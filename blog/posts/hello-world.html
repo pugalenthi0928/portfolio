@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World — Why I Started This Blog — Pugalenthi Magendran</title>
+  <meta name="description" content="A brief introduction to who I am, what I build, and why I decided to start writing about code, design, and everything in between.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../blog.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        // User explicitly chose light mode
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../#projects">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../#contact">Contact</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../#projects">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../#contact">Contact</a>
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article">
+    <div class="container" style="max-width: 720px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <header class="article-header">
+        <h1 class="article-title">Hello World — Why I Started This Blog</h1>
+        <div class="article-meta">
+          <time datetime="2026-02-14">February 14, 2026</time>
+          <span>&middot;</span>
+          <span class="article-reading-time">3 min read</span>
+        </div>
+        <div class="article-tags">
+          <span class="tag">personal</span>
+          <span class="tag">web</span>
+        </div>
+      </header>
+
+      <div class="prose">
+
+        <p>Every developer has that moment — that spark when a line of code transforms into something you can see, interact with, and share with the world. For me, that moment came the first time I built something from scratch with nothing but HTML, CSS, and JavaScript. No frameworks. No build tools. Just a text editor and a browser.</p>
+
+        <p>This blog is an extension of that same spirit.</p>
+
+        <h2>Why Write?</h2>
+
+        <p>I've always believed that the best way to truly understand something is to explain it. Writing forces clarity. When I'm debugging a tricky CSS layout or architecting a new feature, the act of putting my thought process into words helps me spot gaps in my own understanding.</p>
+
+        <p>But beyond personal growth, there's something else: <strong>I want to share the journey</strong>. The web development space can feel overwhelming — new frameworks every week, new paradigms every month. I want to write about the fundamentals that stay constant, the patterns that actually matter, and the small discoveries that make the craft enjoyable.</p>
+
+        <h2>What to Expect</h2>
+
+        <p>This blog will cover a mix of topics:</p>
+
+        <ul>
+          <li><strong>Web development deep dives</strong> — CSS techniques, JavaScript patterns, performance optimization, and the occasional "TIL" moment</li>
+          <li><strong>Design thinking</strong> — how I approach UI/UX decisions, typography choices, and making things feel polished</li>
+          <li><strong>Building in public</strong> — documenting the process of creating projects, including the mistakes and dead ends</li>
+          <li><strong>Tools and workflow</strong> — my development setup, the tools I rely on, and how I stay productive</li>
+        </ul>
+
+        <h2>The Stack Behind This Blog</h2>
+
+        <p>If you're curious about the technical side — this entire site (portfolio + blog) is built with vanilla HTML, CSS, and JavaScript. No React. No Next.js. No static site generator. Just clean, handwritten code.</p>
+
+        <p>Here's a quick look at how the blog system works:</p>
+
+        <pre><code><span class="token-comment">// Blog posts are defined in a simple JSON file</span>
+<span class="token-keyword">const</span> response = <span class="token-keyword">await</span> <span class="token-function">fetch</span>(<span class="token-string">'posts.json'</span>);
+<span class="token-keyword">const</span> posts = <span class="token-keyword">await</span> response.<span class="token-function">json</span>();
+
+<span class="token-comment">// Each post is rendered as a card on the listing page</span>
+posts.<span class="token-function">forEach</span>(<span class="token-property">post</span> <span class="token-keyword">=></span> {
+  <span class="token-keyword">const</span> card = <span class="token-function">createPostCard</span>(post);
+  grid.<span class="token-function">appendChild</span>(card);
+});</code></pre>
+
+        <p>Posts are individual HTML files with a shared template. The listing page dynamically loads post metadata from a JSON file. It's simple, fast, and I have complete control over every pixel.</p>
+
+        <blockquote>
+          The best tool is the one you understand completely. For me, that's the web platform itself.
+        </blockquote>
+
+        <h2>What's Next</h2>
+
+        <p>I'm planning to write about some of the techniques I used to build this portfolio — the cinematic hero reveal, the custom cursor system, the scroll-driven animations — all without any external libraries. If that sounds interesting, stick around.</p>
+
+        <p>Thanks for reading. Let's build something great.</p>
+
+      </div>
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building for the web, one pixel at a time.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../#projects">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../">Blog</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS & JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+  <script src="../blog.js"></script>
+</body>
+</html>

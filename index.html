@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pugalenthi Magendran — AI / ML Engineer</title>
+  <meta name="description" content="AI / Machine Learning Engineer building foundation models, LLM systems, and computer-vision pipelines. Master of AI (Monash). Perplexity AI Fellow.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Prevent flash: apply saved theme before CSS loads
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        // User explicitly chose light mode — respect it
+      } else {
+        // Default to dark (or saved dark preference)
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-logo">P.</div>
+      <div class="preloader-bar">
+        <div class="preloader-bar-fill" id="preloader-bar-fill"></div>
+      </div>
+      <div class="preloader-counter" id="preloader-counter">0</div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="blog/">Blog</a>
+        <a href="#contact">Contact</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="blog/">Blog</a>
+    <a href="#contact">Contact</a>
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span class="line-wrap"><span class="line-inner">AI / Machine Learning Engineer</span></span>
+      </div>
+      <h1 class="hero-heading">
+        <span class="line-wrap"><span class="line-inner">Hi, I'm</span></span>
+        <span class="line-wrap"><span class="line-inner hero-name">Pugalenthi Magendran.</span></span>
+      </h1>
+      <p class="hero-subtitle">
+        <span class="line-wrap"><span class="line-inner">I build intelligent systems — from foundation models</span></span>
+        <span class="line-wrap"><span class="line-inner">and LLM pipelines to production-ready AI tools.</span></span>
+      </p>
+      <div class="hero-cta hero-reveal-item">
+        <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/pugalenthi-magendran-a64912143/" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:pugalenthi0928@gmail.com" class="btn btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator hero-reveal-item">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== MARQUEE ========== -->
+  <div class="marquee" aria-hidden="true" data-parallax="-0.03">
+    <div class="marquee-track">
+      <span class="marquee-content">Python &bull; PyTorch &bull; LLMs &bull; Computer Vision &bull; RAG &bull; LoRA &bull; Transformers &bull; Streamlit &bull; Docker &bull; SQL &bull;&nbsp;</span>
+      <span class="marquee-content">Python &bull; PyTorch &bull; LLMs &bull; Computer Vision &bull; RAG &bull; LoRA &bull; Transformers &bull; Streamlit &bull; Docker &bull; SQL &bull;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ========== PROJECTS ========== -->
+  <section class="section" id="projects">
+    <div class="container container-wide">
+      <h2 class="section-heading" data-animate="fade-up">Featured Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card" data-animate="clip-up" data-color="warm">
+          <div class="project-thumbnail">
+            <img src="retinal_disease_classifier.jpg" alt="Retinal Disease Classifier — FLAIR vision-language model for diabetic retinopathy and glaucoma detection" class="project-thumbnail-img" loading="lazy">
+          </div>
+          <div class="project-card-content">
+            <div class="project-card-header">
+              <span class="project-number">01</span>
+              <div class="project-tags">
+                <span class="tag">PyTorch</span>
+                <span class="tag">FLAIR</span>
+                <span class="tag">Computer Vision</span>
+              </div>
+            </div>
+            <h3 class="project-title">Retinal Disease Classifier</h3>
+            <p class="project-desc">Designed zero-shot and linear-probe experiments with the FLAIR vision-language model for diabetic retinopathy and glaucoma detection, achieving 0.92 AUROC with only 5-20% labels.</p>
+            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+              View Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="project-card" data-animate="clip-up" data-color="cool">
+          <div class="project-thumbnail">
+            <img src="trainingdatarobo.jpg" alt="Training Data Robo — Config-driven CLI and Streamlit dashboard for LLM datasets" class="project-thumbnail-img" loading="lazy">
+          </div>
+          <div class="project-card-content">
+            <div class="project-card-header">
+              <span class="project-number">02</span>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Streamlit</span>
+                <span class="tag">Docker</span>
+              </div>
+            </div>
+            <h3 class="project-title">Training Data Robo</h3>
+            <p class="project-desc">A config-driven CLI and Streamlit dashboard that ingests raw documents and generates multi-task LLM datasets (summarisation, Q&A, key-point extraction) with built-in QA evaluation scripts.</p>
+            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+              View Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="project-card" data-animate="clip-up" data-color="muted">
+          <div class="project-thumbnail">
+            <img src="texttosqllora.jpg" alt="Text-to-SQL with LoRA — Fine-tuned LLaMA model for natural language to SQL generation" class="project-thumbnail-img" loading="lazy">
+          </div>
+          <div class="project-card-content">
+            <div class="project-card-header">
+              <span class="project-number">03</span>
+              <div class="project-tags">
+                <span class="tag">LLaMA</span>
+                <span class="tag">LoRA</span>
+                <span class="tag">PyTorch</span>
+              </div>
+            </div>
+            <h3 class="project-title">Text-to-SQL with LoRA</h3>
+            <p class="project-desc">Fine-tuned a LLaMA-style model on natural-language / SQL pairs using LoRA and parameter-efficient techniques, benchmarking query correctness and execution success against the base model.</p>
+            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+              View Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="projects-view-all" data-animate="fade-up">
+        <a href="projects/" class="view-all-link">
+          View All Projects
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="section section-alt" id="about">
+    <div class="container">
+      <h2 class="section-heading" data-animate="fade-up">About Me</h2>
+
+      <div class="about-layout" data-animate="fade-up">
+        <div class="about-photo" data-parallax="0.06">
+          <img src="image-9090999.jpeg" alt="Pugalenthi Magendran — Graduation" loading="lazy">
+        </div>
+        <div class="about-bio">
+          <p class="about-text">
+            I'm an AI / Machine Learning Engineer with a Master of Artificial Intelligence from Monash University. My work spans foundation models, large language models, and computer vision — from building retinal disease classifiers to fine-tuning LLMs for text-to-SQL generation.
+          </p>
+          <p class="about-text">
+            Currently a Business Fellow at Perplexity AI, I prototype LLM agent workflows and explore AI product strategy. I'm passionate about taking projects from experimentation through to production-ready tools and demos.
+          </p>
+          <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn-resume" data-animate="fade-up">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+            Download Resume
+          </a>
+        </div>
+      </div>
+
+      <div class="about-highlight-cards" data-animate="fade-up">
+        <div class="highlight-card" data-parallax="0.02">
+          <div class="highlight-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <div class="highlight-card-title">Research-Driven</div>
+          <div class="highlight-card-desc">Rigorous experimentation and reproducible results</div>
+        </div>
+        <div class="highlight-card" data-parallax="0.03">
+          <div class="highlight-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <div class="highlight-card-title">Full Pipeline</div>
+          <div class="highlight-card-desc">Data prep to deployment, end-to-end</div>
+        </div>
+        <div class="highlight-card" data-parallax="0.04">
+          <div class="highlight-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </div>
+          <div class="highlight-card-title">Ship Fast</div>
+          <div class="highlight-card-desc">From prototype to production, quickly</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-heading" data-animate="fade-up">Skills & Technologies</h3>
+      <div class="skills-grid" data-animate="fade-up">
+        <span class="tag">Python</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">Transformers</span>
+        <span class="tag">LLMs</span>
+        <span class="tag">LoRA</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Docker</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Git</span>
+        <span class="tag">AWS</span>
+        <span class="tag">Azure</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE ========== -->
+  <section class="section" id="experience">
+    <div class="container">
+      <h2 class="section-heading" data-animate="fade-up">Experience</h2>
+      <div class="timeline">
+
+        <div class="timeline-item" data-animate="slide-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Business Fellow (AI Product & Research)</h3>
+                <p class="timeline-company">Perplexity AI</p>
+              </div>
+              <span class="timeline-date">Feb 2025 — Present</span>
+            </div>
+            <p class="timeline-desc">
+              Selected into a competitive fellowship focused on AI product strategy and LLM-powered workflows. Prototyping no-code and low-code LLM agent workflows to automate internal analysis tasks.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-animate="slide-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">AI Researcher — Foundation Models</h3>
+                <p class="timeline-company">Monash University</p>
+              </div>
+              <span class="timeline-date">Feb 2025 — Nov 2025</span>
+            </div>
+            <p class="timeline-desc">
+              Designed experiments comparing zero-shot vs linear-probe adaptation of the FLAIR vision-language model for retinal disease detection. Built reproducible Python/PyTorch pipelines for the full research workflow.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-animate="slide-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Venture Capital Analyst</h3>
+                <p class="timeline-company">1337 Ventures</p>
+              </div>
+              <span class="timeline-date">Apr 2022 — Jul 2022</span>
+            </div>
+            <p class="timeline-desc">
+              Researched ~400 Malaysian startups, categorising companies by sector, stage and traction to map the early-stage ecosystem and support deal flow.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 class="subsection-heading" data-animate="fade-up" style="margin-top: 56px;">Certifications</h3>
+      <div class="certs-grid" data-animate="fade-up">
+
+        <!-- CERT CARD — Copy this block to add more -->
+        <div class="cert-card">
+          <div class="cert-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          </div>
+          <div class="cert-card-body">
+            <h3 class="cert-card-title">Machine Learning Specialization</h3>
+            <p class="cert-card-issuer">DeepLearning.AI · Coursera</p>
+          </div>
+          <span class="cert-card-date">2024</span>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          </div>
+          <div class="cert-card-body">
+            <h3 class="cert-card-title">Deep Learning Specialization</h3>
+            <p class="cert-card-issuer">DeepLearning.AI · Coursera</p>
+          </div>
+          <span class="cert-card-date">2024</span>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          </div>
+          <div class="cert-card-body">
+            <h3 class="cert-card-title">Natural Language Processing Specialization</h3>
+            <p class="cert-card-issuer">DeepLearning.AI · Coursera</p>
+          </div>
+          <span class="cert-card-date">2024</span>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          </div>
+          <div class="cert-card-body">
+            <h3 class="cert-card-title">Google Data Analytics Professional Certificate</h3>
+            <p class="cert-card-issuer">Google · Coursera</p>
+          </div>
+          <span class="cert-card-date">2023</span>
+        </div>
+        <!-- END CERT CARD -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <div class="contact-hero" data-animate="scale-in">
+        <h2 class="contact-headline" data-parallax="0.04">Let's build something great together.</h2>
+        <p class="contact-subtext">Got a project in mind, a question, or just want to say hi? I'd love to hear from you.</p>
+        <a href="mailto:pugalenthi0928@gmail.com" class="contact-email-link">pugalenthi0928@gmail.com</a>
+        <div class="contact-social">
+          <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/pugalenthi-magendran-a64912143/" target="_blank" rel="noopener" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn
+          </a>
+          <a href="mailto:pugalenthi0928@gmail.com" class="social-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Email
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-divider"></div>
+
+      <div class="contact-form-section" data-animate="scale-in">
+        <p class="contact-form-label">Or send me a message directly</p>
+        <form class="contact-form" action="https://formsubmit.co/pugalenthi0928@gmail.com" method="POST">
+          <input type="hidden" name="_next" value="https://pugalenthimagendran.com/#contact">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_subject" value="New message from portfolio!">
+          <input type="text" name="_honey" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Tell me about your project or just say hi..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-large">
+            Send Message
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" data-animate="fade-up">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems, one model at a time.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="blog/">Blog</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS & JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
