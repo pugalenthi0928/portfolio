@@ -703,12 +703,12 @@ function initCardTilt() {
       const centerY = y - 0.5; // -0.5 to 0.5
 
       // 3D tilt
-      const rotateX = centerY * -12; // max 6 degrees
-      const rotateY = centerX * 12;  // max 6 degrees
+      const rotateX = centerY * -18; // max 9 degrees
+      const rotateY = centerX * 18;  // max 9 degrees
 
       card.classList.add('tilt-active');
       card.classList.remove('tilt-reset');
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px)`;
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px)`;
 
       // Cursor glow position
       card.style.setProperty('--mouse-x', `${x * 100}%`);
@@ -835,22 +835,29 @@ function initParticleCanvas() {
 
   const ctx = canvas.getContext('2d');
   const hero = canvas.closest('.hero');
-  let width, height;
+  let width, height, heroHeight;
   let particles = [];
   let mouseX = -9999, mouseY = -9999;
+  let heroOffsetX = 0, heroOffsetY = 0;
   let animId;
   let isTabVisible = true;
 
-  const PARTICLE_COUNT = 70;
-  const CONNECTION_DIST = 150;
-  const MOUSE_RADIUS = 200;
-  const MOUSE_STRENGTH = 0.02;
+  const PARTICLE_COUNT = 110;
+  const CONNECTION_DIST = 170;
+  const CONNECTION_DIST_SQ = CONNECTION_DIST * CONNECTION_DIST;
+  const MOUSE_RADIUS = 250;
+  const MOUSE_RADIUS_SQ = MOUSE_RADIUS * MOUSE_RADIUS;
+  const MOUSE_STRENGTH = 0.045;
+  const ALPHA_BUCKETS = 5;
 
   function resize() {
     const rect = hero.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = rect.width;
     height = rect.height;
+    heroHeight = height;
+    heroOffsetX = rect.left;
+    heroOffsetY = rect.top + window.scrollY;
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     canvas.style.width = width + 'px';
@@ -866,14 +873,14 @@ function initParticleCanvas() {
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.5 + 0.5,
+        radius: Math.random() * 1.7 + 0.8,
         phase: Math.random() * Math.PI * 2,
         speed: Math.random() * 0.002 + 0.001
       });
     }
   }
 
-  function animate(time) {
+  function animate() {
     if (!isTabVisible) {
       animId = requestAnimationFrame(animate);
       return;
@@ -881,30 +888,30 @@ function initParticleCanvas() {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Fade canvas with hero scroll
+    // Fade canvas with hero scroll — use cached heroHeight
     const scrolled = window.scrollY;
-    const heroH = hero.offsetHeight;
-    const scrollOpacity = Math.max(0, 1 - scrolled / (heroH * 0.8));
+    const scrollOpacity = Math.max(0, 1 - scrolled / (heroHeight * 0.8));
     if (scrollOpacity <= 0) {
       animId = requestAnimationFrame(animate);
       return;
     }
     ctx.globalAlpha = scrollOpacity;
 
-    // Update + draw particles
-    for (let i = 0; i < particles.length; i++) {
+    // Update particles
+    const len = particles.length;
+    for (let i = 0; i < len; i++) {
       const p = particles[i];
 
-      // Organic drift using sine
       p.phase += p.speed;
       p.x += p.vx + Math.sin(p.phase) * 0.15;
       p.y += p.vy + Math.cos(p.phase * 0.7) * 0.15;
 
-      // Mouse attraction
+      // Mouse attraction — use squared distance to avoid sqrt
       const dx = mouseX - p.x;
       const dy = mouseY - p.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < MOUSE_RADIUS && dist > 0) {
+      const distSq = dx * dx + dy * dy;
+      if (distSq < MOUSE_RADIUS_SQ && distSq > 0) {
+        const dist = Math.sqrt(distSq);
         const force = (1 - dist / MOUSE_RADIUS) * MOUSE_STRENGTH;
         p.x += dx * force;
         p.y += dy * force;
@@ -915,41 +922,60 @@ function initParticleCanvas() {
       if (p.x > width + 10) p.x = -10;
       if (p.y < -10) p.y = height + 10;
       if (p.y > height + 10) p.y = -10;
-
-      // Draw particle
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(240, 120, 74, 0.4)';
-      ctx.fill();
     }
 
-    // Draw connections
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < CONNECTION_DIST) {
-          const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(240, 120, 74, ${alpha})`;
-          ctx.stroke();
+    // Draw all particles in a single batched path
+    ctx.fillStyle = 'rgba(240, 120, 74, 0.6)';
+    ctx.beginPath();
+    for (let i = 0; i < len; i++) {
+      const p = particles[i];
+      ctx.moveTo(p.x + p.radius, p.y);
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    }
+    ctx.fill();
+
+    // Draw connections — batch into alpha buckets for fewer draw calls
+    ctx.lineWidth = 0.8;
+    const buckets = new Array(ALPHA_BUCKETS);
+    for (let b = 0; b < ALPHA_BUCKETS; b++) buckets[b] = [];
+
+    for (let i = 0; i < len; i++) {
+      const pi = particles[i];
+      for (let j = i + 1; j < len; j++) {
+        const pj = particles[j];
+        const dx = pi.x - pj.x;
+        const dy = pi.y - pj.y;
+        const distSq = dx * dx + dy * dy;
+        if (distSq < CONNECTION_DIST_SQ) {
+          const dist = Math.sqrt(distSq);
+          const alpha = (1 - dist / CONNECTION_DIST) * 0.3;
+          const bucket = Math.min(Math.floor(alpha * ALPHA_BUCKETS / 0.3), ALPHA_BUCKETS - 1);
+          buckets[bucket].push(pi.x, pi.y, pj.x, pj.y);
         }
       }
+    }
+
+    for (let b = 0; b < ALPHA_BUCKETS; b++) {
+      const lines = buckets[b];
+      if (lines.length === 0) continue;
+      const a = ((b + 0.5) / ALPHA_BUCKETS) * 0.3;
+      ctx.strokeStyle = `rgba(240, 120, 74, ${a.toFixed(3)})`;
+      ctx.beginPath();
+      for (let k = 0; k < lines.length; k += 4) {
+        ctx.moveTo(lines[k], lines[k + 1]);
+        ctx.lineTo(lines[k + 2], lines[k + 3]);
+      }
+      ctx.stroke();
     }
 
     ctx.globalAlpha = 1;
     animId = requestAnimationFrame(animate);
   }
 
-  // Mouse tracking (relative to hero)
+  // Mouse tracking — avoid getBoundingClientRect on every move
   document.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    mouseX = e.pageX - heroOffsetX;
+    mouseY = e.pageY - heroOffsetY;
   });
 
   document.addEventListener('mouseleave', () => {
@@ -962,13 +988,26 @@ function initParticleCanvas() {
     isTabVisible = !document.hidden;
   });
 
-  // Responsive resize
+  // Responsive resize — recache hero dimensions
   const ro = new ResizeObserver(() => {
     resize();
-    // Reinitialize particles if canvas size changed significantly
     if (particles.length === 0) createParticles();
   });
   ro.observe(hero);
+
+  // Also recache hero position on scroll (for mouse tracking)
+  let scrollTick = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollTick) {
+      scrollTick = true;
+      requestAnimationFrame(() => {
+        const rect = hero.getBoundingClientRect();
+        heroOffsetX = rect.left;
+        heroOffsetY = rect.top + window.scrollY;
+        scrollTick = false;
+      });
+    }
+  }, { passive: true });
 
   resize();
   createParticles();
