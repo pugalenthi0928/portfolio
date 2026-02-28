@@ -34,9 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 7. Hero Parallax ---
   initHeroParallax();
 
-  // --- 8. Dark Mode Toggle ---
-  initDarkMode();
-
   // --- 9. Mobile Menu ---
   initMobileMenu();
 
@@ -54,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 14. Parallax Depth Layers ---
   initParallax();
+
+  // --- 15. Neural Network Particle Canvas ---
+  initParticleCanvas();
 
 });
 
@@ -215,10 +215,12 @@ function initCustomCursor() {
 
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
+  const glow = document.querySelector('.mouse-glow');
   if (!dot || !ring) return;
 
   let mouseX = 0, mouseY = 0;
   let ringX = 0, ringY = 0;
+  let glowX = 0, glowY = 0;
   let isVisible = false;
 
   document.addEventListener('mousemove', (e) => {
@@ -232,14 +234,18 @@ function initCustomCursor() {
       isVisible = true;
       dot.classList.add('active');
       ring.classList.add('active');
+      if (glow) glow.classList.add('active');
       ringX = mouseX;
       ringY = mouseY;
+      glowX = mouseX;
+      glowY = mouseY;
     }
   });
 
   document.addEventListener('mouseleave', () => {
     dot.classList.remove('active');
     ring.classList.remove('active');
+    if (glow) glow.classList.remove('active');
     isVisible = false;
   });
 
@@ -247,6 +253,7 @@ function initCustomCursor() {
     if (mouseX !== 0 || mouseY !== 0) {
       dot.classList.add('active');
       ring.classList.add('active');
+      if (glow) glow.classList.add('active');
       isVisible = true;
     }
   });
@@ -256,6 +263,15 @@ function initCustomCursor() {
     ringY += (mouseY - ringY) * 0.25;
     ring.style.left = ringX + 'px';
     ring.style.top = ringY + 'px';
+
+    // Mouse glow follows with slower lerp for atmospheric trailing
+    if (glow) {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      glow.style.left = glowX + 'px';
+      glow.style.top = glowY + 'px';
+    }
+
     requestAnimationFrame(animateRing);
   }
   animateRing();
@@ -271,7 +287,7 @@ function bindCursorHover(container, ring) {
   }
   if (!ring) return;
 
-  const hoverTargets = container.querySelectorAll('a, button, .btn, .tag, input, textarea, .theme-toggle, .nav-toggle');
+  const hoverTargets = container.querySelectorAll('a, button, .btn, .tag, input, textarea, .nav-toggle');
   hoverTargets.forEach(el => {
     el.addEventListener('mouseenter', () => {
       ring.classList.add('cursor-hover');
@@ -329,7 +345,7 @@ function initMagneticButtons() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   if (isTouch) return;
 
-  const magneticEls = document.querySelectorAll('.btn, .project-link, .social-link, .nav-links a, .theme-toggle, .highlight-card');
+  const magneticEls = document.querySelectorAll('.btn, .project-link, .social-link, .nav-links a, .highlight-card');
 
   magneticEls.forEach(el => {
     el.addEventListener('mousemove', (e) => {
@@ -506,30 +522,6 @@ function initHeroParallax() {
 }
 
 
-// ============================================
-// 9. DARK MODE TOGGLE
-// ============================================
-function initDarkMode() {
-  const toggles = document.querySelectorAll('.theme-toggle');
-  if (!toggles.length) return;
-
-  toggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-      if (newTheme === 'light') {
-        html.removeAttribute('data-theme');
-      } else {
-        html.setAttribute('data-theme', 'dark');
-      }
-
-      localStorage.setItem('theme', newTheme);
-    });
-  });
-}
-
 
 // ============================================
 // 10. MOBILE MENU
@@ -572,7 +564,7 @@ function initMobileMenu() {
     document.body.style.overflow = 'hidden';
 
     // Stagger link animations
-    const items = mobileNav.querySelectorAll('a, .theme-toggle');
+    const items = mobileNav.querySelectorAll('a');
     items.forEach((item, i) => {
       item.style.transitionDelay = `${(i + 1) * 60}ms`;
     });
@@ -585,7 +577,7 @@ function initMobileMenu() {
     document.body.style.overflow = '';
 
     // Reset delays
-    const items = mobileNav.querySelectorAll('a, .theme-toggle');
+    const items = mobileNav.querySelectorAll('a');
     items.forEach(item => {
       item.style.transitionDelay = '';
     });
@@ -824,4 +816,161 @@ function initParallax() {
   }
 
   requestAnimationFrame(updateParallax);
+}
+
+
+// ============================================
+// 16. NEURAL NETWORK PARTICLE CANVAS
+// ============================================
+function initParticleCanvas() {
+  const canvas = document.getElementById('hero-particles');
+  if (!canvas) return;
+
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (isTouch || prefersReduced) {
+    canvas.style.display = 'none';
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  const hero = canvas.closest('.hero');
+  let width, height;
+  let particles = [];
+  let mouseX = -9999, mouseY = -9999;
+  let animId;
+  let isTabVisible = true;
+
+  const PARTICLE_COUNT = 70;
+  const CONNECTION_DIST = 150;
+  const MOUSE_RADIUS = 200;
+  const MOUSE_STRENGTH = 0.02;
+
+  function resize() {
+    const rect = hero.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createParticles() {
+    particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 1.5 + 0.5,
+        phase: Math.random() * Math.PI * 2,
+        speed: Math.random() * 0.002 + 0.001
+      });
+    }
+  }
+
+  function animate(time) {
+    if (!isTabVisible) {
+      animId = requestAnimationFrame(animate);
+      return;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Fade canvas with hero scroll
+    const scrolled = window.scrollY;
+    const heroH = hero.offsetHeight;
+    const scrollOpacity = Math.max(0, 1 - scrolled / (heroH * 0.8));
+    if (scrollOpacity <= 0) {
+      animId = requestAnimationFrame(animate);
+      return;
+    }
+    ctx.globalAlpha = scrollOpacity;
+
+    // Update + draw particles
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+
+      // Organic drift using sine
+      p.phase += p.speed;
+      p.x += p.vx + Math.sin(p.phase) * 0.15;
+      p.y += p.vy + Math.cos(p.phase * 0.7) * 0.15;
+
+      // Mouse attraction
+      const dx = mouseX - p.x;
+      const dy = mouseY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MOUSE_RADIUS && dist > 0) {
+        const force = (1 - dist / MOUSE_RADIUS) * MOUSE_STRENGTH;
+        p.x += dx * force;
+        p.y += dy * force;
+      }
+
+      // Wrap edges
+      if (p.x < -10) p.x = width + 10;
+      if (p.x > width + 10) p.x = -10;
+      if (p.y < -10) p.y = height + 10;
+      if (p.y > height + 10) p.y = -10;
+
+      // Draw particle
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(240, 120, 74, 0.4)';
+      ctx.fill();
+    }
+
+    // Draw connections
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECTION_DIST) {
+          const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(240, 120, 74, ${alpha})`;
+          ctx.stroke();
+        }
+      }
+    }
+
+    ctx.globalAlpha = 1;
+    animId = requestAnimationFrame(animate);
+  }
+
+  // Mouse tracking (relative to hero)
+  document.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+
+  document.addEventListener('mouseleave', () => {
+    mouseX = -9999;
+    mouseY = -9999;
+  });
+
+  // Pause when tab hidden
+  document.addEventListener('visibilitychange', () => {
+    isTabVisible = !document.hidden;
+  });
+
+  // Responsive resize
+  const ro = new ResizeObserver(() => {
+    resize();
+    // Reinitialize particles if canvas size changed significantly
+    if (particles.length === 0) createParticles();
+  });
+  ro.observe(hero);
+
+  resize();
+  createParticles();
+  animId = requestAnimationFrame(animate);
 }

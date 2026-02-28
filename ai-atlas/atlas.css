@@ -27,29 +27,6 @@
   --atlas-tooltip-bg: rgba(8, 8, 12, 0.94);
 }
 
-[data-theme="dark"] {
-  --atlas-bg: #0a0a0a;
-  --atlas-card: #111;
-  --atlas-card-hover: #161616;
-  --atlas-border: #1e1e1e;
-  --atlas-border-hover: #333;
-  --atlas-text: #e0e0e0;
-  --atlas-text-dim: #777;
-  --atlas-tooltip-bg: rgba(8, 8, 12, 0.94);
-}
-
-html:not([data-theme="dark"]) {
-  --atlas-bg: #f5f5f5;
-  --atlas-card: #ffffff;
-  --atlas-card-hover: #fafafa;
-  --atlas-border: #e5e5e5;
-  --atlas-border-hover: #ccc;
-  --atlas-text: #1a1a1a;
-  --atlas-text-dim: #666;
-  --atlas-accent-dim: rgba(74, 158, 255, 0.08);
-  --atlas-accent-glow: rgba(74, 158, 255, 0.12);
-  --atlas-tooltip-bg: rgba(15, 15, 20, 0.92);
-}
 
 /* ---------- Keyframe Animations ---------- */
 @keyframes atlas-gradient-shift {
@@ -208,25 +185,8 @@ html:not([data-theme="dark"]) {
   animation: atlas-gradient-shift 10s ease infinite;
 }
 
-[data-theme="dark"] .atlas-hero-title .atlas-line-inner {
+.atlas-hero-title .atlas-line-inner {
   filter: drop-shadow(0 0 30px rgba(74, 158, 255, 0.15));
-}
-
-html:not([data-theme="dark"]) .atlas-hero-title .atlas-line-inner {
-  background: linear-gradient(
-    135deg,
-    #c04040 0%,
-    #b07000 20%,
-    #2a8a80 40%,
-    #7040a8 60%,
-    #1a8040 80%,
-    #c04040 100%
-  );
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: atlas-gradient-shift 10s ease infinite;
 }
 
 .atlas-hero-subtitle {
