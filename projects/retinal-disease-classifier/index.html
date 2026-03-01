@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Prompts to Probes — Retinal Disease Classification</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c0f;--bg2:#111318;--bg3:#1a1d24;--bg4:#242830;
+  --border:#2a2e3a;--text:#d4d8e8;--text2:#8b92a8;--text3:#5c6278;
+  --accent:#2dd4bf;--accent2:#14b8a6;--accent-glow:rgba(45,212,191,.12);
+  --green:#4ade80;--green-dim:rgba(74,222,128,.12);
+  --red:#f87171;--red-dim:rgba(248,113,113,.12);
+  --orange:#fb923c;--orange-dim:rgba(251,146,60,.12);
+  --yellow:#fbbf24;--yellow-dim:rgba(251,191,36,.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,.12);
+  --cyan:#22d3ee;--cyan-dim:rgba(34,211,238,.12);
+  --blue:#6c8cff;--blue-dim:rgba(108,140,255,.12);
+  --radius:10px;
+  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'SF Mono',SFMono-Regular,ui-monospace,'DejaVu Sans Mono',Menlo,Consolas,monospace;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ---- Mode Toggle ---- */
+.mode-bar{position:sticky;top:0;z-index:100;background:rgba(10,12,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 0}
+.mode-bar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mode-bar h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+.mode-bar h1 .logo{font-size:20px}
+.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-family:var(--font-sans);transition:all .2s}
+.back-link:hover{border-color:var(--accent);color:#fff}
+.toggle-group{display:flex;background:var(--bg3);border-radius:8px;border:1px solid var(--border);overflow:hidden}
+.toggle-btn{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:var(--font-sans);transition:all .2s}
+.toggle-btn:hover{color:var(--text)}
+.toggle-btn.active{background:var(--accent);color:#fff}
+
+/* ---- Sidebar Nav ---- */
+.page-layout{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;gap:48px}
+.sidebar-nav{width:240px;flex-shrink:0;position:sticky;top:72px;align-self:flex-start;max-height:calc(100vh - 90px);overflow-y:auto;padding:24px 0}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav a{display:block;padding:6px 14px;font-size:13px;color:var(--text2);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.5}
+.sidebar-nav a:hover{color:var(--text);border-left-color:var(--border)}
+.sidebar-nav a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.sidebar-nav .nav-section{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;padding:16px 14px 6px;margin-top:8px}
+.sidebar-nav .nav-section:first-child{margin-top:0}
+
+/* ---- Main Content ---- */
+.content{flex:1;min-width:0;padding:32px 0 80px}
+.content section{margin-bottom:64px}
+.content h2{font-size:28px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px;padding-top:20px}
+.content h3{font-size:19px;font-weight:700;color:#fff;margin-top:32px;margin-bottom:12px;letter-spacing:-.3px}
+.content h4{font-weight:700;color:var(--accent);margin-top:24px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;font-size:12px}
+.content p{margin-bottom:16px;color:var(--text)}
+.content ul,.content ol{margin-bottom:16px;padding-left:24px}
+.content li{margin-bottom:6px;color:var(--text)}
+.content li::marker{color:var(--text3)}
+.content a{color:var(--accent);text-decoration:none}
+.content a:hover{text-decoration:underline}
+
+/* ---- Callout Boxes ---- */
+.callout{border-radius:var(--radius);padding:16px 20px;margin:20px 0;border:1px solid var(--border);font-size:14px;line-height:1.6}
+.callout.info{background:var(--accent-glow);border-color:rgba(45,212,191,.25)}
+.callout.success{background:var(--green-dim);border-color:rgba(74,222,128,.25)}
+.callout.warning{background:var(--orange-dim);border-color:rgba(251,146,60,.25)}
+.callout.purple{background:var(--purple-dim);border-color:rgba(167,139,250,.25)}
+.callout.blue{background:var(--blue-dim);border-color:rgba(108,140,255,.25)}
+.callout-title{font-weight:700;margin-bottom:4px;font-size:13px}
+.callout.info .callout-title{color:var(--accent)}
+.callout.success .callout-title{color:var(--green)}
+.callout.warning .callout-title{color:var(--orange)}
+.callout.purple .callout-title{color:var(--purple)}
+.callout.blue .callout-title{color:var(--blue)}
+
+/* ---- Tables ---- */
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;background:var(--bg3);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.best{color:var(--accent);font-weight:700}
+td.second{color:var(--yellow)}
+
+/* ---- Model Cards ---- */
+.model-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
+.model-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s}
+.model-card:hover{border-color:var(--accent)}
+.model-card-icon{font-size:28px;margin-bottom:12px}
+.model-card h4{color:#fff;font-size:16px;font-weight:700;margin:0 0 4px;text-transform:none;letter-spacing:0}
+.model-card .model-type{font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.model-card p{font-size:13px;color:var(--text2);margin:0;line-height:1.5}
+.model-card .model-stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.model-card .model-stat{font-size:11px;padding:3px 8px;background:var(--bg3);border-radius:4px;color:var(--text2)}
+
+/* ---- Dataset Cards ---- */
+.dataset-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
+.dataset-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+.dataset-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.dataset-card.dr::before{background:linear-gradient(90deg,var(--orange),var(--yellow))}
+.dataset-card.glaucoma::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.dataset-card.multi::before{background:linear-gradient(90deg,var(--purple),var(--blue))}
+.dataset-card h4{color:#fff;font-size:15px;font-weight:700;margin:0 0 4px;text-transform:none;letter-spacing:0}
+.dataset-card .dataset-task{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.dataset-card.dr .dataset-task{color:var(--orange)}
+.dataset-card.glaucoma .dataset-task{color:var(--accent)}
+.dataset-card.multi .dataset-task{color:var(--purple)}
+.dataset-card p{font-size:13px;color:var(--text2);margin:0 0 8px;line-height:1.5}
+.dataset-card .dataset-meta{display:flex;flex-wrap:wrap;gap:8px}
+.dataset-card .dataset-meta span{font-size:11px;padding:3px 8px;background:var(--bg3);border-radius:4px;color:var(--text2)}
+
+/* ---- Flow Steps ---- */
+.flow-steps{display:flex;flex-direction:column;gap:0;margin:20px 0}
+.flow-step{display:flex;gap:16px;position:relative;padding-bottom:24px}
+.flow-step:last-child{padding-bottom:0}
+.flow-step:last-child .flow-line{display:none}
+.flow-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;position:relative;z-index:1}
+.flow-line{position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--border)}
+.flow-body{flex:1;padding-top:6px}
+.flow-body strong{color:#fff}
+.flow-body p{margin-bottom:4px;font-size:14px}
+
+/* ---- Diagram ---- */
+.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.8;white-space:pre;color:var(--text2)}
+.diagram .highlight{color:var(--accent);font-weight:700}
+.diagram .green{color:var(--green)}
+.diagram .red{color:var(--red)}
+.diagram .yellow{color:var(--yellow)}
+.diagram .purple{color:var(--purple)}
+.diagram .cyan{color:var(--cyan)}
+.diagram .orange{color:var(--orange)}
+
+/* ---- Finding Cards ---- */
+.finding-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:20px 0}
+.finding-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.finding-card .finding-num{font-size:32px;font-weight:800;color:var(--accent);opacity:.3;margin-bottom:8px}
+.finding-card h4{color:#fff;font-size:14px;font-weight:700;margin:0 0 8px;text-transform:none;letter-spacing:0}
+.finding-card p{font-size:13px;color:var(--text2);margin:0;line-height:1.5}
+
+/* ---- Badges ---- */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.badge-best{background:var(--accent-glow);color:var(--accent)}
+.badge-good{background:var(--green-dim);color:var(--green)}
+.badge-note{background:var(--yellow-dim);color:var(--yellow)}
+
+/* ---- Hero ---- */
+.hero{text-align:center;padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);background:var(--accent-glow);padding:6px 16px;border-radius:20px;margin-bottom:20px}
+.hero h2{font-size:38px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:12px;line-height:1.2}
+.hero h2 span{background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:17px;color:var(--text2);max-width:640px;margin:0 auto 8px}
+.hero .hero-meta{font-size:13px;color:var(--text3);margin:0 auto 24px}
+.hero-stats{display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:28px;font-weight:800;color:#fff}
+.hero-stat .num .accent{color:var(--accent)}
+.hero-stat .label{font-size:12px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+
+/* ---- Vs Block ---- */
+.vs-block{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:start;margin:24px 0}
+.vs-side{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.vs-side h4{color:#fff;font-size:15px;font-weight:700;margin:0 0 8px;text-transform:none;letter-spacing:0}
+.vs-side p{font-size:13px;color:var(--text2);margin:0;line-height:1.5}
+.vs-divider{display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--text3);padding-top:30px}
+
+/* ---- Glow Card ---- */
+.glow-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:16px 0;background:var(--bg2);position:relative;overflow:hidden}
+.glow-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,var(--accent-glow) 60deg,transparent 120deg);animation:rotate 8s linear infinite;opacity:.5}
+.glow-card>*{position:relative;z-index:1}
+@keyframes rotate{100%{transform:rotate(360deg)}}
+.glow-card-inner{background:var(--bg2);border-radius:8px;padding:24px;position:relative;z-index:1}
+
+/* ---- Responsive ---- */
+@media(max-width:860px){
+  .page-layout{flex-direction:column;gap:0}
+  .sidebar-nav{display:none}
+  .content{padding:24px 0 60px}
+  .hero h2{font-size:26px}
+  .hero-stats{gap:20px}
+  .model-cards{grid-template-columns:1fr}
+  .dataset-cards{grid-template-columns:1fr}
+  .finding-cards{grid-template-columns:1fr}
+  .vs-block{grid-template-columns:1fr;gap:12px}
+  .vs-divider{padding-top:0}
+  .mode-bar-inner{flex-wrap:wrap}
+}
+@media(max-width:480px){
+  .hero{padding:40px 0 32px}
+  .hero h2{font-size:22px}
+  .mode-bar h1{font-size:14px}
+}
+
+/* ---- Hidden by mode ---- */
+[data-mode="simple"] .tech-only{display:none!important}
+[data-mode="technical"] .simple-only{display:none!important}
+
+/* ---- Print ---- */
+@media print{body{background:#fff;color:#222}pre{background:#f5f5f5}h2,h3{color:#000}.mode-bar{position:static}}
+
+/* ---- Preconnect fonts ---- */
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-mode="simple">
+
+<!-- ---- Sticky Mode Bar ---- -->
+<div class="mode-bar">
+  <div class="mode-bar-inner">
+    <h1><span class="logo">&#9678;</span> Retinal Disease Classification</h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setMode('simple')">Simple</button>
+        <button class="toggle-btn" onclick="setMode('technical')">Technical</button>
+      </div>
+      <a href="../../" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Portfolio
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page-layout">
+
+<!-- ---- Sidebar Navigation ---- -->
+<nav class="sidebar-nav" id="sidebar">
+  <div class="nav-section">Overview</div>
+  <a href="#intro">What Is This?</a>
+  <a href="#why-it-matters">Why It Matters</a>
+  <a href="#approach">The Approach</a>
+
+  <div class="nav-section">Models & Data</div>
+  <a href="#models">The Four Models</a>
+  <a href="#datasets">The Datasets</a>
+  <a href="#prompts">Prompt Design</a>
+
+  <div class="nav-section">Results</div>
+  <a href="#zero-shot">Zero-Shot Results</a>
+  <a href="#few-shot">Few-Shot Results</a>
+  <a href="#clinical">Clinical Operating Point</a>
+  <a href="#findings">Key Findings</a>
+
+  <div class="nav-section">Details</div>
+  <a href="#methodology">Methodology</a>
+  <a href="#guidance">Practical Guidance</a>
+  <a href="#conclusion">Conclusion</a>
+</nav>
+
+<!-- ---- Main Content ---- -->
+<main class="content" id="content">
+
+<!-- ======== HERO ======== -->
+<div class="hero">
+  <div class="hero-badge">Master's Thesis &middot; Monash University</div>
+  <h2>From Prompts to <span>Probes</span></h2>
+  <p>Zero-shot and few-shot transfer of foundation models for retinal fundus disease classification.</p>
+  <p class="hero-meta">Pugalenthi Magendran &middot; Supervised by Dr Yasmeen George &middot; 2025</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">4</div><div class="label">Models Compared</div></div>
+    <div class="hero-stat"><div class="num">3</div><div class="label">Benchmarks</div></div>
+    <div class="hero-stat"><div class="num"><span class="accent">0.921</span></div><div class="label">Best AUROC</div></div>
+    <div class="hero-stat"><div class="num">5-Fold</div><div class="label">Cross-Validation</div></div>
+  </div>
+</div>
+
+<!-- ======== 1. INTRO ======== -->
+<section id="intro">
+  <h2>What Is This?</h2>
+
+  <div class="simple-only">
+    <p>Imagine you go to the eye doctor. They take a photo of the back of your eye (called a <strong>fundus image</strong>) and look for signs of diseases like diabetes-related eye damage or glaucoma. This is how millions of people around the world get screened for vision-threatening conditions.</p>
+    <p>The problem? There aren't enough trained eye doctors, especially in developing countries. <strong>Over 43 million people</strong> worldwide are blind, and the majority live in regions with limited access to specialists.</p>
+    <p><strong>What if an AI could look at that same eye photo and flag potential diseases, without ever being explicitly trained on eye images?</strong></p>
+    <p>That's exactly what this research explores. I took four powerful AI models that were trained on different combinations of medical images and text, and tested how well they can detect retinal diseases in two ways:</p>
+    <ul>
+      <li><strong>Zero-shot:</strong> The AI has never seen these specific eye images before. I just describe the disease in words, and the AI decides if the image matches the description.</li>
+      <li><strong>Few-shot:</strong> I give the AI a tiny fraction of labeled examples (as few as 5% of the dataset) and let it learn a simple classifier on top of its existing knowledge.</li>
+    </ul>
+    <div class="callout info">
+      <div class="callout-title">The core question:</div>
+      Can these foundation models diagnose retinal diseases reliably with little or no task-specific training data, and which model works best for which disease?
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <p>This thesis presents a <strong>systematic benchmark</strong> of four vision-language and vision-only foundation models for retinal fundus image classification under <strong>zero-shot</strong> and <strong>few-shot linear probing</strong> protocols. The work addresses a critical gap: while foundation models show impressive generalization in natural image domains, their transfer characteristics to ophthalmic imaging remain under-explored, particularly under label-scarce conditions.</p>
+    <div class="callout purple">
+      <div class="callout-title">Research Contributions</div>
+      <ul style="margin-bottom:0">
+        <li><strong>First head-to-head comparison</strong> of FLAIR, OpenCLIP, BiomedCLIP, and RETFound on three retinal benchmarks under identical evaluation protocols</li>
+        <li><strong>Clinician-validated prompt engineering</strong> with three templates of increasing clinical specificity (T1-T3)</li>
+        <li><strong>Label-efficiency analysis</strong> at 5%, 10%, and 20% annotation budgets with frozen encoders</li>
+        <li><strong>Calibration assessment</strong> via temperature scaling with ECE and AUCE metrics</li>
+        <li><strong>Clinical operating point analysis</strong> at Sensitivity @ 90% Specificity for glaucoma screening</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 2. WHY IT MATTERS ======== -->
+<section id="why-it-matters">
+  <h2>Why It Matters</h2>
+
+  <div class="simple-only">
+    <p>Three eye diseases account for the vast majority of preventable blindness worldwide:</p>
+    <div class="dataset-cards">
+      <div class="dataset-card dr">
+        <h4>Diabetic Retinopathy</h4>
+        <div class="dataset-task">Leading cause of blindness in working-age adults</div>
+        <p>High blood sugar damages the tiny blood vessels in the retina. If caught early, laser treatment can prevent vision loss. If missed, it leads to irreversible blindness.</p>
+      </div>
+      <div class="dataset-card glaucoma">
+        <h4>Glaucoma</h4>
+        <div class="dataset-task">The "silent thief of sight"</div>
+        <p>Damages the optic nerve gradually with no symptoms until significant vision is already lost. Early detection through screening is the only defense.</p>
+      </div>
+      <div class="dataset-card multi">
+        <h4>Multiple Conditions</h4>
+        <div class="dataset-task">Often co-occurring in the same patient</div>
+        <p>Real-world patients often present with more than one condition. A practical screening tool needs to handle multiple diseases from a single image.</p>
+      </div>
+    </div>
+    <p>The bottleneck is <strong>human experts</strong>. Training an ophthalmologist takes 12+ years. AI models that can screen eye images with minimal training data could bridge this gap, especially in underserved communities.</p>
+  </div>
+
+  <div class="tech-only">
+    <p>Label scarcity is the primary bottleneck in medical image classification. Annotation requires <strong>board-certified ophthalmologists</strong>, and inter-grader agreement is often moderate (Cohen's kappa 0.5-0.7 for DR grading). Foundation models pre-trained on large-scale image-text pairs offer a potential bypass: leveraging rich visual representations learned from diverse medical data to perform downstream tasks with minimal or zero task-specific labels.</p>
+    <p>This is particularly critical for:</p>
+    <ul>
+      <li><strong>Low-resource clinical settings</strong> where expert annotations are prohibitively expensive</li>
+      <li><strong>Rare disease subtypes</strong> where even large hospitals have few confirmed cases</li>
+      <li><strong>Rapid deployment scenarios</strong> where a model must generalize without fine-tuning</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== 3. APPROACH ======== -->
+<section id="approach">
+  <h2>The Approach</h2>
+
+  <div class="simple-only">
+    <p>I tested two fundamentally different ways of using these AI models:</p>
+    <div class="vs-block">
+      <div class="vs-side">
+        <h4>Zero-Shot</h4>
+        <p>The AI has <strong>never seen</strong> these eye images during training. I describe each disease using carefully crafted text prompts (validated by a clinician), and the model compares each image to these descriptions to make a diagnosis.</p>
+        <p style="margin-top:10px"><strong>Analogy:</strong> Like showing a radiologist from another country a type of scan they've never seen, but giving them a detailed written description of what to look for.</p>
+      </div>
+      <div class="vs-divider">vs</div>
+      <div class="vs-side">
+        <h4>Few-Shot (Linear Probe)</h4>
+        <p>The AI's core knowledge is <strong>frozen</strong> (locked in place). I add a simple classifier on top and train it with just 5%, 10%, or 20% of the labeled data.</p>
+        <p style="margin-top:10px"><strong>Analogy:</strong> Like giving that same radiologist a quick 30-minute tutorial with a handful of example cases, then testing them on new ones.</p>
+      </div>
+    </div>
+    <p>The key insight is that these models already understand a lot about medical images from their pre-training. We're testing how far that existing knowledge can stretch when we give it very little (or zero) task-specific guidance.</p>
+  </div>
+
+  <div class="tech-only">
+    <h3>Two Evaluation Protocols</h3>
+    <div class="diagram">
+<span class="highlight">Protocol 1: Zero-Shot Inference</span>
+
+  Input Image ──→ <span class="green">Vision Encoder</span> ──→ Image Embedding
+                                                    ↓
+                                              <span class="yellow">Cosine Similarity</span> ──→ Prediction
+                                                    ↑
+  Text Prompts ──→ <span class="cyan">Text Encoder</span>  ──→ Text Embeddings
+  (T1, T2, T3)
+
+
+<span class="highlight">Protocol 2: Few-Shot Linear Probing</span>
+
+  Input Image ──→ <span class="green">Vision Encoder</span> ──→ Image Embedding ──→ <span class="purple">Linear Classifier</span> ──→ Prediction
+                   (frozen)                                  (trained on 5/10/20%)
+
+  <span class="orange">Note:</span> RETFound (self-supervised MAE) has no text encoder,
+        so it participates only in Protocol 2.
+    </div>
+    <p>For zero-shot, we compute cosine similarity between image embeddings and text embeddings for each class label. For few-shot, we freeze the vision encoder and train a single linear layer (logistic regression) on the extracted features using limited labeled data. Both protocols use <strong>stratified 5-fold cross-validation</strong>.</p>
+  </div>
+</section>
+
+<!-- ======== 4. MODELS ======== -->
+<section id="models">
+  <h2>The Four Models</h2>
+
+  <div class="simple-only">
+    <p>Think of each model as having a different "education background":</p>
+  </div>
+  <div class="tech-only">
+    <p>Four foundation models spanning three pre-training paradigms: retinal-specific contrastive (FLAIR), general biomedical contrastive (BiomedCLIP), web-scale contrastive (OpenCLIP), and self-supervised masked autoencoding (RETFound).</p>
+  </div>
+
+  <div class="model-cards">
+    <div class="model-card">
+      <div class="model-card-icon">&#128065;</div>
+      <h4>FLAIR</h4>
+      <div class="model-type">Retinal Specialist</div>
+      <div class="simple-only">
+        <p>The eye specialist. Trained specifically on 288,000 retinal images paired with clinical descriptions from 38 different datasets. Knows eye diseases inside and out.</p>
+      </div>
+      <div class="tech-only">
+        <p>ResNet-50 vision encoder + BioClinicalBERT text encoder. Contrastive pre-training on 288K fundus images from 38 curated ophthalmic datasets with clinical text pairs.</p>
+      </div>
+      <div class="model-stats">
+        <span class="model-stat">288K images</span>
+        <span class="model-stat">38 datasets</span>
+        <span class="model-stat">ResNet-50</span>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-icon">&#127760;</div>
+      <h4>OpenCLIP</h4>
+      <div class="model-type">World Traveler</div>
+      <div class="simple-only">
+        <p>The generalist who's seen everything. Trained on 2 billion images from the entire internet. Knows a little about a lot, including some medical images.</p>
+      </div>
+      <div class="tech-only">
+        <p>ViT-H/14 vision encoder. CLIP-style contrastive pre-training on LAION-2B (2 billion image-text pairs from the open web). Largest encoder architecture in the comparison.</p>
+      </div>
+      <div class="model-stats">
+        <span class="model-stat">2B images</span>
+        <span class="model-stat">LAION-2B</span>
+        <span class="model-stat">ViT-H/14</span>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-icon">&#129658;</div>
+      <h4>BiomedCLIP</h4>
+      <div class="model-type">Medical Generalist</div>
+      <div class="simple-only">
+        <p>The medical school graduate. Trained on 15 million medical image-text pairs from research papers. Knows medicine broadly, but isn't an eye specialist.</p>
+      </div>
+      <div class="tech-only">
+        <p>ViT-Base/16 vision encoder + PubMedBERT text encoder. Contrastive pre-training on PMC-15M (15M figure-caption pairs from PubMed Central biomedical literature).</p>
+      </div>
+      <div class="model-stats">
+        <span class="model-stat">15M pairs</span>
+        <span class="model-stat">PMC-15M</span>
+        <span class="model-stat">ViT-B/16</span>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-icon">&#129504;</div>
+      <h4>RETFound</h4>
+      <div class="model-type">Self-Taught Eye Expert</div>
+      <div class="simple-only">
+        <p>The self-taught expert. Learned from 1.6 million retinal images by predicting masked parts of images (no text descriptions needed). Deep visual understanding, but can't match images to text.</p>
+      </div>
+      <div class="tech-only">
+        <p>ViT-Large encoder. Self-supervised pre-training via masked autoencoding (MAE) on 1.6M retinal images. No text encoder, so excluded from zero-shot; participates in linear probing only.</p>
+      </div>
+      <div class="model-stats">
+        <span class="model-stat">1.6M images</span>
+        <span class="model-stat">MAE</span>
+        <span class="model-stat">ViT-Large</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <div class="callout info">
+      <div class="callout-title">Architecture Note</div>
+      All experiments ran on an Apple M-series laptop using PyTorch 2.3.1 with MPS acceleration. No GPU cluster required, demonstrating that meaningful foundation model evaluation is accessible to individual researchers.
+    </div>
+  </div>
+</section>
+
+<!-- ======== 5. DATASETS ======== -->
+<section id="datasets">
+  <h2>The Datasets</h2>
+
+  <div class="simple-only">
+    <p>I tested the models on three established medical benchmarks, each targeting a different eye disease:</p>
+  </div>
+  <div class="tech-only">
+    <p>Three public ophthalmic benchmarks selected to span binary, multi-class, and multi-disease classification with varying class distributions and imaging conditions:</p>
+  </div>
+
+  <div class="dataset-cards">
+    <div class="dataset-card dr">
+      <h4>MESSIDOR</h4>
+      <div class="dataset-task">Diabetic Retinopathy Grading</div>
+      <div class="simple-only">
+        <p>1,200 eye images graded by severity of diabetic retinopathy (grades 0 to 3). The challenge: distinguishing between "no disease" and early, moderate, or severe stages.</p>
+      </div>
+      <div class="tech-only">
+        <p>1,200 fundus images with 4-class DR severity grading (R0-R3). Evaluated with Macro-F1 to account for class imbalance. Moderate inter-grader agreement makes this a challenging benchmark.</p>
+      </div>
+      <div class="dataset-meta">
+        <span>1,200 images</span>
+        <span>4 classes</span>
+        <span>Macro-F1</span>
+      </div>
+    </div>
+
+    <div class="dataset-card glaucoma">
+      <h4>REFUGE</h4>
+      <div class="dataset-task">Glaucoma Detection</div>
+      <div class="simple-only">
+        <p>1,200 eye images classified as glaucoma or healthy. The challenge: glaucoma cases are rare (only ~10%), so the model must be very precise to avoid overwhelming clinics with false alarms.</p>
+      </div>
+      <div class="tech-only">
+        <p>1,200 fundus images for binary glaucoma classification (~10% positive rate). Evaluated with AUROC for threshold-independent discrimination, plus Sensitivity @ 90% Specificity for clinical operating point analysis.</p>
+      </div>
+      <div class="dataset-meta">
+        <span>1,200 images</span>
+        <span>Binary</span>
+        <span>AUROC</span>
+        <span>~10% prevalence</span>
+      </div>
+    </div>
+
+    <div class="dataset-card multi">
+      <h4>ODIR-200&times;3</h4>
+      <div class="dataset-task">Multi-Disease Classification</div>
+      <div class="simple-only">
+        <p>A balanced subset of 600 images covering three categories: normal, diabetic retinopathy, and other diseases. Tests whether a model can handle multiple conditions at once.</p>
+      </div>
+      <div class="tech-only">
+        <p>Balanced 200-per-class subset from ODIR: Normal, DR, and Other pathologies (600 images total). Evaluated with Macro-F1. The heterogeneous "Other" category tests generalization beyond specific disease patterns.</p>
+      </div>
+      <div class="dataset-meta">
+        <span>600 images</span>
+        <span>3 classes</span>
+        <span>Macro-F1</span>
+        <span>Balanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 6. PROMPTS ======== -->
+<section id="prompts">
+  <h2>Prompt Design</h2>
+
+  <div class="simple-only">
+    <p>For zero-shot classification, the AI needs a text description of each disease to compare against the eye image. I designed three levels of prompts, each more detailed than the last, and had them <strong>validated by a clinical supervisor</strong>:</p>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num">T1</div><div class="flow-line"></div>
+        <div class="flow-body">
+          <strong>Simple Label</strong>
+          <p>Just the disease name. Example: "A fundus photograph of diabetic retinopathy."</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">T2</div><div class="flow-line"></div>
+        <div class="flow-body">
+          <strong>Clinical Description</strong>
+          <p>Adds specific visual signs. Example: "A fundus photograph showing microaneurysms, hemorrhages, and hard exudates consistent with diabetic retinopathy."</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">T3</div>
+        <div class="flow-body">
+          <strong>Structured Clinical Template</strong>
+          <p>A full structured description following clinical reporting standards, including lesion types, locations, and severity indicators.</p>
+        </div>
+      </div>
+    </div>
+    <p>Results are averaged across all three prompt styles to give a fair assessment of each model's robustness to different prompt formulations.</p>
+  </div>
+
+  <div class="tech-only">
+    <p>Three prompt templates (T1-T3) of increasing clinical specificity, <strong>validated by an ophthalmic clinician</strong> (thesis supervisor Dr Yasmeen George). This hierarchy tests sensitivity to prompt engineering depth:</p>
+    <ul>
+      <li><strong>T1 (Simple):</strong> Minimal disease-name template. Baseline for prompt complexity.</li>
+      <li><strong>T2 (Descriptive):</strong> Incorporates pathological signs and clinical features visible in fundus photography.</li>
+      <li><strong>T3 (Structured):</strong> Full clinical description template following ophthalmic reporting conventions.</li>
+    </ul>
+    <p>Zero-shot results are reported as <strong>mean &plusmn; SD across T1-T3</strong>, capturing both average performance and prompt sensitivity. This averaging strategy follows the approach established in FLAIR's original evaluation.</p>
+    <div class="callout info">
+      <div class="callout-title">Why prompt design matters</div>
+      The standard deviation across prompts reveals how sensitive each model is to prompt engineering. A clinically useful model should perform consistently across reasonable prompt formulations, not just on one carefully tuned template.
+    </div>
+  </div>
+</section>
+
+<!-- ======== 7. ZERO-SHOT RESULTS ======== -->
+<section id="zero-shot">
+  <h2>Zero-Shot Results</h2>
+
+  <div class="simple-only">
+    <p>Remember, zero-shot means the models have <strong>never been trained</strong> on these specific eye images. They're diagnosing purely from text descriptions. Here's how they performed:</p>
+  </div>
+  <div class="tech-only">
+    <p>Performance averaged across T1-T3 prompts. RETFound excluded (no text encoder). Statistical significance assessed via paired image-bootstrap (&alpha; = 0.05, Holm adjustment).</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>MESSIDOR (Macro-F1)</th>
+          <th>REFUGE (AUROC)</th>
+          <th>ODIR-200&times;3 (Macro-F1)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FLAIR</strong></td>
+          <td class="best">0.735 &plusmn; 0.049</td>
+          <td class="best">0.921 &plusmn; 0.049</td>
+          <td>0.366 &plusmn; 0.016</td>
+        </tr>
+        <tr>
+          <td><strong>BiomedCLIP</strong></td>
+          <td>0.471 &plusmn; 0.042</td>
+          <td>0.649 &plusmn; 0.037</td>
+          <td class="best">0.709 &plusmn; 0.032</td>
+        </tr>
+        <tr>
+          <td><strong>OpenCLIP</strong></td>
+          <td>0.353 &plusmn; 0.001</td>
+          <td>0.530 &plusmn; 0.046</td>
+          <td>0.399 &plusmn; 0.131</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px"><span style="color:var(--accent)">Teal</span> = best in column. Higher is better.</p>
+
+  <div class="simple-only">
+    <h3>What does this tell us?</h3>
+    <ul>
+      <li><strong>FLAIR dominates</strong> on diabetic retinopathy (MESSIDOR) and glaucoma (REFUGE). Its specialized retinal training pays off massively: 0.921 AUROC on glaucoma means it correctly distinguishes healthy from glaucoma eyes 92.1% of the time, with zero training on this dataset.</li>
+      <li><strong>BiomedCLIP wins</strong> on multi-disease classification (ODIR-200&times;3), scoring 0.709. Its broad medical knowledge handles the diverse "Other" disease category better than the eye specialist.</li>
+      <li><strong>No single model wins everything.</strong> The best model depends on the specific disease and task.</li>
+    </ul>
+    <div class="callout success">
+      <div class="callout-title">The standout result</div>
+      FLAIR's 0.921 AUROC on glaucoma detection is remarkable for a model that has never been explicitly trained on REFUGE images. This suggests the model has genuinely learned the visual signatures of glaucomatous optic neuropathy during its retinal pre-training.
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <h3>Analysis</h3>
+    <ul>
+      <li><strong>FLAIR's dominance on MESSIDOR and REFUGE</strong> reflects the benefit of domain-specific contrastive pre-training on retinal images with clinical text. The retina-tuned vision-language alignment transfers directly to DR grading and glaucoma discrimination.</li>
+      <li><strong>BiomedCLIP's ODIR advantage</strong> stems from its broader biomedical training corpus (PMC-15M), which provides better coverage of the heterogeneous "Other" pathology category that includes conditions outside FLAIR's pre-training distribution.</li>
+      <li><strong>OpenCLIP's low prompt variance</strong> (&plusmn;0.001 on MESSIDOR) suggests its web-scale representations are relatively invariant to medical prompt formulation, while its absolute performance lags due to domain gap.</li>
+    </ul>
+    <p>Pairwise differences between FLAIR and BiomedCLIP on MESSIDOR and REFUGE are statistically significant (paired image-bootstrap, &alpha; = 0.05, Holm-adjusted).</p>
+  </div>
+</section>
+
+<!-- ======== 8. FEW-SHOT RESULTS ======== -->
+<section id="few-shot">
+  <h2>Few-Shot Results</h2>
+
+  <div class="simple-only">
+    <p>Now we give each model a small number of labeled examples (5%, 10%, or 20% of the training data) and add a simple classifier on top. The model's core knowledge stays frozen. This is like giving each doctor a quick tutorial before the test.</p>
+  </div>
+  <div class="tech-only">
+    <p>Linear probing with frozen encoders. All four models participate (including RETFound). Reported as mean [95% BCa bootstrap CI] across 5-fold stratified CV.</p>
+  </div>
+
+  <h3>MESSIDOR (Diabetic Retinopathy)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>5% Labels</th><th>10% Labels</th><th>20% Labels</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FLAIR</strong></td>
+          <td class="best">0.647</td>
+          <td class="best">0.675</td>
+          <td class="best">0.700</td>
+        </tr>
+        <tr>
+          <td><strong>OpenCLIP</strong></td>
+          <td>0.611</td>
+          <td>0.624</td>
+          <td>0.648</td>
+        </tr>
+        <tr>
+          <td><strong>BiomedCLIP</strong></td>
+          <td>0.580</td>
+          <td>0.596</td>
+          <td>0.613</td>
+        </tr>
+        <tr>
+          <td><strong>RETFound</strong></td>
+          <td>0.543</td>
+          <td>0.579</td>
+          <td>0.619</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+
+  <h3>REFUGE (Glaucoma)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>5% Labels</th><th>10% Labels</th><th>20% Labels</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FLAIR</strong></td>
+          <td>0.718</td>
+          <td>0.843</td>
+          <td>0.870</td>
+        </tr>
+        <tr>
+          <td><strong>OpenCLIP</strong></td>
+          <td class="best">0.807</td>
+          <td class="best">0.853</td>
+          <td class="best">0.891</td>
+        </tr>
+        <tr>
+          <td><strong>BiomedCLIP</strong></td>
+          <td>0.756</td>
+          <td>0.808</td>
+          <td>0.874</td>
+        </tr>
+        <tr>
+          <td><strong>RETFound</strong></td>
+          <td>0.664</td>
+          <td>0.811</td>
+          <td>0.836</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: AUROC. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+
+  <h3>ODIR-200&times;3 (Multi-Disease)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>5% Labels</th><th>10% Labels</th><th>20% Labels</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FLAIR</strong></td>
+          <td>0.843</td>
+          <td>0.873</td>
+          <td class="best">0.900</td>
+        </tr>
+        <tr>
+          <td><strong>OpenCLIP</strong></td>
+          <td>0.793</td>
+          <td>0.871</td>
+          <td>0.878</td>
+        </tr>
+        <tr>
+          <td><strong>BiomedCLIP</strong></td>
+          <td class="best">0.857</td>
+          <td class="best">0.892</td>
+          <td>0.870</td>
+        </tr>
+        <tr>
+          <td><strong>RETFound</strong></td>
+          <td>0.650</td>
+          <td>0.744</td>
+          <td>0.820</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+
+  <div class="simple-only">
+    <h3>What does this tell us?</h3>
+    <ul>
+      <li><strong>A little data goes a long way.</strong> With just 5% of labels, most models already perform well. Adding more labels helps, but the biggest jump is from zero-shot to 5%.</li>
+      <li><strong>FLAIR stays king on DR</strong> (MESSIDOR), winning at every label budget.</li>
+      <li><strong>Plot twist on glaucoma:</strong> OpenCLIP (the generalist) beats FLAIR (the eye specialist) when given even a few labeled examples. Its massive ViT-H/14 encoder extracts better features for a simple classifier to use.</li>
+      <li><strong>BiomedCLIP shines on multi-disease</strong> at lower budgets (5%, 10%), but FLAIR catches up and overtakes at 20%.</li>
+      <li><strong>RETFound underperforms</strong> despite being trained on retinal images. Its self-supervised training (without text) seems less useful than the vision-language approach.</li>
+    </ul>
+  </div>
+
+  <div class="tech-only">
+    <h3>Analysis</h3>
+    <ul>
+      <li><strong>FLAIR dominates MESSIDOR</strong> across all budgets, consistent with its retinal-specific contrastive training providing superior DR-discriminative features.</li>
+      <li><strong>OpenCLIP's REFUGE advantage</strong> is noteworthy: the ViT-H/14's higher-dimensional feature space (1280-d vs FLAIR's 2048-d from ResNet-50) apparently captures structural features relevant to optic disc/cup ratio analysis that benefit linear probing.</li>
+      <li><strong>BiomedCLIP's ODIR efficiency at low budgets</strong> reflects its PMC-15M training capturing diverse pathology patterns, giving the linear head more discriminative features for the heterogeneous "Other" class.</li>
+      <li><strong>RETFound's lagging performance</strong> despite 1.6M retinal images suggests that MAE pre-training objectives optimize for reconstruction, not discrimination. The learned features, while rich in spatial detail, may lack the semantic structure that contrastive training provides for classification tasks.</li>
+    </ul>
+    <p>FLAIR achieves the highest overall average rank across all nine dataset-budget cells, followed by OpenCLIP, then BiomedCLIP, with RETFound trailing.</p>
+  </div>
+</section>
+
+<!-- ======== 9. CLINICAL OPERATING POINT ======== -->
+<section id="clinical">
+  <h2>Clinical Operating Point</h2>
+
+  <div class="simple-only">
+    <p>For a real glaucoma screening program, just having a high AUROC isn't enough. Clinicians need to set a <strong>specific threshold</strong>: how many healthy people are we willing to incorrectly flag as potential glaucoma cases?</p>
+    <p>I fixed the specificity at 90% (meaning only 10% of healthy people would be incorrectly flagged) and measured how many actual glaucoma cases each model catches at that threshold:</p>
+  </div>
+
+  <div class="tech-only">
+    <p>AUROC is threshold-independent. For deployment, we analyze <strong>Sensitivity @ 90% Specificity</strong> on REFUGE, a clinically meaningful operating point for population-level screening where false positive burden must be controlled:</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>Sens@Spec=90% (5%)</th><th>Sens@Spec=90% (20%)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>OpenCLIP</strong></td>
+          <td class="best">0.436</td>
+          <td class="best">0.611</td>
+        </tr>
+        <tr>
+          <td><strong>FLAIR</strong></td>
+          <td>0.289</td>
+          <td>0.526</td>
+        </tr>
+        <tr>
+          <td><strong>BiomedCLIP</strong></td>
+          <td>0.231</td>
+          <td>0.471</td>
+        </tr>
+        <tr>
+          <td><strong>RETFound</strong></td>
+          <td>0.200</td>
+          <td>0.414</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="simple-only">
+    <p>OpenCLIP catches <strong>61.1%</strong> of glaucoma cases with 20% labels at this strict threshold. While not yet sufficient for standalone screening, it's the best option among the models tested and demonstrates that even with minimal training data, meaningful clinical detection is possible.</p>
+  </div>
+
+  <div class="tech-only">
+    <div class="callout warning">
+      <div class="callout-title">Clinical Interpretation</div>
+      At the 90% specificity operating point, OpenCLIP achieves 61.1% sensitivity with 20% labels. While below the WHO-recommended sensitivity threshold for population screening (&ge;80%), this represents a meaningful triage capability that could reduce specialist workload by pre-filtering the most likely negative cases. Temperature scaling improves calibration (reduces ECE/AUCE) without affecting AUROC, enabling more reliable probability outputs for clinical decision support.
+    </div>
+  </div>
+</section>
+
+<!-- ======== 10. KEY FINDINGS ======== -->
+<section id="findings">
+  <h2>Key Findings</h2>
+
+  <div class="finding-cards">
+    <div class="finding-card">
+      <div class="finding-num">01</div>
+      <h4>No Single Model Wins Everything</h4>
+      <p>The best model depends on the disease and how much labeled data you have. FLAIR for DR, OpenCLIP for glaucoma (with probe), BiomedCLIP for multi-disease at low budgets.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">02</div>
+      <h4>Domain-Specific Training Matters Most for Zero-Shot</h4>
+      <p>FLAIR's retinal pre-training gives it a massive zero-shot advantage on DR and glaucoma. But when you add a simple classifier (linear probe), the playing field levels out.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">03</div>
+      <h4>Bigger Isn't Always Better</h4>
+      <p>RETFound (ViT-Large, 1.6M retinal images) underperforms despite having a much larger architecture and domain-specific training. The pre-training objective matters more than scale.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">04</div>
+      <h4>5% Labels Already Help Enormously</h4>
+      <p>The jump from zero-shot to 5% labeled data is dramatic for most tasks. Diminishing returns set in after 10%, suggesting that even tiny annotation budgets are worthwhile.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">05</div>
+      <h4>Calibration Can Be Fixed Separately</h4>
+      <p>Temperature scaling improves model confidence calibration without changing the ranking or discrimination ability. This means calibrated probability outputs are achievable post-hoc.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">06</div>
+      <h4>Runs on a Laptop</h4>
+      <p>All experiments ran on an Apple M-series laptop with MPS acceleration. No GPU cluster needed. Reproducible, accessible research that any researcher can replicate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 11. METHODOLOGY ======== -->
+<section id="methodology">
+  <h2>Methodology</h2>
+
+  <div class="simple-only">
+    <p>To make sure the results are trustworthy and not just lucky, I used rigorous statistical methods:</p>
+    <ul>
+      <li><strong>5-fold cross-validation:</strong> Split the data into 5 parts, train on 4, test on 1, rotate 5 times. Every image gets tested exactly once.</li>
+      <li><strong>Stratified splits:</strong> Each fold maintains the same disease-to-healthy ratio as the full dataset, preventing "easy" or "hard" folds.</li>
+      <li><strong>Bootstrap confidence intervals:</strong> Resample the test predictions 2,000 times to estimate how much the results might vary. Reports 95% confidence intervals.</li>
+      <li><strong>Statistical tests:</strong> Used the Wilcoxon signed-rank test (a non-parametric test that doesn't assume normal distributions) to confirm that differences between models are real and not due to chance.</li>
+      <li><strong>Calibration analysis:</strong> Measured how well the model's confidence scores match actual probabilities using Expected Calibration Error (ECE) and Area Under Calibration Error (AUCE).</li>
+    </ul>
+  </div>
+
+  <div class="tech-only">
+    <h3>Experimental Design</h3>
+    <ul>
+      <li><strong>Evaluation:</strong> Stratified 5-fold CV with identical fold assignments across all models and budgets.</li>
+      <li><strong>Few-shot protocol:</strong> Within each training fold, stratified subsampling at 5%, 10%, 20% label budgets. Linear head (logistic regression) trained on frozen encoder features.</li>
+      <li><strong>Statistical testing:</strong> Paired Wilcoxon signed-rank tests across folds for model comparisons. BCa bootstrap CIs (B=2000) for point estimate uncertainty.</li>
+      <li><strong>Calibration:</strong> Temperature scaling optimized on validation split (NLL objective). Reported metrics: ECE (15-bin), AUCE (area under calibration error curve). AUROC invariant to monotone transforms.</li>
+      <li><strong>Metrics:</strong> Macro-F1 for multi-class tasks (MESSIDOR 4-class, ODIR 3-class); AUROC for binary task (REFUGE). Sensitivity @ 90% Specificity for clinical operating point.</li>
+    </ul>
+
+    <h3>Implementation Stack</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Component</th><th>Technology</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Language</td><td>Python 3.9.22</td></tr>
+          <tr><td>Framework</td><td>PyTorch 2.3.1 (MPS acceleration)</td></tr>
+          <tr><td>Models</td><td>Hugging Face Transformers, open_clip, RETFound weights</td></tr>
+          <tr><td>Statistics</td><td>scipy.stats (Wilcoxon), scikit-learn (bootstrap, calibration)</td></tr>
+          <tr><td>Hardware</td><td>Apple M-series laptop (no external GPU)</td></tr>
+          <tr><td>Reproducibility</td><td>Fixed random seeds, deterministic data splits, public benchmark datasets</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-title">Ethical Considerations</div>
+      All datasets are publicly available de-identified benchmarks. No patient-identifiable data was used. The research was approved under Monash University ethics guidelines. Results are not intended for direct clinical use without further validation on local populations.
+    </div>
+  </div>
+</section>
+
+<!-- ======== 12. PRACTICAL GUIDANCE ======== -->
+<section id="guidance">
+  <h2>Practical Guidance</h2>
+
+  <div class="simple-only">
+    <p>If you're a researcher or engineer looking to build a retinal disease screening tool, here's what this research suggests:</p>
+  </div>
+
+  <div class="glow-card">
+    <div class="glow-card-inner">
+      <h3 style="margin-top:0">Decision Framework</h3>
+
+      <h4 style="color:var(--orange)">For Diabetic Retinopathy Screening</h4>
+      <p><strong>Use FLAIR.</strong> It wins in both zero-shot and few-shot settings. If you have no labeled data at all, FLAIR's zero-shot performance (0.735 Macro-F1) is already useful for triage.</p>
+
+      <h4 style="color:var(--accent)">For Glaucoma Screening</h4>
+      <p><strong>Use OpenCLIP + linear probe.</strong> Despite being a generalist model, it produces the best glaucoma features when paired with a simple classifier. Even 5% labeled data (about 60 images) gives meaningful results.</p>
+
+      <h4 style="color:var(--purple)">For Multi-Disease Screening</h4>
+      <p><strong>Start with BiomedCLIP</strong> if you have very few labels (&lt;10%). <strong>Switch to FLAIR</strong> once you have 20% or more labeled data.</p>
+
+      <h4 style="color:var(--text3)">General Recommendations</h4>
+      <ul>
+        <li>Always prefer few-shot probing over zero-shot if any labeled data is available</li>
+        <li>Apply temperature scaling for calibrated probability outputs</li>
+        <li>Do not assume RETFound will outperform just because it was trained on retinal images</li>
+        <li>Validate on your local population before deployment</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 13. CONCLUSION ======== -->
+<section id="conclusion">
+  <h2>Conclusion</h2>
+
+  <div class="simple-only">
+    <p>This research shows that modern AI foundation models can detect retinal diseases with surprisingly high accuracy, even with little or no disease-specific training data. The key takeaway is that <strong>there is no universal best model</strong>. The right choice depends on what disease you're screening for and how much labeled data you can afford to collect.</p>
+    <p>FLAIR is the clear winner for diabetic retinopathy. OpenCLIP (with a simple classifier) is best for glaucoma. And the amount of data you need is less than you might think: even 5% of labeled examples makes a dramatic difference.</p>
+    <p>All of this runs on a laptop. No expensive GPU cluster, no massive compute budget. Just careful experimental design, rigorous statistics, and the right combination of model and task.</p>
+  </div>
+
+  <div class="tech-only">
+    <p>This thesis provides the first controlled head-to-head evaluation of four foundation model paradigms for retinal fundus classification under zero-shot and label-scarce conditions. The results demonstrate that:</p>
+    <ol>
+      <li><strong>Pre-training domain alignment</strong> is the primary determinant of zero-shot transfer quality, with FLAIR's retinal-specific training providing decisive advantages on DR and glaucoma.</li>
+      <li><strong>Linear probing reshuffles the ranking</strong>, with OpenCLIP's high-dimensional ViT-H features proving most effective for glaucoma discrimination when a task-specific head is added.</li>
+      <li><strong>Self-supervised MAE pre-training</strong> (RETFound) underperforms contrastive approaches for classification despite large-scale domain-specific training, suggesting that reconstruction-optimized features are suboptimal for discriminative transfer.</li>
+      <li><strong>Calibration and clinical operating point analysis</strong> reveal practical deployment considerations beyond aggregate metrics, with temperature scaling providing a viable path to calibrated probability outputs.</li>
+    </ol>
+    <p>Future work should explore adapter-based fine-tuning (LoRA), ensemble strategies combining complementary model strengths, and validation on prospective clinical cohorts from diverse populations.</p>
+  </div>
+
+  <div class="callout info" style="margin-top:24px">
+    <div class="callout-title">About the Author</div>
+    This research was conducted by <strong>Pugalenthi Magendran</strong> as part of the Master of Artificial Intelligence program at Monash University, supervised by <strong>Dr Yasmeen George</strong>. The full thesis is available upon request.
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function setMode(mode){
+  document.body.dataset.mode=mode;
+  document.querySelectorAll('.toggle-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.toLowerCase()===mode);
+  });
+  localStorage.setItem('retinal-mode',mode);
+}
+
+// Restore mode
+const saved=localStorage.getItem('retinal-mode');
+if(saved)setMode(saved);
+
+// Sidebar active tracking
+const sections=document.querySelectorAll('.content section[id]');
+const navLinks=document.querySelectorAll('.sidebar-nav a[href^="#"]');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const active=document.querySelector('.sidebar-nav a[href="#'+e.target.id+'"]');
+      if(active)active.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
