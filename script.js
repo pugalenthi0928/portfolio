@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 15. Neural Network Particle Canvas ---
   initParticleCanvas();
 
+  // --- 16. Stat Counter Animation ---
+  initStatCounters();
+
+  // --- 17. Marquee Scroll Velocity Boost ---
+  initMarqueeBoost();
+
+  // --- 18. Section Arrival Glow ---
+  initSectionGlow();
+
 });
 
 
@@ -81,7 +90,7 @@ function initPreloader() {
 
   const barFill = document.getElementById('preloader-bar-fill');
   const counter = document.getElementById('preloader-counter');
-  const duration = 2800; // ms
+  const duration = 1600; // ms
   const startTime = performance.now();
 
   document.body.style.overflow = 'hidden';
@@ -98,18 +107,18 @@ function initPreloader() {
     if (progress < 1) {
       requestAnimationFrame(updateProgress);
     } else {
-      // Complete — slide preloader up
+      // Complete — overlap hero reveal with preloader dissolve
+      setTimeout(() => initHeroReveal(), 100);
+
       setTimeout(() => {
-        preloader.classList.add('done');
+        preloader.classList.add('dissolving');
         sessionStorage.setItem('preloaded', '1');
 
-        // After slide-up animation completes
         setTimeout(() => {
           preloader.classList.add('hidden');
           document.body.style.overflow = '';
-          initHeroReveal();
-        }, 700);
-      }, 200);
+        }, 600);
+      }, 300);
     }
   }
 
@@ -122,14 +131,17 @@ function initPreloader() {
 // ============================================
 function initHeroReveal() {
   const reveal = () => {
+    // Trigger canvas fade-in immediately
+    if (typeof revealParticleCanvas === 'function') revealParticleCanvas();
+
     const sequence = [
-      { el: '.hero-eyebrow .line-inner', delay: 200 },
-      { el: '.hero-heading .line-wrap:nth-child(1) .line-inner', delay: 400 },
-      { el: '.hero-heading .line-wrap:nth-child(2) .line-inner', delay: 580 },
-      { el: '.hero-subtitle .line-wrap:nth-child(1) .line-inner', delay: 800 },
-      { el: '.hero-subtitle .line-wrap:nth-child(2) .line-inner', delay: 920 },
-      { el: '.hero-cta', delay: 1150 },
-      { el: '.hero-scroll-indicator', delay: 1350 },
+      { el: '.hero-eyebrow .line-inner', delay: 100 },
+      { el: '.hero-heading .line-wrap:nth-child(1) .line-inner', delay: 280 },
+      { el: '.hero-heading .line-wrap:nth-child(2) .line-inner', delay: 420 },
+      { el: '.hero-subtitle .line-wrap:nth-child(1) .line-inner', delay: 620 },
+      { el: '.hero-subtitle .line-wrap:nth-child(2) .line-inner', delay: 750 },
+      { el: '.hero-cta', delay: 950 },
+      { el: '.hero-scroll-indicator', delay: 1100 },
     ];
 
     sequence.forEach(({ el, delay }) => {
@@ -146,7 +158,7 @@ function initHeroReveal() {
       if (!prefersReduced) {
         setTimeout(() => {
           textScramble(heroName);
-        }, 600); // Start after name line begins revealing (580ms)
+        }, 450); // Start after name line begins revealing
       }
     }
   };
@@ -330,11 +342,34 @@ function initScrollReveal() {
     rootMargin: '0px 0px -40px 0px'
   });
 
+  // Separate observer for project cards — higher threshold for more visible stagger
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
+  });
+
   animatedElements.forEach((el) => {
     if (!el.closest('.hero')) {
-      observer.observe(el);
+      if (el.classList.contains('project-card')) {
+        cardObserver.observe(el);
+      } else {
+        observer.observe(el);
+      }
     }
   });
+
+  // Timeline animation — observe .timeline for line growth + dot sequence
+  const timeline = document.querySelector('.timeline');
+  if (timeline) {
+    observer.observe(timeline);
+  }
 }
 
 
@@ -446,11 +481,82 @@ function initActiveNav() {
 
 
 // ============================================
+// CELEBRATION BURST (confetti on form success)
+// ============================================
+function celebrationBurst(originEl) {
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;z-index:10002;pointer-events:none;';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const colors = ['#F0784A', '#F59070', '#FFD4C2', '#22c55e', '#4AB4C8', '#E7E5E4'];
+  const particles = [];
+  for (let i = 0; i < 30; i++) {
+    const angle = (Math.PI * 2 * i) / 30 + (Math.random() - 0.5) * 0.5;
+    const speed = 3 + Math.random() * 5;
+    particles.push({
+      x: cx, y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 2,
+      radius: 2 + Math.random() * 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 1,
+      decay: 0.015 + Math.random() * 0.01,
+      gravity: 0.12
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    for (const p of particles) {
+      if (p.life <= 0) continue;
+      alive = true;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.life -= p.decay;
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (alive) {
+      requestAnimationFrame(draw);
+    } else {
+      canvas.remove();
+    }
+  }
+  requestAnimationFrame(draw);
+}
+
+
+// ============================================
 // 7. CONTACT FORM HANDLER
 // ============================================
 function initContactForm() {
   const form = document.querySelector('.contact-form');
   if (!form) return;
+
+  // Floating label — toggle .filled class
+  const formInputs = form.querySelectorAll('.form-input');
+  formInputs.forEach(input => {
+    // Check initial state (e.g. autofill)
+    if (input.value.trim()) input.closest('.form-group').classList.add('filled');
+    input.addEventListener('input', () => {
+      input.closest('.form-group').classList.toggle('filled', input.value.trim().length > 0);
+    });
+    input.addEventListener('blur', () => {
+      input.closest('.form-group').classList.toggle('filled', input.value.trim().length > 0);
+    });
+  });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -475,12 +581,20 @@ function initContactForm() {
     .then((response) => {
       if (response.ok) {
         btn.innerHTML = `
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <svg class="checkmark-draw" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           Message Sent!
         `;
         btn.style.background = '#16a34a';
         btn.style.color = 'white';
+        btn.style.boxShadow = '0 0 30px rgba(22, 163, 74, 0.3)';
+        // Scale pulse
+        btn.style.transform = 'scale(1.05)';
+        setTimeout(() => { btn.style.transform = ''; }, 400);
+        // Confetti burst
+        celebrationBurst(btn);
         form.reset();
+        // Clear floating label states
+        formInputs.forEach(input => input.closest('.form-group').classList.remove('filled'));
       } else {
         throw new Error('Form submission failed');
       }
@@ -499,6 +613,7 @@ function initContactForm() {
         btn.innerHTML = originalHTML;
         btn.style.background = '';
         btn.style.color = '';
+        btn.style.boxShadow = '';
       }, 3000);
     });
   });
@@ -841,14 +956,24 @@ function initParticleCanvas() {
   let heroOffsetX = 0, heroOffsetY = 0;
   let animId;
   let isTabVisible = true;
+  let canvasOpacity = 0; // Starts hidden, fades in on hero reveal
 
-  const PARTICLE_COUNT = 110;
+  // 3-layer particle system for depth
+  const LAYERS = [
+    { count: 35, speedMult: 0.15, radiusMin: 0.4, radiusMax: 1.0, fillAlpha: 0.25, hasConnections: false, mouseAffected: false },
+    { count: 55, speedMult: 1.0,  radiusMin: 0.8, radiusMax: 2.0, fillAlpha: 0.5,  hasConnections: true,  mouseAffected: true  },
+    { count: 20, speedMult: 2.0,  radiusMin: 1.5, radiusMax: 3.0, fillAlpha: 0.8,  hasConnections: false, mouseAffected: true  },
+  ];
   const CONNECTION_DIST = 170;
   const CONNECTION_DIST_SQ = CONNECTION_DIST * CONNECTION_DIST;
   const MOUSE_RADIUS = 250;
   const MOUSE_RADIUS_SQ = MOUSE_RADIUS * MOUSE_RADIUS;
   const MOUSE_STRENGTH = 0.045;
   const ALPHA_BUCKETS = 5;
+  const MOUSE_PULSE_DIST = 150;
+  const MOUSE_PULSE_DIST_SQ = MOUSE_PULSE_DIST * MOUSE_PULSE_DIST;
+
+  let layerParticles = []; // array of arrays
 
   function resize() {
     const rect = hero.getBoundingClientRect();
@@ -866,18 +991,22 @@ function initParticleCanvas() {
   }
 
   function createParticles() {
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.7 + 0.8,
-        phase: Math.random() * Math.PI * 2,
-        speed: Math.random() * 0.002 + 0.001
-      });
-    }
+    layerParticles = LAYERS.map(layer => {
+      const arr = [];
+      for (let i = 0; i < layer.count; i++) {
+        arr.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.3 * layer.speedMult,
+          vy: (Math.random() - 0.5) * 0.3 * layer.speedMult,
+          radius: Math.random() * (layer.radiusMax - layer.radiusMin) + layer.radiusMin,
+          phase: Math.random() * Math.PI * 2,
+          speed: (Math.random() * 0.002 + 0.001) * layer.speedMult
+        });
+      }
+      return arr;
+    });
+    particles = layerParticles[1]; // keep reference for resize check
   }
 
   function animate() {
@@ -891,81 +1020,103 @@ function initParticleCanvas() {
     // Fade canvas with hero scroll — use cached heroHeight
     const scrolled = window.scrollY;
     const scrollOpacity = Math.max(0, 1 - scrolled / (heroHeight * 0.8));
-    if (scrollOpacity <= 0) {
+    const combinedOpacity = scrollOpacity * canvasOpacity;
+    if (combinedOpacity <= 0) {
       animId = requestAnimationFrame(animate);
       return;
     }
-    ctx.globalAlpha = scrollOpacity;
 
-    // Update particles
-    const len = particles.length;
-    for (let i = 0; i < len; i++) {
-      const p = particles[i];
+    // Update and draw each layer
+    for (let li = 0; li < LAYERS.length; li++) {
+      const layer = LAYERS[li];
+      const pts = layerParticles[li];
+      const len = pts.length;
 
-      p.phase += p.speed;
-      p.x += p.vx + Math.sin(p.phase) * 0.15;
-      p.y += p.vy + Math.cos(p.phase * 0.7) * 0.15;
+      // Update positions
+      for (let i = 0; i < len; i++) {
+        const p = pts[i];
+        p.phase += p.speed;
+        p.x += p.vx + Math.sin(p.phase) * 0.15 * layer.speedMult;
+        p.y += p.vy + Math.cos(p.phase * 0.7) * 0.15 * layer.speedMult;
 
-      // Mouse attraction — use squared distance to avoid sqrt
-      const dx = mouseX - p.x;
-      const dy = mouseY - p.y;
-      const distSq = dx * dx + dy * dy;
-      if (distSq < MOUSE_RADIUS_SQ && distSq > 0) {
-        const dist = Math.sqrt(distSq);
-        const force = (1 - dist / MOUSE_RADIUS) * MOUSE_STRENGTH;
-        p.x += dx * force;
-        p.y += dy * force;
+        // Mouse attraction (mid + foreground only)
+        if (layer.mouseAffected) {
+          const dx = mouseX - p.x;
+          const dy = mouseY - p.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < MOUSE_RADIUS_SQ && distSq > 0) {
+            const dist = Math.sqrt(distSq);
+            const force = (1 - dist / MOUSE_RADIUS) * MOUSE_STRENGTH;
+            p.x += dx * force;
+            p.y += dy * force;
+          }
+        }
+
+        // Wrap edges
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+        if (p.y < -10) p.y = height + 10;
+        if (p.y > height + 10) p.y = -10;
       }
 
-      // Wrap edges
-      if (p.x < -10) p.x = width + 10;
-      if (p.x > width + 10) p.x = -10;
-      if (p.y < -10) p.y = height + 10;
-      if (p.y > height + 10) p.y = -10;
-    }
+      // Draw particles for this layer
+      ctx.globalAlpha = combinedOpacity * layer.fillAlpha;
+      ctx.fillStyle = 'rgba(240, 120, 74, 1)';
+      ctx.beginPath();
+      for (let i = 0; i < len; i++) {
+        const p = pts[i];
+        ctx.moveTo(p.x + p.radius, p.y);
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
 
-    // Draw all particles in a single batched path
-    ctx.fillStyle = 'rgba(240, 120, 74, 0.6)';
-    ctx.beginPath();
-    for (let i = 0; i < len; i++) {
-      const p = particles[i];
-      ctx.moveTo(p.x + p.radius, p.y);
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    }
-    ctx.fill();
+      // Draw connections (mid-layer only)
+      if (layer.hasConnections) {
+        ctx.lineWidth = 0.8;
+        const buckets = new Array(ALPHA_BUCKETS);
+        for (let b = 0; b < ALPHA_BUCKETS; b++) buckets[b] = [];
 
-    // Draw connections — batch into alpha buckets for fewer draw calls
-    ctx.lineWidth = 0.8;
-    const buckets = new Array(ALPHA_BUCKETS);
-    for (let b = 0; b < ALPHA_BUCKETS; b++) buckets[b] = [];
+        for (let i = 0; i < len; i++) {
+          const pi = pts[i];
+          for (let j = i + 1; j < len; j++) {
+            const pj = pts[j];
+            const dx = pi.x - pj.x;
+            const dy = pi.y - pj.y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < CONNECTION_DIST_SQ) {
+              const dist = Math.sqrt(distSq);
+              let alpha = (1 - dist / CONNECTION_DIST) * 0.3;
 
-    for (let i = 0; i < len; i++) {
-      const pi = particles[i];
-      for (let j = i + 1; j < len; j++) {
-        const pj = particles[j];
-        const dx = pi.x - pj.x;
-        const dy = pi.y - pj.y;
-        const distSq = dx * dx + dy * dy;
-        if (distSq < CONNECTION_DIST_SQ) {
-          const dist = Math.sqrt(distSq);
-          const alpha = (1 - dist / CONNECTION_DIST) * 0.3;
-          const bucket = Math.min(Math.floor(alpha * ALPHA_BUCKETS / 0.3), ALPHA_BUCKETS - 1);
-          buckets[bucket].push(pi.x, pi.y, pj.x, pj.y);
+              // Mouse proximity pulse — boost connections near cursor
+              const midX = (pi.x + pj.x) * 0.5;
+              const midY = (pi.y + pj.y) * 0.5;
+              const mdx = mouseX - midX;
+              const mdy = mouseY - midY;
+              const mDistSq = mdx * mdx + mdy * mdy;
+              if (mDistSq < MOUSE_PULSE_DIST_SQ) {
+                alpha *= 1.5;
+              }
+
+              const bucket = Math.min(Math.floor(alpha * ALPHA_BUCKETS / 0.45), ALPHA_BUCKETS - 1);
+              buckets[bucket].push(pi.x, pi.y, pj.x, pj.y);
+            }
+          }
+        }
+
+        for (let b = 0; b < ALPHA_BUCKETS; b++) {
+          const lines = buckets[b];
+          if (lines.length === 0) continue;
+          const a = ((b + 0.5) / ALPHA_BUCKETS) * 0.45;
+          ctx.globalAlpha = combinedOpacity;
+          ctx.strokeStyle = `rgba(240, 120, 74, ${a.toFixed(3)})`;
+          ctx.beginPath();
+          for (let k = 0; k < lines.length; k += 4) {
+            ctx.moveTo(lines[k], lines[k + 1]);
+            ctx.lineTo(lines[k + 2], lines[k + 3]);
+          }
+          ctx.stroke();
         }
       }
-    }
-
-    for (let b = 0; b < ALPHA_BUCKETS; b++) {
-      const lines = buckets[b];
-      if (lines.length === 0) continue;
-      const a = ((b + 0.5) / ALPHA_BUCKETS) * 0.3;
-      ctx.strokeStyle = `rgba(240, 120, 74, ${a.toFixed(3)})`;
-      ctx.beginPath();
-      for (let k = 0; k < lines.length; k += 4) {
-        ctx.moveTo(lines[k], lines[k + 1]);
-        ctx.lineTo(lines[k + 2], lines[k + 3]);
-      }
-      ctx.stroke();
     }
 
     ctx.globalAlpha = 1;
@@ -991,7 +1142,7 @@ function initParticleCanvas() {
   // Responsive resize — recache hero dimensions
   const ro = new ResizeObserver(() => {
     resize();
-    if (particles.length === 0) createParticles();
+    if (layerParticles.length === 0) createParticles();
   });
   ro.observe(hero);
 
@@ -1012,4 +1163,99 @@ function initParticleCanvas() {
   resize();
   createParticles();
   animId = requestAnimationFrame(animate);
+
+  // Expose canvas reveal for hero entrance choreography
+  window.revealParticleCanvas = function() {
+    const fadeStart = performance.now();
+    const fadeDuration = 1200;
+    function fadeIn(now) {
+      const progress = Math.min((now - fadeStart) / fadeDuration, 1);
+      canvasOpacity = progress * progress; // ease-in quadratic
+      if (progress < 1) requestAnimationFrame(fadeIn);
+    }
+    requestAnimationFrame(fadeIn);
+  };
+}
+
+// ============================================
+// 17. Stat Counter Animation
+// ============================================
+function initStatCounters() {
+  const stats = document.querySelectorAll('.highlight-card-stat[data-target]');
+  if (!stats.length) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateCounter(el, target, suffix) {
+    if (prefersReducedMotion) {
+      el.textContent = target + suffix;
+      return;
+    }
+    const duration = 1500;
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        animateCounter(el, target, suffix);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  stats.forEach(stat => observer.observe(stat));
+}
+
+// ============================================
+// 18. Marquee Scroll Velocity Boost
+// ============================================
+function initMarqueeBoost() {
+  const marquees = document.querySelectorAll('.marquee');
+  if (!marquees.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let lastScroll = window.scrollY;
+
+  function tick() {
+    const current = window.scrollY;
+    const velocity = Math.min(Math.abs(current - lastScroll), 60);
+    lastScroll = current;
+    const boost = 1 + velocity * 0.08;
+    marquees.forEach(m => m.style.setProperty('--marquee-speed', boost));
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ============================================
+// 19. Section Arrival Glow
+// ============================================
+function initSectionGlow() {
+  const sections = document.querySelectorAll('.section:not(.hero)');
+  if (!sections.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('glow-entered');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  sections.forEach(s => observer.observe(s));
 }

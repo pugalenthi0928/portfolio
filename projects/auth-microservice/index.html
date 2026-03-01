@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth Microservice - Documentation</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0b10;--bg2:#12141d;--bg3:#1a1d2b;--bg4:#242838;
+  --border:#2a2e42;--text:#d1d5e8;--text2:#8b90a8;--text3:#5c6080;
+  --accent:#6c8cff;--accent2:#4a6adf;--accent-glow:rgba(108,140,255,.12);
+  --green:#4ade80;--green-dim:rgba(74,222,128,.12);
+  --red:#f87171;--red-dim:rgba(248,113,113,.12);
+  --orange:#fb923c;--orange-dim:rgba(251,146,60,.12);
+  --yellow:#fbbf24;--yellow-dim:rgba(251,191,36,.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,.12);
+  --cyan:#22d3ee;--cyan-dim:rgba(34,211,238,.12);
+  --radius:10px;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;
+  --font-mono:'SF Mono',SFMono-Regular,ui-monospace,'DejaVu Sans Mono',Menlo,Consolas,monospace;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ---- Mode Toggle ---- */
+.mode-bar{position:sticky;top:0;z-index:100;background:rgba(10,11,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 0}
+.mode-bar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mode-bar h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+.mode-bar h1 span.logo{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:18px}
+.toggle-group{display:flex;background:var(--bg3);border-radius:8px;border:1px solid var(--border);overflow:hidden}
+.toggle-btn{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:var(--font-sans);transition:all .2s}
+.toggle-btn:hover{color:var(--text)}
+.toggle-btn.active{background:var(--accent);color:#fff}
+
+/* ---- Sidebar Nav ---- */
+.page-layout{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;gap:48px}
+.sidebar-nav{width:240px;flex-shrink:0;position:sticky;top:72px;align-self:flex-start;max-height:calc(100vh - 90px);overflow-y:auto;padding:24px 0}
+.sidebar-nav::-webkit-scrollbar{width:4px}
+.sidebar-nav a{display:block;padding:6px 14px;font-size:13px;color:var(--text2);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.5}
+.sidebar-nav a:hover{color:var(--text);border-left-color:var(--border)}
+.sidebar-nav a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.sidebar-nav .nav-section{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;padding:16px 14px 6px;margin-top:8px}
+.sidebar-nav .nav-section:first-child{margin-top:0}
+
+/* ---- Main Content ---- */
+.content{flex:1;min-width:0;padding:32px 0 80px}
+.content section{margin-bottom:64px}
+.content h2{font-size:28px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px;padding-top:20px}
+.content h3{font-size:19px;font-weight:700;color:#fff;margin-top:32px;margin-bottom:12px;letter-spacing:-.3px}
+.content h4{font-size:15px;font-weight:700;color:var(--accent);margin-top:24px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;font-size:12px}
+.content p{margin-bottom:16px;color:var(--text)}
+.content ul,.content ol{margin-bottom:16px;padding-left:24px}
+.content li{margin-bottom:6px;color:var(--text)}
+.content li::marker{color:var(--text3)}
+.content a{color:var(--accent);text-decoration:none}
+.content a:hover{text-decoration:underline}
+
+/* ---- Callout Boxes ---- */
+.callout{border-radius:var(--radius);padding:16px 20px;margin:20px 0;border:1px solid var(--border);font-size:14px;line-height:1.6}
+.callout.info{background:var(--accent-glow);border-color:rgba(108,140,255,.25)}
+.callout.success{background:var(--green-dim);border-color:rgba(74,222,128,.25)}
+.callout.warning{background:var(--orange-dim);border-color:rgba(251,146,60,.25)}
+.callout.purple{background:var(--purple-dim);border-color:rgba(167,139,250,.25)}
+.callout-title{font-weight:700;margin-bottom:4px;font-size:13px}
+.callout.info .callout-title{color:var(--accent)}
+.callout.success .callout-title{color:var(--green)}
+.callout.warning .callout-title{color:var(--orange)}
+.callout.purple .callout-title{color:var(--purple)}
+
+/* ---- Code Blocks ---- */
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:16px 0;font-size:13px;line-height:1.65;font-family:var(--font-mono)}
+code{font-family:var(--font-mono);font-size:.9em;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--cyan)}
+pre code{background:none;padding:0;color:var(--text);font-size:13px}
+
+/* Syntax colors */
+.kw{color:#c678dd}.str{color:#98c379}.num{color:#d19a66}.cmt{color:#5c6370;font-style:italic}.fn{color:#61afef}.type{color:#e5c07b}.op{color:#56b6c2}.dec{color:#e06c75}
+
+/* ---- Diagram Boxes ---- */
+.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.8;white-space:pre;color:var(--text2)}
+.diagram .highlight{color:var(--accent);font-weight:700}
+.diagram .green{color:var(--green)}
+.diagram .red{color:var(--red)}
+.diagram .yellow{color:var(--yellow)}
+.diagram .purple{color:var(--purple)}
+.diagram .cyan{color:var(--cyan)}
+
+/* ---- Tables ---- */
+.table-wrap{overflow-x:auto;margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;background:var(--bg3);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+/* ---- Badges ---- */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.badge-get{background:var(--green-dim);color:var(--green)}
+.badge-post{background:var(--accent-glow);color:var(--accent)}
+.badge-patch{background:var(--yellow-dim);color:var(--yellow)}
+.badge-delete{background:var(--red-dim);color:var(--red)}
+.badge-public{background:var(--green-dim);color:var(--green)}
+.badge-auth{background:var(--accent-glow);color:var(--accent)}
+.badge-admin{background:var(--purple-dim);color:var(--purple)}
+
+/* ---- Flow Steps ---- */
+.flow-steps{display:flex;flex-direction:column;gap:0;margin:20px 0}
+.flow-step{display:flex;gap:16px;position:relative;padding-bottom:24px}
+.flow-step:last-child{padding-bottom:0}
+.flow-step:last-child .flow-line{display:none}
+.flow-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;position:relative;z-index:1}
+.flow-line{position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--border)}
+.flow-body{flex:1;padding-top:6px}
+.flow-body strong{color:#fff}
+.flow-body p{margin-bottom:4px;font-size:14px}
+
+/* ---- File Tree ---- */
+.file-tree{font-family:var(--font-mono);font-size:13px;line-height:1.9;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:16px 0}
+.file-tree .dir{color:var(--accent);font-weight:600}
+.file-tree .file{color:var(--text2)}
+.file-tree .desc{color:var(--text3);font-family:var(--font-sans);font-size:12px}
+
+/* ---- Hero ---- */
+.hero{text-align:center;padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero h2{font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:12px;line-height:1.2}
+.hero h2 span{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:17px;color:var(--text2);max-width:620px;margin:0 auto 24px}
+.hero-stats{display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:28px;font-weight:800;color:#fff}
+.hero-stat .label{font-size:12px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+
+/* ---- Responsive ---- */
+@media(max-width:860px){
+  .page-layout{flex-direction:column;gap:0}
+  .sidebar-nav{display:none}
+  .content{padding:24px 0 60px}
+  .hero h2{font-size:28px}
+  .hero-stats{gap:20px}
+}
+
+/* ---- Hidden by mode ---- */
+[data-mode="simple"] .tech-only{display:none!important}
+[data-mode="technical"] .simple-only{display:none!important}
+
+/* ---- Animated border ---- */
+.glow-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:16px 0;background:var(--bg2);position:relative;overflow:hidden}
+.glow-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,var(--accent-glow) 60deg,transparent 120deg);animation:rotate 8s linear infinite;opacity:.5}
+.glow-card>*{position:relative;z-index:1}
+@keyframes rotate{100%{transform:rotate(360deg)}}
+.glow-card-inner{background:var(--bg2);border-radius:8px;padding:24px;position:relative;z-index:1}
+
+/* ---- Endpoint Cards ---- */
+.endpoint{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:12px 0;overflow:hidden}
+.endpoint-header{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px}
+.endpoint-header:hover{background:var(--bg3)}
+.endpoint-header .method{font-weight:800;font-family:var(--font-mono);font-size:12px;min-width:56px}
+.endpoint-header .path{font-family:var(--font-mono);color:var(--text2);flex:1}
+.endpoint-header .desc{color:var(--text3);font-size:13px}
+.endpoint-body{padding:16px;border-top:1px solid var(--border);display:none;font-size:13px}
+.endpoint-body.open{display:block}
+
+/* ---- Print style ---- */
+@media print{body{background:#fff;color:#222}pre{background:#f5f5f5}h2,h3{color:#000}.mode-bar{position:static}}
+</style>
+</head>
+<body data-mode="simple">
+
+<!-- ---- Sticky Mode Bar ---- -->
+<div class="mode-bar">
+  <div class="mode-bar-inner">
+    <h1><span class="logo">&#9670;</span> Auth Microservice Docs</h1>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setMode('simple')">Simple</button>
+      <button class="toggle-btn" onclick="setMode('technical')">Technical</button>
+    </div>
+  </div>
+</div>
+
+<div class="page-layout">
+
+<!-- ---- Sidebar Navigation ---- -->
+<nav class="sidebar-nav" id="sidebar">
+  <div class="nav-section">Overview</div>
+  <a href="#intro">What Is This?</a>
+  <a href="#big-picture">The Big Picture</a>
+  <a href="#tech-stack">Tech Stack</a>
+  <a href="#project-structure">Project Structure</a>
+
+  <div class="nav-section">Architecture</div>
+  <a href="#how-auth-works">How Auth Works</a>
+  <a href="#database">Database Design</a>
+  <a href="#security">Security Deep Dive</a>
+  <a href="#middleware">Middleware Pipeline</a>
+
+  <div class="nav-section">Features</div>
+  <a href="#registration">Registration</a>
+  <a href="#login">Login &amp; MFA</a>
+  <a href="#tokens">Token System</a>
+  <a href="#password-reset">Password Reset</a>
+  <a href="#oauth">OAuth (Google/GitHub)</a>
+  <a href="#admin">Admin Panel</a>
+
+  <div class="nav-section">API</div>
+  <a href="#endpoints">All Endpoints</a>
+  <a href="#error-handling">Error Handling</a>
+
+  <div class="nav-section">DevOps</div>
+  <a href="#docker">Docker &amp; Deployment</a>
+  <a href="#monitoring">Monitoring</a>
+  <a href="#testing">Testing</a>
+</nav>
+
+<!-- ---- Main Content ---- -->
+<main class="content" id="content">
+
+<!-- ======== HERO ======== -->
+<div class="hero">
+  <h2>How I Built a <span>Production-Grade Auth Service</span> From Scratch</h2>
+  <p>A complete authentication microservice with JWT, MFA, OAuth, role-based access, and monitoring. Explained two ways.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">30+</div><div class="label">Files</div></div>
+    <div class="hero-stat"><div class="num">25</div><div class="label">API Endpoints</div></div>
+    <div class="hero-stat"><div class="num">136</div><div class="label">Tests Passing</div></div>
+    <div class="hero-stat"><div class="num">14</div><div class="label">Security Layers</div></div>
+  </div>
+</div>
+
+<!-- ======== 1. INTRO ======== -->
+<section id="intro">
+  <h2>What Is This?</h2>
+
+  <div class="simple-only">
+    <p>Think about every app you use. Instagram, Gmail, Spotify, your banking app. Before you can scroll your feed, read an email, or play a song, you have to <strong>log in</strong>.</p>
+    <p>That login screen looks simple. Just an email and a password. But behind that little form, there's an entire system deciding if you're really you, keeping hackers out, remembering you so you don't have to log in every 5 minutes, and locking things down when something suspicious happens.</p>
+    <p><strong>Someone had to build that system. This is what I built.</strong></p>
+    <p>Think of it like a <strong>bouncer at a nightclub</strong>. He checks your ID at the door (authentication), checks if you're on the VIP list (authorization), gives you a wristband so you don't have to show your ID at every bar inside (tokens), and writes your name in the logbook so there's a record of everyone who came and went (audit trail).</p>
+    <p>Except this bouncer also:</p>
+    <ul>
+      <li>Lets you skip the line if you have a <strong>Google or GitHub badge</strong>, like "Sign in with Google"</li>
+      <li>Sends a text to your phone to <strong>double-check it's really you</strong>. Even if someone stole your password, they still need your phone</li>
+      <li>Emails you a <strong>secret link</strong> if you forget your password</li>
+      <li><strong>Locks the door</strong> after 5 wrong guesses so nobody can brute-force their way in</li>
+      <li>Keeps a <strong>detailed security log</strong> of every login, every failure, every suspicious event</li>
+    </ul>
+    <div class="callout info">
+      <div class="callout-title">What this project handles:</div>
+      <ul style="margin-bottom:0">
+        <li><strong>Sign up and Log in</strong> with email/password or Google/GitHub OAuth</li>
+        <li><strong>Two-factor authentication (MFA)</strong> with 6-digit codes from an authenticator app + backup codes</li>
+        <li><strong>Password reset</strong> via secure email link, auto-logs out all devices</li>
+        <li><strong>Session management</strong> to see which devices you're logged in on and revoke any of them</li>
+        <li><strong>Admin dashboard</strong> to manage users, view audit logs, and 7-day stats</li>
+        <li><strong>Auto-monitoring</strong> with Prometheus metrics and Grafana dashboards out of the box</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <p>A production-grade <strong>authentication &amp; authorization microservice</strong> built on Node.js/Express with TypeScript strict mode. It implements industry-standard security patterns including JWT RS256 asymmetric signing, Argon2id password hashing, TOTP-based MFA, refresh token rotation with family-based reuse detection, Redis-backed sliding window rate limiting, and a comprehensive audit trail.</p>
+    <div class="callout purple">
+      <div class="callout-title">Architecture Principles</div>
+      <ul style="margin-bottom:0">
+        <li><strong>Dependency Injection</strong>: Services accept Prisma/Redis clients via constructor</li>
+        <li><strong>Modular Feature Organization</strong>: auth, mfa, oauth, user, session, admin modules</li>
+        <li><strong>Defense in Depth</strong>: 14 security layers from Helmet headers to audit logging</li>
+        <li><strong>Zero Trust Tokens</strong>: Asymmetric RS256, token blacklist, rotation, family tracking</li>
+        <li><strong>Operational Readiness</strong>: Health checks, Prometheus metrics, Grafana dashboards, structured logging</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 2. BIG PICTURE ======== -->
+<section id="big-picture">
+  <h2>The Big Picture</h2>
+
+  <div class="simple-only">
+    <p>Here's how the whole system works at a high level:</p>
+    <div class="diagram">
+<span class="highlight">User's Browser</span>                         <span class="highlight">Our Server</span>
+      |                                       |
+      |  1. "I want to sign up"              |
+      | -------- email + password ---------> |
+      |                                       |  <span class="green">Saves user to database</span>
+      |                                       |  <span class="green">Creates a "pass" (token)</span>
+      | <-------- here's your pass ---------- |
+      |                                       |
+      |  2. "Show me my profile"             |
+      | -------- shows the pass -----------> |
+      |                                       |  <span class="yellow">Checks: is the pass valid?</span>
+      |                                       |  <span class="yellow">Checks: is it blacklisted?</span>
+      | <-------- here's your data ---------- |
+      |                                       |
+      |  3. "Log me out"                     |
+      | -------- shows the pass -----------> |
+      |                                       |  <span class="red">Invalidates the pass</span>
+      | <-------- done! -------------------- |
+    </div>
+    <p>The "pass" is called a <strong>JWT token</strong>. It's a long string of characters that proves who you are. You get a short-lived one (15 minutes) and a long-lived one (7 days) that can get you a new short one.</p>
+  </div>
+
+  <div class="tech-only">
+    <p>The system uses a <strong>dual-token architecture</strong> with RS256 asymmetric JWTs:</p>
+    <div class="diagram">
+<span class="highlight">Client</span>                    <span class="highlight">API Gateway</span>                <span class="highlight">Services</span>                <span class="highlight">Data Stores</span>
+   |                          |                          |                          |
+   | POST /auth/register      |                          |                          |
+   |------------------------->|  Helmet + CORS + Comp    |                          |
+   |                          |  RequestLogger (reqId)   |                          |
+   |                          |  Metrics (prom-client)   |                          |
+   |                          |  RateLimiter (Redis ZSET)|                          |
+   |                          |  validateRequest (Zod)   |                          |
+   |                          |------------------------->|                          |
+   |                          |                          | <span class="green">argon2id(password)</span>        |
+   |                          |                          |------------------------->| <span class="cyan">PostgreSQL</span>
+   |                          |                          | <span class="green">jwt.sign(RS256, privKey)</span> |
+   |                          |                          |------------------------->| <span class="purple">Redis (token hash)</span>
+   |                          |                          |                          |
+   |<------- 201 { user, accessToken (15m), refreshToken (7d) } -------------------|
+   |                          |                          |                          |
+   | GET /users/me            |                          |                          |
+   | Authorization: Bearer    |                          |                          |
+   |------------------------->|  <span class="yellow">authenticate middleware</span>  |                          |
+   |                          |  jwt.verify(pubKey)      |                          |
+   |                          |  redis.get(bl:{token})   |                          |
+   |                          |  req.userId = decoded    |                          |
+   |                          |------------------------->|                          |
+   |<------- 200 { user profile } ---------------------------------------------|
+    </div>
+  </div>
+</section>
+
+<!-- ======== 3. TECH STACK ======== -->
+<section id="tech-stack">
+  <h2>Tech Stack</h2>
+
+  <div class="simple-only">
+    <p>Here are the main tools I used and <strong>why</strong>:</p>
+    <div class="table-wrap"><table>
+      <tr><th>Tool</th><th>What It Does</th><th>Why I Chose It</th></tr>
+      <tr><td><strong>Node.js + Express</strong></td><td>Runs the server</td><td>Fast, huge ecosystem, everyone knows it</td></tr>
+      <tr><td><strong>TypeScript</strong></td><td>Adds type safety to JavaScript</td><td>Catches bugs before they happen</td></tr>
+      <tr><td><strong>PostgreSQL</strong></td><td>Stores users, tokens, logs</td><td>Rock-solid relational database</td></tr>
+      <tr><td><strong>Redis</strong></td><td>Fast in-memory cache</td><td>Rate limiting, token blacklist, session tracking</td></tr>
+      <tr><td><strong>Prisma</strong></td><td>Talks to the database for us</td><td>Auto-generates TypeScript types from schema</td></tr>
+      <tr><td><strong>Docker</strong></td><td>Packages everything into containers</td><td>One command to run the whole thing</td></tr>
+    </table></div>
+  </div>
+
+  <div class="tech-only">
+    <div class="table-wrap"><table>
+      <tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr>
+      <tr><td>Runtime</td><td>Node.js 20 + TypeScript 5.6 (strict)</td><td>Strict mode with <code>noImplicitAny</code>, <code>strictNullChecks</code>, <code>noUnusedLocals</code></td></tr>
+      <tr><td>Framework</td><td>Express 4.21</td><td>Minimal overhead, composable middleware, massive ecosystem</td></tr>
+      <tr><td>ORM</td><td>Prisma 5.22</td><td>Type-safe query builder, automatic migration SQL, introspection</td></tr>
+      <tr><td>Cache</td><td>ioredis 5.4 &rarr; Redis 7</td><td>Pipelining, Lua scripting, sorted sets for sliding window</td></tr>
+      <tr><td>Auth</td><td>jsonwebtoken (RS256) + Argon2id</td><td>Asymmetric JWTs for microservice verification, memory-hard hashing</td></tr>
+      <tr><td>MFA</td><td>otplib (RFC 6238) + qrcode</td><td>TOTP standard, compatible with Google Authenticator / Authy</td></tr>
+      <tr><td>OAuth</td><td>Passport.js (Google + GitHub strategies)</td><td>Proven library, handles PKCE + state parameter automatically</td></tr>
+      <tr><td>Validation</td><td>Zod 3.23</td><td>Runtime type validation, auto-strips unknown fields, composable</td></tr>
+      <tr><td>Logging</td><td>Pino 9.5</td><td>JSON structured, 5x faster than winston, automatic redaction</td></tr>
+      <tr><td>Metrics</td><td>prom-client 15.1</td><td>Prometheus-native, histograms for latency, counters for auth events</td></tr>
+      <tr><td>Security Headers</td><td>Helmet 8</td><td>CSP, HSTS (1yr), X-Frame-Options DENY, nosniff, referrer-policy</td></tr>
+      <tr><td>Email</td><td>Nodemailer 8</td><td>Ethereal auto-accounts in dev, configurable SMTP in prod</td></tr>
+      <tr><td>Testing</td><td>Jest 29 + Supertest 7 + ts-jest</td><td>Unit + integration + E2E, 80% coverage thresholds</td></tr>
+      <tr><td>Container</td><td>Docker multi-stage (Alpine) + docker-compose</td><td>263MB production image, dumb-init for PID 1, non-root user</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ======== 4. PROJECT STRUCTURE ======== -->
+<section id="project-structure">
+  <h2>Project Structure</h2>
+
+  <div class="simple-only">
+    <p>The code is organized like a building where each floor has a specific purpose:</p>
+    <div class="file-tree">
+<span class="dir">src/</span>
+  <span class="dir">config/</span>         <span class="desc">Settings: database connection, Redis connection, environment variables</span>
+  <span class="dir">middleware/</span>     <span class="desc">Guards: checks every request before it reaches your code</span>
+  <span class="dir">modules/</span>       <span class="desc">Features: each feature gets its own folder</span>
+    <span class="dir">auth/</span>        <span class="desc">Sign up, log in, log out, password reset</span>
+    <span class="dir">mfa/</span>         <span class="desc">Two-factor authentication (authenticator app codes)</span>
+    <span class="dir">oauth/</span>       <span class="desc">Google &amp; GitHub "Login with..." buttons</span>
+    <span class="dir">user/</span>        <span class="desc">View/edit your own profile</span>
+    <span class="dir">session/</span>     <span class="desc">See which devices you're logged in on</span>
+    <span class="dir">admin/</span>       <span class="desc">Admin-only: manage users, view audit logs</span>
+  <span class="dir">shared/</span>        <span class="desc">Reusable code: error classes, crypto helpers, logger</span>
+    </div>
+    <p>Each module follows the same pattern: <strong>routes</strong> (URLs) &rarr; <strong>controller</strong> (handles the request) &rarr; <strong>service</strong> (business logic) &rarr; <strong>database</strong>.</p>
+  </div>
+
+  <div class="tech-only">
+    <p>Follows a <strong>modular monolith</strong> pattern with feature-based organization. Each module has its own controller, service, routes, validation schemas, and tests.</p>
+    <div class="file-tree">
+<span class="dir">src/</span>
+  <span class="file">server.ts</span>            <span class="desc">Bootstrap: createApp(), listen(), graceful shutdown (SIGTERM/SIGINT), TokenCleanupService</span>
+  <span class="file">app.ts</span>               <span class="desc">Express factory: middleware stack, DI wiring, route mounting, Swagger setup</span>
+  <span class="dir">config/</span>
+    <span class="file">env.ts</span>             <span class="desc">Zod schema validation for all env vars, exported as typed singleton</span>
+    <span class="file">database.ts</span>        <span class="desc">PrismaClient singleton with query/error logging (dev only)</span>
+    <span class="file">redis.ts</span>           <span class="desc">ioredis client with exponential backoff retry strategy</span>
+  <span class="dir">middleware/</span>
+    <span class="file">authenticate.ts</span>    <span class="desc">JWT Bearer extraction &rarr; RS256 verify &rarr; Redis blacklist check &rarr; req.userId</span>
+    <span class="file">authorize.ts</span>       <span class="desc">Role-based guard: authorize('ADMIN') returns 403 if role mismatch</span>
+    <span class="file">rateLimiter.ts</span>     <span class="desc">Redis ZSET sliding window, path normalization, X-RateLimit-* headers</span>
+    <span class="file">validateRequest.ts</span> <span class="desc">Zod schema.safeParse on body/params/query, strips unknowns</span>
+    <span class="file">errorHandler.ts</span>    <span class="desc">Catches AppError/ZodError/PrismaError, masks non-operational in prod</span>
+    <span class="file">requestLogger.ts</span>   <span class="desc">Assigns X-Request-ID, logs start/end with duration, redacts passwords</span>
+    <span class="file">metricsCollector.ts</span><span class="desc">Prometheus http_requests_total counter, http_request_duration histogram</span>
+    <span class="file">helmet.ts</span>          <span class="desc">CSP default-src 'self', HSTS 1yr, frameguard DENY, nosniff</span>
+    <span class="file">cors.ts</span>            <span class="desc">CORS_ORIGINS whitelist, credentials: true, exposed rate-limit headers</span>
+  <span class="dir">modules/auth/</span>
+    <span class="file">auth.routes.ts</span>     <span class="desc">7 endpoints, Swagger JSDoc annotations, authRateLimiter on sensitive routes</span>
+    <span class="file">auth.controller.ts</span> <span class="desc">Thin layer: extract req fields, call service, format response envelope</span>
+    <span class="file">auth.service.ts</span>    <span class="desc">Core logic: register, login (lockout+MFA), refresh (rotation), logout (blacklist)</span>
+    <span class="file">auth.validation.ts</span> <span class="desc">Zod schemas: registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema</span>
+    <span class="file">auth.test.ts</span>       <span class="desc">Unit tests: argon2 hashing, JWT RS256, crypto utils, Zod schemas</span>
+  <span class="dir">shared/</span>
+    <span class="dir">errors/</span>            <span class="desc">AppError hierarchy: Authentication, Authorization, Validation, NotFound, Conflict, RateLimit, Internal</span>
+    <span class="dir">utils/</span>
+      <span class="file">jwt.ts</span>           <span class="desc">Lazy-loaded RSA keys, generate/verify access+refresh tokens, jwtid for uniqueness</span>
+      <span class="file">password.ts</span>      <span class="desc">Argon2id: 64MB memory, 3 iterations, 4 parallelism (OWASP 2023)</span>
+      <span class="file">crypto.ts</span>        <span class="desc">AES-256-GCM encrypt/decrypt, generateSecureToken (32 bytes), hashToken (SHA-256)</span>
+    <span class="dir">services/</span>
+      <span class="file">email.service.ts</span> <span class="desc">Nodemailer: auto Ethereal in dev, SMTP env config in prod, HTML templates</span>
+      <span class="file">tokenCleanup.service.ts</span> <span class="desc">setInterval + unref(), deletes expired/revoked RefreshTokens hourly</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 5. HOW AUTH WORKS ======== -->
+<section id="how-auth-works">
+  <h2>How Authentication Works</h2>
+
+  <div class="simple-only">
+    <p>Authentication is like a <strong>passport system</strong>. Here's the journey a user takes:</p>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num">1</div><div class="flow-line"></div>
+        <div class="flow-body"><strong>Sign Up</strong><p>User provides email + password. We hash the password (scramble it so no one can read it), save the user, and send a verification email.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div><div class="flow-line"></div>
+        <div class="flow-body"><strong>Verify Email</strong><p>User clicks the link in the email. We mark their account as verified.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div><div class="flow-line"></div>
+        <div class="flow-body"><strong>Log In</strong><p>User provides email + password. We check the password against the scrambled version. If correct, we give them two tokens: a <strong>short pass</strong> (15 min) and a <strong>long pass</strong> (7 days).</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div><div class="flow-line"></div>
+        <div class="flow-body"><strong>Use the App</strong><p>Every request sends the short pass in the header. We verify it's real and not expired.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div><div class="flow-line"></div>
+        <div class="flow-body"><strong>Refresh</strong><p>When the short pass expires, the long pass gets a new short pass. The old long pass is destroyed.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-body"><strong>Log Out</strong><p>The short pass gets blacklisted so no one can use it, even if they stole it.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <h3>Complete Authentication Lifecycle</h3>
+    <div class="diagram">
+<span class="highlight">Registration</span>
+  Client POST /auth/register {email, password, name}
+    &rarr; Zod validates: email (normalized), password (&ge;8, upper+digit+special)
+    &rarr; Check uniqueness: prisma.user.findUnique({email})
+    &rarr; <span class="green">argon2id.hash(password, {memory:64MB, time:3, parallelism:4})</span>
+    &rarr; <span class="green">crypto.randomBytes(32).toString('hex')</span> &rarr; emailVerifyToken
+    &rarr; <span class="green">SHA-256(emailVerifyToken)</span> &rarr; stored in User.emailVerifyToken
+    &rarr; prisma.user.create({passwordHash, emailVerifyToken: hash})
+    &rarr; <span class="cyan">emailService.sendVerificationEmail(email, rawToken)</span>  (async, non-blocking)
+    &rarr; generateTokenPair(userId, email, role)
+        &rarr; jwt.sign({type:'access', jwtid:uuid}, privateKey, {alg:RS256, exp:15m})
+        &rarr; jwt.sign({type:'refresh', family:uuid, jwtid:uuid}, privateKey, {alg:RS256, exp:7d})
+        &rarr; prisma.refreshToken.create({tokenHash: SHA-256(refresh), family, expiresAt})
+    &rarr; auditLog.create({action:'REGISTER'})
+    &rarr; <span class="green">201 {user, accessToken, refreshToken}</span>
+
+<span class="highlight">Login (with MFA flow)</span>
+  Client POST /auth/login {email, password}
+    &rarr; Find user by email (or throw generic <span class="red">"Invalid email or password"</span>)
+    &rarr; Check user.deletedAt === null (soft-delete aware)
+    &rarr; Check user.lockedUntil &lt; now() (account lockout)
+    &rarr; <span class="yellow">argon2.verify(storedHash, providedPassword)</span>
+    &rarr; On failure:
+        &rarr; redis.incr(failed_login:{userId}) with TTL 900s
+        &rarr; If attempts &ge; 5: prisma.user.update({lockedUntil: now+15min})
+        &rarr; Throw <span class="red">"Invalid email or password"</span> (no email enumeration)
+    &rarr; On success:
+        &rarr; redis.del(failed_login:{userId})  // reset counter
+        &rarr; If user.mfaEnabled:
+            &rarr; jwt.sign({type:'mfa_challenge'}, privKey, {exp:15m})
+            &rarr; <span class="yellow">200 {mfaRequired: true, mfaToken}</span>
+        &rarr; Else:
+            &rarr; generateTokenPair(...)
+            &rarr; <span class="green">200 {mfaRequired: false, user, accessToken, refreshToken}</span>
+
+<span class="highlight">Token Refresh (Rotation + Reuse Detection)</span>
+  Client POST /auth/refresh {refreshToken}
+    &rarr; tokenHash = SHA-256(refreshToken)
+    &rarr; storedToken = prisma.refreshToken.findUnique({tokenHash})
+    &rarr; <span class="red">If storedToken.revokedAt !== null:</span>
+        &rarr; <span class="red">REUSE DETECTED: possible token theft!</span>
+        &rarr; prisma.refreshToken.updateMany({family, revokedAt: null} &rarr; {revokedAt: now})
+        &rarr; Throw "Token reuse detected. All sessions revoked"
+    &rarr; If storedToken.expiresAt &lt; now: throw "expired"
+    &rarr; jwt.verify(refreshToken, publicKey) &rarr; validate signature
+    &rarr; Generate new pair in <span class="purple">same family</span>
+    &rarr; Mark old token: revokedAt=now, replacedBy=newTokenId
+    &rarr; <span class="green">200 {accessToken, refreshToken}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 6. DATABASE ======== -->
+<section id="database">
+  <h2>Database Design</h2>
+
+  <div class="simple-only">
+    <p>The database has 5 tables. Think of each table as a spreadsheet:</p>
+    <div class="callout info">
+      <div class="callout-title">Users</div>
+      Stores everyone who signs up. Has their email, scrambled password, whether they've verified their email, and if they've turned on two-factor auth.
+    </div>
+    <div class="callout success">
+      <div class="callout-title">Refresh Tokens</div>
+      Tracks every "long pass" ever issued. When you refresh, the old one gets marked as "used" and a new one appears. If someone tries to reuse an old one, we know it was stolen and revoke everything.
+    </div>
+    <div class="callout warning">
+      <div class="callout-title">OAuth Accounts</div>
+      Links Google/GitHub accounts to users. One user can have both Google and GitHub linked.
+    </div>
+    <div class="callout purple">
+      <div class="callout-title">Audit Logs</div>
+      A diary of every security event: who logged in, from where, when, and whether it worked.
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <h3>Entity Relationship</h3>
+    <div class="diagram">
+  <span class="highlight">User (1)</span> ──────┬─── has many ───> <span class="green">RefreshToken (*)</span>
+    |               |                    tokenHash (unique, SHA-256)
+    |               |                    family (UUID, for rotation groups)
+    |               |                    expiresAt, revokedAt, replacedBy
+    |               |
+    |               ├─── has many ───> <span class="yellow">OAuthAccount (*)</span>
+    |               |                    provider + providerId (unique compound)
+    |               |
+    |               ├─── has many ───> <span class="purple">BackupCode (*)</span>
+    |               |                    codeHash (SHA-256), usedAt (null = available)
+    |               |
+    |               └─── has many ───> <span class="cyan">AuditLog (*)</span>
+    |                                    action, ipAddress, userAgent, metadata (JSON)
+    |
+    ├── id: cuid()               ├── Indexes: email, deletedAt
+    ├── email: unique            ├── passwordHash: nullable (for OAuth-only users)
+    ├── role: USER | ADMIN       ├── mfaSecret: AES-256-GCM encrypted
+    ├── emailVerifyToken: SHA-256├── lockedUntil: DateTime? (account lockout)
+    └── passwordResetToken + Expiry (1hr TTL)
+    </div>
+    <h3>Key Design Decisions</h3>
+    <ul>
+      <li><strong>Token hashing:</strong> Never store raw tokens. All tokens (refresh, email verify, password reset) stored as SHA-256 hashes. If the DB is breached, tokens are useless.</li>
+      <li><strong>Refresh token families:</strong> Each login session creates a family UUID. All rotated tokens share it. If a revoked token is replayed, the entire family gets nuked.</li>
+      <li><strong>Soft deletes:</strong> Users have <code>deletedAt</code> instead of hard deletes. Preserves audit trail integrity.</li>
+      <li><strong>MFA secret encryption:</strong> TOTP secrets encrypted at rest with AES-256-GCM using a dedicated <code>MFA_ENCRYPTION_KEY</code>. Format: <code>iv:authTag:ciphertext</code> (all hex).</li>
+      <li><strong>Backup codes:</strong> 8 codes generated per MFA enrollment, each SHA-256 hashed. One-time use (<code>usedAt</code> timestamp marks consumption).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== 7. SECURITY ======== -->
+<section id="security">
+  <h2>Security Deep Dive</h2>
+
+  <div class="simple-only">
+    <p>Security is built in at every level. Here are the protections:</p>
+    <div class="table-wrap"><table>
+      <tr><th>Protection</th><th>What It Means</th></tr>
+      <tr><td><strong>Password Hashing</strong></td><td>Passwords are scrambled using Argon2id. Even if hackers steal the database, they can't recover passwords.</td></tr>
+      <tr><td><strong>Token Rotation</strong></td><td>Every time you refresh your login, you get a brand new token and the old one is destroyed. If a hacker steals the old one, the system detects it and locks down all your sessions.</td></tr>
+      <tr><td><strong>Two-Factor Auth</strong></td><td>Even if someone knows your password, they need a 6-digit code from your phone to get in.</td></tr>
+      <tr><td><strong>Rate Limiting</strong></td><td>Limits how fast someone can try passwords. After 5 wrong guesses, the account locks for 15 minutes.</td></tr>
+      <tr><td><strong>Email Enumeration Prevention</strong></td><td>The login page never tells you "this email doesn't exist" so hackers can't probe for valid emails.</td></tr>
+      <tr><td><strong>Security Headers</strong></td><td>Browser protections that prevent clickjacking, code injection, and other attacks.</td></tr>
+      <tr><td><strong>Audit Logs</strong></td><td>Every security event is recorded: logins, failures, password changes, role changes.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="tech-only">
+    <h3>1. Password Security: Argon2id</h3>
+    <pre><code><span class="cmt">// OWASP 2023 recommended parameters</span>
+<span class="kw">const</span> ARGON2_OPTIONS = {
+  type: argon2.<span class="fn">argon2id</span>,     <span class="cmt">// Hybrid: resists GPU + side-channel attacks</span>
+  memoryCost: <span class="num">65536</span>,        <span class="cmt">// 64 MiB per hash</span>
+  timeCost: <span class="num">3</span>,              <span class="cmt">// 3 iterations</span>
+  parallelism: <span class="num">4</span>,           <span class="cmt">// 4 threads</span>
+};</code></pre>
+    <p>Each hash includes a random salt. The output is self-describing: <code>$argon2id$v=19$m=65536,t=3,p=4$SALT$HASH</code>. Verification is constant-time to prevent timing attacks.</p>
+
+    <h3>2. JWT Architecture: RS256</h3>
+    <pre><code><span class="cmt">// Asymmetric signing: private key signs, public key verifies</span>
+<span class="cmt">// This means microservices only need the PUBLIC key to verify tokens</span>
+<span class="kw">const</span> signOptions: <span class="type">SignOptions</span> = {
+  algorithm: <span class="str">'RS256'</span>,
+  expiresIn: <span class="str">'15m'</span>,        <span class="cmt">// Short-lived access tokens</span>
+  subject: payload.userId,
+  jwtid: crypto.<span class="fn">randomUUID</span>(),  <span class="cmt">// Unique per token (prevents same-second collisions)</span>
+};
+
+<span class="cmt">// Access token payload</span>
+{ userId, email, role, type: <span class="str">'access'</span>, iat, exp, sub, jti }
+
+<span class="cmt">// Refresh token payload (adds family for rotation tracking)</span>
+{ userId, email, role, type: <span class="str">'refresh'</span>, family: <span class="str">'uuid'</span>, iat, exp, sub, jti }</code></pre>
+
+    <h3>3. Sliding Window Rate Limiter</h3>
+    <pre><code><span class="cmt">// Redis Sorted Set algorithm (per-IP, per-endpoint)</span>
+<span class="cmt">// Key: rl:auth:{ip}:{normalized_path}</span>
+
+pipeline.<span class="fn">zremrangebyscore</span>(key, <span class="str">'-inf'</span>, windowStart);  <span class="cmt">// 1. Prune old entries</span>
+pipeline.<span class="fn">zcard</span>(key);                                    <span class="cmt">// 2. Count remaining</span>
+pipeline.<span class="fn">zadd</span>(key, now, uuid);                          <span class="cmt">// 3. Add this request</span>
+pipeline.<span class="fn">pexpire</span>(key, windowMs);                        <span class="cmt">// 4. Auto-expire key</span>
+
+<span class="cmt">// Global: 100 req / 60s per IP</span>
+<span class="cmt">// Auth endpoints: 5 req / 60s per IP (brute-force protection)</span>
+<span class="cmt">// Path normalization: /users/abc-123 &rarr; /users/:id (prevents key explosion)</span></code></pre>
+
+    <h3>4. Token Blacklist (Logout)</h3>
+    <pre><code><span class="cmt">// On logout, add access token to Redis with TTL = remaining lifetime</span>
+<span class="kw">const</span> remainingSeconds = payload.exp - Math.<span class="fn">floor</span>(Date.<span class="fn">now</span>() / <span class="num">1000</span>);
+<span class="kw">await</span> redis.<span class="fn">set</span>(<span class="str">`bl:${accessToken}`</span>, <span class="str">'1'</span>, <span class="str">'EX'</span>, remainingSeconds);
+
+<span class="cmt">// authenticate middleware checks EVERY request:</span>
+<span class="kw">const</span> isBlacklisted = <span class="kw">await</span> redis.<span class="fn">get</span>(<span class="str">`bl:${token}`</span>);
+<span class="kw">if</span> (isBlacklisted) <span class="kw">throw new</span> <span class="type">AuthenticationError</span>(<span class="str">'Token has been revoked'</span>);</code></pre>
+
+    <h3>5. MFA: TOTP + AES-256-GCM</h3>
+    <pre><code><span class="cmt">// TOTP secret encrypted at rest</span>
+<span class="cmt">// encrypt(): iv (12 bytes) + AES-256-GCM + authTag (16 bytes)</span>
+<span class="cmt">// Storage format: "hex(iv):hex(authTag):hex(ciphertext)"</span>
+<span class="cmt">// Key: MFA_ENCRYPTION_KEY env var (256-bit / 64 hex chars)</span>
+
+<span class="cmt">// Verification allows &#xB1;30s window (standard TOTP tolerance)</span>
+authenticator.<span class="fn">check</span>(userCode, decryptedSecret); <span class="cmt">// true/false</span></code></pre>
+  </div>
+</section>
+
+<!-- ======== 8. MIDDLEWARE ======== -->
+<section id="middleware">
+  <h2>Middleware Pipeline</h2>
+
+  <div class="simple-only">
+    <p>Every request passes through a series of checkpoints before reaching your code. Think of it as airport security:</p>
+    <div class="flow-steps">
+      <div class="flow-step"><div class="flow-num">1</div><div class="flow-line"></div><div class="flow-body"><strong>Security Headers (Helmet)</strong><p>Adds protective headers to every response. Think of it as putting on a seatbelt.</p></div></div>
+      <div class="flow-step"><div class="flow-num">2</div><div class="flow-line"></div><div class="flow-body"><strong>CORS</strong><p>Only allows requests from approved websites.</p></div></div>
+      <div class="flow-step"><div class="flow-num">3</div><div class="flow-line"></div><div class="flow-body"><strong>Request Logger</strong><p>Stamps each request with a unique ID and times how long it takes.</p></div></div>
+      <div class="flow-step"><div class="flow-num">4</div><div class="flow-line"></div><div class="flow-body"><strong>Rate Limiter</strong><p>Blocks you if you're making too many requests too fast.</p></div></div>
+      <div class="flow-step"><div class="flow-num">5</div><div class="flow-line"></div><div class="flow-body"><strong>Auth Check</strong><p>Verifies your token is real, not expired, and not blacklisted.</p></div></div>
+      <div class="flow-step"><div class="flow-num">6</div><div class="flow-line"></div><div class="flow-body"><strong>Role Check</strong><p>For admin routes, checks you have the ADMIN role.</p></div></div>
+      <div class="flow-step"><div class="flow-num">7</div><div class="flow-line"></div><div class="flow-body"><strong>Input Validation</strong><p>Checks your data is in the right format before processing.</p></div></div>
+      <div class="flow-step"><div class="flow-num">8</div><div class="flow-line"></div><div class="flow-body"><strong>Error Handler</strong><p>If anything goes wrong at any step, catches it and sends a clean error message.</p></div></div>
+    </div>
+  </div>
+
+  <div class="tech-only">
+    <h3>Execution Order (app.ts)</h3>
+    <pre><code><span class="cmt">// ─── Global (applied to ALL routes) ────────────────</span>
+app.<span class="fn">use</span>(securityHeaders);       <span class="cmt">// 1. Helmet: CSP, HSTS, X-Frame-Options, nosniff</span>
+app.<span class="fn">use</span>(corsMiddleware);         <span class="cmt">// 2. CORS whitelist from CORS_ORIGINS env</span>
+app.<span class="fn">use</span>(<span class="fn">compression</span>());           <span class="cmt">// 3. Gzip responses</span>
+app.<span class="fn">use</span>(express.<span class="fn">json</span>({limit: <span class="str">'10kb'</span>}));  <span class="cmt">// 4. Body parser (DoS protection)</span>
+app.<span class="fn">use</span>(<span class="fn">cookieParser</span>());          <span class="cmt">// 5. Parse Cookie header</span>
+app.<span class="fn">use</span>(requestLogger);          <span class="cmt">// 6. X-Request-ID, duration, field redaction</span>
+app.<span class="fn">use</span>(metricsMiddleware);       <span class="cmt">// 7. Prometheus counters &amp; histograms</span>
+app.<span class="fn">use</span>(globalRateLimiter);       <span class="cmt">// 8. 100 req/60s per IP (Redis sorted set)</span>
+app.<span class="fn">use</span>(passport.<span class="fn">initialize</span>());   <span class="cmt">// 9. OAuth strategy registration</span>
+
+<span class="cmt">// ─── Route-specific (applied per-route) ────────────</span>
+<span class="cmt">// authRateLimiter</span>               <span class="cmt">// 5 req/60s (on /login, /register, /forgot-password)</span>
+<span class="cmt">// authenticate</span>                  <span class="cmt">// JWT verify + Redis blacklist check</span>
+<span class="cmt">// authorize('ADMIN')</span>            <span class="cmt">// Role-based access control</span>
+<span class="cmt">// validateRequest(schema)</span>       <span class="cmt">// Zod validation on body/params/query</span>
+
+<span class="cmt">// ─── Global catch-all ──────────────────────────────</span>
+app.<span class="fn">use</span>(errorHandler);           <span class="cmt">// Normalizes ALL errors to standard envelope</span></code></pre>
+  </div>
+</section>
+
+<!-- ======== 9. REGISTRATION ======== -->
+<section id="registration">
+  <h2>Registration</h2>
+  <div class="simple-only">
+    <p>When someone signs up, here's what happens behind the scenes:</p>
+    <ol>
+      <li>We check if the email is already taken</li>
+      <li>We <strong>scramble</strong> the password with Argon2id, an algorithm that uses 64MB of memory per hash, making it extremely hard to crack</li>
+      <li>We generate a random verification code and email it to them</li>
+      <li>We create two tokens: a short-lived one for immediate use, and a long-lived one for refreshing</li>
+      <li>We log the event for auditing</li>
+    </ol>
+  </div>
+  <div class="tech-only">
+    <p>See the <a href="#how-auth-works">Authentication Lifecycle</a> section for the full registration flow diagram. Key implementation details:</p>
+    <ul>
+      <li>Email verification token: <code>crypto.randomBytes(32).toString('hex')</code> &rarr; 64 hex chars</li>
+      <li>Stored as SHA-256 hash (if DB is breached, raw tokens are useless)</li>
+      <li>Email sent via <code>void emailService.sendVerificationEmail()</code> (fire-and-forget, errors logged but don't break registration)</li>
+      <li>ConflictError (409) on duplicate email, not generic 400</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== 10. LOGIN & MFA ======== -->
+<section id="login">
+  <h2>Login &amp; MFA</h2>
+  <div class="simple-only">
+    <h3>Regular Login</h3>
+    <p>You enter your email and password. If correct, you get your tokens and you're in.</p>
+    <h3>What if someone guesses wrong?</h3>
+    <p>After <strong>5 wrong guesses</strong>, the account locks for <strong>15 minutes</strong>. This prevents hackers from trying thousands of passwords.</p>
+    <h3>Two-Factor Authentication (MFA)</h3>
+    <p>If you've turned on MFA, logging in with your password isn't enough. You also need a <strong>6-digit code</strong> from an app like Google Authenticator. This code changes every 30 seconds. Even if a hacker knows your password, they can't get in without your phone.</p>
+    <p>You also get <strong>8 backup codes</strong> when you set up MFA. Each can be used once if you lose your phone.</p>
+  </div>
+  <div class="tech-only">
+    <h3>Account Lockout Implementation</h3>
+    <pre><code><span class="cmt">// Redis-backed counter with TTL (survives server restarts)</span>
+<span class="kw">const</span> key = <span class="str">`failed_login:${userId}`</span>;
+<span class="kw">const</span> attempts = <span class="kw">await</span> redis.<span class="fn">incr</span>(key);     <span class="cmt">// Atomic increment</span>
+<span class="kw">await</span> redis.<span class="fn">expire</span>(key, <span class="num">900</span>);               <span class="cmt">// 15 min TTL</span>
+
+<span class="kw">if</span> (attempts >= <span class="num">5</span>) {
+  <span class="kw">await</span> prisma.user.<span class="fn">update</span>({
+    where: { id: user.id },
+    data: { lockedUntil: <span class="kw">new</span> <span class="type">Date</span>(Date.<span class="fn">now</span>() + <span class="num">15</span> * <span class="num">60</span> * <span class="num">1000</span>) },
+  });
+}</code></pre>
+    <h3>MFA Challenge Flow</h3>
+    <p>When <code>user.mfaEnabled === true</code>, login returns a short-lived MFA challenge token (type: <code>mfa_challenge</code>, 15min expiry) instead of full tokens. The client must then call <code>POST /mfa/verify-login</code> with this token + a valid TOTP code to receive full access/refresh tokens.</p>
+    <p>TOTP secrets stored encrypted: <code>AES-256-GCM(secret, MFA_ENCRYPTION_KEY)</code> &rarr; <code>iv:authTag:ciphertext</code>. Decrypted only during verification.</p>
+  </div>
+</section>
+
+<!-- ======== 11. TOKENS ======== -->
+<section id="tokens">
+  <h2>Token System</h2>
+  <div class="simple-only">
+    <div class="callout info">
+      <div class="callout-title">Access Token (Short Pass)</div>
+      <p style="margin-bottom:0">Lives for <strong>15 minutes</strong>. Sent with every request. If it gets stolen, it's only useful for 15 minutes. Signed with RSA cryptography so it's impossible to forge.</p>
+    </div>
+    <div class="callout success">
+      <div class="callout-title">Refresh Token (Long Pass)</div>
+      <p style="margin-bottom:0">Lives for <strong>7 days</strong>. Only used to get new access tokens. Every time it's used, it self-destructs and a new one is created. If someone tries to reuse an old one, <strong>all sessions get killed</strong>.</p>
+    </div>
+    <div class="callout warning">
+      <div class="callout-title">Blacklist (Logout)</div>
+      <p style="margin-bottom:0">When you log out, your access token goes on a "banned list" in Redis. Any request with that token is immediately rejected.</p>
+    </div>
+  </div>
+  <div class="tech-only">
+    <h3>Token Lifecycle State Machine</h3>
+    <div class="diagram">
+<span class="green">ACTIVE</span> ──── refresh ───> <span class="green">NEW ACTIVE</span> (same family, new jti)
+   |                         |
+   | old token:              | old token:
+   | revokedAt = now()       | replacedBy = newToken.id
+   v                         v
+<span class="yellow">REVOKED</span>                 <span class="yellow">REVOKED</span>
+   |
+   | if reused:
+   v
+<span class="red">ENTIRE FAMILY REVOKED</span>   <span class="cmt">&larr; theft detection: all tokens in family killed</span>
+
+<span class="cmt">Key fields per RefreshToken record:</span>
+  tokenHash:  SHA-256(jwt)       <span class="cmt">Never store raw JWT</span>
+  family:     uuid               <span class="cmt">Groups all rotated tokens</span>
+  expiresAt:  DateTime           <span class="cmt">From JWT exp claim</span>
+  revokedAt:  DateTime?          <span class="cmt">null = active</span>
+  replacedBy: String?            <span class="cmt">Points to successor token ID</span>
+    </div>
+    <h3>Token Cleanup Job</h3>
+    <pre><code><span class="cmt">// Runs hourly via setInterval (unref'd so it won't prevent process exit)</span>
+<span class="kw">await</span> prisma.refreshToken.<span class="fn">deleteMany</span>({
+  where: { OR: [
+    { expiresAt: { lt: now } },                      <span class="cmt">// Expired tokens</span>
+    { revokedAt: { not: <span class="kw">null</span>, lt: revokedCutoff } },  <span class="cmt">// Revoked >24h ago</span>
+  ]},
+});</code></pre>
+  </div>
+</section>
+
+<!-- ======== 12. PASSWORD RESET ======== -->
+<section id="password-reset">
+  <h2>Password Reset</h2>
+  <div class="simple-only">
+    <ol>
+      <li>User clicks "Forgot Password" and enters their email</li>
+      <li>We <strong>always</strong> say "check your email" even if the email doesn't exist, so hackers can't check which emails are registered</li>
+      <li>We email a secret reset link (valid for 1 hour)</li>
+      <li>User clicks the link, enters a new password</li>
+      <li>We update the password and <strong>log out all devices</strong> (all refresh tokens get revoked)</li>
+    </ol>
+  </div>
+  <div class="tech-only">
+    <p>Two-step process: <code>POST /auth/forgot-password</code> (generates token) &rarr; <code>POST /auth/reset-password/:token</code> (consumes token). The reset token is a 32-byte random hex string, stored as SHA-256. Expiry: 1 hour (<code>PASSWORD_RESET_EXPIRY_MS = 60 * 60 * 1000</code>). After reset, all user's refresh tokens are revoked with <code>revokedAt = now()</code> to force re-authentication on every device.</p>
+  </div>
+</section>
+
+<!-- ======== 13. OAUTH ======== -->
+<section id="oauth">
+  <h2>OAuth (Google &amp; GitHub)</h2>
+  <div class="simple-only">
+    <p>Users can sign in with their Google or GitHub accounts instead of creating a password. When they click "Login with Google":</p>
+    <ol>
+      <li>We redirect them to Google's login page</li>
+      <li>Google verifies them and sends us back their email/name</li>
+      <li>If they're new, we create an account. If they exist, we link the accounts</li>
+      <li>They get their tokens and are logged in</li>
+    </ol>
+    <p>This is <strong>optional</strong>. It only works if you configure Google/GitHub API keys in the environment variables.</p>
+  </div>
+  <div class="tech-only">
+    <p>Implemented via Passport.js strategies. Each strategy is conditionally loaded. If the client ID env var is not set, the strategy is skipped with a warning log. Account resolution logic: (1) find by <code>OAuthAccount(provider, providerId)</code>, (2) find by email match, (3) create new user with <code>emailVerified: true</code>.</p>
+  </div>
+</section>
+
+<!-- ======== 14. ADMIN ======== -->
+<section id="admin">
+  <h2>Admin Panel</h2>
+  <div class="simple-only">
+    <p>Admin users (role: ADMIN) get access to extra endpoints:</p>
+    <ul>
+      <li><strong>User Management</strong>: list all users, search, filter, lock/unlock accounts, change roles</li>
+      <li><strong>Audit Logs</strong>: view every security event (who logged in, from where, when)</li>
+      <li><strong>Dashboard</strong>: 7-day statistics on signups, logins, and active users</li>
+    </ul>
+    <p>Regular users get a "403 Forbidden" error if they try to access these.</p>
+  </div>
+  <div class="tech-only">
+    <p>All admin routes are guarded by <code>authenticate</code> + <code>authorize('ADMIN')</code> middleware. The authorize middleware checks <code>req.userRole</code> (set by authenticate). The admin service supports paginated queries with Zod-validated params: <code>page</code>, <code>limit</code> (max 100), <code>role</code> filter, <code>status</code> filter (active/locked/deleted), <code>dateFrom</code>/<code>dateTo</code>, <code>search</code> (email fuzzy match), <code>sortBy</code>/<code>sortOrder</code>.</p>
+  </div>
+</section>
+
+<!-- ======== 15. ENDPOINTS ======== -->
+<section id="endpoints">
+  <h2>All API Endpoints</h2>
+
+  <h3>Authentication</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/register</code></td><td><span class="badge badge-public">Public</span></td><td>Register new account</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/login</code></td><td><span class="badge badge-public">Public</span></td><td>Login with email &amp; password</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/refresh</code></td><td><span class="badge badge-public">Public</span></td><td>Exchange refresh token for new pair</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/logout</code></td><td><span class="badge badge-auth">Auth</span></td><td>Blacklist current access token</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/verify-email/:token</code></td><td><span class="badge badge-public">Public</span></td><td>Confirm email address</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/forgot-password</code></td><td><span class="badge badge-public">Public</span></td><td>Initiate password reset</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/auth/reset-password/:token</code></td><td><span class="badge badge-public">Public</span></td><td>Complete password reset</td></tr>
+  </table></div>
+
+  <h3>Multi-Factor Authentication</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/mfa/enable</code></td><td><span class="badge badge-auth">Auth</span></td><td>Generate TOTP secret &amp; backup codes</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/mfa/verify</code></td><td><span class="badge badge-auth">Auth</span></td><td>Activate MFA with TOTP code</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/mfa/verify-login</code></td><td><span class="badge badge-public">Public</span></td><td>Complete MFA login challenge</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/mfa/verify-backup-code</code></td><td><span class="badge badge-public">Public</span></td><td>Use backup code for MFA</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/v1/mfa/disable</code></td><td><span class="badge badge-auth">Auth</span></td><td>Disable MFA (requires password + TOTP)</td></tr>
+  </table></div>
+
+  <h3>User &amp; Sessions</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/users/me</code></td><td><span class="badge badge-auth">Auth</span></td><td>Get current user profile</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/sessions</code></td><td><span class="badge badge-auth">Auth</span></td><td>List active sessions</td></tr>
+    <tr><td><span class="badge badge-delete">DEL</span></td><td><code>/api/v1/sessions/:id</code></td><td><span class="badge badge-auth">Auth</span></td><td>Revoke a session</td></tr>
+  </table></div>
+
+  <h3>Admin <span class="tech-only" style="display:inline">(RBAC: ADMIN role required)</span></h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/admin/users</code></td><td><span class="badge badge-admin">Admin</span></td><td>List all users (paginated, filterable)</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/admin/users/:id</code></td><td><span class="badge badge-admin">Admin</span></td><td>Get user details</td></tr>
+    <tr><td><span class="badge badge-patch">PATCH</span></td><td><code>/api/v1/admin/users/:id</code></td><td><span class="badge badge-admin">Admin</span></td><td>Update user (role, lock, verify)</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/admin/audit-logs</code></td><td><span class="badge badge-admin">Admin</span></td><td>View audit trail</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/v1/admin/dashboard</code></td><td><span class="badge badge-admin">Admin</span></td><td>Dashboard stats (7-day trends)</td></tr>
+  </table></div>
+
+  <h3>System</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/health</code></td><td>Health check (Docker liveness probe)</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/metrics</code></td><td>Prometheus metrics</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api-docs</code></td><td>Swagger UI (interactive docs)</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/demo</code></td><td>Interactive demo page</td></tr>
+  </table></div>
+</section>
+
+<!-- ======== 16. ERROR HANDLING ======== -->
+<section id="error-handling">
+  <h2>Error Handling</h2>
+
+  <div class="simple-only">
+    <p>Every error returns a consistent format so your frontend always knows what to expect:</p>
+    <pre><code>{
+  "success": false,
+  "error": {
+    "code": "AUTHENTICATION_ERROR",
+    "message": "Invalid email or password",
+    "statusCode": 401
+  }
+}</code></pre>
+    <p>Errors never expose sensitive information. In production, unexpected errors return a generic message while the full details are logged server-side.</p>
+  </div>
+
+  <div class="tech-only">
+    <h3>Error Class Hierarchy</h3>
+    <pre><code><span class="type">AppError</span> (base)
+  ├── <span class="type">AuthenticationError</span>  <span class="cmt">// 401 - invalid token, wrong password</span>
+  ├── <span class="type">AuthorizationError</span>   <span class="cmt">// 403 - insufficient role</span>
+  ├── <span class="type">ValidationError</span>      <span class="cmt">// 400 - Zod schema failures (includes field errors[])</span>
+  ├── <span class="type">NotFoundError</span>        <span class="cmt">// 404 - user/resource not found</span>
+  ├── <span class="type">ConflictError</span>        <span class="cmt">// 409 - duplicate email</span>
+  ├── <span class="type">RateLimitError</span>       <span class="cmt">// 429 - too many requests</span>
+  └── <span class="type">InternalError</span>        <span class="cmt">// 500 - isOperational=false (masked in prod)</span></code></pre>
+    <p>The global <code>errorHandler</code> middleware catches all errors, maps Prisma errors (P2002 &rarr; 409, P2025 &rarr; 404), Zod errors to ValidationError, and masks non-operational errors in production (returns generic "An unexpected error occurred" while logging full stack trace).</p>
+  </div>
+</section>
+
+<!-- ======== 17. DOCKER ======== -->
+<section id="docker">
+  <h2>Docker &amp; Deployment</h2>
+
+  <div class="simple-only">
+    <p>The entire system runs with <strong>one command</strong>:</p>
+    <pre><code>docker-compose up</code></pre>
+    <p>This starts 5 services:</p>
+    <ol>
+      <li><strong>App</strong> (port 3000): the auth service itself</li>
+      <li><strong>PostgreSQL</strong> (port 5432): the database</li>
+      <li><strong>Redis</strong> (port 6379): fast cache for sessions and rate-limiting</li>
+      <li><strong>Prometheus</strong> (port 9090): collects performance metrics</li>
+      <li><strong>Grafana</strong> (port 3001): dashboards to monitor everything</li>
+    </ol>
+  </div>
+
+  <div class="tech-only">
+    <h3>Multi-Stage Dockerfile</h3>
+    <pre><code><span class="cmt"># Stage 1: Build (full Node, all devDeps)</span>
+<span class="kw">FROM</span> node:20-alpine <span class="kw">AS</span> builder
+<span class="kw">RUN</span> npm ci                    <span class="cmt"># Deterministic install</span>
+<span class="kw">RUN</span> npx prisma generate        <span class="cmt"># Generate typed client</span>
+<span class="kw">RUN</span> npm run build              <span class="cmt"># tsc &rarr; dist/</span>
+
+<span class="cmt"># Stage 2: Production (minimal image)</span>
+<span class="kw">FROM</span> node:20-alpine
+<span class="kw">RUN</span> apk add --no-cache dumb-init openssl
+<span class="kw">COPY</span> --from=builder /app/dist ./dist
+<span class="kw">COPY</span> --from=builder /app/node_modules ./node_modules
+<span class="kw">COPY</span> --from=builder /app/prisma ./prisma
+<span class="kw">COPY</span> --from=builder /app/public ./public
+<span class="kw">USER</span> node                      <span class="cmt"># Non-root user</span>
+<span class="kw">CMD</span> ["dumb-init", "node", "dist/server.js"]  <span class="cmt"># PID 1 handler</span></code></pre>
+    <h3>docker-compose.yml</h3>
+    <p>5 services on a shared bridge network (<code>auth-network</code>). App depends on postgres/redis health checks. Postgres uses <code>pg_isready</code>, Redis uses <code>redis-cli ping</code>. Data persisted via named volumes. Docker entrypoint generates RSA keys if missing, runs Prisma migrations, and seeds in dev.</p>
+  </div>
+</section>
+
+<!-- ======== 18. MONITORING ======== -->
+<section id="monitoring">
+  <h2>Monitoring</h2>
+
+  <div class="simple-only">
+    <p>The service automatically tracks its own health:</p>
+    <ul>
+      <li><strong>Structured Logs</strong>: every request is logged as JSON with a unique ID, timing, and user info</li>
+      <li><strong>Prometheus Metrics</strong>: request counts, response times, error rates, active sessions</li>
+      <li><strong>Grafana Dashboards</strong>: visual graphs showing traffic, latency, and auth success/failure rates</li>
+      <li><strong>Health Check</strong>: a <code>/health</code> endpoint that Docker uses to know if the service is alive</li>
+    </ul>
+  </div>
+
+  <div class="tech-only">
+    <h3>Prometheus Metrics Collected</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Metric</th><th>Type</th><th>Labels</th></tr>
+      <tr><td><code>http_requests_total</code></td><td>Counter</td><td>method, path, status_code</td></tr>
+      <tr><td><code>http_request_duration_seconds</code></td><td>Histogram</td><td>method, path</td></tr>
+      <tr><td><code>auth_login_total</code></td><td>Counter</td><td>result (success/failure/locked)</td></tr>
+      <tr><td><code>auth_active_sessions</code></td><td>Gauge</td><td>-</td></tr>
+      <tr><td><code>auth_rate_limit_hits_total</code></td><td>Counter</td><td>-</td></tr>
+      <tr><td>Default process metrics</td><td>Various</td><td>CPU, memory, event loop lag, GC</td></tr>
+    </table></div>
+    <p>Logging via Pino (JSON in production, pretty-printed in dev). Automatic field redaction for passwords, tokens, and secrets. Every log entry includes <code>requestId</code> for distributed tracing.</p>
+  </div>
+</section>
+
+<!-- ======== 19. TESTING ======== -->
+<section id="testing">
+  <h2>Testing</h2>
+
+  <div class="simple-only">
+    <p>The entire system has <strong>136 automated tests</strong> that verify everything works correctly:</p>
+    <div class="table-wrap"><table>
+      <tr><th>Type</th><th>Count</th><th>What It Tests</th></tr>
+      <tr><td><strong>Unit Tests</strong></td><td>86</td><td>Individual functions in isolation (password hashing, JWT, crypto, validation schemas)</td></tr>
+      <tr><td><strong>Integration Tests</strong></td><td>40</td><td>Full HTTP requests through the server (register, login, admin, MFA)</td></tr>
+      <tr><td><strong>E2E Tests</strong></td><td>10</td><td>Complete user journey: register &rarr; verify email &rarr; login &rarr; enable MFA &rarr; MFA login &rarr; refresh &rarr; sessions &rarr; logout</td></tr>
+    </table></div>
+    <p>Run them all with <code>npm test</code>. The project requires 80% code coverage to pass.</p>
+  </div>
+
+  <div class="tech-only">
+    <h3>Test Architecture</h3>
+    <pre><code><span class="cmt">// Coverage thresholds (jest.config.js)</span>
+coverageThreshold: {
+  global: { branches: <span class="num">70</span>, functions: <span class="num">80</span>, lines: <span class="num">80</span>, statements: <span class="num">80</span> }
+}
+
+<span class="cmt">// Test commands</span>
+npm run test:unit        <span class="cmt">// src/**/*.test.ts (86 tests)</span>
+npm run test:integration <span class="cmt">// tests/integration/ (40 tests, real DB)</span>
+npm run test:e2e         <span class="cmt">// tests/e2e/ (10 steps, sequential flow)</span></code></pre>
+    <h3>Key Testing Patterns</h3>
+    <ul>
+      <li><strong>Unit tests</strong>: Pure function testing (argon2 roundtrip, JWT sign/verify, crypto encrypt/decrypt, Zod schema edge cases). No DB or network calls.</li>
+      <li><strong>Integration tests</strong>: Supertest against real Express app with real Prisma (test DB) and real Redis. <code>afterEach</code> cleans all tables.</li>
+      <li><strong>E2E tests</strong>: Sequential 10-step journey using <code>setup-e2e.ts</code> (no <code>afterEach</code> cleanup, only <code>afterAll</code>) so state persists between steps.</li>
+      <li><strong>Test helpers</strong>: <code>factories.ts</code> provides <code>createTestUser()</code> and <code>createTestApp()</code> with TestAgent for cookie/header persistence.</li>
+      <li><strong>TypeScript config</strong>: <code>tsconfig.test.json</code> extends base with <code>noUnusedLocals: false</code> to allow test-scoped variables.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<section style="text-align:center;padding:48px 0;border-top:1px solid var(--border);margin-top:32px">
+  <p style="color:var(--text3);font-size:13px">
+    Auth Microservice &bull; 136 tests &bull; 25 endpoints &bull; 14 security layers
+    <br>Built with Node.js, TypeScript, PostgreSQL, Redis, and Docker
+  </p>
+</section>
+
+</main>
+</div>
+
+<script>
+// ---- Mode Toggle ----
+function setMode(mode) {
+  document.body.setAttribute('data-mode', mode);
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === mode);
+  });
+  localStorage.setItem('docs-mode', mode);
+}
+
+// Restore mode from localStorage
+const savedMode = localStorage.getItem('docs-mode');
+if (savedMode) setMode(savedMode);
+
+// ---- Sidebar Active State ----
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (window.scrollY >= top) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+
+// ---- Endpoint toggle ----
+document.querySelectorAll('.endpoint-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const body = header.nextElementSibling;
+    if (body) body.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
