@@ -3,191 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auth Microservice - Documentation</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0b10;--bg2:#12141d;--bg3:#1a1d2b;--bg4:#242838;
-  --border:#2a2e42;--text:#d1d5e8;--text2:#8b90a8;--text3:#5c6080;
-  --accent:#6c8cff;--accent2:#4a6adf;--accent-glow:rgba(108,140,255,.12);
-  --green:#4ade80;--green-dim:rgba(74,222,128,.12);
-  --red:#f87171;--red-dim:rgba(248,113,113,.12);
-  --orange:#fb923c;--orange-dim:rgba(251,146,60,.12);
-  --yellow:#fbbf24;--yellow-dim:rgba(251,191,36,.12);
-  --purple:#a78bfa;--purple-dim:rgba(167,139,250,.12);
-  --cyan:#22d3ee;--cyan-dim:rgba(34,211,238,.12);
-  --radius:10px;
-  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;
-  --font-mono:'SF Mono',SFMono-Regular,ui-monospace,'DejaVu Sans Mono',Menlo,Consolas,monospace;
-}
-html{font-size:15px;scroll-behavior:smooth}
-body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
-
-/* ---- Scrollbar ---- */
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-
-/* ---- Mode Toggle ---- */
-.mode-bar{position:sticky;top:0;z-index:100;background:rgba(10,11,16,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 0}
-.mode-bar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.mode-bar h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
-.mode-bar h1 span.logo{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:18px}
-.toggle-group{display:flex;background:var(--bg3);border-radius:8px;border:1px solid var(--border);overflow:hidden}
-.toggle-btn{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:var(--font-sans);transition:all .2s}
-.toggle-btn:hover{color:var(--text)}
-.toggle-btn.active{background:var(--accent);color:#fff}
-
-/* ---- Sidebar Nav ---- */
-.page-layout{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;gap:48px}
-.sidebar-nav{width:240px;flex-shrink:0;position:sticky;top:72px;align-self:flex-start;max-height:calc(100vh - 90px);overflow-y:auto;padding:24px 0}
-.sidebar-nav::-webkit-scrollbar{width:4px}
-.sidebar-nav a{display:block;padding:6px 14px;font-size:13px;color:var(--text2);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.5}
-.sidebar-nav a:hover{color:var(--text);border-left-color:var(--border)}
-.sidebar-nav a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600}
-.sidebar-nav .nav-section{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;padding:16px 14px 6px;margin-top:8px}
-.sidebar-nav .nav-section:first-child{margin-top:0}
-
-/* ---- Main Content ---- */
-.content{flex:1;min-width:0;padding:32px 0 80px}
-.content section{margin-bottom:64px}
-.content h2{font-size:28px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px;padding-top:20px}
-.content h3{font-size:19px;font-weight:700;color:#fff;margin-top:32px;margin-bottom:12px;letter-spacing:-.3px}
-.content h4{font-size:15px;font-weight:700;color:var(--accent);margin-top:24px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;font-size:12px}
-.content p{margin-bottom:16px;color:var(--text)}
-.content ul,.content ol{margin-bottom:16px;padding-left:24px}
-.content li{margin-bottom:6px;color:var(--text)}
-.content li::marker{color:var(--text3)}
-.content a{color:var(--accent);text-decoration:none}
-.content a:hover{text-decoration:underline}
-
-/* ---- Callout Boxes ---- */
-.callout{border-radius:var(--radius);padding:16px 20px;margin:20px 0;border:1px solid var(--border);font-size:14px;line-height:1.6}
-.callout.info{background:var(--accent-glow);border-color:rgba(108,140,255,.25)}
-.callout.success{background:var(--green-dim);border-color:rgba(74,222,128,.25)}
-.callout.warning{background:var(--orange-dim);border-color:rgba(251,146,60,.25)}
-.callout.purple{background:var(--purple-dim);border-color:rgba(167,139,250,.25)}
-.callout-title{font-weight:700;margin-bottom:4px;font-size:13px}
-.callout.info .callout-title{color:var(--accent)}
-.callout.success .callout-title{color:var(--green)}
-.callout.warning .callout-title{color:var(--orange)}
-.callout.purple .callout-title{color:var(--purple)}
-
-/* ---- Code Blocks ---- */
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;margin:16px 0;font-size:13px;line-height:1.65;font-family:var(--font-mono)}
-code{font-family:var(--font-mono);font-size:.9em;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--cyan)}
-pre code{background:none;padding:0;color:var(--text);font-size:13px}
-
-/* Syntax colors */
-.kw{color:#c678dd}.str{color:#98c379}.num{color:#d19a66}.cmt{color:#5c6370;font-style:italic}.fn{color:#61afef}.type{color:#e5c07b}.op{color:#56b6c2}.dec{color:#e06c75}
-
-/* ---- Diagram Boxes ---- */
-.diagram{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.8;white-space:pre;color:var(--text2)}
-.diagram .highlight{color:var(--accent);font-weight:700}
-.diagram .green{color:var(--green)}
-.diagram .red{color:var(--red)}
-.diagram .yellow{color:var(--yellow)}
-.diagram .purple{color:var(--purple)}
-.diagram .cyan{color:var(--cyan)}
-
-/* ---- Tables ---- */
-.table-wrap{overflow-x:auto;margin:16px 0}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:10px 14px;background:var(--bg3);color:var(--text2);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
-td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
-tr:last-child td{border-bottom:none}
-
-/* ---- Badges ---- */
-.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
-.badge-get{background:var(--green-dim);color:var(--green)}
-.badge-post{background:var(--accent-glow);color:var(--accent)}
-.badge-patch{background:var(--yellow-dim);color:var(--yellow)}
-.badge-delete{background:var(--red-dim);color:var(--red)}
-.badge-public{background:var(--green-dim);color:var(--green)}
-.badge-auth{background:var(--accent-glow);color:var(--accent)}
-.badge-admin{background:var(--purple-dim);color:var(--purple)}
-
-/* ---- Flow Steps ---- */
-.flow-steps{display:flex;flex-direction:column;gap:0;margin:20px 0}
-.flow-step{display:flex;gap:16px;position:relative;padding-bottom:24px}
-.flow-step:last-child{padding-bottom:0}
-.flow-step:last-child .flow-line{display:none}
-.flow-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;position:relative;z-index:1}
-.flow-line{position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--border)}
-.flow-body{flex:1;padding-top:6px}
-.flow-body strong{color:#fff}
-.flow-body p{margin-bottom:4px;font-size:14px}
-
-/* ---- File Tree ---- */
-.file-tree{font-family:var(--font-mono);font-size:13px;line-height:1.9;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:16px 0}
-.file-tree .dir{color:var(--accent);font-weight:600}
-.file-tree .file{color:var(--text2)}
-.file-tree .desc{color:var(--text3);font-family:var(--font-sans);font-size:12px}
-
-/* ---- Hero ---- */
-.hero{text-align:center;padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
-.hero h2{font-size:40px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:12px;line-height:1.2}
-.hero h2 span{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:17px;color:var(--text2);max-width:620px;margin:0 auto 24px}
-.hero-stats{display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap}
-.hero-stat{text-align:center}
-.hero-stat .num{font-size:28px;font-weight:800;color:#fff}
-.hero-stat .label{font-size:12px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
-
-/* ---- Responsive ---- */
-@media(max-width:860px){
-  .page-layout{flex-direction:column;gap:0}
-  .sidebar-nav{display:none}
-  .content{padding:24px 0 60px}
-  .hero h2{font-size:28px}
-  .hero-stats{gap:20px}
-}
-
-/* ---- Hidden by mode ---- */
-[data-mode="simple"] .tech-only{display:none!important}
-[data-mode="technical"] .simple-only{display:none!important}
-
-/* ---- Animated border ---- */
-.glow-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:16px 0;background:var(--bg2);position:relative;overflow:hidden}
-.glow-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,var(--accent-glow) 60deg,transparent 120deg);animation:rotate 8s linear infinite;opacity:.5}
-.glow-card>*{position:relative;z-index:1}
-@keyframes rotate{100%{transform:rotate(360deg)}}
-.glow-card-inner{background:var(--bg2);border-radius:8px;padding:24px;position:relative;z-index:1}
-
-/* ---- Endpoint Cards ---- */
-.endpoint{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:12px 0;overflow:hidden}
-.endpoint-header{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px}
-.endpoint-header:hover{background:var(--bg3)}
-.endpoint-header .method{font-weight:800;font-family:var(--font-mono);font-size:12px;min-width:56px}
-.endpoint-header .path{font-family:var(--font-mono);color:var(--text2);flex:1}
-.endpoint-header .desc{color:var(--text3);font-size:13px}
-.endpoint-body{padding:16px;border-top:1px solid var(--border);display:none;font-size:13px}
-.endpoint-body.open{display:block}
-
-/* ---- Print style ---- */
-@media print{body{background:#fff;color:#222}pre{background:#f5f5f5}h2,h3{color:#000}.mode-bar{position:static}}
-</style>
+<title>Auth Microservice | Pugalenthi Magendran</title>
+<meta name="description" content="A production-grade authentication microservice with JWT RS256, TOTP-based MFA, OAuth, refresh token rotation, and Redis rate limiting. 136 tests.">
+<link rel="canonical" href="https://pugalenthimagendran.com/projects/auth-microservice/">
+<meta property="og:title" content="Auth Microservice | Pugalenthi Magendran">
+<meta property="og:description" content="A production-grade authentication microservice with JWT, MFA, OAuth, and role-based access control.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pugalenthimagendran.com/projects/auth-microservice/">
+<meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Auth Microservice | Pugalenthi Magendran">
+<meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+<meta name="twitter:description" content="A production-grade authentication microservice with JWT, MFA, OAuth, and role-based access control.">
+<meta name="view-transition" content="same-origin">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css?v=9">
+<link rel="stylesheet" href="../project-detail.css?v=1">
 </head>
-<body data-mode="simple">
+<body class="page-project-detail" data-mode="simple">
 
-<!-- ---- Sticky Mode Bar ---- -->
-<div class="mode-bar">
-  <div class="mode-bar-inner">
-    <h1><span class="logo">&#9670;</span> Auth Microservice Docs</h1>
-    <div style="display:flex;align-items:center;gap:16px">
-      <div class="toggle-group">
-        <button class="toggle-btn active" onclick="setMode('simple')">Simple</button>
-        <button class="toggle-btn" onclick="setMode('technical')">Technical</button>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../" class="active">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../../blog/">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../#contact">Contact</a>
       </div>
-      <a href="https://github.com/pugalenthi0928/auth-microservice" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-family:var(--font-sans);transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='#fff'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../../blog/">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+
+  <main>
+  <!-- ---- Mode Bar ---- -->
+  <div class="mode-bar">
+    <div class="mode-bar-inner">
+      <h1>Auth Microservice</h1>
+      <div class="mode-bar-right">
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="setMode('simple')">Simple</button>
+          <button class="toggle-btn" onclick="setMode('technical')">Technical</button>
+        </div>
+        <a href="https://github.com/pugalenthi0928/auth-microservice" target="_blank" rel="noopener" class="mode-bar-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="page-layout">
+  <div class="page-layout">
 
 <!-- ---- Sidebar Navigation ---- -->
 <nav class="sidebar-nav" id="sidebar">
@@ -222,7 +122,7 @@ tr:last-child td{border-bottom:none}
 </nav>
 
 <!-- ---- Main Content ---- -->
-<main class="content" id="content">
+<div class="content" id="content">
 
 <!-- ======== HERO ======== -->
 <div class="hero">
@@ -1053,56 +953,68 @@ npm run test:e2e         <span class="cmt">// tests/e2e/ (10 steps, sequential f
   </div>
 </section>
 
-<!-- ======== FOOTER ======== -->
-<section style="text-align:center;padding:48px 0;border-top:1px solid var(--border);margin-top:32px">
-  <p style="color:var(--text3);font-size:13px">
-    Auth Microservice &bull; 136 tests &bull; 25 endpoints &bull; 14 security layers
-    <br>Built with Node.js, TypeScript, PostgreSQL, Redis, and Docker
-  </p>
-</section>
+  </div>
+  </div>
+  </main>
 
-</main>
-</div>
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../../blog/">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS & JS</span></span>
+      </div>
+    </div>
+  </footer>
 
-<script>
-// ---- Mode Toggle ----
-function setMode(mode) {
-  document.body.setAttribute('data-mode', mode);
-  document.querySelectorAll('.toggle-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === mode);
+  <script src="../../script.js?v=9"></script>
+  <script>
+  function setMode(mode) {
+    document.body.setAttribute('data-mode', mode);
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === mode);
+    });
+    localStorage.setItem('docs-mode', mode);
+  }
+
+  const savedMode = localStorage.getItem('docs-mode');
+  if (savedMode) setMode(savedMode);
+
+  // Sidebar active tracking
+  const pdSections = document.querySelectorAll('.content section[id]');
+  const pdNavLinks = document.querySelectorAll('.sidebar-nav a');
+  const pdObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pdNavLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.sidebar-nav a[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-25% 0px -65% 0px' });
+  pdSections.forEach(s => pdObserver.observe(s));
+
+  // Endpoint toggle
+  document.querySelectorAll('.endpoint-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const body = header.nextElementSibling;
+      if (body) body.classList.toggle('open');
+    });
   });
-  localStorage.setItem('docs-mode', mode);
-}
-
-// Restore mode from localStorage
-const savedMode = localStorage.getItem('docs-mode');
-if (savedMode) setMode(savedMode);
-
-// ---- Sidebar Active State ----
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.sidebar-nav a');
-
-function updateActiveNav() {
-  let current = '';
-  sections.forEach(section => {
-    const top = section.offsetTop - 100;
-    if (window.scrollY >= top) current = section.id;
-  });
-  navLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-  });
-}
-
-window.addEventListener('scroll', updateActiveNav, { passive: true });
-updateActiveNav();
-
-// ---- Endpoint toggle ----
-document.querySelectorAll('.endpoint-header').forEach(header => {
-  header.addEventListener('click', () => {
-    const body = header.nextElementSibling;
-    if (body) body.classList.toggle('open');
-  });
-});
-</script>
+  </script>
 </body>
 </html>
