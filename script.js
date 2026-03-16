@@ -234,6 +234,27 @@ function initCustomCursor() {
   let ringX = 0, ringY = 0;
   let glowX = 0, glowY = 0;
   let isVisible = false;
+  let cursorRafId = null;
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.25;
+    ringY += (mouseY - ringY) * 0.25;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+
+    if (glow) {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      glow.style.left = glowX + 'px';
+      glow.style.top = glowY + 'px';
+    }
+
+    if (isVisible) {
+      cursorRafId = requestAnimationFrame(animateRing);
+    } else {
+      cursorRafId = null;
+    }
+  }
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -251,6 +272,7 @@ function initCustomCursor() {
       ringY = mouseY;
       glowX = mouseX;
       glowY = mouseY;
+      if (!cursorRafId) cursorRafId = requestAnimationFrame(animateRing);
     }
   });
 
@@ -267,26 +289,9 @@ function initCustomCursor() {
       ring.classList.add('active');
       if (glow) glow.classList.add('active');
       isVisible = true;
+      if (!cursorRafId) cursorRafId = requestAnimationFrame(animateRing);
     }
   });
-
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.25;
-    ringY += (mouseY - ringY) * 0.25;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-
-    // Mouse glow follows with slower lerp for atmospheric trailing
-    if (glow) {
-      glowX += (mouseX - glowX) * 0.08;
-      glowY += (mouseY - glowY) * 0.08;
-      glow.style.left = glowX + 'px';
-      glow.style.top = glowY + 'px';
-    }
-
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
 
   // Bind cursor hover effects — exported for reuse
   bindCursorHover(document, ring);
@@ -627,11 +632,21 @@ function initHeroParallax() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
 
-  window.addEventListener('scroll', () => {
+  let heroTicking = false;
+
+  function updateHeroParallax() {
     const scrolled = window.scrollY;
     if (scrolled < window.innerHeight) {
       hero.style.transform = `translateY(${scrolled * 0.15}px)`;
       hero.style.opacity = 1 - (scrolled / (window.innerHeight * 1.2));
+    }
+    heroTicking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!heroTicking) {
+      heroTicking = true;
+      requestAnimationFrame(updateHeroParallax);
     }
   }, { passive: true });
 }
@@ -735,17 +750,44 @@ function initMomentumScroll() {
 
   let currentY = window.scrollY;
   let targetY = currentY;
-  let isRunning = true;
   const lerp = 0.09;
   const threshold = 0.5;
+  let momentumRafId = null;
 
   function getMaxScroll() {
     return document.body.scrollHeight - window.innerHeight;
   }
 
+  // Sync when user grabs scrollbar
+  let isSyncing = false;
+
+  function animate() {
+    const diff = targetY - currentY;
+    if (Math.abs(diff) > threshold) {
+      currentY += diff * lerp;
+      isSyncing = true;
+      window.scrollTo(0, Math.round(currentY));
+      isSyncing = false;
+      momentumRafId = requestAnimationFrame(animate);
+    } else if (Math.abs(diff) > 0.01) {
+      currentY = targetY;
+      isSyncing = true;
+      window.scrollTo(0, Math.round(currentY));
+      isSyncing = false;
+      momentumRafId = null;
+    } else {
+      momentumRafId = null;
+    }
+  }
+
+  function startAnimate() {
+    if (!momentumRafId) momentumRafId = requestAnimationFrame(animate);
+  }
+
   window.addEventListener('wheel', (e) => {
     targetY += e.deltaY;
     targetY = Math.max(0, Math.min(targetY, getMaxScroll()));
+    startAnimate();
   }, { passive: true });
 
   // Sync on resize
@@ -753,11 +795,8 @@ function initMomentumScroll() {
     targetY = Math.min(targetY, getMaxScroll());
   }, { passive: true });
 
-  // Sync when user grabs scrollbar
-  let isSyncing = false;
   window.addEventListener('scroll', () => {
     if (!isSyncing) {
-      // External scroll (scrollbar drag, programmatic) — sync
       const diff = Math.abs(window.scrollY - currentY);
       if (diff > 2) {
         targetY = window.scrollY;
@@ -766,31 +805,11 @@ function initMomentumScroll() {
     }
   }, { passive: true });
 
-  function animate() {
-    if (!isRunning) return;
-
-    const diff = targetY - currentY;
-    if (Math.abs(diff) > threshold) {
-      currentY += diff * lerp;
-      isSyncing = true;
-      window.scrollTo(0, Math.round(currentY));
-      isSyncing = false;
-    } else if (Math.abs(diff) > 0.01) {
-      currentY = targetY;
-      isSyncing = true;
-      window.scrollTo(0, Math.round(currentY));
-      isSyncing = false;
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
   // Expose for nav links and back-to-top
   smoothScroller = {
     scrollTo: (y) => {
       targetY = Math.max(0, Math.min(y, getMaxScroll()));
+      startAnimate();
     },
     getCurrentY: () => currentY,
     getTargetY: () => targetY,
@@ -909,6 +928,8 @@ function initParallax() {
   // Clamp parallax offset to prevent elements drifting too far
   const MAX_OFFSET = 50; // px
 
+  let ticking = false;
+
   function updateParallax() {
     const scrollY = window.scrollY;
     const viewportCenter = scrollY + window.innerHeight / 2;
@@ -926,10 +947,18 @@ function initParallax() {
       el.style.translate = `0 ${offset}px`;
     });
 
-    requestAnimationFrame(updateParallax);
+    ticking = false;
   }
 
-  requestAnimationFrame(updateParallax);
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateParallax);
+    }
+  }, { passive: true });
+
+  // Run once on load
+  updateParallax();
 }
 
 
@@ -1133,9 +1162,14 @@ function initParticleCanvas() {
     mouseY = -9999;
   });
 
-  // Pause when tab hidden
+  // Pause when tab hidden — cancel RAF to save resources
   document.addEventListener('visibilitychange', () => {
     isTabVisible = !document.hidden;
+    if (document.hidden) {
+      if (animId) { cancelAnimationFrame(animId); animId = null; }
+    } else {
+      if (!animId) { animId = requestAnimationFrame(animate); }
+    }
   });
 
   // Responsive resize — recache hero dimensions
@@ -1227,16 +1261,21 @@ function initMarqueeBoost() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   let lastScroll = window.scrollY;
+  let marqueTicking = false;
 
-  function tick() {
-    const current = window.scrollY;
-    const velocity = Math.min(Math.abs(current - lastScroll), 60);
-    lastScroll = current;
-    const boost = 1 + velocity * 0.08;
-    marquees.forEach(m => m.style.setProperty('--marquee-speed', boost));
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  window.addEventListener('scroll', () => {
+    if (!marqueTicking) {
+      marqueTicking = true;
+      requestAnimationFrame(() => {
+        const current = window.scrollY;
+        const velocity = Math.min(Math.abs(current - lastScroll), 60);
+        lastScroll = current;
+        const boost = 1 + velocity * 0.08;
+        marquees.forEach(m => m.style.setProperty('--marquee-speed', boost));
+        marqueTicking = false;
+      });
+    }
+  }, { passive: true });
 }
 
 // ============================================

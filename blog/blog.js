@@ -30,6 +30,7 @@ async function loadBlogPosts() {
 
   try {
     const response = await fetch('posts.json');
+    if (!response.ok) throw new Error(response.statusText);
     const posts = await response.json();
 
     if (posts.length === 0) {
@@ -196,20 +197,27 @@ function initReadingProgress() {
   bar.className = 'reading-progress';
   document.body.appendChild(bar);
 
+  const article = document.querySelector('.article');
+  if (!article) return;
+
+  let rpTicking = false;
+
   window.addEventListener('scroll', () => {
-    const article = document.querySelector('.article');
-    if (!article) return;
+    if (!rpTicking) {
+      rpTicking = true;
+      requestAnimationFrame(() => {
+        const rect = article.getBoundingClientRect();
+        const totalHeight = rect.height - window.innerHeight;
 
-    const rect = article.getBoundingClientRect();
-    const totalHeight = rect.height - window.innerHeight;
-
-    if (totalHeight <= 0) {
-      bar.style.transform = 'scaleX(1)';
-      return;
+        if (totalHeight <= 0) {
+          bar.style.transform = 'scaleX(1)';
+        } else {
+          const progress = Math.min(1, Math.max(0, -rect.top / totalHeight));
+          bar.style.transform = `scaleX(${progress})`;
+        }
+        rpTicking = false;
+      });
     }
-
-    const progress = Math.min(1, Math.max(0, -rect.top / totalHeight));
-    bar.style.transform = `scaleX(${progress})`;
   }, { passive: true });
 }
 
@@ -223,6 +231,7 @@ async function loadArticleNav() {
 
   try {
     const response = await fetch('../posts.json');
+    if (!response.ok) throw new Error(response.statusText);
     const posts = await response.json();
 
     // Find current post by slug from URL
