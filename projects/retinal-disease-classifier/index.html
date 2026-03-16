@@ -9,7 +9,7 @@
 :root{
   --bg:#0a0c0f;--bg2:#111318;--bg3:#1a1d24;--bg4:#242830;
   --border:#2a2e3a;--text:#d4d8e8;--text2:#8b92a8;--text3:#5c6278;
-  --accent:#2dd4bf;--accent2:#14b8a6;--accent-glow:rgba(45,212,191,.12);
+  --accent:#F0784A;--accent2:#E06830;--accent-glow:rgba(240,120,74,.12);
   --green:#4ade80;--green-dim:rgba(74,222,128,.12);
   --red:#f87171;--red-dim:rgba(248,113,113,.12);
   --orange:#fb923c;--orange-dim:rgba(251,146,60,.12);
@@ -34,8 +34,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-he
 .mode-bar-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .mode-bar h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
 .mode-bar h1 .logo{font-size:20px}
-.back-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-family:var(--font-sans);transition:all .2s}
-.back-link:hover{border-color:var(--accent);color:#fff}
 .toggle-group{display:flex;background:var(--bg3);border-radius:8px;border:1px solid var(--border);overflow:hidden}
 .toggle-btn{padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:var(--font-sans);transition:all .2s}
 .toggle-btn:hover{color:var(--text)}
@@ -66,7 +64,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-he
 
 /* ---- Callout Boxes ---- */
 .callout{border-radius:var(--radius);padding:16px 20px;margin:20px 0;border:1px solid var(--border);font-size:14px;line-height:1.6}
-.callout.info{background:var(--accent-glow);border-color:rgba(45,212,191,.25)}
+.callout.info{background:var(--accent-glow);border-color:rgba(240,120,74,.25)}
 .callout.success{background:var(--green-dim);border-color:rgba(74,222,128,.25)}
 .callout.warning{background:var(--orange-dim);border-color:rgba(251,146,60,.25)}
 .callout.purple{background:var(--purple-dim);border-color:rgba(167,139,250,.25)}
@@ -102,13 +100,13 @@ td.second{color:var(--yellow)}
 .dataset-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0}
 .dataset-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
 .dataset-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.dataset-card.dr::before{background:linear-gradient(90deg,var(--orange),var(--yellow))}
-.dataset-card.glaucoma::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.dataset-card.dr::before{background:linear-gradient(90deg,var(--accent),var(--yellow))}
+.dataset-card.glaucoma::before{background:linear-gradient(90deg,#22d3ee,#6c8cff)}
 .dataset-card.multi::before{background:linear-gradient(90deg,var(--purple),var(--blue))}
 .dataset-card h4{color:#fff;font-size:15px;font-weight:700;margin:0 0 4px;text-transform:none;letter-spacing:0}
 .dataset-card .dataset-task{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .dataset-card.dr .dataset-task{color:var(--orange)}
-.dataset-card.glaucoma .dataset-task{color:var(--accent)}
+.dataset-card.glaucoma .dataset-task{color:var(--cyan)}
 .dataset-card.multi .dataset-task{color:var(--purple)}
 .dataset-card p{font-size:13px;color:var(--text2);margin:0 0 8px;line-height:1.5}
 .dataset-card .dataset-meta{display:flex;flex-wrap:wrap;gap:8px}
@@ -152,7 +150,7 @@ td.second{color:var(--yellow)}
 .hero{text-align:center;padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
 .hero-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);background:var(--accent-glow);padding:6px 16px;border-radius:20px;margin-bottom:20px}
 .hero h2{font-size:38px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:12px;line-height:1.2}
-.hero h2 span{background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero h2 span{background:linear-gradient(135deg,var(--accent),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{font-size:17px;color:var(--text2);max-width:640px;margin:0 auto 8px}
 .hero .hero-meta{font-size:13px;color:var(--text3);margin:0 auto 24px}
 .hero-stats{display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap}
@@ -219,10 +217,6 @@ td.second{color:var(--yellow)}
         <button class="toggle-btn active" onclick="setMode('simple')">Simple</button>
         <button class="toggle-btn" onclick="setMode('technical')">Technical</button>
       </div>
-      <a href="../../" class="back-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        Portfolio
-      </a>
     </div>
   </div>
 </div>
@@ -631,7 +625,7 @@ td.second{color:var(--yellow)}
       </tbody>
     </table>
   </div>
-  <p style="font-size:12px;color:var(--text3);margin-top:4px"><span style="color:var(--accent)">Teal</span> = best in column. Higher is better.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px"><span style="color:var(--accent)">Orange</span> = best in column. Higher is better.</p>
 
   <div class="simple-only">
     <h3>What does this tell us?</h3>
@@ -702,7 +696,7 @@ td.second{color:var(--yellow)}
       </tbody>
     </table>
   </div>
-  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Orange</span> = best in column.</p>
 
   <h3>REFUGE (Glaucoma)</h3>
   <div class="table-wrap">
@@ -738,7 +732,7 @@ td.second{color:var(--yellow)}
       </tbody>
     </table>
   </div>
-  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: AUROC. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: AUROC. <span style="color:var(--accent)">Orange</span> = best in column.</p>
 
   <h3>ODIR-200&times;3 (Multi-Disease)</h3>
   <div class="table-wrap">
@@ -774,7 +768,7 @@ td.second{color:var(--yellow)}
       </tbody>
     </table>
   </div>
-  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Teal</span> = best in column.</p>
+  <p style="font-size:12px;color:var(--text3);margin-top:4px">Metric: Macro-F1. <span style="color:var(--accent)">Orange</span> = best in column.</p>
 
   <div class="simple-only">
     <h3>What does this tell us?</h3>
@@ -956,7 +950,7 @@ td.second{color:var(--yellow)}
       <h4 style="color:var(--orange)">For Diabetic Retinopathy Screening</h4>
       <p><strong>Use FLAIR.</strong> It wins in both zero-shot and few-shot settings. If you have no labeled data at all, FLAIR's zero-shot performance (0.735 Macro-F1) is already useful for triage.</p>
 
-      <h4 style="color:var(--accent)">For Glaucoma Screening</h4>
+      <h4 style="color:var(--cyan)">For Glaucoma Screening</h4>
       <p><strong>Use OpenCLIP + linear probe.</strong> Despite being a generalist model, it produces the best glaucoma features when paired with a simple classifier. Even 5% labeled data (about 60 images) gives meaningful results.</p>
 
       <h4 style="color:var(--purple)">For Multi-Disease Screening</h4>

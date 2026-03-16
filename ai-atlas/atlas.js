@@ -10,6 +10,7 @@
   /* ---- Helpers ---- */
   const $ = (s, p) => (p || document).querySelector(s);
   const $$ = (s, p) => [...(p || document).querySelectorAll(s)];
+  const esc = (str) => { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; };
   const paperMap = new Map(papers.map((p) => [p.id, p]));
   const byId = (id) => paperMap.get(id);
   const eraOf = (id) => eras.find((e) => e.id === byId(id)?.era);
@@ -187,7 +188,7 @@
       const tag = document.createElement('button');
       tag.className = 'atlas-era-tag';
       tag.dataset.era = era.id;
-      tag.innerHTML = `<span class="atlas-era-dot" style="background:${era.color}"></span>${era.name}`;
+      tag.innerHTML = `<span class="atlas-era-dot" style="background:${era.color}"></span>${esc(era.name)}`;
       tag.addEventListener('click', () => filterByEra(era.id, tag));
       wrap.appendChild(tag);
     });
@@ -404,16 +405,16 @@
         const paper = byId(pid);
         const era = paper ? eras.find(e => e.id === paper.era) : null;
         const dotColor = era ? era.color : accent;
-        return `<span class="atlas-path-dot${isRead ? ' read' : ''}" style="background:${dotColor}" title="${paper ? paper.title : ''}"></span>`;
+        return `<span class="atlas-path-dot${isRead ? ' read' : ''}" style="background:${dotColor}" title="${paper ? esc(paper.title) : ''}"></span>`;
       }).join('');
 
       card.innerHTML = `
         <div class="atlas-path-header">
           <span class="atlas-path-number">0${idx + 1}</span>
-          <div class="atlas-path-name">${path.name}</div>
+          <div class="atlas-path-name">${esc(path.name)}</div>
           <span class="atlas-path-count">${total} papers</span>
         </div>
-        <div class="atlas-path-desc">${path.desc}</div>
+        <div class="atlas-path-desc">${esc(path.desc)}</div>
         <div class="atlas-path-trail">
           ${dots}
           <span class="atlas-path-progress" data-path-progress>${readCount}/${total}</span>
@@ -504,18 +505,18 @@
         <div class="atlas-card-header" tabindex="0" role="button" aria-expanded="false">
           <div class="atlas-card-top-row">
             <div style="display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;">
-              <span class="atlas-card-era-badge" style="${badgeStyle}">${era ? era.name : ''}</span>
+              <span class="atlas-card-era-badge" style="${badgeStyle}">${era ? esc(era.name) : ''}</span>
               ${featuredBadge}
             </div>
-            <div class="atlas-card-impact" title="Impact: ${impactLabel}" aria-label="Impact: ${impactLabel}">${dots}</div>
+            <div class="atlas-card-impact" title="Impact: ${esc(impactLabel)}" aria-label="Impact: ${esc(impactLabel)}">${dots}</div>
           </div>
-          <h3 class="atlas-card-title">${paper.title}</h3>
+          <h3 class="atlas-card-title">${esc(paper.title)}</h3>
           <div class="atlas-card-meta">
-            <span class="atlas-card-year">${paper.year}</span>
-            <span>${paper.venue}</span>
-            <span>${paper.authors}</span>
+            <span class="atlas-card-year">${esc(String(paper.year))}</span>
+            <span>${esc(paper.venue)}</span>
+            <span>${esc(paper.authors)}</span>
           </div>
-          <p class="atlas-card-oneliner">${paper.oneLiner}</p>
+          <p class="atlas-card-oneliner">${esc(paper.oneLiner)}</p>
           <div class="atlas-card-actions">
             <button class="atlas-read-toggle${progress.has(paper.id) ? ' read' : ''}" data-id="${paper.id}" aria-label="${progress.has(paper.id) ? 'Mark as unread' : 'Mark as read'}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -570,7 +571,7 @@
            <div class="atlas-card-section-title">Builds On</div>
            <div class="atlas-card-links">${paper.deps.map((d) => {
              const dep = byId(d);
-             return dep ? `<a class="atlas-card-dep-link" data-paper="${d}">${dep.shortTitle || dep.title}</a>` : '';
+             return dep ? `<a class="atlas-card-dep-link" data-paper="${d}">${esc(dep.shortTitle || dep.title)}</a>` : '';
            }).join('')}</div>
          </div>`
       : '';
@@ -580,46 +581,46 @@
            <div class="atlas-card-section-title">Unlocks</div>
            <div class="atlas-card-links">${paper.unlocks.map((u) => {
              const un = byId(u);
-             return un ? `<a class="atlas-card-dep-link" data-paper="${u}">${un.shortTitle || un.title}</a>` : '';
+             return un ? `<a class="atlas-card-dep-link" data-paper="${u}">${esc(un.shortTitle || un.title)}</a>` : '';
            }).join('')}</div>
          </div>`
       : '';
 
     const tagsHtml = paper.tags.length
-      ? `<div class="atlas-card-tags">${paper.tags.map((t) => `<span class="atlas-card-tag">${t}</span>`).join('')}</div>`
+      ? `<div class="atlas-card-tags">${paper.tags.map((t) => `<span class="atlas-card-tag">${esc(t)}</span>`).join('')}</div>`
       : '';
 
     return `
       <div class="atlas-card-body-inner">
         <div class="atlas-card-section">
           <div class="atlas-card-section-title">The Problem</div>
-          <p>${paper.problem}</p>
+          <p>${esc(paper.problem)}</p>
         </div>
         <div class="atlas-card-section">
           <div class="atlas-card-section-title">Key Insight</div>
-          <p>${paper.insight}</p>
+          <p>${esc(paper.insight)}</p>
         </div>
         <div class="atlas-card-section">
           <div class="atlas-card-section-title">Why It Matters</div>
           <div class="atlas-verdict">
             <div class="atlas-verdict-item">
               <div class="atlas-verdict-label">Still Holds</div>
-              <div class="atlas-verdict-text">${paper.holds}</div>
+              <div class="atlas-verdict-text">${esc(paper.holds)}</div>
             </div>
             <div class="atlas-verdict-item">
               <div class="atlas-verdict-label">Superseded By</div>
-              <div class="atlas-verdict-text">${paper.superseded}</div>
+              <div class="atlas-verdict-text">${esc(paper.superseded)}</div>
             </div>
           </div>
         </div>
         <div class="atlas-card-section">
           <div class="atlas-card-section-title">Practitioner Takeaway</div>
-          <p>${paper.practitioner}</p>
+          <p>${esc(paper.practitioner)}</p>
         </div>
         ${depsHtml}
         ${unlocksHtml}
         ${tagsHtml}
-        <a href="${paper.link}" target="_blank" rel="noopener" class="atlas-paper-link">
+        <a href="${esc(paper.link)}" target="_blank" rel="noopener" class="atlas-paper-link">
           Read Paper
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
         </a>
@@ -629,7 +630,7 @@
 
   function buildComingSoonBody(paper) {
     const tagsHtml = paper.tags.length
-      ? `<div class="atlas-card-tags">${paper.tags.map((t) => `<span class="atlas-card-tag">${t}</span>`).join('')}</div>`
+      ? `<div class="atlas-card-tags">${paper.tags.map((t) => `<span class="atlas-card-tag">${esc(t)}</span>`).join('')}</div>`
       : '';
 
     const depsHtml = paper.deps.length
@@ -637,7 +638,7 @@
            <div class="atlas-card-section-title">Builds On</div>
            <div class="atlas-card-links">${paper.deps.map((d) => {
              const dep = byId(d);
-             return dep ? `<a class="atlas-card-dep-link" data-paper="${d}">${dep.shortTitle || dep.title}</a>` : '';
+             return dep ? `<a class="atlas-card-dep-link" data-paper="${d}">${esc(dep.shortTitle || dep.title)}</a>` : '';
            }).join('')}</div>
          </div>`
       : '';
@@ -648,7 +649,7 @@
         ${tagsHtml}
         <div class="atlas-coming-soon">Full analysis coming soon</div>
         <div class="atlas-card-section" style="padding-top:0;">
-          <a href="${paper.link}" target="_blank" rel="noopener" class="atlas-paper-link">
+          <a href="${esc(paper.link)}" target="_blank" rel="noopener" class="atlas-paper-link">
             Read Paper
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
           </a>
@@ -724,7 +725,7 @@
       block.innerHTML = `
         <div class="atlas-mobile-era-title">
           <span class="atlas-mobile-era-dot" style="background:${era.color}"></span>
-          ${era.name} <span style="color:var(--atlas-text-dim);font-weight:400">(${era.period})</span>
+          ${esc(era.name)} <span style="color:var(--atlas-text-dim);font-weight:400">(${esc(era.period)})</span>
         </div>
       `;
       eraPapers.forEach((paper) => {
@@ -735,9 +736,9 @@
         const row = document.createElement('div');
         row.className = 'atlas-mobile-paper';
         row.innerHTML = `
-          <span class="atlas-mobile-paper-name">${paper.shortTitle || paper.title}</span>
+          <span class="atlas-mobile-paper-name">${esc(paper.shortTitle || paper.title)}</span>
           <span class="atlas-mobile-paper-impact">${impactDots}</span>
-          <span class="atlas-mobile-paper-year">${paper.year}</span>
+          <span class="atlas-mobile-paper-year">${esc(String(paper.year))}</span>
         `;
         row.addEventListener('click', () => navigateToPaper(paper.id));
         block.appendChild(row);
@@ -1007,7 +1008,7 @@
     if (!tooltip) return;
     const era = eras.find((e) => e.id === d.era);
     const dotColor = era ? era.color : 'var(--atlas-text)';
-    tooltip.innerHTML = `<span class="atlas-tooltip-dot" style="background:${dotColor}"></span><span class="atlas-tooltip-title">${d.fullTitle}</span><span class="atlas-tooltip-year">${d.year}</span>`;
+    tooltip.innerHTML = `<span class="atlas-tooltip-dot" style="background:${dotColor}"></span><span class="atlas-tooltip-title">${esc(d.fullTitle)}</span><span class="atlas-tooltip-year">${esc(String(d.year))}</span>`;
     tooltip.classList.add('visible');
   }
 
@@ -1131,7 +1132,7 @@
         if (paper && journeyLabel) {
           const era = eraOf(paperId);
           const dotColor = era ? era.color : 'var(--atlas-accent)';
-          journeyLabel.innerHTML = `<span class="atlas-journey-label-dot" style="background:${dotColor}"></span>${paper.shortTitle || paper.title} <span style="opacity:0.5">${paper.year}</span>`;
+          journeyLabel.innerHTML = `<span class="atlas-journey-label-dot" style="background:${dotColor}"></span>${esc(paper.shortTitle || paper.title)} <span style="opacity:0.5">${esc(String(paper.year))}</span>`;
           journeyLabel.classList.add('visible');
         }
 

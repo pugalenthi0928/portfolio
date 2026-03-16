@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects — Pugalenthi Magendran</title>
   <meta name="description" content="AI / ML projects spanning foundation models, computer vision, LLM fine-tuning, and production-ready AI tools.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/projects/">
+  <meta property="og:title" content="Projects — Pugalenthi Magendran">
+  <meta property="og:description" content="AI / ML projects spanning foundation models, computer vision, LLM fine-tuning, and production-ready AI tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pugalenthimagendran.com/projects/">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="view-transition" content="same-origin">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +19,9 @@
   <link rel="stylesheet" href="../style.css?v=9">
 </head>
 <body>
+
+  <!-- Skip to Content -->
+  <a href="#projects-grid" class="skip-to-content">Skip to content</a>
 
   <!-- Custom Cursor -->
   <div class="cursor-dot" aria-hidden="true"></div>
@@ -68,15 +78,21 @@
   <!-- ========== PROJECTS GRID ========== -->
   <section class="section" style="padding-top: 0;">
     <div class="container container-wide">
-      <div class="projects-compact-grid">
+      <!-- Filter Bar -->
+      <div class="projects-filter-bar" id="projects-filter-bar">
+        <button class="projects-filter-btn active" data-filter="all">All</button>
+      </div>
+
+      <div class="projects-compact-grid" id="projects-grid">
 
         <!--
           ======= PROJECT CARD TEMPLATE =======
           Copy the <article> block below to add a new project.
           Replace: IMAGE_FILE, ALT_TEXT, TAG(s), TITLE, DESCRIPTION, PROJECT_URL
+          Add data-tags="tag1,tag2" for filtering.
         -->
 
-        <article class="project-compact-card" data-animate="clip-up">
+        <article class="project-compact-card" data-animate="clip-up" data-tags="PyTorch,FLAIR,Computer Vision">
           <div class="project-compact-thumbnail">
             <img src="../retinal_disease_classifier.jpg" alt="Retinal Disease Classifier" class="project-compact-thumbnail-img" loading="lazy">
           </div>
@@ -88,14 +104,14 @@
             </div>
             <h3 class="project-compact-title">Retinal Disease Classifier</h3>
             <p class="project-compact-desc">Designed zero-shot and linear-probe experiments with the FLAIR vision-language model for diabetic retinopathy and glaucoma detection, achieving 0.92 AUROC with only 5-20% labels.</p>
-            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+            <a href="retinal-disease-classifier/" class="project-link">
               View Project
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
           </div>
         </article>
 
-        <article class="project-compact-card" data-animate="clip-up">
+        <article class="project-compact-card" data-animate="clip-up" data-tags="Python,Streamlit,Docker">
           <div class="project-compact-thumbnail">
             <img src="../trainingdatarobo.jpg" alt="Training Data Robo" class="project-compact-thumbnail-img" loading="lazy">
           </div>
@@ -107,14 +123,14 @@
             </div>
             <h3 class="project-compact-title">Training Data Robo</h3>
             <p class="project-compact-desc">A config-driven CLI and Streamlit dashboard that ingests raw documents and generates multi-task LLM datasets with built-in QA evaluation scripts.</p>
-            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+            <a href="https://github.com/pugalenthi0928/training-data-factory" target="_blank" rel="noopener" class="project-link">
               View Project
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
             </a>
           </div>
         </article>
 
-        <article class="project-compact-card" data-animate="clip-up">
+        <article class="project-compact-card" data-animate="clip-up" data-tags="Node.js,TypeScript,PostgreSQL">
           <div class="project-compact-thumbnail">
             <img src="../auth-microservice.jpg" alt="Auth Microservice" class="project-compact-thumbnail-img" loading="lazy">
           </div>
@@ -133,7 +149,7 @@
           </div>
         </article>
 
-        <article class="project-compact-card" data-animate="clip-up">
+        <article class="project-compact-card" data-animate="clip-up" data-tags="LLaMA,LoRA,PyTorch">
           <div class="project-compact-thumbnail">
             <img src="../texttosqllora.jpg" alt="Text-to-SQL with LoRA" class="project-compact-thumbnail-img" loading="lazy">
           </div>
@@ -183,5 +199,39 @@
   </footer>
 
   <script src="../script.js?v=9"></script>
+  <script>
+  (function () {
+    const bar = document.getElementById('projects-filter-bar');
+    const cards = document.querySelectorAll('.project-compact-card');
+    if (!bar || !cards.length) return;
+
+    // Collect unique tags
+    const tagSet = new Set();
+    cards.forEach(c => (c.dataset.tags || '').split(',').forEach(t => { if (t) tagSet.add(t); }));
+
+    // Create tag buttons
+    [...tagSet].sort().forEach(tag => {
+      const btn = document.createElement('button');
+      btn.className = 'projects-filter-btn';
+      btn.dataset.filter = tag;
+      btn.textContent = tag;
+      bar.appendChild(btn);
+    });
+
+    // Filter logic
+    bar.addEventListener('click', e => {
+      const btn = e.target.closest('.projects-filter-btn');
+      if (!btn) return;
+      bar.querySelectorAll('.projects-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all') { card.style.display = ''; return; }
+        const tags = (card.dataset.tags || '').split(',');
+        card.style.display = tags.includes(filter) ? '' : 'none';
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

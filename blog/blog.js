@@ -64,23 +64,36 @@ async function loadBlogPosts() {
 }
 
 
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function createPostCard(post) {
   const article = document.createElement('article');
   article.className = 'blog-card';
   article.setAttribute('data-animate', 'fade-up');
   article.setAttribute('data-tags', post.tags.join(','));
 
+  const title = escapeHTML(post.title);
+  const excerpt = escapeHTML(post.excerpt);
+  const slug = encodeURIComponent(post.slug);
+  const date = escapeHTML(post.date);
+  const readingTime = parseInt(post.readingTime, 10) || 1;
+  const tags = post.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join('');
+
   article.innerHTML = `
-    <a href="posts/${post.slug}.html" class="blog-card-link">
+    <a href="posts/${slug}.html" class="blog-card-link">
       <div class="blog-card-meta">
-        <time datetime="${post.date}">${formatDate(post.date)}</time>
+        <time datetime="${date}">${formatDate(post.date)}</time>
         <span class="blog-card-dot">&middot;</span>
-        <span>${post.readingTime} min read</span>
+        <span>${readingTime} min read</span>
       </div>
-      <h2 class="blog-card-title">${post.title}</h2>
-      <p class="blog-card-excerpt">${post.excerpt}</p>
+      <h2 class="blog-card-title">${title}</h2>
+      <p class="blog-card-excerpt">${excerpt}</p>
       <div class="blog-card-tags">
-        ${post.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        ${tags}
       </div>
     </a>
   `;
@@ -226,9 +239,9 @@ async function loadArticleNav() {
 
     if (prevPost) {
       navContainer.innerHTML += `
-        <a href="${prevPost.slug}.html" class="article-nav-link article-nav-prev">
+        <a href="${encodeURIComponent(prevPost.slug)}.html" class="article-nav-link article-nav-prev">
           <span class="article-nav-label">Previous</span>
-          <span class="article-nav-title">${prevPost.title}</span>
+          <span class="article-nav-title">${escapeHTML(prevPost.title)}</span>
         </a>
       `;
     } else {
@@ -237,9 +250,9 @@ async function loadArticleNav() {
 
     if (nextPost) {
       navContainer.innerHTML += `
-        <a href="${nextPost.slug}.html" class="article-nav-link article-nav-next">
+        <a href="${encodeURIComponent(nextPost.slug)}.html" class="article-nav-link article-nav-next">
           <span class="article-nav-label">Next</span>
-          <span class="article-nav-title">${nextPost.title}</span>
+          <span class="article-nav-title">${escapeHTML(nextPost.title)}</span>
         </a>
       `;
     } else {

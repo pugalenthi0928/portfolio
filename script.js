@@ -34,34 +34,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 7. Hero Parallax ---
   initHeroParallax();
 
-  // --- 9. Mobile Menu ---
+  // --- 8. Mobile Menu ---
   initMobileMenu();
 
-  // --- 10. Back to Top ---
+  // --- 9. Back to Top ---
   initBackToTop();
 
-  // --- 11. Smooth Momentum Scroll ---
+  // --- 10. Smooth Momentum Scroll ---
   initMomentumScroll();
 
-  // --- 12. 3D Card Tilt + Cursor Glow ---
+  // --- 11. 3D Card Tilt + Cursor Glow ---
   initCardTilt();
 
-  // --- 13. Section Heading Character Reveal ---
+  // --- 12. Section Heading Character Reveal ---
   initCharReveal();
 
-  // --- 14. Parallax Depth Layers ---
+  // --- 13. Parallax Depth Layers ---
   initParallax();
 
-  // --- 15. Neural Network Particle Canvas ---
+  // --- 14. Neural Network Particle Canvas ---
   initParticleCanvas();
 
-  // --- 16. Stat Counter Animation ---
+  // --- 15. Stat Counter Animation ---
   initStatCounters();
 
-  // --- 17. Marquee Scroll Velocity Boost ---
+  // --- 16. Marquee Scroll Velocity Boost ---
   initMarqueeBoost();
 
-  // --- 18. Section Arrival Glow ---
+  // --- 17. Section Arrival Glow ---
   initSectionGlow();
 
 });
@@ -621,7 +621,7 @@ function initContactForm() {
 
 
 // ============================================
-// 8. HERO PARALLAX
+// 7. HERO PARALLAX
 // ============================================
 function initHeroParallax() {
   const hero = document.querySelector('.hero');
@@ -639,7 +639,7 @@ function initHeroParallax() {
 
 
 // ============================================
-// 10. MOBILE MENU
+// 8. MOBILE MENU
 // ============================================
 function initMobileMenu() {
   const toggle = document.querySelector('.nav-toggle');
@@ -701,7 +701,7 @@ function initMobileMenu() {
 
 
 // ============================================
-// 11. BACK TO TOP
+// 9. BACK TO TOP
 // ============================================
 function initBackToTop() {
   const btn = document.querySelector('.back-to-top');
@@ -726,7 +726,7 @@ function initBackToTop() {
 
 
 // ============================================
-// 12. SMOOTH MOMENTUM SCROLL (Lenis-style)
+// 10. SMOOTH MOMENTUM SCROLL (Lenis-style)
 // ============================================
 function initMomentumScroll() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -744,10 +744,9 @@ function initMomentumScroll() {
   }
 
   window.addEventListener('wheel', (e) => {
-    e.preventDefault();
     targetY += e.deltaY;
     targetY = Math.max(0, Math.min(targetY, getMaxScroll()));
-  }, { passive: false });
+  }, { passive: true });
 
   // Sync on resize
   window.addEventListener('resize', () => {
@@ -800,7 +799,7 @@ function initMomentumScroll() {
 
 
 // ============================================
-// 13. 3D CARD TILT + CURSOR GLOW
+// 11. 3D CARD TILT + CURSOR GLOW
 // ============================================
 function initCardTilt() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -842,7 +841,7 @@ function initCardTilt() {
 
 
 // ============================================
-// 14. SECTION HEADING CHARACTER REVEAL
+// 12. SECTION HEADING CHARACTER REVEAL
 // ============================================
 function initCharReveal() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -897,7 +896,7 @@ function initCharReveal() {
 
 
 // ============================================
-// 15. PARALLAX DEPTH LAYERS
+// 13. PARALLAX DEPTH LAYERS
 // ============================================
 function initParallax() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -935,7 +934,7 @@ function initParallax() {
 
 
 // ============================================
-// 16. NEURAL NETWORK PARTICLE CANVAS
+// 14. NEURAL NETWORK PARTICLE CANVAS
 // ============================================
 function initParticleCanvas() {
   const canvas = document.getElementById('hero-particles');
@@ -1178,7 +1177,7 @@ function initParticleCanvas() {
 }
 
 // ============================================
-// 17. Stat Counter Animation
+// 15. Stat Counter Animation
 // ============================================
 function initStatCounters() {
   const stats = document.querySelectorAll('.highlight-card-stat[data-target]');
@@ -1220,7 +1219,7 @@ function initStatCounters() {
 }
 
 // ============================================
-// 18. Marquee Scroll Velocity Boost
+// 16. Marquee Scroll Velocity Boost
 // ============================================
 function initMarqueeBoost() {
   const marquees = document.querySelectorAll('.marquee');
@@ -1241,7 +1240,7 @@ function initMarqueeBoost() {
 }
 
 // ============================================
-// 19. Section Arrival Glow
+// 17. Section Arrival Glow
 // ============================================
 function initSectionGlow() {
   const sections = document.querySelectorAll('.section:not(.hero)');

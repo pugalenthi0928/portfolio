@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=9">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-code {
+      font-size: clamp(6rem, 15vw, 12rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.15;
+      letter-spacing: -0.04em;
+    }
+    .error-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: -1rem;
+    }
+    .error-desc {
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .error-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="./" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="projects/">Projects</a>
+        <a href="#about">About</a>
+        <a href="blog/">Blog</a>
+        <a href="ai-atlas/">AI Atlas</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="error-page">
+    <div>
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page not found</h1>
+      <p class="error-desc">The page you're looking for doesn't exist or has been moved.</p>
+      <div class="error-links">
+        <a href="./" class="btn btn-primary">Back Home</a>
+        <a href="projects/" class="btn btn-secondary">Projects</a>
+        <a href="blog/" class="btn btn-secondary">Blog</a>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
