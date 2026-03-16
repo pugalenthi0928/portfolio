@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 17. Section Arrival Glow ---
   initSectionGlow();
 
+  // --- 18. Clickable Project Cards ---
+  initCardLinks();
+
 });
 
 
@@ -1320,4 +1323,31 @@ function initSectionGlow() {
   }, { threshold: 0.08 });
 
   sections.forEach(s => observer.observe(s));
+}
+
+
+// ============================================
+// 18. Clickable Project Cards
+// ============================================
+function initCardLinks() {
+  const cards = document.querySelectorAll('.project-card, .project-compact-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    const link = card.querySelector('.project-link');
+    if (!link) return;
+
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('click', (e) => {
+      // Don't hijack clicks on the link itself or other interactive elements
+      if (e.target.closest('a, button')) return;
+
+      if (link.target === '_blank') {
+        window.open(link.href, '_blank', 'noopener');
+      } else {
+        window.location.href = link.href;
+      }
+    });
+  });
 }
