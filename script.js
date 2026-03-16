@@ -309,7 +309,7 @@ function bindCursorHover(container, ring) {
     });
   });
 
-  const projectCards = container.querySelectorAll('.project-card, .project-compact-card');
+  const projectCards = container.querySelectorAll('.project-card, .project-compact-card, .bento-view-all');
   projectCards.forEach(card => {
     card.addEventListener('mouseenter', () => {
       ring.classList.remove('cursor-hover');
