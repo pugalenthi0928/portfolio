@@ -4,6 +4,7 @@
 
 // Shared state
 let smoothScroller = null;
+let revealParticleCanvas = null;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -132,7 +133,7 @@ function initPreloader() {
 function initHeroReveal() {
   const reveal = () => {
     // Trigger canvas fade-in immediately
-    if (typeof revealParticleCanvas === 'function') revealParticleCanvas();
+    if (revealParticleCanvas) revealParticleCanvas();
 
     const sequence = [
       { el: '.hero-eyebrow .line-inner', delay: 100 },
@@ -412,11 +413,14 @@ function initNavbar() {
   const nav = document.getElementById('nav');
   if (!nav) return;
 
+  let navTicking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+    if (!navTicking) {
+      navTicking = true;
+      requestAnimationFrame(() => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+        navTicking = false;
+      });
     }
   }, { passive: true });
 }
@@ -479,7 +483,16 @@ function initActiveNav() {
     });
   }
 
-  window.addEventListener('scroll', updateActiveLink, { passive: true });
+  let activeNavTicking = false;
+  window.addEventListener('scroll', () => {
+    if (!activeNavTicking) {
+      activeNavTicking = true;
+      requestAnimationFrame(() => {
+        updateActiveLink();
+        activeNavTicking = false;
+      });
+    }
+  }, { passive: true });
   // Run once on load
   updateActiveLink();
 }
@@ -1039,7 +1052,7 @@ function initParticleCanvas() {
 
   function animate() {
     if (!isTabVisible) {
-      animId = requestAnimationFrame(animate);
+      animId = null;
       return;
     }
 
@@ -1050,7 +1063,7 @@ function initParticleCanvas() {
     const scrollOpacity = Math.max(0, 1 - scrolled / (heroHeight * 0.8));
     const combinedOpacity = scrollOpacity * canvasOpacity;
     if (combinedOpacity <= 0) {
-      animId = requestAnimationFrame(animate);
+      animId = null;
       return;
     }
 
@@ -1162,13 +1175,19 @@ function initParticleCanvas() {
     mouseY = -9999;
   });
 
+  function startLoop() {
+    if (!animId && isTabVisible) {
+      animId = requestAnimationFrame(animate);
+    }
+  }
+
   // Pause when tab hidden — cancel RAF to save resources
   document.addEventListener('visibilitychange', () => {
     isTabVisible = !document.hidden;
     if (document.hidden) {
       if (animId) { cancelAnimationFrame(animId); animId = null; }
     } else {
-      if (!animId) { animId = requestAnimationFrame(animate); }
+      startLoop();
     }
   });
 
@@ -1179,7 +1198,7 @@ function initParticleCanvas() {
   });
   ro.observe(hero);
 
-  // Also recache hero position on scroll (for mouse tracking)
+  // Also recache hero position on scroll (for mouse tracking) + restart loop if needed
   let scrollTick = false;
   window.addEventListener('scroll', () => {
     if (!scrollTick) {
@@ -1189,6 +1208,11 @@ function initParticleCanvas() {
         heroOffsetX = rect.left;
         heroOffsetY = rect.top + window.scrollY;
         scrollTick = false;
+        // Restart animation if hero scrolled back into view
+        if (!animId) {
+          const scrollOpacity = Math.max(0, 1 - window.scrollY / (heroHeight * 0.8));
+          if (scrollOpacity > 0 && canvasOpacity > 0) startLoop();
+        }
       });
     }
   }, { passive: true });
@@ -1198,7 +1222,7 @@ function initParticleCanvas() {
   animId = requestAnimationFrame(animate);
 
   // Expose canvas reveal for hero entrance choreography
-  window.revealParticleCanvas = function() {
+  revealParticleCanvas = function() {
     const fadeStart = performance.now();
     const fadeDuration = 1200;
     function fadeIn(now) {

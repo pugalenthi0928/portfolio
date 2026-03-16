@@ -25,6 +25,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css?v=9">
   <link rel="stylesheet" href="atlas.css?v=9">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "The AI Atlas",
+    "description": "An interactive knowledge graph of the 50 most important AI/ML papers with guided learning paths.",
+    "url": "https://pugalenthimagendran.com/ai-atlas/",
+    "applicationCategory": "EducationalApplication",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    }
+  }
+  </script>
 
 </head>
 <body>
@@ -41,7 +56,7 @@
 
   <!-- Back to Top -->
   <button class="back-to-top" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
   </button>
 
   <!-- ========== NAV ========== -->
@@ -64,15 +79,16 @@
   </nav>
 
   <!-- Mobile Nav Overlay -->
-  <div class="nav-mobile" id="nav-mobile">
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
     <a href="../projects/">Projects</a>
     <a href="../#about">About</a>
     <a href="../#experience">Experience</a>
     <a href="../blog/">Blog</a>
     <a href="./">AI Atlas</a>
     <a href="../#contact">Contact</a>
-  </div>
+  </nav>
 
+  <main>
   <!-- ========== ATLAS HERO ========== -->
   <section class="atlas-hero">
     <div class="container">
@@ -184,7 +200,7 @@
       <!-- Search -->
       <div class="atlas-search-wrap" id="atlas-search-wrap">
         <svg class="atlas-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" class="atlas-search-input" id="atlas-search-input" placeholder="Search by title, author, or topic..." autocomplete="off" spellcheck="false">
+        <input type="text" class="atlas-search-input" id="atlas-search-input" placeholder="Search by title, author, or topic..." aria-label="Search papers" autocomplete="off" spellcheck="false">
         <span class="atlas-search-count" id="atlas-search-count" aria-live="polite" aria-atomic="true"></span>
         <button class="atlas-search-clear" id="atlas-search-clear" aria-label="Clear search" hidden>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -207,6 +223,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ========== PROGRESS BAR ========== -->
   <div class="atlas-progress-bar" id="atlas-progress-bar">
