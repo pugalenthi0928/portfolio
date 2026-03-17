@@ -68,14 +68,33 @@
       padding: 0 0 2rem;
     }
 
-    /* Kicker line */
-    .essay-kicker {
+    /* Issue line */
+    .essay-issue {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
+      font-size: 10px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--color-text-tertiary);
-      margin-bottom: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Tag row */
+    .essay-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      color: var(--color-text-tertiary);
+      background: none;
     }
 
     /* Headline */
@@ -102,15 +121,55 @@
       font-style: italic;
     }
 
-    /* Byline */
-    .essay-byline {
+    /* Author meta */
+    .essay-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3.5rem;
+    }
+
+    .essay-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    .essay-meta-text {
+      flex: 1;
+    }
+
+    .essay-author {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-text-primary);
+      letter-spacing: 0.04em;
+    }
+
+    .essay-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
       color: var(--color-text-tertiary);
-      letter-spacing: 0.08em;
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-top: 2px;
+    }
+
+    .essay-read-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
     }
 
     /* Lede paragraph */
@@ -283,6 +342,38 @@
       margin: 3rem 0;
     }
 
+    /* Ornament divider */
+    .essay-ornament {
+      color: var(--color-border-secondary);
+      text-align: left;
+      margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    /* Closer paragraph */
+    .essay-closer {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.975rem;
+      line-height: 1.95;
+      color: var(--color-text-secondary);
+      font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem;
+      margin-top: 3.5rem;
+    }
+
+    /* Signature */
+    .essay-sig {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin-top: 1.75rem;
+    }
+
     /* Footnotes */
     .essay-footnote {
       font-family: 'Source Serif 4', serif;
@@ -321,6 +412,10 @@
         font-size: 1.05rem;
       }
 
+      .essay-meta {
+        gap: 1rem;
+      }
+
       .essay-pull {
         font-size: 1.25rem;
       }
@@ -343,6 +438,15 @@
 
       .essay-deck {
         font-size: 0.95rem;
+      }
+
+      .essay-meta {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .essay-read-time {
+        width: 100%;
       }
 
       .essay-body p {
@@ -437,13 +541,27 @@
       <!-- ====== ESSAY CONTENT ====== -->
       <div class="essay-page" id="article-content">
 
-        <div class="essay-kicker">Essay &middot; Deep technical history &middot; 2,200 words</div>
+        <div class="essay-issue">Essay No. 002 &nbsp;&middot;&nbsp; Deep technical history &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI</span>
+          <span class="tag">deep learning</span>
+          <span class="tag">transformers</span>
+          <span class="tag">technical</span>
+        </div>
 
         <h1 class="essay-hed">The title was wrong.<br>That&rsquo;s what made it historic.</h1>
 
         <div class="essay-deck">Everyone remembers &ldquo;Attention Is All You Need&rdquo; as the attention paper. That&rsquo;s the wrong lesson. The real innovation was something later summaries under-emphasized, and it explains everything that came after.</div>
 
-        <div class="essay-byline">On the paper that accidentally built the infrastructure of modern intelligence &nbsp;&middot;&nbsp; NIPS 2017</div>
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">March 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">10 min read</div>
+        </div>
 
         <div class="essay-body">
 
@@ -606,7 +724,11 @@ PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
             <sup>5</sup> On the decoder: the Transformer&rsquo;s decoder remains auto-regressive at inference, generating one token at a time. The sequential bottleneck was removed from training, not from generation. The paper states this explicitly: &ldquo;the decoder generates an output sequence one element at a time.&rdquo;
           </div>
 
-          <div class="essay-tagline">-- end --</div>
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 002. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. You can reach me directly. I read everything.</p>
+
+          <div class="essay-sig">&mdash; Pugalenthi Magendran</div>
 
         </div><!-- .essay-body -->
 
