@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Article Page ---
-  const prose = document.querySelector('.prose');
+  const prose = document.querySelector('.prose') || document.getElementById('article-content');
   if (prose) {
     computeReadingTime(prose);
     initReadingProgress();
