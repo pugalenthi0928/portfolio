@@ -29,7 +29,7 @@ async function loadBlogPosts() {
   const filtersContainer = document.getElementById('blog-filters');
 
   try {
-    const response = await fetch('posts.json');
+    const response = await fetch('posts.json?v=' + Date.now());
     if (!response.ok) throw new Error(response.statusText);
     const posts = await response.json();
 
@@ -230,7 +230,7 @@ async function loadArticleNav() {
   if (!navContainer) return;
 
   try {
-    const response = await fetch('../posts.json');
+    const response = await fetch('../posts.json?v=' + Date.now());
     if (!response.ok) throw new Error(response.statusText);
     const posts = await response.json();
 
