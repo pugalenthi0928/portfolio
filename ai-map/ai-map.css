@@ -1,0 +1,451 @@
+/* ============================================
+   AI MAP - Page Styles
+   ============================================ */
+
+/* --- Layer Color System --- */
+:root {
+  --energy-bg: #2E1F0E;
+  --energy-t: #F0B060;
+  --energy-bd: #D4892A;
+
+  --chips-bg: #0E1F2E;
+  --chips-t: #6CB8E0;
+  --chips-bd: #378ADD;
+
+  --infra-bg: #1E1830;
+  --infra-t: #A89CE0;
+  --infra-bd: #7F77DD;
+
+  --models-bg: #0C2822;
+  --models-t: #5DCAA5;
+  --models-bd: #1D9E75;
+
+  --apps-bg: #2E160E;
+  --apps-t: #F09070;
+  --apps-bd: #D85A30;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.map-hero {
+  padding: 160px 0 80px;
+  position: relative;
+}
+
+.map-hero-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.map-hero-title {
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.map-hero-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 24px;
+}
+
+.map-hero-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+  max-width: 560px;
+}
+
+/* ============================================
+   CAKE STACK
+   ============================================ */
+.map-cake-section {
+  padding: 0 0 40px;
+}
+
+.map-section-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.map-cake {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.map-bar {
+  border-radius: 10px;
+  padding: 14px 22px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.2s var(--ease);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.map-bar:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.map-bar.sel {
+  border-color: var(--text) !important;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.06);
+}
+
+.map-bar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.map-bar-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.map-bar-sub {
+  font-size: 11px;
+  opacity: 0.55;
+  line-height: 1.3;
+}
+
+.map-bar-count {
+  font-size: 24px;
+  font-weight: 500;
+  opacity: 0.35;
+  min-width: 32px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   LAYER EXPLANATION PANEL
+   ============================================ */
+.map-explanation {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease), opacity 0.3s ease, margin 0.4s var(--ease);
+  opacity: 0;
+  margin-bottom: 0;
+}
+
+.map-explanation.open {
+  max-height: 260px;
+  opacity: 1;
+  margin-bottom: 32px;
+}
+
+.map-explanation-inner {
+  padding: 20px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+}
+
+.map-explanation-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.map-explanation-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   CONTROLS - Legend & Show All
+   ============================================ */
+.map-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.map-leg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.map-leg:hover {
+  color: var(--text);
+}
+
+.map-leg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.map-show-all {
+  font-size: 12px;
+  font-family: var(--font-sans);
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.map-show-all:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--text-tertiary);
+}
+
+.map-show-all.filter-active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.map-show-all.filter-active:hover {
+  background: var(--accent-light);
+}
+
+/* ============================================
+   TAXONOMY GRID
+   ============================================ */
+.map-tax-section {
+  padding-bottom: 80px;
+}
+
+.map-tax-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
+@media (max-width: 600px) {
+  .map-tax-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-cat {
+  margin-bottom: 32px;
+}
+
+.map-cat-hd {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.map-cat-count {
+  font-weight: 400;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.map-cat-note {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.map-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.map-chip {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.map-chip.dim {
+  opacity: 0.07;
+}
+
+/* ============================================
+   THINKING SECTION
+   ============================================ */
+.map-thinking {
+  padding: 80px 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.map-thinking-heading {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.map-thinking-body p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  max-width: 620px;
+}
+
+.map-thinking-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   CLOSING
+   ============================================ */
+.map-closing {
+  padding: 0 0 80px;
+}
+
+.map-closing-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+  max-width: 540px;
+}
+
+.map-closing-text a {
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+.map-closing-text a:hover {
+  color: var(--accent-hover);
+}
+
+.map-attribution {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  opacity: 0.6;
+  margin-top: 24px;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+.map-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0 0 32px;
+}
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+.map-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.map-reveal.map-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   FOCUS & KEYBOARD ACCESSIBILITY
+   ============================================ */
+.map-bar:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.map-leg:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+  .map-hero {
+    padding: 130px 0 60px;
+  }
+
+  .map-hero-title {
+    font-size: 32px;
+  }
+
+  .map-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .map-bar {
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+
+  .map-bar-name {
+    font-size: 14px;
+  }
+
+  .map-bar-sub {
+    display: none;
+  }
+
+  .map-bar-count {
+    font-size: 20px;
+  }
+
+  .map-explanation.open {
+    max-height: 400px;
+  }
+
+  .map-thinking {
+    padding: 60px 0;
+  }
+}

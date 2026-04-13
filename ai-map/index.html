@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AI Map | Pugalenthi Magendran</title>
+  <meta name="description" content="A practical view of AI as a five-layer stack, from energy and chips to infrastructure, models, and real-world applications. An interactive taxonomy of the full AI field.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/ai-map/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The AI Map | Pugalenthi Magendran">
+  <meta property="og:description" content="A practical view of AI as a five-layer stack, from energy and chips to infrastructure, models, and real-world applications.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pugalenthimagendran.com/ai-map/">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The AI Map | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="A practical view of AI as a five-layer stack, from energy and chips to infrastructure, models, and real-world applications.">
+
+  <meta name="view-transition" content="same-origin">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=10">
+  <link rel="stylesheet" href="ai-map.css?v=10">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "The AI Map",
+    "description": "A practical view of AI as a five-layer stack, from energy and chips to infrastructure, models, and real-world applications.",
+    "url": "https://pugalenthimagendran.com/ai-map/",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../projects/">Projects</a>
+        <a href="../#about">About</a>
+        <a href="../#experience">Experience</a>
+        <a href="../blog/">Blog</a>
+        <a href="../ai-atlas/">AI Atlas</a>
+        <a href="./" class="active">AI Map</a>
+        <a href="../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../projects/">Projects</a>
+    <a href="../#about">About</a>
+    <a href="../#experience">Experience</a>
+    <a href="../blog/">Blog</a>
+    <a href="../ai-atlas/">AI Atlas</a>
+    <a href="./">AI Map</a>
+    <a href="../#contact">Contact</a>
+  </nav>
+
+  <main>
+  <!-- ========== HERO ========== -->
+  <section class="map-hero">
+    <div class="container">
+      <p class="map-hero-label">AI Taxonomy</p>
+      <h1 class="map-hero-title">The AI Map</h1>
+      <p class="map-hero-subtitle map-reveal">A practical view of AI, from energy and chips to models and real-world applications.</p>
+      <p class="map-hero-intro map-reveal">AI is not one thing. It is a stack. From energy and silicon to infrastructure, models, and applications, each layer enables the one above it. This page is my attempt to map the field clearly.</p>
+    </div>
+  </section>
+
+  <!-- ========== CAKE STACK ========== -->
+  <section class="map-cake-section">
+    <div class="container">
+      <div class="map-section-label">The five-layer stack. Click any layer to filter.</div>
+      <div class="map-cake" id="map-cake"></div>
+
+      <!-- Layer explanation panel -->
+      <div class="map-explanation" id="map-explanation">
+        <div class="map-explanation-inner">
+          <div class="map-explanation-title" id="map-exp-title"></div>
+          <div class="map-explanation-body" id="map-exp-body"></div>
+        </div>
+      </div>
+
+      <hr class="map-divider">
+
+      <!-- Controls -->
+      <div class="map-controls">
+        <div class="map-legend" id="map-legend"></div>
+        <button class="map-show-all" id="map-show-all">Show all</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAXONOMY GRID ========== -->
+  <section class="map-tax-section">
+    <div class="container">
+      <div class="map-section-label" style="margin-bottom:20px">Full AI research &amp; engineering taxonomy</div>
+      <div class="map-tax-grid" id="map-tax"></div>
+    </div>
+  </section>
+
+  <!-- ========== HOW I THINK ABOUT AI ========== -->
+  <section class="map-thinking">
+    <div class="container">
+      <div class="map-thinking-heading map-reveal">How I think about AI</div>
+      <div class="map-thinking-body map-reveal">
+        <p>Most AI discussion stays at the top of the stack. People debate which model is best, which agent framework to use, which startup just launched. That layer matters, but it is only one-fifth of the picture.</p>
+        <p>Real leverage comes from understanding how the layers connect. A breakthrough in chip interconnects changes the economics of distributed training. A new compiler optimization shifts what model sizes are practical to serve. Cheaper energy in a specific geography changes where AI factories get built, which changes who has access to frontier compute.</p>
+        <p>The people building the most consequential AI systems are not just prompting models. They are reasoning across the full stack: spotting bottlenecks, understanding where marginal progress in one layer unlocks disproportionate gains in the layers above it. That is the kind of thinking this page is designed to support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CLOSING ========== -->
+  <section class="map-closing">
+    <div class="container">
+      <p class="map-closing-text map-reveal">For a deeper look at the foundational papers behind many of these ideas, see <a href="../ai-atlas/">The AI Atlas</a>, an interactive knowledge graph of the 50 most important AI/ML papers.</p>
+      <p class="map-attribution">Inspired by Jensen Huang's framing of AI as a five-layer industrial stack.</p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../projects/">Projects</a>
+          <a href="../#about">About</a>
+          <a href="../#experience">Experience</a>
+          <a href="../blog/">Blog</a>
+          <a href="../ai-atlas/">AI Atlas</a>
+          <a href="./">AI Map</a>
+          <a href="../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS & JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js?v=10"></script>
+  <script src="data.js?v=10"></script>
+  <script src="ai-map.js?v=10"></script>
+</body>
+</html>
