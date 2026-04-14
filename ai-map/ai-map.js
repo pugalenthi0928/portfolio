@@ -24,7 +24,7 @@
     return items;
   }
 
-  /* --- Update visible count per category --- */
+  /* --- Update visible count per category & hide empty ones --- */
   function updateCategoryCounts(id) {
     var cats = document.querySelectorAll('.map-cat');
     cats.forEach(function (cat) {
@@ -36,6 +36,12 @@
       var countEl = cat.querySelector('.map-cat-count');
       if (countEl) {
         countEl.textContent = id === null ? chips.length : visible + '/' + chips.length;
+      }
+      /* Hide categories with 0 matching items when filtering */
+      if (id === null) {
+        cat.style.display = '';
+      } else {
+        cat.style.display = visible === 0 ? 'none' : '';
       }
     });
   }
