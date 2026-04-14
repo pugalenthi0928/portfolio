@@ -101,16 +101,18 @@
   </section>
 
   <!-- ========== CAKE STACK ========== -->
-  <section class="map-cake-section">
+  <section class="map-cake-section" aria-label="Five-layer AI stack">
     <div class="container">
-      <div class="map-section-label">The five-layer stack. Click any layer to filter.</div>
-      <div class="map-cake" id="map-cake"></div>
+      <h2 class="map-section-label">The five-layer stack. Click any layer to filter.</h2>
+      <div class="map-cake" id="map-cake" role="group" aria-label="AI stack layers"></div>
 
       <!-- Layer explanation panel -->
-      <div class="map-explanation" id="map-explanation">
+      <div class="map-explanation" id="map-explanation" role="region" aria-live="polite">
         <div class="map-explanation-inner">
-          <div class="map-explanation-title" id="map-exp-title"></div>
-          <div class="map-explanation-body" id="map-exp-body"></div>
+          <div class="map-explanation-content">
+            <div class="map-explanation-title" id="map-exp-title"></div>
+            <div class="map-explanation-body" id="map-exp-body"></div>
+          </div>
         </div>
       </div>
 
@@ -118,24 +120,24 @@
 
       <!-- Controls -->
       <div class="map-controls">
-        <div class="map-legend" id="map-legend"></div>
+        <div class="map-legend" id="map-legend" role="group" aria-label="Layer filter"></div>
         <button class="map-show-all" id="map-show-all">Show all</button>
       </div>
     </div>
   </section>
 
   <!-- ========== TAXONOMY GRID ========== -->
-  <section class="map-tax-section">
+  <section class="map-tax-section" id="map-tax-section" aria-label="AI taxonomy">
     <div class="container">
-      <div class="map-section-label" style="margin-bottom:20px">Full AI research &amp; engineering taxonomy</div>
+      <h2 class="map-section-label map-tax-label">Full AI research &amp; engineering taxonomy</h2>
       <div class="map-tax-grid" id="map-tax"></div>
     </div>
   </section>
 
   <!-- ========== HOW I THINK ABOUT AI ========== -->
-  <section class="map-thinking">
+  <section class="map-thinking" aria-label="How I think about AI">
     <div class="container">
-      <div class="map-thinking-heading map-reveal">How I think about AI</div>
+      <h2 class="map-thinking-heading map-reveal">How I think about AI</h2>
       <div class="map-thinking-body map-reveal">
         <p>Most AI discussion stays at the top of the stack. People debate which model is best, which agent framework to use, which startup just launched. That layer matters, but it is only one-fifth of the picture.</p>
         <p>Real leverage comes from understanding how the layers connect. A breakthrough in chip interconnects changes the economics of distributed training. A new compiler optimization shifts what model sizes are practical to serve. Cheaper energy in a specific geography changes where AI factories get built, which changes who has access to frontier compute.</p>

@@ -2,7 +2,7 @@
    AI MAP - Layer & Taxonomy Data
    ============================================ */
 
-const LAYERS = [
+var LAYERS = [
   {
     id: 'energy',
     label: 'Energy',
@@ -40,7 +40,7 @@ const LAYERS = [
   },
 ];
 
-const TAX = [
+var TAX = [
   {
     cat: 'Learning paradigms',
     note: 'How models acquire knowledge, training-time decisions',

@@ -6,11 +6,39 @@
   'use strict';
 
   var active = null;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --- Color accessors --- */
   function bg(id)  { return 'var(--' + id + '-bg)'; }
   function txt(id) { return 'var(--' + id + '-t)'; }
   function bd(id)  { return 'var(--' + id + '-bd)'; }
+
+  /* --- Collect all taxonomy items (ES5-safe) --- */
+  function getAllItems() {
+    var items = [];
+    for (var i = 0; i < TAX.length; i++) {
+      for (var j = 0; j < TAX[i].items.length; j++) {
+        items.push(TAX[i].items[j]);
+      }
+    }
+    return items;
+  }
+
+  /* --- Update visible count per category --- */
+  function updateCategoryCounts(id) {
+    var cats = document.querySelectorAll('.map-cat');
+    cats.forEach(function (cat) {
+      var chips = cat.querySelectorAll('.map-chip');
+      var visible = 0;
+      chips.forEach(function (c) {
+        if (id === null || c.dataset.l === id) visible++;
+      });
+      var countEl = cat.querySelector('.map-cat-count');
+      if (countEl) {
+        countEl.textContent = id === null ? chips.length : visible + '/' + chips.length;
+      }
+    });
+  }
 
   /* --- Selection handler --- */
   function sel(id, scroll) {
@@ -21,16 +49,25 @@
       b.setAttribute('aria-pressed', b.dataset.id === id ? 'true' : 'false');
     });
 
+    document.querySelectorAll('.map-leg').forEach(function (leg) {
+      leg.setAttribute('aria-pressed', leg.dataset.id === id ? 'true' : 'false');
+    });
+
     document.querySelectorAll('.map-chip').forEach(function (c) {
       c.classList.toggle('dim', id !== null && c.dataset.l !== id);
     });
+
+    updateCategoryCounts(id);
 
     /* Update explanation panel */
     var panel = document.getElementById('map-explanation');
     if (id === null) {
       panel.classList.remove('open');
     } else {
-      var layer = LAYERS.find(function (l) { return l.id === id; });
+      var layer = null;
+      for (var i = 0; i < LAYERS.length; i++) {
+        if (LAYERS[i].id === id) { layer = LAYERS[i]; break; }
+      }
       if (layer) {
         document.getElementById('map-exp-title').textContent = layer.label;
         document.getElementById('map-exp-title').style.color = txt(id);
@@ -47,10 +84,15 @@
 
     /* Smooth scroll to taxonomy when a layer is selected */
     if (id !== null && scroll !== false) {
-      var taxSection = document.getElementById('map-tax');
+      var taxSection = document.getElementById('map-tax-section');
       if (taxSection) {
         setTimeout(function () {
-          taxSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var navHeight = 70;
+          var top = taxSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+          window.scrollTo({
+            top: top,
+            behavior: reducedMotion ? 'auto' : 'smooth'
+          });
         }, 200);
       }
     }
@@ -67,7 +109,7 @@
   /* --- Build the cake stack --- */
   function buildCake() {
     var cakeEl = document.getElementById('map-cake');
-    var allItems = TAX.flatMap(function (c) { return c.items; });
+    var allItems = getAllItems();
 
     /* Reverse so Energy (bottom, widest) appears last in DOM.
        flex-direction: column means first child = top. Reverse puts Apps first (top). */
@@ -111,8 +153,10 @@
     LAYERS.forEach(function (L) {
       var d = document.createElement('div');
       d.className = 'map-leg';
+      d.dataset.id = L.id;
       d.setAttribute('role', 'button');
       d.setAttribute('tabindex', '0');
+      d.setAttribute('aria-pressed', 'false');
       d.setAttribute('aria-label', 'Filter by ' + L.label);
       d.innerHTML = '<div class="map-leg-dot" style="background:' + bd(L.id) + '"></div><span>' + L.label + '</span>';
 
@@ -135,7 +179,7 @@
       block.className = 'map-cat map-reveal';
 
       var chipsHTML = cat.items.map(function (item) {
-        return '<span class="map-chip" data-l="' + item.l + '" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '">' + item.n + '</span>';
+        return '<span class="map-chip" data-l="' + item.l + '" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '" aria-hidden="true">' + item.n + '</span>';
       }).join('');
 
       block.innerHTML =
@@ -160,6 +204,13 @@
 
   /* --- Scroll reveal for sections --- */
   function initScrollReveal() {
+    if (reducedMotion) {
+      document.querySelectorAll('.map-reveal').forEach(function (el) {
+        el.classList.add('map-revealed');
+      });
+      return;
+    }
+
     var els = document.querySelectorAll('.map-reveal');
     if (!els.length) return;
 
