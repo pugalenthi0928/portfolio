@@ -40,9 +40,31 @@
     });
   }
 
+  /* --- Animated count-up for cake bar numbers --- */
+  function animateCount(el, target) {
+    var duration = 400;
+    var start = performance.now();
+    function step(now) {
+      var progress = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
   /* --- Selection handler --- */
   function sel(id, scroll) {
     active = id;
+
+    /* Update URL hash */
+    if (id !== null) {
+      history.replaceState(null, '', '#' + id);
+    } else {
+      history.replaceState(null, '', window.location.pathname);
+    }
 
     document.querySelectorAll('.map-bar').forEach(function (b) {
       b.classList.toggle('sel', b.dataset.id === id);
@@ -104,6 +126,58 @@
       e.preventDefault();
       callback();
     }
+  }
+
+  /* --- Staggered cake build animation --- */
+  function animateCakeBuild() {
+    var bars = document.querySelectorAll('.map-bar');
+    if (reducedMotion) {
+      bars.forEach(function (bar) { bar.classList.add('map-bar-visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          /* Reveal bars bottom-to-top (last in DOM = Energy = bottom) */
+          var barEls = Array.prototype.slice.call(document.querySelectorAll('.map-bar'));
+          var reversed = barEls.slice().reverse();
+          reversed.forEach(function (bar, i) {
+            setTimeout(function () {
+              bar.classList.add('map-bar-visible');
+              /* Animate count-up */
+              var countEl = bar.querySelector('.map-bar-count');
+              if (countEl) {
+                var target = parseInt(countEl.textContent, 10);
+                animateCount(countEl, target);
+              }
+            }, i * 120);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    var cake = document.getElementById('map-cake');
+    if (cake) observer.observe(cake);
+
+    /* Fallback: if observer hasn't fired after 1.5s (e.g. cake already in view), show bars */
+    setTimeout(function () {
+      var hidden = document.querySelectorAll('.map-bar:not(.map-bar-visible)');
+      if (hidden.length > 0) {
+        var barEls = Array.prototype.slice.call(document.querySelectorAll('.map-bar'));
+        barEls.slice().reverse().forEach(function (bar, i) {
+          setTimeout(function () {
+            bar.classList.add('map-bar-visible');
+            var countEl = bar.querySelector('.map-bar-count');
+            if (countEl) {
+              var target = parseInt(countEl.textContent, 10);
+              animateCount(countEl, target);
+            }
+          }, i * 120);
+        });
+      }
+    }, 1500);
   }
 
   /* --- Build the cake stack --- */
@@ -179,7 +253,8 @@
       block.className = 'map-cat map-reveal';
 
       var chipsHTML = cat.items.map(function (item) {
-        return '<span class="map-chip" data-l="' + item.l + '" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '" aria-hidden="true">' + item.n + '</span>';
+        var tipHTML = item.t ? '<span class="map-chip-tip">' + item.t + '</span>' : '';
+        return '<span class="map-chip" data-l="' + item.l + '" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '" tabindex="0" aria-label="' + item.n + (item.t ? ': ' + item.t : '') + '">' + item.n + tipHTML + '</span>';
       }).join('');
 
       block.innerHTML =
@@ -226,6 +301,58 @@
     els.forEach(function (el) { observer.observe(el); });
   }
 
+  /* --- Handle URL hash on load --- */
+  function handleHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    for (var i = 0; i < LAYERS.length; i++) {
+      if (LAYERS[i].id === hash) {
+        sel(hash, false);
+        return;
+      }
+    }
+  }
+
+  /* --- Arrow key navigation between layers --- */
+  function bindArrowKeys() {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && active !== null) {
+        sel(null, false);
+        return;
+      }
+
+      if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+
+      var bars = document.querySelectorAll('.map-bar');
+      if (!bars.length) return;
+
+      /* Only activate if a bar or the cake area is focused */
+      var focused = document.activeElement;
+      var isCakeArea = false;
+      bars.forEach(function (b) { if (b === focused) isCakeArea = true; });
+      if (!isCakeArea) return;
+
+      e.preventDefault();
+
+      /* bars in DOM: Apps(top) ... Energy(bottom)
+         ArrowDown = move toward Energy = next in DOM
+         ArrowUp = move toward Apps = prev in DOM */
+      var barArr = Array.prototype.slice.call(bars);
+      var idx = -1;
+      barArr.forEach(function (b, i) { if (b === focused) idx = i; });
+
+      var nextIdx;
+      if (e.key === 'ArrowDown') {
+        nextIdx = idx < barArr.length - 1 ? idx + 1 : 0;
+      } else {
+        nextIdx = idx > 0 ? idx - 1 : barArr.length - 1;
+      }
+
+      barArr[nextIdx].focus();
+      sel(barArr[nextIdx].dataset.id, false);
+    });
+  }
+
   /* --- Init --- */
   document.addEventListener('DOMContentLoaded', function () {
     buildCake();
@@ -233,5 +360,8 @@
     buildTaxonomy();
     bindShowAll();
     initScrollReveal();
+    animateCakeBuild();
+    handleHash();
+    bindArrowKeys();
   });
 })();

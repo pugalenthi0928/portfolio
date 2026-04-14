@@ -102,11 +102,13 @@
   min-width: 160px;
   cursor: pointer;
   border: 1.5px solid transparent;
-  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  /* Start hidden for build animation */
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 .map-bar:hover {
@@ -117,6 +119,31 @@
 .map-bar.sel {
   border-color: var(--text);
   box-shadow: 0 0 24px rgba(255, 255, 255, 0.06);
+}
+
+.map-bar.sel[data-id="energy"] {
+  border-color: var(--energy-bd);
+  box-shadow: 0 0 24px rgba(240, 176, 96, 0.2), inset 0 0 12px rgba(240, 176, 96, 0.06);
+}
+
+.map-bar.sel[data-id="chips"] {
+  border-color: var(--chips-bd);
+  box-shadow: 0 0 24px rgba(108, 184, 224, 0.2), inset 0 0 12px rgba(108, 184, 224, 0.06);
+}
+
+.map-bar.sel[data-id="infra"] {
+  border-color: var(--infra-bd);
+  box-shadow: 0 0 24px rgba(168, 156, 224, 0.2), inset 0 0 12px rgba(168, 156, 224, 0.06);
+}
+
+.map-bar.sel[data-id="models"] {
+  border-color: var(--models-bd);
+  box-shadow: 0 0 24px rgba(93, 202, 165, 0.2), inset 0 0 12px rgba(93, 202, 165, 0.06);
+}
+
+.map-bar.sel[data-id="apps"] {
+  border-color: var(--apps-bd);
+  box-shadow: 0 0 24px rgba(240, 144, 112, 0.2), inset 0 0 12px rgba(240, 144, 112, 0.06);
 }
 
 .map-bar-left {
@@ -324,6 +351,57 @@
 }
 
 /* ============================================
+   CAKE BUILD ANIMATION
+   ============================================ */
+.map-bar.map-bar-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease),
+              border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+/* ============================================
+   CHIP TOOLTIP
+   ============================================ */
+.map-chip {
+  position: relative;
+  cursor: default;
+}
+
+.map-chip-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #1A1918;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  white-space: normal;
+  width: max-content;
+  max-width: 260px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.map-chip:hover .map-chip-tip,
+.map-chip:focus .map-chip-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.map-chip.dim .map-chip-tip {
+  display: none;
+}
+
+/* ============================================
    THINKING SECTION
    ============================================ */
 .map-thinking {
@@ -430,6 +508,11 @@
   }
 
   .map-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .map-bar {
     opacity: 1;
     transform: none;
   }
