@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Applied AI Atlas | Pugalenthi Magendran</title>
+  <meta name="description" content="A source-backed visual atlas of where AI is deployed across domains: biology, medicine, finance, law, education, robotics, science, energy, manufacturing, government, media and more.">
+
+  <link rel="canonical" href="https://pugalenthimagendran.com/applied-ai-atlas/">
+  <meta property="og:title" content="The Applied AI Atlas">
+  <meta property="og:description" content="Where intelligence enters the world. A source-backed map of how AI is deployed across domains, architectures, workflows, papers and bottlenecks.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/applied-ai-atlas/">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="applied-ai.css?v=1">
+</head>
+<body>
+
+<a href="#applied-domains" class="applied-skiplink">Skip to domain map</a>
+
+<header class="applied-topbar">
+  <a href="../" class="applied-topbar-home" aria-label="Back to portfolio home">&larr; pugalenthimagendran.com</a>
+  <nav class="applied-topbar-nav" aria-label="Atlas navigation">
+    <a href="#applied-featured">Questions</a>
+    <a href="#applied-domains">Domains</a>
+    <a href="#applied-architectures">Architectures</a>
+    <a href="#applied-workflows">Workflows</a>
+    <a href="#applied-bottlenecks">Bottlenecks</a>
+    <a href="#applied-frontier">Frontier</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- 1. HERO -->
+  <section class="applied-hero">
+    <div class="applied-container">
+      <div class="applied-hero-label">Applied AI Atlas</div>
+      <h1 class="applied-hero-title">Where Intelligence<br>Enters the World</h1>
+      <p class="applied-hero-sub">
+        AI is not one thing. It becomes different tools in different domains: protein models in biology,
+        vision transformers in medicine, time-series models in finance, retrieval systems in law,
+        diffusion policies in robotics, neural operators in science, agents in software. This atlas maps
+        what is used, where, why, and what still breaks.
+      </p>
+      <div class="applied-hero-ctas">
+        <a class="applied-cta applied-cta-primary" href="#applied-featured">Start with a question</a>
+        <a class="applied-cta" href="#applied-domains">Explore domains</a>
+        <a class="applied-cta" href="#applied-architectures">Compare architectures</a>
+        <a class="applied-cta" href="#applied-bottlenecks">See bottlenecks</a>
+      </div>
+      <div class="applied-hero-meta">
+        <span><span id="applied-stat-domains">52</span> domains</span>
+        <span><span id="applied-stat-architectures">32</span> architectures</span>
+        <span><span id="applied-stat-questions">126</span> questions</span>
+        <span><span id="applied-stat-papers">37</span> papers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TRUST STRIP -->
+  <section class="applied-section applied-section--tight" aria-labelledby="applied-trust-h">
+    <div class="applied-container">
+      <h2 id="applied-trust-h" class="applied-eyebrow">Trust &amp; confidence</h2>
+      <p class="applied-trust-line">
+        This atlas separates sourced facts, inferred relationships, market context and forward-looking
+        claims. Papers, models, companies and use cases are labelled by confidence and maturity.
+      </p>
+      <div class="applied-trust-grid">
+        <div class="applied-trust-card">
+          <div class="applied-trust-cardtitle">Confidence</div>
+          <ul class="applied-trust-pills">
+            <li><span class="applied-conf conf-sourced">sourced</span> direct citation</li>
+            <li><span class="applied-conf conf-inferred">inferred</span> multi-source consensus</li>
+            <li><span class="applied-conf conf-context">market context</span> industry-known dynamics</li>
+            <li><span class="applied-conf conf-forward">forward-looking</span> roadmap signal</li>
+            <li><span class="applied-conf conf-needs">needs verification</span> placeholder</li>
+          </ul>
+        </div>
+        <div class="applied-trust-card">
+          <div class="applied-trust-cardtitle">Maturity</div>
+          <ul class="applied-trust-pills">
+            <li><span class="applied-mat mat-prod">production</span> commercial / clinical scale</li>
+            <li><span class="applied-mat mat-early">early production</span> narrow real deployments</li>
+            <li><span class="applied-mat mat-research">research frontier</span> published methods</li>
+            <li><span class="applied-mat mat-exp">experimental</span> pilot or demo</li>
+            <li><span class="applied-mat mat-spec">speculative</span> claimed only</li>
+          </ul>
+        </div>
+        <div class="applied-trust-card">
+          <div class="applied-trust-cardtitle">Coverage</div>
+          <p class="applied-trust-cardtext">
+            This atlas covers the major domains where AI is currently used, researched, commercialised
+            or strategically deployed. It is designed to be expandable, source-backed and updated over
+            time. Where a claim is not verified, we mark it &mdash; not invent it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. HOW TO USE -->
+  <section class="applied-section applied-section--tight" id="applied-how" aria-labelledby="applied-how-h">
+    <div class="applied-container">
+      <h2 id="applied-how-h" class="applied-eyebrow">How to use this atlas</h2>
+      <div class="applied-how-grid">
+        <div class="applied-how-card">
+          <div class="applied-how-num">1</div>
+          <div class="applied-how-title">Pick a question</div>
+          <div class="applied-how-text">Featured questions teach the mental models. Each opens a panel with detailed answer, related domains, architectures and papers.</div>
+        </div>
+        <div class="applied-how-card">
+          <div class="applied-how-num">2</div>
+          <div class="applied-how-title">Open a domain</div>
+          <div class="applied-how-text">Each domain card opens a profile with thesis, use cases, architectures, papers, companies, bottlenecks, hype-vs-real and opportunities.</div>
+        </div>
+        <div class="applied-how-card">
+          <div class="applied-how-num">3</div>
+          <div class="applied-how-title">Compare architectures &amp; bottlenecks</div>
+          <div class="applied-how-text">Click an architecture or bottleneck to see which domains depend on it. Use this to spot patterns across the map.</div>
+        </div>
+        <div class="applied-how-card">
+          <div class="applied-how-num">4</div>
+          <div class="applied-how-title">Verify before acting</div>
+          <div class="applied-how-text">Source pills inside panels show which claims are sourced, inferred, market context, forward-looking or in need of verification.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FEATURED QUESTIONS -->
+  <section class="applied-section" id="applied-featured" aria-labelledby="applied-featured-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-featured-h" class="applied-section-title">Featured questions</h2>
+        <p class="applied-section-sub">Curated entry points across audiences. The full question explorer is below.</p>
+      </div>
+      <div class="applied-fq-groups">
+        <div class="applied-fq-group">
+          <div class="applied-fq-grouptitle">Beginner</div>
+          <div class="applied-fq-grid" id="applied-featured-beginner"></div>
+        </div>
+        <div class="applied-fq-group">
+          <div class="applied-fq-grouptitle">Builder &amp; investor</div>
+          <div class="applied-fq-grid" id="applied-featured-builder"></div>
+        </div>
+        <div class="applied-fq-group">
+          <div class="applied-fq-grouptitle">Technical &amp; research</div>
+          <div class="applied-fq-grid" id="applied-featured-technical"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DOMAIN MAP -->
+  <section class="applied-section" id="applied-domains" aria-labelledby="applied-domains-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-domains-h" class="applied-section-title">Domain map</h2>
+        <p class="applied-section-sub">52 domains across 7 categories. Click any tile to open the profile.</p>
+      </div>
+      <div class="applied-domain-map" id="applied-domain-map"></div>
+    </div>
+  </section>
+
+  <!-- 6. DOMAIN EXPLORER -->
+  <section class="applied-section" id="applied-explorer" aria-labelledby="applied-explorer-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-explorer-h" class="applied-section-title">Domain explorer</h2>
+        <p class="applied-section-sub">Search and filter the full map. Each profile shows architectures, papers, bottlenecks, opportunities and hype-vs-real.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-domain-search" class="applied-search" placeholder="Search domains, architectures, companies&hellip;" aria-label="Search domains">
+        <select id="applied-filter-category" class="applied-select" aria-label="Filter by category">
+          <option value="">All categories</option>
+        </select>
+        <select id="applied-filter-maturity" class="applied-select" aria-label="Filter by maturity">
+          <option value="">Any maturity</option>
+          <option value="Production">Production</option>
+          <option value="Early production">Early production</option>
+          <option value="Research frontier">Research frontier</option>
+          <option value="Experimental">Experimental</option>
+          <option value="Speculative">Speculative</option>
+        </select>
+        <select id="applied-filter-architecture" class="applied-select" aria-label="Filter by architecture">
+          <option value="">Any architecture</option>
+        </select>
+        <select id="applied-filter-bottleneck" class="applied-select" aria-label="Filter by bottleneck">
+          <option value="">Any bottleneck</option>
+        </select>
+      </div>
+      <div class="applied-explorer-grid" id="applied-explorer-grid"></div>
+    </div>
+  </section>
+
+  <!-- 7. ARCHITECTURE EXPLORER -->
+  <section class="applied-section" id="applied-architectures" aria-labelledby="applied-arch-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-arch-h" class="applied-section-title">Architecture explorer</h2>
+        <p class="applied-section-sub">The toolbox. Each entry shows what the architecture is, where it shines, where it fails and which domains use it.</p>
+      </div>
+      <div class="applied-arch-grid" id="applied-arch-grid"></div>
+    </div>
+  </section>
+
+  <!-- 8. WORKFLOW EXPLORER -->
+  <section class="applied-section" id="applied-workflows" aria-labelledby="applied-wf-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-wf-h" class="applied-section-title">Workflow explorer</h2>
+        <p class="applied-section-sub">End-to-end pipelines: drug discovery, radiology, quant research, robotics, AI coding, weather, manufacturing, support and more.</p>
+      </div>
+      <div class="applied-wf-grid" id="applied-wf-grid"></div>
+    </div>
+  </section>
+
+  <!-- 9. PAPER / MODEL EXPLORER -->
+  <section class="applied-section" id="applied-papers" aria-labelledby="applied-papers-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-papers-h" class="applied-section-title">Papers &amp; models</h2>
+        <p class="applied-section-sub">Landmark papers across foundation, vision, biology, robotics and scientific AI. Sources linked where possible.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-paper-search" class="applied-search" placeholder="Search papers&hellip;" aria-label="Search papers">
+        <select id="applied-filter-paper-domain" class="applied-select" aria-label="Filter papers by domain">
+          <option value="">Any domain</option>
+        </select>
+      </div>
+      <div class="applied-paper-grid" id="applied-paper-grid"></div>
+    </div>
+  </section>
+
+  <!-- 10. BOTTLENECK MAP -->
+  <section class="applied-section" id="applied-bottlenecks" aria-labelledby="applied-bn-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-bn-h" class="applied-section-title">Bottleneck map</h2>
+        <p class="applied-section-sub">16 categories of bottleneck across applied AI. The binding gate is rarely model quality.</p>
+      </div>
+      <div class="applied-bn-grid" id="applied-bn-grid"></div>
+    </div>
+  </section>
+
+  <!-- 11. HYPE VS REAL -->
+  <section class="applied-section" id="applied-hype" aria-labelledby="applied-hype-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-hype-h" class="applied-section-title">Hype vs real</h2>
+        <p class="applied-section-sub">For every major domain: what is real today, and what is overhyped right now.</p>
+      </div>
+      <div class="applied-hype-grid" id="applied-hype-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12. FOUNDER OPPORTUNITY MAP -->
+  <section class="applied-section" id="applied-opps" aria-labelledby="applied-opps-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-opps-h" class="applied-section-title">Founder opportunity map</h2>
+        <p class="applied-section-sub">Underserved workflows by domain. Each row shows buyer, pain, data and regulatory risk, and competition.</p>
+      </div>
+      <div class="applied-opps-table" id="applied-opps-table"></div>
+    </div>
+  </section>
+
+  <!-- 13. RESEARCH FRONTIER -->
+  <section class="applied-section" id="applied-frontier" aria-labelledby="applied-frontier-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-frontier-h" class="applied-section-title">Research frontier</h2>
+        <p class="applied-section-sub">Where new architectures and methods are still needed. Domains with research-frontier or experimental maturity.</p>
+      </div>
+      <div class="applied-frontier-grid" id="applied-frontier-grid"></div>
+    </div>
+  </section>
+
+  <!-- 14. QUESTION EXPLORER -->
+  <section class="applied-section" id="applied-questions" aria-labelledby="applied-q-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-q-h" class="applied-section-title">Question explorer</h2>
+        <p class="applied-section-sub">Search the full Q&amp;A by audience, category and difficulty. Every answer aims to teach a mental model.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-q-search" class="applied-search" placeholder="Search questions&hellip;" aria-label="Search questions">
+        <select id="applied-q-audience" class="applied-select" aria-label="Filter by audience">
+          <option value="">Any audience</option>
+          <option value="beginner">Beginner</option>
+          <option value="founder">Founder / operator</option>
+          <option value="operator">Operator</option>
+          <option value="investor">Investor</option>
+          <option value="engineer">Engineer</option>
+          <option value="researcher">Researcher</option>
+          <option value="contrarian">Contrarian</option>
+        </select>
+        <select id="applied-q-category" class="applied-select" aria-label="Filter by category">
+          <option value="">Any category</option>
+        </select>
+        <select id="applied-q-difficulty" class="applied-select" aria-label="Filter by difficulty">
+          <option value="">Any difficulty</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+          <option value="Expert">Expert</option>
+        </select>
+      </div>
+      <div class="applied-q-list" id="applied-q-list"></div>
+    </div>
+  </section>
+
+  <!-- 15. SOURCES & ASSUMPTIONS -->
+  <section class="applied-section" id="applied-sources" aria-labelledby="applied-sources-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-sources-h" class="applied-section-title">Sources &amp; assumptions</h2>
+        <p class="applied-section-sub">Methodology, source library and the audit log of claims tightened or flagged for verification.</p>
+      </div>
+      <div class="applied-source-block">
+        <h3 class="applied-source-h3">Methodology</h3>
+        <ul class="applied-source-list">
+          <li>Each domain entry is anchored on what AI is currently used for, not on what is claimed.</li>
+          <li>Architectures, papers and datasets are matched per domain; specific authorship and venues are only asserted when verifiable.</li>
+          <li>Companies are listed as market context. Adoption claims are softened or marked &lsquo;needs verification&rsquo; where data is partial.</li>
+          <li>Regulated domains (medicine, law, finance, defence, government) use cautious wording &mdash; AI assists, augments, triages, drafts, ranks, recommends.</li>
+          <li>Forward-looking labels apply to any claim about future capability or commercial scale.</li>
+        </ul>
+      </div>
+      <div class="applied-source-block">
+        <h3 class="applied-source-h3">Source library</h3>
+        <div class="applied-source-grid" id="applied-source-grid"></div>
+      </div>
+      <div class="applied-source-block">
+        <h3 class="applied-source-h3">Audit log</h3>
+        <div class="applied-audit-grid" id="applied-audit-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. CLOSING CTA -->
+  <section class="applied-section applied-section--closing" aria-labelledby="applied-close-h">
+    <div class="applied-container">
+      <h2 id="applied-close-h" class="applied-close-title">Three atlases, one map</h2>
+      <p class="applied-close-sub">
+        The Accelerated Computing Atlas explains how AI is physically manufactured: power, chips, TSMC,
+        HBM, NVIDIA, cloud and data centers. The Applied AI Atlas explains where that intelligence is
+        deployed across domains. The AI Map sits underneath both with the taxonomy of techniques.
+      </p>
+      <div class="applied-close-grid">
+        <a class="applied-close-card" href="../ai-map/">
+          <div class="applied-close-cardlabel">Foundations</div>
+          <div class="applied-close-cardtitle">AI Map &rarr;</div>
+          <div class="applied-close-cardtext">Five-layer taxonomy of AI techniques and concepts.</div>
+        </a>
+        <a class="applied-close-card" href="../accelerated-computing-atlas/">
+          <div class="applied-close-cardlabel">Manufacture</div>
+          <div class="applied-close-cardtitle">Accelerated Computing Atlas &rarr;</div>
+          <div class="applied-close-cardtext">Power, chips, packaging, networking, cloud &mdash; the physical economy of AI.</div>
+        </a>
+        <a class="applied-close-card applied-close-card--current" href="#">
+          <div class="applied-close-cardlabel">Application</div>
+          <div class="applied-close-cardtitle">Applied AI Atlas</div>
+          <div class="applied-close-cardtext">Where intelligence enters the world &mdash; you are here.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="applied-footer">
+  <div class="applied-container">
+    <div class="applied-footer-row">
+      <div>
+        <div class="applied-footer-name">Pugalenthi Magendran</div>
+        <div class="applied-footer-sub">AI / Machine Learning Engineer</div>
+      </div>
+      <div class="applied-footer-links">
+        <a href="../">Home</a>
+        <a href="../ai-map/">AI Map</a>
+        <a href="../accelerated-computing-atlas/">Accelerated Computing Atlas</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Slide-in detail panel -->
+<div class="applied-detail-overlay" id="applied-detail-overlay" aria-hidden="true"></div>
+<aside class="applied-detail" id="applied-detail" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="applied-detail-title">
+  <div class="applied-detail-inner" id="applied-detail-inner"></div>
+</aside>
+
+<script src="applied-ai-data.js?v=1"></script>
+<script src="applied-ai.js?v=1"></script>
+
+</body>
+</html>
