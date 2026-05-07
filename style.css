@@ -2807,12 +2807,14 @@ img {
 
 /* ============================================
    ATLASES SECTION
+   Dark editorial cards matching the site palette.
+   Per-atlas accent on the top rail and CTA only.
    ============================================ */
 .section-sub {
-  font-size: clamp(15px, 1.5vw, 17px);
-  color: var(--text-secondary, #6b7280);
+  font-size: clamp(15px, 1.4vw, 17px);
+  color: var(--text-secondary);
   max-width: 760px;
-  margin: -8px 0 36px;
+  margin: -8px 0 40px;
   line-height: 1.6;
 }
 
@@ -2826,33 +2828,55 @@ img {
   position: relative;
   display: flex !important;
   flex-direction: column;
-  gap: 12px;
-  padding: 28px 30px 26px;
-  border-radius: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: #fff;
+  gap: 14px;
+  padding: 30px 32px 26px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-alt);
   text-decoration: none;
   color: inherit;
   opacity: 1 !important;
   transform: none;
   clip-path: none;
-  transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 220ms ease, border-color 220ms ease;
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 240ms ease, background 240ms ease;
   overflow: hidden;
 }
 .atlas-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 0%, transparent 45%, var(--atlas-tint, transparent) 100%);
-  opacity: 0.6;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--atlas-accent, var(--accent));
+  opacity: 0.85;
+  transition: height 240ms ease, opacity 240ms ease;
   pointer-events: none;
-  z-index: 0;
+}
+.atlas-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 100% 0%, var(--atlas-glow, transparent) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
 }
 .atlas-card > * { position: relative; z-index: 1; }
-.atlas-card:hover {
+.atlas-card:hover,
+.atlas-card:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
-  border-color: var(--atlas-accent, rgba(0, 0, 0, 0.16));
+  border-color: var(--atlas-accent, var(--accent));
+  background: linear-gradient(180deg, var(--bg-alt) 0%, rgba(255,255,255,0.01) 100%);
+  outline: none;
+}
+.atlas-card:hover::before {
+  height: 3px;
+  opacity: 1;
+}
+.atlas-card:hover::after {
+  opacity: 1;
 }
 
 .atlas-card-label {
@@ -2860,22 +2884,23 @@ img {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--atlas-accent, #6b7280);
+  color: var(--atlas-accent, var(--accent));
+  margin-bottom: 2px;
 }
 
 .atlas-card-title {
-  font-size: clamp(20px, 2vw, 26px);
+  font-size: clamp(22px, 2.2vw, 28px);
   font-weight: 700;
-  letter-spacing: -0.018em;
+  letter-spacing: -0.02em;
   margin: 0;
-  color: #111827;
-  line-height: 1.2;
+  color: var(--text);
+  line-height: 1.15;
 }
 
 .atlas-card-desc {
   font-size: 14px;
-  line-height: 1.55;
-  color: #374151;
+  line-height: 1.6;
+  color: var(--text-secondary);
   margin: 0;
   flex: 1;
 }
@@ -2884,16 +2909,17 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 .atlas-card-meta span {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 3px 10px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.04);
-  color: #4b5563;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-tertiary);
 }
 
 .atlas-card-cta {
@@ -2902,45 +2928,145 @@ img {
   gap: 6px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--atlas-accent, #111827);
-  margin-top: 4px;
+  color: var(--atlas-accent, var(--accent));
+  margin-top: 6px;
 }
 .atlas-card-cta svg {
   transition: transform 220ms ease;
 }
 .atlas-card:hover .atlas-card-cta svg {
-  transform: translate(2px, -2px);
+  transform: translate(3px, -3px);
 }
 
-/* Per-atlas accent (subtle tint + accent color) */
-.atlas-card--map        { --atlas-accent: #2563eb; --atlas-tint: rgba(37, 99, 235, 0.08); }
-.atlas-card--papers     { --atlas-accent: #7c3aed; --atlas-tint: rgba(124, 58, 237, 0.08); }
-.atlas-card--accelerated{ --atlas-accent: #d97706; --atlas-tint: rgba(217, 119, 6, 0.10); }
-.atlas-card--applied    { --atlas-accent: #0d9488; --atlas-tint: rgba(13, 148, 136, 0.10); }
-
-/* Dark-mode variants if site uses prefers-color-scheme or theme class */
-@media (prefers-color-scheme: dark) {
-  .atlas-card {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-  .atlas-card-title { color: #f3f4f6; }
-  .atlas-card-desc { color: #d1d5db; }
-  .atlas-card-meta span {
-    background: rgba(255, 255, 255, 0.06);
-    color: #d1d5db;
-  }
-}
+/* Per-atlas accent palette — picked from each atlas's own page accent */
+.atlas-card--map        { --atlas-accent: #4AB4C8; --atlas-glow: rgba(74,180,200,0.10); }
+.atlas-card--papers     { --atlas-accent: #B794F4; --atlas-glow: rgba(183,148,244,0.10); }
+.atlas-card--accelerated{ --atlas-accent: #F0784A; --atlas-glow: rgba(240,120,74,0.12); }
+.atlas-card--applied    { --atlas-accent: #5EEAD4; --atlas-glow: rgba(94,234,212,0.10); }
 
 @media (max-width: 760px) {
-  .atlas-grid { grid-template-columns: 1fr; gap: 12px; }
-  .atlas-card { padding: 22px 22px 20px; }
+  .atlas-grid { grid-template-columns: 1fr; gap: 14px; }
+  .atlas-card { padding: 24px 22px 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .atlas-card,
+  .atlas-card::before,
+  .atlas-card::after,
   .atlas-card-cta svg { transition: none !important; }
   .atlas-card:hover { transform: none; }
+}
+
+/* ============================================
+   NAV DROPDOWN — Atlases
+   Hover-to-open on desktop; tap-to-toggle on touch via :focus-within.
+   ============================================ */
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+/* Suppress the parent .nav-links a::after underline on the dropdown trigger */
+.nav-links .nav-dropdown-trigger::after {
+  display: none !important;
+}
+.nav-dropdown-chevron {
+  font-size: 9px;
+  margin-left: 4px;
+  opacity: 0.55;
+  transform: translateY(1px);
+  transition: opacity 160ms ease, transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  display: inline-block;
+}
+.nav-dropdown:hover .nav-dropdown-chevron,
+.nav-dropdown:focus-within .nav-dropdown-chevron {
+  opacity: 1;
+  transform: translateY(3px);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: -8px;
+  min-width: 360px;
+  background: var(--bg-alt);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.55);
+  margin-top: 14px;
+  z-index: 110;
+}
+.nav-dropdown-menu::before {
+  /* Hover bridge so cursor can move down without losing hover */
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.is-open .nav-dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-dropdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  transition: background 160ms ease, color 160ms ease;
+  position: relative;
+}
+.nav-dropdown-item::before,
+.nav-dropdown-item::after { display: none !important; }
+.nav-dropdown-item:hover,
+.nav-dropdown-item:focus-visible {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  outline: none;
+}
+.nav-dropdown-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.nav-dropdown-item--map        .nav-dropdown-label { color: #4AB4C8; }
+.nav-dropdown-item--papers     .nav-dropdown-label { color: #B794F4; }
+.nav-dropdown-item--accelerated .nav-dropdown-label { color: #F0784A; }
+.nav-dropdown-item--applied    .nav-dropdown-label { color: #5EEAD4; }
+.nav-dropdown-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+.nav-dropdown-desc {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+@media (max-width: 880px) {
+  .nav-dropdown-menu { display: none; }
 }
