@@ -443,6 +443,169 @@
   /* ============================================
      RECOMMENDER
      ============================================ */
+  /* ============================================
+     BEST FIRST OFFERS LEADERBOARD
+     ============================================ */
+  function scoreSum(s) {
+    if (!s) return 0;
+    return (s.speedToClose || 0) + (s.easeOfDelivery || 0) + (s.margin || 0) + (s.retainerPotential || 0) + (s.risk || 0) + (s.proofNeeded || 0) + (s.smallTeamFeasibility || 0);
+  }
+  function buildBestFirstOffers() {
+    var grid = document.getElementById('mc-bfo-grid');
+    if (!grid || typeof BEST_FIRST_OFFERS === 'undefined') return;
+    grid.innerHTML = BEST_FIRST_OFFERS.map(function (o) {
+      var total = scoreSum(o.soloConsultantScore);
+      return '<button class="mc-bfo-card" data-bfo-id="' + escapeHtml(o.serviceId) + '" data-rank="' + o.rank + '">' +
+        '<div class="mc-bfo-rank">#' + o.rank + '</div>' +
+        '<div class="mc-bfo-body">' +
+          '<div class="mc-card-title">' + escapeHtml(o.title) + '</div>' +
+          '<div class="mc-card-take">' + escapeHtml(o.whyItSells) + '</div>' +
+          '<div class="mc-bfo-meta">' +
+            '<span class="mc-tag">' + escapeHtml(o.priceRange) + '</span>' +
+            '<span class="mc-tag">' + escapeHtml(o.deliveryTime) + '</span>' +
+            '<span class="mc-tag mc-tag-cat">solo score ' + total + '/35</span>' +
+          '</div>' +
+          '<div class="mc-card-foot">Buyer: ' + escapeHtml(o.bestBuyer) + ' &middot; Retainer: ' + escapeHtml(o.retainerPath) + '</div>' +
+        '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderBestFirstOfferProfile(o) {
+    var s = o.soloConsultantScore || {};
+    function row(label, val) { return '<div class="mc-score-row"><span class="mc-score-label">' + escapeHtml(label) + '</span><span class="mc-score-bar"><span class="mc-score-fill" style="width:' + (val * 20) + '%"></span></span><span class="mc-score-val">' + val + '/5</span></div>'; }
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Best first offer #' + o.rank + '</span><span class="mc-tag">' + escapeHtml(o.priceRange) + '</span><span class="mc-tag">' + escapeHtml(o.deliveryTime) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(o.title) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(o.whyItSells) + '</p>' +
+      '<button class="mc-link-btn" data-svc-id="' + escapeHtml(o.serviceId) + '">Open service profile →</button>' +
+      metaPair('Best buyer', o.bestBuyer) +
+      metaPair('Easiest niche', o.easiestNiche) +
+      metaPair('First-customer strategy', o.firstCustomerStrategy) +
+      metaPair('Proof needed', o.proofNeeded) +
+      metaPair('Retainer path', o.retainerPath) +
+      metaPair('Main risk', o.mainRisk) +
+      metaPair('Avoid if', o.avoidIf) +
+      '<div class="mc-block"><div class="mc-block-h">Solo consultant score</div>' +
+        row('Speed to close', s.speedToClose) +
+        row('Ease of delivery', s.easeOfDelivery) +
+        row('Margin', s.margin) +
+        row('Retainer potential', s.retainerPotential) +
+        row('Low risk', s.risk) +
+        row('Proof you have', s.proofNeeded) +
+        row('Small-team feasibility', s.smallTeamFeasibility) +
+      '</div>';
+  }
+
+  /* ============================================
+     AVOID FIRST OFFERS
+     ============================================ */
+  function buildAvoidFirstOffers() {
+    var grid = document.getElementById('mc-avoid-grid');
+    if (!grid || typeof AVOID_FIRST_OFFERS === 'undefined') return;
+    grid.innerHTML = AVOID_FIRST_OFFERS.map(function (o, i) {
+      var risk = (o.riskLevel || '').toLowerCase();
+      return '<button class="mc-avoid-card mc-avoid-' + risk + '" data-avoid-i="' + i + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-risk-' + risk + '">' + escapeHtml(o.riskLevel || '') + ' risk</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(o.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(o.whyAvoidAtFirst) + '</div>' +
+        '<div class="mc-card-foot">Better: ' + escapeHtml(o.betterAlternative) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderAvoidProfile(o) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-risk-' + (o.riskLevel || '').toLowerCase() + '">' + escapeHtml(o.riskLevel || '') + ' risk</span></div>' +
+      '<h2 class="mc-detail-title">Avoid first: ' + escapeHtml(o.title) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(o.whyAvoidAtFirst) + '</p>' +
+      bulletList('Hidden complexity', o.hiddenComplexity) +
+      metaPair('Better alternative', o.betterAlternative) +
+      metaPair('When it becomes a good offer', o.whenItBecomesGood);
+  }
+
+  /* ============================================
+     BUYER SALES PLAYBOOKS
+     ============================================ */
+  function buildBuyerPlaybooks() {
+    var grid = document.getElementById('mc-bsp-grid');
+    if (!grid || typeof BUYER_SALES_PLAYBOOKS === 'undefined') return;
+    grid.innerHTML = BUYER_SALES_PLAYBOOKS.map(function (b) {
+      return '<button class="mc-pkg-card" data-bsp-id="' + escapeHtml(b.buyerId) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag">' + escapeHtml(b.bestFirstOffer) + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(b.buyerName) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(b.painHypothesis) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderBuyerPlaybookProfile(b) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag">' + escapeHtml(b.bestFirstOffer) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(b.buyerName) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(b.painHypothesis) + '</p>' +
+      '<div class="mc-block"><div class="mc-block-h">Cold email</div><pre class="mc-script-pre">' + escapeHtml(b.coldEmail) + '</pre></div>' +
+      '<div class="mc-block"><div class="mc-block-h">LinkedIn DM</div><pre class="mc-script-pre">' + escapeHtml(b.linkedinDM) + '</pre></div>' +
+      '<div class="mc-block"><div class="mc-block-h">Call opener</div><pre class="mc-script-pre">' + escapeHtml(b.callOpener) + '</pre></div>' +
+      bulletList('Discovery questions', b.discoveryQuestions) +
+      bulletList('Objection handling', b.objectionHandling) +
+      metaPair('Follow-up', b.followUp) +
+      metaPair('Close angle', b.closeAngle) +
+      metaPair('Retainer upsell', b.retainerUpsell);
+  }
+
+  /* ============================================
+     OFFER LADDERS
+     ============================================ */
+  function buildOfferLadders() {
+    var grid = document.getElementById('mc-ladder-grid');
+    if (!grid || typeof OFFER_LADDERS === 'undefined') return;
+    grid.innerHTML = OFFER_LADDERS.map(function (l) {
+      var steps = (l.steps || []).map(function (s) {
+        return '<div class="mc-ladder-step">' +
+          '<div class="mc-ladder-stage">' + escapeHtml(s.stage) + '</div>' +
+          '<div class="mc-ladder-offer">' + escapeHtml(s.offer) + '</div>' +
+          '<div class="mc-ladder-price">' + escapeHtml(s.price) + '</div>' +
+          '<div class="mc-ladder-goal">' + escapeHtml(s.goal) + '</div>' +
+        '</div>';
+      }).join('<div class="mc-ladder-arrow">→</div>');
+      return '<div class="mc-ladder-card">' +
+        '<div class="mc-ladder-head">' +
+          '<div class="mc-card-title">' + escapeHtml(l.name) + '</div>' +
+          '<div class="mc-card-take">For: ' + escapeHtml(l.targetBuyer) + '</div>' +
+        '</div>' +
+        '<div class="mc-ladder-steps">' + steps + '</div>' +
+        '<div class="mc-ladder-foot">' + escapeHtml(l.whyItWorks) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     DELIVERY RECIPES
+     ============================================ */
+  function buildDeliveryRecipes() {
+    var grid = document.getElementById('mc-recipe-grid');
+    if (!grid || typeof DELIVERY_RECIPES === 'undefined') return;
+    grid.innerHTML = DELIVERY_RECIPES.map(function (r, i) {
+      return '<button class="mc-pkg-card" data-recipe-i="' + i + '">' +
+        '<div class="mc-card-title">' + escapeHtml(r.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(r.scopeBoundary) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderRecipeProfile(r) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(r.title) + '</h2>' +
+      '<button class="mc-link-btn" data-svc-id="' + escapeHtml(r.serviceId) + '">Open service profile →</button>' +
+      metaPair('Scope boundary', r.scopeBoundary) +
+      bulletList('Client inputs needed', r.clientInputsNeeded) +
+      bulletList('Tools needed', r.toolsNeeded) +
+      bulletList('Day-by-day plan', r.dayByDayPlan) +
+      bulletList('Deliverables', r.deliverables) +
+      bulletList('Acceptance criteria', r.acceptanceCriteria) +
+      bulletList('Handover checklist', r.handoverChecklist) +
+      metaPair('Retainer upsell', r.retainerUpsell) +
+      bulletList('What can go wrong', r.whatCanGoWrong) +
+      bulletList('How to avoid scope creep', r.howToAvoidScopeCreep);
+  }
+
   function buildRecommender() {
     var grid = document.getElementById('mc-rec-grid');
     if (!grid || typeof FIRST_OFFER_RECOMMENDER === 'undefined') return;
@@ -511,6 +674,14 @@
       if (rtBtn) { var rt = RETAINER_MODELS.filter(function (x) { return x.id === rtBtn.dataset.rtId; })[0]; if (rt) { e.preventDefault(); openPanel(renderRetainerProfile(rt)); return; } }
       var riskBtn = t.closest('[data-risk-id]');
       if (riskBtn) { var rk = RISK_DOSSIERS.filter(function (x) { return x.id === riskBtn.dataset.riskId; })[0]; if (rk) { e.preventDefault(); openPanel(renderRiskProfile(rk)); return; } }
+      var bfoBtn = t.closest('[data-bfo-id]');
+      if (bfoBtn) { var bfo = BEST_FIRST_OFFERS.filter(function (x) { return x.serviceId === bfoBtn.dataset.bfoId; })[0]; if (bfo) { e.preventDefault(); openPanel(renderBestFirstOfferProfile(bfo)); return; } }
+      var avoidBtn = t.closest('[data-avoid-i]');
+      if (avoidBtn) { var ai = parseInt(avoidBtn.dataset.avoidI, 10); var av = AVOID_FIRST_OFFERS[ai]; if (av) { e.preventDefault(); openPanel(renderAvoidProfile(av)); return; } }
+      var bspBtn = t.closest('[data-bsp-id]');
+      if (bspBtn) { var bsp = BUYER_SALES_PLAYBOOKS.filter(function (x) { return x.buyerId === bspBtn.dataset.bspId; })[0]; if (bsp) { e.preventDefault(); openPanel(renderBuyerPlaybookProfile(bsp)); return; } }
+      var rcpBtn = t.closest('[data-recipe-i]');
+      if (rcpBtn) { var ri = parseInt(rcpBtn.dataset.recipeI, 10); var rcp = DELIVERY_RECIPES[ri]; if (rcp) { e.preventDefault(); openPanel(renderRecipeProfile(rcp)); return; } }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
   }
@@ -562,6 +733,11 @@
     buildROI();
     buildRetainers();
     buildRisks();
+    buildBestFirstOffers();
+    buildAvoidFirstOffers();
+    buildBuyerPlaybooks();
+    buildOfferLadders();
+    buildDeliveryRecipes();
     buildRecommender();
     buildSources();
     bindClicks();
