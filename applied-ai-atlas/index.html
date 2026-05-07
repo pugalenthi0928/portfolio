@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="applied-ai.css?v=3">
+  <link rel="stylesheet" href="applied-ai.css?v=4">
 </head>
 <body>
 
@@ -26,10 +26,11 @@
 <header class="applied-topbar">
   <a href="../" class="applied-topbar-home" aria-label="Back to portfolio home">&larr; pugalenthimagendran.com</a>
   <nav class="applied-topbar-nav" aria-label="Atlas navigation">
-    <a href="#applied-featured">Questions</a>
-    <a href="#applied-domains">Domains</a>
+    <a href="#applied-workflows-explorer">Workflows</a>
+    <a href="#applied-money-map">Money map</a>
+    <a href="#applied-arch-playbook">Architectures</a>
+    <a href="#applied-roadmap">Learn</a>
     <a href="#applied-founder-dossiers">Founder map</a>
-    <a href="#applied-bn-dossiers">Bottlenecks</a>
     <a href="#applied-gameboard">Gameboard</a>
     <a href="#applied-interview">Interviews</a>
   </nav>
@@ -357,6 +358,73 @@
     </div>
   </section>
 
+  <!-- 12f. INDUSTRY WORKFLOW EXPLORER -->
+  <section class="applied-section" id="applied-workflows-explorer" aria-labelledby="applied-workflows-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-workflows-h" class="applied-section-title">Industry workflows &mdash; how AI actually enters the work</h2>
+        <p class="applied-section-sub">Step-by-step workflows: input, actor, AI role, data, architecture, output, human review and failure mode per step.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-iw-search" class="applied-search" placeholder="Search workflows&hellip;" aria-label="Search workflows">
+        <select id="applied-iw-industry" class="applied-select" aria-label="Filter by industry">
+          <option value="">Any industry</option>
+        </select>
+        <select id="applied-iw-maturity" class="applied-select" aria-label="Filter by maturity">
+          <option value="">Any maturity</option>
+          <option value="Production">Production</option>
+          <option value="Early production">Early production</option>
+          <option value="Research frontier">Research frontier</option>
+          <option value="Experimental">Experimental</option>
+        </select>
+      </div>
+      <div class="applied-iw-grid" id="applied-iw-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12g. WORKFLOW-TO-MONEY MAP -->
+  <section class="applied-section" id="applied-money-map" aria-labelledby="applied-money-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-money-h" class="applied-section-title">Where AI turns into money</h2>
+        <p class="applied-section-sub">Workflow &rarr; buyer &rarr; pain &rarr; AI stack &rarr; revenue logic. The bridge between capability and product.</p>
+      </div>
+      <div class="applied-money-grid" id="applied-money-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12h. ARCHITECTURE PLAYBOOK -->
+  <section class="applied-section" id="applied-arch-playbook" aria-labelledby="applied-arch-playbook-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-arch-playbook-h" class="applied-section-title">Architectures that let you understand the game</h2>
+        <p class="applied-section-sub">You do not need to know every model. You need the architectures that keep reappearing across industries.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-hva-search" class="applied-search" placeholder="Search architecture playbook&hellip;" aria-label="Search architecture playbook">
+        <select id="applied-hva-priority" class="applied-select" aria-label="Filter by learning priority">
+          <option value="">Any priority</option>
+          <option value="Must learn now">Must learn now</option>
+          <option value="High value">High value</option>
+          <option value="Domain-specific">Domain-specific</option>
+          <option value="Research frontier">Research frontier</option>
+        </select>
+      </div>
+      <div class="applied-hva-grid" id="applied-hva-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12i. LEARNING ROADMAP -->
+  <section class="applied-section" id="applied-roadmap" aria-labelledby="applied-roadmap-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-roadmap-h" class="applied-section-title">What to learn next</h2>
+        <p class="applied-section-sub">Practical study paths for builders, engineers, researchers, investors, robotics, bio, finance, infrastructure and interviewers. Each module is concrete.</p>
+      </div>
+      <div class="applied-roadmap-grid" id="applied-roadmap-grid"></div>
+    </div>
+  </section>
+
   <!-- 13. RESEARCH FRONTIER -->
   <section class="applied-section" id="applied-frontier" aria-labelledby="applied-frontier-h">
     <div class="applied-container">
@@ -483,8 +551,8 @@
   <div class="applied-detail-inner" id="applied-detail-inner"></div>
 </aside>
 
-<script src="applied-ai-data.js?v=3"></script>
-<script src="applied-ai.js?v=3"></script>
+<script src="applied-ai-data.js?v=4"></script>
+<script src="applied-ai.js?v=4"></script>
 
 </body>
 </html>

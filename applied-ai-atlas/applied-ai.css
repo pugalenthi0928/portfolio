@@ -1803,6 +1803,297 @@ button {
   .applied-iq-tab { width: 100%; }
 }
 
+/* ============================================
+   INDUSTRY WORKFLOW EXPLORER
+   ============================================ */
+.applied-iw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+.applied-iw-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 160ms ease;
+}
+.applied-iw-card[hidden] { display: none; }
+.applied-iw-card:hover, .applied-iw-card:focus-visible {
+  border-color: var(--applied-core);
+  outline: none;
+}
+.applied-iw-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.applied-iw-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.applied-iw-take {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.applied-iw-summary {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+/* Step rendering inside the workflow detail panel */
+.applied-iw-step {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.applied-iw-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(94,234,212,0.12);
+  color: var(--applied-core);
+  border: 1px solid rgba(94,234,212,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+.applied-iw-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.applied-iw-step-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.applied-iw-step-row {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.applied-iw-step-row > span:first-child {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--applied-warm);
+  margin-right: 8px;
+  min-width: 90px;
+}
+
+/* ============================================
+   WORKFLOW MONEY MAP
+   ============================================ */
+.applied-money-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+.applied-money-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 160ms ease;
+}
+.applied-money-card:hover, .applied-money-card:focus-visible {
+  border-color: var(--applied-warm);
+  outline: none;
+}
+.applied-money-buyer {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--applied-warm);
+}
+.applied-money-pain {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+.applied-money-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.applied-money-rev {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  border-top: 1px dashed var(--border-light);
+  padding-top: 8px;
+}
+.applied-money-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ============================================
+   ARCHITECTURE PLAYBOOK
+   ============================================ */
+.applied-hva-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.applied-hva-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 160ms ease;
+  border-left-width: 3px;
+}
+.applied-hva-card[hidden] { display: none; }
+.applied-hva-card:hover, .applied-hva-card:focus-visible {
+  border-color: var(--applied-core);
+  outline: none;
+}
+.applied-hva-priority {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.applied-hva-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.applied-hva-why {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.applied-hva-card.pri-must-learn-now { border-left-color: #f87171; }
+.applied-hva-card.pri-high-value { border-left-color: var(--applied-warm); }
+.applied-hva-card.pri-domain-specific { border-left-color: var(--applied-core); }
+.applied-hva-card.pri-research-frontier { border-left-color: #a78bfa; }
+
+.applied-hva-priority.pri-must-learn-now { color: #f87171; border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.08); }
+.applied-hva-priority.pri-high-value { color: var(--applied-warm); border-color: rgba(251,211,141,0.4); background: rgba(251,211,141,0.08); }
+.applied-hva-priority.pri-domain-specific { color: var(--applied-core); border-color: rgba(94,234,212,0.4); background: rgba(94,234,212,0.08); }
+.applied-hva-priority.pri-research-frontier { color: #a78bfa; border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08); }
+
+/* ============================================
+   LEARNING ROADMAP
+   ============================================ */
+.applied-roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+.applied-roadmap-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.applied-roadmap-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.applied-roadmap-goal {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  border-bottom: 1px dashed var(--border-light);
+  padding-bottom: 10px;
+}
+.applied-roadmap-module {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+.applied-roadmap-module:last-child { border-bottom: none; padding-bottom: 0; }
+.applied-roadmap-module-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--applied-warm);
+  letter-spacing: -0.005em;
+}
+.applied-roadmap-why {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.applied-roadmap-row {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.applied-roadmap-row > span:first-child {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--applied-core);
+}
+
+@media (max-width: 540px) {
+  .applied-iw-step { grid-template-columns: 28px 1fr; gap: 10px; }
+  .applied-iw-step-num { width: 26px; height: 26px; font-size: 11px; }
+  .applied-iw-step-row > span:first-child { display: block; min-width: 0; margin-bottom: 2px; }
+}
+
 /* Print just-in-case */
 @media print {
   .applied-topbar, .applied-detail, .applied-detail-overlay, .applied-hero-ctas, .applied-explorer-controls { display: none !important; }

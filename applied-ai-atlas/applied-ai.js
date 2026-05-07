@@ -887,9 +887,13 @@
       var fdoBtn = t.closest('[data-fdo-id]');
       var bndBtn = t.closest('[data-bnd-id]');
       var csBtn = t.closest('[data-cs-id]');
+      var iwBtn = t.closest('[data-iw-id]');
+      var hvaBtn = t.closest('[data-hva-id]');
       var close = t.closest('.applied-detail-close');
       var overlay = t.closest('#applied-detail-overlay');
       if (close || overlay) { closePanel(); return; }
+      if (iwBtn && iwBtn.dataset.iwId) { e.preventDefault(); openIndustryWorkflow(iwBtn.dataset.iwId); return; }
+      if (hvaBtn && hvaBtn.dataset.hvaId) { e.preventDefault(); openHighValueArch(hvaBtn.dataset.hvaId); return; }
       if (fdoBtn && fdoBtn.dataset.fdoId) { e.preventDefault(); openFounderDossier(fdoBtn.dataset.fdoId); return; }
       if (bndBtn && bndBtn.dataset.bndId) { e.preventDefault(); openBottleneckDossier(bndBtn.dataset.bndId); return; }
       if (csBtn && csBtn.dataset.csId) { e.preventDefault(); openCompanyStrategy(csBtn.dataset.csId); return; }
@@ -916,6 +920,18 @@
     var cs = getCompanyStrategy(id); if (!cs) return;
     openPanel(renderCompanyStrategyProfile(cs));
     history.replaceState(null, '', '#company:' + id);
+  }
+  function openIndustryWorkflow(id) {
+    if (typeof getIndustryWorkflow !== 'function') return;
+    var w = getIndustryWorkflow(id); if (!w) return;
+    openPanel(renderIndustryWorkflowProfile(w));
+    history.replaceState(null, '', '#workflow:' + id);
+  }
+  function openHighValueArch(id) {
+    if (typeof getHighValueArch !== 'function') return;
+    var a = getHighValueArch(id); if (!a) return;
+    openPanel(renderHighValueArchProfile(a));
+    history.replaceState(null, '', '#archplay:' + id);
   }
 
   function bindFilters() {
@@ -948,6 +964,8 @@
     if (h.indexOf('opp:') === 0) { setTimeout(function () { openFounderDossier(h.slice(4)); }, 200); return; }
     if (h.indexOf('bottleneck:') === 0) { setTimeout(function () { openBottleneckDossier(h.slice(11)); }, 200); return; }
     if (h.indexOf('company:') === 0) { setTimeout(function () { openCompanyStrategy(h.slice(8)); }, 200); return; }
+    if (h.indexOf('workflow:') === 0) { setTimeout(function () { openIndustryWorkflow(h.slice(9)); }, 200); return; }
+    if (h.indexOf('archplay:') === 0) { setTimeout(function () { openHighValueArch(h.slice(9)); }, 200); return; }
   }
 
   /* ============================================
@@ -976,10 +994,224 @@
     buildBottleneckDossiers();
     buildCompanyStrategies();
     buildInterviewRoom();
+    buildIndustryWorkflows();
+    buildMoneyMap();
+    buildHighValueArchitectures();
+    buildLearningRoadmap();
     bindClicks();
     bindFilters();
     handleHash();
     window.addEventListener('hashchange', handleHash);
+  }
+
+  /* ============================================
+     INDUSTRY WORKFLOWS
+     ============================================ */
+  function buildIndustryWorkflows() {
+    var c = document.getElementById('applied-iw-grid');
+    if (!c || typeof INDUSTRY_WORKFLOWS === 'undefined') return;
+    var indSel = document.getElementById('applied-iw-industry');
+    if (indSel) {
+      var seen = {};
+      INDUSTRY_WORKFLOWS.forEach(function (w) {
+        if (w.industry && !seen[w.industry]) {
+          seen[w.industry] = true;
+          var opt = document.createElement('option');
+          opt.value = w.industry; opt.textContent = w.industry;
+          indSel.appendChild(opt);
+        }
+      });
+    }
+    var html = '';
+    for (var i = 0; i < INDUSTRY_WORKFLOWS.length; i++) {
+      var w = INDUSTRY_WORKFLOWS[i];
+      var search = ((w.title || '') + ' ' + (w.industry || '') + ' ' + (w.oneLineTakeaway || '') + ' ' + (w.architecturesUsed || []).join(' ') + ' ' + (w.companiesUsingThisWorkflow || []).join(' ')).toLowerCase();
+      html += '<button class="applied-iw-card" data-iw-id="' + escapeHtml(w.id) + '" data-industry="' + escapeHtml(w.industry || '') + '" data-maturity="' + escapeHtml(w.maturity || '') + '" data-search="' + escapeHtml(search) + '">' +
+                '<div class="applied-iw-meta">' +
+                  '<span class="applied-tag applied-tag-arch">' + escapeHtml(w.industry || '') + '</span>' +
+                  '<span class="applied-mat ' + maturityClass(w.maturity) + '">' + escapeHtml(w.maturity || '') + '</span>' +
+                  '<span class="applied-conf ' + confidenceClass(w.confidence) + '">' + confidenceLabel(w.confidence) + '</span>' +
+                '</div>' +
+                '<div class="applied-iw-title">' + escapeHtml(w.title || '') + '</div>' +
+                '<div class="applied-iw-take">' + escapeHtml(w.oneLineTakeaway || '') + '</div>' +
+                '<div class="applied-iw-summary">' + (w.workflowSteps || []).length + ' steps &middot; ' + (w.architecturesUsed || []).length + ' architectures &middot; ' + (w.companiesUsingThisWorkflow || []).length + ' companies</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+    var search = document.getElementById('applied-iw-search');
+    var ind = document.getElementById('applied-iw-industry');
+    var mat = document.getElementById('applied-iw-maturity');
+    var apply = function () {
+      var s = (search.value || '').toLowerCase().trim();
+      var i = ind.value; var m = mat.value;
+      c.querySelectorAll('.applied-iw-card').forEach(function (card) {
+        var passS = !s || card.dataset.search.indexOf(s) !== -1;
+        var passI = !i || card.dataset.industry === i;
+        var passM = !m || card.dataset.maturity === m;
+        card.hidden = !(passS && passI && passM);
+      });
+    };
+    [search, ind, mat].forEach(function (el) { if (el) el.addEventListener('input', apply); });
+  }
+
+  function getIndustryWorkflow(id) {
+    if (typeof INDUSTRY_WORKFLOWS === 'undefined') return null;
+    for (var i = 0; i < INDUSTRY_WORKFLOWS.length; i++) if (INDUSTRY_WORKFLOWS[i].id === id) return INDUSTRY_WORKFLOWS[i];
+    return null;
+  }
+
+  function renderIndustryWorkflowProfile(w) {
+    var stepsHtml = '';
+    (w.workflowSteps || []).forEach(function (s) {
+      var archChips = (s.architectures || []).map(function (a) {
+        var arch = getArchitecture(a);
+        return '<span class="applied-tag applied-tag-arch">' + escapeHtml(arch ? arch.name : a) + '</span>';
+      }).join(' ');
+      var fmHtml = (s.failureModes || []).map(function (f) { return '<li>' + escapeHtml(f) + '</li>'; }).join('');
+      stepsHtml += '<div class="applied-iw-step">' +
+                     '<div class="applied-iw-step-num">' + s.step + '</div>' +
+                     '<div class="applied-iw-step-body">' +
+                       '<div class="applied-iw-step-title">' + escapeHtml(s.name) + '</div>' +
+                       '<div class="applied-iw-step-row"><span>Actor</span> ' + escapeHtml(s.actor || '') + '</div>' +
+                       '<div class="applied-iw-step-row"><span>Input</span> ' + escapeHtml(s.input || '') + '</div>' +
+                       '<div class="applied-iw-step-row"><span>AI role</span> ' + escapeHtml(s.aiRole || '') + '</div>' +
+                       '<div class="applied-iw-step-row"><span>Output</span> ' + escapeHtml(s.output || '') + '</div>' +
+                       '<div class="applied-iw-step-row"><span>Human review</span> ' + escapeHtml(s.humanReview || '') + '</div>' +
+                       (archChips ? '<div class="applied-iw-step-row"><span>Architectures</span> ' + archChips + '</div>' : '') +
+                       (fmHtml ? '<div class="applied-iw-step-row"><span>Failure modes</span><ul class="applied-detail-list">' + fmHtml + '</ul></div>' : '') +
+                     '</div>' +
+                   '</div>';
+    });
+    return '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
+           '<div class="applied-detail-badges">' +
+             '<span class="applied-tag applied-tag-arch">' + escapeHtml(w.industry || '') + '</span>' +
+             '<span class="applied-mat ' + maturityClass(w.maturity) + '">' + escapeHtml(w.maturity || '') + '</span>' +
+             '<span class="applied-conf ' + confidenceClass(w.confidence) + '">' + confidenceLabel(w.confidence) + '</span>' +
+           '</div>' +
+           '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(w.title || '') + '</h2>' +
+           '<p class="applied-detail-summary">' + escapeHtml(w.oneLineTakeaway || '') + '</p>' +
+           '<div class="applied-detail-block"><div class="applied-detail-block-title">Workflow steps</div>' + stepsHtml + '</div>' +
+           bulletList('Companies using this workflow', w.companiesUsingThisWorkflow) +
+           bulletList('Datasets', w.datasets) +
+           bulletList('Regulations', w.regulations) +
+           bulletList('Bottlenecks', w.bottlenecks);
+  }
+
+  /* ============================================
+     WORKFLOW-TO-MONEY MAP
+     ============================================ */
+  function buildMoneyMap() {
+    var c = document.getElementById('applied-money-grid');
+    if (!c || typeof WORKFLOW_MONEY_MAP === 'undefined') return;
+    var html = '';
+    for (var i = 0; i < WORKFLOW_MONEY_MAP.length; i++) {
+      var m = WORKFLOW_MONEY_MAP[i];
+      html += '<button class="applied-money-card" data-iw-id="' + escapeHtml(m.workflowId) + '">' +
+                '<div class="applied-money-buyer">' + escapeHtml(m.buyer || '') + '</div>' +
+                '<div class="applied-money-pain">' + escapeHtml(m.painfulJob || '') + '</div>' +
+                '<div class="applied-money-stack">' + (m.architectures || []).slice(0, 4).map(function (a) { var arch = getArchitecture(a); return '<span class="applied-tag applied-tag-arch">' + escapeHtml(arch ? arch.name : a) + '</span>'; }).join('') + '</div>' +
+                '<div class="applied-money-rev">' + escapeHtml(m.revenueLogic || '') + '</div>' +
+                '<div class="applied-money-meta">' +
+                  '<span class="applied-tag">WTP: ' + escapeHtml(m.willingnessToPay || '') + '</span>' +
+                  '<span class="applied-tag">sales: ' + escapeHtml(m.salesDifficulty || '') + '</span>' +
+                  '<span class="applied-tag">data: ' + escapeHtml(m.dataDifficulty || '') + '</span>' +
+                  '<span class="applied-tag">reg: ' + escapeHtml(m.regulatoryDifficulty || '') + '</span>' +
+                '</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+  }
+
+  /* ============================================
+     HIGH-VALUE ARCHITECTURES PLAYBOOK
+     ============================================ */
+  function buildHighValueArchitectures() {
+    var c = document.getElementById('applied-hva-grid');
+    if (!c || typeof HIGH_VALUE_AI_ARCHITECTURES === 'undefined') return;
+    var html = '';
+    for (var i = 0; i < HIGH_VALUE_AI_ARCHITECTURES.length; i++) {
+      var a = HIGH_VALUE_AI_ARCHITECTURES[i];
+      var search = ((a.name || '') + ' ' + (a.whyItMatters || '') + ' ' + (a.domains || []).join(' ')).toLowerCase();
+      var prCls = 'pri-' + (a.learningPriority || '').toLowerCase().replace(/\s+/g, '-');
+      html += '<button class="applied-hva-card ' + prCls + '" data-hva-id="' + escapeHtml(a.id) + '" data-priority="' + escapeHtml(a.learningPriority || '') + '" data-search="' + escapeHtml(search) + '">' +
+                '<div class="applied-hva-priority ' + prCls + '">' + escapeHtml(a.learningPriority || '') + '</div>' +
+                '<div class="applied-hva-name">' + escapeHtml(a.name || '') + '</div>' +
+                '<div class="applied-hva-why">' + escapeHtml(a.whyItMatters || '') + '</div>' +
+                '<div class="applied-fq-meta">' +
+                  '<span class="applied-conf ' + confidenceClass(a.confidence) + '">' + confidenceLabel(a.confidence) + '</span>' +
+                  '<span class="applied-tag">' + (a.domains || []).length + ' domains</span>' +
+                  '<span class="applied-tag">' + (a.companyExamples || []).length + ' co.</span>' +
+                '</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+    var search = document.getElementById('applied-hva-search');
+    var pri = document.getElementById('applied-hva-priority');
+    var apply = function () {
+      var s = (search.value || '').toLowerCase().trim();
+      var p = pri.value;
+      c.querySelectorAll('.applied-hva-card').forEach(function (card) {
+        var passS = !s || card.dataset.search.indexOf(s) !== -1;
+        var passP = !p || card.dataset.priority === p;
+        card.hidden = !(passS && passP);
+      });
+    };
+    [search, pri].forEach(function (el) { if (el) el.addEventListener('input', apply); });
+  }
+
+  function getHighValueArch(id) {
+    if (typeof HIGH_VALUE_AI_ARCHITECTURES === 'undefined') return null;
+    for (var i = 0; i < HIGH_VALUE_AI_ARCHITECTURES.length; i++) if (HIGH_VALUE_AI_ARCHITECTURES[i].id === id) return HIGH_VALUE_AI_ARCHITECTURES[i];
+    return null;
+  }
+
+  function renderHighValueArchProfile(a) {
+    return '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
+           '<div class="applied-detail-badges">' +
+             '<span class="applied-hva-priority pri-' + (a.learningPriority || '').toLowerCase().replace(/\s+/g, '-') + '">' + escapeHtml(a.learningPriority || '') + '</span>' +
+             '<span class="applied-conf ' + confidenceClass(a.confidence) + '">' + confidenceLabel(a.confidence) + '</span>' +
+           '</div>' +
+           '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(a.name || '') + '</h2>' +
+           '<p class="applied-detail-summary">' + escapeHtml(a.whyItMatters || '') + '</p>' +
+           bulletList('What it enables', a.whatItEnables) +
+           bulletList('Where it makes money', a.whereItMakesMoney) +
+           bulletList('Where it fails', a.whereItFails) +
+           bulletList('What to learn', a.whatToLearn) +
+           bulletList('Practical projects', a.practicalProjects) +
+           bulletList('Domains', a.domains) +
+           bulletList('Company examples', a.companyExamples) +
+           bulletList('Interview questions', a.interviewQuestions);
+  }
+
+  /* ============================================
+     LEARNING ROADMAP
+     ============================================ */
+  function buildLearningRoadmap() {
+    var c = document.getElementById('applied-roadmap-grid');
+    if (!c || typeof AI_LEARNING_ROADMAP === 'undefined') return;
+    var html = '';
+    for (var i = 0; i < AI_LEARNING_ROADMAP.length; i++) {
+      var p = AI_LEARNING_ROADMAP[i];
+      var modulesHtml = '';
+      (p.modules || []).forEach(function (m) {
+        var learnChips = (m.learn || []).map(function (l) { return '<span class="applied-tag">' + escapeHtml(l) + '</span>'; }).join('');
+        var projHtml = (m.projects || []).map(function (pr) { return '<li>' + escapeHtml(pr) + '</li>'; }).join('');
+        var domsHtml = (m.domainsUnlocked || []).map(function (d) { var dom = getDomain(d); return dom ? '<button class="applied-source-pill" data-domain="' + escapeHtml(d) + '">' + escapeHtml(dom.name) + '</button>' : ''; }).join('');
+        modulesHtml += '<div class="applied-roadmap-module">' +
+                         '<div class="applied-roadmap-module-name">' + escapeHtml(m.name) + '</div>' +
+                         (m.whyHighValue ? '<div class="applied-roadmap-why">' + escapeHtml(m.whyHighValue) + '</div>' : '') +
+                         (learnChips ? '<div class="applied-roadmap-row"><span>Learn</span><div class="applied-detail-chip-row">' + learnChips + '</div></div>' : '') +
+                         (projHtml ? '<div class="applied-roadmap-row"><span>Projects</span><ul class="applied-detail-list">' + projHtml + '</ul></div>' : '') +
+                         (domsHtml ? '<div class="applied-roadmap-row"><span>Domains unlocked</span><div class="applied-detail-chip-row">' + domsHtml + '</div></div>' : '') +
+                       '</div>';
+      });
+      html += '<div class="applied-roadmap-card">' +
+                '<div class="applied-roadmap-title">' + escapeHtml(p.title || '') + '</div>' +
+                '<div class="applied-roadmap-goal">' + escapeHtml(p.goal || '') + '</div>' +
+                modulesHtml +
+              '</div>';
+    }
+    c.innerHTML = html;
   }
 
   /* ============================================
