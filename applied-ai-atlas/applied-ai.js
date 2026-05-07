@@ -76,12 +76,22 @@
   function setStats() {
     var d = (typeof AI_DOMAINS !== 'undefined') ? AI_DOMAINS.length : 0;
     var a = (typeof AI_ARCHITECTURES !== 'undefined') ? AI_ARCHITECTURES.length : 0;
-    var q = (typeof DOMAIN_QUESTIONS !== 'undefined') ? DOMAIN_QUESTIONS.length : 0;
+    var dq = (typeof DOMAIN_QUESTIONS !== 'undefined') ? DOMAIN_QUESTIONS.length : 0;
+    var gq = (typeof GREAT_AI_QUESTIONS !== 'undefined') ? GREAT_AI_QUESTIONS.length : 0;
+    var totalQ = dq + gq;
     var p = (typeof DOMAIN_PAPERS !== 'undefined') ? DOMAIN_PAPERS.length : 0;
+    var w = (typeof INDUSTRY_WORKFLOWS !== 'undefined') ? INDUSTRY_WORKFLOWS.length : 0;
+    var o = (typeof FOUNDER_OPPORTUNITIES !== 'undefined') ? FOUNDER_OPPORTUNITIES.length : 0;
+    var c = (typeof COMPANY_AI_STRATEGIES !== 'undefined') ? COMPANY_AI_STRATEGIES.length : 0;
+    var s = (typeof SOURCE_LIBRARY !== 'undefined') ? SOURCE_LIBRARY.length : 0;
     if ($('#applied-stat-domains'))      $('#applied-stat-domains').textContent = d;
     if ($('#applied-stat-architectures')) $('#applied-stat-architectures').textContent = a;
-    if ($('#applied-stat-questions'))    $('#applied-stat-questions').textContent = q;
+    if ($('#applied-stat-workflows'))    $('#applied-stat-workflows').textContent = w;
+    if ($('#applied-stat-companies'))    $('#applied-stat-companies').textContent = c;
+    if ($('#applied-stat-opps'))         $('#applied-stat-opps').textContent = o;
+    if ($('#applied-stat-questions'))    $('#applied-stat-questions').textContent = totalQ;
     if ($('#applied-stat-papers'))       $('#applied-stat-papers').textContent = p;
+    if ($('#applied-stat-sources'))      $('#applied-stat-sources').textContent = s;
   }
 
   /* ============================================
