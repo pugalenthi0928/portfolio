@@ -884,9 +884,15 @@
       var domainBtn = t.closest('[data-domain]');
       var archBtn = t.closest('[data-arch]');
       var qBtn = t.closest('[data-qid]');
+      var fdoBtn = t.closest('[data-fdo-id]');
+      var bndBtn = t.closest('[data-bnd-id]');
+      var csBtn = t.closest('[data-cs-id]');
       var close = t.closest('.applied-detail-close');
       var overlay = t.closest('#applied-detail-overlay');
       if (close || overlay) { closePanel(); return; }
+      if (fdoBtn && fdoBtn.dataset.fdoId) { e.preventDefault(); openFounderDossier(fdoBtn.dataset.fdoId); return; }
+      if (bndBtn && bndBtn.dataset.bndId) { e.preventDefault(); openBottleneckDossier(bndBtn.dataset.bndId); return; }
+      if (csBtn && csBtn.dataset.csId) { e.preventDefault(); openCompanyStrategy(csBtn.dataset.csId); return; }
       if (qBtn && qBtn.dataset.qid) { e.preventDefault(); openQuestionPanel(qBtn.dataset.qid); return; }
       if (domainBtn && domainBtn.dataset.domain) { e.preventDefault(); openDomain(domainBtn.dataset.domain); return; }
       if (archBtn && archBtn.dataset.arch) { e.preventDefault(); openArch(archBtn.dataset.arch); return; }
@@ -894,6 +900,22 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closePanel();
     });
+  }
+
+  function openFounderDossier(id) {
+    var o = getFounderOpp(id); if (!o) return;
+    openPanel(renderFounderDossierProfile(o));
+    history.replaceState(null, '', '#opp:' + id);
+  }
+  function openBottleneckDossier(id) {
+    var b = getBottleneckDossier(id); if (!b) return;
+    openPanel(renderBottleneckDossierProfile(b));
+    history.replaceState(null, '', '#bottleneck:' + id);
+  }
+  function openCompanyStrategy(id) {
+    var cs = getCompanyStrategy(id); if (!cs) return;
+    openPanel(renderCompanyStrategyProfile(cs));
+    history.replaceState(null, '', '#company:' + id);
   }
 
   function bindFilters() {
@@ -923,6 +945,9 @@
     if (h.indexOf('domain:') === 0) { setTimeout(function () { openDomain(h.slice(7)); }, 200); return; }
     if (h.indexOf('arch:') === 0) { setTimeout(function () { openArch(h.slice(5)); }, 200); return; }
     if (h.indexOf('question:') === 0) { setTimeout(function () { openQuestionPanel(h.slice(9)); }, 200); return; }
+    if (h.indexOf('opp:') === 0) { setTimeout(function () { openFounderDossier(h.slice(4)); }, 200); return; }
+    if (h.indexOf('bottleneck:') === 0) { setTimeout(function () { openBottleneckDossier(h.slice(11)); }, 200); return; }
+    if (h.indexOf('company:') === 0) { setTimeout(function () { openCompanyStrategy(h.slice(8)); }, 200); return; }
   }
 
   /* ============================================
@@ -947,10 +972,383 @@
     buildQuestionFilters();
     buildQuestions();
     buildSources();
+    buildFounderDossiers();
+    buildBottleneckDossiers();
+    buildCompanyStrategies();
+    buildInterviewRoom();
     bindClicks();
     bindFilters();
     handleHash();
     window.addEventListener('hashchange', handleHash);
+  }
+
+  /* ============================================
+     FOUNDER OPPORTUNITY DOSSIERS
+     ============================================ */
+  function buildFounderDossiers() {
+    var c = document.getElementById('applied-fdo-grid');
+    if (!c || typeof FOUNDER_OPPORTUNITIES === 'undefined') return;
+    /* Populate type filter */
+    var sel = document.getElementById('applied-fdo-type');
+    if (sel) {
+      var seen = {};
+      FOUNDER_OPPORTUNITIES.forEach(function (o) {
+        if (o.opportunityType && !seen[o.opportunityType]) {
+          seen[o.opportunityType] = true;
+          var opt = document.createElement('option');
+          opt.value = o.opportunityType; opt.textContent = o.opportunityType;
+          sel.appendChild(opt);
+        }
+      });
+    }
+    var html = '';
+    for (var i = 0; i < FOUNDER_OPPORTUNITIES.length; i++) {
+      var o = FOUNDER_OPPORTUNITIES[i];
+      var search = ((o.title || '') + ' ' + (o.short || '') + ' ' + (o.domainId || '') + ' ' + (o.buyer || '') + ' ' + (o.opportunityType || '')).toLowerCase();
+      html += '<button class="applied-fdo-card" data-fdo-id="' + escapeHtml(o.id) + '" data-status="' + escapeHtml(o.status || '') + '" data-type="' + escapeHtml(o.opportunityType || '') + '" data-vsp="' + escapeHtml((o.brutalCapitalistRead && o.brutalCapitalistRead.ventureScalePotential) || '') + '" data-search="' + escapeHtml(search) + '">' +
+                '<div class="applied-fdo-meta">' +
+                  '<span class="applied-fdo-status status-' + escapeHtml((o.status || '').replace(/\s+/g, '-')) + '">' + escapeHtml(o.status || '') + '</span>' +
+                  '<span class="applied-conf ' + confidenceClass(o.confidence) + '">' + confidenceLabel(o.confidence) + '</span>' +
+                '</div>' +
+                '<div class="applied-fdo-title">' + escapeHtml(o.title || '') + '</div>' +
+                '<div class="applied-fdo-short">' + escapeHtml(o.short || '') + '</div>' +
+                '<div class="applied-fdo-tags">' +
+                  '<span class="applied-tag">' + escapeHtml(o.opportunityType || '') + '</span>' +
+                  (o.brutalCapitalistRead ? '<span class="applied-tag applied-tag-arch">VSP: ' + escapeHtml(o.brutalCapitalistRead.ventureScalePotential || '') + '</span>' : '') +
+                  (o.brutalCapitalistRead ? '<span class="applied-tag">' + escapeHtml(o.brutalCapitalistRead.speedToRevenue || '') + ' speed</span>' : '') +
+                  '<span class="applied-tag">buyer: ' + escapeHtml(o.buyer || '') + '</span>' +
+                '</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+
+    var search = document.getElementById('applied-fdo-search');
+    var status = document.getElementById('applied-fdo-status');
+    var type = document.getElementById('applied-fdo-type');
+    var vsp = document.getElementById('applied-fdo-vsp');
+    var apply = function () {
+      var s = (search.value || '').toLowerCase().trim();
+      var st = status.value;
+      var t = type.value;
+      var v = vsp.value;
+      var cards = c.querySelectorAll('.applied-fdo-card');
+      cards.forEach(function (card) {
+        var passS = !s || (card.dataset.search.indexOf(s) !== -1);
+        var passSt = !st || card.dataset.status === st;
+        var passT = !t || card.dataset.type === t;
+        var passV = !v || card.dataset.vsp === v;
+        card.hidden = !(passS && passSt && passT && passV);
+      });
+    };
+    [search, status, type, vsp].forEach(function (el) { if (el) el.addEventListener('input', apply); });
+  }
+
+  function getFounderOpp(id) {
+    if (typeof FOUNDER_OPPORTUNITIES === 'undefined') return null;
+    for (var i = 0; i < FOUNDER_OPPORTUNITIES.length; i++) if (FOUNDER_OPPORTUNITIES[i].id === id) return FOUNDER_OPPORTUNITIES[i];
+    return null;
+  }
+
+  function renderFounderDossierProfile(o) {
+    var bcr = o.brutalCapitalistRead || {};
+    var validationCompanies = (o.existingValidation && o.existingValidation.companies) || [];
+    var validationSignals = (o.existingValidation && o.existingValidation.publicSignals) || [];
+    var validationYC = (o.existingValidation && o.existingValidation.ycCompanies) || [];
+    var validationA16Z = (o.existingValidation && o.existingValidation.a16zRelevantTheses) || [];
+    var validationChina = (o.existingValidation && o.existingValidation.chinaAnalogues) || [];
+    var ulg = o.uberLyftGrabLogic || {};
+
+    var html = '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
+               '<div class="applied-detail-badges">' +
+                 '<span class="applied-fdo-status status-' + escapeHtml((o.status || '').replace(/\s+/g, '-')) + '">' + escapeHtml(o.status || '') + '</span>' +
+                 '<span class="applied-conf ' + confidenceClass(o.confidence) + '">' + confidenceLabel(o.confidence) + '</span>' +
+                 (o.opportunityType ? '<span class="applied-detail-badge" style="color:var(--applied-warm);border-color:var(--applied-warm);">' + escapeHtml(o.opportunityType) + '</span>' : '') +
+               '</div>' +
+               '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(o.title || '') + '</h2>' +
+               '<p class="applied-detail-summary">' + escapeHtml(o.short || '') + '</p>' +
+               '<div class="applied-detail-tabs" role="tablist">' +
+                 '<button class="applied-detail-tab active" data-tab="brief">Brief</button>' +
+                 '<button class="applied-detail-tab" data-tab="capitalist">Brutal capitalist read</button>' +
+                 '<button class="applied-detail-tab" data-tab="validation">Validation</button>' +
+                 '<button class="applied-detail-tab" data-tab="play">How to play</button>' +
+                 '<button class="applied-detail-tab" data-tab="risk">Why it could fail / win</button>' +
+               '</div>' +
+               '<div class="applied-detail-tabpanel active" data-tabpanel="brief">' +
+                 (o.corePain ? '<div class="applied-callout applied-callout--warn"><span class="applied-callout-label">Core pain</span>' + escapeHtml(o.corePain) + '</div>' : '') +
+                 metaPair('Buyer', o.buyer) +
+                 metaPair('User', o.user) +
+                 metaPair('Budget owner', o.budgetOwner) +
+                 metaPair('Urgency', o.urgency) +
+                 metaPair('Why now', o.whyNow) +
+                 metaPair('Why before now was hard', o.whyBeforeNowWasHard) +
+                 bulletList('Not yet done well because', o.notYetDoneWellBecause) +
+                 bulletList('What changed recently', o.whatChangedRecently) +
+               '</div>' +
+               '<div class="applied-detail-tabpanel" data-tabpanel="capitalist">' +
+                 capitalistGrid(bcr) +
+               '</div>' +
+               '<div class="applied-detail-tabpanel" data-tabpanel="validation">' +
+                 bulletList('Companies', validationCompanies) +
+                 bulletList('Public signals', validationSignals) +
+                 bulletList('YC analogues', validationYC) +
+                 bulletList('a16z theses', validationA16Z) +
+                 bulletList('China analogues', validationChina) +
+                 '<div class="applied-detail-block"><div class="applied-detail-block-title">Uber/Lyft/Grab logic</div>' +
+                 metaPair('Validated by', ulg.validatedBy) +
+                 metaPair('Second-mover angle', ulg.secondMoverAngle) +
+                 metaPair('Localisation / verticalisation', ulg.localisationOrVerticalisation) +
+                 metaPair('Smarter execution variant', ulg.smarterExecutionVariant) +
+                 '</div>' +
+               '</div>' +
+               '<div class="applied-detail-tabpanel" data-tabpanel="play">' +
+                 metaPair('Wedge', o.wedge) +
+                 metaPair('First customer', o.firstCustomer) +
+                 metaPair('MVP', o.mvp) +
+                 metaPair('Pricing hypothesis', o.pricingHypothesis) +
+                 metaPair('Go-to-market', o.goToMarket) +
+                 metaPair('What to avoid', o.whatToAvoid) +
+               '</div>' +
+               '<div class="applied-detail-tabpanel" data-tabpanel="risk">' +
+                 (o.whyThisCouldFail ? '<div class="applied-callout applied-callout--warn"><span class="applied-callout-label">Why this could fail</span>' + escapeHtml(o.whyThisCouldFail) + '</div>' : '') +
+                 (o.whyThisCouldWin ? '<div class="applied-callout"><span class="applied-callout-label">Why this could win</span>' + escapeHtml(o.whyThisCouldWin) + '</div>' : '') +
+               '</div>';
+    return html;
+  }
+
+  function metaPair(label, val) {
+    if (!val) return '';
+    return '<div class="applied-detail-block"><div class="applied-detail-block-title">' + escapeHtml(label) + '</div><p class="applied-detail-block-text">' + escapeHtml(val) + '</p></div>';
+  }
+
+  function capitalistGrid(bcr) {
+    var rows = [
+      ['Willingness to pay', bcr.willingnessToPay],
+      ['Sales cycle', bcr.salesCycle],
+      ['Distribution difficulty', bcr.distributionDifficulty],
+      ['Data access difficulty', bcr.dataAccessDifficulty],
+      ['Regulatory difficulty', bcr.regulatoryDifficulty],
+      ['Incumbent risk', bcr.incumbentRisk],
+      ['Margin potential', bcr.marginPotential],
+      ['Defensibility', bcr.defensibility],
+      ['Speed to revenue', bcr.speedToRevenue],
+      ['Venture-scale potential', bcr.ventureScalePotential]
+    ];
+    var html = '<div class="applied-cap-grid">';
+    rows.forEach(function (r) {
+      var label = r[0]; var val = r[1] || '&mdash;';
+      var cls = (val || '').toString().toLowerCase();
+      var cellCls = '';
+      if (cls.indexOf('very high') !== -1 || cls.indexOf('massive') !== -1) cellCls = 'cap-very-high';
+      else if (cls.indexOf('high') !== -1 || cls.indexOf('long') !== -1 || cls.indexOf('slow') !== -1) cellCls = 'cap-high';
+      else if (cls.indexOf('medium') !== -1 || cls.indexOf('moderate') !== -1) cellCls = 'cap-medium';
+      else if (cls.indexOf('low') !== -1 || cls.indexOf('short') !== -1 || cls.indexOf('fast') !== -1) cellCls = 'cap-low';
+      html += '<div class="applied-cap-cell ' + cellCls + '"><div class="applied-cap-label">' + escapeHtml(label) + '</div><div class="applied-cap-val">' + val + '</div></div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  /* ============================================
+     BOTTLENECK DOSSIERS
+     ============================================ */
+  function buildBottleneckDossiers() {
+    var c = document.getElementById('applied-bnd-grid');
+    if (!c || typeof BOTTLENECK_DOSSIERS === 'undefined') return;
+    var typeSel = document.getElementById('applied-bnd-type');
+    if (typeSel) {
+      var seen = {};
+      BOTTLENECK_DOSSIERS.forEach(function (b) {
+        if (b.bottleneckType && !seen[b.bottleneckType]) {
+          seen[b.bottleneckType] = true;
+          var opt = document.createElement('option');
+          opt.value = b.bottleneckType; opt.textContent = b.bottleneckType;
+          typeSel.appendChild(opt);
+        }
+      });
+    }
+    var html = '';
+    for (var i = 0; i < BOTTLENECK_DOSSIERS.length; i++) {
+      var b = BOTTLENECK_DOSSIERS[i];
+      var search = ((b.title || '') + ' ' + (b.explanation || '') + ' ' + (b.domainId || '') + ' ' + (b.bottleneckType || '')).toLowerCase();
+      html += '<button class="applied-bnd-card" data-bnd-id="' + escapeHtml(b.id) + '" data-severity="' + escapeHtml(b.severity || '') + '" data-type="' + escapeHtml(b.bottleneckType || '') + '" data-search="' + escapeHtml(search) + '">' +
+                '<div class="applied-bnd-meta">' +
+                  '<span class="applied-bnd-sev sev-' + escapeHtml(b.severity || '') + '">' + escapeHtml(b.severity || '') + '</span>' +
+                  '<span class="applied-tag">' + escapeHtml(b.bottleneckType || '') + '</span>' +
+                  '<span class="applied-conf ' + confidenceClass(b.confidence) + '">' + confidenceLabel(b.confidence) + '</span>' +
+                '</div>' +
+                '<div class="applied-bnd-title">' + escapeHtml(b.title || '') + '</div>' +
+                '<div class="applied-bnd-explain">' + escapeHtml(b.explanation || '') + '</div>' +
+                '<div class="applied-bnd-impact">' + escapeHtml(b.maturityImpact || '') + '</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+
+    var search = document.getElementById('applied-bnd-search');
+    var sev = document.getElementById('applied-bnd-severity');
+    var typeF = document.getElementById('applied-bnd-type');
+    var apply = function () {
+      var s = (search.value || '').toLowerCase().trim();
+      var sv = sev.value; var t = typeF.value;
+      c.querySelectorAll('.applied-bnd-card').forEach(function (card) {
+        var passS = !s || card.dataset.search.indexOf(s) !== -1;
+        var passSv = !sv || card.dataset.severity === sv;
+        var passT = !t || card.dataset.type === t;
+        card.hidden = !(passS && passSv && passT);
+      });
+    };
+    [search, sev, typeF].forEach(function (el) { if (el) el.addEventListener('input', apply); });
+  }
+
+  function getBottleneckDossier(id) {
+    if (typeof BOTTLENECK_DOSSIERS === 'undefined') return null;
+    for (var i = 0; i < BOTTLENECK_DOSSIERS.length; i++) if (BOTTLENECK_DOSSIERS[i].id === id) return BOTTLENECK_DOSSIERS[i];
+    return null;
+  }
+
+  function renderBottleneckDossierProfile(b) {
+    var html = '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
+               '<div class="applied-detail-badges">' +
+                 '<span class="applied-bnd-sev sev-' + escapeHtml(b.severity || '') + '">' + escapeHtml(b.severity || '') + ' severity</span>' +
+                 '<span class="applied-tag">' + escapeHtml(b.bottleneckType || '') + '</span>' +
+                 '<span class="applied-conf ' + confidenceClass(b.confidence) + '">' + confidenceLabel(b.confidence) + '</span>' +
+               '</div>' +
+               '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(b.title || '') + '</h2>' +
+               '<p class="applied-detail-summary">' + escapeHtml(b.explanation || '') + '</p>' +
+               metaPair('Maturity impact', b.maturityImpact) +
+               bulletList('Why it exists', b.whyItExists) +
+               bulletList('Evidence', b.evidence) +
+               bulletList('First-order effects', b.firstOrderEffects) +
+               bulletList('Second-order effects', b.secondOrderEffects) +
+               bulletList('Who is trying to solve it', b.whoIsTryingToSolveIt) +
+               bulletList('What would break it open', b.whatWouldBreakItOpen) +
+               bulletList('What still does not work', b.whatStillDoesNotWork) +
+               (b.founderOpportunity ? '<div class="applied-callout"><span class="applied-callout-label">Founder opportunity</span>' + escapeHtml(b.founderOpportunity) + '</div>' : '') +
+               (b.investorSignal ? '<div class="applied-callout applied-callout--why"><span class="applied-callout-label">Investor signal</span>' + escapeHtml(b.investorSignal) + '</div>' : '') +
+               (b.interviewQuestion ? '<div class="applied-callout applied-callout--warn"><span class="applied-callout-label">Interview question</span>' + escapeHtml(b.interviewQuestion) + '</div>' : '');
+    return html;
+  }
+
+  /* ============================================
+     COMPANY STRATEGIES
+     ============================================ */
+  function buildCompanyStrategies() {
+    var c = document.getElementById('applied-cs-grid');
+    if (!c || typeof COMPANY_AI_STRATEGIES === 'undefined') return;
+    var catSel = document.getElementById('applied-cs-category');
+    if (catSel) {
+      var seen = {};
+      COMPANY_AI_STRATEGIES.forEach(function (cs) {
+        if (cs.category && !seen[cs.category]) {
+          seen[cs.category] = true;
+          var opt = document.createElement('option');
+          opt.value = cs.category; opt.textContent = cs.category;
+          catSel.appendChild(opt);
+        }
+      });
+    }
+    var html = '';
+    for (var i = 0; i < COMPANY_AI_STRATEGIES.length; i++) {
+      var cs = COMPANY_AI_STRATEGIES[i];
+      var search = ((cs.company || '') + ' ' + (cs.category || '') + ' ' + (cs.thesis || '')).toLowerCase();
+      html += '<button class="applied-cs-card" data-cs-id="' + escapeHtml(cs.id) + '" data-category="' + escapeHtml(cs.category || '') + '" data-search="' + escapeHtml(search) + '">' +
+                '<div class="applied-cs-cat">' + escapeHtml(cs.category || '') + '</div>' +
+                '<div class="applied-cs-name">' + escapeHtml(cs.company || '') + '</div>' +
+                '<div class="applied-cs-thesis">' + escapeHtml(cs.thesis || '') + '</div>' +
+                '<div class="applied-fq-meta">' +
+                  '<span class="applied-conf ' + confidenceClass(cs.confidence) + '">' + confidenceLabel(cs.confidence) + '</span>' +
+                '</div>' +
+              '</button>';
+    }
+    c.innerHTML = html;
+
+    var search = document.getElementById('applied-cs-search');
+    var apply = function () {
+      var s = (search.value || '').toLowerCase().trim();
+      var cat = catSel ? catSel.value : '';
+      c.querySelectorAll('.applied-cs-card').forEach(function (card) {
+        var passS = !s || card.dataset.search.indexOf(s) !== -1;
+        var passC = !cat || card.dataset.category === cat;
+        card.hidden = !(passS && passC);
+      });
+    };
+    [search, catSel].forEach(function (el) { if (el) el.addEventListener('input', apply); });
+  }
+
+  function getCompanyStrategy(id) {
+    if (typeof COMPANY_AI_STRATEGIES === 'undefined') return null;
+    for (var i = 0; i < COMPANY_AI_STRATEGIES.length; i++) if (COMPANY_AI_STRATEGIES[i].id === id) return COMPANY_AI_STRATEGIES[i];
+    return null;
+  }
+
+  function renderCompanyStrategyProfile(cs) {
+    var arches = '';
+    if (cs.architecturesUsed && cs.architecturesUsed.length) {
+      arches = '<div class="applied-detail-block"><div class="applied-detail-block-title">Architectures used</div><ul class="applied-detail-list">';
+      cs.architecturesUsed.forEach(function (a) {
+        var arch = getArchitecture(a.architectureId);
+        var name = arch ? arch.name : (a.architectureId || '');
+        arches += '<li><strong>' + escapeHtml(name) + '</strong> &mdash; ' + escapeHtml(a.usedFor || '') + ' <span class="applied-conf ' + confidenceClass(a.confidence) + '">' + confidenceLabel(a.confidence) + '</span>' + (a.evidence ? '<br/><span style="color:var(--text-tertiary);font-size:11px;">' + escapeHtml(a.evidence) + '</span>' : '') + '</li>';
+      });
+      arches += '</ul></div>';
+    }
+    var html = '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
+               '<div class="applied-detail-badges">' +
+                 '<span class="applied-detail-badge" style="color:var(--applied-warm);border-color:var(--applied-warm);">' + escapeHtml(cs.category || '') + '</span>' +
+                 '<span class="applied-conf ' + confidenceClass(cs.confidence) + '">' + confidenceLabel(cs.confidence) + '</span>' +
+               '</div>' +
+               '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(cs.company || '') + '</h2>' +
+               '<p class="applied-detail-summary">' + escapeHtml(cs.thesis || '') + '</p>' +
+               bulletList('AI products', cs.aiProducts) +
+               arches +
+               metaPair('Data advantage', cs.dataAdvantage) +
+               metaPair('Compute stack', cs.computeStack) +
+               metaPair('Deployment surface', cs.deploymentSurface) +
+               metaPair('Business advantage', cs.businessAdvantage) +
+               metaPair('Revenue logic', cs.revenueLogic) +
+               bulletList('Comparison companies', cs.comparisonCompanies) +
+               bulletList('Biggest open questions', cs.biggestOpenQuestions);
+    return html;
+  }
+
+  /* ============================================
+     INTERVIEW QUESTION ROOM
+     ============================================ */
+  function buildInterviewRoom() {
+    var tabs = document.getElementById('applied-iq-tabs');
+    var content = document.getElementById('applied-iq-content');
+    if (!tabs || !content || typeof INTERVIEW_QUESTION_SETS === 'undefined') return;
+    var tabsHtml = '';
+    var contentHtml = '';
+    for (var i = 0; i < INTERVIEW_QUESTION_SETS.length; i++) {
+      var s = INTERVIEW_QUESTION_SETS[i];
+      var active = (i === 0) ? ' active' : '';
+      tabsHtml += '<button class="applied-iq-tab' + active + '" data-iq-tab="' + escapeHtml(s.id) + '">' + escapeHtml(s.name) + '</button>';
+      var sectionsHtml = '';
+      for (var j = 0; j < (s.sections || []).length; j++) {
+        var sec = s.sections[j];
+        var qHtml = '';
+        for (var k = 0; k < (sec.questions || []).length; k++) {
+          var q = sec.questions[k];
+          qHtml += '<div class="applied-iq-q">' +
+                     '<div class="applied-iq-question">' + escapeHtml(q.question) + '</div>' +
+                     (q.whyItMatters ? '<div class="applied-iq-why"><span class="applied-iq-label">Why it matters</span>' + escapeHtml(q.whyItMatters) + '</div>' : '') +
+                     ((q.followUps && q.followUps.length) ? '<div class="applied-iq-follow"><span class="applied-iq-label">Follow-ups</span>' + q.followUps.map(escapeHtml).join(' &middot; ') + '</div>' : '') +
+                   '</div>';
+        }
+        sectionsHtml += '<div class="applied-iq-section"><div class="applied-iq-section-title">' + escapeHtml(sec.title || '') + '</div>' + qHtml + '</div>';
+      }
+      contentHtml += '<div class="applied-iq-set' + active + '" data-iq-set="' + escapeHtml(s.id) + '"><div class="applied-iq-target">' + escapeHtml(s.target || '') + '</div>' + sectionsHtml + '</div>';
+    }
+    tabs.innerHTML = tabsHtml;
+    content.innerHTML = contentHtml;
+    /* Tab switching */
+    tabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('.applied-iq-tab');
+      if (!btn) return;
+      var id = btn.dataset.iqTab;
+      tabs.querySelectorAll('.applied-iq-tab').forEach(function (t) { t.classList.toggle('active', t.dataset.iqTab === id); });
+      content.querySelectorAll('.applied-iq-set').forEach(function (s) { s.classList.toggle('active', s.dataset.iqSet === id); });
+    });
   }
 
   if (document.readyState === 'loading') {

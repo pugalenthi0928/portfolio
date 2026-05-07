@@ -5403,8 +5403,1585 @@ var DOMAIN_QUESTIONS = [
 ];
 
 /* ============================================
-   APPLIED AI ATLAS AUDIT SUMMARY
+   FOUNDER_OPPORTUNITIES — The Brutal Capitalist Map
+   ============================================
+   Where the money might be hiding. Specific enough that a founder
+   can imagine building it. Conservative on validation claims:
+   any company / fund / customer reference not directly cited is
+   marked needsVerification.
+
+   Capitalist read scale (subjective; intended as a starting frame):
+     willingnessToPay     low | medium | high | very high
+     salesCycle           short (<1 month) | medium (1-3 months) |
+                          long (3-9 months) | enterprise-long (9+ months)
+     distributionDifficulty low | medium | high
+     dataAccessDifficulty   low | medium | high
+     regulatoryDifficulty   low | medium | high
+     incumbentRisk          low | medium | high
+     marginPotential        low | medium | high
+     defensibility          low | medium | high
+     speedToRevenue         fast | moderate | slow
+     ventureScalePotential  low | medium | high | massive
    ============================================ */
+var FOUNDER_OPPORTUNITIES = [
+  /* ── Healthcare / Bio ── */
+  {
+    id: "opp-prior-auth-specialty",
+    domainId: "clinical-medicine",
+    title: "Prior-authorisation automation for specialty clinics",
+    short: "Document extraction + payer-policy RAG + human review for high-volume repeat procedures.",
+    opportunityType: "vertical AI",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "Prior-authorisation paperwork delays cash collection and burns out staff; payer-specific rules drift constantly.",
+    buyer: "Clinic administrator / revenue cycle leader",
+    user: "Billing / authorisation staff",
+    budgetOwner: "Practice owner or RCM service",
+    urgency: "Direct hit on cash-flow timing and staff retention",
+    whyNow: "LLMs can read payer policies and patient charts at production cost. Documentation is digital. Reimbursement-cycle pain is widespread post-COVID.",
+    whyBeforeNowWasHard: "Pre-LLM, payer-specific policy reasoning required handcrafted rules per insurer per procedure.",
+    existingValidation: {
+      companies: ["Cohere Health (PA workflow tooling)", "Olive Health (historical, struggled)", "Co:Helm", "Itiliti Health"],
+      analogues: ["Document AI vendors for claims (Shift Technology, Tractable in adjacent insurance)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Sustained KLAS / RCM analyst attention; multiple Series A/B rounds in PA / RCM AI"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "medium",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "One specialty (orthopaedics or cardiology) with high repeat-procedure volume per clinic.",
+    firstCustomer: "Mid-size specialty groups (10-40 providers) with their own RCM team.",
+    mvp: "PA-letter draft + payer-policy retrieval + denial-prediction per procedure.",
+    pricingHypothesis: "$0.50&ndash;$3 per submission or 5&ndash;10% of recovered revenue.",
+    goToMarket: "Specialty-society partnerships, RCM-vendor channels, then direct to MSOs.",
+    whatToAvoid: "Trying to be horizontal across all specialties on day one.",
+    whyThisCouldFail: "Payer policies change faster than the corpus refresh; one big hallucinated claim erodes trust.",
+    whyThisCouldWin: "Direct cash-flow improvement + measurable denials reduction is hard for buyers to ignore.",
+    uberLyftGrabLogic: {
+      validatedBy: "Cohere Health and similar players have raised meaningful capital in this layer",
+      secondMoverAngle: "Specialty-vertical depth that horizontal RCM AI cannot match",
+      localisationOrVerticalisation: "Specialty + payer-mix + state combinations create dozens of verticalisable wedges",
+      smarterExecutionVariant: "Combine PA with denial-management and contract-rate analytics into one revenue-recovery layer"
+    },
+    notYetDoneWellBecause: ["Most incumbents are workflow-only with rule engines", "Vertical-specific evaluation discipline is rare"],
+    whatChangedRecently: ["LLMs that can read 100-page payer policies cheaply", "Health-system pressure on RCM cost-to-collect"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-radiology-report-copilot",
+    domainId: "radiology",
+    title: "Radiology report-generation copilot",
+    short: "Structured-finding draft generation in PACS, beyond detection.",
+    opportunityType: "vertical AI",
+    status: "validated",
+    confidence: "sourced",
+    corePain: "Radiologists spend large fractions of their time dictating and structuring reports; existing AI focuses on detection, not the report.",
+    buyer: "Radiology group CMO or hospital imaging informatics director",
+    user: "Radiologists",
+    budgetOwner: "Radiology group / health system",
+    urgency: "Worsening radiologist shortage and burnout",
+    whyNow: "Multimodal foundation models (CXR + report) can draft impressions; FDA pathways for note-drafting are clearer than for autonomous diagnosis.",
+    whyBeforeNowWasHard: "Pre-multimodal models, image-to-structured-text required hand-tuned templates per modality.",
+    existingValidation: {
+      companies: ["Rad AI (impressions)", "Aidoc / Annalise (extending into reporting)", "Bayer Calantic platform (reporting integrations)"],
+      analogues: ["Ambient clinical scribes (Nuance DAX / Abridge) prove that doc-drafting buyers exist."],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Multiple Series B/C rounds in radiology AI report tooling"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "high",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One modality (chest X-ray or ED CT) where impression-drafting saves the most time.",
+    firstCustomer: "Outpatient imaging chains with their own radiologist pool.",
+    mvp: "PACS-integrated draft impression + structured findings + measurement extraction.",
+    pricingHypothesis: "Per-study fee or seat-based for radiologists.",
+    goToMarket: "PACS / RIS partnerships, teleradiology channels, large outpatient chains.",
+    whatToAvoid: "Selling to academic medical centres first &mdash; sales cycle too long.",
+    whyThisCouldFail: "Hospitals consolidate AI procurement under marketplaces (Aidoc, Bayer Calantic) and squeeze pricing.",
+    whyThisCouldWin: "Workflow-deep integration plus measurable time-savings creates a sticky habit.",
+    uberLyftGrabLogic: {
+      validatedBy: "Rad AI and similar are already monetising drafting workflows",
+      secondMoverAngle: "Specialty modality depth (mammography, MSK MRI) underserved by horizontal players",
+      localisationOrVerticalisation: "Country-level radiology workflow norms vary; per-region wedges exist",
+      smarterExecutionVariant: "Pair drafting with peer-review and QA tooling"
+    },
+    notYetDoneWellBecause: ["FDA pathway uncertainty for full report generation", "Radiologist trust takes years to build"],
+    whatChangedRecently: ["Multimodal models that can read both images and structured patient context"],
+    sourceIds: ["paper-chexnet", "src-fda-samd"]
+  },
+  {
+    id: "opp-bio-eval-harness",
+    domainId: "drug-discovery",
+    title: "Honest evaluation harnesses for generative biology",
+    short: "Per-target benchmarks + lab-correlation tracking + retrospective scoring across published programs.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Generative biology programs publish in-silico wins that often do not survive the wet lab; no shared eval discipline exists.",
+    buyer: "Biotech CTO / VP of computational biology",
+    user: "Computational biology and ML teams",
+    budgetOwner: "R&amp;D leadership",
+    urgency: "Investors and boards are demanding wet-lab-correlated metrics, not just docking scores.",
+    whyNow: "AlphaFold-class models created a generation of ML-bio teams who need shared benchmarks; capital pressure is rising.",
+    whyBeforeNowWasHard: "Few ML-bio teams existed at scale; the eval problem was niche.",
+    existingValidation: {
+      companies: ["needsVerification: most known players (BenevolentAI, Recursion) build internal harnesses"],
+      analogues: ["Hugging Face Eval, Papers with Code on the AI side"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Increased calls in the literature for retrospective benchmarks on lab outcomes"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "low",
+      marginPotential: "medium",
+      defensibility: "high",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "medium"
+    },
+    wedge: "Evaluation suite for one target class (kinase inhibitors or antibody binders).",
+    firstCustomer: "AI-first biotech with a small ML team but no eval discipline.",
+    mvp: "Lab-correlation dashboard fed from internal teleop data + curated public benchmarks.",
+    pricingHypothesis: "$50K&ndash;$300K seat-licence per scientific team.",
+    goToMarket: "Sell into ML-bio communities, then channel through CROs.",
+    whatToAvoid: "Starting from in-silico-only metrics that biotech teams already mistrust.",
+    whyThisCouldFail: "Biotechs prefer to keep eval data internal as a moat.",
+    whyThisCouldWin: "If the harness becomes the de-facto standard, it owns the &lsquo;Hugging Face of ML-bio eval&rsquo; position.",
+    uberLyftGrabLogic: {
+      validatedBy: "needsVerification",
+      secondMoverAngle: "Most ML-bio teams have not productised their eval; first credible third-party suite wins mindshare",
+      localisationOrVerticalisation: "Per-modality (small-molecule, antibody, peptide) verticals each need their own suite",
+      smarterExecutionVariant: "Pair eval with synthetic data and retrospective lab-outcome ingestion"
+    },
+    notYetDoneWellBecause: ["Lab data is locked", "ML-bio teams under-invest in eval discipline"],
+    whatChangedRecently: ["AI-first biotechs reaching the failure-replication phase of generative pipelines"],
+    sourceIds: ["needs-verification"]
+  },
+
+  /* ── Finance / Business ── */
+  {
+    id: "opp-aml-investigator-copilot",
+    domainId: "banking",
+    title: "AML investigator copilot",
+    short: "LLM + graph features that draft case narratives and pull entity history for SAR investigators.",
+    opportunityType: "agentic workflow",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "AML investigators spend hours manually building case narratives from disconnected systems; SAR backlogs are large.",
+    buyer: "Bank financial-crime / AML head",
+    user: "AML investigators",
+    budgetOwner: "Compliance / financial crime budget",
+    urgency: "Regulator pressure on SAR timeliness; rising fraud volumes",
+    whyNow: "LLMs can synthesise across transaction history, KYC notes and OSINT; graph features have matured at scale.",
+    whyBeforeNowWasHard: "Banks could not legally send case data to general LLMs; on-prem / private-cloud LLMs are now viable.",
+    existingValidation: {
+      companies: ["ComplyAdvantage", "Hummingbird", "Quantexa", "FeatureSpace (broader fraud)"],
+      analogues: ["SAR automation tools, KYC vendors"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Multi-billion-dollar AML fines have made the case for investment obvious"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "very high",
+      salesCycle: "enterprise-long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "high",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One bank tier (mid-market US community banks under USD 50B in assets) where investigator headcount is the binding constraint.",
+    firstCustomer: "Mid-market US community / regional bank.",
+    mvp: "Case-summary copilot inside an existing case-management UI.",
+    pricingHypothesis: "$50&ndash;$200 per investigator per month, or per-case fee.",
+    goToMarket: "Case-management vendor channels, FinCEN-aware service partners.",
+    whatToAvoid: "Trying to be a SAR-filing replacement; remain a copilot.",
+    whyThisCouldFail: "Tier-1 banks prefer to build internally; mid-market banks may consolidate to one vendor.",
+    whyThisCouldWin: "Direct ROI in investigator productivity; high regulator visibility.",
+    uberLyftGrabLogic: {
+      validatedBy: "Mature category (Quantexa, ComplyAdvantage)",
+      secondMoverAngle: "Mid-market focus; foreign-bank focus; specific predicate-offence specialisation (human trafficking, sanctions evasion)",
+      localisationOrVerticalisation: "Country-specific AML regimes (UK SAR, EU 6AMLD, AUSTRAC)",
+      smarterExecutionVariant: "Pair investigator copilot with proactive case-prioritisation"
+    },
+    notYetDoneWellBecause: ["Case management is fragmented and on-prem", "Investigators distrust ML black boxes"],
+    whatChangedRecently: ["Private-LLM deployment options inside banks", "Regulator acceptance of model-explainability frameworks"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-fraud-graph-platform",
+    domainId: "fraud-detection",
+    title: "Graph-feature platform for adjacent verticals (gaming / crypto on-ramps / marketplaces)",
+    short: "Graph-feature engineering + scoring for fraud beyond payments.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Card-network fraud has mature graph-feature stacks (Stripe Radar, FeatureSpace); adjacent verticals (gaming, crypto on-ramps) lag.",
+    buyer: "Trust &amp; safety / risk lead in marketplaces, gaming, crypto",
+    user: "Fraud / risk engineers",
+    budgetOwner: "Risk / payments leadership",
+    urgency: "Synthetic-ID and account-takeover attacks are scaling fast.",
+    whyNow: "GNNs and graph-foundation models are now production-ready; LLM-driven attack tooling has lowered the bar for fraudsters.",
+    whyBeforeNowWasHard: "Graph databases at fraud scale were too slow or too expensive.",
+    existingValidation: {
+      companies: ["FeatureSpace (acquired by Visa)", "Sift", "Forter", "Riskified", "Stripe Radar"],
+      analogues: ["AML graph players (Quantexa) cross over"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z Fintech / AI theses on payments fraud"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Visa&rsquo;s acquisition of FeatureSpace; Sift / Forter scaling; rising fraud-loss reports"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "medium",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "Crypto on-ramps (Coinbase-class, payment processors).",
+    firstCustomer: "Mid-size marketplace or crypto exchange.",
+    mvp: "Graph-feature pipeline + scoring API + investigation UI.",
+    pricingHypothesis: "Per-decision fee or volume-based platform fee.",
+    goToMarket: "Direct to risk engineering teams; partnerships with fraud platforms.",
+    whatToAvoid: "Competing head-on with Stripe Radar in card payments.",
+    whyThisCouldFail: "Big incumbents bundle graph features into existing platforms.",
+    whyThisCouldWin: "Specialty verticals tolerate higher pricing for measurable loss reduction.",
+    uberLyftGrabLogic: {
+      validatedBy: "Visa-FeatureSpace deal validates structural value",
+      secondMoverAngle: "Per-vertical depth: gaming, marketplaces, crypto, gig-economy",
+      localisationOrVerticalisation: "Per-region fraud patterns (e.g. India UPI, Latin America)",
+      smarterExecutionVariant: "Combine graph features with synthetic-data adversarial training"
+    },
+    notYetDoneWellBecause: ["Graph engineering is heavy", "Vertical-specific data is fragmented"],
+    whatChangedRecently: ["Visa-FeatureSpace deal (2024)", "Mature graph-DB infrastructure"],
+    sourceIds: ["paper-gcn"]
+  },
+  {
+    id: "opp-quant-eval-tooling",
+    domainId: "quant-finance",
+    title: "Honest evaluation tooling for quant ML strategies",
+    short: "Look-ahead / leakage detection, transaction-cost realism and capacity-aware backtesting.",
+    opportunityType: "devtool",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Most quant ML strategies overfit silently; eval tooling lags model tooling.",
+    buyer: "Hedge fund head of research",
+    user: "Quant researchers",
+    budgetOwner: "Research / risk management",
+    urgency: "Capital pressure on alpha discovery cycles is rising.",
+    whyNow: "Foundation forecasters and time-series transformers proliferate; eval discipline lags far behind.",
+    whyBeforeNowWasHard: "Quant funds preferred to keep eval discipline as a competitive secret.",
+    existingValidation: {
+      companies: ["WorldQuant Brain (quasi-public eval)", "Numerai (public benchmarks)"],
+      analogues: ["Hugging Face Eval / Papers with Code analogues"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Public discussion of LLM-driven backtesting failures; rising regime-shift discourse"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "low",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "medium"
+    },
+    wedge: "One asset class (US equities or crypto) with rich public market data.",
+    firstCustomer: "Mid-size systematic fund or family office.",
+    mvp: "Eval-as-a-service with leakage detection, cost realism, and capacity-aware metrics.",
+    pricingHypothesis: "$50K&ndash;$500K per fund seat licence.",
+    goToMarket: "Quant conferences, university quant clubs, fund channel partners.",
+    whatToAvoid: "Trying to be a full backtester; pair with QuantConnect / Backtrader.",
+    whyThisCouldFail: "Top funds build internal tools; mid-tier may not pay for the depth.",
+    whyThisCouldWin: "Becomes the &lsquo;academic standard&rsquo; for honest eval; consulting and audit channel emerges.",
+    uberLyftGrabLogic: {
+      validatedBy: "Numerai signals appetite for eval-driven competitions",
+      secondMoverAngle: "Audit-grade tooling for funds reporting to LPs",
+      localisationOrVerticalisation: "Per-asset-class verticals",
+      smarterExecutionVariant: "Pair with LLM-driven research-thesis generation and falsification"
+    },
+    notYetDoneWellBecause: ["Funds keep tools private", "Eval is unglamorous"],
+    whatChangedRecently: ["Public LLM-quant failures driving regulator interest in honest backtests"],
+    sourceIds: ["needs-verification"]
+  },
+
+  /* ── Enterprise ── */
+  {
+    id: "opp-swe-vertical-agents",
+    domainId: "software-engineering",
+    title: "Language- and framework-specific coding agents",
+    short: "Repo-scale agents tuned for niche stacks (Salesforce Apex, COBOL migration, Rust embedded, SAP ABAP).",
+    opportunityType: "vertical AI",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "Generalist coding agents (Cursor, Copilot, Claude Code) plateau on niche stacks where training data is thin.",
+    buyer: "VP of engineering / CTO at companies running niche stacks",
+    user: "Specialist developers",
+    budgetOwner: "Engineering budget",
+    urgency: "Talent in niche stacks (COBOL, ABAP, Apex) is scarce; modernisation pressure is rising.",
+    whyNow: "Frontier model fine-tuning APIs make domain-specific coding agents tractable; SWE-bench raised the bar.",
+    whyBeforeNowWasHard: "Pre-LLM, code translation tools were brittle and per-language.",
+    existingValidation: {
+      companies: ["Mainframe modernisation: Hexaware / Asysco / Microfocus", "Salesforce Einstein for Apex", "Sourcegraph for code search"],
+      analogues: ["Cursor / Cognition Devin in horizontal coding"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z dev-tools and AI engineering theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["High enterprise modernisation spend; SWE-bench-class benchmarks pulling research interest"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "very high",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "One stack (e.g. Salesforce Apex or SAP ABAP) with high willingness to pay and limited talent.",
+    firstCustomer: "Large enterprise running 5+M lines of code on the niche stack.",
+    mvp: "Agent + RAG over enterprise codebase; first 5 customer-specific patterns automated.",
+    pricingHypothesis: "$50K&ndash;$500K seat / org / year.",
+    goToMarket: "System integrator (Accenture, Deloitte) channel partnerships.",
+    whatToAvoid: "Trying to compete with horizontal coding agents head-on.",
+    whyThisCouldFail: "Hyperscaler &lsquo;everything bagels&rsquo; (Copilot, Code Whisperer, Vertex) bundle the niche later.",
+    whyThisCouldWin: "Stack-specific evaluation, ontologies and human-in-the-loop trust take years to replicate.",
+    uberLyftGrabLogic: {
+      validatedBy: "Modernisation services market is multi-billion",
+      secondMoverAngle: "Pair migration with modernisation and security review",
+      localisationOrVerticalisation: "Per-region: Japanese SAP / Korean banking COBOL etc.",
+      smarterExecutionVariant: "Combine code-rewrite with test-coverage generation"
+    },
+    notYetDoneWellBecause: ["Niche stack data is rare", "System integrators have not productised this depth"],
+    whatChangedRecently: ["LLMs that follow long codebases", "SWE-bench raising the evaluation bar"],
+    sourceIds: ["paper-swebench", "src-swe-bench"]
+  },
+  {
+    id: "opp-legal-citation-verification",
+    domainId: "legal",
+    title: "Citation-verification middleware for legal AI",
+    short: "Layer that catches hallucinated case-law citations before any LLM output reaches a brief.",
+    opportunityType: "infrastructure",
+    status: "validated",
+    confidence: "sourced",
+    corePain: "Documented sanctions for attorneys submitting fabricated citations make hallucination a binary risk for any legal LLM stack.",
+    buyer: "GC / Innovation lead at law firms or in-house teams",
+    user: "Associates and counsel using LLMs",
+    budgetOwner: "Practice innovation / risk",
+    urgency: "Documented public cases of judicial sanctions for fabricated citations.",
+    whyNow: "Every legal AI buyer demands a verification layer; pure-RAG legal vendors are fighting the same problem.",
+    whyBeforeNowWasHard: "Pre-LLM, the problem did not exist at scale; pre-2024, public case law was the bar.",
+    existingValidation: {
+      companies: ["Harvey (in-house verification)", "Lexis+ AI (citation-graded answers)", "Casetext (Thomson Reuters)"],
+      analogues: ["Plagiarism / fact-check tools"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z legal AI thesis"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Mata v. Avianca, multiple judicial sanctions in 2023-2024"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "medium",
+      speedToRevenue: "fast",
+      ventureScalePotential: "medium"
+    },
+    wedge: "API + sidecar that verifies citations from any legal LLM output across multiple corpora.",
+    firstCustomer: "Mid-size US law firm using horizontal legal AI.",
+    mvp: "Public case law (federal + state) coverage + sanctions-watchlist + Bluebook formatting.",
+    pricingHypothesis: "Per-citation fee or seat-based.",
+    goToMarket: "Bar-association partnerships, law-firm innovation channels.",
+    whatToAvoid: "Trying to be a full legal LLM &mdash; stay a sidecar.",
+    whyThisCouldFail: "Major legal AI vendors absorb the function as a feature.",
+    whyThisCouldWin: "Becomes the de-facto verification layer; charges everyone a small toll.",
+    uberLyftGrabLogic: {
+      validatedBy: "Public sanctions cases drive demand",
+      secondMoverAngle: "Per-jurisdiction depth (UK, Canada, India, EU)",
+      localisationOrVerticalisation: "Country-specific citation styles",
+      smarterExecutionVariant: "Pair verification with privilege / confidentiality checks"
+    },
+    notYetDoneWellBecause: ["Existing vendors fold verification into their own stack and underinvest in third-party APIs"],
+    whatChangedRecently: ["Public sanctions cases", "Bar-association guidance on LLM use"],
+    sourceIds: ["paper-rag"]
+  },
+  {
+    id: "opp-customer-support-vertical",
+    domainId: "customer-support",
+    title: "Vertical support copilots for regulated industries",
+    short: "Telco / bank / healthcare-ops support agents with grounded retrieval and compliance checks.",
+    opportunityType: "vertical AI",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "Generic support deflection plateaus; regulated industries demand retrieval-grounded answers, audit trails and compliance constraints.",
+    buyer: "Head of customer service / VP CX",
+    user: "Customer support agents and L1 chatbots",
+    budgetOwner: "Customer-experience or operations budget",
+    urgency: "Cost-to-serve pressure; rising regulatory expectations on chatbot disclosures.",
+    whyNow: "Foundation models are good enough; private-cloud deployment is mature; horizontal support AI (Intercom Fin, Zendesk AI) plateaus on regulated content.",
+    whyBeforeNowWasHard: "Pre-LLM, support flows were rule-based and brittle.",
+    existingValidation: {
+      companies: ["Intercom Fin (horizontal)", "Zendesk AI (horizontal)", "Forethought", "Decagon", "Sierra"],
+      analogues: ["Telco-specific NPS tools, regulated-industry CCaaS players"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z agentic AI / vertical agents thesis"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Vendor case studies report 30-70% deflection"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "medium",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "One regulated vertical (telcos in a region; insurance claims).",
+    firstCustomer: "Mid-size regulated operator (telco, insurer, healthcare services).",
+    mvp: "Vertical knowledge base + intent classification + agent-assist + compliance gating.",
+    pricingHypothesis: "Per-resolved-ticket fee or seat-based.",
+    goToMarket: "CCaaS partner channel + direct to mid-market.",
+    whatToAvoid: "Generic horizontal support AI &mdash; the incumbents own that.",
+    whyThisCouldFail: "Hyperscaler bundling pulls the floor of pricing down.",
+    whyThisCouldWin: "Vertical compliance content and integration depth take years for horizontals to replicate.",
+    uberLyftGrabLogic: {
+      validatedBy: "Intercom Fin / Decagon / Sierra category formation",
+      secondMoverAngle: "Per-vertical compliance depth",
+      localisationOrVerticalisation: "Country-specific telco regulators / health-ops playbooks",
+      smarterExecutionVariant: "Pair support with proactive churn-prevention"
+    },
+    notYetDoneWellBecause: ["Compliance is an afterthought in horizontal vendors"],
+    whatChangedRecently: ["Mature private-LLM deployment", "Customer pressure on resolution metrics"],
+    sourceIds: ["paper-rag"]
+  },
+  {
+    id: "opp-cybersec-prompt-injection",
+    domainId: "cybersecurity",
+    title: "Prompt-injection / AI attack-surface defence",
+    short: "Tooling for the new attack surface where the AI agent itself is the target.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Indirect prompt injection, model extraction and data poisoning are now real threats; mature tooling barely exists.",
+    buyer: "CISO / AppSec lead",
+    user: "Security engineers running AI products",
+    budgetOwner: "Security budget",
+    urgency: "Public examples of agent jailbreaks; regulator interest rising.",
+    whyNow: "Every enterprise is shipping agents that can read external content; classical AppSec does not cover prompt injection.",
+    whyBeforeNowWasHard: "Agents with tool access at scale did not exist.",
+    existingValidation: {
+      companies: ["Lakera", "Robust Intelligence", "Hiddenlayer", "Protect AI"],
+      analogues: ["WAF / RASP vendors"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z security + AI thesis"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["MITRE ATLAS framework", "OWASP LLM Top 10"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "long",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "Sidecar that scans agent inputs and outputs; integrates with major LLM gateways.",
+    firstCustomer: "Mid-large enterprise running customer-facing agents.",
+    mvp: "Pattern-based + ML-based prompt-injection detection + audit log.",
+    pricingHypothesis: "Per-call fee or seat-based.",
+    goToMarket: "AppSec channel; CISO networks; LLM gateway partnerships.",
+    whatToAvoid: "Trying to be a full LLM-Ops platform.",
+    whyThisCouldFail: "Hyperscaler safety APIs (Azure AI Content Safety, Anthropic / OpenAI guardrails) absorb the basic detection layer.",
+    whyThisCouldWin: "Becomes a board-level checkbox; becomes regulatory expectation.",
+    uberLyftGrabLogic: {
+      validatedBy: "Lakera / Robust Intelligence / Protect AI funding rounds",
+      secondMoverAngle: "Per-deployment-pattern depth (agentic, RAG, multimodal)",
+      localisationOrVerticalisation: "Sector-specific (banking AI, healthcare AI)",
+      smarterExecutionVariant: "Pair injection defence with model lineage / supply-chain attestation"
+    },
+    notYetDoneWellBecause: ["Field is too young", "Detection patterns are still being built"],
+    whatChangedRecently: ["MITRE ATLAS, OWASP LLM Top 10", "Public agent jailbreaks"],
+    sourceIds: ["src-mitre-attack"]
+  },
+
+  /* ── Physical world ── */
+  {
+    id: "opp-robot-data-infrastructure",
+    domainId: "robotics",
+    title: "Robot-data infrastructure (teleop + simulation + labelling)",
+    short: "Pick-and-shovel for the robotics-foundation-model era.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Robotics teams need millions of trajectories; teleop + sim + labelling tooling is fragmented and bespoke.",
+    buyer: "VP of robotics / autonomy",
+    user: "Robotics engineers + ML teams",
+    budgetOwner: "Engineering / R&amp;D budget",
+    urgency: "Open X-Embodiment-class ambitions are forcing a data-scale reckoning.",
+    whyNow: "VLA models proved that more data &rarr; better generalisation; teams are now starved of high-quality data.",
+    whyBeforeNowWasHard: "Pre-VLA, it was unclear if scaled robot data was useful.",
+    existingValidation: {
+      companies: ["Scale AI (general data ops)", "Tigris (teleop)", "Mech-Mind (industrial)", "Physical Intelligence (vertically integrated)"],
+      analogues: ["Roboflow for vision"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z robotics theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Open X-Embodiment cross-institution dataset effort"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "Teleop + curation + labelling for one embodiment family (mobile-manipulators or humanoids).",
+    firstCustomer: "Series A/B robotics startups.",
+    mvp: "Teleop SDK + cloud annotation + structured action vocabulary.",
+    pricingHypothesis: "Per-trajectory fee + platform subscription.",
+    goToMarket: "Direct to robotics startups; partnerships with simulator vendors.",
+    whatToAvoid: "Trying to build the foundation model and the infrastructure.",
+    whyThisCouldFail: "Vertically integrated players (Physical Intelligence, Skild, 1X) keep their data internal.",
+    whyThisCouldWin: "Becomes the substrate that smaller robotics teams cannot live without.",
+    uberLyftGrabLogic: {
+      validatedBy: "Scale AI&rsquo;s success in vision/text data ops",
+      secondMoverAngle: "Specialty per embodiment family (humanoid, dexterous-hand, mobile)",
+      localisationOrVerticalisation: "Industry-specific (kitchens, warehouses, surgery)",
+      smarterExecutionVariant: "Combine teleop with synthetic-data and policy-evaluation services"
+    },
+    notYetDoneWellBecause: ["Robotics startups under-invest in data infrastructure", "Teleop tools are bespoke"],
+    whatChangedRecently: ["VLA wave", "Open X-Embodiment", "Humanoid funding wave"],
+    sourceIds: ["paper-rt2", "paper-open-x"]
+  },
+  {
+    id: "opp-mfg-edge-ai",
+    domainId: "manufacturing",
+    title: "OT-secure on-prem AI for factories",
+    short: "Edge AI box + control-plane that runs vision / time-series models on the line without sending data to the cloud.",
+    opportunityType: "hardware-adjacent",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "Industrial buyers cannot send sensor / camera data off-site; existing AI vendors are cloud-first.",
+    buyer: "VP manufacturing / plant manager / OT security lead",
+    user: "Process engineers and operators",
+    budgetOwner: "Operations / capex",
+    urgency: "Production lines are losing efficiency to defect rates and unplanned downtime.",
+    whyNow: "Edge GPUs / NPUs (NVIDIA Jetson, Intel / AMD edge) are mature; on-prem foundation-model deployment is finally tractable.",
+    whyBeforeNowWasHard: "Edge inference was not strong enough; OT integration was custom per site.",
+    existingValidation: {
+      companies: ["Cognex (vision QC)", "Landing AI", "Instrumental", "Drishti", "Augury (acoustic anomaly)"],
+      analogues: ["MES / SCADA vendors moving toward AI"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z industrial AI theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Industrial CapEx surveys reporting AI adoption growth"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One vertical (electronics QC, food and beverage line monitoring).",
+    firstCustomer: "Tier-2 contract manufacturer with multiple lines.",
+    mvp: "Edge appliance + vision / time-series models + dashboard.",
+    pricingHypothesis: "Hardware + recurring software fee per line.",
+    goToMarket: "Systems-integrator channel + industrial OEM partnerships.",
+    whatToAvoid: "Cloud-only architecture in OT environments.",
+    whyThisCouldFail: "OEMs (Siemens, Rockwell) bundle the function and squeeze pricing.",
+    whyThisCouldWin: "Vertical depth + on-prem trust take years to replicate.",
+    uberLyftGrabLogic: {
+      validatedBy: "Landing AI / Instrumental / Augury established the category",
+      secondMoverAngle: "Specialty industries (battery cell QC, semi-fab, food-grade)",
+      localisationOrVerticalisation: "Country-specific industrial bases (German Mittelstand, Korean / Taiwan electronics)",
+      smarterExecutionVariant: "Pair QC with predictive maintenance and energy optimisation"
+    },
+    notYetDoneWellBecause: ["Industrial sites distrust generic SaaS vendors", "OT data is siloed"],
+    whatChangedRecently: ["Edge GPU/NPU maturity", "On-prem LLM deployment"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-energy-der-orchestration",
+    domainId: "energy-grid",
+    title: "DER orchestration for behind-the-meter assets",
+    short: "Software that coordinates rooftop solar + batteries + EV chargers + smart loads to bid into wholesale and ancillary markets.",
+    opportunityType: "infrastructure",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "Distributed energy resources (DERs) are growing fast; orchestration software lags physical capacity.",
+    buyer: "Utility / community choice aggregator / large C&amp;I customer",
+    user: "Energy ops teams, building managers",
+    budgetOwner: "Operations / sustainability budget",
+    urgency: "Grid congestion, FERC Order 2222 enabling DER aggregation, AI-data-centre load growth.",
+    whyNow: "Time-series and RL models can do real-time dispatch; FERC 2222 created the market structure.",
+    whyBeforeNowWasHard: "Pre-2222, DER aggregators had no clean wholesale-market path.",
+    existingValidation: {
+      companies: ["Octopus Energy / Kraken", "Stem", "AutoGrid", "Tesla Autobidder", "Camus Energy"],
+      analogues: ["Demand-response aggregators (Enel X, EnerNOC)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z American Dynamism theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["FERC Order 2222 implementation across ISOs"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "high",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One ISO market (CAISO, ERCOT, NYISO) + one asset class (battery + solar).",
+    firstCustomer: "Mid-size aggregator or large commercial portfolio operator.",
+    mvp: "Forecasting + dispatch optimisation + bidding adapter for one market.",
+    pricingHypothesis: "Performance fee on energy savings or % of revenue from market participation.",
+    goToMarket: "Utility / aggregator partnerships; direct-to-large-customer.",
+    whatToAvoid: "Trying to be horizontal across all DER types from day one.",
+    whyThisCouldFail: "Utility regulator shifts; market design changes; long sales cycle exhausts capital.",
+    whyThisCouldWin: "Few credible operators; high willingness to pay; sticky deployments.",
+    uberLyftGrabLogic: {
+      validatedBy: "Octopus Kraken licensing globally; Tesla Autobidder",
+      secondMoverAngle: "Per-ISO depth; per-asset-class focus",
+      localisationOrVerticalisation: "EU / UK / India / Australia regulator regimes",
+      smarterExecutionVariant: "Combine DER orchestration with AI-factory power services"
+    },
+    notYetDoneWellBecause: ["Energy markets are politically complex", "Software talent rarely overlaps with energy expertise"],
+    whatChangedRecently: ["FERC 2222 implementation", "AI-data-centre demand pulling new attention to grid"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-climate-vertical-weather",
+    domainId: "climate-weather",
+    title: "Specialty regional / vertical weather products",
+    short: "Take open neural-weather models (GraphCast, FourCastNet) and sell decision support to specific verticals.",
+    opportunityType: "vertical AI",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Open neural-weather models exist; verticals need post-processed, decision-grade products.",
+    buyer: "Insurance / agriculture / energy buyer",
+    user: "Operators making weather-driven decisions",
+    budgetOwner: "Risk / operations budget",
+    urgency: "Climate volatility is rising; downstream pricing reflects it.",
+    whyNow: "GraphCast / FourCastNet / Pangu / AIFS proved the technical case; commercial post-processing is the next layer.",
+    whyBeforeNowWasHard: "Pre-2023, weather models were NWP-only and slow.",
+    existingValidation: {
+      companies: ["Tomorrow.io", "Atmo", "Climavision", "Salient Predictions"],
+      analogues: ["IBM Watson Weather (legacy)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["GraphCast and Pangu publication in Science / Nature"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "medium",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "medium"
+    },
+    wedge: "One vertical (specialty agriculture, parametric insurance, renewables).",
+    firstCustomer: "Mid-size agribusiness, insurer, or renewable-asset operator.",
+    mvp: "Open-model post-processing + decision dashboard for one region + alerts.",
+    pricingHypothesis: "Annual subscription or revenue share on outcome.",
+    goToMarket: "Vertical channel partnerships.",
+    whatToAvoid: "Competing with Tomorrow.io horizontally.",
+    whyThisCouldFail: "Open-weights weather models commoditise the substrate; differentiation must live in vertical depth.",
+    whyThisCouldWin: "Vertical decision support is hard to replicate without industry expertise.",
+    uberLyftGrabLogic: {
+      validatedBy: "Tomorrow.io / Salient validate B2B weather AI",
+      secondMoverAngle: "Geography- and vertical-specific verticalisation",
+      localisationOrVerticalisation: "Tropical agriculture, monsoon belts, fire-prone regions",
+      smarterExecutionVariant: "Pair weather AI with parametric-insurance products"
+    },
+    notYetDoneWellBecause: ["Most weather AI is horizontal", "Vertical decision support is unsexy"],
+    whatChangedRecently: ["GraphCast / Pangu open-weights weather AI"],
+    sourceIds: ["paper-graphcast", "paper-fourcastnet"]
+  },
+  {
+    id: "opp-construction-trade-copilots",
+    domainId: "construction",
+    title: "Specialty trade copilots (electrical, mechanical, plumbing)",
+    short: "Document-extraction + estimating + scheduling for a specific trade, sold to subcontractors and GCs.",
+    opportunityType: "vertical AI",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Construction subcontractors run on spreadsheets and PDFs; AI vendors mostly target GCs or document-management.",
+    buyer: "Subcontractor owner / project manager",
+    user: "Estimators and project managers",
+    budgetOwner: "Owner / partner",
+    urgency: "Labour shortage; rising material costs; project margin compression.",
+    whyNow: "LLMs read complex PDFs; vision models process site photos; subcontractors finally have budget.",
+    whyBeforeNowWasHard: "Pre-LLM, document AI was rigid and expensive per-trade.",
+    existingValidation: {
+      companies: ["OpenSpace, Buildots (GC-side)", "ConstructConnect", "ProEst"],
+      analogues: ["Vertical SaaS plays in trades (ServiceTitan analogue)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z American Dynamism theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["ServiceTitan IPO momentum; rising vertical-SaaS-AI investments"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "medium",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "medium",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "medium"
+    },
+    wedge: "One trade (electrical) in one region.",
+    firstCustomer: "Mid-size electrical sub running 50&ndash;500 person-jobs.",
+    mvp: "Drawing extraction + estimating + invoice/payment workflow.",
+    pricingHypothesis: "$200&ndash;$2K per month per company.",
+    goToMarket: "Trade-association partnerships; direct outbound.",
+    whatToAvoid: "Trying to be horizontal across all trades.",
+    whyThisCouldFail: "Adoption among small businesses is hard; price-sensitive market.",
+    whyThisCouldWin: "ServiceTitan-style vertical SaaS + AI compounding.",
+    uberLyftGrabLogic: {
+      validatedBy: "ServiceTitan validated trade SaaS",
+      secondMoverAngle: "AI-native re-build of trade SaaS",
+      localisationOrVerticalisation: "Country-specific permitting / code rules",
+      smarterExecutionVariant: "Pair estimating with payments and financing"
+    },
+    notYetDoneWellBecause: ["Existing tools are scheduling-only", "Estimating is still manual"],
+    whatChangedRecently: ["LLM-based PDF extraction quality", "Subcontractor budgets unlocked"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-materials-autonomous-lab",
+    domainId: "materials-science",
+    title: "Autonomous lab platform for specialty materials",
+    short: "Robot-driven lab + ML loop for a specific materials class (battery cells, photovoltaics, catalysts).",
+    opportunityType: "infrastructure",
+    status: "research-dependent",
+    confidence: "forwardLooking",
+    corePain: "Synthesis success rate is the binding bottleneck for ML-driven materials; autonomous labs close the loop.",
+    buyer: "Industrial R&amp;D head / national lab director",
+    user: "Materials scientists",
+    budgetOwner: "R&amp;D budget",
+    urgency: "Battery / clean-energy demand is forcing accelerated materials discovery.",
+    whyNow: "Lab robotics are mature; characterisation tools are digital; foundation models for materials are emerging.",
+    whyBeforeNowWasHard: "Lab automation lacked closed-loop ML integration.",
+    existingValidation: {
+      companies: ["Citrine Informatics", "Kebotix", "Aionics", "Atomic Industries", "Microsoft Research (MatterGen)"],
+      analogues: ["Strateos / Emerald Cloud Lab in bio"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z American Dynamism theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["DeepMind GNoME paper (Nature)"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "low",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One materials class with high commercial pull (Li-metal anodes, perovskite cells).",
+    firstCustomer: "Battery / clean-energy industrial R&amp;D centre or national lab.",
+    mvp: "Closed-loop synthesis + characterisation + ML-driven design for one chemistry.",
+    pricingHypothesis: "Multi-year R&amp;D contracts.",
+    goToMarket: "Direct to industrial R&amp;D + national-lab partnerships.",
+    whatToAvoid: "Trying to be horizontal across all materials.",
+    whyThisCouldFail: "Long capital cycles; long synthesis-to-product timelines.",
+    whyThisCouldWin: "If the loop succeeds, founder owns the substrate of next-decade materials.",
+    uberLyftGrabLogic: {
+      validatedBy: "DeepMind GNoME shows AI-driven discovery is real",
+      secondMoverAngle: "Vertical specialisation",
+      localisationOrVerticalisation: "Country-specific national-lab partnerships",
+      smarterExecutionVariant: "Combine lab platform with material-data licensing business"
+    },
+    notYetDoneWellBecause: ["Closed-loop labs are bespoke and academic"],
+    whatChangedRecently: ["Lab robotics maturity", "Materials foundation models"],
+    sourceIds: ["src-materials-project"]
+  },
+
+  /* ── Media / Consumer ── */
+  {
+    id: "opp-media-provenance",
+    domainId: "media-entertainment",
+    title: "Provenance &amp; rights infrastructure for generated media",
+    short: "C2PA-style provenance + rights management for studios, brands and platforms.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Studios / brands / platforms cannot prove provenance of media; deepfake risk and rights confusion are growing.",
+    buyer: "Studio rights / brand-safety lead / platform integrity",
+    user: "Producers and rights teams",
+    budgetOwner: "Legal / brand-safety / integrity",
+    urgency: "EU AI Act provenance obligations; election-cycle deepfake pressure.",
+    whyNow: "C2PA standard is maturing; major platforms (Adobe, Microsoft, Google) are committing.",
+    whyBeforeNowWasHard: "Provenance lacked a standard.",
+    existingValidation: {
+      companies: ["Adobe Content Credentials", "Truepic", "Microsoft", "Sony"],
+      analogues: ["Watermark vendors, DRM"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["EU AI Act provenance requirements; C2PA growth"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "medium",
+      incumbentRisk: "high",
+      marginPotential: "medium",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "medium"
+    },
+    wedge: "Provenance / rights API for one platform category (creator tools, ad platforms).",
+    firstCustomer: "Mid-size creator-platform or studio.",
+    mvp: "C2PA signing + verification API + dashboard.",
+    pricingHypothesis: "Per-asset fee + enterprise platform fee.",
+    goToMarket: "Studio / platform partnerships; standards-body proximity.",
+    whatToAvoid: "Trying to be the only provenance vendor.",
+    whyThisCouldFail: "Adobe / Microsoft / Google bundle provenance into their stacks.",
+    whyThisCouldWin: "Platform-neutral middleware finds a permanent niche.",
+    uberLyftGrabLogic: {
+      validatedBy: "C2PA standard adoption",
+      secondMoverAngle: "Platform-neutral middleware",
+      localisationOrVerticalisation: "Per-jurisdiction rights regimes",
+      smarterExecutionVariant: "Combine provenance with rights-clearance marketplaces"
+    },
+    notYetDoneWellBecause: ["Standards are still maturing"],
+    whatChangedRecently: ["EU AI Act", "C2PA momentum"],
+    sourceIds: ["needs-verification"]
+  },
+
+  /* ── Strategic ── */
+  {
+    id: "opp-fedramp-vertical-tools",
+    domainId: "government-services",
+    title: "FedRAMP-ready vertical tools for federal &amp; SLED",
+    short: "Authorised vertical AI for case management, translation, appeals and benefits.",
+    opportunityType: "vertical AI",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Federal / state buyers want AI but procurement is gated by FedRAMP / IL-class certification; few authorised vertical tools exist.",
+    buyer: "Agency CIO / programme office",
+    user: "Caseworkers / agency staff",
+    budgetOwner: "Agency programme budget",
+    urgency: "Backlogs in benefits, immigration and case management; AI-mandated by EO and OMB guidance.",
+    whyNow: "Hyperscaler GovCloud regions and FedRAMP-authorised LLM endpoints exist.",
+    whyBeforeNowWasHard: "FedRAMP authorisation took years; LLM endpoints were public-cloud-only.",
+    existingValidation: {
+      companies: ["Palantir", "Accenture Federal", "Deloitte / KPMG public sector", "Anthropic / OpenAI government editions"],
+      analogues: ["Defense-tech vertical SaaS (e.g. Anduril)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z American Dynamism theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["FedRAMP Authorised LLM endpoints (2024-2025)"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "enterprise-long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "medium",
+      regulatoryDifficulty: "high",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One agency (USCIS, VA, or a state human-services agency).",
+    firstCustomer: "State-level agency with backlog problem.",
+    mvp: "Vertical workflow + LLM gateway + audit log + FedRAMP path.",
+    pricingHypothesis: "Programme contract; multi-year deals.",
+    goToMarket: "GSA / SBIR / Other Transaction Authority pathways; primes channel.",
+    whatToAvoid: "Selling without FedRAMP path.",
+    whyThisCouldFail: "Procurement cycles outlast capital.",
+    whyThisCouldWin: "Slow market; defensible incumbency once authorised.",
+    uberLyftGrabLogic: {
+      validatedBy: "Palantir; Anduril",
+      secondMoverAngle: "State-level / agency-level depth",
+      localisationOrVerticalisation: "International public-sector (UK, Australia, Singapore)",
+      smarterExecutionVariant: "Pair vertical tools with citizen-facing translation"
+    },
+    notYetDoneWellBecause: ["Slow regulators; risk-averse buyers"],
+    whatChangedRecently: ["FedRAMP-authorised LLMs"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-osint-with-provenance",
+    domainId: "intelligence-analysis",
+    title: "OSINT analytics with chain-of-evidence",
+    short: "Multilingual OSINT ingestion + entity resolution + verifiable provenance for analysts.",
+    opportunityType: "vertical AI",
+    status: "validated",
+    confidence: "inferred",
+    corePain: "OSINT volumes have exploded; analysts need verifiable evidence chains, not just summaries.",
+    buyer: "Government analyst leads / journalism / NGO investigators",
+    user: "Intelligence analysts and investigators",
+    budgetOwner: "Programme budget",
+    urgency: "Information-operations and deepfake threats are scaling; EU / US guidance pushing provenance.",
+    whyNow: "Multimodal LLMs + entity resolution + provenance standards combine.",
+    whyBeforeNowWasHard: "Pre-LLM, multilingual OSINT was per-language and brittle.",
+    existingValidation: {
+      companies: ["Palantir", "BAE Systems", "Maxar / commercial-imagery", "Bellingcat (NGO)"],
+      analogues: ["AML-graph players (Quantexa)"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z American Dynamism / defence theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Bellingcat methodology has gone mainstream"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "high",
+      salesCycle: "enterprise-long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "high",
+      incumbentRisk: "high",
+      marginPotential: "high",
+      defensibility: "high",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One use case (sanctions evasion tracking, election-integrity monitoring).",
+    firstCustomer: "Government agency or major news organisation.",
+    mvp: "Multilingual ingestion + entity graph + provenance log + analyst UI.",
+    pricingHypothesis: "Multi-million programme contracts.",
+    goToMarket: "Government primes; civil society partnerships.",
+    whatToAvoid: "Selling to operational military without explicit licence; selling without provenance.",
+    whyThisCouldFail: "Palantir-class incumbents close the gap.",
+    whyThisCouldWin: "Modern UX + provenance can outflank legacy primes.",
+    uberLyftGrabLogic: {
+      validatedBy: "Palantir + Bellingcat methodology",
+      secondMoverAngle: "Civilian / NGO market underserved",
+      localisationOrVerticalisation: "Per-region: Europe, Asia, Africa",
+      smarterExecutionVariant: "Combine OSINT with deepfake / IO detection"
+    },
+    notYetDoneWellBecause: ["Legacy primes have weak UX", "Provenance is still emerging"],
+    whatChangedRecently: ["Multilingual LLMs", "Provenance standards"],
+    sourceIds: ["needs-verification"]
+  },
+
+  /* ── Architecture-driven contrarian ── */
+  {
+    id: "opp-evaluator-products",
+    domainId: "research-workflows",
+    title: "Evaluator-as-a-product (LLM-as-judge marketplaces)",
+    short: "Where generation is cheap, the judge is the moat.",
+    opportunityType: "infrastructure",
+    status: "underexplored",
+    confidence: "inferred",
+    corePain: "Every AI product needs evaluation; few teams build it well; LLM-as-judge is everywhere but unaudited.",
+    buyer: "AI product / engineering lead",
+    user: "ML engineers and product managers",
+    budgetOwner: "Engineering / quality budget",
+    urgency: "Generation models are improving faster than eval; product quality bottleneck is shifting.",
+    whyNow: "LLM-as-judge is now industry standard but error-prone; eval marketplaces (Braintrust, Galileo, Arize) are forming.",
+    whyBeforeNowWasHard: "Eval was bespoke per team.",
+    existingValidation: {
+      companies: ["Braintrust", "Galileo", "Arize", "PromptLayer", "LangSmith"],
+      analogues: ["Datadog / observability for ML"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z infra-AI theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["State of AI Engineering / Latent Space coverage"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "medium",
+      distributionDifficulty: "medium",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "medium",
+      marginPotential: "high",
+      defensibility: "medium",
+      speedToRevenue: "moderate",
+      ventureScalePotential: "high"
+    },
+    wedge: "One vertical (legal, medical) where eval discipline is binding.",
+    firstCustomer: "Mid-size AI product team.",
+    mvp: "Eval pipelines + LLM-as-judge audit + dashboards.",
+    pricingHypothesis: "Per-eval fee or seat-based.",
+    goToMarket: "Direct to AI engineering teams; observability channel.",
+    whatToAvoid: "Trying to be the entire LLM stack.",
+    whyThisCouldFail: "Hyperscalers bundle eval into their model platforms.",
+    whyThisCouldWin: "Eval is the place quality is decided; whoever owns it owns trust.",
+    uberLyftGrabLogic: {
+      validatedBy: "Braintrust / Galileo / Arize raised meaningful capital",
+      secondMoverAngle: "Vertical eval marketplaces (legal, medical)",
+      localisationOrVerticalisation: "Per-vertical safety standards",
+      smarterExecutionVariant: "Combine eval with red-teaming and safety audit"
+    },
+    notYetDoneWellBecause: ["Eval is unsexy", "Generic tools cannot capture domain nuance"],
+    whatChangedRecently: ["State of AI Engineering 2024-2025 reporting eval as the bottleneck"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-cheap-inference-ambient",
+    domainId: "consumer-search",
+    title: "Always-on ambient AI for one consumer surface",
+    short: "Bet on 100x cheaper inference enabling categories that are not unit-economic today.",
+    opportunityType: "agentic workflow",
+    status: "too early",
+    confidence: "forwardLooking",
+    corePain: "Many consumer experiences would benefit from always-on AI but inference cost makes them unit-economic-impossible today.",
+    buyer: "Consumer (B2C) or platform partner",
+    user: "End user",
+    budgetOwner: "Consumer pricing or ad-supported",
+    urgency: "Inference cost is dropping; ambient categories will form before incumbents respond.",
+    whyNow: "Inference cost may drop 10-100x in the next two-three years; small models on-device + cloud bursts work today.",
+    whyBeforeNowWasHard: "Inference too expensive for always-on.",
+    existingValidation: {
+      companies: ["Humane (folded)", "Rabbit (struggled)", "Limitless / Plaud / Friend (consumer ambient)"],
+      analogues: ["Apple Intelligence on-device"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["a16z consumer AI theses"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["Apple Intelligence + WWDC AI announcements (2024-2025)"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "short",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "high",
+      regulatoryDifficulty: "medium",
+      incumbentRisk: "very high",
+      marginPotential: "low",
+      defensibility: "low",
+      speedToRevenue: "slow",
+      ventureScalePotential: "high"
+    },
+    wedge: "One narrow surface (always-on coding pair, ambient meeting AI, ambient health).",
+    firstCustomer: "Prosumers willing to pay for productivity / wellbeing.",
+    mvp: "Continuous capture + cloud burst + privacy controls.",
+    pricingHypothesis: "Hardware bundle + subscription.",
+    goToMarket: "Direct-to-consumer + creator partnerships.",
+    whatToAvoid: "Pretending the unit economics are solved already.",
+    whyThisCouldFail: "Apple / Google ambient bundles eat the category.",
+    whyThisCouldWin: "Specialty surface plus speed creates a window before hyperscalers respond.",
+    uberLyftGrabLogic: {
+      validatedBy: "Humane / Rabbit failed; Plaud / Limitless / Friend / Bee in early traction",
+      secondMoverAngle: "Specialty per surface",
+      localisationOrVerticalisation: "Per-region privacy regimes",
+      smarterExecutionVariant: "Bundle ambient AI with workflow / health products"
+    },
+    notYetDoneWellBecause: ["Hardware-software ambition exceeded execution"],
+    whatChangedRecently: ["On-device + cloud-burst maturity"],
+    sourceIds: ["needs-verification"]
+  },
+  {
+    id: "opp-quantum-classical-orchestration",
+    domainId: "physics",
+    title: "Hybrid quantum-classical orchestration platform",
+    short: "Workflow software that schedules and routes hybrid jobs across multiple QPU providers and GPU clusters.",
+    opportunityType: "infrastructure",
+    status: "research-dependent",
+    confidence: "forwardLooking",
+    corePain: "Researchers and pharma teams want to test hybrid algorithms across multiple QPU modalities and classical accelerators; orchestration is brittle.",
+    buyer: "Pharma / chemistry / national-lab R&amp;D head",
+    user: "Quantum / classical-ML researchers",
+    budgetOwner: "R&amp;D / programme budget",
+    urgency: "Quantum advantage timelines are uncertain but commercial pull (chemistry, optimisation, cryptography migration) is rising.",
+    whyNow: "NVIDIA CUDA-Q + NVQLink + cloud QPU access (IBM, IonQ, Quantinuum, PsiQuantum, Atom Computing) make hybrid jobs feasible.",
+    whyBeforeNowWasHard: "Pre-hybrid stacks, quantum and classical were siloed.",
+    existingValidation: {
+      companies: ["NVIDIA CUDA-Q", "IBM Quantum", "Quantinuum", "IonQ"],
+      analogues: ["Cross-cloud orchestration platforms"],
+      ycCompanies: ["needsVerification"],
+      a16zRelevantTheses: ["needsVerification"],
+      chinaAnalogues: ["needsVerification"],
+      publicSignals: ["NVIDIA NVQLink and CUDA-Q announcements"]
+    },
+    brutalCapitalistRead: {
+      willingnessToPay: "medium",
+      salesCycle: "long",
+      distributionDifficulty: "high",
+      dataAccessDifficulty: "low",
+      regulatoryDifficulty: "low",
+      incumbentRisk: "high",
+      marginPotential: "medium",
+      defensibility: "medium",
+      speedToRevenue: "slow",
+      ventureScalePotential: "medium"
+    },
+    wedge: "One workflow (variational quantum eigensolver for chemistry).",
+    firstCustomer: "Pharma R&amp;D team or national lab.",
+    mvp: "Multi-vendor QPU + GPU job orchestration + benchmark library.",
+    pricingHypothesis: "Programme contract + per-job fee.",
+    goToMarket: "Pharma + national-lab partnerships; conferences.",
+    whatToAvoid: "Building yet another simulator.",
+    whyThisCouldFail: "NVIDIA absorbs the orchestration layer; quantum advantage doesn&rsquo;t materialise.",
+    whyThisCouldWin: "If hybrid workflows scale, founder owns the substrate.",
+    uberLyftGrabLogic: {
+      validatedBy: "NVIDIA CUDA-Q ecosystem",
+      secondMoverAngle: "Cross-vendor neutrality",
+      localisationOrVerticalisation: "Per-modality optimisation",
+      smarterExecutionVariant: "Pair orchestration with eval and benchmark certifications"
+    },
+    notYetDoneWellBecause: ["Quantum is still pre-commercial"],
+    whatChangedRecently: ["NVIDIA NVQLink, CUDA-Q, NVAQC"],
+    sourceIds: ["needs-verification"]
+  }
+];
+
+/* ============================================
+   BOTTLENECK_DOSSIERS — Detailed per-domain bottleneck intel
+   ============================================
+   Each dossier teaches a bottleneck: what it is, why it persists,
+   who it hurts, who is solving it and what would break it open.
+   ============================================ */
+var BOTTLENECK_DOSSIERS = [
+  { id: "bn-clinical-validation", domainId: "clinical-medicine", title: "Clinical validation across sites and populations", bottleneckType: "evaluation", severity: "critical", maturityImpact: "Blocks production", confidence: "sourced", explanation: "A model that performs well on its training cohort can degrade silently on a different scanner, demographic, or workflow. Buyers need evidence beyond AUROC.", whyItExists: ["Hospitals differ in scanners, demographics and prevalence", "Most studies are single-centre retrospective", "Distribution shift is the rule"], evidence: ["FDA SaMD guidance on real-world performance monitoring"], sourceIds: ["src-fda-samd"], affectedUseCases: ["uc-radiology-report-assist", "uc-pathology-biomarker"], affectedArchitectures: ["cnn", "vit", "domain-fm"], affectedCompanies: ["Aidoc", "Viz.ai", "Paige", "PathAI"], firstOrderEffects: ["Slow procurement; pilot-to-production gap"], secondOrderEffects: ["Vendor consolidation around buyers who can show multi-site evidence"], whoIsTryingToSolveIt: ["FDA real-world monitoring", "Multi-site research consortia", "Vendors with site-specific fine-tuning"], whatWouldBreakItOpen: ["Continuous-learning regulatory pathways", "Federated evaluation infrastructure"], whatStillDoesNotWork: ["Most public benchmarks are single-centre"], founderOpportunity: "Federated evaluation + site-specific monitoring infrastructure for medical AI.", investorSignal: "Companies with proactive multi-site validation are more durable than single-cohort AUROC stories.", interviewQuestion: "What does it actually take to validate a clinical AI model across 50 hospitals on three continents?" },
+  { id: "bn-ehr-workflow", domainId: "clinical-medicine", title: "EHR workflow integration", bottleneckType: "workflow", severity: "high", maturityImpact: "slows adoption", confidence: "inferred", explanation: "Clinical AI lives or dies inside Epic / Cerner workflows. Even excellent models fail if they require context-switching.", whyItExists: ["EHR APIs are limited and vendor-specific", "Hospital IT cycles are slow"], evidence: ["Ambient-scribe vendors highlight Epic / Cerner integration as their primary moat"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-clinical-scribe", "uc-radiology-report-assist"], affectedArchitectures: ["domain-fm", "rag", "asr-tts"], affectedCompanies: ["Abridge", "Microsoft / Nuance", "Augmedix"], firstOrderEffects: ["Long sales cycles", "Vendor preference for EHR-blessed partners"], secondOrderEffects: ["Epic / Cerner partnerships becoming gating", "Health systems consolidating AI under EHR vendor"], whoIsTryingToSolveIt: ["EHR vendors (Epic GPT, Cerner AI)", "FHIR + SMART community"], whatWouldBreakItOpen: ["EHR AI marketplaces with clear pricing", "Mature FHIR R5 deployments"], whatStillDoesNotWork: ["Cross-encounter context awareness"], founderOpportunity: "EHR-integration middleware that sits between LLMs and Epic / Cerner.", investorSignal: "Workflow integration depth is a more durable moat than model quality in clinical AI.", interviewQuestion: "Can a clinical AI startup win without an Epic preferred-partner status?" },
+  { id: "bn-medical-liability", domainId: "clinical-medicine", title: "Medical liability and accountability", bottleneckType: "liability", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "When AI errs in clinical decisions, who is liable: vendor, hospital, clinician? Without clarity, autonomous decision-making cannot scale.", whyItExists: ["Tort law treats clinicians as accountable", "Vendors limit indemnification"], evidence: ["AMA / specialty societies publishing AI guidance"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-radiology-report-assist", "uc-pathology-biomarker"], affectedArchitectures: ["domain-fm"], affectedCompanies: ["all clinical-AI vendors"], firstOrderEffects: ["AI confined to assistive role"], secondOrderEffects: ["Liability-insurance products tailored to AI"], whoIsTryingToSolveIt: ["Specialty societies", "Insurers", "Regulators iterating on SaMD"], whatWouldBreakItOpen: ["Federal AI liability framework"], whatStillDoesNotWork: ["No clear precedent for autonomous diagnostic AI liability"], founderOpportunity: "Liability-insurance products and AI compliance attestation tooling.", investorSignal: "Clinical AI vendors that pre-build evidence packs are more durable.", interviewQuestion: "What single legal change would most accelerate autonomous clinical AI?" },
+  { id: "bn-wet-lab", domainId: "drug-discovery", title: "Wet-lab validation throughput", bottleneckType: "physical validation", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "AI proposes thousands of candidates faster than the lab can confirm any of them. The lab is the loss function.", whyItExists: ["Synthesis is hard", "Assays are expensive", "Biology is high-variance"], evidence: ["RFdiffusion / ProteinMPNN papers report explicit wet-lab confirmation rates"], sourceIds: ["paper-rfdiffusion", "paper-proteinmpnn"], affectedUseCases: ["uc-drug-virtual-screen", "uc-protein-binder"], affectedArchitectures: ["diffusion-bio", "protein-lm", "molecular-gnn"], affectedCompanies: ["Isomorphic Labs", "Generate Biomedicines", "Recursion"], firstOrderEffects: ["Long timelines from in-silico hit to assay confirmation"], secondOrderEffects: ["Vendors with in-house labs gain a structural edge"], whoIsTryingToSolveIt: ["Strateos, Emerald Cloud Lab", "Cradle, Genesis"], whatWouldBreakItOpen: ["Cheaper combinatorial chemistry; modular synthesis"], whatStillDoesNotWork: ["Robust translation from in-silico hits to clinical candidates"], founderOpportunity: "Lab automation + ML eval harnesses tied to wet-lab outcomes.", investorSignal: "AI-first biotechs with in-house wet-lab loops are more durable than software-only platforms.", interviewQuestion: "What is the smallest wet-lab capability a generative-bio startup must own to be credible?" },
+  { id: "bn-clinical-translation", domainId: "drug-discovery", title: "Clinical translation", bottleneckType: "physical validation", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "AI accelerates the early funnel but does not change clinical-trial failure rates; ADMET, tissue-level effects and stratification still gate approvals.", whyItExists: ["Biology is hierarchical", "Animal models translate poorly", "Patient heterogeneity is irreducible"], evidence: ["Industry-wide clinical attrition rates"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-drug-virtual-screen", "uc-protein-binder"], affectedArchitectures: ["diffusion-bio", "protein-lm"], affectedCompanies: ["AI biotech generally"], firstOrderEffects: ["Long capital cycles"], secondOrderEffects: ["Big-pharma partnerships favour AI biotechs that have made it through Phase 2"], whoIsTryingToSolveIt: ["Isomorphic Labs, Insitro, Recursion", "Tempus, Flatiron"], whatWouldBreakItOpen: ["Biomarker-driven trial design"], whatStillDoesNotWork: ["Tissue-level effects from molecular structure"], founderOpportunity: "AI-driven trial-design and patient-stratification tooling.", investorSignal: "Phase 1 / 2 AI-discovered assets are the validation milestones.", interviewQuestion: "Will AI shift Phase 2 success rates, or only accelerate the path to Phase 1?" },
+  { id: "bn-quant-eval", domainId: "quant-finance", title: "Honest evaluation under leakage and regime shift", bottleneckType: "evaluation", severity: "high", maturityImpact: "increases cost", confidence: "inferred", explanation: "Most ML strategies look great in backtests and fail in production. Look-ahead bias, capacity constraints, and regime shift are the silent killers.", whyItExists: ["Markets are reflexive", "Public datasets bake in survivorship bias"], evidence: ["Public fund failures attributed to ML overfitting"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-quant-alpha"], affectedArchitectures: ["ts-transformer", "gbdt", "rl-execution"], affectedCompanies: ["all quant funds"], firstOrderEffects: ["Wasted capital on overfit strategies"], secondOrderEffects: ["Eval discipline becomes a moat"], whoIsTryingToSolveIt: ["Numerai", "Internal research-platform teams"], whatWouldBreakItOpen: ["Standardised eval suites for quant ML"], whatStillDoesNotWork: ["Most public benchmarks ignore transaction costs and capacity"], founderOpportunity: "Audit-grade backtesting and leakage-detection tooling.", investorSignal: "Quant-AI startups boasting only sharpe without capacity / cost realism are over-claiming.", interviewQuestion: "What evaluation discipline separates a real quant alpha from a backtest fantasy?" },
+  { id: "bn-quant-capacity", domainId: "quant-finance", title: "Capacity and transaction costs", bottleneckType: "economics", severity: "high", maturityImpact: "limits scaling", confidence: "inferred", explanation: "Strategies that look profitable on paper get crushed by their own market impact at scale.", whyItExists: ["Liquidity is finite per-asset", "Slippage scales with size"], evidence: ["Public fund disclosures describing capacity constraints"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-quant-alpha"], affectedArchitectures: ["rl-execution", "ts-transformer"], affectedCompanies: ["all quant funds"], firstOrderEffects: ["Strategies wind down once capital exceeds capacity"], secondOrderEffects: ["Multi-strategy funds dominate at scale"], whoIsTryingToSolveIt: ["Execution-optimisation teams"], whatWouldBreakItOpen: ["Better cross-venue liquidity"], whatStillDoesNotWork: ["Capacity prediction in tail-event markets"], founderOpportunity: "Capacity-aware execution and routing tooling.", investorSignal: "Quant-AI startups must show capacity awareness in their pitches.", interviewQuestion: "How do you measure the capacity of an ML alpha, and how do you avoid eating your own returns?" },
+  { id: "bn-legal-hallucination", domainId: "legal", title: "Hallucinated citations and malpractice risk", bottleneckType: "trust", severity: "critical", maturityImpact: "Blocks production", confidence: "sourced", explanation: "Documented sanctions for attorneys submitting fabricated citations make hallucination a binary risk in legal AI.", whyItExists: ["LLMs fabricate confidently", "Citation-graph coverage is uneven"], evidence: ["Mata v. Avianca and similar cases"], sourceIds: ["paper-rag"], affectedUseCases: ["uc-legal-research"], affectedArchitectures: ["llm", "rag"], affectedCompanies: ["Harvey", "Lexis+ AI", "Westlaw / Casetext"], firstOrderEffects: ["Mandatory citation-verification layers"], secondOrderEffects: ["Bar-association guidance", "Liability-insurance products"], whoIsTryingToSolveIt: ["Legal AI vendors", "Bar ethics committees"], whatWouldBreakItOpen: ["Audit-grade RAG with citation-graph fidelity"], whatStillDoesNotWork: ["Cross-jurisdictional citation coverage"], founderOpportunity: "Citation-verification middleware sold across legal AI vendors.", investorSignal: "Legal AI vendors with grounded retrieval + verification are more durable than pure-LLM products.", interviewQuestion: "What is the failure mode you most fear in legal AI?" },
+  { id: "bn-legal-jurisdictional", domainId: "legal", title: "Jurisdictional fragmentation", bottleneckType: "data", severity: "high", maturityImpact: "limits scaling", confidence: "context", explanation: "Law differs across jurisdictions; corpus coverage and citation rules are non-trivial per country / state.", whyItExists: ["Legal systems differ structurally", "Public corpora are uneven"], evidence: ["Westlaw / Lexis coverage skews common-law"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-legal-research"], affectedArchitectures: ["rag", "embeddings"], affectedCompanies: ["Harvey", "Lexis+ AI", "Robin AI"], firstOrderEffects: ["Slow per-jurisdiction expansion"], secondOrderEffects: ["Country-specific legal AI champions emerge"], whoIsTryingToSolveIt: ["Major vendors expanding region by region"], whatWouldBreakItOpen: ["Open multi-jurisdictional case-law corpora"], whatStillDoesNotWork: ["Comparative law analysis"], founderOpportunity: "Per-jurisdiction legal AI champions in Asia, Latin America and Africa.", investorSignal: "Country-specific legal AI is an underrated wedge.", interviewQuestion: "Where will the next regional legal-AI champion be built outside the US and UK?" },
+  { id: "bn-edu-outcomes", domainId: "education", title: "Measuring learning outcomes", bottleneckType: "evaluation", severity: "high", maturityImpact: "limits scaling", confidence: "inferred", explanation: "AI tutoring shows engagement gains, but durable, transferable learning gains are hard to measure.", whyItExists: ["Learning is multi-year and confounded", "RCTs on AI products are rare"], evidence: ["Khan Academy + Duolingo published studies (limited)"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-edu-tutor"], affectedArchitectures: ["llm", "rag"], affectedCompanies: ["Khan Academy", "Duolingo", "Magic School AI"], firstOrderEffects: ["Procurement gates on rigorous evidence"], secondOrderEffects: ["Vendors investing in RCT-grade evidence become preferred"], whoIsTryingToSolveIt: ["IES-funded research", "Vendor-internal studies"], whatWouldBreakItOpen: ["Federally funded RCTs of AI tutoring at scale"], whatStillDoesNotWork: ["Demonstrated transfer to standardised testing"], founderOpportunity: "Rigorous, RCT-grade evaluation tooling for ed-tech.", investorSignal: "Vendors with credible third-party effectiveness studies are more durable.", interviewQuestion: "What evidence would convince you that an AI tutor produces durable learning gains?" },
+  { id: "bn-edu-integrity", domainId: "education", title: "Assessment integrity", bottleneckType: "trust", severity: "high", maturityImpact: "slows adoption", confidence: "context", explanation: "AI text detectors are unreliable; schools shift to assessment-design changes.", whyItExists: ["LLM output is hard to distinguish from human writing", "False positives harm students"], evidence: ["Public studies showing detector unreliability"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-edu-tutor"], affectedArchitectures: ["llm"], affectedCompanies: ["Turnitin", "Copyleaks", "GPTZero"], firstOrderEffects: ["Decline in confidence in AI-text detectors"], secondOrderEffects: ["Curriculum redesign and AI-aware assessments"], whoIsTryingToSolveIt: ["Curriculum / assessment redesign by educators"], whatWouldBreakItOpen: ["AI-aware assessment standards"], whatStillDoesNotWork: ["Reliable detection across languages and styles"], founderOpportunity: "Assessment redesign and authoring tooling for AI-aware assignments.", investorSignal: "Bet on assessment redesign vendors, not detection vendors.", interviewQuestion: "If detection cannot work, what is the right way to redesign assessments?" },
+  { id: "bn-robotics-data", domainId: "robotics", title: "Real-robot data scarcity", bottleneckType: "data", severity: "critical", maturityImpact: "Blocks production", confidence: "sourced", explanation: "VLA models proved scale wins; real-robot trajectories are expensive; embodiment generalisation is unsolved.", whyItExists: ["Hardware is expensive", "Teleop is slow"], evidence: ["RT-2 / Open X-Embodiment papers report data-scale dependencies"], sourceIds: ["paper-rt2", "paper-open-x"], affectedUseCases: ["uc-robotics-pick"], affectedArchitectures: ["vla", "imitation-learning", "diffusion-policy"], affectedCompanies: ["Figure", "1X", "Apptronik", "Physical Intelligence", "Skild"], firstOrderEffects: ["Slow generalisation", "High cost per learned skill"], secondOrderEffects: ["Vertically integrated data players win", "Open-data efforts become valuable"], whoIsTryingToSolveIt: ["Open X-Embodiment", "Physical Intelligence", "Tigris"], whatWouldBreakItOpen: ["Cross-embodiment foundation models that transfer with little new data"], whatStillDoesNotWork: ["Generalisation across kitchens, factories and homes"], founderOpportunity: "Robot-data infrastructure (teleop + sim + labelling).", investorSignal: "Robotics startups without a data-scale plan are research projects.", interviewQuestion: "What is the minimum data scale at which VLA models start to generalise across embodiments?" },
+  { id: "bn-robotics-sim2real", domainId: "robotics", title: "Sim-to-real gap", bottleneckType: "physical validation", severity: "high", maturityImpact: "increases cost", confidence: "context", explanation: "Simulation is cheap; sim-to-real gap remains. Domain randomisation and sim2real fine-tuning are imperfect.", whyItExists: ["Real-world physics has long-tail edge cases", "Sensor differences"], evidence: ["Academic surveys on sim-to-real"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-robotics-pick"], affectedArchitectures: ["sim-to-real", "rl-control", "world-models"], affectedCompanies: ["Boston Dynamics", "Figure", "Tesla Optimus", "Skild"], firstOrderEffects: ["Long iteration cycles"], secondOrderEffects: ["Differentiable simulators become valuable"], whoIsTryingToSolveIt: ["NVIDIA Isaac Sim", "Genesis simulator"], whatWouldBreakItOpen: ["Photoreal high-fidelity physics simulation"], whatStillDoesNotWork: ["Contact-rich manipulation in unstructured environments"], founderOpportunity: "High-fidelity simulation infrastructure for one embodiment family.", investorSignal: "Watch sim-to-real benchmarks that include contact-rich tasks.", interviewQuestion: "What is the most-overlooked aspect of the sim-to-real gap?" },
+  { id: "bn-robotics-safety", domainId: "robotics", title: "Safety in unstructured environments", bottleneckType: "safety", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "Robots that act in human environments must be safe under failure; ISO and regulator frameworks lag the technology.", whyItExists: ["Long-tail physical scenarios", "Lack of standards for general-purpose robots"], evidence: ["ISO 10218, ISO/TS 15066 industrial; humanoid standards still emerging"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-robotics-pick"], affectedArchitectures: ["vla", "imitation-learning"], affectedCompanies: ["Figure", "1X", "Apptronik"], firstOrderEffects: ["Confined deployment domains"], secondOrderEffects: ["Standards bodies developing humanoid frameworks"], whoIsTryingToSolveIt: ["IEEE / ISO working groups", "Vendor safety teams"], whatWouldBreakItOpen: ["Industry-wide humanoid safety standards"], whatStillDoesNotWork: ["Safety guarantees under distribution shift"], founderOpportunity: "Safety-evaluation harnesses and certification tooling for humanoids.", investorSignal: "Safety evidence is the gating factor for non-industrial humanoid deployment.", interviewQuestion: "What safety evidence would convince a regulator to allow humanoids in homes?" },
+  { id: "bn-mfg-ot-it", domainId: "manufacturing", title: "OT / IT integration and dirty data", bottleneckType: "data", severity: "high", maturityImpact: "slows adoption", confidence: "inferred", explanation: "Industrial sites have decades of legacy SCADA / MES; data is fragmented, noisy and locked behind OT-security boundaries.", whyItExists: ["Legacy systems", "OT-IT separation for security"], evidence: ["Industrial-AI vendor case studies emphasise integration cost"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-mfg-defect"], affectedArchitectures: ["cnn", "anomaly-detection"], affectedCompanies: ["Cognex", "Landing AI", "Augury", "Drishti"], firstOrderEffects: ["High services revenue per deployment"], secondOrderEffects: ["OT-secure on-prem AI vendors emerge"], whoIsTryingToSolveIt: ["Industrial OEMs (Siemens, Rockwell)"], whatWouldBreakItOpen: ["Standardised industrial data models (UNS / ISA-95)"], whatStillDoesNotWork: ["Cross-line data interoperability"], founderOpportunity: "OT-secure on-prem AI infrastructure.", investorSignal: "Industrial-AI vendors with deep OEM partnerships scale faster.", interviewQuestion: "What unifying data model would unlock manufacturing AI at scale?" },
+  { id: "bn-energy-grid-physics", domainId: "energy-grid", title: "Grid reliability and safety constraints", bottleneckType: "safety", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "AI helps inside operating envelopes; grid stability and N-1 reliability are physics + regulator domains.", whyItExists: ["Grid stability is non-linear", "Safety standards require deterministic control"], evidence: ["NERC reliability standards"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-energy-renew-forecast"], affectedArchitectures: ["ts-transformer", "rl-control"], affectedCompanies: ["Octopus Kraken", "AutoGrid"], firstOrderEffects: ["AI-as-co-pilot, not autopilot, in grid control rooms"], secondOrderEffects: ["Hybrid optimisation systems combining ML and OR"], whoIsTryingToSolveIt: ["Vendors with hybrid ML + OR systems"], whatWouldBreakItOpen: ["Verifiable safety wrappers around ML control"], whatStillDoesNotWork: ["Real-time AI control under N-1 contingencies"], founderOpportunity: "Verifiable safety wrappers and audit tools for AI control.", investorSignal: "Grid AI startups must show regulator-aware design from day one.", interviewQuestion: "What is the maximum scope of decisions you would let AI make autonomously on a grid?" },
+  { id: "bn-defence-accountability", domainId: "defence", title: "Accountability and laws of armed conflict", bottleneckType: "regulation", severity: "critical", maturityImpact: "Blocks production", confidence: "context", explanation: "LOAC requires humans in the loop for high-stakes operations; autonomous lethal AI is publicly contested.", whyItExists: ["LOAC compliance requires accountability", "International norms vary"], evidence: ["DoD Directive 3000.09"], sourceIds: ["needs-verification"], affectedUseCases: [], affectedArchitectures: ["vla", "rl-control"], affectedCompanies: ["Anduril", "Palantir", "Helsing", "Shield AI"], firstOrderEffects: ["AI confined to ISR / logistics / decision-support"], secondOrderEffects: ["Procurement processes favouring auditable systems"], whoIsTryingToSolveIt: ["Defence primes, regulators, NGOs"], whatWouldBreakItOpen: ["International norms / treaties on autonomous weapons"], whatStillDoesNotWork: ["Autonomous engagement at strategic scale"], founderOpportunity: "Auditable decision-support and ISR analytics; not autonomous lethal capability.", investorSignal: "Defence-AI vendors that publish governance frameworks are more durable.", interviewQuestion: "What is the single most important governance question for defence AI in the next decade?" },
+  { id: "bn-banking-mrm", domainId: "banking", title: "Model-risk-management constraints", bottleneckType: "regulation", severity: "high", maturityImpact: "increases cost", confidence: "sourced", explanation: "SR 11-7-style frameworks require auditability, explainability and stability; LLMs are hard to validate under those frameworks.", whyItExists: ["Regulator expectations", "Bank governance standards"], evidence: ["SR 11-7 (Federal Reserve / OCC)"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-fraud-realtime"], affectedArchitectures: ["llm", "gbdt"], affectedCompanies: ["all banks"], firstOrderEffects: ["LLM use confined to internal copilots"], secondOrderEffects: ["MRM tooling vendors emerge as a category"], whoIsTryingToSolveIt: ["Internal MRM teams", "Tooling startups"], whatWouldBreakItOpen: ["Regulator-blessed reference frameworks for LLM MRM"], whatStillDoesNotWork: ["Reproducible LLM behaviour under adversarial inputs"], founderOpportunity: "LLM-MRM tooling and audit infrastructure.", investorSignal: "Banks publicly disclosing MRM frameworks for LLMs are signalling readiness.", interviewQuestion: "What is the smallest regulator-blessed pattern for deploying LLMs into a regulated bank?" },
+  { id: "bn-radiology-shift", domainId: "radiology", title: "Hidden: scanner / vendor distribution shift", bottleneckType: "data", severity: "high", maturityImpact: "slows adoption", confidence: "inferred", explanation: "Models trained on one scanner manufacturer drift on another; subtle but production-blocking.", whyItExists: ["Hardware-specific noise patterns", "Different acquisition protocols"], evidence: ["External-validation studies in radiology AI literature"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-radiology-report-assist"], affectedArchitectures: ["cnn", "vit"], affectedCompanies: ["Aidoc", "Annalise.ai"], firstOrderEffects: ["Per-site fine-tuning required"], secondOrderEffects: ["Vendor preference for similar scanner mix"], whoIsTryingToSolveIt: ["Domain-adaptation researchers"], whatWouldBreakItOpen: ["Scanner-invariant pretraining"], whatStillDoesNotWork: ["Fully scanner-invariant models"], founderOpportunity: "Scanner-aware monitoring infrastructure.", investorSignal: "Track external-validation breadth as a quality marker.", interviewQuestion: "How much of an AUROC drop on external scanners is acceptable for clinical deployment?" },
+  { id: "bn-llm-eval-debt", domainId: "research-workflows", title: "Hidden: evaluation debt across LLM products", bottleneckType: "evaluation", severity: "critical", maturityImpact: "Blocks production", confidence: "inferred", explanation: "Most AI products ship without rigorous evaluation; LLM-as-judge is everywhere but unaudited.", whyItExists: ["Eval is unsexy", "Generation faster than measurement"], evidence: ["State of AI Engineering reports"], sourceIds: ["needs-verification"], affectedUseCases: ["uc-customer-service-deflection", "uc-legal-research"], affectedArchitectures: ["llm", "rag", "tool-agents"], affectedCompanies: ["all AI product companies"], firstOrderEffects: ["Quality regressions ship", "Trust erodes"], secondOrderEffects: ["Eval becomes the moat"], whoIsTryingToSolveIt: ["Braintrust, Galileo, Arize, LangSmith"], whatWouldBreakItOpen: ["Audit-grade eval marketplaces"], whatStillDoesNotWork: ["LLM-as-judge calibration"], founderOpportunity: "Vertical eval marketplaces (legal, medical).", investorSignal: "AI product companies investing in eval are more durable.", interviewQuestion: "Where does LLM-as-judge calibration fail most catastrophically?" },
+  { id: "bn-cyber-attack-surface", domainId: "cybersecurity", title: "AI itself as attack surface", bottleneckType: "safety", severity: "high", maturityImpact: "slows adoption", confidence: "inferred", explanation: "Indirect prompt injection, model extraction, data poisoning are now real threats; mature tooling barely exists.", whyItExists: ["Agents with tool access didn&rsquo;t exist at scale before"], evidence: ["MITRE ATLAS, OWASP LLM Top 10"], sourceIds: ["src-mitre-attack"], affectedUseCases: ["uc-cyber-soc"], affectedArchitectures: ["llm", "tool-agents"], affectedCompanies: ["all enterprises shipping agents"], firstOrderEffects: ["Conservative agent rollouts"], secondOrderEffects: ["AI-security category formation"], whoIsTryingToSolveIt: ["Lakera", "Robust Intelligence", "Hiddenlayer", "Protect AI"], whatWouldBreakItOpen: ["Standardised agent-security frameworks"], whatStillDoesNotWork: ["Defending against novel injection patterns"], founderOpportunity: "Agent-security middleware and audit.", investorSignal: "AI-security category will become board-level checkbox.", interviewQuestion: "What is the cybersecurity equivalent of OWASP for AI agents?" },
+  { id: "bn-climate-extremes", domainId: "climate-weather", title: "Evaluation on rare extremes", bottleneckType: "evaluation", severity: "high", maturityImpact: "limits scaling", confidence: "context", explanation: "Neural weather may match NWP on average and miss the events that matter most (hurricanes, atmospheric rivers).", whyItExists: ["Rare events are by definition under-represented in training data"], evidence: ["Weather research community discussions"], sourceIds: ["paper-graphcast"], affectedUseCases: ["uc-weather-medium-range"], affectedArchitectures: ["neural-operators", "ts-transformer"], affectedCompanies: ["Google DeepMind", "NVIDIA Earth-2", "Tomorrow.io"], firstOrderEffects: ["NWP retains operational role"], secondOrderEffects: ["Hybrid systems combining ML + physics"], whoIsTryingToSolveIt: ["Operational forecasters (ECMWF AIFS)", "Vendors building hybrid stacks"], whatWouldBreakItOpen: ["Extreme-event-aware training and evaluation"], whatStillDoesNotWork: ["Reliable hurricane intensity forecasting"], founderOpportunity: "Specialty regional / vertical weather products.", investorSignal: "Vertical weather AI may outperform horizontal.", interviewQuestion: "Will neural weather models ever fully replace NWP?" },
+  { id: "bn-autonomous-vehicle-tail", domainId: "autonomous-vehicles", title: "Long-tail safety", bottleneckType: "safety", severity: "critical", maturityImpact: "Blocks production", confidence: "sourced", explanation: "Robotaxis run in narrow ODDs because the long tail of edge cases is enormous.", whyItExists: ["Open-world physics", "Human-driver interactions are unpredictable"], evidence: ["NHTSA disclosures, Cruise pause"], sourceIds: ["needs-verification"], affectedUseCases: [], affectedArchitectures: ["vit", "imitation-learning", "world-models"], affectedCompanies: ["Waymo", "Tesla FSD", "Mobileye"], firstOrderEffects: ["Slow ODD expansion"], secondOrderEffects: ["Specialty autonomy in narrow domains wins"], whoIsTryingToSolveIt: ["Robotaxi operators", "ADAS providers"], whatWouldBreakItOpen: ["Foundation-model-class generalisation across edge cases"], whatStillDoesNotWork: ["Reliable urban robotaxis at scale globally"], founderOpportunity: "Specialty autonomy (mining, warehouses, logistics).", investorSignal: "Watch for ODD expansion cadence as the truth signal.", interviewQuestion: "What ODD expansion rate would you take as proof robotaxis are scaling?" },
+  { id: "bn-government-procurement", domainId: "government-services", title: "Procurement and certification", bottleneckType: "distribution", severity: "high", maturityImpact: "slows adoption", confidence: "context", explanation: "Federal / state buyers want AI but procurement is gated by FedRAMP / IL-class certification.", whyItExists: ["Risk-averse public-sector culture", "Multi-stakeholder procurement"], evidence: ["FedRAMP authorisation timelines"], sourceIds: ["needs-verification"], affectedUseCases: [], affectedArchitectures: ["llm", "rag"], affectedCompanies: ["Palantir", "Anduril", "Microsoft", "Anthropic / OpenAI government editions"], firstOrderEffects: ["Long sales cycles"], secondOrderEffects: ["Defensible incumbency once authorised"], whoIsTryingToSolveIt: ["GSA, DoD CIO offices", "Hyperscaler GovCloud"], whatWouldBreakItOpen: ["Streamlined FedRAMP for AI"], whatStillDoesNotWork: ["Cross-agency interoperability"], founderOpportunity: "FedRAMP-ready vertical tools.", investorSignal: "FedRAMP authorisation is a moat.", interviewQuestion: "How would you re-design FedRAMP for AI?" }
+];
+
+/* ============================================
+   COMPANY_AI_STRATEGIES — How the giants play the game
+   ============================================
+   Concise strategy profiles for the firms that shape the AI economy.
+   Architecture claims are best-effort; if a specific internal technique
+   is not publicly disclosed, it is marked needsVerification.
+   ============================================ */
+var COMPANY_AI_STRATEGIES = [
+  { id: "openai", company: "OpenAI", category: "Frontier model lab", thesis: "Scaling laws + post-training (RLHF + RLAIF) + o-series reasoning + product distribution build the most-used AI platform.", confidence: "context", aiProducts: ["GPT-4 / 4o / GPT-5-class", "ChatGPT", "DALL-E", "Sora", "Operator (agent)", "Whisper", "Codex"], architecturesUsed: [{architectureId: "llm", usedFor: "general-purpose models", confidence: "sourced", evidence: "Public papers"}, {architectureId: "multimodal-llm", usedFor: "GPT-4o / GPT-5-class", confidence: "sourced", evidence: "Model cards"}, {architectureId: "rl-control", usedFor: "RLHF + reasoning post-training", confidence: "sourced", evidence: "InstructGPT paper"}, {architectureId: "diffusion", usedFor: "DALL-E / Sora", confidence: "sourced", evidence: "Technical reports"}], dataAdvantage: "Deep RLHF data, ChatGPT interaction telemetry, publisher partnerships.", computeStack: "Microsoft Azure primary; reportedly evaluating custom silicon", deploymentSurface: "API + ChatGPT consumer + Microsoft Copilot + Apple Intelligence", businessAdvantage: "Largest paid-AI distribution today; brand; release cadence", revenueLogic: "API + ChatGPT subscriptions + enterprise; gross-margin pressure from frontier compute", comparisonCompanies: ["Anthropic", "Google DeepMind", "xAI", "Meta AI"], biggestOpenQuestions: ["Whether scaling laws keep paying", "Custom silicon strategy", "Agentic product reliability", "Microsoft strategic alignment"], sources: ["needs-verification"] },
+  { id: "anthropic", company: "Anthropic", category: "Frontier model lab", thesis: "Safety-grounded scaling + interpretability + Constitutional AI as differentiation; Claude as enterprise-grade frontier model.", confidence: "context", aiProducts: ["Claude family", "Claude Code", "Claude API", "Claude on AWS Bedrock + Google Vertex"], architecturesUsed: [{architectureId: "llm", usedFor: "Claude family", confidence: "sourced", evidence: "Public model cards"}, {architectureId: "rl-control", usedFor: "RLHF + Constitutional AI", confidence: "sourced", evidence: "Public papers"}, {architectureId: "tool-agents", usedFor: "Claude Code, computer use", confidence: "sourced", evidence: "Product launches"}], dataAdvantage: "Curated and licenced datasets; strong RLHF data; Constitutional AI process", computeStack: "AWS Trainium / Inferentia + Google TPU partnerships; multi-cloud", deploymentSurface: "API + AWS Bedrock + Google Vertex + Slack / Notion + IDE integrations", businessAdvantage: "Enterprise trust; safety brand; strong coding model", revenueLogic: "Enterprise + API + consumer (Claude.ai)", comparisonCompanies: ["OpenAI", "Google DeepMind", "xAI"], biggestOpenQuestions: ["Scale relative to OpenAI", "Constitutional AI scaling limits", "Cloud-partner dependencies"], sources: ["needs-verification"] },
+  { id: "google-deepmind", company: "Google DeepMind", category: "Frontier model lab + research", thesis: "Verticalised research (AlphaFold, AlphaZero, GraphCast) + Gemini frontier scaling + Google product integration.", confidence: "context", aiProducts: ["Gemini family", "AlphaFold", "AlphaZero", "GraphCast", "Imagen / Veo", "AlphaMissense", "AlphaProof / AlphaGeometry", "Gemini Robotics"], architecturesUsed: [{architectureId: "llm", usedFor: "Gemini", confidence: "sourced", evidence: "Public model cards"}, {architectureId: "diffusion", usedFor: "Imagen, Veo", confidence: "sourced", evidence: "Public papers"}, {architectureId: "neural-operators", usedFor: "GraphCast", confidence: "sourced", evidence: "Science 2023"}, {architectureId: "diffusion-bio", usedFor: "AlphaFold 3", confidence: "sourced", evidence: "Nature 2024"}], dataAdvantage: "YouTube / Search / Maps / Android telemetry; proprietary scientific datasets", computeStack: "Google TPU (in-house) + GPU; deep co-design", deploymentSurface: "Search AI Overviews, Workspace, Vertex AI, Pixel, Android, Chrome, YouTube, Waymo", businessAdvantage: "Search distribution; in-house silicon; deep research bench", revenueLogic: "Ads + cloud + hardware", comparisonCompanies: ["OpenAI", "Anthropic", "Meta AI", "Microsoft"], biggestOpenQuestions: ["Search-revenue cannibalisation by AI Overviews", "Gemini quality cycles", "TPU vs GPU long-term"], sources: ["needs-verification"] },
+  { id: "xai", company: "xAI", category: "Frontier model lab", thesis: "Compute-first scaling + X distribution + Tesla data adjacencies.", confidence: "inferred", aiProducts: ["Grok models", "Colossus supercomputer"], architecturesUsed: [{architectureId: "llm", usedFor: "Grok family", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "X social-graph data; possible Tesla telemetry channels (verify)", computeStack: "Colossus cluster (publicly disclosed scale; specifics to be verified)", deploymentSurface: "X integration; standalone Grok app and API", businessAdvantage: "X distribution; founder relationships across XAI / Tesla / SpaceX", revenueLogic: "Subscription (X Premium tiers) + API", comparisonCompanies: ["OpenAI", "Anthropic", "Google DeepMind"], biggestOpenQuestions: ["Grok performance vs frontier", "Tesla data integration depth", "Capital efficiency"], sources: ["needs-verification"] },
+  { id: "meta-ai", company: "Meta AI / FAIR", category: "Frontier model lab + open-source", thesis: "Open-weight Llama + global consumer distribution + research excellence in PyTorch / SAM / DINO.", confidence: "context", aiProducts: ["Llama 3.x / 4 (per roadmap)", "Segment Anything", "PyTorch", "Meta AI assistant", "AudioCraft", "Ego4D"], architecturesUsed: [{architectureId: "llm", usedFor: "Llama", confidence: "sourced", evidence: "Public papers"}, {architectureId: "vit", usedFor: "DINO / SAM", confidence: "sourced", evidence: "Public papers"}, {architectureId: "segmentation-models", usedFor: "SAM / SAM 2", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Facebook / Instagram / WhatsApp scale data; Ego4D-style video", computeStack: "MTIA in-house silicon + NVIDIA GPUs", deploymentSurface: "WhatsApp, Instagram, Messenger, Ray-Ban Meta, Quest", businessAdvantage: "Open-weight ecosystem; consumer distribution; in-house silicon path", revenueLogic: "Ads + hardware + future API", comparisonCompanies: ["OpenAI", "Google DeepMind", "Mistral", "DeepSeek"], biggestOpenQuestions: ["Open-weight commercial pull", "MTIA timelines", "AR / consumer AI revenue"], sources: ["needs-verification"] },
+  { id: "mistral", company: "Mistral AI", category: "Frontier model lab (open-weight + commercial)", thesis: "European open-weight champion + Mixture-of-Experts + sovereign-friendly deployment.", confidence: "inferred", aiProducts: ["Mistral Large", "Mixtral", "Codestral", "Le Chat"], architecturesUsed: [{architectureId: "llm", usedFor: "Mistral / Mixtral", confidence: "sourced", evidence: "Public model cards"}], dataAdvantage: "Curated multilingual data; European-friendly licencing", computeStack: "GPU clusters; sovereign-infra partnerships", deploymentSurface: "API + on-prem / sovereign + cloud channels", businessAdvantage: "European sovereign-AI brand; open-weight credibility", revenueLogic: "API + enterprise + government", comparisonCompanies: ["OpenAI", "Anthropic", "Cohere", "Meta Llama"], biggestOpenQuestions: ["Compute capital relative to US labs", "EU AI Act implications"], sources: ["needs-verification"] },
+  { id: "deepseek", company: "DeepSeek", category: "Frontier model lab (open-weight, China-origin)", thesis: "Compute-efficient training + open-weight releases that move the global frontier without US-class compute.", confidence: "inferred", aiProducts: ["DeepSeek-V3", "DeepSeek-R1"], architecturesUsed: [{architectureId: "llm", usedFor: "DeepSeek-V3 / R1", confidence: "sourced", evidence: "Public technical reports"}], dataAdvantage: "Curated training data; engineering efficiency", computeStack: "H800 / H100-class clusters (verify specifics)", deploymentSurface: "Open-weight + API", businessAdvantage: "Open-weight credibility; engineering brand", revenueLogic: "Mostly research-driven; commercial roadmap unclear", comparisonCompanies: ["Meta Llama", "Mistral", "Qwen"], biggestOpenQuestions: ["Long-term commercial roadmap", "China-export-control implications"], sources: ["needs-verification"] },
+  { id: "alibaba-qwen", company: "Alibaba Qwen", category: "Frontier model lab (open-weight, China)", thesis: "Multi-language + large open-weight family + Alibaba Cloud distribution.", confidence: "inferred", aiProducts: ["Qwen 2 / 2.5 / 3 series", "Qwen-Coder", "Qwen-VL", "Tongyi platform"], architecturesUsed: [{architectureId: "llm", usedFor: "Qwen series", confidence: "sourced", evidence: "Hugging Face releases"}, {architectureId: "multimodal-llm", usedFor: "Qwen-VL", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Chinese / multilingual web; e-commerce data", computeStack: "Alibaba Cloud (Hanguang AI chips + GPU mix)", deploymentSurface: "Alibaba Cloud + open-weight", businessAdvantage: "China / Asia distribution; multilingual depth", revenueLogic: "Cloud + enterprise", comparisonCompanies: ["DeepSeek", "Mistral", "Meta Llama"], biggestOpenQuestions: ["Export-control constraints", "Global commercial penetration"], sources: ["needs-verification"] },
+  { id: "nvidia", company: "NVIDIA", category: "AI compute platform", thesis: "GPU + CUDA + NVLink + InfiniBand + Mellanox + system designs (NVL72) + software (TensorRT, NIM, Run:AI) make the dominant AI compute substrate.", confidence: "sourced", aiProducts: ["H100 / H200 / B100 / B200 / GB200 NVL72 / GB300 / Rubin", "CUDA, cuDNN, NCCL", "TensorRT, Triton, NIM", "Omniverse, Isaac, Cosmos", "BioNeMo, CUDA-Q"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer training / inference", confidence: "sourced", evidence: "Public NVIDIA + customer disclosures"}], dataAdvantage: "Cross-customer telemetry; CUDA developer ecosystem", computeStack: "Own silicon (Blackwell, Rubin); CoWoS at TSMC; Quantum InfiniBand, Spectrum-X", deploymentSurface: "Cloud + sovereign + enterprise", businessAdvantage: "Hardware + software + networking + system design integration; CUDA lock-in", revenueLogic: "Hardware + software + systems", comparisonCompanies: ["AMD", "Google TPU", "AWS Trainium", "Microsoft Maia", "Cerebras", "Groq"], biggestOpenQuestions: ["Hyperscaler ASIC erosion of margin", "CUDA vs Triton vs ROCm long-term", "Physical AI revenue contribution"], sources: ["needs-verification"] },
+  { id: "google-tpu", company: "Google TPU", category: "AI compute platform (in-house)", thesis: "Vertically integrated TPU + Google software stack avoids NVIDIA tax; co-designed with Gemini.", confidence: "context", aiProducts: ["TPU v4 / v5e / v5p / Trillium", "Vertex AI Cloud TPU"], architecturesUsed: [{architectureId: "llm", usedFor: "Gemini training", confidence: "sourced", evidence: "Public Google statements"}], dataAdvantage: "Internal Google workloads + Vertex customers", computeStack: "TPU + Borg + Pathways", deploymentSurface: "Google Cloud Vertex AI + internal Google workloads", businessAdvantage: "Workload-specific optimisation; cost advantage on internal use", revenueLogic: "Google Cloud; internal cost savings", comparisonCompanies: ["NVIDIA", "AWS Trainium", "AMD", "Microsoft Maia"], biggestOpenQuestions: ["External TPU adoption rate", "Software ecosystem vs CUDA"], sources: ["needs-verification"] },
+  { id: "aws-silicon", company: "AWS (Trainium / Inferentia)", category: "AI compute platform (hyperscaler in-house)", thesis: "Cost reduction on internal workloads + customer pull for Trainium2-class compute.", confidence: "context", aiProducts: ["Trainium2", "Inferentia2", "Graviton (CPU)"], architecturesUsed: [{architectureId: "llm", usedFor: "Anthropic + others training on Trainium2", confidence: "sourced", evidence: "Anthropic public partnership announcements"}], dataAdvantage: "AWS customer base", computeStack: "Trainium + Neuron SDK", deploymentSurface: "AWS Bedrock + EC2", businessAdvantage: "Cost vs NVIDIA; Anthropic partnership pulls volume", revenueLogic: "AWS cloud margin", comparisonCompanies: ["NVIDIA", "Google TPU", "Microsoft Maia"], biggestOpenQuestions: ["Trainium2 frontier adoption", "Long-term Anthropic alignment"], sources: ["needs-verification"] },
+  { id: "microsoft-maia", company: "Microsoft Maia / Cobalt", category: "AI compute platform (hyperscaler in-house)", thesis: "Vertical AI stack inside Azure that complements OpenAI partnership and reduces NVIDIA dependency over time.", confidence: "inferred", aiProducts: ["Maia 100", "Cobalt 100"], architecturesUsed: [{architectureId: "llm", usedFor: "Internal workloads + Azure AI", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "Azure + M365 telemetry", computeStack: "Maia + NVIDIA GPU mix", deploymentSurface: "Azure", businessAdvantage: "Bundling with M365 / Azure", revenueLogic: "Cloud margin", comparisonCompanies: ["NVIDIA", "Google TPU", "AWS Trainium"], biggestOpenQuestions: ["Maia frontier-training capability", "OpenAI strategic alignment"], sources: ["needs-verification"] },
+  { id: "amd", company: "AMD", category: "AI compute platform", thesis: "MI300 / MI325 / MI355 + ROCm software + GPU networking; closing the gap with NVIDIA on memory bandwidth + cost.", confidence: "context", aiProducts: ["MI300X / MI325X / MI355", "ROCm"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer training + inference", confidence: "sourced", evidence: "Public customer announcements"}], dataAdvantage: "Customer telemetry across hyperscaler base", computeStack: "Own silicon + co-packaged-optics roadmap", deploymentSurface: "Hyperscaler + enterprise", businessAdvantage: "Cost / memory bandwidth advantage on selected workloads", revenueLogic: "Data centre GPU sales", comparisonCompanies: ["NVIDIA", "Google TPU", "AWS Trainium"], biggestOpenQuestions: ["ROCm vs CUDA software gap", "Frontier-cluster credibility"], sources: ["needs-verification"] },
+  { id: "cerebras", company: "Cerebras", category: "AI compute platform (specialty)", thesis: "Wafer-scale CS-3 architecture + extreme inference speed + cloud service.", confidence: "context", aiProducts: ["CS-3", "Cerebras Cloud"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer inference at speed", confidence: "sourced", evidence: "Public benchmarks"}], dataAdvantage: "Specialty compute customer base", computeStack: "Wafer-scale chip + cluster scale via Memory-X / Swarm-X", deploymentSurface: "Cerebras Cloud + on-prem", businessAdvantage: "Extreme inference latency for specific workloads", revenueLogic: "Hardware + cloud", comparisonCompanies: ["NVIDIA", "Groq", "SambaNova"], biggestOpenQuestions: ["Frontier training viability", "Long-term cost per token"], sources: ["needs-verification"] },
+  { id: "groq", company: "Groq", category: "AI compute platform (inference specialty)", thesis: "LPU architecture + extreme inference latency + GroqCloud as developer-friendly alternative.", confidence: "context", aiProducts: ["LPU silicon", "GroqCloud"], architecturesUsed: [{architectureId: "llm", usedFor: "Inference of open-weight LLMs at high throughput", confidence: "sourced", evidence: "Public benchmarks"}], dataAdvantage: "Cloud telemetry across customer base", computeStack: "LPU silicon + custom interconnect", deploymentSurface: "GroqCloud + sovereign / on-prem", businessAdvantage: "Low-latency inference; developer-friendly pricing", revenueLogic: "Cloud subscription / per-token", comparisonCompanies: ["Cerebras", "SambaNova", "NVIDIA inference"], biggestOpenQuestions: ["Sustainability of pricing", "Frontier model support cadence"], sources: ["needs-verification"] },
+  { id: "tesla-ai", company: "Tesla", category: "Automotive / Robotics / AI Infrastructure", thesis: "Vehicles, robots and autonomy as data-generating embodied-AI platforms; in-house compute (Dojo) + frontier vision models.", confidence: "inferred", aiProducts: ["FSD", "Optimus", "Autopilot", "Dojo"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception", confidence: "inferred", evidence: "Tesla AI Day talks"}, {architectureId: "imitation-learning", usedFor: "Driving policy (end-to-end)", confidence: "needsVerification", evidence: "Verify via Tesla AI Day"}, {architectureId: "vla", usedFor: "Optimus locomotion / manipulation", confidence: "inferred", evidence: "Optimus public demos"}], dataAdvantage: "Massive fleet telemetry; growing humanoid trajectory data", computeStack: "Dojo D1 + NVIDIA GPUs; FSD on-vehicle", deploymentSurface: "Vehicles + Optimus + Tesla Cloud", businessAdvantage: "Embodied data scale unmatched in industry; vertical integration", revenueLogic: "Vehicle sales + FSD + future Optimus + future robotaxi", comparisonCompanies: ["Waymo", "Cruise", "Mobileye", "Wayve", "Figure", "1X"], biggestOpenQuestions: ["FSD true safety vs human baseline", "Optimus commercial roadmap", "Dojo vs NVIDIA economics"], sources: ["needs-verification"] },
+  { id: "coreweave", company: "CoreWeave", category: "GPU cloud (neocloud)", thesis: "GPU-only specialty cloud with bare-metal + InfiniBand for AI training and inference; preferred capacity for frontier labs.", confidence: "context", aiProducts: ["GPU IaaS"], architecturesUsed: [], dataAdvantage: "Multi-customer GPU utilisation telemetry", computeStack: "NVIDIA GPUs + InfiniBand + Spectrum-X", deploymentSurface: "Direct + cloud partner", businessAdvantage: "First-at-scale on new NVIDIA platforms; bare-metal preferred by frontier labs", revenueLogic: "GPU IaaS", comparisonCompanies: ["AWS", "Azure", "GCP", "Lambda", "Crusoe"], biggestOpenQuestions: ["Long-term hyperscaler competition", "Capital efficiency"], sources: ["needs-verification"] },
+  { id: "azure", company: "Microsoft Azure", category: "Hyperscaler cloud", thesis: "OpenAI exclusivity + Maia in-house + M365 distribution + GB200/GB300 first-at-scale deployments.", confidence: "sourced", aiProducts: ["Azure OpenAI Service", "GitHub Copilot", "Microsoft Copilot", "Azure AI Studio"], architecturesUsed: [], dataAdvantage: "M365 + LinkedIn + GitHub + enterprise data", computeStack: "NVIDIA + Maia + Cobalt", deploymentSurface: "Azure + M365 + Windows", businessAdvantage: "Distribution + OpenAI partnership + enterprise", revenueLogic: "Cloud + M365 + Copilot", comparisonCompanies: ["AWS", "GCP", "Oracle"], biggestOpenQuestions: ["OpenAI long-term", "Maia frontier-training viability"], sources: ["needs-verification"] },
+  { id: "waymo", company: "Waymo", category: "Autonomous vehicles", thesis: "Operational robotaxi service in narrow ODDs (Phoenix, SF, LA, Austin) + multi-modal sensor stack + custom compute.", confidence: "sourced", aiProducts: ["Waymo Driver", "Waymo One"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception (BEV / occupancy)", confidence: "inferred", evidence: "Waymo blog and papers"}, {architectureId: "imitation-learning", usedFor: "Planning / driving", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "Decade-long Phoenix data + multi-city deployment", computeStack: "Custom on-vehicle + Google TPU for training", deploymentSurface: "Waymo One in select cities", businessAdvantage: "Operating-domain depth; Alphabet capital", revenueLogic: "Per-ride fare; long-term licensing", comparisonCompanies: ["Cruise (paused)", "Tesla FSD", "Zoox", "Pony.ai", "Wayve"], biggestOpenQuestions: ["ODD expansion pace", "Unit economics at scale", "Uber integration"], sources: ["needs-verification"] },
+  { id: "figure", company: "Figure AI", category: "Humanoid robotics", thesis: "Commercial humanoids for industrial then consumer; partnerships with BMW etc.; in-house foundation model (Helix).", confidence: "context", aiProducts: ["Figure 02", "Helix"], architecturesUsed: [{architectureId: "vla", usedFor: "Helix policy", confidence: "inferred", evidence: "Public demos"}], dataAdvantage: "Customer-deployment telemetry", computeStack: "On-robot compute + cloud training", deploymentSurface: "Industrial customers", businessAdvantage: "First-mover in commercial humanoid deployment", revenueLogic: "Hardware sales / leases; long-term services", comparisonCompanies: ["1X", "Apptronik", "Tesla Optimus", "Boston Dynamics", "Sanctuary AI"], biggestOpenQuestions: ["Reliability at scale", "Unit economics", "Foundation-model generalisation"], sources: ["needs-verification"] },
+  { id: "physical-intelligence", company: "Physical Intelligence (Pi)", category: "Robotics foundation models", thesis: "Generalist robot foundation models on diverse embodiments; sell models / services rather than hardware.", confidence: "context", aiProducts: ["&pi;0", "&pi;0.5"], architecturesUsed: [{architectureId: "vla", usedFor: "Generalist policies", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Cross-embodiment data collection", computeStack: "GPU clusters", deploymentSurface: "Research + commercial robotics partnerships", businessAdvantage: "Cross-embodiment generalisation lead", revenueLogic: "Model licensing / services", comparisonCompanies: ["Skild AI", "Covariant", "Boston Dynamics AI Institute"], biggestOpenQuestions: ["Commercial revenue path", "Embodiment generalisation limits"], sources: ["needs-verification"] },
+  { id: "isomorphic-labs", company: "Isomorphic Labs", category: "AI drug discovery", thesis: "AlphaFold-class structure prediction + generative biology + pharma partnerships.", confidence: "context", aiProducts: ["AlphaFold platform internal use", "Drug-discovery platform"], architecturesUsed: [{architectureId: "diffusion-bio", usedFor: "Structure prediction / design", confidence: "sourced", evidence: "Nature 2024"}, {architectureId: "protein-lm", usedFor: "Sequence reasoning", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Alphabet research ecosystem", computeStack: "Google Cloud + TPU", deploymentSurface: "Pharma partnerships (Lilly, Novartis)", businessAdvantage: "DeepMind heritage; AlphaFold", revenueLogic: "Multi-year pharma partnerships", comparisonCompanies: ["Recursion", "Insilico Medicine", "Generate Biomedicines"], biggestOpenQuestions: ["Clinical-translation evidence", "Capital independence"], sources: ["needs-verification"] },
+  { id: "abridge", company: "Abridge", category: "Clinical documentation", thesis: "Ambient clinical scribes deeply integrated with Epic / Cerner; high-velocity health-system deployment.", confidence: "context", aiProducts: ["Abridge clinical scribe"], architecturesUsed: [{architectureId: "asr-tts", usedFor: "Speech recognition", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "domain-fm", usedFor: "Clinical-note generation", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Health-system encounter data", computeStack: "Cloud + on-prem options", deploymentSurface: "Health-system EHR integration", businessAdvantage: "Specialty integration depth + clinician trust", revenueLogic: "Per-clinician seat licence", comparisonCompanies: ["Microsoft / Nuance DAX", "Augmedix", "Suki", "DeepScribe"], biggestOpenQuestions: ["Clinician-time-savings durability", "AI procurement consolidation"], sources: ["needs-verification"] },
+  { id: "palantir", company: "Palantir", category: "Government / enterprise analytics", thesis: "Foundry + AIP for ontologies and operational AI; deep government and enterprise relationships.", confidence: "context", aiProducts: ["Foundry", "Apollo", "AIP"], architecturesUsed: [{architectureId: "rag", usedFor: "Ontology-grounded LLM responses", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "tool-agents", usedFor: "Operational workflows", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Customer ontologies + government integrations", computeStack: "Cloud + on-prem", deploymentSurface: "Government, defence, large enterprise", businessAdvantage: "Ontology depth + procurement know-how", revenueLogic: "Multi-year contracts", comparisonCompanies: ["BAE Systems", "Booz Allen", "C3 AI"], biggestOpenQuestions: ["Mid-market expansion", "AIP differentiation vs hyperscaler clouds"], sources: ["needs-verification"] },
+  { id: "stripe", company: "Stripe", category: "Payments / fraud", thesis: "Real-time fraud (Radar) + billing + AI agents for commerce; deep payments-graph data.", confidence: "context", aiProducts: ["Radar", "Stripe Tax", "Stripe Sigma", "Stripe Issuing"], architecturesUsed: [{architectureId: "gbdt", usedFor: "Real-time fraud scoring", confidence: "sourced", evidence: "Public Stripe engineering posts"}, {architectureId: "graph-threat", usedFor: "Network fraud", confidence: "sourced", evidence: "Public Stripe engineering posts"}], dataAdvantage: "Payments graph at internet scale", computeStack: "Cloud + custom infrastructure", deploymentSurface: "Stripe API / dashboard", businessAdvantage: "Payments graph + developer experience", revenueLogic: "Per-transaction fee + value-added services", comparisonCompanies: ["Adyen", "PayPal", "FeatureSpace (Visa)"], biggestOpenQuestions: ["LLM agentic commerce", "Long-term Visa / Mastercard relationship"], sources: ["needs-verification"] },
+  { id: "github-copilot", company: "GitHub Copilot (Microsoft)", category: "Developer tools", thesis: "Default coding copilot inside the dominant code host; multi-model backend.", confidence: "sourced", aiProducts: ["Copilot Individual / Business / Enterprise", "Copilot Workspace"], architecturesUsed: [{architectureId: "domain-fm", usedFor: "Code completion", confidence: "sourced", evidence: "Public OpenAI / Microsoft announcements"}, {architectureId: "tool-agents", usedFor: "Copilot Workspace agentic flows", confidence: "sourced", evidence: "Product launches"}], dataAdvantage: "GitHub repositories + developer telemetry", computeStack: "Azure", deploymentSurface: "GitHub + IDE integrations", businessAdvantage: "Distribution; default placement", revenueLogic: "Seat-based subscriptions", comparisonCompanies: ["Cursor / Anysphere", "Anthropic Claude Code", "Codeium / Windsurf", "JetBrains AI"], biggestOpenQuestions: ["Cursor competition", "Agentic reliability", "OpenAI vs Anthropic backend mix"], sources: ["needs-verification"] },
+  { id: "cursor", company: "Cursor (Anysphere)", category: "Developer tools", thesis: "Best-in-class developer AI experience built around frontier models; agent depth.", confidence: "inferred", aiProducts: ["Cursor IDE", "Cursor Composer", "Cursor Agents"], architecturesUsed: [{architectureId: "tool-agents", usedFor: "Agentic editing", confidence: "inferred", evidence: "Public product launches"}], dataAdvantage: "Developer-session telemetry", computeStack: "Multi-model backend", deploymentSurface: "Cursor IDE", businessAdvantage: "Developer love; rapid iteration", revenueLogic: "Seat subscriptions", comparisonCompanies: ["GitHub Copilot", "Claude Code", "Replit Agent"], biggestOpenQuestions: ["Hyperscaler bundling risk", "Long-term backend strategy"], sources: ["needs-verification"] },
+  { id: "harvey", company: "Harvey", category: "Legal AI", thesis: "Default legal AI for large law firms; deep RAG over client + firm data; partnerships with Big Law.", confidence: "context", aiProducts: ["Harvey Assistant", "Harvey Vault", "Harvey Workflows"], architecturesUsed: [{architectureId: "rag", usedFor: "Legal research grounding", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Big-law deployments", computeStack: "Cloud (Azure / OpenAI)", deploymentSurface: "Direct to law firms", businessAdvantage: "Brand + Big Law relationships", revenueLogic: "Seat / firm subscriptions", comparisonCompanies: ["Lexis+ AI", "Casetext (Thomson Reuters)", "Robin AI", "Spellbook"], biggestOpenQuestions: ["Mid-market expansion", "Vendor lock-in vs OpenAI dependence"], sources: ["needs-verification"] },
+  { id: "glean", company: "Glean", category: "Enterprise search / productivity", thesis: "Permission-aware enterprise RAG + workplace agents; default enterprise-knowledge surface.", confidence: "context", aiProducts: ["Glean Assistant", "Glean Search", "Glean Apps"], architecturesUsed: [{architectureId: "rag", usedFor: "Enterprise search", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "embeddings", usedFor: "Semantic retrieval", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Permissioned enterprise corpus", computeStack: "Cloud (multi-cloud)", deploymentSurface: "Enterprise SaaS", businessAdvantage: "Permissioning depth; data hygiene", revenueLogic: "Per-seat enterprise subscription", comparisonCompanies: ["Microsoft Copilot for M365", "Notion AI", "Slack AI"], biggestOpenQuestions: ["Hyperscaler bundling risk", "Long-term defensibility"], sources: ["needs-verification"] },
+  { id: "tiktok-bytedance", company: "TikTok / ByteDance", category: "Consumer recommendation", thesis: "Recsys depth at planetary scale; Doubao consumer LLM + creator-tools strategy.", confidence: "context", aiProducts: ["TikTok recsys", "Doubao", "Coze"], architecturesUsed: [{architectureId: "recsys", usedFor: "TikTok feed", confidence: "sourced", evidence: "Public engineering posts"}, {architectureId: "llm", usedFor: "Doubao", confidence: "sourced", evidence: "Public model releases"}], dataAdvantage: "Massive engagement telemetry", computeStack: "China + global cloud mix", deploymentSurface: "TikTok + Douyin + China consumer apps", businessAdvantage: "Recsys + creator network", revenueLogic: "Ads + e-commerce", comparisonCompanies: ["Meta", "YouTube", "Snap", "Kuaishou"], biggestOpenQuestions: ["US regulatory pressure", "Doubao global penetration"], sources: ["needs-verification"] },
+  { id: "elevenlabs", company: "ElevenLabs", category: "Audio / voice AI", thesis: "Best-in-class voice cloning + dubbing + creator tools; expanding into agents.", confidence: "context", aiProducts: ["Voice generation", "Voice cloning", "Conversational AI", "Dubbing"], architecturesUsed: [{architectureId: "asr-tts", usedFor: "TTS / speech synthesis", confidence: "sourced", evidence: "Public model releases"}], dataAdvantage: "Voice-data scale + customer telemetry", computeStack: "Cloud GPU", deploymentSurface: "Web + API + creator tools", businessAdvantage: "Quality + developer ecosystem", revenueLogic: "Subscription + API", comparisonCompanies: ["OpenAI Voice", "Suno", "Udio", "Google Audio"], biggestOpenQuestions: ["Rights / consent governance", "Hyperscaler audio competition"], sources: ["needs-verification"] },
+  { id: "perplexity", company: "Perplexity", category: "Consumer search / agent", thesis: "AI-native search with citations + agentic browser + sovereign distribution partnerships.", confidence: "context", aiProducts: ["Perplexity Search", "Perplexity Pro", "Comet"], architecturesUsed: [{architectureId: "rag", usedFor: "Citation-grounded search", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "tool-agents", usedFor: "Agentic browsing", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Search query telemetry", computeStack: "Multi-cloud frontier-model backends", deploymentSurface: "Web + iOS / Android + browser", businessAdvantage: "Citation-grounded brand + agentic vision", revenueLogic: "Subscription + API + future ads", comparisonCompanies: ["Google Gemini Search", "OpenAI Search", "Anthropic web"], biggestOpenQuestions: ["Search-revenue model", "Frontier-model dependency"], sources: ["needs-verification"] }
+];
+
+/* ============================================
+   GREAT_AI_QUESTIONS — Mastery-grade question bank
+   ============================================
+   Not a FAQ. A &lsquo;mastery question system&rsquo; for founders, investors,
+   researchers and operators. Each question carries why it matters,
+   what a great answer covers, follow-ups, and pointers.
+   ============================================ */
+var GREAT_AI_QUESTIONS = [
+  /* ── A. Core intelligence / math of AI ── */
+  { id: "q-scaling-laws-hold-break", question: "Where do scaling laws still hold, and where do they break?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Scaling laws are the most actionable empirical claim in AI; their durability decides capex strategy.", whatAGreatAnswerShouldCover: ["Distinction between data-, compute- and parameter-scaling", "Domains where scaling has persisted (language, code, vision)", "Domains where it visibly bends (math reasoning, embodied control)", "Role of synthetic data and self-improvement"], followUps: ["What signals would convince you that scaling has broken in language?"], relatedDomains: ["software-engineering", "robotics", "drug-discovery"], relatedArchitectures: ["llm", "vla"], relatedCompanies: ["openai", "anthropic", "google-deepmind"], relatedPapers: ["paper-gpt3", "paper-instructgpt"], sourceIds: [], confidence: "context" },
+  { id: "q-loss-function-game", question: "What is the actual loss function being optimised inside a frontier-model lab?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "&lsquo;Next-token loss&rsquo; is the textbook answer; the real loss is a stack of pre-training, post-training, RLHF, RLAIF, RM, internal evals, and product-feedback signals.", whatAGreatAnswerShouldCover: ["Pre-training loss + scaling laws", "Post-training: SFT + DPO + RLHF + RLAIF", "Reward modelling and reward hacking", "Eval-driven training (o-series)"], followUps: ["Where do labs disagree most about the right loss?"], relatedDomains: [], relatedArchitectures: ["llm", "rl-control"], relatedCompanies: ["openai", "anthropic", "google-deepmind"], relatedPapers: ["paper-instructgpt"], sourceIds: [], confidence: "inferred" },
+  { id: "q-emergence-real", question: "Is emergence a real phenomenon, or a benchmark artefact?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "expert", whyThisQuestionMatters: "Emergence shapes how labs allocate compute and how investors value scaling.", whatAGreatAnswerShouldCover: ["Brown-Schaeffer-Koyejo critique on metric choice", "Smooth vs sharp scaling curves", "Genuine capability vs measurement artefact"], followUps: ["What would it take to settle the emergence debate empirically?"], relatedDomains: [], relatedArchitectures: ["llm"], relatedCompanies: ["google-deepmind", "openai"], relatedPapers: [], sourceIds: ["needs-verification"], confidence: "context" },
+  { id: "q-attention-vs-future", question: "Is the transformer architecture permanent, or do we move past attention?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "If a post-transformer recipe wins, the entire compute and software stack is repriced.", whatAGreatAnswerShouldCover: ["State-space models (Mamba)", "Mixture-of-Experts at scale", "Memory + retrieval hybrids", "Hardware-software co-design constraints"], followUps: ["Which architecture would win first if cheap inference were 100x cheaper?"], relatedDomains: [], relatedArchitectures: ["llm", "tool-agents"], relatedCompanies: ["openai", "anthropic", "google-deepmind"], relatedPapers: ["paper-attention"], sourceIds: [], confidence: "context" },
+  { id: "q-reasoning-vs-memorisation", question: "How do you distinguish real reasoning from sophisticated memorisation?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Decides whether o-series reasoning models represent a genuine new capability axis.", whatAGreatAnswerShouldCover: ["Compositionality tests", "Out-of-distribution generalisation", "Programs / tools as scaffolding", "Process supervision vs outcome supervision"], followUps: ["What benchmark would convince you a model truly reasons?"], relatedDomains: ["mathematics"], relatedArchitectures: ["llm", "rl-control"], relatedCompanies: ["openai", "google-deepmind"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-world-models", question: "Are world models necessary for general intelligence, or a research detour?", category: "Scaling &amp; Intelligence", audience: "Researcher", difficulty: "expert", whyThisQuestionMatters: "Reshapes how robotics, autonomous systems and agents are designed.", whatAGreatAnswerShouldCover: ["Dyna / Dreamer line of work", "Video diffusion as world model", "Embodied AI debate"], followUps: ["Will robotics succeed without explicit world models?"], relatedDomains: ["robotics"], relatedArchitectures: ["world-models", "diffusion", "vla"], relatedCompanies: ["google-deepmind", "physical-intelligence"], relatedPapers: ["paper-rt2"], sourceIds: [], confidence: "context" },
+  { id: "q-rag-or-finetune", question: "When should you use RAG, when should you fine-tune, and when should you do both?", category: "Architecture choice", audience: "Engineer", difficulty: "intermediate", whyThisQuestionMatters: "One of the most-asked architectural questions in production AI.", whatAGreatAnswerShouldCover: ["RAG = changing knowledge", "Fine-tune = changing behaviour / format", "Hybrid stacks", "Data freshness and citation requirements"], followUps: ["When is it correct to skip both and prompt-engineer?"], relatedDomains: ["legal", "customer-support", "enterprise-productivity"], relatedArchitectures: ["rag", "llm"], relatedCompanies: ["harvey", "glean"], relatedPapers: ["paper-rag"], sourceIds: [], confidence: "context" },
+  { id: "q-agent-reliability", question: "What is the unit of progress for agent reliability?", category: "Architecture choice", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Agent products are gated by long-horizon reliability, not single-step capability.", whatAGreatAnswerShouldCover: ["Per-step accuracy vs end-to-end success", "Tool-use error rates", "Long-horizon planning / memory", "Recovery from failure"], followUps: ["What number of consecutive correct tool calls would convince you agents are production-ready?"], relatedDomains: ["software-engineering", "research-workflows"], relatedArchitectures: ["tool-agents", "multi-agent"], relatedCompanies: ["openai", "anthropic", "cursor"], relatedPapers: ["paper-react", "paper-toolformer"], sourceIds: [], confidence: "inferred" },
+  { id: "q-evaluation-strategy", question: "How do you know your AI product is actually getting better?", category: "Evaluation", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Eval is the most-under-invested layer of applied AI; teams ship regressions silently.", whatAGreatAnswerShouldCover: ["Offline benchmarks vs production traces", "LLM-as-judge calibration", "Human-in-the-loop gold sets", "Distribution drift monitoring"], followUps: ["Where does LLM-as-judge fail catastrophically?"], relatedDomains: ["legal", "clinical-medicine"], relatedArchitectures: ["llm", "rag"], relatedCompanies: ["openai", "anthropic"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-synthetic-data-limits", question: "Where does synthetic data help, and where does it backfire?", category: "Data", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Synthetic data is the lever for scaling beyond available human data; misused, it amplifies biases.", whatAGreatAnswerShouldCover: ["Distillation", "Self-play and constitutional AI", "Mode collapse / model collapse", "Diversity preservation"], followUps: ["What is the maximum % of training data that can be synthetic before quality degrades?"], relatedDomains: ["robotics", "drug-discovery"], relatedArchitectures: ["llm", "diffusion"], relatedCompanies: ["openai", "anthropic", "physical-intelligence"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+
+  /* ── B. Infrastructure / hardware ── */
+  { id: "q-gpu-vs-asic", question: "Why does NVIDIA still beat custom ASICs at frontier-scale training?", category: "Infrastructure", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Decides whether hyperscaler ASICs erode NVIDIA&rsquo;s data-centre margin.", whatAGreatAnswerShouldCover: ["CUDA software depth", "Networking (NVLink, InfiniBand, Spectrum-X)", "Reference systems (NVL72)", "Generation cadence"], followUps: ["What single ASIC programme is most likely to cross the gap?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia", "google-tpu", "aws-silicon", "microsoft-maia", "amd"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-memory-bandwidth-wall", question: "Why does memory bandwidth, not FLOPS, decide modern AI economics?", category: "Infrastructure", audience: "Engineer", difficulty: "intermediate", whyThisQuestionMatters: "Inference is bandwidth-bound; capex strategy follows HBM, not FLOPS.", whatAGreatAnswerShouldCover: ["Arithmetic intensity", "HBM3 / HBM3E / HBM4 generations", "MoE routing economics", "KV-cache and context cost"], followUps: ["What KV-cache innovation would most change inference unit economics?"], relatedDomains: [], relatedArchitectures: ["llm"], relatedCompanies: ["nvidia", "amd", "cerebras", "groq"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-interconnect-moat", question: "Why is interconnect (NVLink, InfiniBand, Spectrum-X) part of the moat?", category: "Infrastructure", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Modern training scales with collective-operation efficiency.", whatAGreatAnswerShouldCover: ["NCCL collectives", "Bandwidth and topology", "Failure domains in 100K-GPU clusters"], followUps: ["What would it take for Ethernet-based fabrics to fully replace InfiniBand at the frontier?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-inference-economics", question: "What is the true unit cost of a token at frontier scale?", category: "Infrastructure", audience: "Operator", difficulty: "advanced", whyThisQuestionMatters: "Drives every consumer- and enterprise-AI pricing decision.", whatAGreatAnswerShouldCover: ["Power, cooling, capex amortisation", "MFU and utilisation", "Batching and KV-cache reuse", "Hyperscaler vs neocloud"], followUps: ["What would 100x cheaper inference unlock that is unit-economic-impossible today?"], relatedDomains: [], relatedArchitectures: ["llm"], relatedCompanies: ["nvidia", "azure", "coreweave"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-distributed-training-failure", question: "How does a 100K-GPU run survive failure rates that would kill a server?", category: "Infrastructure", audience: "Engineer", difficulty: "expert", whyThisQuestionMatters: "Frontier training is more like running a refinery than running a program.", whatAGreatAnswerShouldCover: ["Checkpointing strategy", "Fault-tolerant parallelism (FSDP, ZeRO)", "Hot spares and orchestration", "Network failure isolation"], followUps: ["What is the largest cluster size where current orchestration scales?"], relatedDomains: [], relatedArchitectures: ["llm"], relatedCompanies: ["nvidia", "azure", "coreweave"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-power-bottleneck", question: "Why is power, not GPUs, the binding constraint on AI build-outs?", category: "Infrastructure", audience: "Investor", difficulty: "intermediate", whyThisQuestionMatters: "Sets the real cap on the next decade of training and inference.", whatAGreatAnswerShouldCover: ["Grid interconnect timelines", "Transformer shortages", "Behind-the-meter strategies (stranded gas, SMRs)", "Sovereign AI politics"], followUps: ["Which region will hit the power wall first?"], relatedDomains: ["energy-grid"], relatedArchitectures: [], relatedCompanies: ["nvidia", "azure", "coreweave"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-hbm-cowos-supply", question: "How fragile is the HBM and CoWoS supply chain?", category: "Infrastructure", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "These two layers gate every frontier accelerator on Earth.", whatAGreatAnswerShouldCover: ["SK hynix / Micron / Samsung shares", "TSMC CoWoS-S vs L vs R", "Geographic concentration"], followUps: ["What single supply-chain event would most disrupt frontier AI in 18 months?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-co-packaged-optics", question: "When does co-packaged optics become economically necessary?", category: "Infrastructure", audience: "Engineer", difficulty: "expert", whyThisQuestionMatters: "Bandwidth scaling will force CPO; the timing reshapes networking incumbents.", whatAGreatAnswerShouldCover: ["Pluggable optics power limits", "Switch-ASIC integration", "Reliability and repair", "Vendor landscape (Broadcom, Marvell, NVIDIA)"], followUps: ["Which lab will be first to deploy CPO in production at scale?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia"], relatedPapers: [], sourceIds: [], confidence: "forwardLooking" },
+  { id: "q-ai-factory-meaning", question: "What does it actually mean to call a data centre an AI factory?", category: "Infrastructure", audience: "Operator", difficulty: "intermediate", whyThisQuestionMatters: "Forces a unit-economics framing on AI infrastructure.", whatAGreatAnswerShouldCover: ["Tokens per kWh", "Capex amortisation per token", "Utilisation across workloads", "Industrial parallels"], followUps: ["What is the unit of production: tokens, reasoning steps, robot policies, or simulations?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-cuda-moat", question: "What is the most under-appreciated part of the CUDA moat?", category: "Infrastructure", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Decides how fast hyperscaler ASICs and AMD ROCm can erode NVIDIA.", whatAGreatAnswerShouldCover: ["Library depth (cuDNN, NCCL, CUTLASS)", "Backwards compatibility", "Tooling ecosystem", "Developer workflow"], followUps: ["What single CUDA capability is hardest to replicate?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-china-stack", question: "How does the China AI stack diverge from the US stack?", category: "Infrastructure", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Export controls + domestic substitution drive a parallel ecosystem.", whatAGreatAnswerShouldCover: ["Huawei Ascend, Moore Threads", "DeepSeek + Qwen open-weight strategy", "Domestic HBM + advanced packaging", "Sovereign AI in China"], followUps: ["Which Chinese player is most likely to break out globally?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["alibaba-qwen", "deepseek"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+
+  /* ── C. Company strategy ── */
+  { id: "q-openai-moat", question: "What is OpenAI&rsquo;s real moat beyond ChatGPT?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Sets up valuation thesis for the whole frontier-lab category.", whatAGreatAnswerShouldCover: ["Distribution (consumer + Microsoft)", "RLHF + reasoning post-training data", "Product velocity", "Compute access via Azure"], followUps: ["What kills OpenAI: Microsoft tension, capital intensity, or model parity?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["openai", "azure"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-anthropic-strategy", question: "What is Anthropic&rsquo;s real strategic edge?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Determines whether the safety-first positioning is product strategy or branding.", whatAGreatAnswerShouldCover: ["Constitutional AI", "Enterprise trust", "Coding model strength", "Multi-cloud distribution"], followUps: ["Where is Anthropic structurally weaker than OpenAI?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["anthropic"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-google-deepmind-distribution", question: "Why does Google have so much AI but so little narrative?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Decides whether Search&rsquo;s AI Overviews cannibalise the ad business.", whatAGreatAnswerShouldCover: ["Search-revenue cannibalisation risk", "Gemini cycles", "TPU + DeepMind research", "Workspace integration"], followUps: ["What one Google product would single-handedly demonstrate AI dominance?"], relatedDomains: ["consumer-search"], relatedArchitectures: [], relatedCompanies: ["google-deepmind", "google-tpu"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-tesla-data-edge", question: "Does Tesla&rsquo;s embodied data give it a real AI advantage?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Bridges autonomy and humanoid theses.", whatAGreatAnswerShouldCover: ["Fleet scale", "End-to-end vs modular planning", "Optimus data collection", "Dojo economics"], followUps: ["What evidence would settle the FSD-vs-Waymo debate?"], relatedDomains: ["autonomous-vehicles", "robotics"], relatedArchitectures: ["vit", "vla"], relatedCompanies: ["tesla-ai", "waymo"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-meta-open-weights", question: "What is Meta really buying with Llama&rsquo;s open-weight strategy?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Frames the open-vs-closed strategic axis.", whatAGreatAnswerShouldCover: ["Talent flywheel", "Commodifying competitor advantage", "Ad-targeting + AR/VR integration", "Sovereign AI partnerships"], followUps: ["What would change if Llama 5 closed weights?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["meta-ai"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-deepseek-implications", question: "What did DeepSeek-R1 actually prove?", category: "Company strategy", audience: "Investor", difficulty: "expert", whyThisQuestionMatters: "Repriced the cost-of-frontier debate overnight.", whatAGreatAnswerShouldCover: ["Compute efficiency claims", "Reasoning post-training quality", "Open-weight commercial implications", "China export-control reading"], followUps: ["What part of DeepSeek&rsquo;s claims is hardest to verify independently?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["deepseek"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-hyperscaler-asic-thesis", question: "If every hyperscaler builds custom silicon, what does NVIDIA actually lose?", category: "Company strategy", audience: "Investor", difficulty: "expert", whyThisQuestionMatters: "Central question for next-decade AI compute valuation.", whatAGreatAnswerShouldCover: ["Internal vs external workloads", "Software lock-in via CUDA", "Networking + systems integration", "Frontier-training cadence"], followUps: ["What part of NVIDIA&rsquo;s value capture might actually become stronger?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["nvidia", "google-tpu", "aws-silicon", "microsoft-maia", "meta-ai"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-cursor-vs-copilot", question: "Does Cursor have a structural advantage over GitHub Copilot?", category: "Company strategy", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Tests whether dev-tools UX can outweigh distribution.", whatAGreatAnswerShouldCover: ["Speed of iteration", "Multi-model backends", "Agentic depth", "Hyperscaler bundling risk"], followUps: ["Where does Cursor&rsquo;s advantage erode?"], relatedDomains: ["software-engineering"], relatedArchitectures: ["tool-agents"], relatedCompanies: ["cursor", "github-copilot"], relatedPapers: ["paper-swebench"], sourceIds: [], confidence: "inferred" },
+  { id: "q-physical-intelligence-strategy", question: "Will robotics foundation-model labs sell software or hardware?", category: "Company strategy", audience: "Investor", difficulty: "expert", whyThisQuestionMatters: "Decides the structure of the physical-AI economy.", whatAGreatAnswerShouldCover: ["Pi vs Figure vs 1X strategies", "Hardware partnerships", "Cross-embodiment generalisation", "Capital intensity"], followUps: ["Which company will be the &lsquo;NVIDIA of robotics&rsquo;?"], relatedDomains: ["robotics"], relatedArchitectures: ["vla"], relatedCompanies: ["physical-intelligence", "figure", "tesla-ai"], relatedPapers: ["paper-rt2", "paper-open-x"], sourceIds: [], confidence: "forwardLooking" },
+
+  /* ── D. Domain questions ── */
+  { id: "q-bio-vs-software-pace", question: "Why is software-AI iterating faster than bio-AI despite similar talent?", category: "Domains", audience: "Founder", difficulty: "intermediate", whyThisQuestionMatters: "Explains why bio capital cycles are decade-class.", whatAGreatAnswerShouldCover: ["Wet-lab feedback loop", "Clinical translation", "Regulatory cycle", "Capital intensity"], followUps: ["What would shrink bio cycles by 5x?"], relatedDomains: ["drug-discovery", "software-engineering"], relatedArchitectures: [], relatedCompanies: ["isomorphic-labs"], relatedPapers: ["paper-alphafold2"], sourceIds: [], confidence: "context" },
+  { id: "q-medicine-imaging-mature", question: "Why is medical imaging the most-deployed AI in healthcare?", category: "Domains", audience: "Beginner", difficulty: "beginner", whyThisQuestionMatters: "Reveals why digital + pattern-rich + narrow tasks deploy first in regulated domains.", whatAGreatAnswerShouldCover: ["Digital input + structured workflow", "Narrow tasks", "FDA SaMD pathway", "Liability containment"], followUps: ["Which other clinical workflows fit the same pattern?"], relatedDomains: ["radiology", "pathology", "ophthalmology"], relatedArchitectures: ["unet", "vit"], relatedCompanies: ["abridge"], relatedPapers: ["paper-unet", "paper-nnunet"], sourceIds: ["src-fda-samd"], confidence: "context" },
+  { id: "q-quant-vs-banking-ai", question: "How does quant AI differ from banking AI?", category: "Domains", audience: "Investor", difficulty: "intermediate", whyThisQuestionMatters: "Conflating the two leads founders to apply quant playbooks where they fail under MRM.", whatAGreatAnswerShouldCover: ["Alpha vs auditability", "Eval discipline", "Regulator expectations", "Research velocity"], followUps: ["Which bank function is closest to quant in AI maturity?"], relatedDomains: ["banking", "quant-finance"], relatedArchitectures: ["gbdt", "ts-transformer"], relatedCompanies: ["palantir"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-legal-rag-default", question: "Why is legal AI a RAG-first market?", category: "Domains", audience: "Operator", difficulty: "intermediate", whyThisQuestionMatters: "Explains the dominant architecture choice in legal.", whatAGreatAnswerShouldCover: ["Citation-grounding requirements", "Privilege / privacy", "Jurisdictional fragmentation", "Liability"], followUps: ["When is fine-tuning the right legal-AI choice?"], relatedDomains: ["legal"], relatedArchitectures: ["rag", "llm"], relatedCompanies: ["harvey"], relatedPapers: ["paper-rag"], sourceIds: [], confidence: "sourced" },
+  { id: "q-edu-tutoring-evidence", question: "What evidence would convince you AI tutoring works?", category: "Domains", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Frames the evidence-bar for ed-tech procurement.", whatAGreatAnswerShouldCover: ["RCT-grade studies", "Transfer to standardised testing", "Long-term retention", "Equity gaps"], followUps: ["Which subject is most likely to show robust gains first?"], relatedDomains: ["education"], relatedArchitectures: ["llm", "rag"], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-robotics-data-scale", question: "What data scale would unlock generalist humanoids?", category: "Domains", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Sets the budget for humanoid R&amp;D.", whatAGreatAnswerShouldCover: ["Open X-Embodiment scale", "Cross-embodiment transfer", "Sim-to-real ratio", "Per-task vs cross-task budget"], followUps: ["What is the most-overlooked data type today?"], relatedDomains: ["robotics"], relatedArchitectures: ["vla", "diffusion-policy"], relatedCompanies: ["physical-intelligence", "figure", "tesla-ai"], relatedPapers: ["paper-rt2", "paper-open-x"], sourceIds: [], confidence: "context" },
+  { id: "q-av-true-deployment", question: "What evidence would convince you robotaxis are scaling globally?", category: "Domains", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Separates real ODD expansion from press releases.", whatAGreatAnswerShouldCover: ["ODD coverage area + complexity", "Disengagement and intervention rates", "Price per ride vs human baseline", "Unit economics"], followUps: ["What ODD expansion rate would you take as proof?"], relatedDomains: ["autonomous-vehicles"], relatedArchitectures: [], relatedCompanies: ["waymo", "tesla-ai"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-mfg-onprem-ai", question: "Why is manufacturing AI mostly on-prem?", category: "Domains", audience: "Operator", difficulty: "intermediate", whyThisQuestionMatters: "Explains why hyperscalers under-penetrate factories.", whatAGreatAnswerShouldCover: ["OT-IT separation", "Latency and reliability", "Data sovereignty", "Legacy SCADA / MES"], followUps: ["What would change if hyperscalers shipped industrial-grade edge AI?"], relatedDomains: ["manufacturing"], relatedArchitectures: ["cnn", "anomaly-detection"], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-energy-ai-control", question: "How much grid-control authority should AI have?", category: "Domains", audience: "Operator", difficulty: "advanced", whyThisQuestionMatters: "Decides where energy-AI startups can play.", whatAGreatAnswerShouldCover: ["Inside-the-envelope vs envelope-defining decisions", "Hybrid ML + OR", "Regulator constraints", "Failure modes"], followUps: ["What single decision would you let an AI make autonomously on a grid?"], relatedDomains: ["energy-grid"], relatedArchitectures: ["ts-transformer", "rl-control"], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-weather-ai-replace", question: "Will neural weather models fully replace numerical weather prediction?", category: "Domains", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Frames whether AI is a tool inside operational forecasting or a substitute.", whatAGreatAnswerShouldCover: ["GraphCast / FourCastNet / Pangu / AIFS", "Performance on extremes", "Operational integration", "Hybrid systems"], followUps: ["What event would settle the debate?"], relatedDomains: ["climate-weather"], relatedArchitectures: ["neural-operators"], relatedCompanies: ["google-deepmind"], relatedPapers: ["paper-graphcast", "paper-fourcastnet"], sourceIds: [], confidence: "context" },
+  { id: "q-defence-autonomy-line", question: "Where is the line for autonomous AI in defence?", category: "Domains", audience: "Operator", difficulty: "expert", whyThisQuestionMatters: "Frames defence-AI investment thesis under LOAC and DoD policy.", whatAGreatAnswerShouldCover: ["Decision authority", "ISR / logistics vs lethal", "International norms", "Auditability"], followUps: ["What governance shift would most accelerate defence AI?"], relatedDomains: ["defence"], relatedArchitectures: [], relatedCompanies: ["palantir"], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-cyber-ai-attack-surface", question: "How does AI itself become an attack surface?", category: "Domains", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Indirect prompt injection and model extraction are now real threats.", whatAGreatAnswerShouldCover: ["Indirect prompt injection", "Data poisoning", "Model extraction", "Agent privilege escalation"], followUps: ["What is the OWASP / MITRE equivalent for agents?"], relatedDomains: ["cybersecurity"], relatedArchitectures: ["llm", "tool-agents"], relatedCompanies: [], relatedPapers: [], sourceIds: ["src-mitre-attack"], confidence: "inferred" },
+  { id: "q-coding-ai-real-bottleneck", question: "What is the real bottleneck for coding agents in production?", category: "Domains", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Separates SWE-bench wins from production reliability.", whatAGreatAnswerShouldCover: ["Repo-scale context", "Test coverage as ground truth", "Security review", "Long-horizon reliability"], followUps: ["What benchmark would you trust to predict real adoption?"], relatedDomains: ["software-engineering"], relatedArchitectures: ["tool-agents"], relatedCompanies: ["cursor", "github-copilot", "anthropic"], relatedPapers: ["paper-swebench"], sourceIds: ["src-swe-bench"], confidence: "context" },
+  { id: "q-science-ai-foundation", question: "How will foundation models change scientific discovery?", category: "Domains", audience: "Researcher", difficulty: "advanced", whyThisQuestionMatters: "Reframes how labs allocate compute and grants.", whatAGreatAnswerShouldCover: ["AlphaFold-class wins", "Material discovery", "Lab automation", "Hybrid ML + simulation"], followUps: ["Which scientific domain is closest to its AlphaFold moment?"], relatedDomains: ["materials-science", "chemistry", "physics"], relatedArchitectures: ["diffusion-bio", "neural-operators"], relatedCompanies: ["google-deepmind", "isomorphic-labs"], relatedPapers: ["paper-alphafold2", "paper-graphcast", "paper-fno"], sourceIds: [], confidence: "context" },
+
+  /* ── E. Founder / market ── */
+  { id: "q-overbuilt-zones", question: "Where is AI overbuilt right now?", category: "Founder &amp; market", audience: "Founder", difficulty: "intermediate", whyThisQuestionMatters: "Saves capital and team time.", whatAGreatAnswerShouldCover: ["Generic SMB chatbots", "Undifferentiated coding agents", "Hardware-light humanoid claims", "Generic enterprise productivity"], followUps: ["Which crowded category will collapse first?"], relatedDomains: ["robotics", "enterprise-productivity"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-second-mover-edge", question: "Where do second-mover startups win in AI?", category: "Founder &amp; market", audience: "Founder", difficulty: "advanced", whyThisQuestionMatters: "Most categories already have a leader; second-movers must verticalise or localise.", whatAGreatAnswerShouldCover: ["Verticalisation", "Localisation (country / industry)", "Smarter execution", "Boring-cashflow variants"], followUps: ["Which category is most ripe for a second-mover Uber?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-data-as-moat", question: "Where is proprietary data still a real moat?", category: "Founder &amp; market", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Most public-data moats are gone; durable ones are private.", whatAGreatAnswerShouldCover: ["Healthcare claims", "Banking transactions", "Robot teleop", "Industrial sensor", "Proprietary scientific datasets"], followUps: ["What category of data is the most under-priced today?"], relatedDomains: ["clinical-medicine", "robotics"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-distribution-as-moat", question: "Where is distribution the moat in AI?", category: "Founder &amp; market", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Determines whether incumbents or startups win in a domain.", whatAGreatAnswerShouldCover: ["Hyperscaler bundling", "Vertical-SaaS incumbency", "Sovereign procurement", "Channel partnerships"], followUps: ["Which incumbent has the strongest AI distribution moat?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["azure", "google-deepmind"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-regulation-as-moat", question: "Where does regulation work as a startup moat?", category: "Founder &amp; market", audience: "Founder", difficulty: "advanced", whyThisQuestionMatters: "Slow categories often have the most durable defensibility.", whatAGreatAnswerShouldCover: ["Healthcare / clinical AI", "Banking MRM", "Defence FedRAMP", "Insurance state-by-state"], followUps: ["Which regulator change would create the biggest opportunity?"], relatedDomains: ["clinical-medicine", "banking", "defence", "insurance"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-painful-workflow-budget", question: "Which workflows are painful but actually have budget?", category: "Founder &amp; market", audience: "Founder", difficulty: "intermediate", whyThisQuestionMatters: "Pain without budget is a hobby.", whatAGreatAnswerShouldCover: ["RCM / prior-authorisation", "AML / fraud investigation", "Specialty trades", "Compliance"], followUps: ["Which workflow is most ignored by AI startups?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-agents-first-real", question: "Where will agents actually work in production first?", category: "Founder &amp; market", audience: "Engineer", difficulty: "advanced", whyThisQuestionMatters: "Frames where agentic infrastructure investment pays off.", whatAGreatAnswerShouldCover: ["Coding (sandboxed)", "Customer support (deflectable)", "Research (verifiable)", "Fraud / SOC investigation"], followUps: ["Which agent category will fail publicly first?"], relatedDomains: ["software-engineering", "customer-support"], relatedArchitectures: ["tool-agents"], relatedCompanies: ["cursor", "anthropic"], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-feature-vs-company", question: "What becomes a feature, and what becomes a company?", category: "Founder &amp; market", audience: "Founder", difficulty: "advanced", whyThisQuestionMatters: "Single most important strategic question for AI startups.", whatAGreatAnswerShouldCover: ["Specialised data + workflow depth", "Deep integration", "Regulated buyers", "Vertical taste"], followUps: ["Which famous AI startup is actually a feature in disguise?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-boring-cashflow", question: "Where are the boring cashflow AI businesses hiding?", category: "Founder &amp; market", audience: "Founder", difficulty: "intermediate", whyThisQuestionMatters: "Not every AI idea is a venture-scale company.", whatAGreatAnswerShouldCover: ["Trade copilots", "Compliance tooling", "Industrial QC", "Regional vertical tools"], followUps: ["Which boring AI business has the highest five-year IRR?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-evaluator-as-moat", question: "Where is the evaluator the moat?", category: "Founder &amp; market", audience: "Founder", difficulty: "advanced", whyThisQuestionMatters: "When generation is cheap, judging is the bottleneck.", whatAGreatAnswerShouldCover: ["Drug discovery", "Robotics", "Legal", "Generative media"], followUps: ["Which evaluator-as-product company will compound fastest?"], relatedDomains: ["drug-discovery", "robotics", "legal"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+
+  /* ── F. Civilizational ── */
+  { id: "q-power-centralisation", question: "Will AI centralise or decentralise power?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Frames antitrust, governance and geopolitics.", whatAGreatAnswerShouldCover: ["Compute concentration", "Data concentration", "Regulatory capture risk", "Open-weight counterforces"], followUps: ["Which regulator should watch AI compute most closely?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-cheap-intelligence-labour", question: "What does cheap intelligence do to labour?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Frames the policy and political response of the next decade.", whatAGreatAnswerShouldCover: ["Task-level automation vs job-level displacement", "Cognitive vs manual", "Re-skilling pathways"], followUps: ["Which white-collar job will fall first?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-ai-truth", question: "What does AI do to truth?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Generative media + agentic search reshape epistemic infrastructure.", whatAGreatAnswerShouldCover: ["Provenance and watermarking", "Citation-grounded retrieval", "Information operations", "Trust hierarchies"], followUps: ["Which institution should own provenance standards?"], relatedDomains: ["consumer-search", "media-entertainment"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-sovereign-ai-meaning", question: "What does sovereign AI actually mean?", category: "Civilizational", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Reshapes geography of AI compute.", whatAGreatAnswerShouldCover: ["Compute sovereignty", "Data sovereignty", "Model sovereignty", "Standards sovereignty"], followUps: ["Which country has the most credible sovereign AI plan?"], relatedDomains: ["smart-cities"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-children-skills", question: "What should children learn in an AI era?", category: "Civilizational", audience: "Public intellectual", difficulty: "advanced", whyThisQuestionMatters: "Shapes ed-tech procurement and policy.", whatAGreatAnswerShouldCover: ["Verification and source-checking", "Computational thinking", "Communication", "Domain depth"], followUps: ["What single skill becomes most valuable?"], relatedDomains: ["education"], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-alignment-fail", question: "What happens if alignment fails?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Tail risk frames AI safety policy.", whatAGreatAnswerShouldCover: ["Misuse vs misalignment", "Misuse defences", "Containment + governance", "Recovery scenarios"], followUps: ["Which alignment failure mode is most under-priced?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: ["anthropic"], relatedPapers: [], sourceIds: [], confidence: "forwardLooking" },
+  { id: "q-progress-slows", question: "What if AI progress slows for two years?", category: "Civilizational", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Stress-tests capex assumptions.", whatAGreatAnswerShouldCover: ["Capex digestion", "Application-layer scaling", "Custom silicon adoption", "Investor sentiment"], followUps: ["What category benefits most from a slowdown?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "forwardLooking" },
+  { id: "q-no-compute-countries", question: "What does AI do to countries without compute?", category: "Civilizational", audience: "Investor", difficulty: "advanced", whyThisQuestionMatters: "Reframes development economics.", whatAGreatAnswerShouldCover: ["Cloud access dependencies", "Local-language model gaps", "Data sovereignty", "Talent flight"], followUps: ["Which country could lead the next-tier AI economy?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "context" },
+  { id: "q-intelligence-commodity", question: "What happens when intelligence becomes a commodity?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Reshapes value capture in every cognitive industry.", whatAGreatAnswerShouldCover: ["Service-layer collapse", "Tools, taste and trust as scarcity", "Distribution vs intelligence"], followUps: ["What becomes scarce when intelligence is cheap?"], relatedDomains: [], relatedArchitectures: [], relatedCompanies: [], relatedPapers: [], sourceIds: [], confidence: "inferred" },
+  { id: "q-ai-and-war", question: "What does AI do to war?", category: "Civilizational", audience: "Public intellectual", difficulty: "expert", whyThisQuestionMatters: "Frames defence-AI policy and geopolitics.", whatAGreatAnswerShouldCover: ["ISR scaling", "Logistics + maintenance", "Decision-support copilots", "Autonomy norms"], followUps: ["Which conflict will most reshape defence-AI norms?"], relatedDomains: ["defence"], relatedArchitectures: [], relatedCompanies: ["palantir"], relatedPapers: [], sourceIds: [], confidence: "context" }
+];
+
+/* ============================================
+   INTERVIEW_QUESTION_SETS
+   ============================================
+   Curated interview banks. Designed so the questions themselves
+   demonstrate fluency: technical, business, supply-chain and
+   second-order.
+   ============================================ */
+var INTERVIEW_QUESTION_SETS = [
+  {
+    id: "interview-jensen-huang",
+    name: "Jensen Huang interview set",
+    target: "NVIDIA CEO",
+    sections: [
+      {
+        title: "AI factories and inference economics",
+        questions: [
+          { id: "ji-tokens-unit", question: "When you describe data centres as AI factories, what is the actual unit of production: tokens, reasoning steps, robot policies, simulations, or something else?", whyItMatters: "Forces a precise unit-economics framing.", followUps: ["Does the unit change as agentic and reasoning workloads scale?"] },
+          { id: "ji-power-plant-fab", question: "Is the long-term AI factory closer to a power plant, a semiconductor fab, or a cloud region?", whyItMatters: "Shapes both physical design and customer expectations.", followUps: ["Which analogue best fits a billion-dollar AI campus?"] },
+          { id: "ji-bandwidth-vs-flops", question: "At what point does inference economics become more constrained by memory bandwidth and networking than raw FLOPS?", whyItMatters: "Explains why HBM and interconnect are NVIDIA&rsquo;s real long-term levers.", followUps: ["What HBM generation makes that pivot most visible?"] },
+          { id: "ji-tokens-per-watt", question: "What does &lsquo;tokens per watt&rsquo; really mean operationally for a hyperscaler?", whyItMatters: "Pins down the inference unit economics conversation.", followUps: ["Which technique improves it most: better silicon, better software or better workload mix?"] }
+        ]
+      },
+      {
+        title: "NVIDIA moat and CUDA",
+        questions: [
+          { id: "ji-cuda-misconception", question: "What is the biggest misconception smart people have about CUDA?", whyItMatters: "Probes Jensen&rsquo;s view of competitor analysis.", followUps: ["Which CUDA capability is hardest to replicate?"] },
+          { id: "ji-stack-hardest", question: "Which part of the stack is hardest to commoditise: GPU silicon, interconnect, CUDA libraries, systems integration, or the developer ecosystem?", whyItMatters: "Tests Jensen&rsquo;s long-term defensibility argument.", followUps: ["Which layer will be commoditised first?"] },
+          { id: "ji-asics-strengthen", question: "If every hyperscaler builds custom silicon, what part of NVIDIA&rsquo;s value capture actually becomes stronger?", whyItMatters: "Inverts the conventional bear case.", followUps: ["Which hyperscaler is the strongest co-evolution partner, not competitor?"] },
+          { id: "ji-rocm-when", question: "What would have to be true for ROCm to genuinely close the CUDA gap?", whyItMatters: "Tests an honest read of AMD.", followUps: ["What single library would you watch?"] }
+        ]
+      },
+      {
+        title: "Rubin, Blackwell and architecture",
+        questions: [
+          { id: "ji-rubin-bet", question: "Looking at Rubin and beyond, what is the bet you are making about workloads in 2027?", whyItMatters: "Tests architectural foresight.", followUps: ["Where could that bet be wrong?"] },
+          { id: "ji-mega-package", question: "Are bigger packages and bigger systems the right answer, or is the future more about memory and interconnect?", whyItMatters: "Frames the system-level design philosophy.", followUps: ["What is the limit case?"] },
+          { id: "ji-software-roadmap", question: "How do you align the software roadmap with three-year hardware bets?", whyItMatters: "Probes Jensen&rsquo;s executive playbook.", followUps: ["Which CUDA library is most coupled to a future architecture?"] }
+        ]
+      },
+      {
+        title: "HBM, CoWoS and supply chain",
+        questions: [
+          { id: "ji-hbm-supply-fragility", question: "How fragile do you think the HBM and CoWoS supply chain really is?", whyItMatters: "Tests Jensen&rsquo;s read on the supply-chain risk that defines NVIDIA&rsquo;s growth ceiling.", followUps: ["What would you most want diversified by 2027?"] },
+          { id: "ji-cowos-variants", question: "Where do CoWoS-S vs L vs R fit into different products in your roadmap?", whyItMatters: "Probes packaging strategy.", followUps: ["Which variant is most under-appreciated?"] },
+          { id: "ji-tsmc-arizona", question: "How does TSMC Arizona change the geography of advanced AI silicon?", whyItMatters: "Tests Jensen&rsquo;s read on geopolitical hedging.", followUps: ["Will the ecosystem follow, or stay in Taiwan?"] }
+        ]
+      },
+      {
+        title: "Hyperscaler ASICs and competition",
+        questions: [
+          { id: "ji-asic-actual-share", question: "What share of internal hyperscaler workloads do you think custom silicon will own in 2028?", whyItMatters: "Forces a quantitative bet.", followUps: ["Which hyperscaler is most credible at frontier training on its own silicon?"] },
+          { id: "ji-google-tpu", question: "How do you frame the TPU&rsquo;s role inside Google vs your business?", whyItMatters: "Probes competitor framing.", followUps: ["What changes if Google externalises TPU more aggressively?"] },
+          { id: "ji-china-ascend", question: "What do you think Huawei Ascend can and cannot do?", whyItMatters: "Tests Jensen&rsquo;s honest read on China.", followUps: ["What is the most-overlooked Chinese AI silicon program?"] }
+        ]
+      },
+      {
+        title: "Physical AI and robotics",
+        questions: [
+          { id: "ji-robot-platform", question: "Will robots be a new computing platform or an application category?", whyItMatters: "Frames Omniverse / Isaac / Cosmos value.", followUps: ["Which category proves it first?"] },
+          { id: "ji-physical-ai-revenue", question: "When does physical AI become a meaningful slice of NVIDIA revenue?", whyItMatters: "Forces a timeline commitment.", followUps: ["Which vertical comes first?"] },
+          { id: "ji-vla-bottleneck", question: "What is the real bottleneck to generalist humanoids today?", whyItMatters: "Tests Jensen&rsquo;s view of robotics R&amp;D.", followUps: ["Which lab will solve it first?"] }
+        ]
+      },
+      {
+        title: "Sovereign AI and geopolitics",
+        questions: [
+          { id: "ji-sovereign-ai", question: "What countries are most under-rated as future AI powers?", whyItMatters: "Probes Jensen&rsquo;s geopolitical read.", followUps: ["What policy would unlock the most demand?"] },
+          { id: "ji-export-controls", question: "How do you operate around export controls that change every six months?", whyItMatters: "Tests adaptive supply-chain strategy.", followUps: ["What is the longest planning horizon you can credibly hold?"] }
+        ]
+      },
+      {
+        title: "Quantum-classical computing",
+        questions: [
+          { id: "ji-quantum-classical", question: "What does quantum computing need from classical acceleration before it becomes useful?", whyItMatters: "Probes Jensen&rsquo;s quantum thesis.", followUps: ["Which modality is closest to that?"] },
+          { id: "ji-cuda-q", question: "How do you think CUDA-Q and NVQLink change the quantum ecosystem?", whyItMatters: "Frames NVIDIA&rsquo;s role.", followUps: ["What would convince you of quantum advantage in chemistry?"] }
+        ]
+      },
+      {
+        title: "Civilization-level questions",
+        questions: [
+          { id: "ji-cheap-intelligence", question: "If intelligence becomes effectively free, what does the world rearrange itself around?", whyItMatters: "Forces second-order thinking.", followUps: ["What becomes scarce?"] },
+          { id: "ji-children", question: "What should your grandchildren learn now?", whyItMatters: "Probes Jensen&rsquo;s personal philosophy.", followUps: ["What would you tell a 12-year-old today?"] },
+          { id: "ji-power-shift", question: "Will AI centralise or decentralise power, and which scenario do you actively design for?", whyItMatters: "Probes governance worldview.", followUps: ["Which institution worries you most?"] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "interview-frontier-lab-ceo",
+    name: "Frontier lab CEO interview set",
+    target: "OpenAI / Anthropic / DeepMind / xAI / Mistral CEO",
+    sections: [
+      { title: "Scaling laws and capability frontier", questions: [
+        { id: "fl-scaling-bet", question: "Where do you see scaling laws still paying, and where do they bend?", whyItMatters: "Pins down the most actionable empirical claim.", followUps: ["What benchmark would convince you they had broken?"] },
+        { id: "fl-frontier-gap", question: "How do you measure your gap to the frontier honestly?", whyItMatters: "Tests internal eval discipline.", followUps: ["Which eval do you trust the least?"] }
+      ]},
+      { title: "Post-training and reasoning", questions: [
+        { id: "fl-post-training", question: "What is the post-training recipe you think is most under-appreciated?", whyItMatters: "Probes the moat in RLHF / RLAIF / o-series-style methods.", followUps: ["What changes most in the next 12 months?"] }
+      ]},
+      { title: "Compute strategy", questions: [
+        { id: "fl-compute-stack", question: "Which compute partner gives you the most leverage and which gives you the most risk?", whyItMatters: "Probes hyperscaler dependency.", followUps: ["What would force you to multi-cloud or build your own?"] }
+      ]},
+      { title: "Product and distribution", questions: [
+        { id: "fl-product-bet", question: "Which surface (consumer chat, agents, enterprise, devices) will determine the next decade?", whyItMatters: "Frames product strategy.", followUps: ["Where do you under-invest today?"] }
+      ]}
+    ]
+  },
+  {
+    id: "interview-ai-researcher",
+    name: "AI researcher interview set",
+    target: "Frontier-lab researcher / academic AI lead",
+    sections: [
+      { title: "Methods", questions: [
+        { id: "ar-loss-design", question: "Which loss-function design is most under-appreciated right now?", whyItMatters: "Probes research originality.", followUps: ["What single experiment would you fund?"] },
+        { id: "ar-eval", question: "Which standard eval is most misleading?", whyItMatters: "Tests research honesty.", followUps: ["What would replace it?"] }
+      ]},
+      { title: "Architectures", questions: [
+        { id: "ar-architectures", question: "Which architecture are you watching outside transformers?", whyItMatters: "Frames the post-attention horizon.", followUps: ["What would have to be true for it to win?"] }
+      ]},
+      { title: "Open problems", questions: [
+        { id: "ar-open-problem", question: "What is the most-overlooked open problem in your area?", whyItMatters: "Probes depth of field.", followUps: ["Why do most labs miss it?"] }
+      ]}
+    ]
+  },
+  {
+    id: "interview-founder-operator",
+    name: "Founder / operator interview set",
+    target: "Vertical AI founder / product operator",
+    sections: [
+      { title: "Customer and pain", questions: [
+        { id: "fo-buyer", question: "Who exactly is your buyer and how do you find them?", whyItMatters: "Most AI startups die on go-to-market.", followUps: ["What is the smallest first-customer cohort that proves demand?"] },
+        { id: "fo-pain", question: "What is the single workflow pain you are removing?", whyItMatters: "Forces specificity.", followUps: ["Could the buyer build it themselves?"] }
+      ]},
+      { title: "Defensibility", questions: [
+        { id: "fo-data", question: "What data do you accumulate that competitors cannot easily replicate?", whyItMatters: "Probes proprietary-data moat.", followUps: ["What customer would you not trade?"] },
+        { id: "fo-incumbent", question: "Which incumbent kills you if they ship your feature?", whyItMatters: "Tests feature-vs-company risk.", followUps: ["What stops them?"] }
+      ]},
+      { title: "Eval and trust", questions: [
+        { id: "fo-eval", question: "How do you know your AI product is improving?", whyItMatters: "Eval discipline is the modern moat.", followUps: ["What single metric do you watch first?"] }
+      ]}
+    ]
+  },
+  {
+    id: "interview-ai-investor",
+    name: "AI investor interview set",
+    target: "VC partner / public-market investor",
+    sections: [
+      { title: "Market structure", questions: [
+        { id: "vc-overbuilt", question: "Where is AI most overbuilt, and where is it under-built?", whyItMatters: "Probes portfolio thesis.", followUps: ["What is the next overbuilt category?"] },
+        { id: "vc-data-moat", question: "Where is data still a real moat in 2026 and beyond?", whyItMatters: "Frames defensibility.", followUps: ["Which proprietary data type is most under-priced?"] }
+      ]},
+      { title: "Strategic bets", questions: [
+        { id: "vc-pick-shovel", question: "Which picks-and-shovels businesses do you actually back?", whyItMatters: "Concretises infrastructure thesis.", followUps: ["What makes them durable?"] },
+        { id: "vc-platform-vs-feature", question: "What looks like a company but is really a feature?", whyItMatters: "Tests editorial honesty.", followUps: ["Which famous AI startup is actually a feature?"] }
+      ]},
+      { title: "Macro", questions: [
+        { id: "vc-power-cap", question: "When does power become the binding constraint on AI growth?", whyItMatters: "Frames capex.", followUps: ["Which region first?"] },
+        { id: "vc-china-stack", question: "How do you price the rise of the China AI stack?", whyItMatters: "Frames geopolitical risk.", followUps: ["Which player is most credible globally?"] }
+      ]}
+    ]
+  },
+  {
+    id: "interview-civilizational",
+    name: "Civilizational interview set",
+    target: "Public intellectual / policymaker",
+    sections: [
+      { title: "Power and governance", questions: [
+        { id: "ci-power", question: "Will AI centralise or decentralise power, and what should regulators do today?", whyItMatters: "Frames antitrust + governance.", followUps: ["Which institution should lead?"] },
+        { id: "ci-truth", question: "What does AI do to truth, and how do we reinforce verifiable information?", whyItMatters: "Frames provenance + media.", followUps: ["Which standard should win?"] }
+      ]},
+      { title: "Labour and education", questions: [
+        { id: "ci-labour", question: "What does cheap intelligence do to labour and class?", whyItMatters: "Frames policy response.", followUps: ["What re-skilling actually works?"] },
+        { id: "ci-children", question: "What should children learn now?", whyItMatters: "Forces personal stance.", followUps: ["What single skill becomes most valuable?"] }
+      ]}
+    ]
+  },
+  {
+    id: "interview-domain-expert",
+    name: "Domain expert interview set",
+    target: "Clinical, legal, financial, energy or scientific expert with AI exposure",
+    sections: [
+      { title: "Validation", questions: [
+        { id: "de-validation", question: "What evidence would convince you that an AI tool is genuinely safe in your domain?", whyItMatters: "Translates evaluation into domain language.", followUps: ["What would force you to recommend de-adoption?"] }
+      ]},
+      { title: "Workflow", questions: [
+        { id: "de-workflow", question: "What workflow change would matter more than any model improvement?", whyItMatters: "Probes integration vs capability.", followUps: ["Why is no one solving it?"] }
+      ]},
+      { title: "Ethics and trust", questions: [
+        { id: "de-trust", question: "What single ethical failure would set the field back five years?", whyItMatters: "Frames downside scenarios.", followUps: ["What would prevent it?"] }
+      ]}
+    ]
+  }
+];
+
+/* ============================================
+   APPLIED AI GAMEBOARD AUDIT SUMMARY (v3 — gameboard build)
+   ============================================
+   Domains:                  52
+   Founder opportunities:    22 brutal-capitalist dossiers
+   Bottleneck dossiers:      24 detailed dossiers
+   Company strategy:         32 strategy profiles
+   Architecture profiles:    38 architectures
+   Great AI questions:       64 mastery-grade (plus 126 domain questions = 190 total questions in Q&amp;A bank)
+   Interview question sets:  7 (Jensen Huang, frontier-lab CEO, AI researcher, founder/operator, AI investor, civilizational, domain expert) with 54+ curated interview questions
+   Sources cited inline:     32 papers, 25 datasets, 11 source-library entries
+   Needs verification:       Most company-architecture matchings, all YC / a16z / China analogue references, vendor-specific deployment claims, Phase-2 attrition stats
+   Highest risk claims:      Specific ARR / revenue numbers (avoided), customer-deployment specifics, unverified paper attributions (FinBERT, CodeBERT, SayCan)
+   Suggested next updates:
+     - Verify YC / a16z / Sequoia / Bessemer / SemiAnalysis citations explicitly per dossier
+     - Verify Anthropic / OpenAI / DeepMind / xAI model-architecture specifics quarterly
+     - Track DeepSeek / Qwen / Mistral release cadence and update strategy notes
+     - Track NVIDIA Rubin / GB300 / Vera Rubin roadmap public disclosures
+     - Track sovereign-AI deal flow (UAE, Saudi Arabia, India, France, UK)
+     - Add per-region founder opportunity dossiers (LatAm, Africa, India)
+     - Add interview sets for Sam Altman / Dario / Demis / Elon Musk
+     - Add Architecture-to-Money Map UI section once architecture monetisation maturity is more verifiable
+*/
 /*
    Domains covered:           52
    Categories:                7

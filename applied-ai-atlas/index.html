@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="applied-ai.css?v=1">
+  <link rel="stylesheet" href="applied-ai.css?v=2">
 </head>
 <body>
 
@@ -28,10 +28,10 @@
   <nav class="applied-topbar-nav" aria-label="Atlas navigation">
     <a href="#applied-featured">Questions</a>
     <a href="#applied-domains">Domains</a>
-    <a href="#applied-architectures">Architectures</a>
-    <a href="#applied-workflows">Workflows</a>
-    <a href="#applied-bottlenecks">Bottlenecks</a>
-    <a href="#applied-frontier">Frontier</a>
+    <a href="#applied-founder-dossiers">Founder map</a>
+    <a href="#applied-bn-dossiers">Bottlenecks</a>
+    <a href="#applied-gameboard">Gameboard</a>
+    <a href="#applied-interview">Interviews</a>
   </nav>
 </header>
 
@@ -271,6 +271,92 @@
     </div>
   </section>
 
+  <!-- 12b. BRUTAL FOUNDER OPPORTUNITY DOSSIERS (gameboard depth) -->
+  <section class="applied-section" id="applied-founder-dossiers" aria-labelledby="applied-founder-dossiers-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-founder-dossiers-h" class="applied-section-title">Where the money might be hiding</h2>
+        <p class="applied-section-sub">Not every AI idea is a startup. These dossiers separate validated demand, second-mover opportunities, boring cashflow businesses, venture-scale wedges and overbuilt zones &mdash; with the brutal capitalist read on each.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-fdo-search" class="applied-search" placeholder="Search opportunities&hellip;" aria-label="Search founder opportunity dossiers">
+        <select id="applied-fdo-status" class="applied-select" aria-label="Filter by status">
+          <option value="">Any status</option>
+          <option value="validated">validated</option>
+          <option value="partially validated">partially validated</option>
+          <option value="underexplored">underexplored</option>
+          <option value="overbuilt">overbuilt</option>
+          <option value="too early">too early</option>
+          <option value="research-dependent">research-dependent</option>
+        </select>
+        <select id="applied-fdo-type" class="applied-select" aria-label="Filter by opportunity type">
+          <option value="">Any type</option>
+        </select>
+        <select id="applied-fdo-vsp" class="applied-select" aria-label="Filter by venture-scale potential">
+          <option value="">Any venture scale</option>
+          <option value="low">low venture-scale</option>
+          <option value="medium">medium venture-scale</option>
+          <option value="high">high venture-scale</option>
+          <option value="massive">massive</option>
+        </select>
+      </div>
+      <div class="applied-fdo-grid" id="applied-fdo-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12c. BOTTLENECK INTELLIGENCE MAP -->
+  <section class="applied-section" id="applied-bn-dossiers" aria-labelledby="applied-bn-dossiers-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-bn-dossiers-h" class="applied-section-title">What actually blocks adoption</h2>
+        <p class="applied-section-sub">Detailed bottleneck intel: what it is, why it exists, who is solving it, and what would break it open.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-bnd-search" class="applied-search" placeholder="Search bottlenecks&hellip;" aria-label="Search bottleneck dossiers">
+        <select id="applied-bnd-severity" class="applied-select" aria-label="Filter by severity">
+          <option value="">Any severity</option>
+          <option value="critical">critical</option>
+          <option value="high">high</option>
+          <option value="medium">medium</option>
+          <option value="low">low</option>
+        </select>
+        <select id="applied-bnd-type" class="applied-select" aria-label="Filter by bottleneck type">
+          <option value="">Any type</option>
+        </select>
+      </div>
+      <div class="applied-bnd-grid" id="applied-bnd-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12d. COMPANY x ARCHITECTURE GAMEBOARD -->
+  <section class="applied-section" id="applied-gameboard" aria-labelledby="applied-gameboard-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-gameboard-h" class="applied-section-title">How the biggest companies are playing the AI game</h2>
+        <p class="applied-section-sub">Strategy profiles of frontier labs, infrastructure giants, robotics players, healthcare and finance leaders. Architecture claims are best-effort and labelled by confidence.</p>
+      </div>
+      <div class="applied-explorer-controls">
+        <input type="search" id="applied-cs-search" class="applied-search" placeholder="Search companies&hellip;" aria-label="Search company strategies">
+        <select id="applied-cs-category" class="applied-select" aria-label="Filter by company category">
+          <option value="">Any category</option>
+        </select>
+      </div>
+      <div class="applied-cs-grid" id="applied-cs-grid"></div>
+    </div>
+  </section>
+
+  <!-- 12e. INTERVIEW QUESTION ROOM -->
+  <section class="applied-section" id="applied-interview" aria-labelledby="applied-interview-h">
+    <div class="applied-container">
+      <div class="applied-section-head">
+        <h2 id="applied-interview-h" class="applied-section-title">The questions that define the AI era</h2>
+        <p class="applied-section-sub">Curated interview banks for Jensen Huang, frontier-lab CEOs, researchers, founders, investors, civilizational thinkers and domain experts.</p>
+      </div>
+      <div class="applied-iq-tabs" id="applied-iq-tabs" role="tablist"></div>
+      <div class="applied-iq-content" id="applied-iq-content"></div>
+    </div>
+  </section>
+
   <!-- 13. RESEARCH FRONTIER -->
   <section class="applied-section" id="applied-frontier" aria-labelledby="applied-frontier-h">
     <div class="applied-container">
@@ -397,8 +483,8 @@
   <div class="applied-detail-inner" id="applied-detail-inner"></div>
 </aside>
 
-<script src="applied-ai-data.js?v=1"></script>
-<script src="applied-ai.js?v=1"></script>
+<script src="applied-ai-data.js?v=2"></script>
+<script src="applied-ai.js?v=2"></script>
 
 </body>
 </html>
