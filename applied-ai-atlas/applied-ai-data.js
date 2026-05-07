@@ -7572,8 +7572,9 @@ var NEEDS_VERIFICATION_QUEUE = [
    Source library entries:   149 (canonical papers, regulators, datasets, benchmarks,
                               model cards, vendor blogs; ~5 needsVerification on vendor
                               pages that may shift)
-   Verification queue:       20 entries (status fields: 2 resolved, 6 linked-needs-
-                              update, 6 soften, 6 open)
+   Verification queue:       21 entries (status: 3 resolved, 7 partiallyResolved,
+                              11 open). Each entry has whyItMatters + safeCurrentWording
+                              so any claim can be audited without reading source code.
    Dev integrity check:      JS function devCheckIntegrity() runs on ?devcheck=1; it
                               verifies sourceIds resolve to SOURCE_LIBRARY or
                               DOMAIN_PAPERS, that domain / arch / workflow / opp /
