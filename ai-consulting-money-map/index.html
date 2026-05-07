@@ -9,22 +9,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="ai-consulting.css?v=2">
+  <link rel="stylesheet" href="ai-consulting.css?v=3">
 </head>
 <body>
 
 <header class="mc-topbar">
   <a href="../" class="mc-topbar-home" aria-label="Back to portfolio home">&larr; pugalenthimagendran.com</a>
   <nav class="mc-topbar-nav" aria-label="Money-map navigation">
+    <a href="#mc-au-gtm">AU buyers</a>
+    <a href="#mc-launch">30-day plan</a>
     <a href="#mc-best-first">First offers</a>
-    <a href="#mc-ladders">Ladders</a>
-    <a href="#mc-services">Services</a>
+    <a href="#mc-demos">Demos</a>
     <a href="#mc-buyer-playbooks">Playbooks</a>
-    <a href="#mc-workflows">Workflows</a>
-    <a href="#mc-pricing">Pricing</a>
+    <a href="#mc-objections">Objections</a>
+    <a href="#mc-ladders">Ladders</a>
     <a href="#mc-recipes">Recipes</a>
     <a href="#mc-retainers">Retainers</a>
-    <a href="#mc-risks">Risks</a>
   </nav>
 </header>
 
@@ -46,21 +46,20 @@
         forward-looking / needs verification). Pricing is indicative; vendor mentions follow public docs.
       </p>
       <div class="mc-hero-ctas">
-        <a class="mc-cta mc-cta-primary" href="#mc-services">See services</a>
-        <a class="mc-cta" href="#mc-workflows">Explore workflows</a>
-        <a class="mc-cta" href="#mc-pricing">Check pricing</a>
-        <a class="mc-cta" href="#mc-recommender">What to sell first</a>
+        <a class="mc-cta mc-cta-primary" href="#mc-best-first">Start with best first offers</a>
+        <a class="mc-cta" href="#mc-buyer-playbooks">Find a buyer playbook</a>
+        <a class="mc-cta" href="#mc-ladders">Use an offer ladder</a>
+        <a class="mc-cta" href="#mc-recipes">Pick a delivery recipe</a>
       </div>
       <div class="mc-hero-meta">
         <span><span id="mc-stat-services">56</span> services</span>
-        <span><span id="mc-stat-buyers">21</span> buyers</span>
         <span><span id="mc-stat-workflows">80</span> workflow maps</span>
-        <span><span id="mc-stat-packages">10</span> packages</span>
-        <span><span id="mc-stat-tools">15</span> tool stacks</span>
-        <span><span id="mc-stat-scripts">10</span> sales scripts</span>
+        <span><span id="mc-stat-bfo">15</span> best-first offers</span>
+        <span><span id="mc-stat-bsp">15</span> buyer playbooks</span>
+        <span><span id="mc-stat-ladders">8</span> offer ladders</span>
+        <span><span id="mc-stat-recipes">10</span> delivery recipes</span>
         <span><span id="mc-stat-retainers">7</span> retainer models</span>
         <span><span id="mc-stat-risks">15</span> risks</span>
-        <span><span id="mc-stat-roi">10</span> ROI templates</span>
         <span><span id="mc-stat-sources">27</span> sources</span>
       </div>
     </div>
@@ -119,6 +118,53 @@
         <div class="mc-rev"><div class="mc-rev-h">Training &amp; enablement</div><div class="mc-rev-t">Often under-priced; high-leverage when paired with delivery + retainers.</div></div>
         <div class="mc-rev"><div class="mc-rev-h">Governance &amp; security</div><div class="mc-rev-t">High-margin, regulator-driven. Survives downturns better than build work.</div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- AUSTRALIA SMB GTM -->
+  <section class="mc-section" id="mc-au-gtm">
+    <div class="mc-container">
+      <div class="mc-section-head">
+        <h2 class="mc-section-title">Who to sell AI consulting to first in Australia</h2>
+        <p class="mc-section-sub">A practical buyer map for solo founders and small AI consulting teams. Twenty AU SMB segments with visible pain, short sales cycles, document/call/email-heavy workflows and realistic budgets in AUD.</p>
+      </div>
+      <div class="mc-filters">
+        <input type="search" id="mc-au-search" class="mc-input" placeholder="Search buyer / pain / first offer">
+      </div>
+      <div id="mc-au-grid" class="mc-grid mc-grid--cards"></div>
+    </div>
+  </section>
+
+  <!-- 30-DAY LAUNCH PLAN -->
+  <section class="mc-section" id="mc-launch">
+    <div class="mc-container">
+      <div class="mc-section-head">
+        <h2 class="mc-section-title">30-day launch plan</h2>
+        <p class="mc-section-sub">Practical execution for a solo founder or small team starting from zero. Four weeks: prep + outbound, discovery + sales, deliver + case study, retainer + referral + repeat.</p>
+      </div>
+      <div id="mc-launch-grid" class="mc-launch-grid"></div>
+    </div>
+  </section>
+
+  <!-- DEMO LIBRARY -->
+  <section class="mc-section" id="mc-demos">
+    <div class="mc-container">
+      <div class="mc-section-head">
+        <h2 class="mc-section-title">Demo library</h2>
+        <p class="mc-section-sub">Eleven demos that disarm specific buyer objections in 5-10 minutes. Each entry lists demo inputs, demo flow, tools needed, time-to-build and why it sells.</p>
+      </div>
+      <div id="mc-demo-grid" class="mc-grid mc-grid--cards"></div>
+    </div>
+  </section>
+
+  <!-- OBJECTION LIBRARY -->
+  <section class="mc-section" id="mc-objections">
+    <div class="mc-container">
+      <div class="mc-section-head">
+        <h2 class="mc-section-title">Objection library</h2>
+        <p class="mc-section-sub">Ten common AI consulting objections with bad response, better response and close question. Use the better response in the call and the close question to test commitment.</p>
+      </div>
+      <div id="mc-obj-grid" class="mc-grid mc-grid--cards"></div>
     </div>
   </section>
 
@@ -372,7 +418,7 @@
 <div id="mc-detail-overlay" class="mc-detail-overlay" aria-hidden="true"></div>
 <aside id="mc-detail" class="mc-detail" role="dialog" aria-modal="true"></aside>
 
-<script src="ai-consulting-data.js?v=2"></script>
-<script src="ai-consulting.js?v=2"></script>
+<script src="ai-consulting-data.js?v=3"></script>
+<script src="ai-consulting.js?v=3"></script>
 </body>
 </html>

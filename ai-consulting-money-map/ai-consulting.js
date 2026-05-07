@@ -31,7 +31,11 @@
       'mc-stat-workflows': a.workflowMaps, 'mc-stat-packages': a.pricingPackages,
       'mc-stat-tools': a.toolStacks, 'mc-stat-scripts': a.salesScripts,
       'mc-stat-retainers': a.retainerModels, 'mc-stat-risks': a.riskDossiers,
-      'mc-stat-sources': a.sources, 'mc-stat-roi': a.roiTemplates
+      'mc-stat-sources': a.sources, 'mc-stat-roi': a.roiTemplates,
+      'mc-stat-bfo': a.bestFirstOffers, 'mc-stat-bsp': a.buyerSalesPlaybooks,
+      'mc-stat-ladders': a.offerLadders, 'mc-stat-recipes': a.deliveryRecipes,
+      'mc-stat-au': a.australiaGTM, 'mc-stat-demos': a.demos,
+      'mc-stat-objections': a.objections, 'mc-stat-launch': a.launchPlanItems
     };
     Object.keys(map).forEach(function (id) {
       var el = document.getElementById(id);
@@ -606,6 +610,118 @@
       bulletList('How to avoid scope creep', r.howToAvoidScopeCreep);
   }
 
+  /* ============================================
+     AUSTRALIA SMB GTM
+     ============================================ */
+  function buildAustraliaGTM() {
+    var grid = document.getElementById('mc-au-grid');
+    if (!grid || typeof AUSTRALIA_SMB_GTM === 'undefined') return;
+    var search = document.getElementById('mc-au-search');
+    var html = AUSTRALIA_SMB_GTM.map(function (b) {
+      var s = ((b.buyer || '') + ' ' + (b.bestFirstOffer || '') + ' ' + (b.painfulWorkflows || []).join(' ')).toLowerCase();
+      return '<button class="mc-au-card" data-au-id="' + escapeHtml(b.id) + '" data-search="' + escapeHtml(s) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-au">AU</span><span class="mc-tag">' + escapeHtml(b.priceRange || '') + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(b.buyer || '') + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml((b.painfulWorkflows || []).slice(0, 2).join(' &middot; ')) + '</div>' +
+        '<div class="mc-card-foot">First offer: ' + escapeHtml(b.bestFirstOffer || '') + '</div>' +
+      '</button>';
+    }).join('');
+    grid.innerHTML = html;
+    function apply() {
+      var s = (search && search.value || '').toLowerCase().trim();
+      Array.prototype.forEach.call(grid.querySelectorAll('.mc-au-card'), function (card) {
+        card.hidden = !(!s || card.dataset.search.indexOf(s) !== -1);
+      });
+    }
+    if (search) search.addEventListener('input', apply);
+  }
+  function renderAUProfile(b) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-au">AU SMB</span><span class="mc-tag">' + escapeHtml(b.priceRange || '') + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(b.buyer || '') + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(b.whyTheyBuy || '') + '</p>' +
+      bulletList('Painful workflows', b.painfulWorkflows) +
+      metaPair('Best first offer', b.bestFirstOffer) +
+      metaPair('Demo to show', b.demoToShow) +
+      '<div class="mc-block"><div class="mc-block-h">First message</div><pre class="mc-script-pre">' + escapeHtml(b.firstMessage || '') + '</pre></div>' +
+      bulletList('Discovery questions', b.discoveryQuestions) +
+      bulletList('Objection handling', b.objectionHandling) +
+      bulletList('5-day delivery plan', b.fiveDayDeliveryPlan) +
+      metaPair('Retainer path', b.retainerPath) +
+      bulletList('Risks', b.risks) +
+      srcChips(b.sourceIds);
+  }
+
+  /* ============================================
+     DEMO LIBRARY
+     ============================================ */
+  function buildDemoLibrary() {
+    var grid = document.getElementById('mc-demo-grid');
+    if (!grid || typeof DEMO_LIBRARY === 'undefined') return;
+    grid.innerHTML = DEMO_LIBRARY.map(function (d) {
+      return '<button class="mc-pkg-card" data-demo-id="' + escapeHtml(d.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag">' + escapeHtml(d.timeToBuild || '') + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(d.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(d.whatItShows || '') + '</div>' +
+        '<div class="mc-card-foot">Buyer: ' + escapeHtml(d.targetBuyer || '') + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderDemoProfile(d) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag">' + escapeHtml(d.timeToBuild || '') + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(d.title || '') + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(d.whatItShows || '') + '</p>' +
+      (d.serviceId ? '<button class="mc-link-btn" data-svc-id="' + escapeHtml(d.serviceId) + '">Open service profile →</button>' : '') +
+      metaPair('Target buyer', d.targetBuyer) +
+      bulletList('Demo inputs', d.demoInputs) +
+      bulletList('Demo flow', d.demoFlow) +
+      bulletList('Tools needed', d.toolsNeeded) +
+      metaPair('Why it sells', d.whyItSells) +
+      bulletList('Risks', d.risks);
+  }
+
+  /* ============================================
+     OBJECTION LIBRARY
+     ============================================ */
+  function buildObjectionLibrary() {
+    var grid = document.getElementById('mc-obj-grid');
+    if (!grid || typeof OBJECTION_LIBRARY === 'undefined') return;
+    grid.innerHTML = OBJECTION_LIBRARY.map(function (o) {
+      return '<button class="mc-pkg-card" data-obj-id="' + escapeHtml(o.id) + '">' +
+        '<div class="mc-card-title">&ldquo;' + escapeHtml(o.objection || '') + '&rdquo;</div>' +
+        '<div class="mc-card-take"><strong>Better:</strong> ' + escapeHtml((o.betterResponse || '').slice(0, 140)) + '…</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderObjectionProfile(o) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<h2 class="mc-detail-title">&ldquo;' + escapeHtml(o.objection || '') + '&rdquo;</h2>' +
+      '<div class="mc-block"><div class="mc-block-h">Bad response</div><div class="mc-block-text mc-block-bad">' + escapeHtml(o.badResponse || '') + '</div></div>' +
+      '<div class="mc-block"><div class="mc-block-h">Better response</div><div class="mc-block-text">' + escapeHtml(o.betterResponse || '') + '</div></div>' +
+      '<div class="mc-block"><div class="mc-block-h">Close question</div><div class="mc-block-text mc-block-close">' + escapeHtml(o.closeQuestion || '') + '</div></div>';
+  }
+
+  /* ============================================
+     30-DAY LAUNCH PLAN
+     ============================================ */
+  function buildLaunchPlan() {
+    var grid = document.getElementById('mc-launch-grid');
+    if (!grid || typeof FIRST_30_DAYS_PLAN === 'undefined') return;
+    grid.innerHTML = FIRST_30_DAYS_PLAN.map(function (w, i) {
+      return '<div class="mc-launch-card">' +
+        '<div class="mc-launch-num">' + (i + 1) + '</div>' +
+        '<div class="mc-launch-body">' +
+          '<div class="mc-card-title">' + escapeHtml(w.week || '') + '</div>' +
+          '<div class="mc-card-take">' + escapeHtml(w.goal || '') + '</div>' +
+          '<div class="mc-launch-section"><div class="mc-launch-h">Tasks</div><ul class="mc-list">' + (w.tasks || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
+          '<div class="mc-launch-section"><div class="mc-launch-h">Outcomes</div><ul class="mc-list">' + (w.outcomes || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
+          '<div class="mc-launch-section"><div class="mc-launch-h mc-launch-h--warn">Common failures</div><ul class="mc-list">' + (w.commonFailures || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
   function buildRecommender() {
     var grid = document.getElementById('mc-rec-grid');
     if (!grid || typeof FIRST_OFFER_RECOMMENDER === 'undefined') return;
@@ -682,6 +798,12 @@
       if (bspBtn) { var bsp = BUYER_SALES_PLAYBOOKS.filter(function (x) { return x.buyerId === bspBtn.dataset.bspId; })[0]; if (bsp) { e.preventDefault(); openPanel(renderBuyerPlaybookProfile(bsp)); return; } }
       var rcpBtn = t.closest('[data-recipe-i]');
       if (rcpBtn) { var ri = parseInt(rcpBtn.dataset.recipeI, 10); var rcp = DELIVERY_RECIPES[ri]; if (rcp) { e.preventDefault(); openPanel(renderRecipeProfile(rcp)); return; } }
+      var auBtn = t.closest('[data-au-id]');
+      if (auBtn) { var au = AUSTRALIA_SMB_GTM.filter(function (x) { return x.id === auBtn.dataset.auId; })[0]; if (au) { e.preventDefault(); openPanel(renderAUProfile(au)); return; } }
+      var demoBtn = t.closest('[data-demo-id]');
+      if (demoBtn) { var dm = DEMO_LIBRARY.filter(function (x) { return x.id === demoBtn.dataset.demoId; })[0]; if (dm) { e.preventDefault(); openPanel(renderDemoProfile(dm)); return; } }
+      var objBtn = t.closest('[data-obj-id]');
+      if (objBtn) { var ob = OBJECTION_LIBRARY.filter(function (x) { return x.id === objBtn.dataset.objId; })[0]; if (ob) { e.preventDefault(); openPanel(renderObjectionProfile(ob)); return; } }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
   }
@@ -738,6 +860,10 @@
     buildBuyerPlaybooks();
     buildOfferLadders();
     buildDeliveryRecipes();
+    buildAustraliaGTM();
+    buildDemoLibrary();
+    buildObjectionLibrary();
+    buildLaunchPlan();
     buildRecommender();
     buildSources();
     bindClicks();

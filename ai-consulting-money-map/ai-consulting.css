@@ -556,6 +556,93 @@ a { color: inherit; text-decoration: none; }
   .mc-score-row { grid-template-columns: 110px 1fr 40px; gap: 8px; }
 }
 
+/* ============================================
+   AUSTRALIA SMB GTM
+   ============================================ */
+.mc-au-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--core);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 160ms ease, transform 160ms ease;
+  font-family: inherit;
+  color: inherit;
+}
+.mc-au-card:hover { border-color: var(--core); transform: translateY(-1px); }
+.mc-au-card[hidden] { display: none; }
+.mc-tag-au {
+  color: var(--core);
+  border-color: var(--core);
+  background: rgba(246,194,103,0.18);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ============================================
+   30-DAY LAUNCH PLAN
+   ============================================ */
+.mc-launch-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .mc-launch-grid { grid-template-columns: repeat(2, 1fr); } }
+.mc-launch-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.mc-launch-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--core);
+  background: var(--core-dim);
+  border: 1px solid rgba(246,194,103,0.4);
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  align-self: start;
+  letter-spacing: -0.02em;
+}
+.mc-launch-body { display: flex; flex-direction: column; gap: 10px; }
+.mc-launch-section { padding-top: 6px; border-top: 1px dashed var(--border-light); }
+.mc-launch-h {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin-bottom: 4px;
+}
+.mc-launch-h--warn { color: var(--warn); }
+
+/* ============================================
+   OBJECTION LIBRARY
+   ============================================ */
+.mc-block-bad {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  text-decoration-color: var(--danger);
+  text-decoration-thickness: 1px;
+}
+.mc-block-close {
+  color: var(--core);
+  font-weight: 600;
+  font-style: italic;
+}
+
 @media (max-width: 720px) {
   .mc-topbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 18px; }
   .mc-topbar-nav { flex-wrap: wrap; gap: 10px 14px; }
