@@ -773,6 +773,256 @@
       bulletList('Alternate niches if niche 1 + 2 do not click', p.alternateNiches);
   }
 
+  /* ============================================
+     DEAL ENGINE
+     ============================================ */
+  function buildDealEngine() {
+    var grid = document.getElementById('mc-deal-grid');
+    if (!grid || typeof DEAL_ENGINE_RECOMMENDATIONS === 'undefined') return;
+    grid.innerHTML = DEAL_ENGINE_RECOMMENDATIONS.map(function (d) {
+      return '<button class="mc-deal-card" data-deal-id="' + escapeHtml(d.id) + '" data-rank="' + d.rank + '">' +
+        '<div class="mc-deal-rank">#' + d.rank + '</div>' +
+        '<div class="mc-deal-body">' +
+          '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">' + escapeHtml(d.niche || '') + '</span><span class="mc-tag">' + escapeHtml(d.priceForFirst3Clients || '') + '</span></div>' +
+          '<div class="mc-card-title">' + escapeHtml(d.title) + '</div>' +
+          '<div class="mc-card-take">' + escapeHtml(d.whyThisFirst || '') + '</div>' +
+          '<div class="mc-card-foot">Buyer: ' + escapeHtml(d.targetBuyer || '') + ' &middot; Retainer: ' + escapeHtml(d.retainer || '') + '</div>' +
+        '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderDealProfile(d) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Deal #' + d.rank + '</span><span class="mc-tag">' + escapeHtml(d.niche) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(d.title) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(d.whyThisFirst || '') + '</p>' +
+      metaPair('Target buyer', d.targetBuyer) +
+      metaPair('Offer', d.offer) +
+      metaPair('Price (first 3 clients)', d.priceForFirst3Clients) +
+      metaPair('Normal price', d.normalPrice) +
+      metaPair('Retainer', d.retainer) +
+      metaPair('Painful workflow', d.painfulWorkflow) +
+      metaPair('Demo to build', d.demoToBuild) +
+      bulletList('Exact demo flow', d.exactDemoFlow) +
+      bulletList('What to show on the call', d.whatToShowOnCall) +
+      '<div class="mc-block"><div class="mc-block-h">First message</div><pre class="mc-script-pre">' + escapeHtml(d.firstMessage || '') + '</pre></div>' +
+      '<div class="mc-block"><div class="mc-block-h">Follow-up message</div><pre class="mc-script-pre">' + escapeHtml(d.followUpMessage || '') + '</pre></div>' +
+      bulletList('Discovery questions', d.discoveryQuestions) +
+      '<div class="mc-block"><div class="mc-block-h">Close script</div><pre class="mc-script-pre">' + escapeHtml(d.closeScript || '') + '</pre></div>' +
+      bulletList('5-day delivery plan', d.deliveryPlan5Days) +
+      metaPair('Retainer upsell', d.retainerUpsell) +
+      bulletList('Proof of ROI', d.proofOfROI) +
+      bulletList('Why it could fail', d.whyItCouldFail) +
+      bulletList('Why it could work', d.whyItCouldWork) +
+      bulletList('Avoid scope creep', d.avoidScopeCreep) +
+      srcChips(d.sourceIds);
+  }
+
+  /* ============================================
+     NICHE SCORECARD
+     ============================================ */
+  function buildNicheScorecard() {
+    var grid = document.getElementById('mc-niche-grid');
+    if (!grid || typeof NICHE_SCORECARD === 'undefined') return;
+    var sorted = NICHE_SCORECARD.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+    grid.innerHTML = sorted.map(function (n) {
+      var bar = Math.max(0, Math.min(100, n.score || 0));
+      return '<button class="mc-niche-card" data-niche-id="' + escapeHtml(n.id) + '">' +
+        '<div class="mc-niche-row">' +
+          '<div class="mc-niche-name">' + escapeHtml(n.niche) + '</div>' +
+          '<div class="mc-niche-score">' + n.score + '</div>' +
+        '</div>' +
+        '<div class="mc-niche-bar"><span class="mc-niche-bar-fill" style="width:' + bar + '%"></span></div>' +
+        '<div class="mc-niche-meta">' +
+          '<span class="mc-niche-pill">access: ' + escapeHtml(n.buyerAccess) + '</span>' +
+          '<span class="mc-niche-pill">pain: ' + escapeHtml(n.painIntensity) + '</span>' +
+          '<span class="mc-niche-pill">cycle: ' + escapeHtml(n.salesCycle) + '</span>' +
+          '<span class="mc-niche-pill">demo: ' + escapeHtml(n.demoEase) + '</span>' +
+          '<span class="mc-niche-pill">compliance: ' + escapeHtml(n.complianceRisk) + '</span>' +
+          '<span class="mc-niche-pill">retainer: ' + escapeHtml(n.retainerPotential) + '</span>' +
+        '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderNicheProfile(n) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Score ' + n.score + '/100</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(n.niche) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(n.reason || '') + '</p>' +
+      metaPair('Best offer', n.bestOffer) +
+      metaPair('Best demo', n.bestDemo) +
+      metaPair('First-100 outreach targets', n.first100OutreachTargets) +
+      metaPair('What to avoid', n.whatToAvoid) +
+      '<div class="mc-block"><div class="mc-block-h">Scorecard</div>' +
+      '<div class="mc-niche-detail-grid">' +
+        '<div><strong>Buyer access</strong><br>' + escapeHtml(n.buyerAccess) + '</div>' +
+        '<div><strong>Pain intensity</strong><br>' + escapeHtml(n.painIntensity) + '</div>' +
+        '<div><strong>Budget</strong><br>' + escapeHtml(n.budget) + '</div>' +
+        '<div><strong>Sales cycle</strong><br>' + escapeHtml(n.salesCycle) + '</div>' +
+        '<div><strong>Demo ease</strong><br>' + escapeHtml(n.demoEase) + '</div>' +
+        '<div><strong>Delivery risk</strong><br>' + escapeHtml(n.deliveryRisk) + '</div>' +
+        '<div><strong>Compliance risk</strong><br>' + escapeHtml(n.complianceRisk) + '</div>' +
+        '<div><strong>Retainer potential</strong><br>' + escapeHtml(n.retainerPotential) + '</div>' +
+      '</div></div>';
+  }
+
+  /* ============================================
+     DEMO TO DEAL BLUEPRINTS
+     ============================================ */
+  function buildDemoToDeal() {
+    var grid = document.getElementById('mc-d2d-grid');
+    if (!grid || typeof DEMO_TO_DEAL_BLUEPRINTS === 'undefined') return;
+    grid.innerHTML = DEMO_TO_DEAL_BLUEPRINTS.map(function (b) {
+      return '<button class="mc-pkg-card" data-d2d-id="' + escapeHtml(b.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag">' + escapeHtml(b.timeToBuild || '') + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(b.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(b.targetBuyer || '') + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderD2DProfile(b) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag">' + escapeHtml(b.timeToBuild || '') + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(b.title) + '</h2>' +
+      metaPair('Target buyer', b.targetBuyer) +
+      bulletList('Tools', b.tools) +
+      bulletList('Fake data needed', b.fakeDataNeeded) +
+      bulletList('Demo steps', b.demoSteps) +
+      metaPair('What buyer should feel', b.whatBuyerShouldFeel) +
+      '<div class="mc-block"><div class="mc-block-h">Call script</div><pre class="mc-script-pre">' + escapeHtml(b.callScript || '') + '</pre></div>' +
+      metaPair('Demo → paid audit', b.howToTurnDemoIntoPaidAudit) +
+      metaPair('Audit → sprint', b.howToTurnAuditIntoSprint) +
+      metaPair('Sprint → retainer', b.howToTurnSprintIntoRetainer) +
+      metaPair('Demo risk', b.demoRisk);
+  }
+
+  /* ============================================
+     DAILY ACTION ENGINE
+     ============================================ */
+  function buildDailyEngine() {
+    var c = document.getElementById('mc-daily-card');
+    if (!c || typeof DAILY_ACTION_ENGINE === 'undefined') return;
+    var d = DAILY_ACTION_ENGINE;
+    function ul(items) { return '<ul class="mc-list">' + (items || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') + '</ul>'; }
+    function block(label, items, warn) {
+      return '<div class="mc-block"><div class="mc-block-h ' + (warn ? 'mc-launch-h--warn' : '') + '">' + escapeHtml(label) + '</div>' + ul(items) + '</div>';
+    }
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Daily action engine</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(d.title) + '</div>' +
+      '</div>' +
+      block('Rules', d.rules) +
+      '<div class="mc-daily-grid">' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Day 1</div>' + ul(d.day1) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Day 2</div>' + ul(d.day2) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Day 3</div>' + ul(d.day3) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Day 4</div>' + ul(d.day4) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Day 5</div>' + ul(d.day5) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Week 2</div>' + ul(d.week2) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Week 3</div>' + ul(d.week3) + '</div>' +
+        '<div class="mc-daily-cell"><div class="mc-daily-h">Week 4</div>' + ul(d.week4) + '</div>' +
+      '</div>' +
+      block('Fallback rules', d.fallbackRules, true);
+  }
+
+  /* ============================================
+     MONEY MATH
+     ============================================ */
+  function buildMoneyMath() {
+    var grid = document.getElementById('mc-math-grid');
+    if (!grid || typeof MONEY_MATH === 'undefined') return;
+    grid.innerHTML = MONEY_MATH.map(function (m) {
+      return '<button class="mc-pkg-card" data-math-id="' + escapeHtml(m.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">' + escapeHtml(m.monthlyTarget) + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(m.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml((m.requiredDeals || []).join(' &middot; ')) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderMathProfile(m) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">' + escapeHtml(m.monthlyTarget) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(m.title) + '</h2>' +
+      bulletList('Required deals', m.requiredDeals) +
+      bulletList('Required activity', m.requiredActivity) +
+      bulletList('Assumptions', m.assumptions) +
+      bulletList('Risks', m.risks) +
+      bulletList('How to improve odds', m.howToImproveOdds);
+  }
+
+  /* ============================================
+     OUTREACH CAMPAIGN PACKS
+     ============================================ */
+  function buildOutreachPacks() {
+    var grid = document.getElementById('mc-outreach-grid');
+    if (!grid || typeof OUTREACH_CAMPAIGN_PACKS === 'undefined') return;
+    grid.innerHTML = OUTREACH_CAMPAIGN_PACKS.map(function (p) {
+      return '<button class="mc-pkg-card" data-outreach-id="' + escapeHtml(p.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">' + escapeHtml(p.niche) + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(p.niche) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(p.offer) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderOutreachProfile(p) {
+    function pre(label, items) {
+      return '<div class="mc-block"><div class="mc-block-h">' + escapeHtml(label) + '</div>' + (items || []).map(function (m) { return '<pre class="mc-script-pre">' + escapeHtml(m) + '</pre>'; }).join('') + '</div>';
+    }
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">' + escapeHtml(p.niche) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(p.niche) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(p.offer) + '</p>' +
+      bulletList('Subject lines', p.subjectLines) +
+      pre('Cold emails', p.coldEmails) +
+      pre('LinkedIn DMs', p.linkedinDMs) +
+      pre('Call openers', p.callOpeners) +
+      pre('SMS-style messages', p.smsStyleMessages) +
+      pre('Follow-ups', p.followUps) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">What NOT to say</div><ul class="mc-list">' + (p.whatNotToSay || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') + '</ul></div>' +
+      metaPair('Proof asset', p.proofAsset);
+  }
+
+  /* ============================================
+     SCOPE BOUNDARIES
+     ============================================ */
+  function buildScopeBoundaries() {
+    var grid = document.getElementById('mc-scope-grid');
+    if (!grid || typeof SCOPE_BOUNDARY_LIBRARY === 'undefined') return;
+    grid.innerHTML = SCOPE_BOUNDARY_LIBRARY.map(function (s, i) {
+      return '<button class="mc-pkg-card" data-scope-i="' + i + '">' +
+        '<div class="mc-card-title">' + escapeHtml(s.offer) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml((s.included || []).slice(0, 2).join(' &middot; ')) + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderScopeProfile(s) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(s.offer) + '</h2>' +
+      bulletList('Included', s.included) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Excluded</div><ul class="mc-list">' + (s.excluded || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') + '</ul></div>' +
+      bulletList('Client responsibilities', s.clientResponsibilities) +
+      bulletList('Acceptance criteria', s.acceptanceCriteria) +
+      metaPair('Change-request rule', s.changeRequestRule) +
+      metaPair('Refund / guarantee posture', s.refundOrGuaranteePosition);
+  }
+
+  /* ============================================
+     SALES PIPELINE TEMPLATE
+     ============================================ */
+  function buildPipelineTemplate() {
+    var c = document.getElementById('mc-pipeline-card');
+    if (!c || typeof SALES_PIPELINE_TEMPLATE === 'undefined') return;
+    var p = SALES_PIPELINE_TEMPLATE;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Pipeline template</div>' +
+        '<div class="mc-pfm-title">Copy this into Sheets / Notion / Airtable</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(p.copyHint) + '</p>' +
+      bulletList('Stages', p.stages) +
+      bulletList('Fields', p.fields) +
+      bulletList('Daily review questions', p.dailyReviewQuestions);
+  }
+
   function buildRecommender() {
     var grid = document.getElementById('mc-rec-grid');
     if (!grid || typeof FIRST_OFFER_RECOMMENDER === 'undefined') return;
@@ -855,6 +1105,18 @@
       if (demoBtn) { var dm = DEMO_LIBRARY.filter(function (x) { return x.id === demoBtn.dataset.demoId; })[0]; if (dm) { e.preventDefault(); openPanel(renderDemoProfile(dm)); return; } }
       var objBtn = t.closest('[data-obj-id]');
       if (objBtn) { var ob = OBJECTION_LIBRARY.filter(function (x) { return x.id === objBtn.dataset.objId; })[0]; if (ob) { e.preventDefault(); openPanel(renderObjectionProfile(ob)); return; } }
+      var dealBtn = t.closest('[data-deal-id]');
+      if (dealBtn) { var dl = DEAL_ENGINE_RECOMMENDATIONS.filter(function (x) { return x.id === dealBtn.dataset.dealId; })[0]; if (dl) { e.preventDefault(); openPanel(renderDealProfile(dl)); return; } }
+      var nicheBtn = t.closest('[data-niche-id]');
+      if (nicheBtn) { var nc = NICHE_SCORECARD.filter(function (x) { return x.id === nicheBtn.dataset.nicheId; })[0]; if (nc) { e.preventDefault(); openPanel(renderNicheProfile(nc)); return; } }
+      var d2dBtn = t.closest('[data-d2d-id]');
+      if (d2dBtn) { var d2d = DEMO_TO_DEAL_BLUEPRINTS.filter(function (x) { return x.id === d2dBtn.dataset.d2dId; })[0]; if (d2d) { e.preventDefault(); openPanel(renderD2DProfile(d2d)); return; } }
+      var mathBtn = t.closest('[data-math-id]');
+      if (mathBtn) { var mm = MONEY_MATH.filter(function (x) { return x.id === mathBtn.dataset.mathId; })[0]; if (mm) { e.preventDefault(); openPanel(renderMathProfile(mm)); return; } }
+      var outBtn = t.closest('[data-outreach-id]');
+      if (outBtn) { var op = OUTREACH_CAMPAIGN_PACKS.filter(function (x) { return x.id === outBtn.dataset.outreachId; })[0]; if (op) { e.preventDefault(); openPanel(renderOutreachProfile(op)); return; } }
+      var scopeBtn = t.closest('[data-scope-i]');
+      if (scopeBtn) { var si = parseInt(scopeBtn.dataset.scopeI, 10); var sc = SCOPE_BOUNDARY_LIBRARY[si]; if (sc) { e.preventDefault(); openPanel(renderScopeProfile(sc)); return; } }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
   }
@@ -952,6 +1214,14 @@
     buildBuyerPlaybooks();
     buildOfferLadders();
     buildDeliveryRecipes();
+    buildDealEngine();
+    buildNicheScorecard();
+    buildDemoToDeal();
+    buildDailyEngine();
+    buildMoneyMath();
+    buildOutreachPacks();
+    buildScopeBoundaries();
+    buildPipelineTemplate();
     buildAustraliaGTM();
     buildPersonalFirstMove();
     buildDemoLibrary();

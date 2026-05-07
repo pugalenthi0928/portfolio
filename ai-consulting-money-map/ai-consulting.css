@@ -707,6 +707,120 @@ a { color: inherit; text-decoration: none; }
 }
 .mc-pfm-val { font-size: 13px; color: var(--text); line-height: 1.55; }
 
+/* ============================================
+   DEAL ENGINE
+   ============================================ */
+.mc-deal-card {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(246,194,103,0.05), transparent 70%), var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--core);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.mc-deal-card:hover { border-color: var(--core); transform: translateY(-1px); }
+.mc-deal-rank {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--core);
+  background: var(--core-dim);
+  border: 1px solid rgba(246,194,103,0.4);
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+  align-self: start;
+  letter-spacing: -0.03em;
+}
+.mc-deal-card[data-rank="1"] .mc-deal-rank,
+.mc-deal-card[data-rank="2"] .mc-deal-rank,
+.mc-deal-card[data-rank="3"] .mc-deal-rank {
+  background: rgba(246,194,103,0.22);
+  color: #ffe2a3;
+}
+.mc-deal-body { display: flex; flex-direction: column; gap: 6px; }
+
+/* ============================================
+   NICHE SCORECARD
+   ============================================ */
+.mc-niche-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 160ms ease;
+}
+.mc-niche-card:hover { border-color: var(--core); }
+.mc-niche-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.mc-niche-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.005em; }
+.mc-niche-score { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--core); }
+.mc-niche-bar { height: 4px; background: var(--bg-elev); border-radius: 2px; overflow: hidden; }
+.mc-niche-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--core), #ffe2a3);
+  transition: width 240ms ease;
+}
+.mc-niche-meta { display: flex; flex-wrap: wrap; gap: 4px; }
+.mc-niche-pill {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  color: var(--text-tertiary);
+  background: rgba(255,255,255,0.02);
+}
+.mc-niche-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.mc-niche-detail-grid strong { color: var(--core); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ============================================
+   DAILY ACTION ENGINE GRID
+   ============================================ */
+.mc-daily-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.mc-daily-cell {
+  background: var(--bg-elev);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.mc-daily-h {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin-bottom: 6px;
+}
+.mc-daily-cell .mc-list { font-size: 12.5px; }
+
 @media (max-width: 720px) {
   .mc-topbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 18px; }
   .mc-topbar-nav { flex-wrap: wrap; gap: 10px 14px; }
