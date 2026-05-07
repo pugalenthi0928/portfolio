@@ -1291,6 +1291,8 @@
       });
       arches += '</ul></div>';
     }
+    var startupOpp = (typeof COMPANY_STARTUP_OPPORTUNITIES !== 'undefined') ? COMPANY_STARTUP_OPPORTUNITIES[cs.id] : null;
+    var startupBlock = startupOpp ? '<div class="applied-callout applied-callout--why"><span class="applied-callout-label">What a startup can copy or localise</span>' + startupOpp + '</div>' : '';
     var html = '<button class="applied-detail-close" aria-label="Close panel">&times;</button>' +
                '<div class="applied-detail-badges">' +
                  '<span class="applied-detail-badge" style="color:var(--applied-warm);border-color:var(--applied-warm);">' + escapeHtml(cs.category || '') + '</span>' +
@@ -1298,6 +1300,7 @@
                '</div>' +
                '<h2 id="applied-detail-title" class="applied-detail-name">' + escapeHtml(cs.company || '') + '</h2>' +
                '<p class="applied-detail-summary">' + escapeHtml(cs.thesis || '') + '</p>' +
+               startupBlock +
                bulletList('AI products', cs.aiProducts) +
                arches +
                metaPair('Data advantage', cs.dataAdvantage) +
