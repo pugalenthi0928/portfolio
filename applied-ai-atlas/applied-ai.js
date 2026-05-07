@@ -1088,11 +1088,39 @@
 
     if (typeof NEEDS_VERIFICATION_QUEUE !== 'undefined') {
       NEEDS_VERIFICATION_QUEUE.forEach(function (n) {
-        if (n.suggestedSource && /^src-|^paper-/.test(n.suggestedSource) && !srcIds.has(n.suggestedSource)) {
-          warn('verification "' + n.id + '" suggestedSource "' + n.suggestedSource + '" is not in SOURCE_LIBRARY or DOMAIN_PAPERS.');
-        }
+        if (!n.suggestedSource) return;
+        // suggestedSource may be a comma-separated list of src-* / paper-* ids
+        var ids = (typeof n.suggestedSource === 'string') ? n.suggestedSource.split(/[,\s]+/) : [];
+        ids.forEach(function (sid) {
+          if (/^(src-|paper-)/.test(sid) && !srcIds.has(sid)) {
+            warn('verification "' + n.id + '" suggestedSource "' + sid + '" is not in SOURCE_LIBRARY or DOMAIN_PAPERS.');
+          }
+        });
       });
     }
+
+    /* Duplicate-id detection across all keyed arrays */
+    function checkDuplicates(label, arr) {
+      if (!arr) return;
+      var seen = {};
+      arr.forEach(function (e) {
+        if (!e || typeof e.id !== 'string') return;
+        if (seen[e.id]) warn('duplicate id in ' + label + ': "' + e.id + '"');
+        seen[e.id] = true;
+      });
+    }
+    if (typeof AI_DOMAINS !== 'undefined') checkDuplicates('AI_DOMAINS', AI_DOMAINS);
+    if (typeof AI_ARCHITECTURES !== 'undefined') checkDuplicates('AI_ARCHITECTURES', AI_ARCHITECTURES);
+    if (typeof DOMAIN_PAPERS !== 'undefined') checkDuplicates('DOMAIN_PAPERS', DOMAIN_PAPERS);
+    if (typeof DOMAIN_QUESTIONS !== 'undefined') checkDuplicates('DOMAIN_QUESTIONS', DOMAIN_QUESTIONS);
+    if (typeof GREAT_AI_QUESTIONS !== 'undefined') checkDuplicates('GREAT_AI_QUESTIONS', GREAT_AI_QUESTIONS);
+    if (typeof INDUSTRY_WORKFLOWS !== 'undefined') checkDuplicates('INDUSTRY_WORKFLOWS', INDUSTRY_WORKFLOWS);
+    if (typeof WORKFLOW_MONEY_MAP !== 'undefined') checkDuplicates('WORKFLOW_MONEY_MAP', WORKFLOW_MONEY_MAP);
+    if (typeof FOUNDER_OPPORTUNITIES !== 'undefined') checkDuplicates('FOUNDER_OPPORTUNITIES', FOUNDER_OPPORTUNITIES);
+    if (typeof BOTTLENECK_DOSSIERS !== 'undefined') checkDuplicates('BOTTLENECK_DOSSIERS', BOTTLENECK_DOSSIERS);
+    if (typeof COMPANY_AI_STRATEGIES !== 'undefined') checkDuplicates('COMPANY_AI_STRATEGIES', COMPANY_AI_STRATEGIES);
+    if (typeof SOURCE_LIBRARY !== 'undefined') checkDuplicates('SOURCE_LIBRARY', SOURCE_LIBRARY);
+    if (typeof NEEDS_VERIFICATION_QUEUE !== 'undefined') checkDuplicates('NEEDS_VERIFICATION_QUEUE', NEEDS_VERIFICATION_QUEUE);
 
     if (warnings === 0) console.info('[applied-atlas] devCheckIntegrity: no issues found.');
     else console.info('[applied-atlas] devCheckIntegrity: ' + warnings + ' warning(s).');
