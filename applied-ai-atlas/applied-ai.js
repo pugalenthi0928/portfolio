@@ -1629,6 +1629,9 @@
                startupBlock +
                bulletList('AI products', cs.aiProducts) +
                arches +
+               bulletList('Public evidence', cs.publicEvidence) +
+               bulletList('Inferred stack', cs.inferredStack) +
+               bulletList('Unknowns', cs.unknowns) +
                metaPair('Data advantage', cs.dataAdvantage) +
                metaPair('Compute stack', cs.computeStack) +
                metaPair('Deployment surface', cs.deploymentSurface) +

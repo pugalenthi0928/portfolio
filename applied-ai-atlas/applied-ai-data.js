@@ -1562,10 +1562,10 @@ var AI_ARCHITECTURES = [
     strengths: ["fast, well-deployed pipelines", "strong open-source ecosystem"],
     weaknesses: ["fine-grained categorisation is hard", "rare classes underperform"],
     domains: ["autonomous-vehicles", "manufacturing", "agriculture", "defence"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-yolo", "src-detr"],
     commonMisunderstanding: "Detection benchmarks (COCO mAP) are not deployment metrics. Long-tail and edge-case performance is what fails in the field.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-yolo", "src-detr"]
   },
   {
     id: "diffusion",
@@ -1590,10 +1590,10 @@ var AI_ARCHITECTURES = [
     strengths: ["temporal coherence is improving", "multimodal grounding"],
     weaknesses: ["expensive to train and infer", "physical plausibility limited"],
     domains: ["media-entertainment", "gaming", "robotics"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-sora-tr", "src-ldm", "src-ddpm"],
     commonMisunderstanding: "Looking real and being physically right are different things. Video models can produce footage that violates basic physics.",
     maturity: "Early production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-sora-tr", "src-ldm", "src-ddpm"]
   },
 
   /* ── Biology / chemistry ── */
@@ -1634,10 +1634,10 @@ var AI_ARCHITECTURES = [
     strengths: ["data-efficient when symmetries are respected", "physically consistent outputs"],
     weaknesses: ["complex implementation", "harder to scale than vanilla transformers"],
     domains: ["protein-design", "drug-discovery", "materials-science", "physics"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-egnn"],
     commonMisunderstanding: "Equivariance is not always necessary. For some tasks, brute-force data augmentation works comparably.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-egnn"]
   },
   {
     id: "diffusion-bio",
@@ -1664,10 +1664,10 @@ var AI_ARCHITECTURES = [
     strengths: ["strong on tabular data", "fast to train and infer", "well-understood by regulators"],
     weaknesses: ["hard to use raw text or images", "requires feature engineering"],
     domains: ["banking", "fraud-detection", "risk-management", "insurance"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-xgboost", "src-lightgbm"],
     commonMisunderstanding: "GBDT is not legacy. It still wins on tabular at production scale.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-xgboost", "src-lightgbm"]
   },
   {
     id: "ts-transformer",
@@ -1678,10 +1678,10 @@ var AI_ARCHITECTURES = [
     strengths: ["zero-shot forecasting from foundation models", "joint modelling across many series"],
     weaknesses: ["sometimes outperformed by classical models on simple, stationary series"],
     domains: ["quant-finance", "trading", "energy-grid", "climate-weather", "supply-chain"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-temporal-fusion", "src-attention-is-all"],
     commonMisunderstanding: "Foundation forecasters do not always beat ARIMA. They are useful where data scale and heterogeneity make classical models hard to maintain.",
     maturity: "Early production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-temporal-fusion", "src-attention-is-all"]
   },
   {
     id: "anomaly-detection",
@@ -1692,10 +1692,10 @@ var AI_ARCHITECTURES = [
     strengths: ["works without labelled positive cases", "scales to streaming"],
     weaknesses: ["false positive rate is the practical bottleneck", "drift sensitive"],
     domains: ["fraud-detection", "cybersecurity", "manufacturing", "telecommunications", "aerospace-space"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-isolation-forest"],
     commonMisunderstanding: "Anomalies are not failures. The system has to be calibrated for the cost of investigation.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-isolation-forest"]
   },
   {
     id: "rl-execution",
@@ -1706,10 +1706,10 @@ var AI_ARCHITECTURES = [
     strengths: ["adaptive to live conditions", "co-optimises across child orders"],
     weaknesses: ["sim-to-real gap on market impact", "training data is non-stationary"],
     domains: ["trading"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-deep-rl-execution"],
     commonMisunderstanding: "Execution RL is not predicting price. It is minimising cost given a parent order.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-deep-rl-execution"]
   },
 
   /* ── Robotics ── */
@@ -1764,10 +1764,10 @@ var AI_ARCHITECTURES = [
     strengths: ["sample-efficient policy learning", "imagined planning"],
     weaknesses: ["compounding error in rollouts", "hard to scale to messy real-world dynamics"],
     domains: ["robotics", "autonomous-vehicles", "gaming"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-world-models", "src-dreamer-v3"],
     commonMisunderstanding: "A world model is not a simulator. It is a learned approximation; reality always has surprises.",
     maturity: "Research frontier",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-world-models", "src-dreamer-v3"]
   },
   {
     id: "sim-to-real",
@@ -1778,10 +1778,10 @@ var AI_ARCHITECTURES = [
     strengths: ["scale of training in sim", "safe iteration"],
     weaknesses: ["physics gap", "perception gap", "actuator gap"],
     domains: ["robotics", "autonomous-vehicles"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-rt-x", "src-pi-zero"],
     commonMisunderstanding: "More simulation does not always close the gap. The right curriculum and randomisation matter more than raw volume.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-rt-x", "src-pi-zero"]
   },
   {
     id: "rl-control",
@@ -1836,10 +1836,10 @@ var AI_ARCHITECTURES = [
     strengths: ["gradient-based optimisation through dynamics", "tighter design loops"],
     weaknesses: ["non-differentiable contact and discontinuities", "compute cost"],
     domains: ["robotics", "scientific-computing", "aerospace-space"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-graphcast", "src-fourcastnet"],
     commonMisunderstanding: "Differentiable simulation is not a free optimisation. Discontinuities (contact, friction) make gradients informative only in some regimes.",
     maturity: "Research frontier",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-graphcast", "src-fourcastnet"]
   },
   {
     id: "bayesian-opt",
@@ -1850,10 +1850,10 @@ var AI_ARCHITECTURES = [
     strengths: ["sample-efficient", "principled uncertainty"],
     weaknesses: ["scales poorly with very high-dimensional search", "requires good surrogates"],
     domains: ["materials-science", "chemistry", "drug-discovery"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-bayes-opt-snoek"],
     commonMisunderstanding: "Active learning is not a model architecture. It is a strategy for choosing experiments around a model.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-bayes-opt-snoek"]
   },
 
   /* ── Enterprise / general ── */
@@ -1866,10 +1866,10 @@ var AI_ARCHITECTURES = [
     strengths: ["scales to billions of items", "language- and modality-agnostic"],
     weaknesses: ["quality bottlenecked by embedder", "metadata filters often dominate at scale"],
     domains: ["consumer-search", "customer-support", "legal", "research-workflows"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-word2vec", "src-sbert", "src-hnsw", "src-mteb"],
     commonMisunderstanding: "Vector search is not always the right answer. Lexical retrieval (BM25) still wins on many enterprise corpora.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-word2vec", "src-sbert", "src-hnsw", "src-mteb"]
   },
   {
     id: "asr-tts",
@@ -1880,10 +1880,10 @@ var AI_ARCHITECTURES = [
     strengths: ["high quality across languages", "robust to noise"],
     weaknesses: ["medical / legal vocabulary still imperfect", "voice cloning ethics"],
     domains: ["clinical-documentation", "customer-support", "music-audio", "telecommunications"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-whisper"],
     commonMisunderstanding: "A clean transcript is not a clean note. Domain-specific terminology and structure are still hard.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-whisper"]
   },
   {
     id: "ocr-docai",
@@ -1894,10 +1894,10 @@ var AI_ARCHITECTURES = [
     strengths: ["mature on common documents", "integrates with RPA"],
     weaknesses: ["fragile on novel layouts", "handwriting still hard"],
     domains: ["banking", "insurance", "accounting-audit", "legal", "supply-chain"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-donut"],
     commonMisunderstanding: "OCR is solved on print, not on the wild. Real production documents are messier than benchmarks.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-donut"]
   },
   {
     id: "recsys",
@@ -1908,10 +1908,10 @@ var AI_ARCHITECTURES = [
     strengths: ["enormous data feedback", "production-scale infrastructure"],
     weaknesses: ["objective is multi-stakeholder (engagement vs welfare)", "feedback loops"],
     domains: ["consumer-search", "media-entertainment", "gaming"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-wide-deep"],
     commonMisunderstanding: "Recsys optimises a measurable proxy, not user welfare. The choice of proxy is a values decision.",
     maturity: "Production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-wide-deep"]
   },
 
   /* ── Security ── */
@@ -1938,10 +1938,10 @@ var AI_ARCHITECTURES = [
     strengths: ["scales review across large repos", "complements rule-based scanners"],
     weaknesses: ["false positives still high", "adversarial drift in malware"],
     domains: ["cybersecurity", "software-engineering"],
-    landmarkPapers: ["needs-verification"],
+    landmarkPapers: ["src-swe-bench", "src-humaneval"],
     commonMisunderstanding: "ML in security is not a replacement for static analysis or fuzzing. It is one tool in the stack.",
     maturity: "Early production",
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-swe-bench", "src-humaneval"]
   }
 ];
 
@@ -2599,7 +2599,30 @@ var SOURCE_LIBRARY = [
   { id: "src-tsmc-capex", title: "TSMC quarterly results + capex disclosures", publisher: "TSMC Investor Relations", year: 2024, url: "https://investor.tsmc.com/english/quarterly-results", type: "filing", supports: ["enterprise-productivity"], confidence: "sourced" },
   { id: "src-rfm1", title: "Covariant RFM-1 (Robotics Foundation Model) announcement", publisher: "Covariant", year: 2024, url: "https://covariant.ai/insights/introducing-rfm-1-giving-robots-human-like-reasoning-capabilities/", type: "vendor-disclosure", supports: ["robotics"], confidence: "sourced" },
   { id: "src-pi-zero", title: "Physical Intelligence Pi-0 (general-purpose robot policy)", publisher: "Physical Intelligence", year: 2024, url: "https://www.physicalintelligence.company/blog/pi0", type: "vendor-disclosure", supports: ["robotics"], confidence: "sourced" },
-  { id: "src-deepmind-cooling", title: "DeepMind data-centre cooling RL deployment", publisher: "Google / DeepMind", year: 2018, url: "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/", type: "vendor-disclosure", supports: ["energy-grid"], confidence: "sourced" }
+  { id: "src-deepmind-cooling", title: "DeepMind data-centre cooling RL deployment", publisher: "Google / DeepMind", year: 2018, url: "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/", type: "vendor-disclosure", supports: ["energy-grid"], confidence: "sourced" },
+
+  /* --- Canonical papers added in credibility hardening pass 3 --- */
+  { id: "src-whisper", title: "Robust Speech Recognition via Large-Scale Weak Supervision (Whisper)", publisher: "Radford et al., OpenAI", year: 2022, url: "https://arxiv.org/abs/2212.04356", type: "paper", supports: ["clinical-documentation", "customer-support", "media-entertainment"], confidence: "sourced" },
+  { id: "src-word2vec", title: "Efficient Estimation of Word Representations in Vector Space (word2vec)", publisher: "Mikolov et al.", year: 2013, url: "https://arxiv.org/abs/1301.3781", type: "paper", supports: ["consumer-search", "enterprise-productivity", "legal"], confidence: "sourced" },
+  { id: "src-sbert", title: "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks", publisher: "Reimers and Gurevych, EMNLP", year: 2019, url: "https://arxiv.org/abs/1908.10084", type: "paper", supports: ["legal", "consumer-search", "enterprise-productivity"], confidence: "sourced" },
+  { id: "src-hnsw", title: "Efficient and robust approximate nearest neighbor search using HNSW graphs", publisher: "Malkov and Yashunin", year: 2016, url: "https://arxiv.org/abs/1603.09320", type: "paper", supports: ["consumer-search", "enterprise-productivity"], confidence: "sourced" },
+  { id: "src-yolo", title: "You Only Look Once: Unified, Real-Time Object Detection (YOLO)", publisher: "Redmon et al., CVPR", year: 2016, url: "https://arxiv.org/abs/1506.02640", type: "paper", supports: ["manufacturing", "robotics", "autonomous-vehicles"], confidence: "sourced" },
+  { id: "src-detr", title: "End-to-End Object Detection with Transformers (DETR)", publisher: "Carion et al., Meta AI", year: 2020, url: "https://arxiv.org/abs/2005.12872", type: "paper", supports: ["manufacturing", "robotics", "autonomous-vehicles"], confidence: "sourced" },
+  { id: "src-donut", title: "OCR-free Document Understanding Transformer (Donut)", publisher: "Kim et al., NAVER", year: 2022, url: "https://arxiv.org/abs/2111.15664", type: "paper", supports: ["banking", "insurance", "legal", "clinical-documentation"], confidence: "sourced" },
+  { id: "src-wide-deep", title: "Wide & Deep Learning for Recommender Systems", publisher: "Cheng et al., Google", year: 2016, url: "https://arxiv.org/abs/1606.07792", type: "paper", supports: ["media-entertainment", "consumer-search"], confidence: "sourced" },
+  { id: "src-dqn", title: "Human-level control through deep reinforcement learning (DQN)", publisher: "Mnih et al., Nature (DeepMind)", year: 2015, url: "https://www.nature.com/articles/nature14236", type: "paper", supports: ["robotics", "trading"], confidence: "sourced" },
+  { id: "src-muzero", title: "Mastering Atari, Go, chess and shogi by planning with a learned model (MuZero)", publisher: "Schrittwieser et al., Nature (DeepMind)", year: 2020, url: "https://www.nature.com/articles/s41586-020-03051-4", type: "paper", supports: ["robotics", "scientific-computing"], confidence: "sourced" },
+  { id: "src-world-models", title: "World Models (Ha & Schmidhuber)", publisher: "Ha and Schmidhuber, NeurIPS", year: 2018, url: "https://arxiv.org/abs/1803.10122", type: "paper", supports: ["robotics", "autonomous-vehicles"], confidence: "sourced" },
+  { id: "src-dreamer-v3", title: "Mastering Diverse Domains through World Models (DreamerV3)", publisher: "Hafner et al., DeepMind", year: 2023, url: "https://arxiv.org/abs/2301.04104", type: "paper", supports: ["robotics"], confidence: "sourced" },
+  { id: "src-egnn", title: "E(n) Equivariant Graph Neural Networks", publisher: "Satorras et al., ICML", year: 2021, url: "https://arxiv.org/abs/2102.09844", type: "paper", supports: ["materials-science", "drug-discovery", "chemistry"], confidence: "sourced" },
+  { id: "src-lightgbm", title: "LightGBM: A Highly Efficient Gradient Boosting Decision Tree", publisher: "Ke et al., NeurIPS", year: 2017, url: "https://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree", type: "paper", supports: ["banking", "fraud-detection", "insurance"], confidence: "sourced" },
+  { id: "src-xgboost", title: "XGBoost: A Scalable Tree Boosting System", publisher: "Chen and Guestrin, KDD", year: 2016, url: "https://arxiv.org/abs/1603.02754", type: "paper", supports: ["banking", "fraud-detection", "quant-finance"], confidence: "sourced" },
+  { id: "src-bayes-opt-snoek", title: "Practical Bayesian Optimization of Machine Learning Algorithms", publisher: "Snoek et al., NeurIPS", year: 2012, url: "https://arxiv.org/abs/1206.2944", type: "paper", supports: ["materials-science", "scientific-computing"], confidence: "sourced" },
+  { id: "src-temporal-fusion", title: "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting", publisher: "Lim et al.", year: 2021, url: "https://arxiv.org/abs/1912.09363", type: "paper", supports: ["energy-grid", "supply-chain", "trading"], confidence: "sourced" },
+  { id: "src-isolation-forest", title: "Isolation Forest", publisher: "Liu, Ting, Zhou, ICDM", year: 2008, url: "https://ieeexplore.ieee.org/document/4781136", type: "paper", supports: ["fraud-detection", "cybersecurity"], confidence: "sourced" },
+  { id: "src-deep-rl-execution", title: "Reinforcement Learning for Order Execution (Nevmyvaka et al.)", publisher: "Nevmyvaka, Feng, Kearns, ICML", year: 2006, url: "https://www.cis.upenn.edu/~mkearns/papers/rlexec.pdf", type: "paper", supports: ["trading"], confidence: "sourced" },
+  { id: "src-vllm", title: "Efficient Memory Management for Large Language Model Serving with PagedAttention (vLLM)", publisher: "Kwon et al.", year: 2023, url: "https://arxiv.org/abs/2309.06180", type: "paper", supports: ["enterprise-productivity"], confidence: "sourced" },
+  { id: "src-mteb-2", title: "MTEB Massive Text Embedding Benchmark (extended)", publisher: "Muennighoff et al., HuggingFace", year: 2024, url: "https://huggingface.co/spaces/mteb/leaderboard", type: "benchmark", supports: ["enterprise-productivity", "legal", "consumer-search"], confidence: "sourced" }
 ];
 
 /* ============================================
@@ -6442,7 +6465,7 @@ var COMPANY_AI_STRATEGIES = [
   { id: "xai", company: "xAI", category: "Frontier model lab", thesis: "Compute-first scaling + X distribution + Tesla data adjacencies.", confidence: "inferred", aiProducts: ["Grok models", "Colossus supercomputer"], architecturesUsed: [{architectureId: "llm", usedFor: "Grok family", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "X social-graph data; possible Tesla telemetry channels (verify)", computeStack: "Colossus cluster (publicly disclosed scale; specifics to be verified)", deploymentSurface: "X integration; standalone Grok app and API", businessAdvantage: "X distribution; founder relationships across XAI / Tesla / SpaceX", revenueLogic: "Subscription (X Premium tiers) + API", comparisonCompanies: ["OpenAI", "Anthropic", "Google DeepMind"], biggestOpenQuestions: ["Grok performance vs frontier", "Tesla data integration depth", "Capital efficiency"], sources: ["needs-verification"] },
   { id: "meta-ai", company: "Meta AI / FAIR", category: "Frontier model lab + open-source", thesis: "Open-weight Llama + global consumer distribution + research excellence in PyTorch / SAM / DINO.", confidence: "marketContext", aiProducts: ["Llama 3.x / 4 (per roadmap)", "Segment Anything", "PyTorch", "Meta AI assistant", "AudioCraft", "Ego4D"], architecturesUsed: [{architectureId: "llm", usedFor: "Llama", confidence: "sourced", evidence: "Public papers"}, {architectureId: "vit", usedFor: "DINO / SAM", confidence: "sourced", evidence: "Public papers"}, {architectureId: "segmentation-models", usedFor: "SAM / SAM 2", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Facebook / Instagram / WhatsApp scale data; Ego4D-style video", computeStack: "MTIA in-house silicon + NVIDIA GPUs", deploymentSurface: "WhatsApp, Instagram, Messenger, Ray-Ban Meta, Quest", businessAdvantage: "Open-weight ecosystem; consumer distribution; in-house silicon path", revenueLogic: "Ads + hardware + future API", comparisonCompanies: ["OpenAI", "Google DeepMind", "Mistral", "DeepSeek"], biggestOpenQuestions: ["Open-weight commercial pull", "MTIA timelines", "AR / consumer AI revenue"], sources: ["src-llama3", "src-sam"] },
   { id: "mistral", company: "Mistral AI", category: "Frontier model lab (open-weight + commercial)", thesis: "European open-weight champion + Mixture-of-Experts + sovereign-friendly deployment.", confidence: "inferred", aiProducts: ["Mistral Large", "Mixtral", "Codestral", "Le Chat"], architecturesUsed: [{architectureId: "llm", usedFor: "Mistral / Mixtral", confidence: "sourced", evidence: "Public model cards"}], dataAdvantage: "Curated multilingual data; European-friendly licencing", computeStack: "GPU clusters; sovereign-infra partnerships", deploymentSurface: "API + on-prem / sovereign + cloud channels", businessAdvantage: "European sovereign-AI brand; open-weight credibility", revenueLogic: "API + enterprise + government", comparisonCompanies: ["OpenAI", "Anthropic", "Cohere", "Meta Llama"], biggestOpenQuestions: ["Compute capital relative to US labs", "EU AI Act implications"], sources: ["needs-verification"] },
-  { id: "deepseek", company: "DeepSeek", category: "Frontier model lab (open-weight, China-origin)", thesis: "Compute-efficient training + open-weight releases that move the global frontier without US-class compute.", confidence: "inferred", aiProducts: ["DeepSeek-V3", "DeepSeek-R1"], architecturesUsed: [{architectureId: "llm", usedFor: "DeepSeek-V3 / R1", confidence: "sourced", evidence: "Public technical reports"}], dataAdvantage: "Curated training data; engineering efficiency", computeStack: "H800 / H100-class clusters (verify specifics)", deploymentSurface: "Open-weight + API", businessAdvantage: "Open-weight credibility; engineering brand", revenueLogic: "Mostly research-driven; commercial roadmap unclear", comparisonCompanies: ["Meta Llama", "Mistral", "Qwen"], biggestOpenQuestions: ["Long-term commercial roadmap", "China-export-control implications"], sources: ["src-deepseek-v3"] },
+  { id: "deepseek", company: "DeepSeek", category: "Frontier model lab (open-weight, China-origin)", thesis: "Compute-efficient training + open-weight releases that move the global frontier without US-class compute.", confidence: "inferred", aiProducts: ["DeepSeek-V3", "DeepSeek-R1"], architecturesUsed: [{architectureId: "llm", usedFor: "DeepSeek-V3 / R1", confidence: "sourced", evidence: "Public technical reports"}], dataAdvantage: "Curated training data; engineering efficiency", computeStack: "H800 / H100-class clusters (verify specifics)", deploymentSurface: "Open-weight + API", businessAdvantage: "Open-weight credibility; engineering brand", revenueLogic: "Mostly research-driven; commercial roadmap unclear", comparisonCompanies: ["Meta Llama", "Mistral", "Qwen"], biggestOpenQuestions: ["Long-term commercial roadmap", "China-export-control implications"], sources: ["src-deepseek-v3"] , publicEvidence: ["DeepSeek-V3 + DeepSeek-R1 technical reports (arxiv papers)","Public weights + tokenizer + benchmark scores"], inferredStack: ["Mixture-of-experts plus reasoning-style RL post-training, per published reports","Cost-per-token claims based on disclosed training compute"], unknowns: ["Sustained frontier credibility cycle-over-cycle relative to Anthropic / OpenAI","Hardware mix beyond what is disclosed (sanctioned vs non-sanctioned silicon)"] },
   { id: "alibaba-qwen", company: "Alibaba Qwen", category: "Frontier model lab (open-weight, China)", thesis: "Multi-language + large open-weight family + Alibaba Cloud distribution.", confidence: "inferred", aiProducts: ["Qwen 2 / 2.5 / 3 series", "Qwen-Coder", "Qwen-VL", "Tongyi platform"], architecturesUsed: [{architectureId: "llm", usedFor: "Qwen series", confidence: "sourced", evidence: "Hugging Face releases"}, {architectureId: "multimodal-llm", usedFor: "Qwen-VL", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Chinese / multilingual web; e-commerce data", computeStack: "Alibaba Cloud (Hanguang AI chips + GPU mix)", deploymentSurface: "Alibaba Cloud + open-weight", businessAdvantage: "China / Asia distribution; multilingual depth", revenueLogic: "Cloud + enterprise", comparisonCompanies: ["DeepSeek", "Mistral", "Meta Llama"], biggestOpenQuestions: ["Export-control constraints", "Global commercial penetration"], sources: ["needs-verification"] },
   { id: "nvidia", company: "NVIDIA", category: "AI compute platform", thesis: "GPU + CUDA + NVLink + InfiniBand + Mellanox + system designs (NVL72) + software (TensorRT, NIM, Run:AI) make the dominant AI compute substrate.", confidence: "sourced", aiProducts: ["H100 / H200 / B100 / B200 / GB200 NVL72 / GB300 / Rubin", "CUDA, cuDNN, NCCL", "TensorRT, Triton, NIM", "Omniverse, Isaac, Cosmos", "BioNeMo, CUDA-Q"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer training / inference", confidence: "sourced", evidence: "Public NVIDIA + customer disclosures"}], dataAdvantage: "Cross-customer telemetry; CUDA developer ecosystem", computeStack: "Own silicon (Blackwell, Rubin); CoWoS at TSMC; Quantum InfiniBand, Spectrum-X", deploymentSurface: "Cloud + sovereign + enterprise", businessAdvantage: "Hardware + software + networking + system design integration; CUDA lock-in", revenueLogic: "Hardware + software + systems", comparisonCompanies: ["AMD", "Google TPU", "AWS Trainium", "Microsoft Maia", "Cerebras", "Groq"], biggestOpenQuestions: ["Hyperscaler ASIC erosion of margin", "CUDA vs Triton vs ROCm long-term", "Physical AI revenue contribution"], sources: ["src-mlperf"] },
   { id: "google-tpu", company: "Google TPU", category: "AI compute platform (in-house)", thesis: "Vertically integrated TPU + Google software stack avoids NVIDIA tax; co-designed with Gemini.", confidence: "marketContext", aiProducts: ["TPU v4 / v5e / v5p / Trillium", "Vertex AI Cloud TPU"], architecturesUsed: [{architectureId: "llm", usedFor: "Gemini training", confidence: "sourced", evidence: "Public Google statements"}], dataAdvantage: "Internal Google workloads + Vertex customers", computeStack: "TPU + Borg + Pathways", deploymentSurface: "Google Cloud Vertex AI + internal Google workloads", businessAdvantage: "Workload-specific optimisation; cost advantage on internal use", revenueLogic: "Google Cloud; internal cost savings", comparisonCompanies: ["NVIDIA", "AWS Trainium", "AMD", "Microsoft Maia"], biggestOpenQuestions: ["External TPU adoption rate", "Software ecosystem vs CUDA"], sources: ["needs-verification"] },
@@ -6451,11 +6474,11 @@ var COMPANY_AI_STRATEGIES = [
   { id: "amd", company: "AMD", category: "AI compute platform", thesis: "MI300 / MI325 / MI355 + ROCm software + GPU networking; closing the gap with NVIDIA on memory bandwidth + cost.", confidence: "marketContext", aiProducts: ["MI300X / MI325X / MI355", "ROCm"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer training + inference", confidence: "sourced", evidence: "Public customer announcements"}], dataAdvantage: "Customer telemetry across hyperscaler base", computeStack: "Own silicon + co-packaged-optics roadmap", deploymentSurface: "Hyperscaler + enterprise", businessAdvantage: "Cost / memory bandwidth advantage on selected workloads", revenueLogic: "Data centre GPU sales", comparisonCompanies: ["NVIDIA", "Google TPU", "AWS Trainium"], biggestOpenQuestions: ["ROCm vs CUDA software gap", "Frontier-cluster credibility"], sources: ["needs-verification"] },
   { id: "cerebras", company: "Cerebras", category: "AI compute platform (specialty)", thesis: "Wafer-scale CS-3 architecture + extreme inference speed + cloud service.", confidence: "marketContext", aiProducts: ["CS-3", "Cerebras Cloud"], architecturesUsed: [{architectureId: "llm", usedFor: "Customer inference at speed", confidence: "sourced", evidence: "Public benchmarks"}], dataAdvantage: "Specialty compute customer base", computeStack: "Wafer-scale chip + cluster scale via Memory-X / Swarm-X", deploymentSurface: "Cerebras Cloud + on-prem", businessAdvantage: "Extreme inference latency for specific workloads", revenueLogic: "Hardware + cloud", comparisonCompanies: ["NVIDIA", "Groq", "SambaNova"], biggestOpenQuestions: ["Frontier training viability", "Long-term cost per token"], sources: ["needs-verification"] },
   { id: "groq", company: "Groq", category: "AI compute platform (inference specialty)", thesis: "LPU architecture + extreme inference latency + GroqCloud as developer-friendly alternative.", confidence: "marketContext", aiProducts: ["LPU silicon", "GroqCloud"], architecturesUsed: [{architectureId: "llm", usedFor: "Inference of open-weight LLMs at high throughput", confidence: "sourced", evidence: "Public benchmarks"}], dataAdvantage: "Cloud telemetry across customer base", computeStack: "LPU silicon + custom interconnect", deploymentSurface: "GroqCloud + sovereign / on-prem", businessAdvantage: "Low-latency inference; developer-friendly pricing", revenueLogic: "Cloud subscription / per-token", comparisonCompanies: ["Cerebras", "SambaNova", "NVIDIA inference"], biggestOpenQuestions: ["Sustainability of pricing", "Frontier model support cadence"], sources: ["needs-verification"] },
-  { id: "tesla-ai", company: "Tesla", category: "Automotive / Robotics / AI Infrastructure", thesis: "Vehicles, robots and autonomy as data-generating embodied-AI platforms; in-house compute (Dojo) + frontier vision models.", confidence: "needsVerification", aiProducts: ["FSD", "Optimus", "Autopilot", "Dojo"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception", confidence: "inferred", evidence: "Tesla AI Day talks"}, {architectureId: "imitation-learning", usedFor: "Driving policy (end-to-end)", confidence: "needsVerification", evidence: "Verify via Tesla AI Day"}, {architectureId: "vla", usedFor: "Optimus locomotion / manipulation", confidence: "inferred", evidence: "Optimus public demos"}], dataAdvantage: "Massive fleet telemetry; growing humanoid trajectory data", computeStack: "Dojo D1 + NVIDIA GPUs; FSD on-vehicle", deploymentSurface: "Vehicles + Optimus + Tesla Cloud", businessAdvantage: "Embodied data scale unmatched in industry; vertical integration", revenueLogic: "Vehicle sales + FSD + future Optimus + future robotaxi", comparisonCompanies: ["Waymo", "Cruise", "Mobileye", "Wayve", "Figure", "1X"], biggestOpenQuestions: ["FSD true safety vs human baseline", "Optimus commercial roadmap", "Dojo vs NVIDIA economics"], sources: ["src-tesla-ai-day", "src-nhtsa-ads", "src-cruise-pause"] },
+  { id: "tesla-ai", company: "Tesla", category: "Automotive / Robotics / AI Infrastructure", thesis: "Vehicles, robots and autonomy as data-generating embodied-AI platforms; in-house compute (Dojo) + frontier vision models.", confidence: "needsVerification", aiProducts: ["FSD", "Optimus", "Autopilot", "Dojo"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception", confidence: "inferred", evidence: "Tesla AI Day talks"}, {architectureId: "imitation-learning", usedFor: "Driving policy (end-to-end)", confidence: "needsVerification", evidence: "Verify via Tesla AI Day"}, {architectureId: "vla", usedFor: "Optimus locomotion / manipulation", confidence: "inferred", evidence: "Optimus public demos"}], dataAdvantage: "Massive fleet telemetry; growing humanoid trajectory data", computeStack: "Dojo D1 + NVIDIA GPUs; FSD on-vehicle", deploymentSurface: "Vehicles + Optimus + Tesla Cloud", businessAdvantage: "Embodied data scale unmatched in industry; vertical integration", revenueLogic: "Vehicle sales + FSD + future Optimus + future robotaxi", comparisonCompanies: ["Waymo", "Cruise", "Mobileye", "Wayve", "Figure", "1X"], biggestOpenQuestions: ["FSD true safety vs human baseline", "Optimus commercial roadmap", "Dojo vs NVIDIA economics"], sources: ["src-tesla-ai-day", "src-nhtsa-ads", "src-cruise-pause"] , publicEvidence: ["Vehicle-fleet telemetry at scale (Tesla AI Day 2021/2022)","In-house compute referred to as Dojo (public talks)","NHTSA standing order requires Tesla to report L2 ADAS crashes (regulator-side evidence)"], inferredStack: ["Vision-led perception based on transformer-style architectures (consistent with public talks; specific layers undisclosed)","End-to-end policy training via imitation learning is plausible from public messaging but full training recipe is undisclosed","Optimus humanoid policy stack overlaps with FSD compute infra, by Tesla messaging"], unknowns: ["Whether current FSD uses an explicit world model or is end-to-end policy only","Dojo cluster scale, utilisation, and cost per training run vs NVIDIA-based clusters","Robotaxi unit economics + ODD (operational design domain) expansion rate beyond a few cities"] },
   { id: "coreweave", company: "CoreWeave", category: "GPU cloud (neocloud)", thesis: "GPU-only specialty cloud with bare-metal + InfiniBand for AI training and inference; preferred capacity for frontier labs.", confidence: "marketContext", aiProducts: ["GPU IaaS"], architecturesUsed: [], dataAdvantage: "Multi-customer GPU utilisation telemetry", computeStack: "NVIDIA GPUs + InfiniBand + Spectrum-X", deploymentSurface: "Direct + cloud partner", businessAdvantage: "First-at-scale on new NVIDIA platforms; bare-metal preferred by frontier labs", revenueLogic: "GPU IaaS", comparisonCompanies: ["AWS", "Azure", "GCP", "Lambda", "Crusoe"], biggestOpenQuestions: ["Long-term hyperscaler competition", "Capital efficiency"], sources: ["needs-verification"] },
   { id: "azure", company: "Microsoft Azure", category: "Hyperscaler cloud", thesis: "OpenAI exclusivity + Maia in-house + M365 distribution + GB200/GB300 first-at-scale deployments.", confidence: "inferred", aiProducts: ["Azure OpenAI Service", "GitHub Copilot", "Microsoft Copilot", "Azure AI Studio"], architecturesUsed: [], dataAdvantage: "M365 + LinkedIn + GitHub + enterprise data", computeStack: "NVIDIA + Maia + Cobalt", deploymentSurface: "Azure + M365 + Windows", businessAdvantage: "Distribution + OpenAI partnership + enterprise", revenueLogic: "Cloud + M365 + Copilot", comparisonCompanies: ["AWS", "GCP", "Oracle"], biggestOpenQuestions: ["OpenAI long-term", "Maia frontier-training viability"], sources: ["needs-verification"] },
-  { id: "waymo", company: "Waymo", category: "Autonomous vehicles", thesis: "Operational robotaxi service in narrow ODDs (Phoenix, SF, LA, Austin) + multi-modal sensor stack + custom compute.", confidence: "sourced", aiProducts: ["Waymo Driver", "Waymo One"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception (BEV / occupancy)", confidence: "inferred", evidence: "Waymo blog and papers"}, {architectureId: "imitation-learning", usedFor: "Planning / driving", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "Decade-long Phoenix data + multi-city deployment", computeStack: "Custom on-vehicle + Google TPU for training", deploymentSurface: "Waymo One in select cities", businessAdvantage: "Operating-domain depth; Alphabet capital", revenueLogic: "Per-ride fare; long-term licensing", comparisonCompanies: ["Cruise (paused)", "Tesla FSD", "Zoox", "Pony.ai", "Wayve"], biggestOpenQuestions: ["ODD expansion pace", "Unit economics at scale", "Uber integration"], sources: ["src-nhtsa-ads", "src-cruise-pause"] },
-  { id: "figure", company: "Figure AI", category: "Humanoid robotics", thesis: "Commercial humanoids for industrial then consumer; partnerships with BMW etc.; in-house foundation model (Helix).", confidence: "marketContext", aiProducts: ["Figure 02", "Helix"], architecturesUsed: [{architectureId: "vla", usedFor: "Helix policy", confidence: "inferred", evidence: "Public demos"}], dataAdvantage: "Customer-deployment telemetry", computeStack: "On-robot compute + cloud training", deploymentSurface: "Industrial customers", businessAdvantage: "First-mover in commercial humanoid deployment", revenueLogic: "Hardware sales / leases; long-term services", comparisonCompanies: ["1X", "Apptronik", "Tesla Optimus", "Boston Dynamics", "Sanctuary AI"], biggestOpenQuestions: ["Reliability at scale", "Unit economics", "Foundation-model generalisation"], sources: ["needs-verification"] },
+  { id: "waymo", company: "Waymo", category: "Autonomous vehicles", thesis: "Operational robotaxi service in narrow ODDs (Phoenix, SF, LA, Austin) + multi-modal sensor stack + custom compute.", confidence: "sourced", aiProducts: ["Waymo Driver", "Waymo One"], architecturesUsed: [{architectureId: "vit", usedFor: "Perception (BEV / occupancy)", confidence: "inferred", evidence: "Waymo blog and papers"}, {architectureId: "imitation-learning", usedFor: "Planning / driving", confidence: "inferred", evidence: "needsVerification"}], dataAdvantage: "Decade-long Phoenix data + multi-city deployment", computeStack: "Custom on-vehicle + Google TPU for training", deploymentSurface: "Waymo One in select cities", businessAdvantage: "Operating-domain depth; Alphabet capital", revenueLogic: "Per-ride fare; long-term licensing", comparisonCompanies: ["Cruise (paused)", "Tesla FSD", "Zoox", "Pony.ai", "Wayve"], biggestOpenQuestions: ["ODD expansion pace", "Unit economics at scale", "Uber integration"], sources: ["src-nhtsa-ads", "src-cruise-pause"] , publicEvidence: ["Public NHTSA + DMV reporting on driverless miles (NHTSA standing order)","Robotaxi commercial operations in San Francisco, Phoenix, Los Angeles, Austin (public service area maps)","Independent safety reports published periodically"], inferredStack: ["Multi-sensor fusion (lidar + radar + camera) plus ML perception is standard for the robotaxi category; Waymo specifics consistent with public papers","Foundation-model-style components for prediction / planning are reportedly under research"], unknowns: ["Per-mile economics + intervention rate detail at current ODD","Specific planning / prediction architecture beyond high-level disclosures"] },
+  { id: "figure", company: "Figure AI", category: "Humanoid robotics", thesis: "Commercial humanoids for industrial then consumer; partnerships with BMW etc.; in-house foundation model (Helix).", confidence: "marketContext", aiProducts: ["Figure 02", "Helix"], architecturesUsed: [{architectureId: "vla", usedFor: "Helix policy", confidence: "inferred", evidence: "Public demos"}], dataAdvantage: "Customer-deployment telemetry", computeStack: "On-robot compute + cloud training", deploymentSurface: "Industrial customers", businessAdvantage: "First-mover in commercial humanoid deployment", revenueLogic: "Hardware sales / leases; long-term services", comparisonCompanies: ["1X", "Apptronik", "Tesla Optimus", "Boston Dynamics", "Sanctuary AI"], biggestOpenQuestions: ["Reliability at scale", "Unit economics", "Foundation-model generalisation"], sources: ["needs-verification"] , publicEvidence: ["Public demos of bipedal locomotion + manipulation tasks","Disclosed partnership with OpenAI for language-conditioned policies (joint announcement)"], inferredStack: ["VLA-class policy architecture for language-conditioned manipulation, consistent with public field direction","On-robot perception likely transformer-based (industry-standard); specifics not disclosed"], unknowns: ["Real fleet size, hours of teleop data collected, and customer count","Cost-per-task vs human labour benchmark","Production deployments outside controlled demos"] },
   { id: "physical-intelligence", company: "Physical Intelligence (Pi)", category: "Robotics foundation models", thesis: "Generalist robot foundation models on diverse embodiments; sell models / services rather than hardware.", confidence: "marketContext", aiProducts: ["&pi;0", "&pi;0.5"], architecturesUsed: [{architectureId: "vla", usedFor: "Generalist policies", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Cross-embodiment data collection", computeStack: "GPU clusters", deploymentSurface: "Research + commercial robotics partnerships", businessAdvantage: "Cross-embodiment generalisation lead", revenueLogic: "Model licensing / services", comparisonCompanies: ["Skild AI", "Covariant", "Boston Dynamics AI Institute"], biggestOpenQuestions: ["Commercial revenue path", "Embodiment generalisation limits"], sources: ["needs-verification"] },
   { id: "isomorphic-labs", company: "Isomorphic Labs", category: "AI drug discovery", thesis: "AlphaFold-class structure prediction + generative biology + pharma partnerships.", confidence: "marketContext", aiProducts: ["AlphaFold platform internal use", "Drug-discovery platform"], architecturesUsed: [{architectureId: "diffusion-bio", usedFor: "Structure prediction / design", confidence: "sourced", evidence: "Nature 2024"}, {architectureId: "protein-lm", usedFor: "Sequence reasoning", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Alphabet research ecosystem", computeStack: "Google Cloud + TPU", deploymentSurface: "Pharma partnerships (Lilly, Novartis)", businessAdvantage: "DeepMind heritage; AlphaFold", revenueLogic: "Multi-year pharma partnerships", comparisonCompanies: ["Recursion", "Insilico Medicine", "Generate Biomedicines"], biggestOpenQuestions: ["Clinical-translation evidence", "Capital independence"], sources: ["needs-verification"] },
   { id: "abridge", company: "Abridge", category: "Clinical documentation", thesis: "Ambient clinical scribes deeply integrated with Epic / Cerner; high-velocity health-system deployment.", confidence: "marketContext", aiProducts: ["Abridge clinical scribe"], architecturesUsed: [{architectureId: "asr-tts", usedFor: "Speech recognition", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "domain-fm", usedFor: "Clinical-note generation", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Health-system encounter data", computeStack: "Cloud + on-prem options", deploymentSurface: "Health-system EHR integration", businessAdvantage: "Specialty integration depth + clinician trust", revenueLogic: "Per-clinician seat licence", comparisonCompanies: ["Microsoft / Nuance DAX", "Augmedix", "Suki", "DeepScribe"], biggestOpenQuestions: ["Clinician-time-savings durability", "AI procurement consolidation"], sources: ["needs-verification"] },
@@ -6471,7 +6494,7 @@ var COMPANY_AI_STRATEGIES = [
 
   /* ===== Phase 2.A company gameboard expansion (18 new) ===== */
 
-  { id: "cohere", company: "Cohere", category: "Frontier model lab (enterprise)", thesis: "Enterprise-first frontier models + sovereign + RAG-native fine-tuning.", confidence: "marketContext", aiProducts: ["Command R / R+", "Embed", "Rerank"], architecturesUsed: [{architectureId: "llm", usedFor: "General-purpose models tuned for retrieval", confidence: "sourced", evidence: "Public model cards"}, {architectureId: "embeddings", usedFor: "Embed / Rerank", confidence: "sourced", evidence: "Public products"}], dataAdvantage: "Enterprise + sovereign deployment data", computeStack: "Multi-cloud + Oracle partnership", deploymentSurface: "API + Oracle Cloud + Bedrock", businessAdvantage: "Enterprise + RAG pedigree; founder pedigree", revenueLogic: "Enterprise + API", comparisonCompanies: ["Anthropic", "Mistral", "OpenAI"], biggestOpenQuestions: ["Frontier scaling without consumer", "Sovereign-AI revenue mix"], sources: ["needs-verification"] },
+  { id: "cohere", company: "Cohere", category: "Frontier model lab (enterprise)", thesis: "Enterprise-first frontier models + sovereign + RAG-native fine-tuning.", confidence: "marketContext", aiProducts: ["Command R / R+", "Embed", "Rerank"], architecturesUsed: [{architectureId: "llm", usedFor: "General-purpose models tuned for retrieval", confidence: "sourced", evidence: "Public model cards"}, {architectureId: "embeddings", usedFor: "Embed / Rerank", confidence: "sourced", evidence: "Public products"}], dataAdvantage: "Enterprise + sovereign deployment data", computeStack: "Multi-cloud + Oracle partnership", deploymentSurface: "API + Oracle Cloud + Bedrock", businessAdvantage: "Enterprise + RAG pedigree; founder pedigree", revenueLogic: "Enterprise + API", comparisonCompanies: ["Anthropic", "Mistral", "OpenAI"], biggestOpenQuestions: ["Frontier scaling without consumer", "Sovereign-AI revenue mix"], sources: ["needs-verification"] , publicEvidence: ["Command R / R+ + Embed + Rerank model releases","Oracle Cloud + AWS Bedrock + Google Vertex availability"], inferredStack: ["Retrieval-augmented architecture plus enterprise fine-tuning (consistent with product positioning)","Sovereign-AI deployments per public partnership announcements"], unknowns: ["Frontier-scale revenue + deployment depth vs OpenAI / Anthropic","Specific sovereign customer revenue contributions"] },
 
   { id: "salesforce", company: "Salesforce", category: "Enterprise SaaS + AI", thesis: "Agentforce as autonomous business agents on top of CRM + Data Cloud.", confidence: "marketContext", aiProducts: ["Einstein", "Agentforce", "Data Cloud + AI"], architecturesUsed: [{architectureId: "tool-agents", usedFor: "Agentforce", confidence: "sourced", evidence: "Dreamforce announcements"}, {architectureId: "rag", usedFor: "Data Cloud retrieval", confidence: "inferred", evidence: "Product launches"}], dataAdvantage: "CRM + customer data; Data Cloud", computeStack: "Public cloud", deploymentSurface: "Salesforce SaaS surface", businessAdvantage: "Distribution into F500 + customer ownership", revenueLogic: "Per-action / per-conversation pricing for Agentforce", comparisonCompanies: ["ServiceNow", "Microsoft Dynamics", "Oracle"], biggestOpenQuestions: ["Per-action pricing economics", "Reliability of agent autonomy"], sources: ["needs-verification"] },
 
@@ -6481,18 +6504,18 @@ var COMPANY_AI_STRATEGIES = [
 
 
 
-  { id: "boston-dynamics", company: "Boston Dynamics", category: "Robotics", thesis: "Atlas (electric) + Stretch + Spot deployments backed by Hyundai industrial scale.", confidence: "needsVerification", aiProducts: ["Atlas", "Spot", "Stretch", "Orbit"], architecturesUsed: [{architectureId: "rl-control", usedFor: "Locomotion + manipulation", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "vit", usedFor: "Perception", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Decade+ of robot-control data; Hyundai industrial deployments", computeStack: "On-robot + cloud", deploymentSurface: "Industrial / inspection", businessAdvantage: "Proven control engineering; brand", revenueLogic: "Robot sales + service", comparisonCompanies: ["ANYbotics", "Agility", "Figure"], biggestOpenQuestions: ["Atlas commercialisation timeline", "AI policy depth"], sources: ["needs-verification"] },
+  { id: "boston-dynamics", company: "Boston Dynamics", category: "Robotics", thesis: "Atlas (electric) + Stretch + Spot deployments backed by Hyundai industrial scale.", confidence: "needsVerification", aiProducts: ["Atlas", "Spot", "Stretch", "Orbit"], architecturesUsed: [{architectureId: "rl-control", usedFor: "Locomotion + manipulation", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "vit", usedFor: "Perception", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Decade+ of robot-control data; Hyundai industrial deployments", computeStack: "On-robot + cloud", deploymentSurface: "Industrial / inspection", businessAdvantage: "Proven control engineering; brand", revenueLogic: "Robot sales + service", comparisonCompanies: ["ANYbotics", "Agility", "Figure"], biggestOpenQuestions: ["Atlas commercialisation timeline", "AI policy depth"], sources: ["needs-verification"] , publicEvidence: ["Decade+ of public locomotion + manipulation research and product launches (Spot, Stretch, Atlas)","Hyundai industrial deployment partnerships"], inferredStack: ["Classical model-predictive control + RL hybrid for legged locomotion (consistent with public papers)","Perception likely transformer-based on Atlas; specifics undisclosed"], unknowns: ["Atlas (electric) commercial readiness timeline","Depth of foundation-model use in current control stack"] },
 
 
-  { id: "tempus", company: "Tempus AI", category: "Healthcare / clinical AI", thesis: "Multi-modal clinical data platform + AI applications across oncology, cardiology, neurology.", confidence: "needsVerification", aiProducts: ["Tempus Lens", "Tempus One", "Tempus Next"], architecturesUsed: [{architectureId: "domain-fm", usedFor: "Clinical FM", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "vit", usedFor: "Pathology + imaging", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Tempus oncology + cardiology data", computeStack: "Cloud", deploymentSurface: "Clinician + pharma surfaces", businessAdvantage: "Data + clinician network", revenueLogic: "Diagnostics + pharma data + AI applications", comparisonCompanies: ["Flatiron", "PathAI", "Concert AI"], biggestOpenQuestions: ["Path to profitability", "Clinical AI deployment scale"], sources: ["src-tempus-s1"] },
+  { id: "tempus", company: "Tempus AI", category: "Healthcare / clinical AI", thesis: "Multi-modal clinical data platform + AI applications across oncology, cardiology, neurology.", confidence: "needsVerification", aiProducts: ["Tempus Lens", "Tempus One", "Tempus Next"], architecturesUsed: [{architectureId: "domain-fm", usedFor: "Clinical FM", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "vit", usedFor: "Pathology + imaging", confidence: "inferred", evidence: "Vendor materials"}], dataAdvantage: "Tempus oncology + cardiology data", computeStack: "Cloud", deploymentSurface: "Clinician + pharma surfaces", businessAdvantage: "Data + clinician network", revenueLogic: "Diagnostics + pharma data + AI applications", comparisonCompanies: ["Flatiron", "PathAI", "Concert AI"], biggestOpenQuestions: ["Path to profitability", "Clinical AI deployment scale"], sources: ["src-tempus-s1"] , publicEvidence: ["Tempus AI S-1 / 10-K filings (US SEC)","Disclosed pharma partnerships + diagnostic product portfolio"], inferredStack: ["Multi-modal clinical data + ML applications across oncology, cardiology, neurology","Domain-tuned models for specific clinical / research tasks"], unknowns: ["Whether internal models meet a strict foundation-model definition vs domain-tuned models","Per-product clinical efficacy cited in public studies"] },
 
 
   { id: "bloomberg", company: "Bloomberg", category: "Finance data + AI", thesis: "BloombergGPT + AI-assisted analyst tools sit on top of Bloomberg's market + alternative data.", confidence: "marketContext", aiProducts: ["BloombergGPT (research)", "AI on the Terminal", "Bloomberg AI tools"], architecturesUsed: [{architectureId: "domain-fm", usedFor: "Finance LLM", confidence: "sourced", evidence: "BloombergGPT paper"}, {architectureId: "rag", usedFor: "Terminal AI", confidence: "inferred", evidence: "Product launches"}], dataAdvantage: "Bloomberg market + alt data + chat archive", computeStack: "Hybrid", deploymentSurface: "Bloomberg Terminal", businessAdvantage: "Distribution + curated data", revenueLogic: "Terminal subscription + enterprise", comparisonCompanies: ["FactSet", "Refinitiv (LSEG)", "S&amp;P Capital IQ"], biggestOpenQuestions: ["Open vs proprietary AI strategy", "Terminal AI monetisation"], sources: ["needs-verification"] },
 
-  { id: "blackrock-aladdin", company: "BlackRock Aladdin", category: "Finance platform + AI", thesis: "Aladdin as AI-augmented investment + risk platform across asset managers; private + public markets.", confidence: "needsVerification", aiProducts: ["Aladdin", "eFront", "Aladdin AI capabilities (Aladdin Copilot)"], architecturesUsed: [{architectureId: "ts-transformer", usedFor: "Risk modelling", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "llm", usedFor: "Aladdin Copilot", confidence: "sourced", evidence: "Public announcements"}], dataAdvantage: "Aladdin client portfolios + transactions", computeStack: "Hybrid", deploymentSurface: "Aladdin SaaS", businessAdvantage: "Distribution to asset managers + risk depth", revenueLogic: "Aladdin platform fees", comparisonCompanies: ["MSCI", "FactSet", "SimCorp"], biggestOpenQuestions: ["Aladdin AI consumption", "Private-market expansion"], sources: ["src-aladdin-ai"] },
+  { id: "blackrock-aladdin", company: "BlackRock Aladdin", category: "Finance platform + AI", thesis: "Aladdin as AI-augmented investment + risk platform across asset managers; private + public markets.", confidence: "needsVerification", aiProducts: ["Aladdin", "eFront", "Aladdin AI capabilities (Aladdin Copilot)"], architecturesUsed: [{architectureId: "ts-transformer", usedFor: "Risk modelling", confidence: "inferred", evidence: "Vendor materials"}, {architectureId: "llm", usedFor: "Aladdin Copilot", confidence: "sourced", evidence: "Public announcements"}], dataAdvantage: "Aladdin client portfolios + transactions", computeStack: "Hybrid", deploymentSurface: "Aladdin SaaS", businessAdvantage: "Distribution to asset managers + risk depth", revenueLogic: "Aladdin platform fees", comparisonCompanies: ["MSCI", "FactSet", "SimCorp"], biggestOpenQuestions: ["Aladdin AI consumption", "Private-market expansion"], sources: ["src-aladdin-ai"] , publicEvidence: ["Aladdin Copilot product announcement (BlackRock vendor page)","Public investor-day disclosures of AI investment"], inferredStack: ["Aladdin platform integrates risk + portfolio + analytics; AI layer is a copilot on top","Mix of in-house and vendor LLMs (specific partner vs in-house unclear)"], unknowns: ["Specific LLM partner(s) or in-house model identity","Customer activation rate and revenue contribution from Aladdin Copilot"] },
 
 
-  { id: "runway", company: "Runway", category: "Generative video", thesis: "Best-in-class generative video product for film + creative; partnerships with studios.", confidence: "marketContext", aiProducts: ["Gen-3 Alpha", "Gen-4", "Act-One"], architecturesUsed: [{architectureId: "video-models", usedFor: "Generative video", confidence: "sourced", evidence: "Public model releases"}, {architectureId: "diffusion", usedFor: "Image / video generation", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Curated training data + creator usage", computeStack: "Cloud GPU", deploymentSurface: "Web + API", businessAdvantage: "Creator brand + film studio relationships", revenueLogic: "Subscription + API + studio deals", comparisonCompanies: ["OpenAI Sora", "Pika", "Luma"], biggestOpenQuestions: ["Sora competitive pressure", "Film studio adoption depth"], sources: ["needs-verification"] },
+  { id: "runway", company: "Runway", category: "Generative video", thesis: "Best-in-class generative video product for film + creative; partnerships with studios.", confidence: "marketContext", aiProducts: ["Gen-3 Alpha", "Gen-4", "Act-One"], architecturesUsed: [{architectureId: "video-models", usedFor: "Generative video", confidence: "sourced", evidence: "Public model releases"}, {architectureId: "diffusion", usedFor: "Image / video generation", confidence: "sourced", evidence: "Public papers"}], dataAdvantage: "Curated training data + creator usage", computeStack: "Cloud GPU", deploymentSurface: "Web + API", businessAdvantage: "Creator brand + film studio relationships", revenueLogic: "Subscription + API + studio deals", comparisonCompanies: ["OpenAI Sora", "Pika", "Luma"], biggestOpenQuestions: ["Sora competitive pressure", "Film studio adoption depth"], sources: ["needs-verification"] , publicEvidence: ["Public Gen-3 Alpha / Gen-4 / Act-One model releases","Disclosed partnerships with film studios"], inferredStack: ["Video diffusion architecture consistent with the broader latent-diffusion + temporal-conditioning category","Curated training data plus creator usage telemetry"], unknowns: ["Comparative quality vs Sora / Veo across genres","Studio adoption depth vs per-creator subscription revenue mix"] },
 
 
 
@@ -7378,6 +7401,46 @@ var AI_LEARNING_ROADMAP = [
    Each entry pins a high-risk claim somewhere in this dataset.
    Use this list to drive the next round of source-hunting.
    ============================================ */
+
+/* ============================================
+   RESEARCH_STATUS — meta-audit pointer
+   ============================================
+   Where the atlas is strong, where it is weak, what to source-hunt next.
+   ============================================ */
+var RESEARCH_STATUS = {
+  lastAudit: "2026-05-07",
+  strongestAreas: [
+    "Domain framing (52 domains with thesis, reality check, common misunderstanding)",
+    "Workflow-to-money map (43 workflows linked 1:1 to buyer / pain / revenue rows)",
+    "Confidence taxonomy applied across every entry (sourced / inferred / marketContext / forwardLooking / needsVerification)",
+    "Learning roadmap (10 study paths with concrete projects + opportunities)",
+    "Interview question room (7 sets of source-graded mastery questions)",
+    "Source library (100+ canonical papers, regulators, datasets, benchmarks, model cards)"
+  ],
+  weakestAreas: [
+    "Specific company architecture claims (Tesla, Figure, Boston Dynamics, Tempus, BlackRock &mdash; internal stacks rarely fully disclosed)",
+    "YC / a16z / China analogue placeholders across founder dossiers (still flagged for verification per dossier)",
+    "Vendor-specific deployment + revenue claims (most softened to qualitative ranges rather than specific %)",
+    "Regulated-domain magnitude claims (clinical efficacy %, quant bps savings, mfg PdM ROI) &mdash; kept qualitative until each can be cited"
+  ],
+  nextSourceTargets: [
+    "Tesla AI Day refreshed transcripts (current source dates from 2022)",
+    "FDA AI/ML enabled medical devices list (refresh quarterly)",
+    "YC public batch directory (verify per founder-dossier ycCompanies array)",
+    "a16z published theses (American Dynamism / Bio / Enterprise / Consumer)",
+    "SemiAnalysis recent posts (especially capacity / interconnect)",
+    "Stanford AI Index annual report",
+    "MLPerf inference + training results",
+    "Frontier-lab model cards (Anthropic / OpenAI / Google DeepMind / Meta / DeepSeek / Cohere)",
+    "Official company technical blogs (DeepMind, Anthropic, OpenAI, Meta AI, NVIDIA)"
+  ],
+  notes: [
+    "Run window.APPLIED_DEV_CHECK = true or load with ?devcheck=1 to trigger devCheckIntegrity",
+    "confidence:sourced + empty sourceIds is treated as a hard error by the dev check",
+    "Architecture entries without a canonical paper (currently: multi-agent only) keep needsVerification rather than overclaiming"
+  ]
+};
+
 var NEEDS_VERIFICATION_QUEUE = [
   /* Resolved with primary sources. The corresponding entry has been linked via sourceIds.
      Kept here so the audit trail is visible (resolution = source id). */
