@@ -26,12 +26,13 @@
   function setStats() {
     if (typeof CONSULTING_ATLAS_AUDIT === 'undefined') return;
     var a = CONSULTING_ATLAS_AUDIT;
+    var totalSources = (a.sources || 0) + (a.australiaSources || 0);
     var map = {
       'mc-stat-services': a.services, 'mc-stat-buyers': a.buyerSegments,
       'mc-stat-workflows': a.workflowMaps, 'mc-stat-packages': a.pricingPackages,
       'mc-stat-tools': a.toolStacks, 'mc-stat-scripts': a.salesScripts,
       'mc-stat-retainers': a.retainerModels, 'mc-stat-risks': a.riskDossiers,
-      'mc-stat-sources': a.sources, 'mc-stat-roi': a.roiTemplates,
+      'mc-stat-sources': totalSources, 'mc-stat-roi': a.roiTemplates,
       'mc-stat-bfo': a.bestFirstOffers, 'mc-stat-bsp': a.buyerSalesPlaybooks,
       'mc-stat-ladders': a.offerLadders, 'mc-stat-recipes': a.deliveryRecipes,
       'mc-stat-au': a.australiaGTM, 'mc-stat-demos': a.demos,
