@@ -92,7 +92,7 @@ var AI_DOMAINS = [
     confidence: "sourced",
     whatAIIsUsedFor: ["protein structure prediction", "virtual screening", "molecule generation", "target identification", "binding affinity prediction", "lab-workflow automation", "active-learning around assays"],
     mainArchitectures: ["protein language models", "graph neural networks", "diffusion models", "equivariant neural networks", "multimodal foundation models", "active learning"],
-    keyModels: ["AlphaFold 2", "AlphaFold 3", "ESM-2", "RoseTTAFold", "DiffDock", "BioNeMo platform"],
+    keyModels: ["AlphaFold 2", "AlphaFold 3", "ESM-2 / ESMFold", "RoseTTAFold", "DiffDock", "BioNeMo (NVIDIA platform / framework, not a single model)"],
     keyDatasets: ["Protein Data Bank (PDB)", "UniProt", "PubChem", "ChEMBL"],
     workflow: ["biological data + targets", "representation learning", "candidate generation (proteins / molecules)", "in-silico ranking", "wet-lab validation", "lead optimisation", "preclinical / clinical translation"],
     bottlenecks: ["wet-lab validation throughput", "biological data quality and bias", "clinical translation", "regulatory approval", "evaluation beyond benchmarks"],
@@ -217,7 +217,7 @@ var AI_DOMAINS = [
     confidence: "sourced",
     whatAIIsUsedFor: ["tumour detection and grading", "biomarker prediction from H&amp;E", "whole-slide retrieval", "quality control"],
     mainArchitectures: ["multiple-instance learning", "vision transformers", "self-supervised foundation models", "graph neural networks", "tile-based CNNs"],
-    keyModels: ["Paige Prostate", "PathChat (research)", "UNI / Virchow / GigaPath foundation models"],
+    keyModels: ["Paige Prostate (FDA De Novo authorisation, 2021; first AI for cancer detection in pathology)", "PathChat (research, multimodal pathology assistant)", "Pathology foundation models &mdash; UNI, Virchow, GigaPath (specific authorship and venues vary; treat names as references, not citations until verified)"],
     keyDatasets: ["TCGA", "CAMELYON", "PANDA challenge", "PAIP"],
     workflow: ["slide scanning", "tile sampling", "embedding extraction", "slide-level aggregation", "pathologist review", "structured reporting"],
     bottlenecks: ["scanner heterogeneity", "stain variation", "labour-intensive labelling", "regulatory pathway", "clinical lab integration"],
@@ -242,7 +242,7 @@ var AI_DOMAINS = [
     confidence: "sourced",
     whatAIIsUsedFor: ["diabetic retinopathy screening", "glaucoma risk assessment", "age-related macular degeneration detection", "OCT analysis"],
     mainArchitectures: ["convolutional neural networks", "vision transformers", "self-supervised foundation models", "multimodal models"],
-    keyModels: ["IDx-DR (cleared)", "RETFound (foundation model, research)"],
+    keyModels: ["IDx-DR (FDA De Novo authorisation, 2018; first autonomous diagnostic AI cleared in the US)", "RETFound (Moorfields Eye Hospital + UCL; Nature 2023, retinal foundation model, research)"],
     keyDatasets: ["EyePACS", "Kaggle DR detection", "UK Biobank ophthalmic data"],
     workflow: ["fundus / OCT imaging", "model inference", "referral / triage", "ophthalmologist review for confirmation"],
     bottlenecks: ["distribution shift across cameras", "downstream care pathway", "reimbursement", "ethnic and geographic data diversity"],
@@ -296,7 +296,7 @@ var AI_DOMAINS = [
     keyDatasets: ["WHO datasets", "national CDC equivalents", "Johns Hopkins COVID Resource (historical)"],
     workflow: ["multi-source signal ingestion", "anomaly detection", "outbreak hypothesis", "epidemiologist review", "public health response"],
     bottlenecks: ["data fragmentation across jurisdictions", "false-alarm cost", "equity and bias across populations", "coordination across agencies"],
-    companies: ["BlueDot", "Metabiota (historical)", "Kinsa", "academic public-health centers"],
+    companies: ["BlueDot", "Metabiota (historical, acquired by Ginkgo Bioworks; original public-health work largely wound down)", "Kinsa", "academic public-health centres"],
     founderOpportunities: ["multi-source signal fusion for local health departments", "wastewater analytics", "post-event analysis tooling"],
     hypeVsReal: {
       real: ["earlier-than-baseline anomaly detection in published studies", "syndromic surveillance enhancements"],
@@ -1962,7 +1962,7 @@ var DOMAIN_USE_CASES = [
     outputs: ["findings", "triage flags", "draft report", "structured summary"],
     maturity: "Early production",
     bottlenecks: ["clinical validation", "PACS integration", "liability", "bias", "data shift across scanners"],
-    realWorldExamples: ["Aidoc and Viz.ai triage in stroke and PE", "Rad AI draft impressions"],
+    realWorldExamples: ["Aidoc and Viz.ai have FDA-cleared workflow tools for stroke and pulmonary-embolism triage / notification (per vendor and FDA listings).", "Rad AI is a vendor of report-drafting tooling (impressions, generative reporting); deployment varies by health system."],
     risks: ["false negatives", "automation bias", "dataset bias"],
     sourceIds: ["paper-unet", "paper-chexnet"]
   },
@@ -2405,7 +2405,7 @@ var DOMAIN_PAPERS = [
 
   /* ── Biology / chemistry ── */
   { id: "paper-alphafold2", title: "Highly accurate protein structure prediction with AlphaFold", authors: "Jumper et al.", year: 2021, venue: "Nature", domain: "drug-discovery", architecture: "equivariant-nn", whyItMatters: "Solved a 50-year challenge in protein structure prediction.", whatItEnabled: "Modern computational biology pipelines and downstream design work.", limitations: "Single-protein static structures; not the full biology.", sourceUrl: "https://www.nature.com/articles/s41586-021-03819-2", confidence: "sourced" },
-  { id: "paper-alphafold3", title: "Accurate structure prediction of biomolecular interactions with AlphaFold 3", authors: "Abramson et al.", year: 2024, venue: "Nature", domain: "drug-discovery", architecture: "diffusion-bio", whyItMatters: "Extended AlphaFold to broader biomolecular complexes (DNA, RNA, ligands, antibodies).", whatItEnabled: "Multi-component structure prediction for drug discovery workflows.", limitations: "Server-only access initially; closed weights.", sourceUrl: "https://www.nature.com/articles/s41586-024-07487-w", confidence: "sourced" },
+  { id: "paper-alphafold3", title: "Accurate structure prediction of biomolecular interactions with AlphaFold 3", authors: "Abramson et al.", year: 2024, venue: "Nature", domain: "drug-discovery", architecture: "diffusion-bio", whyItMatters: "Extended AlphaFold to broader biomolecular complexes (DNA, RNA, ligands, antibodies).", whatItEnabled: "Multi-component structure prediction for drug discovery workflows.", limitations: "Initial release was server-only; weights and code subsequently released for non-commercial use (late 2024). Confirm current licence terms before commercial use.", sourceUrl: "https://www.nature.com/articles/s41586-024-07487-w", confidence: "sourced" },
   { id: "paper-esm2", title: "Evolutionary-scale prediction of atomic-level protein structure with a language model", authors: "Lin et al.", year: 2023, venue: "Science", domain: "drug-discovery", architecture: "protein-lm", whyItMatters: "Scaled protein language models; ESM-2 / ESMFold predict structure from sequence.", whatItEnabled: "Wide adoption of protein LMs as priors and embeddings.", limitations: "Coverage and accuracy below AlphaFold 2 on many cases.", sourceUrl: "https://www.science.org/doi/10.1126/science.ade2574", confidence: "sourced" },
   { id: "paper-rosettafold", title: "Accurate prediction of protein structures and interactions using a three-track neural network", authors: "Baek et al.", year: 2021, venue: "Science", domain: "drug-discovery", architecture: "equivariant-nn", whyItMatters: "Independent confirmation of high-accuracy structure prediction; basis for the RoseTTAFold family.", whatItEnabled: "Open-source foundations for computational protein modelling.", limitations: "Slightly behind AlphaFold 2 on benchmarks.", sourceUrl: "https://www.science.org/doi/10.1126/science.abj8754", confidence: "sourced" },
   { id: "paper-rfdiffusion", title: "De novo design of protein structure and function with RFdiffusion", authors: "Watson et al.", year: 2023, venue: "Nature", domain: "protein-design", architecture: "diffusion-bio", whyItMatters: "Diffusion model for protein backbones; generated designs that work in the lab.", whatItEnabled: "Modern de novo protein design pipelines.", limitations: "Designs still need lab validation.", sourceUrl: "https://www.nature.com/articles/s41586-023-06415-8", confidence: "sourced" },
@@ -2414,7 +2414,7 @@ var DOMAIN_PAPERS = [
   { id: "paper-gcn", title: "Semi-Supervised Classification with Graph Convolutional Networks", authors: "Kipf and Welling", year: 2017, venue: "ICLR", domain: "general", architecture: "molecular-gnn", whyItMatters: "Foundational GNN paper; basis for chemistry, security and recommendation GNNs.", whatItEnabled: "Wide adoption of GNNs.", limitations: "Many follow-up architectures address scalability.", sourceUrl: "https://arxiv.org/abs/1609.02907", confidence: "sourced" },
   { id: "paper-spliceai", title: "Predicting Splicing from Primary Sequence with Deep Learning", authors: "Jaganathan et al.", year: 2019, venue: "Cell", domain: "genomics", architecture: "cnn", whyItMatters: "Strong CNN model for splice prediction; widely used in clinical interpretation pipelines.", whatItEnabled: "Variant interpretation for splice impact.", limitations: "Cohort distribution effects.", sourceUrl: "https://www.cell.com/cell/fulltext/S0092-8674(18)31629-5", confidence: "sourced" },
   { id: "paper-alphamissense", title: "Accurate proteome-wide missense variant effect prediction with AlphaMissense", authors: "Cheng et al.", year: 2023, venue: "Science", domain: "genomics", architecture: "protein-lm", whyItMatters: "Proteome-scale variant-effect predictions integrated with structure priors.", whatItEnabled: "Variant prioritisation in clinical genomics research.", limitations: "Predictions are not clinical diagnoses.", sourceUrl: "https://www.science.org/doi/10.1126/science.adg7492", confidence: "sourced" },
-  { id: "paper-medpalm2", title: "Towards Expert-Level Medical Question Answering with Large Language Models (Med-PaLM 2)", authors: "Singhal et al.", year: 2023, venue: "arXiv (Nature Medicine follow-up)", domain: "clinical-medicine", architecture: "domain-fm", whyItMatters: "Showed domain-tuned LLMs can reach physician-level on USMLE-style questions.", whatItEnabled: "Acceleration of clinical LLM research.", limitations: "Benchmark performance is not clinical safety.", sourceUrl: "https://arxiv.org/abs/2305.09617", confidence: "sourced" },
+  { id: "paper-medpalm2", title: "Towards Expert-Level Medical Question Answering with Large Language Models (Med-PaLM 2)", authors: "Singhal et al.", year: 2023, venue: "arXiv preprint", domain: "clinical-medicine", architecture: "domain-fm", whyItMatters: "Reported strong performance on USMLE-style multiple-choice questions, accelerating clinical-LLM research. Singhal et al.&rsquo;s earlier 2023 Nature paper (&lsquo;Large language models encode clinical knowledge&rsquo;) introduced the original Med-PaLM.", whatItEnabled: "Acceleration of clinical LLM research; benchmarks for downstream evaluations.", limitations: "USMLE benchmark performance is not equivalent to clinical safety, real-world workflow integration, or accuracy on novel patient cases.", sourceUrl: "https://arxiv.org/abs/2305.09617", confidence: "sourced" },
   { id: "paper-chexnet", title: "CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays with Deep Learning", authors: "Rajpurkar et al.", year: 2017, venue: "arXiv", domain: "radiology", architecture: "cnn", whyItMatters: "Sparked the modern radiology-AI wave; widely cited and replicated.", whatItEnabled: "Many follow-up CXR models and benchmarks.", limitations: "Single-task; benchmark != deployment.", sourceUrl: "https://arxiv.org/abs/1711.05225", confidence: "sourced" },
 
   /* ── Robotics / RL ── */
@@ -2551,8 +2551,308 @@ var CLAIM_AUDIT_LOG = [
   { id: "iss-saycan-cite", domainId: "robotics", claim: "SayCan paper details.", issue: "Author list and venue specifics should be re-verified before public assertion.", action: "Marked confidence: needsVerification.", status: "kept-with-flag" },
   { id: "iss-pathology-fdn", domainId: "pathology", claim: "Pathology foundation models cite specifics (UNI / Virchow / GigaPath).", issue: "Names referenced; specific authorship and venues not asserted.", action: "Generic citation; sourceIds: needs-verification.", status: "kept-with-flag" },
   { id: "iss-public-health-models", domainId: "public-health", claim: "Domain-specific surveillance models cite specifics.", issue: "Specific models not asserted.", action: "Marked needs-verification.", status: "kept-with-flag" },
-  { id: "iss-mental-health-models", domainId: "mental-health", claim: "Specific models behind mental-health apps.", issue: "Vendor-specific and partly proprietary.", action: "Marked needs-verification.", status: "kept-with-flag" }
+  { id: "iss-mental-health-models", domainId: "mental-health", claim: "Specific models behind mental-health apps.", issue: "Vendor-specific and partly proprietary.", action: "Marked needs-verification.", status: "kept-with-flag" },
+
+  /* ── Audit pass v2 (post-build editorial pass) ── */
+  { id: "iss-bionemo", domainId: "drug-discovery", claim: "&lsquo;BioNeMo platform&rsquo; listed under keyModels.", issue: "BioNeMo is a NVIDIA framework / platform, not a single model.", action: "Renamed to clarify it is a platform / framework, not a single model.", status: "tightened" },
+  { id: "iss-alphafold3-access", domainId: "drug-discovery", claim: "AlphaFold 3 is server-only.", issue: "Initial release was server-only; weights and code were subsequently released for non-commercial use in late 2024.", action: "Updated paper limitations note to reflect post-launch release; flagged that licence terms should be re-verified before commercial use.", status: "tightened" },
+  { id: "iss-medpalm-clarification", domainId: "clinical-medicine", claim: "Med-PaLM 2 paper attribution.", issue: "Earlier Singhal et al. 2023 Nature paper introduced the original Med-PaLM; Med-PaLM 2 is a separate arXiv preprint with different scope.", action: "Clarified attribution and added explicit limitation: USMLE benchmark performance is not equivalent to clinical safety.", status: "tightened" },
+  { id: "iss-paige-prostate", domainId: "pathology", claim: "Paige Prostate FDA clearance.", issue: "Specific year not previously stated.", action: "Added FDA De Novo authorisation year (2021) and noted it is the first AI for cancer detection in pathology.", status: "tightened" },
+  { id: "iss-idx-dr", domainId: "ophthalmology", claim: "IDx-DR FDA authorisation.", issue: "Year and authorisation type not previously stated.", action: "Added FDA De Novo authorisation year (2018) and noted it as the first autonomous diagnostic AI cleared in the US.", status: "tightened" },
+  { id: "iss-retfound", domainId: "ophthalmology", claim: "RETFound foundation model.", issue: "Origin not previously cited.", action: "Added Moorfields Eye Hospital + UCL attribution and Nature 2023 publication context.", status: "tightened" },
+  { id: "iss-metabiota-status", domainId: "public-health", claim: "Metabiota listed without status.", issue: "Company was acquired by Ginkgo Bioworks; original public-health surveillance work largely wound down.", action: "Added historical / acquired note inline.", status: "tightened" },
+  { id: "iss-radiology-fda-count", domainId: "radiology", claim: "&lsquo;FDA-cleared triage and detection across many anatomies.&rsquo;", issue: "Vague quantification of FDA-cleared device count.", action: "Reframed as &lsquo;FDA has authorised hundreds of AI/ML-enabled medical devices, with radiology the largest category by count&rsquo; and noted the count evolves with public listings.", status: "tightened" },
+  { id: "iss-pathology-fdn-attribution", domainId: "pathology", claim: "UNI / Virchow / GigaPath foundation models.", issue: "Specific authorship and venues not asserted in the data.", action: "Added explicit caveat that names are references, not citations until verified.", status: "tightened" },
+  { id: "iss-banking-mrm-cite", domainId: "banking", claim: "Model-risk-management constraints in banking AI.", issue: "Implicit reference to SR 11-7 not previously named.", action: "Named SR 11-7 (Federal Reserve / OCC) explicitly; clarified classical-ML maturity vs LLM early production split.", status: "tightened" },
+  { id: "iss-radiology-vendors", domainId: "radiology", claim: "Aidoc / Viz.ai / Rad AI deployment claims.", issue: "Originally phrased as &lsquo;triage in stroke and PE&rsquo; without sourcing the specific clearance status.", action: "Reframed as &lsquo;FDA-cleared workflow tools for stroke and pulmonary-embolism triage / notification (per vendor and FDA listings)&rsquo;.", status: "tightened" },
+  { id: "iss-clinical-scribe-claims", domainId: "clinical-documentation", claim: "Time-savings and adoption claims.", issue: "Specific numerical claims not asserted; uptake claim was generic.", action: "Reframed as &lsquo;multiple peer-reviewed and vendor-reported pilot studies&rsquo; with deployment described as well documented in vendor and trade reporting; numbers verifiable per site.", status: "tightened" },
+  { id: "iss-uses-by-claims", domainId: null, claim: "&lsquo;Used by&rsquo; / deployment claims across vendors.", issue: "Risk of overstating adoption from vendor materials alone.", action: "Across all domains, company lists are framed as &lsquo;market context&rsquo; (in domain entries) or as vendor lists with explicit hedging where adoption-specific.", status: "kept-with-confidence" },
+  { id: "iss-arch-domain-mapping", domainId: null, claim: "Architecture-domain match coverage.", issue: "Some architectures are listed across multiple domains where their use is partial or specialised.", action: "Coverage retained but each architecture entry specifies primary &lsquo;whereUsed&rsquo; and includes weaknesses noting where it does not work.", status: "kept-with-confidence" },
+  { id: "iss-maturity-banking", domainId: "banking", claim: "Banking maturity label.", issue: "Banking ML is decades-mature; LLM-driven banking AI is early.", action: "Kept as &lsquo;Early production&rsquo; with detailed-answer split between mature classical ML and early LLM use.", status: "kept-with-confidence" },
+  { id: "iss-quant-firms", domainId: "quant-finance", claim: "Renaissance Technologies, Two Sigma etc. as illustrative firms.", issue: "Public ML-use disclosure varies; some firms (Renaissance especially) are extremely opaque.", action: "Kept list, but the entry itself notes &lsquo;mostly proprietary; little is published&rsquo;.", status: "kept-with-confidence" },
+  { id: "iss-magnific-acq", domainId: "design-architecture", claim: "Magnific acquisition status.", issue: "Acquisition of Magnific by Freepik (2024) confirmed in public reporting.", action: "Kept inline annotation.", status: "kept-with-confidence" },
+  { id: "iss-llamasoft-coupa", domainId: "supply-chain", claim: "Llamasoft acquired by Coupa.", issue: "Coupa acquired Llamasoft in 2020; subsequently rolled into Coupa offerings.", action: "Kept inline annotation.", status: "kept-with-confidence" },
+  { id: "iss-idx-rwe", domainId: "ophthalmology", claim: "IDx-DR realWorldExamples wording.", issue: "Originally vague.", action: "Already tightened in main entry; use-case examples remain consistent with main entry.", status: "kept-with-confidence" }
 ];
+
+/* ============================================
+   DOMAIN_SUMMARY
+   For each domain, a structured high-signal summary aimed at the
+   audit&rsquo;s requirement: every domain must have a memorable takeaway,
+   a biggest bottleneck, a best founder opportunity and a top reference
+   (paper / model / dataset) where source-backed.
+
+   Field semantics:
+     biggestBottleneck    one-line constraint that gates real progress
+     bestOpportunity      one founder wedge with the strongest signal
+     topReference         { type, label, refId } where:
+                            type = paper | model | dataset | regulator | vendor | concept
+                            refId is an id in DOMAIN_PAPERS / SOURCE_LIBRARY
+                                   or null if there is none worth citing yet
+     confidenceNote       (optional) explicit caveat about the summary
+   ============================================ */
+var DOMAIN_SUMMARY = {
+  "drug-discovery": {
+    biggestBottleneck: "Wet-lab validation throughput &mdash; AI proposes thousands of candidates faster than experiments can confirm any of them.",
+    bestOpportunity: "Evaluation harnesses for generated molecules: novelty, drug-likeness and predicted safety scoring before the lab spend begins.",
+    topReference: { type: "paper", label: "AlphaFold 2 (Jumper et al., Nature 2021)", refId: "paper-alphafold2" }
+  },
+  "genomics": {
+    biggestBottleneck: "Population diversity in training cohorts &mdash; under-representation of non-European cohorts limits clinical actionability.",
+    bestOpportunity: "Variant interpretation copilots that defer correctly to human experts on variants of uncertain significance.",
+    topReference: { type: "paper", label: "AlphaMissense (Cheng et al., Science 2023)", refId: "paper-alphamissense" }
+  },
+  "protein-design": {
+    biggestBottleneck: "Expression and folding success rates &mdash; designed sequences often fail before they reach an assay.",
+    bestOpportunity: "High-throughput protein expression and characterisation platforms that close the design-build-test loop.",
+    topReference: { type: "paper", label: "RFdiffusion (Watson et al., Nature 2023)", refId: "paper-rfdiffusion" }
+  },
+  "clinical-medicine": {
+    biggestBottleneck: "Validation outside training distribution &mdash; clinical deployments must hold across sites, demographics and workflows.",
+    bestOpportunity: "Specialty-specific copilots (cardiology, oncology, paediatrics) with EHR-grade integration and explicit safety scaffolding.",
+    topReference: { type: "regulator", label: "FDA Software as a Medical Device guidance", refId: "src-fda-samd" }
+  },
+  "radiology": {
+    biggestBottleneck: "Distribution shift across scanners and sites &mdash; performance can drop silently when deployed in a different hospital than training.",
+    bestOpportunity: "Report-generation copilots that draft structured findings inside PACS / RIS, not standalone detectors.",
+    topReference: { type: "paper", label: "nnU-Net (Isensee et al., Nature Methods 2021)", refId: "paper-nnunet" }
+  },
+  "pathology": {
+    biggestBottleneck: "Slide-scanner heterogeneity and stain variation &mdash; foundation models still drift across labs.",
+    bestOpportunity: "Specialty fine-tunes for rare cancers and biomarker subtypes where general foundation models under-perform.",
+    topReference: { type: "model", label: "Paige Prostate (FDA De Novo authorisation, 2021)", refId: null }
+  },
+  "ophthalmology": {
+    biggestBottleneck: "Camera and population diversity &mdash; models trained on one camera or demographic generalise poorly elsewhere.",
+    bestOpportunity: "Primary-care eye-screening kiosks paired with affordable imaging hardware.",
+    topReference: { type: "model", label: "IDx-DR (FDA De Novo authorisation, 2018) &mdash; first autonomous diagnostic AI cleared in the US", refId: null }
+  },
+  "clinical-documentation": {
+    biggestBottleneck: "EHR integration and structured-note quality &mdash; transcripts are easy; correctly coded SOAP notes are not.",
+    bestOpportunity: "Specialty-specific scribes (paediatrics, OB, behavioural) where general scribes plateau on phrasing.",
+    topReference: { type: "vendor", label: "Microsoft / Nuance DAX, Abridge, Augmedix, Suki (broad commercial deployment, well-documented in trade reporting)", refId: null }
+  },
+  "public-health": {
+    biggestBottleneck: "Data fragmentation across jurisdictions &mdash; signals exist; sharing them does not.",
+    bestOpportunity: "Multi-source signal fusion for local health departments, with provenance and equity built in.",
+    topReference: { type: "concept", label: "WHO and CDC syndromic-surveillance datasets (specific surveillance models flagged for verification)", refId: null }
+  },
+  "mental-health": {
+    biggestBottleneck: "Safety, risk handling and the absence of clean efficacy gold-standards &mdash; conversational fluency &ne; clinical efficacy.",
+    bestOpportunity: "Clinician-supervised between-session tools with structured safety scaffolding and clinical efficacy evidence.",
+    topReference: { type: "concept", label: "Vendor-specific models (treat as needs-verification; no widely-cited published model is canonical here yet)", refId: null }
+  },
+  "banking": {
+    biggestBottleneck: "Model-risk-management constraints (SR 11-7-style) &mdash; explainability and stability under stress are non-negotiable.",
+    bestOpportunity: "AML investigator copilots and MRM tooling for AI models &mdash; banks need playbooks LLMs were not built for.",
+    topReference: { type: "concept", label: "GBDT (XGBoost / LightGBM / CatBoost) is the production workhorse; foundation papers are well-known but no single &lsquo;banking AI&rsquo; canonical paper exists", refId: null }
+  },
+  "quant-finance": {
+    biggestBottleneck: "Honest evaluation under data leakage, regime shift and transaction costs &mdash; most strategies look great until they go live.",
+    bestOpportunity: "Honest evaluation tooling (transaction-cost, look-ahead-bias, leakage detection) that the industry quietly under-invests in.",
+    topReference: { type: "concept", label: "No public canonical paper; quant ML is mostly proprietary. Time-series and reinforcement-learning landmarks (e.g. AlphaZero, DQN) are the underlying recipes.", refId: "paper-alphazero" }
+  },
+  "trading": {
+    biggestBottleneck: "Latency and infrastructure &mdash; microseconds dominate, and most of the work is engineering, not modelling.",
+    bestOpportunity: "Transaction-cost analytics and smart-routing tooling for buy-side workflows.",
+    topReference: { type: "concept", label: "Mostly proprietary; reinforcement learning for execution is the dominant recipe.", refId: null }
+  },
+  "risk-management": {
+    biggestBottleneck: "Stress-test coverage &mdash; tail events are by definition under-represented in training data.",
+    bestOpportunity: "Model-monitoring + scenario / stress-test infrastructure tailored for AI models in regulated finance.",
+    topReference: { type: "concept", label: "Industry-specific (no single canonical paper); SR 11-7 framework + interpretability literature.", refId: null }
+  },
+  "fraud-detection": {
+    biggestBottleneck: "Adversarial drift &mdash; the attacker is learning at the same time you are.",
+    bestOpportunity: "Graph-feature platforms for verticals adjacent to payments (gaming, marketplaces, crypto on-ramps).",
+    topReference: { type: "paper", label: "GCN (Kipf and Welling, ICLR 2017) underpins the graph-feature approach", refId: "paper-gcn" }
+  },
+  "insurance": {
+    biggestBottleneck: "State-by-state regulatory approval and fair-pricing constraints in major markets.",
+    bestOpportunity: "Claims-process copilots with direct loss-ratio impact (auto, property, parametric).",
+    topReference: { type: "vendor", label: "Tractable, Cape Analytics, Shift Technology (vendor case studies; specific deployment metrics vary)", refId: null }
+  },
+  "accounting-audit": {
+    biggestBottleneck: "Regulator and standard-setter acceptance &mdash; AI outputs must be auditable and traceable.",
+    bestOpportunity: "Specialty-area copilots (revenue recognition, leases, transfer pricing) with evidence-chain infrastructure.",
+    topReference: { type: "concept", label: "RAG (Lewis et al., NeurIPS 2020) is the underlying retrieval pattern", refId: "paper-rag" }
+  },
+  "economic-forecasting": {
+    biggestBottleneck: "Non-stationarity and limited training data per regime &mdash; macro is reflexive.",
+    bestOpportunity: "Alt-data nowcasts for specialised verticals (consumer, supply chain, energy) where signals beat consensus by hours.",
+    topReference: { type: "concept", label: "Time-series transformers + classical Bayesian VARs; no single canonical applied paper.", refId: null }
+  },
+  "software-engineering": {
+    biggestBottleneck: "Repo-scale reliability &mdash; coding agents can pass benchmarks and still ship broken PRs.",
+    bestOpportunity: "Language- and framework-specific agents for niche stacks where generalists struggle.",
+    topReference: { type: "paper", label: "SWE-bench (Jimenez et al., ICLR 2024)", refId: "paper-swebench" }
+  },
+  "cybersecurity": {
+    biggestBottleneck: "Adversarial drift plus the new AI attack surface (prompt injection, data poisoning).",
+    bestOpportunity: "Prompt-injection / AI-attack-surface defence tooling for enterprise security teams.",
+    topReference: { type: "dataset", label: "MITRE ATT&amp;CK (knowledge base of adversary tactics)", refId: "src-mitre-attack" }
+  },
+  "legal": {
+    biggestBottleneck: "Hallucinated citations &mdash; documented in courts, leading to sanctions and malpractice risk.",
+    bestOpportunity: "Specialty practice copilots (immigration, tax, employment) with verified citation chains.",
+    topReference: { type: "paper", label: "RAG (Lewis et al., NeurIPS 2020) underpins citation-grounded legal AI", refId: "paper-rag" }
+  },
+  "education": {
+    biggestBottleneck: "Assessment integrity &mdash; detection is unreliable; the response shifts to assignment design.",
+    bestOpportunity: "Subject-specific tutors with measurable learning gains (math, languages, code) and integrity-aware assessment.",
+    topReference: { type: "vendor", label: "Khan Academy Khanmigo, Duolingo Max (vendor-reported engagement; learning-gain evidence is the open question)", refId: null }
+  },
+  "hr-recruiting": {
+    biggestBottleneck: "Fair-hiring laws &mdash; aggregate accuracy is not enough; disparate impact on protected groups is the binding test.",
+    bestOpportunity: "Transparent ranking + audit / bias-monitoring tooling for regulated jurisdictions (NYC, EU AI Act).",
+    topReference: { type: "concept", label: "Skills-graph and ranking models; no canonical applied paper, vendor-driven.", refId: null }
+  },
+  "sales-marketing": {
+    biggestBottleneck: "Privacy and consent regulation plus measurement over long sales cycles.",
+    bestOpportunity: "Outbound copilots with verified data sources and post-call coaching, not generation-only tools.",
+    topReference: { type: "concept", label: "LLMs (general) + embeddings; no domain-specific canonical paper.", refId: null }
+  },
+  "customer-support": {
+    biggestBottleneck: "Knowledge-base hygiene &mdash; a great LLM is bounded by the corpus it retrieves from.",
+    bestOpportunity: "Vertical support copilots for regulated industries (telcos, banks, healthcare ops).",
+    topReference: { type: "paper", label: "RAG (Lewis et al., NeurIPS 2020) is the dominant pattern", refId: "paper-rag" }
+  },
+  "enterprise-productivity": {
+    biggestBottleneck: "Enterprise data hygiene and permissioning &mdash; copilots are only as good as what they can see.",
+    bestOpportunity: "Vertical productivity copilots (industry-specific) plus permissioning + governance for AI access.",
+    topReference: { type: "vendor", label: "Microsoft Copilot, Google Workspace AI, Glean (broad enterprise distribution)", refId: null }
+  },
+  "research-workflows": {
+    biggestBottleneck: "Citation hallucination and corpus-coverage gaps &mdash; confidence is not verification.",
+    bestOpportunity: "Specialty corpora copilots (medicine, law, materials, finance) with rigorous evaluation.",
+    topReference: { type: "paper", label: "RAG (Lewis et al., NeurIPS 2020) underpins research copilots", refId: "paper-rag" }
+  },
+  "robotics": {
+    biggestBottleneck: "Real-robot data scarcity plus the sim-to-real gap &mdash; demos are everywhere; reliability is rare.",
+    bestOpportunity: "Robot-data infrastructure: teleoperation, simulation and labelling at fleet scale.",
+    topReference: { type: "paper", label: "RT-2 (Brohan et al., 2023) and Open X-Embodiment (2023)", refId: "paper-rt2" }
+  },
+  "autonomous-vehicles": {
+    biggestBottleneck: "Long-tail safety and human-driver interaction &mdash; the rare cases dominate risk.",
+    bestOpportunity: "Specialty autonomy (warehouses, mining, logistics) where the operating-design domain is naturally narrow.",
+    topReference: { type: "dataset", label: "nuScenes / Waymo Open Dataset / Argoverse (public AV datasets)", refId: "ds-nuscenes" }
+  },
+  "manufacturing": {
+    biggestBottleneck: "Industrial data fragmentation across OT and IT systems plus rare-defect labelling.",
+    bestOpportunity: "Specialty defect detection (electronics, food, pharma) with MES-integrated copilots.",
+    topReference: { type: "vendor", label: "Cognex, Landing AI, Instrumental, Drishti (vendor-led category)", refId: null }
+  },
+  "supply-chain": {
+    biggestBottleneck: "Multi-party data sharing across shippers, carriers and 3PLs.",
+    bestOpportunity: "Real-time disruption signals with provenance and translation across jurisdictions.",
+    topReference: { type: "concept", label: "Time-series + OR with ML inputs; no single canonical paper.", refId: null }
+  },
+  "energy-grid": {
+    biggestBottleneck: "Regulatory approval and physical safety constraints &mdash; the grid is a physics machine first.",
+    bestOpportunity: "DER (distributed energy resource) orchestration for behind-the-meter assets.",
+    topReference: { type: "concept", label: "Time-series + reinforcement learning for dispatch; no single domain-canonical paper.", refId: null }
+  },
+  "climate-weather": {
+    biggestBottleneck: "Evaluation on rare extremes &mdash; AI may match NWP on average and miss the events that matter most.",
+    bestOpportunity: "Specialty regional and vertical weather products (renewables, agriculture, insurance).",
+    topReference: { type: "paper", label: "GraphCast (Lam et al., Science 2023)", refId: "paper-graphcast" }
+  },
+  "agriculture": {
+    biggestBottleneck: "Local heterogeneity (crop, soil, weather) &mdash; models do not transfer across geographies.",
+    bestOpportunity: "Specialty-crop computer vision and decision support for under-served regions.",
+    topReference: { type: "vendor", label: "John Deere See &amp; Spray (Blue River); vendor-disclosed input reduction in their materials", refId: null }
+  },
+  "construction": {
+    biggestBottleneck: "Capture inconsistency &mdash; site photos and 360 captures must be regular and clean for AI to be accurate.",
+    bestOpportunity: "Specialty trade copilots (electrical, mechanical, plumbing) and BIM-integrated progress tracking.",
+    topReference: { type: "vendor", label: "OpenSpace, Buildots (vendor-led category, public case studies)", refId: null }
+  },
+  "mining-oil-gas": {
+    biggestBottleneck: "Regulatory approval and safety in remote / harsh environments.",
+    bestOpportunity: "Subsurface foundation models and edge AI for remote sites.",
+    topReference: { type: "vendor", label: "BHP and Rio Tinto autonomous-haul deployments; SLB / Halliburton subsurface ML platforms", refId: null }
+  },
+  "telecommunications": {
+    biggestBottleneck: "Vendor lock-in for OSS / BSS plus edge inference cost for the radio access network.",
+    bestOpportunity: "Edge AI for RAN and AI-native customer care purpose-built for telcos.",
+    topReference: { type: "concept", label: "Time-series anomaly detection + RL for self-organising networks; no canonical paper.", refId: null }
+  },
+  "materials-science": {
+    biggestBottleneck: "Synthesis success rate &mdash; predicted stable structures are often not synthesisable.",
+    bestOpportunity: "Autonomous lab platforms that close the design-build-test-learn loop.",
+    topReference: { type: "dataset", label: "Materials Project (LBNL)", refId: "ds-materials-project" }
+  },
+  "chemistry": {
+    biggestBottleneck: "Limited high-quality reaction data; novel-reaction generalisation.",
+    bestOpportunity: "Lab-execution platforms that translate retrosynthetic plans into automated experiments.",
+    topReference: { type: "concept", label: "Molecular transformers + GNNs; field has many strong papers, no single canonical reference.", refId: null }
+  },
+  "physics": {
+    biggestBottleneck: "Trust in surrogates outside training distribution and interpretability for physics.",
+    bestOpportunity: "Specialty engineering surrogates (CFD, EM, structural) with engineering-grade uncertainty.",
+    topReference: { type: "paper", label: "Fourier Neural Operator (Li et al., ICLR 2021)", refId: "paper-fno" }
+  },
+  "mathematics": {
+    biggestBottleneck: "Formalisation cost &mdash; informal mathematical reasoning has to be ported to Lean / Coq for verification.",
+    bestOpportunity: "Formalisation tooling and research-math copilots that lower the cost of theorem-proving workflows.",
+    topReference: { type: "model", label: "AlphaProof and AlphaGeometry (DeepMind research)", refId: null }
+  },
+  "scientific-computing": {
+    biggestBottleneck: "Out-of-distribution behaviour &mdash; engineering certification (e.g. DO-178C-class) needs guarantees neural surrogates do not yet provide.",
+    bestOpportunity: "Engineering-grade surrogates with uncertainty and certification-friendly tooling.",
+    topReference: { type: "paper", label: "Fourier Neural Operator (Li et al., ICLR 2021)", refId: "paper-fno" }
+  },
+  "aerospace-space": {
+    biggestBottleneck: "Certification (DO-178C / DO-254) keeps autonomy narrow and supervised in safety-critical aviation systems.",
+    bestOpportunity: "Specialty geospatial verticals (insurance, agriculture, defence) on top of foundation models.",
+    topReference: { type: "model", label: "Prithvi geospatial foundation model (NASA + IBM); vendor / research partnership", refId: null }
+  },
+  "media-entertainment": {
+    biggestBottleneck: "Rights, provenance and moderation at scale.",
+    bestOpportunity: "Provenance and rights tooling (e.g. C2PA-based) for studios, brands and platforms.",
+    topReference: { type: "paper", label: "Latent Diffusion Models (Rombach et al., CVPR 2022)", refId: "paper-ldm" }
+  },
+  "gaming": {
+    biggestBottleneck: "Latency budgets and platform certification limit on-device AI in real-time gameplay.",
+    bestOpportunity: "Studio-grade asset pipelines and NPC agents with safety scaffolding.",
+    topReference: { type: "concept", label: "DLSS-class super-resolution (NVIDIA) is the most-deployed gaming AI category.", refId: null }
+  },
+  "design-architecture": {
+    biggestBottleneck: "IP and rights on training data; manufacturability and code-compliance constraints.",
+    bestOpportunity: "Specialty design copilots (interior, brand, product) with manufacturability constraints baked in.",
+    topReference: { type: "vendor", label: "Adobe Firefly, Figma AI, Vizcom (vendor-led category)", refId: null }
+  },
+  "music-audio": {
+    biggestBottleneck: "Rights and licensing &mdash; commercial use is risky until rights regimes mature.",
+    bestOpportunity: "Rights-clean training and licensing infrastructure for sync, podcast and game audio.",
+    topReference: { type: "vendor", label: "Suno, Udio, ElevenLabs (vendor-led; rights status varies)", refId: null }
+  },
+  "consumer-search": {
+    biggestBottleneck: "Citation and ad / publisher economics &mdash; the disruption is the business model, not just the UX.",
+    bestOpportunity: "Vertical search (medicine, law, science) with citation infrastructure and rights-clean retrieval.",
+    topReference: { type: "paper", label: "RAG (Lewis et al., NeurIPS 2020)", refId: "paper-rag" }
+  },
+  "government-services": {
+    biggestBottleneck: "Procurement, FedRAMP / IL-class certification, and equity / transparency requirements.",
+    bestOpportunity: "FedRAMP-ready vertical tools for case management, translation and appeals.",
+    topReference: { type: "concept", label: "RAG + OCR + ASR stacks built on hyperscaler models; no single domain-canonical paper.", refId: null }
+  },
+  "defence": {
+    biggestBottleneck: "Accountability and laws of armed conflict &mdash; high-stakes operations require humans in the loop.",
+    bestOpportunity: "Dual-use ISR analysis, logistics and predictive-maintenance copilots; training simulators.",
+    topReference: { type: "concept", label: "Mostly classified or vendor-private; cite cautiously.", refId: null }
+  },
+  "intelligence-analysis": {
+    biggestBottleneck: "Classification and access controls plus adversarial deception (deepfakes / IO).",
+    bestOpportunity: "OSINT analytics with chain-of-evidence and deepfake / IO detection.",
+    topReference: { type: "concept", label: "Mostly classified or vendor-private; cite cautiously.", refId: null }
+  },
+  "smart-cities": {
+    biggestBottleneck: "Procurement, interoperability across departments and privacy / surveillance scrutiny.",
+    bestOpportunity: "Civic copilots in many languages with civic-data interoperability built in.",
+    topReference: { type: "concept", label: "National LLM programmes (UAE, Saudi Arabia, India, Singapore, France) and civic AI deployments; no single canonical paper.", refId: null }
+  }
+};
 
 /* ============================================
    DOMAIN_QUESTIONS
@@ -3091,7 +3391,7 @@ var DOMAIN_QUESTIONS = [
     audience: "researcher", category: "Domain overview", difficulty: "Intermediate",
     shortAnswer: "Mostly for syndromic surveillance, multi-source signal fusion and outbreak forecasting. Governance and equity gate operational use as much as model quality.",
     detailedAnswer: [
-      "Public health departments fuse signals from health systems, wastewater, social media and geographies to detect outbreaks earlier and target interventions.",
+      "Public health departments fuse signals from health systems, wastewater, social media and geographies to detect outbreaks earlier and target interventions. Some commercial vendors that pioneered this category (e.g. Metabiota) have changed hands or wound down operations; the work has continued inside academic centres and government labs.",
       "AI helps with anomaly detection, signal fusion and forecasting; epidemiologists adjudicate.",
       "Earlier detection only matters if response capacity exists. Governance, data sharing and equity considerations dominate."
     ],
@@ -3133,8 +3433,8 @@ var DOMAIN_QUESTIONS = [
     audience: "investor", category: "Domain overview", difficulty: "Intermediate",
     shortAnswer: "Mostly in risk, compliance and operations &mdash; the unglamorous middle of the bank. The visible chatbots are far less economically significant than the GBDT models running fraud and credit.",
     detailedAnswer: [
-      "Banking AI lives inside model-risk-management constraints. Models must be auditable, explainable and reproducible.",
-      "Workhorses: GBDT for fraud and credit, OCR + document AI for KYC and operations, LLMs for internal copilots, graph models for AML.",
+      "Banking AI lives inside model-risk-management constraints (e.g. Federal Reserve / OCC SR 11-7 in the US). Models must be auditable, explainable and reproducible.",
+      "Workhorses: GBDT for fraud and credit, OCR + document AI for KYC and operations, LLMs for internal copilots, graph models for AML. The classical-ML side is mature; the LLM side is mostly early production.",
       "Customer-facing chat is real but secondary. The economic value is in cost-to-serve and risk."
     ],
     mentalModel: "The boring AI inside banks is doing more economic work than the visible AI.",

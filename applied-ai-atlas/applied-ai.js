@@ -625,13 +625,52 @@
     return html;
   }
 
+  function getDomainSummary(id) {
+    if (typeof DOMAIN_SUMMARY === 'undefined') return null;
+    return DOMAIN_SUMMARY[id] || null;
+  }
+
+  function renderTopReference(ref) {
+    if (!ref) return '';
+    var label = ref.label || '';
+    if (ref.refId) {
+      var paper = getPaper(ref.refId);
+      if (paper && paper.sourceUrl) {
+        return '<a class="applied-paper-link" href="' + escapeHtml(paper.sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(label) + ' &nearr;</a>';
+      }
+      var src = (typeof SOURCE_LIBRARY !== 'undefined') ? SOURCE_LIBRARY.filter(function (s) { return s.id === ref.refId; })[0] : null;
+      if (src && src.url) {
+        return '<a class="applied-paper-link" href="' + escapeHtml(src.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(label) + ' &nearr;</a>';
+      }
+      var ds = (typeof DOMAIN_DATASETS !== 'undefined') ? DOMAIN_DATASETS.filter(function (x) { return x.id === ref.refId; })[0] : null;
+      if (ds && ds.url) {
+        return '<a class="applied-paper-link" href="' + escapeHtml(ds.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(label) + ' &nearr;</a>';
+      }
+    }
+    return escapeHtml(label);
+  }
+
+  function renderSummaryBlock(s) {
+    if (!s) return '';
+    var typeLabels = { paper: 'Top paper', model: 'Top model', dataset: 'Top dataset', regulator: 'Top reference', vendor: 'Top vendors', concept: 'Top reference' };
+    var refLabel = (s.topReference && s.topReference.type) ? (typeLabels[s.topReference.type] || 'Top reference') : 'Top reference';
+    return '<div class="applied-summary-block">' +
+             (s.biggestBottleneck ? '<div class="applied-summary-row"><div class="applied-summary-label">Biggest bottleneck</div><div class="applied-summary-text">' + s.biggestBottleneck + '</div></div>' : '') +
+             (s.bestOpportunity ? '<div class="applied-summary-row"><div class="applied-summary-label">Best founder opportunity</div><div class="applied-summary-text">' + s.bestOpportunity + '</div></div>' : '') +
+             (s.topReference ? '<div class="applied-summary-row"><div class="applied-summary-label">' + refLabel + '</div><div class="applied-summary-text">' + renderTopReference(s.topReference) + '</div></div>' : '') +
+             (s.confidenceNote ? '<div class="applied-summary-row"><div class="applied-summary-label">Note</div><div class="applied-summary-text">' + escapeHtml(s.confidenceNote) + '</div></div>' : '') +
+           '</div>';
+  }
+
   function renderDomainProfile(d) {
     var cat = getCategoryMeta(d.category);
     var catColor = cat ? cat.color : '#5EEAD4';
     var catLabel = cat ? cat.label : d.category;
+    var summary = getDomainSummary(d.id);
 
     var brief =
       '<p class="applied-detail-summary">' + escapeHtml(d.thesis || '') + '</p>' +
+      renderSummaryBlock(summary) +
       (d.commonMisunderstanding ? '<div class="applied-callout applied-callout--warn"><span class="applied-callout-label">Common misunderstanding</span>' + escapeHtml(d.commonMisunderstanding) + '</div>' : '') +
       bulletList('What AI is used for', d.whatAIIsUsedFor) +
       chipList('Main architectures', d.mainArchitectures, 'arch') +

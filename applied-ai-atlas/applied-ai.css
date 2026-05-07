@@ -1231,6 +1231,42 @@ button {
 .applied-callout--warn .applied-callout-label { color: var(--c-needs); }
 .applied-callout--why  .applied-callout-label { color: var(--applied-warm); }
 
+/* Summary block (per-domain audit summary) */
+.applied-summary-block {
+  margin: 14px 0 18px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(94,234,212,0.05), rgba(94,234,212,0.01));
+  border: 1px solid rgba(94,234,212,0.18);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.applied-summary-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.applied-summary-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--applied-core);
+  padding-top: 1px;
+}
+.applied-summary-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.applied-summary-text a { color: var(--applied-core); }
+.applied-summary-text a:hover { text-decoration: underline; }
+@media (max-width: 540px) {
+  .applied-summary-row { grid-template-columns: 1fr; gap: 2px; }
+}
+
 /* Source pill block */
 .applied-source-pill {
   display: inline-flex;
