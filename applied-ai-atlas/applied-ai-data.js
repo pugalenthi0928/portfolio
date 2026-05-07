@@ -229,7 +229,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "AI predictions on H&amp;E slides are not equivalent to molecular tests. They can suggest likely biomarker status, but molecular confirmation is still standard.",
     relatedQuestions: ["q-pathology-overview", "q-medicine-imaging-mature"],
-    sourceIds: ["src-tcga", "needs-verification"]
+    sourceIds: ["src-tcga", "src-radiology-fda-list"]
   },
 
   {
@@ -254,7 +254,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "An autonomous screening system is approved for screening within a defined indication, not for full ophthalmic diagnosis.",
     relatedQuestions: ["q-ophthalmology-overview"],
-    sourceIds: ["src-fda-samd", "needs-verification"]
+    sourceIds: ["src-fda-samd", "src-idx-dr", "src-radiology-fda-list"]
   },
 
   {
@@ -264,7 +264,7 @@ var AI_DOMAINS = [
     thesis: "Ambient scribes and discharge-summary copilots are among the fastest-deploying clinical AI categories because the workflow change is small and the time-savings are immediate.",
     oneLineTakeaway: "AI scribes are the first AI most clinicians will actually use.",
     maturity: "Production",
-    confidence: "sourced",
+    confidence: "inferred",
     whatAIIsUsedFor: ["ambient note drafting", "discharge summary generation", "coding assistance", "letter writing", "structured note extraction"],
     mainArchitectures: ["ASR (Whisper-class)", "clinical LLMs", "retrieval-augmented generation", "speaker diarisation"],
     keyModels: ["Whisper-class ASR", "GPT-4 / GPT-5-class LLMs (when integrated by EHR vendors)", "Claude-class LLMs"],
@@ -279,7 +279,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "A clean transcript is not a clean note. The structured-note step (problem, plan, billing) is where most of the work — and most of the failures — happen.",
     relatedQuestions: ["q-clinical-docs-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-whisper", "src-hipaa"]
   },
 
   {
@@ -304,7 +304,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "Earlier signal is not earlier action. Detection without governance and response capacity does not improve outcomes.",
     relatedQuestions: ["q-public-health-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: []
   },
 
   {
@@ -329,7 +329,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "Empathic dialogue is not therapy. Conversational fluency does not equal clinical efficacy or safety.",
     relatedQuestions: ["q-mental-health-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: []
   },
 
   /* ── B. FINANCE & ECONOMICS ── */
@@ -807,7 +807,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "A safe operating domain is narrow on purpose. AV providers expand that domain incrementally; the long tail of edge cases is large.",
     relatedQuestions: ["q-av-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-nhtsa-ads", "src-cruise-pause"]
   },
 
   {
@@ -1093,7 +1093,7 @@ var AI_DOMAINS = [
     thesis: "AI is becoming a real tool in mathematics: theorem proving, conjecture generation, computer-algebra augmentation. The frontier moved from neat puzzles to research-grade lemmas.",
     oneLineTakeaway: "Math is becoming an AI workload, not just an AI subject.",
     maturity: "Research frontier",
-    confidence: "sourced",
+    confidence: "inferred",
     whatAIIsUsedFor: ["theorem proving (Lean / Coq)", "conjecture generation", "olympiad-style problem solving", "computer-algebra augmentation", "literature retrieval"],
     mainArchitectures: ["LLMs (general and math-specialised)", "tree search + neural value/policy", "retrieval over math corpora", "tool-using agents (Lean, Wolfram, SymPy)"],
     keyModels: ["AlphaProof (DeepMind, research)", "AlphaGeometry / AlphaGeometry 2 (DeepMind)", "OpenAI o-series and successors", "math-trained open models"],
@@ -1108,7 +1108,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "An AI that solves Olympiad problems is not yet an AI mathematician. Olympiad mathematics has clean evaluation; research mathematics does not.",
     relatedQuestions: ["q-math-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: []
   },
 
   {
@@ -1184,7 +1184,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "Generative tools change the workflow, not the audience&rsquo;s appetite for craft. Output volume rises faster than attention.",
     relatedQuestions: ["q-media-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-sora-tr", "src-ldm", "src-ddpm", "src-c2pa"]
   },
 
   {
@@ -1194,7 +1194,7 @@ var AI_DOMAINS = [
     thesis: "Gaming uses ML for graphics first (DLSS, frame generation), AI characters second, and content generation third. The interesting frontier is real-time agents and procedural worlds.",
     oneLineTakeaway: "AI lifts frame rates today; the question is whether it lifts gameplay tomorrow.",
     maturity: "Production",
-    confidence: "sourced",
+    confidence: "marketContext",
     whatAIIsUsedFor: ["super-resolution / frame generation (DLSS, FSR)", "NPC behaviour", "content moderation", "matchmaking", "procedural generation", "voice synthesis"],
     mainArchitectures: ["super-resolution networks", "diffusion / GAN for assets", "LLMs for NPCs", "RL for matchmaking and game balance"],
     keyModels: ["NVIDIA DLSS family", "AMD FSR (algorithmic + ML)", "Inworld AI characters", "vendor + studio internal"],
@@ -1209,7 +1209,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "Better graphics are not better games. AI-driven design needs gameplay direction, not just generation.",
     relatedQuestions: ["q-gaming-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: []
   },
 
   {
@@ -1244,7 +1244,7 @@ var AI_DOMAINS = [
     thesis: "Music AI generates passable songs from prompts. The unresolved questions are rights, royalties, and whether commercial output is desired by listeners.",
     oneLineTakeaway: "We can generate music; we cannot yet license it cleanly.",
     maturity: "Early production",
-    confidence: "sourced",
+    confidence: "inferred",
     whatAIIsUsedFor: ["music generation", "stem separation", "mastering", "voice synthesis and cloning", "translation and dubbing", "sound design"],
     mainArchitectures: ["diffusion models for audio", "transformers for music tokens", "neural codecs", "speech models"],
     keyModels: ["Suno", "Udio", "MusicGen", "AudioCraft (Meta)", "ElevenLabs", "OpenAI Voice / Whisper"],
@@ -1259,7 +1259,7 @@ var AI_DOMAINS = [
     },
     commonMisunderstanding: "Generated music is not licensed music. Until rights regimes mature, commercial use is risky.",
     relatedQuestions: ["q-music-overview"],
-    sourceIds: ["needs-verification"]
+    sourceIds: ["src-whisper"]
   },
 
   {
@@ -7415,7 +7415,7 @@ var RESEARCH_STATUS = {
     "Confidence taxonomy applied across every entry (sourced / inferred / marketContext / forwardLooking / needsVerification)",
     "Learning roadmap (10 study paths with concrete projects + opportunities)",
     "Interview question room (7 sets of source-graded mastery questions)",
-    "Source library (100+ canonical papers, regulators, datasets, benchmarks, model cards)"
+    "Source library (103 canonical papers, regulators, datasets, benchmarks, model cards)"
   ],
   weakestAreas: [
     "Specific company architecture claims (Tesla, Figure, Boston Dynamics, Tempus, BlackRock &mdash; internal stacks rarely fully disclosed)",
@@ -7490,9 +7490,9 @@ var NEEDS_VERIFICATION_QUEUE = [
                               finance, enterprise, infrastructure, interviewer)
    Interview question sets:  7 (Jensen, frontier-lab CEO, AI researcher, founder/operator,
                               AI investor, civilizational, domain expert)
-   Source library entries:   82 (74 sourced, 5 needsVerification on vendor disclosures
-                              that may shift, plus mixed; canonical papers, regulators,
-                              datasets, benchmarks, model cards)
+   Source library entries:   103 (canonical papers, regulators, datasets, benchmarks,
+                              model cards, vendor disclosures; ~5 needsVerification on
+                              vendor pages that may shift)
    Verification queue:       20 entries (status fields: 2 resolved, 6 linked-needs-
                               update, 6 soften, 6 open)
    Dev integrity check:      JS function devCheckIntegrity() runs on ?devcheck=1; it
