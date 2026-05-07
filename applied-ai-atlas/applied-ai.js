@@ -1012,6 +1012,90 @@
     bindFilters();
     handleHash();
     window.addEventListener('hashchange', handleHash);
+    if (window.location.search.indexOf('devcheck=1') !== -1 || window.APPLIED_DEV_CHECK) {
+      try { devCheckIntegrity(); } catch (e) { console.warn('[applied-atlas] devCheckIntegrity failed:', e); }
+    }
+  }
+
+  /* ============================================
+     DEV-ONLY DATA INTEGRITY CHECK
+     Console-warnings only. Run by adding ?devcheck=1 to the URL or
+     setting window.APPLIED_DEV_CHECK = true before init.
+     ============================================ */
+  function devCheckIntegrity() {
+    if (typeof console === 'undefined' || !console.warn) return;
+    var warnings = 0;
+    function warn(msg) { console.warn('[applied-atlas] ' + msg); warnings++; }
+
+    var srcIds = new Set();
+    if (typeof SOURCE_LIBRARY !== 'undefined') SOURCE_LIBRARY.forEach(function (s) { srcIds.add(s.id); });
+    if (typeof DOMAIN_PAPERS !== 'undefined') DOMAIN_PAPERS.forEach(function (p) { srcIds.add(p.id); });
+    var domainIds = new Set();
+    if (typeof AI_DOMAINS !== 'undefined') AI_DOMAINS.forEach(function (d) { domainIds.add(d.id); });
+    var archIds = new Set();
+    if (typeof AI_ARCHITECTURES !== 'undefined') AI_ARCHITECTURES.forEach(function (a) { archIds.add(a.id); });
+    var workflowIds = new Set();
+    if (typeof INDUSTRY_WORKFLOWS !== 'undefined') INDUSTRY_WORKFLOWS.forEach(function (w) { workflowIds.add(w.id); });
+    var oppIds = new Set();
+    if (typeof FOUNDER_OPPORTUNITIES !== 'undefined') FOUNDER_OPPORTUNITIES.forEach(function (o) { oppIds.add(o.id); });
+    if (typeof DOMAIN_OPPORTUNITIES !== 'undefined') DOMAIN_OPPORTUNITIES.forEach(function (o) { oppIds.add(o.id); });
+    var bnIds = new Set();
+    if (typeof BOTTLENECK_DOSSIERS !== 'undefined') BOTTLENECK_DOSSIERS.forEach(function (b) { bnIds.add(b.id); });
+    if (typeof DOMAIN_BOTTLENECKS !== 'undefined') DOMAIN_BOTTLENECKS.forEach(function (b) { bnIds.add(b.id); });
+
+    function checkSourceIntegrity(label, entry, key) {
+      var conf = entry.confidence;
+      var ids = entry[key] || [];
+      var realIds = ids.filter(function (s) { return s !== 'needs-verification' && s !== 'needsVerification'; });
+      if (conf === 'sourced' && (realIds.length === 0 || ids.indexOf('needs-verification') !== -1 || ids.indexOf('needsVerification') !== -1)) {
+        warn(label + ' "' + (entry.id || '?') + '" is confidence:sourced but ' + (realIds.length === 0 ? 'has no sourceIds' : 'still includes needs-verification placeholder') + '.');
+      }
+      realIds.forEach(function (sid) {
+        if (!srcIds.has(sid)) warn(label + ' "' + (entry.id || '?') + '" references missing source "' + sid + '".');
+      });
+    }
+
+    if (typeof INDUSTRY_WORKFLOWS !== 'undefined') INDUSTRY_WORKFLOWS.forEach(function (w) {
+      checkSourceIntegrity('workflow', w, 'sourceIds');
+      if (w.domainId && !domainIds.has(w.domainId)) warn('workflow "' + w.id + '" references missing domain "' + w.domainId + '".');
+      (w.architecturesUsed || []).forEach(function (a) { if (!archIds.has(a)) warn('workflow "' + w.id + '" references missing architecture "' + a + '".'); });
+      (w.bottlenecks || []).forEach(function (b) { if (!bnIds.has(b)) warn('workflow "' + w.id + '" references missing bottleneck "' + b + '".'); });
+      (w.founderOpportunities || []).forEach(function (o) { if (!oppIds.has(o)) warn('workflow "' + w.id + '" references missing opportunity "' + o + '".'); });
+    });
+    if (typeof WORKFLOW_MONEY_MAP !== 'undefined') WORKFLOW_MONEY_MAP.forEach(function (m) {
+      checkSourceIntegrity('money', m, 'sourceIds');
+      if (m.workflowId && !workflowIds.has(m.workflowId)) warn('money "' + m.id + '" references missing workflow "' + m.workflowId + '".');
+      (m.architectures || []).forEach(function (a) { if (!archIds.has(a)) warn('money "' + m.id + '" references missing architecture "' + a + '".'); });
+      (m.founderOpportunityIds || []).forEach(function (o) { if (!oppIds.has(o)) warn('money "' + m.id + '" references missing opportunity "' + o + '".'); });
+    });
+    if (typeof FOUNDER_OPPORTUNITIES !== 'undefined') FOUNDER_OPPORTUNITIES.forEach(function (o) {
+      checkSourceIntegrity('opportunity', o, 'sourceIds');
+      if (o.domainId && !domainIds.has(o.domainId)) warn('opportunity "' + o.id + '" references missing domain "' + o.domainId + '".');
+      if (o.workflowId && !workflowIds.has(o.workflowId)) warn('opportunity "' + o.id + '" references missing workflow "' + o.workflowId + '".');
+    });
+    if (typeof BOTTLENECK_DOSSIERS !== 'undefined') BOTTLENECK_DOSSIERS.forEach(function (b) {
+      checkSourceIntegrity('bottleneck', b, 'sourceIds');
+      if (b.domainId && !domainIds.has(b.domainId)) warn('bottleneck "' + b.id + '" references missing domain "' + b.domainId + '".');
+      (b.affectedArchitectures || []).forEach(function (a) { if (!archIds.has(a)) warn('bottleneck "' + b.id + '" references missing architecture "' + a + '".'); });
+    });
+    if (typeof COMPANY_AI_STRATEGIES !== 'undefined') COMPANY_AI_STRATEGIES.forEach(function (c) {
+      checkSourceIntegrity('company', c, 'sources');
+      (c.architecturesUsed || []).forEach(function (a) {
+        if (a && a.architectureId && !archIds.has(a.architectureId)) warn('company "' + c.id + '" references missing architecture "' + a.architectureId + '".');
+      });
+    });
+    if (typeof DOMAIN_PAPERS !== 'undefined') DOMAIN_PAPERS.forEach(function (p) { checkSourceIntegrity('paper', p, 'sourceIds'); });
+
+    if (typeof NEEDS_VERIFICATION_QUEUE !== 'undefined') {
+      NEEDS_VERIFICATION_QUEUE.forEach(function (n) {
+        if (n.suggestedSource && /^src-|^paper-/.test(n.suggestedSource) && !srcIds.has(n.suggestedSource)) {
+          warn('verification "' + n.id + '" suggestedSource "' + n.suggestedSource + '" is not in SOURCE_LIBRARY or DOMAIN_PAPERS.');
+        }
+      });
+    }
+
+    if (warnings === 0) console.info('[applied-atlas] devCheckIntegrity: no issues found.');
+    else console.info('[applied-atlas] devCheckIntegrity: ' + warnings + ' warning(s).');
   }
 
   /* ============================================
