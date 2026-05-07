@@ -76,12 +76,15 @@
     return '<div class="mc-block"><div class="mc-block-h">' + escapeHtml(label) + '</div><p class="mc-block-text">' + escapeHtml(val) + '</p></div>';
   }
   function srcChips(ids) {
-    if (!ids || !ids.length || typeof SOURCE_LIBRARY === 'undefined') return '';
-    var lib = {}; SOURCE_LIBRARY.forEach(function (s) { lib[s.id] = s; });
+    if (!ids || !ids.length) return '';
+    var lib = {};
+    if (typeof SOURCE_LIBRARY !== 'undefined') SOURCE_LIBRARY.forEach(function (s) { lib[s.id] = s; });
+    if (typeof AUSTRALIA_SOURCE_LIBRARY !== 'undefined') AUSTRALIA_SOURCE_LIBRARY.forEach(function (s) { lib[s.id] = s; });
     var html = ids.map(function (id) {
       var s = lib[id];
       if (!s) return '<span class="mc-src-chip mc-src-chip--miss">' + escapeHtml(id) + '</span>';
-      return '<a class="mc-src-chip" href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + '</a>';
+      var auTag = (typeof AUSTRALIA_SOURCE_LIBRARY !== 'undefined' && AUSTRALIA_SOURCE_LIBRARY.some(function (x) { return x.id === id; })) ? ' mc-src-chip--au' : '';
+      return '<a class="mc-src-chip' + auTag + '" href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">' + escapeHtml(s.title) + '</a>';
     }).join(' ');
     return '<div class="mc-block"><div class="mc-block-h">Sources</div><div class="mc-chip-row">' + html + '</div></div>';
   }
@@ -648,6 +651,8 @@
       bulletList('Objection handling', b.objectionHandling) +
       bulletList('5-day delivery plan', b.fiveDayDeliveryPlan) +
       metaPair('Retainer path', b.retainerPath) +
+      (b.avoidSellingThisFirst ? '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Avoid selling this first</div><div class="mc-block-text">' + escapeHtml(b.avoidSellingThisFirst) + '</div></div>' : '') +
+      (b.fastestProofOfROI ? '<div class="mc-block"><div class="mc-block-h">Fastest proof of ROI</div><div class="mc-block-text">' + escapeHtml(b.fastestProofOfROI) + '</div></div>' : '') +
       bulletList('Risks', b.risks) +
       srcChips(b.sourceIds);
   }
@@ -709,17 +714,62 @@
     var grid = document.getElementById('mc-launch-grid');
     if (!grid || typeof FIRST_30_DAYS_PLAN === 'undefined') return;
     grid.innerHTML = FIRST_30_DAYS_PLAN.map(function (w, i) {
+      var daysHtml = '';
+      if (w.days && w.days.length) {
+        daysHtml = '<div class="mc-launch-section"><div class="mc-launch-h">Day-by-day</div>' +
+          w.days.map(function (d) {
+            return '<div class="mc-launch-day"><strong>' + escapeHtml(d.day) + '</strong><ul class="mc-list">' + (d.actions || []).map(function (a) { return '<li>' + escapeHtml(a) + '</li>'; }).join('') + '</ul></div>';
+          }).join('') +
+        '</div>';
+      }
+      var minimumsHtml = w.minimums ? '<div class="mc-launch-section"><div class="mc-launch-h">Minimums</div><ul class="mc-list">' + w.minimums.map(function (m) { return '<li>' + escapeHtml(m) + '</li>'; }).join('') + '</ul></div>' : '';
+      var nicheTBHtml = w.niche_tie_breakers ? '<div class="mc-launch-section"><div class="mc-launch-h">Niche tie-breakers</div><ul class="mc-list">' + w.niche_tie_breakers.map(function (m) { return '<li>' + escapeHtml(m) + '</li>'; }).join('') + '</ul></div>' : '';
+      var ifNoRepliesHtml = w.if_no_replies ? '<div class="mc-launch-section"><div class="mc-launch-h mc-launch-h--warn">If no replies</div><ul class="mc-list">' + w.if_no_replies.map(function (m) { return '<li>' + escapeHtml(m) + '</li>'; }).join('') + '</ul></div>' : '';
+      var nicheChoiceHtml = w.niche_choice_after_week_1 ? '<div class="mc-launch-section"><div class="mc-launch-h">Niche choice after week 1</div><div class="mc-block-text">' + escapeHtml(w.niche_choice_after_week_1) + '</div></div>' : '';
       return '<div class="mc-launch-card">' +
         '<div class="mc-launch-num">' + (i + 1) + '</div>' +
         '<div class="mc-launch-body">' +
           '<div class="mc-card-title">' + escapeHtml(w.week || '') + '</div>' +
           '<div class="mc-card-take">' + escapeHtml(w.goal || '') + '</div>' +
-          '<div class="mc-launch-section"><div class="mc-launch-h">Tasks</div><ul class="mc-list">' + (w.tasks || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
-          '<div class="mc-launch-section"><div class="mc-launch-h">Outcomes</div><ul class="mc-list">' + (w.outcomes || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
-          '<div class="mc-launch-section"><div class="mc-launch-h mc-launch-h--warn">Common failures</div><ul class="mc-list">' + (w.commonFailures || []).map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' +
+          daysHtml +
+          (w.tasks ? '<div class="mc-launch-section"><div class="mc-launch-h">Tasks</div><ul class="mc-list">' + w.tasks.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' : '') +
+          minimumsHtml +
+          nicheTBHtml +
+          ifNoRepliesHtml +
+          nicheChoiceHtml +
+          (w.outcomes ? '<div class="mc-launch-section"><div class="mc-launch-h">Outcomes</div><ul class="mc-list">' + w.outcomes.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' : '') +
+          (w.commonFailures ? '<div class="mc-launch-section"><div class="mc-launch-h mc-launch-h--warn">Common failures</div><ul class="mc-list">' + w.commonFailures.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') + '</ul></div>' : '') +
         '</div>' +
       '</div>';
     }).join('');
+  }
+
+  /* ============================================
+     PERSONAL FIRST MOVE
+     ============================================ */
+  function buildPersonalFirstMove() {
+    var c = document.getElementById('mc-pfm-card');
+    if (!c || typeof PERSONAL_FIRST_MOVE === 'undefined') return;
+    var p = PERSONAL_FIRST_MOVE;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Operator pick</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(p.title || '') + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(p.recommendation || '') + '</p>' +
+      '<div class="mc-pfm-grid">' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Niche 1</div><div class="mc-pfm-val">' + escapeHtml(p.niche1) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Niche 2</div><div class="mc-pfm-val">' + escapeHtml(p.niche2) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Offer</div><div class="mc-pfm-val">' + escapeHtml(p.offer) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Price</div><div class="mc-pfm-val">' + escapeHtml(p.price) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Demo</div><div class="mc-pfm-val">' + escapeHtml(p.demo) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Delivery plan</div><div class="mc-pfm-val">' + escapeHtml(p.deliveryPlan) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Retainer path</div><div class="mc-pfm-val">' + escapeHtml(p.retainerPath) + '</div></div>' +
+        '<div class="mc-pfm-cell"><div class="mc-pfm-label">Fastest proof of ROI</div><div class="mc-pfm-val">' + escapeHtml(p.fastestProofOfROI) + '</div></div>' +
+      '</div>' +
+      '<div class="mc-block"><div class="mc-block-h">First message template</div><pre class="mc-script-pre">' + escapeHtml(p.firstMessage) + '</pre></div>' +
+      bulletList('Why this, not other offers', p.whyThisNotOtherOffers) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Avoid for now</div><ul class="mc-list">' + (p.avoidForNow || []).map(function (a) { return '<li>' + escapeHtml(a) + '</li>'; }).join('') + '</ul></div>' +
+      bulletList('Alternate niches if niche 1 + 2 do not click', p.alternateNiches);
   }
 
   function buildRecommender() {
@@ -815,8 +865,11 @@
     if (!console || !console.warn) return;
     var warnings = 0;
     function warn(m) { console.warn('[ai-consulting] ' + m); warnings++; }
-    var srcIds = new Set(SOURCE_LIBRARY.map(function (s) { return s.id; }));
+    var srcIds = new Set();
+    if (typeof SOURCE_LIBRARY !== 'undefined') SOURCE_LIBRARY.forEach(function (s) { srcIds.add(s.id); });
+    if (typeof AUSTRALIA_SOURCE_LIBRARY !== 'undefined') AUSTRALIA_SOURCE_LIBRARY.forEach(function (s) { srcIds.add(s.id); });
     var serviceIds = new Set(CONSULTING_SERVICES.map(function (s) { return s.id; }));
+    var buyerIds = new Set(BUYER_SEGMENTS.map(function (b) { return b.id; }));
     function checkSrc(label, e, key) {
       var ids = e[key] || [];
       ids.forEach(function (id) { if (id !== 'needs-verification' && !srcIds.has(id)) warn(label + ' "' + e.id + '" references missing source "' + id + '".'); });
@@ -831,8 +884,46 @@
       (b.servicesToSell || []).forEach(function (id) { if (!serviceIds.has(id)) warn('buyer "' + b.id + '" references missing service "' + id + '".'); });
     });
     RISK_DOSSIERS.forEach(function (r) { checkSrc('risk', r, 'sourceIds'); (r.serviceWhereItMatters || []).forEach(function (id) { if (!serviceIds.has(id)) warn('risk "' + r.id + '" references missing service "' + id + '".'); }); });
+
+    /* Best-first / avoid / ladders / recipes referential checks */
+    if (typeof BEST_FIRST_OFFERS !== 'undefined') BEST_FIRST_OFFERS.forEach(function (o) {
+      if (o.serviceId && !serviceIds.has(o.serviceId) && !(typeof PRICING_PACKAGES !== 'undefined' && PRICING_PACKAGES.some(function (p) { return p.id === o.serviceId; }))) {
+        warn('best-first "' + (o.title || '?') + '" references missing service "' + o.serviceId + '".');
+      }
+    });
+    if (typeof AVOID_FIRST_OFFERS !== 'undefined') AVOID_FIRST_OFFERS.forEach(function (o) {
+      if (o.serviceId && !serviceIds.has(o.serviceId) && !(typeof PRICING_PACKAGES !== 'undefined' && PRICING_PACKAGES.some(function (p) { return p.id === o.serviceId; }))) {
+        warn('avoid-first "' + (o.title || '?') + '" references missing service "' + o.serviceId + '".');
+      }
+    });
+    if (typeof BUYER_SALES_PLAYBOOKS !== 'undefined') BUYER_SALES_PLAYBOOKS.forEach(function (b) {
+      if (b.buyerId && !buyerIds.has(b.buyerId)) warn('buyer-playbook "' + b.buyerId + '" references missing buyer segment.');
+    });
+    if (typeof DELIVERY_RECIPES !== 'undefined') DELIVERY_RECIPES.forEach(function (r) {
+      if (r.serviceId && !serviceIds.has(r.serviceId)) warn('delivery-recipe "' + r.title + '" references missing service "' + r.serviceId + '".');
+    });
+    if (typeof DEMO_LIBRARY !== 'undefined') DEMO_LIBRARY.forEach(function (d) {
+      if (d.serviceId && !serviceIds.has(d.serviceId)) warn('demo "' + d.id + '" references missing service "' + d.serviceId + '".');
+    });
+
+    /* AU GTM hard-required fields */
+    if (typeof AUSTRALIA_SMB_GTM !== 'undefined') AUSTRALIA_SMB_GTM.forEach(function (b) {
+      if (!b.bestFirstOffer) warn('au-gtm "' + b.id + '" missing bestFirstOffer.');
+      if (!b.demoToShow) warn('au-gtm "' + b.id + '" missing demoToShow.');
+      if (!b.priceRange) warn('au-gtm "' + b.id + '" missing priceRange.');
+      if (!b.avoidSellingThisFirst) warn('au-gtm "' + b.id + '" missing avoidSellingThisFirst.');
+      if (!b.fastestProofOfROI) warn('au-gtm "' + b.id + '" missing fastestProofOfROI.');
+      checkSrc('au-gtm', b, 'sourceIds');
+    });
+
+    /* Audit count consistency */
+    if (typeof CONSULTING_ATLAS_AUDIT !== 'undefined' && typeof SOURCE_LIBRARY !== 'undefined') {
+      if (CONSULTING_ATLAS_AUDIT.sources !== SOURCE_LIBRARY.length) warn('audit.sources (' + CONSULTING_ATLAS_AUDIT.sources + ') does not match SOURCE_LIBRARY.length (' + SOURCE_LIBRARY.length + ').');
+      if (typeof AUSTRALIA_SOURCE_LIBRARY !== 'undefined' && CONSULTING_ATLAS_AUDIT.australiaSources !== AUSTRALIA_SOURCE_LIBRARY.length) warn('audit.australiaSources (' + CONSULTING_ATLAS_AUDIT.australiaSources + ') does not match AUSTRALIA_SOURCE_LIBRARY.length (' + AUSTRALIA_SOURCE_LIBRARY.length + ').');
+    }
+
     /* duplicate-id detection */
-    [['CONSULTING_SERVICES', CONSULTING_SERVICES], ['BUYER_SEGMENTS', BUYER_SEGMENTS], ['WORKFLOW_TO_OFFER_MAP', WORKFLOW_TO_OFFER_MAP], ['PRICING_PACKAGES', PRICING_PACKAGES], ['DELIVERY_PLAYBOOKS', DELIVERY_PLAYBOOKS], ['SALES_SCRIPTS', SALES_SCRIPTS], ['CASE_STUDY_TEMPLATES', CASE_STUDY_TEMPLATES], ['RETAINER_MODELS', RETAINER_MODELS], ['RISK_DOSSIERS', RISK_DOSSIERS], ['SOURCE_LIBRARY', SOURCE_LIBRARY], ['NEEDS_VERIFICATION_QUEUE', NEEDS_VERIFICATION_QUEUE]].forEach(function (pair) {
+    [['CONSULTING_SERVICES', CONSULTING_SERVICES], ['BUYER_SEGMENTS', BUYER_SEGMENTS], ['WORKFLOW_TO_OFFER_MAP', WORKFLOW_TO_OFFER_MAP], ['PRICING_PACKAGES', PRICING_PACKAGES], ['DELIVERY_PLAYBOOKS', DELIVERY_PLAYBOOKS], ['SALES_SCRIPTS', SALES_SCRIPTS], ['CASE_STUDY_TEMPLATES', CASE_STUDY_TEMPLATES], ['RETAINER_MODELS', RETAINER_MODELS], ['RISK_DOSSIERS', RISK_DOSSIERS], ['SOURCE_LIBRARY', SOURCE_LIBRARY], ['NEEDS_VERIFICATION_QUEUE', NEEDS_VERIFICATION_QUEUE], ['AUSTRALIA_SMB_GTM', typeof AUSTRALIA_SMB_GTM !== 'undefined' ? AUSTRALIA_SMB_GTM : []], ['AUSTRALIA_SOURCE_LIBRARY', typeof AUSTRALIA_SOURCE_LIBRARY !== 'undefined' ? AUSTRALIA_SOURCE_LIBRARY : []], ['BEST_FIRST_OFFERS', typeof BEST_FIRST_OFFERS !== 'undefined' ? BEST_FIRST_OFFERS : []], ['DEMO_LIBRARY', typeof DEMO_LIBRARY !== 'undefined' ? DEMO_LIBRARY : []], ['OBJECTION_LIBRARY', typeof OBJECTION_LIBRARY !== 'undefined' ? OBJECTION_LIBRARY : []]].forEach(function (pair) {
       var seen = {};
       (pair[1] || []).forEach(function (e) { if (e && e.id && seen[e.id]) warn('duplicate id in ' + pair[0] + ': "' + e.id + '"'); seen[e.id] = true; });
     });
@@ -861,6 +952,7 @@
     buildOfferLadders();
     buildDeliveryRecipes();
     buildAustraliaGTM();
+    buildPersonalFirstMove();
     buildDemoLibrary();
     buildObjectionLibrary();
     buildLaunchPlan();

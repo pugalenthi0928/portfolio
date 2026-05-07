@@ -643,6 +643,70 @@ a { color: inherit; text-decoration: none; }
   font-style: italic;
 }
 
+/* Day-by-day launch */
+.mc-launch-day {
+  background: var(--bg-elev);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-top: 6px;
+}
+.mc-launch-day strong {
+  display: block;
+  font-size: 12px;
+  color: var(--core);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.mc-launch-day .mc-list { margin-top: 2px; }
+
+/* AU source chip variant */
+.mc-src-chip--au {
+  background: rgba(246,194,103,0.12);
+  color: var(--core);
+  border-color: rgba(246,194,103,0.4);
+}
+.mc-src-chip--au:hover { border-color: var(--core); }
+
+/* Personal first move */
+.mc-pfm-card {
+  background: linear-gradient(180deg, rgba(246,194,103,0.06), transparent 70%), var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--core);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+}
+.mc-pfm-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.mc-pfm-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+  background: var(--core-dim);
+  border: 1px solid rgba(246,194,103,0.4);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.mc-pfm-title { font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+.mc-pfm-rec { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 18px; max-width: 800px; }
+.mc-pfm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.mc-pfm-cell {
+  background: var(--bg-elev);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.mc-pfm-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin-bottom: 4px;
+}
+.mc-pfm-val { font-size: 13px; color: var(--text); line-height: 1.55; }
+
 @media (max-width: 720px) {
   .mc-topbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 18px; }
   .mc-topbar-nav { flex-wrap: wrap; gap: 10px 14px; }
