@@ -938,7 +938,7 @@ var SALES_PIPELINE_TEMPLATE = {
 var OUTREACH_COMPLIANCE_WARNING = {
   jurisdiction: "Australia",
   title: "AU outreach compliance — read before sending anything",
-  body: "Commercial email and SMS in Australia must respect consent, sender identification, accurate contact details and a working unsubscribe / opt-out mechanism on every message. Keep outreach targeted, low volume and segmented. Do not mass-blast 28,000 records on day one. Permission-safe, throttled, segmented sends only.",
+  body: "Commercial email and SMS in Australia must respect consent, identify the sender, include accurate contact details and provide a working unsubscribe on every message. Keep outreach targeted, low volume and segmented. Do not mass-blast 28,000 records on day one. Do not use sensitive personal details to personalise messages — public business context only.",
   rules: [
     "Consent: express or inferred from a current relationship; not 'they were on a list once'.",
     "Sender ID: clearly identify the business sending the message in every email and SMS.",
@@ -946,22 +946,27 @@ var OUTREACH_COMPLIANCE_WARNING = {
     "Unsubscribe: every message must include a working, low-friction unsubscribe; honour it within 5 business days.",
     "SMS: keep volumes low and targeted; explicit consent strongly preferred; honour STOP keywords immediately.",
     "Lists: do not buy lists. Use customer / enquiry lists with documented permission only.",
-    "Privacy: comply with the Privacy Act 1988 + APPs when handling personal information.",
-    "ACL: do not make false, misleading or deceptive claims in outbound (e.g., guaranteed revenue)."
+    "Privacy: comply with the Privacy Act 1988 + the Australian Privacy Principles (APPs). APP 7 (direct marketing) governs how personal information may be used in marketing.",
+    "Personalisation: use public business context only — do not reference family, social, health or other sensitive personal details.",
+    "ACL: do not make false, misleading or deceptive claims in outbound (e.g., guaranteed revenue uplift)."
   ],
   whatNotToDo: [
     "Do not send a 28,000-record blast on day one without segmentation, consent review and unsubscribe handling.",
     "Do not auto-reply on behalf of the buyer without human approval in the pilot phase.",
     "Do not buy or scrape contact lists.",
+    "Do not use sensitive personal details (family, social, health, financial) in personalisation — public business context only.",
     "Do not promise specific revenue uplift in cold outreach (ACL false-or-misleading risk).",
-    "Do not send SMS marketing without express consent + a working STOP keyword."
+    "Do not send SMS marketing without express consent + a working STOP keyword.",
+    "Do not import lists from prior employers / clients without documented permission."
   ],
   saferDefaults: [
     "Cap outreach at 30-50 personalised messages per day in pilot phase.",
     "Sender ID + working unsubscribe on every email and SMS (test before sending).",
     "Use segmented small batches (50-200 records) to test reply rate and refine first sentence.",
     "Run a list-quality pass before sending: dedupe, bounce-clean, opt-out scrub.",
-    "Document consent provenance per record (where + when consent was captured)."
+    "Document consent provenance per record (where + when consent was captured).",
+    "Personalise only from public business context (website, services page, public news, public hiring page).",
+    "Honour APP 7 direct-marketing posture: clear opt-out, easy contact, no use of personal information without a permitted purpose."
   ],
   sourceIds: ["src-acma-spam", "src-au-oaic", "src-acl"],
   confidence: "marketContext"
@@ -1114,6 +1119,585 @@ var PROOF_ASSET_BUILDER = [
 ];
 
 /* ============================================
+   AI_SALES_OPERATING_SYSTEM — AI as leverage, not replacement
+   ============================================
+   Sales has phases. AI handles mechanical work. The human handles trust,
+   judgement, objection conversations and the close. Each phase shows what
+   AI can do, what stays human, what to feed in, what comes out, the tools,
+   the guardrails, a working prompt and the failure modes.
+   ============================================ */
+var AI_SALES_OPERATING_SYSTEM = [
+  {
+    id: "sales-phase-prospecting",
+    phase: "Prospecting",
+    goal: "Find likely buyers without wasting human time.",
+    aiRole: [
+      "Build targeted lead lists from public business context",
+      "Score leads by niche fit, pain likelihood and buyer access",
+      "Draft short, relevant first messages"
+    ],
+    humanRole: [
+      "Choose the niche",
+      "Approve the ICP",
+      "Review lead quality",
+      "Decide which segment to test first"
+    ],
+    inputsNeeded: [
+      "target niche",
+      "buyer role",
+      "pain hypothesis",
+      "geography",
+      "company size",
+      "excluded segments"
+    ],
+    outputs: [
+      "qualified lead list",
+      "pain hypothesis per lead",
+      "personalisation notes",
+      "outreach draft"
+    ],
+    tools: ["Clay", "Apollo", "Google Sheets", "ChatGPT/Claude", "CRM"],
+    guardrails: [
+      "Use public business context only — do not scrape personal, family or social details",
+      "Respect AU spam rules: consent, sender ID, contact details, working unsubscribe",
+      "Do not mass-blast unsegmented lists",
+      "Do not buy contact lists"
+    ],
+    bestPrompt: "Act as a B2B research analyst. Given the niche, buyer role, geography, company size and pain hypothesis below, produce 25 candidate companies using PUBLIC BUSINESS context only (website, services page, hiring page, public news). For each, capture: company name, public URL, likely-buyer role, the public signal of pain, and 3 lines for a first message that uses the pain in the buyer's likely language. Do not reference personal, family or social details. Flag any candidate where you cannot find public business context.",
+    failureModes: [
+      "bad ICP",
+      "irrelevant personalisation",
+      "low-quality data",
+      "spammy outreach",
+      "research rabbit hole"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-qualifying",
+    phase: "Qualifying",
+    goal: "Pre-qualify before booking discovery. Avoid burning time on tyre-kickers.",
+    aiRole: [
+      "Score replies and inquiries against the qualification gate",
+      "Suggest follow-up questions to fill missing signals",
+      "Draft pre-call qualification questions"
+    ],
+    humanRole: [
+      "Decide whom to call",
+      "Override the AI score where context is unique",
+      "Hold the no-pilot-no-call line"
+    ],
+    inputsNeeded: [
+      "reply or inquiry text",
+      "company context",
+      "buyer role",
+      "qualification gate signals"
+    ],
+    outputs: [
+      "qualified yes/no flag",
+      "missing signals",
+      "next-step recommendation",
+      "pre-call questionnaire"
+    ],
+    tools: ["ChatGPT/Claude", "CRM", "Notion / Sheets for the gate"],
+    guardrails: [
+      "Never assume budget without buyer confirmation",
+      "Do not infer urgency from generic interest in AI",
+      "Do not score on demographics, only workflow signals",
+      "Do not bypass the gate to hit a calls-booked target"
+    ],
+    bestPrompt: "Act as a sales-ops analyst. Score the lead below against this qualification gate: budget influence, active pain, repeating workflow, cost of inaction, data/access available, willingness to pay for a pilot. Output: qualified yes/no, confidence (low/medium/high), missing signals, and the single best follow-up question to ask before booking discovery. Do not assume budget without confirmation.",
+    failureModes: [
+      "false-positive on 'just curious about AI'",
+      "scoring on title alone",
+      "skipping the pre-call questionnaire",
+      "booking discovery for unqualified leads"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-discovery-prep",
+    phase: "Discovery Prep",
+    goal: "Walk into discovery already knowing the workflow and the public pain.",
+    aiRole: [
+      "Build a 1-page brief on the company + buyer",
+      "Draft the discovery agenda + pain-cost questions",
+      "Suggest a soft pivot to a paid manual pilot"
+    ],
+    humanRole: [
+      "Run the call",
+      "Adapt the agenda live",
+      "Decide what NOT to ask",
+      "Listen 70% of the call"
+    ],
+    inputsNeeded: [
+      "company website",
+      "role of the buyer",
+      "public pain signal",
+      "qualification answers",
+      "any prior message thread"
+    ],
+    outputs: [
+      "1-page prospect brief",
+      "discovery agenda",
+      "5-7 workflow + pain-cost questions",
+      "pivot script to a paid manual pilot"
+    ],
+    tools: ["ChatGPT/Claude", "Loom (for self-review)", "Sheets / Notion"],
+    guardrails: [
+      "Use only public business context — never scrape personal or social details",
+      "Do not rehearse the script word-for-word; keep it conversational",
+      "Do not pre-judge the buyer's needs before the call",
+      "Do not pitch during discovery"
+    ],
+    bestPrompt: "Act as a B2B discovery coach. Given the prospect's public website + role + qualification answers below, produce: (1) a 1-page prospect brief; (2) a discovery agenda with 5 workflow questions, 3 pain-cost questions, 2 decision-process questions, 1 data/access question, and a soft pivot to a paid manual pilot. Avoid pitching during discovery. Use public business context only.",
+    failureModes: [
+      "script-bound questions",
+      "skipping the pain-cost question",
+      "rehearsing instead of listening",
+      "researching family / social details (do not)"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-personalised-proposal",
+    phase: "Personalised Proposal",
+    goal: "Send a proposal the buyer recognises as their own situation, not a template.",
+    aiRole: [
+      "Synthesise the discovery transcript",
+      "Draft a proposal in the buyer's words with explicit scope boundaries",
+      "Suggest objection-prevention sentences based on what they said"
+    ],
+    humanRole: [
+      "Run the discovery call",
+      "Edit + price the proposal",
+      "Present it live, not by email",
+      "Negotiate scope, not price"
+    ],
+    inputsNeeded: [
+      "discovery call transcript",
+      "pain points captured verbatim",
+      "current workflow",
+      "desired result",
+      "budget signal",
+      "timeline",
+      "objections raised"
+    ],
+    outputs: [
+      "proposal with the 9 spec'd sections",
+      "scope boundary list",
+      "success metric definition",
+      "next-step recommendation"
+    ],
+    tools: ["Otter / Fathom transcript", "ChatGPT/Claude", "Google Docs / Notion"],
+    guardrails: [
+      "Do not invent metrics the buyer did not mention",
+      "Process guarantees only — never outcome guarantees",
+      "Always present the proposal live; never just email it",
+      "Match the buyer's own language, not your slogans"
+    ],
+    bestPrompt: "Act as a practical B2B consultant. Using the discovery notes below, create a concise proposal that uses the buyer's own words, focuses on the painful workflow, avoids hype, includes scope boundaries (included / excluded / acceptance criteria / change-request rule), proposes a paid manual pilot first, and lists a process guarantee. Sections: Current problem, Cost of inaction, Proposed pilot, What is included, What is excluded, Timeline, Price, Success metrics, Next step.",
+    failureModes: [
+      "copy-paste templated proposals",
+      "AI-written content the buyer recognises as boilerplate",
+      "skipping the live walk-through",
+      "outcome guarantees instead of process guarantees"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-objection-practice",
+    phase: "Objection Practice",
+    goal: "Practise responses before the live call so you don't freeze.",
+    aiRole: [
+      "Roleplay buyer objections in the buyer's voice",
+      "Score the human's response against the criteria",
+      "Suggest a tighter, less salesy answer"
+    ],
+    humanRole: [
+      "Practise out loud",
+      "Choose the honest answer",
+      "Handle the conversation live without scripts",
+      "Update the answer library after every real call"
+    ],
+    inputsNeeded: [
+      "actual objections from your own calls",
+      "scoring criteria",
+      "5 minutes a day"
+    ],
+    outputs: [
+      "practised responses",
+      "an internal answer library",
+      "tighter first sentences"
+    ],
+    tools: ["ChatGPT/Claude voice", "Otter / Fathom for review", "OBJECTION_LIBRARY"],
+    guardrails: [
+      "Do not memorise responses word-for-word",
+      "Do not use AI to manipulate buyers — use it to practise honesty",
+      "Do not promise outcomes you cannot control",
+      "If the honest answer is 'we can't do that yet', say it"
+    ],
+    bestPrompt: "Roleplay as the buyer. Use this objection in the buyer's voice and tone: '{objection}'. After my response, score me on: (1) acknowledged the concern; (2) asked a useful follow-up question; (3) avoided overpromising; (4) returned to the business pain; (5) proposed a safe next step. Suggest a tighter, less salesy version of my answer if mine was too long or defensive.",
+    failureModes: [
+      "over-rehearsed canned answers",
+      "defensive responses",
+      "missing the underlying business pain",
+      "promising results to win the objection"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-closing",
+    phase: "Closing / Enrollment",
+    goal: "Make it easy to say yes — no fewer than the agreed scope, no more.",
+    aiRole: [
+      "Draft the close email summarising the agreed pilot",
+      "Generate the engagement letter / SOW from the agreed scope",
+      "Draft the kickoff email"
+    ],
+    humanRole: [
+      "Run the close conversation",
+      "Sign the SOW",
+      "Take payment",
+      "Confirm the start date"
+    ],
+    inputsNeeded: [
+      "agreed proposal",
+      "buyer's name + role + email",
+      "start date",
+      "kickoff agenda",
+      "process guarantee text"
+    ],
+    outputs: [
+      "close email",
+      "SOW / engagement letter",
+      "kickoff email",
+      "invoice"
+    ],
+    tools: ["ChatGPT/Claude", "DocuSign / HelloSign", "Stripe / invoicing tool"],
+    guardrails: [
+      "Never auto-send",
+      "Match agreed scope exactly — no silent scope creep",
+      "Process guarantees only",
+      "Do not start delivery without signed SOW + payment"
+    ],
+    bestPrompt: "Given the agreed pilot scope, price, start date and process guarantee below, draft: (1) a close email recapping the pilot in the buyer's own words; (2) a 1-page engagement letter with included / excluded scope, acceptance criteria, change-request rule and refund posture; (3) a kickoff email listing the data / access we need and the 48-hour first-win commitment. Do not promise specific revenue.",
+    failureModes: [
+      "scope drift between proposal and SOW",
+      "auto-sending without human read",
+      "vague acceptance criteria",
+      "starting delivery before payment lands"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-onboarding",
+    phase: "Onboarding",
+    goal: "Reduce buyer's remorse in the first 48 hours and ship a visible win fast.",
+    aiRole: [
+      "Generate the 5-day onboarding checklist",
+      "Draft the kickoff agenda",
+      "Pre-fill the data / access request",
+      "Draft the day-5 read-out template"
+    ],
+    humanRole: [
+      "Run kickoff",
+      "Deliver the first 48-hour visible win",
+      "Confirm the next read-out date",
+      "Hold scope on day-1 surprises"
+    ],
+    inputsNeeded: [
+      "signed SOW",
+      "named operator",
+      "data / access plan",
+      "first-win definition"
+    ],
+    outputs: [
+      "welcome email",
+      "5-day checklist",
+      "first-48h visible-win plan",
+      "read-out template",
+      "permission-to-publish ask"
+    ],
+    tools: ["ChatGPT/Claude", "Notion / Linear / Trello", "Loom for the welcome video"],
+    guardrails: [
+      "Do not start work without signed SOW + payment",
+      "Do not ask for sensitive personal data; only what scope requires",
+      "Confirm DPA / data-handling before any client data lands in your tools",
+      "AU-region data hosting where the client posture demands it"
+    ],
+    bestPrompt: "Given the signed pilot scope below, produce: (1) a welcome email; (2) a 5-day onboarding checklist (data/access required, named operator, kickoff agenda, first-48h visible win, blocking risks); (3) a day-5 read-out template; (4) a permission-to-publish ask for the proof asset.",
+    failureModes: [
+      "slow kickoff (>3 days)",
+      "no first-48h visible win",
+      "data / access blockers eat days",
+      "starting before DPA is signed when it should be"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-win-capture",
+    phase: "Win Capture / Case Study",
+    goal: "Turn the first result into the asset that sells the next two pilots.",
+    aiRole: [
+      "Draft the case study from before/after metrics",
+      "Draft the LinkedIn / outbound version",
+      "Draft the testimonial ask in the client's own language"
+    ],
+    humanRole: [
+      "Capture before / after metrics",
+      "Get explicit client permission",
+      "Edit for honesty",
+      "Decide what stays private"
+    ],
+    inputsNeeded: [
+      "before metrics",
+      "after metrics",
+      "1-line client quote (with permission)",
+      "screenshots",
+      "agreed scope"
+    ],
+    outputs: [
+      "1-page case study",
+      "LinkedIn version",
+      "outbound-attached version",
+      "testimonial-permission email"
+    ],
+    tools: ["ChatGPT/Claude", "Google Docs / Notion", "Canva / Figma for visuals"],
+    guardrails: [
+      "Permission-confirmed quotes only",
+      "Never publish numbers the client has not signed off on",
+      "No customer / patient PII without consent",
+      "Mark anything that needs verification"
+    ],
+    bestPrompt: "Given the pilot read-out + before/after metrics + 1-line client quote, draft a 1-page case study with: pain → manual-first delivery → metrics → quote → next step (retainer pitch). Use the client's own language. Do not exaggerate. Mark any field that requires client confirmation before publishing.",
+    failureModes: [
+      "publishing without permission",
+      "exaggerated metrics",
+      "missing the client's voice",
+      "delaying the case study past 48 hours after read-out"
+    ],
+    confidence: "marketContext"
+  },
+  {
+    id: "sales-phase-retainer-expansion",
+    phase: "Retainer Expansion",
+    goal: "Convert pilots into a monthly retainer where it makes sense — not by default.",
+    aiRole: [
+      "Draft the retainer pitch from the case study",
+      "Suggest a monthly cap and SLA based on pilot delivery",
+      "Draft the change-request rules"
+    ],
+    humanRole: [
+      "Decide whether the client is a fit for retainer",
+      "Negotiate scope + price",
+      "Hold the line on out-of-scope asks",
+      "Walk away from a bad fit"
+    ],
+    inputsNeeded: [
+      "case study",
+      "pilot scope",
+      "client's recurring workflow",
+      "RETAINER_MODELS data"
+    ],
+    outputs: [
+      "retainer pitch",
+      "scope + monthly cap",
+      "change-request rule",
+      "exit terms"
+    ],
+    tools: ["ChatGPT/Claude", "Google Docs / Notion", "DocuSign / HelloSign"],
+    guardrails: [
+      "Don't pitch retainer to a struggling pilot — fix the pilot first",
+      "Hold the monthly cap firmly",
+      "Document exit terms (30-day notice) clearly",
+      "Don't absorb new builds inside retainer pricing"
+    ],
+    bestPrompt: "Given the case study + recurring workflow below + RETAINER_MODELS ranges, draft a tailored retainer pitch with: monthly scope, ticket cap, response SLA, change-request rule, exit terms (30-day notice), first-month non-refundable. Flag any scope expansion that should be a separate sprint, not absorbed into the retainer.",
+    failureModes: [
+      "scope creep into retainer at no extra cost",
+      "pitching retainer before the pilot read-out",
+      "vague SLA",
+      "auto-renewing without an exit window"
+    ],
+    confidence: "marketContext"
+  }
+];
+
+/* ============================================
+   TEN_EIGHTY_TEN_SYSTEM — 10-80-10 sales leverage
+   ============================================
+   The human does the first 10% (strategy + ICP). AI does the 80% (mechanical
+   execution). The human does the final 10% (judgement, taste, relationship).
+   ============================================ */
+var TEN_EIGHTY_TEN_SYSTEM = {
+  title: "10-80-10 Sales Leverage",
+  explanation: "The human does the first 10% strategy, AI handles the 80% repetitive execution, and the human does the final 10% judgement, taste and relationship work. AI does not replace human sales — it removes mechanical work so the founder can spend more time on trust, calls, judgement and closing.",
+  examples: [
+    {
+      workflow: "Lead list building",
+      first10: "Define ICP and pain hypothesis",
+      eighty: "AI researches and enriches leads",
+      final10: "Human reviews lead quality and selects the first segment"
+    },
+    {
+      workflow: "Proposal creation",
+      first10: "Human runs discovery call and understands pain",
+      eighty: "AI drafts proposal from transcript and notes",
+      final10: "Human edits, prices and presents live"
+    },
+    {
+      workflow: "Objection handling",
+      first10: "Human collects real objections from calls",
+      eighty: "AI generates practice responses and roleplays buyer",
+      final10: "Human chooses honest response and handles conversation live"
+    },
+    {
+      workflow: "Onboarding kickoff",
+      first10: "Human confirms signed SOW and named operator",
+      eighty: "AI drafts welcome email, 5-day checklist and read-out template",
+      final10: "Human runs kickoff and ships the first 48-hour visible win"
+    },
+    {
+      workflow: "Case study + retainer pitch",
+      first10: "Human captures before/after metrics with client permission",
+      eighty: "AI drafts case study, LinkedIn version and tailored retainer pitch",
+      final10: "Human edits for honesty, secures permission and presents live"
+    }
+  ]
+};
+
+/* ============================================
+   QUALIFICATION_GATE — do not take every call
+   ============================================ */
+var QUALIFICATION_GATE = {
+  title: "Do not take every call",
+  principle: "More calls is not the goal. More qualified calls is the goal.",
+  requiredSignals: [
+    "buyer owns or influences budget",
+    "pain is active now",
+    "workflow happens repeatedly",
+    "problem costs time, money or leads",
+    "they have data / access needed",
+    "they are willing to test a paid pilot"
+  ],
+  disqualifiers: [
+    "just curious about AI",
+    "no clear workflow pain",
+    "no owner for the decision",
+    "wants free consulting",
+    "asks for a custom enterprise system before a pilot",
+    "cannot provide data or access"
+  ],
+  preCallQuestions: [
+    "What workflow are you trying to improve?",
+    "How are you handling it today?",
+    "What happens if this is not fixed?",
+    "Who else is involved in approving a pilot?",
+    "Do you already have the data / documents / leads needed?",
+    "Would you be open to a paid pilot if the scope is clear?"
+  ],
+  output: "Book only qualified prospects into discovery. Send everyone else a 1-page write-up + a polite 'reach out when ready'."
+};
+
+/* ============================================
+   PERSONALIZED_PROPOSAL_ENGINE — never send a generic proposal
+   ============================================ */
+var PERSONALIZED_PROPOSAL_ENGINE = {
+  title: "Personalised proposal engine",
+  principle: "Never send a generic proposal. Use discovery notes to create a proposal that reflects the buyer's exact pain and desired outcome — and present it live, never just by email.",
+  inputs: [
+    "prospect company",
+    "buyer role",
+    "discovery call transcript",
+    "pain points (verbatim)",
+    "current workflow",
+    "desired result",
+    "budget signal",
+    "timeline",
+    "objections raised"
+  ],
+  outputSections: [
+    "Current problem",
+    "Cost of inaction",
+    "Proposed pilot",
+    "What is included",
+    "What is excluded",
+    "Timeline",
+    "Price",
+    "Success metrics",
+    "Next step"
+  ],
+  rule: "Do not just email the proposal. Schedule a call to review it live so you can hold scope and answer objections in real time.",
+  promptTemplate: "Act as a practical B2B consultant. Using the discovery notes below, create a concise proposal that uses the buyer's own words, focuses on the painful workflow, avoids hype, includes scope boundaries (included / excluded / acceptance criteria / change-request rule / refund posture), proposes a paid manual pilot first (AUD $750-$5,000 typical), and includes a process guarantee — never an outcome guarantee. Output the 9 sections in order: Current problem, Cost of inaction, Proposed pilot, What is included, What is excluded, Timeline, Price, Success metrics, Next step. Use the buyer's exact phrases where you have them; flag any section you had to invent."
+};
+
+/* ============================================
+   OBJECTION_ROLEPLAY_ENGINE — practise, don't manipulate
+   ============================================ */
+var OBJECTION_ROLEPLAY_ENGINE = {
+  title: "Objection practice engine",
+  principle: "Use AI to practise honest answers, not to manipulate buyers. Five minutes a day before live calls.",
+  commonObjections: [
+    "We can just use ChatGPT",
+    "Is this secure?",
+    "We do not have budget",
+    "We tried automation before",
+    "What if it gives wrong answers?",
+    "Can you guarantee results?",
+    "We do not have clean data",
+    "This sounds too complex",
+    "Can you just send a proposal?"
+  ],
+  roleplayPrompt: "Roleplay as the buyer. Voice this objection in the buyer's tone: '{objection}'. After my response, score me on: (1) did I acknowledge the concern; (2) did I ask a useful follow-up question; (3) did I avoid overpromising; (4) did I return to the business pain; (5) did I propose a safe next step. Suggest a tighter, less salesy version of my answer if mine was long or defensive. Do not help me manipulate the buyer. If the honest answer is 'we can't do that yet,' say so.",
+  scoringCriteria: [
+    "Did the response acknowledge the concern?",
+    "Did it ask a useful follow-up question?",
+    "Did it avoid overpromising?",
+    "Did it return to the business pain?",
+    "Did it propose a safe next step?"
+  ],
+  guardrails: [
+    "Do not memorise responses word-for-word",
+    "Do not promise outcomes you cannot control",
+    "Use real objections from your own calls, not generic ones",
+    "Update the answer library after every live call"
+  ]
+};
+
+/* ============================================
+   POST_CLOSE_MOMENTUM — first 48 hours after payment
+   ============================================ */
+var POST_CLOSE_MOMENTUM = {
+  title: "First win after close",
+  principle: "The first 48 hours after payment should reduce buyer's remorse and create momentum. A visible small win matters more than a polished kickoff deck.",
+  steps: [
+    "Send welcome email immediately",
+    "Confirm scope and timeline",
+    "Collect required access / data",
+    "Show quick-start checklist",
+    "Book kickoff",
+    "Deliver a visible small win within 48 hours",
+    "Track the first result",
+    "Ask permission to turn the result into a proof asset"
+  ],
+  firstWinExamples: [
+    "clean 100 dormant leads",
+    "draft first reactivation campaign",
+    "build first workflow map",
+    "connect one inbox",
+    "create first policy Q&A prototype",
+    "produce first ROI baseline report"
+  ],
+  guardrails: [
+    "Do not start work without signed SOW + payment",
+    "Do not ask for sensitive personal data; only what scope requires",
+    "AU-region data hosting where the client posture demands it",
+    "Confirm DPA / data-handling before any client data lands in your tools"
+  ]
+};
+
+/* ============================================
    CONSULTING_ATLAS_AUDIT
    ============================================ */
 var CONSULTING_ATLAS_AUDIT = {
@@ -1149,6 +1733,12 @@ var CONSULTING_ATLAS_AUDIT = {
   offerStressTests: OFFER_STRESS_TEST.length,
   valueBasedPricingCalculator: 1,
   proofAssets: PROOF_ASSET_BUILDER.length,
+  salesOperatingSystemPhases: AI_SALES_OPERATING_SYSTEM.length,
+  tenEightyTen: 1,
+  qualificationGate: 1,
+  proposalEngine: 1,
+  objectionRoleplayEngine: 1,
+  postCloseMomentum: 1,
   sources: SOURCE_LIBRARY.length,
   needsVerification: NEEDS_VERIFICATION_QUEUE.length
 };

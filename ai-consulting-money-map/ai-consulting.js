@@ -1212,6 +1212,160 @@
   }
 
   /* ============================================
+     AI SALES OPERATING SYSTEM — phase grid
+     ============================================ */
+  function buildSalesOS() {
+    var grid = document.getElementById('mc-salesos-grid');
+    if (!grid || typeof AI_SALES_OPERATING_SYSTEM === 'undefined') return;
+    grid.innerHTML = AI_SALES_OPERATING_SYSTEM.map(function (p, i) {
+      var summary = (p.aiRole && p.aiRole[0]) ? p.aiRole[0] : (p.goal || '');
+      return '<button class="mc-phase-card" data-phase-id="' + escapeHtml(p.id) + '" data-phase-index="' + (i + 1) + '">' +
+        '<div class="mc-phase-num">' + (i + 1) + '</div>' +
+        '<div class="mc-phase-body">' +
+          '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">phase ' + (i + 1) + '</span></div>' +
+          '<div class="mc-card-title">' + escapeHtml(p.phase) + '</div>' +
+          '<div class="mc-card-take">' + escapeHtml(p.goal || '') + '</div>' +
+          '<div class="mc-card-foot"><span class="mc-phase-pill mc-phase-pill--ai">AI</span> ' + escapeHtml(summary) + '</div>' +
+        '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderPhaseProfile(p) {
+    function rolePair(label, items, kind) {
+      if (!items || !items.length) return '';
+      var pillClass = kind === 'ai' ? 'mc-phase-pill--ai' : 'mc-phase-pill--human';
+      return '<div class="mc-block"><div class="mc-block-h"><span class="mc-phase-pill ' + pillClass + '">' + (kind === 'ai' ? 'AI' : 'HUMAN') + '</span> ' + escapeHtml(label) + '</div><ul class="mc-list">' +
+        items.map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>';
+    }
+    var promptBlock = p.bestPrompt
+      ? '<div class="mc-block"><div class="mc-block-h">Working prompt</div><pre class="mc-script-pre">' + escapeHtml(p.bestPrompt) + '</pre></div>'
+      : '';
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Sales OS phase</span><span class="mc-tag">' + escapeHtml(p.phase) + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(p.phase) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(p.goal || '') + '</p>' +
+      rolePair('AI role', p.aiRole, 'ai') +
+      rolePair('Human role', p.humanRole, 'human') +
+      bulletList('Inputs needed', p.inputsNeeded) +
+      bulletList('Outputs', p.outputs) +
+      bulletList('Tools', p.tools) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Guardrails</div><ul class="mc-list">' +
+        (p.guardrails || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>' +
+      promptBlock +
+      bulletList('Failure modes', p.failureModes);
+  }
+
+  /* ============================================
+     10-80-10 SALES LEVERAGE
+     ============================================ */
+  function build1080() {
+    var c = document.getElementById('mc-1080-card');
+    if (!c || typeof TEN_EIGHTY_TEN_SYSTEM === 'undefined') return;
+    var t = TEN_EIGHTY_TEN_SYSTEM;
+    var rows = (t.examples || []).map(function (e) {
+      return '<div class="mc-1080-row">' +
+        '<div class="mc-1080-cell mc-1080-workflow">' + escapeHtml(e.workflow) + '</div>' +
+        '<div class="mc-1080-cell mc-1080-first10"><span class="mc-1080-tag">first 10%</span><span class="mc-phase-pill mc-phase-pill--human">HUMAN</span><div>' + escapeHtml(e.first10) + '</div></div>' +
+        '<div class="mc-1080-cell mc-1080-eighty"><span class="mc-1080-tag">80%</span><span class="mc-phase-pill mc-phase-pill--ai">AI</span><div>' + escapeHtml(e.eighty) + '</div></div>' +
+        '<div class="mc-1080-cell mc-1080-final10"><span class="mc-1080-tag">final 10%</span><span class="mc-phase-pill mc-phase-pill--human">HUMAN</span><div>' + escapeHtml(e.final10) + '</div></div>' +
+      '</div>';
+    }).join('');
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">10-80-10 leverage</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(t.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(t.explanation) + '</p>' +
+      '<div class="mc-1080-table">' +
+        '<div class="mc-1080-row mc-1080-head">' +
+          '<div class="mc-1080-cell">Workflow</div>' +
+          '<div class="mc-1080-cell">First 10% — human</div>' +
+          '<div class="mc-1080-cell">80% — AI</div>' +
+          '<div class="mc-1080-cell">Final 10% — human</div>' +
+        '</div>' +
+        rows +
+      '</div>';
+  }
+
+  /* ============================================
+     QUALIFICATION GATE
+     ============================================ */
+  function buildQualificationGate() {
+    var c = document.getElementById('mc-qualgate-card');
+    if (!c || typeof QUALIFICATION_GATE === 'undefined') return;
+    var q = QUALIFICATION_GATE;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Qualification gate</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(q.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(q.principle) + '</p>' +
+      bulletList('Required signals (need all six)', q.requiredSignals) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Disqualifiers (any one = no call)</div><ul class="mc-list">' +
+        (q.disqualifiers || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>' +
+      bulletList('Pre-call questions', q.preCallQuestions) +
+      metaPair('Output', q.output);
+  }
+
+  /* ============================================
+     PERSONALISED PROPOSAL ENGINE
+     ============================================ */
+  function buildProposalEngine() {
+    var c = document.getElementById('mc-proposal-card');
+    if (!c || typeof PERSONALIZED_PROPOSAL_ENGINE === 'undefined') return;
+    var p = PERSONALIZED_PROPOSAL_ENGINE;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Proposal engine</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(p.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(p.principle) + '</p>' +
+      bulletList('Inputs (from discovery)', p.inputs) +
+      bulletList('Output sections (in order)', p.outputSections) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Rule</div><p class="mc-block-text">' + escapeHtml(p.rule) + '</p></div>' +
+      '<div class="mc-block"><div class="mc-block-h">Prompt template</div><pre class="mc-script-pre">' + escapeHtml(p.promptTemplate) + '</pre></div>';
+  }
+
+  /* ============================================
+     OBJECTION ROLEPLAY ENGINE
+     ============================================ */
+  function buildObjectionRoleplay() {
+    var c = document.getElementById('mc-roleplay-card');
+    if (!c || typeof OBJECTION_ROLEPLAY_ENGINE === 'undefined') return;
+    var o = OBJECTION_ROLEPLAY_ENGINE;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Objection practice</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(o.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(o.principle) + '</p>' +
+      bulletList('Common objections', o.commonObjections) +
+      '<div class="mc-block"><div class="mc-block-h">Roleplay prompt</div><pre class="mc-script-pre">' + escapeHtml(o.roleplayPrompt) + '</pre></div>' +
+      bulletList('Scoring criteria', o.scoringCriteria) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Guardrails</div><ul class="mc-list">' +
+        (o.guardrails || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>';
+  }
+
+  /* ============================================
+     POST-CLOSE MOMENTUM
+     ============================================ */
+  function buildPostCloseMomentum() {
+    var c = document.getElementById('mc-postclose-card');
+    if (!c || typeof POST_CLOSE_MOMENTUM === 'undefined') return;
+    var pc = POST_CLOSE_MOMENTUM;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">First 48 hours</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(pc.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(pc.principle) + '</p>' +
+      bulletList('Steps', pc.steps) +
+      bulletList('First-win examples', pc.firstWinExamples) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">Guardrails</div><ul class="mc-list">' +
+        (pc.guardrails || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>';
+  }
+
+  /* ============================================
      OUTREACH COMPLIANCE WARNING (AU / ACMA)
      ============================================ */
   function buildOutreachWarning() {
@@ -1302,6 +1456,8 @@
       if (stressBtn) { var st = OFFER_STRESS_TEST.filter(function (x) { return x.id === stressBtn.dataset.stressId; })[0]; if (st) { e.preventDefault(); openPanel(renderStressTestProfile(st)); return; } }
       var proofBtn = t.closest('[data-proof-id]');
       if (proofBtn) { var pr = PROOF_ASSET_BUILDER.filter(function (x) { return x.id === proofBtn.dataset.proofId; })[0]; if (pr) { e.preventDefault(); openPanel(renderProofProfile(pr)); return; } }
+      var phaseBtn = t.closest('[data-phase-id]');
+      if (phaseBtn) { var ph = AI_SALES_OPERATING_SYSTEM.filter(function (x) { return x.id === phaseBtn.dataset.phaseId; })[0]; if (ph) { e.preventDefault(); openPanel(renderPhaseProfile(ph)); return; } }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
   }
@@ -1400,13 +1556,19 @@
     buildOfferLadders();
     buildDeliveryRecipes();
     buildDealEngine();
-    buildManualFulfilmentLab();
-    buildValidationSprint();
     buildNicheScorecard();
     buildDailyEngine();
+    buildSalesOS();
+    build1080();
+    buildQualificationGate();
+    buildProposalEngine();
+    buildObjectionRoleplay();
+    buildPostCloseMomentum();
+    buildManualFulfilmentLab();
+    buildValidationSprint();
+    buildOfferStressTests();
     buildDemoToDeal();
     buildValuePricing();
-    buildOfferStressTests();
     buildProofAssets();
     buildMoneyMath();
     buildOutreachWarning();
