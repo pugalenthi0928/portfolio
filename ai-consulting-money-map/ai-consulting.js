@@ -1054,6 +1054,185 @@
   }
 
   /* ============================================
+     MANUAL FULFILMENT LAB
+     ============================================ */
+  function buildManualFulfilmentLab() {
+    var grid = document.getElementById('mc-manual-grid');
+    if (!grid || typeof MANUAL_FULFILMENT_LAB === 'undefined') return;
+    grid.innerHTML = MANUAL_FULFILMENT_LAB.map(function (m) {
+      return '<button class="mc-manual-card" data-manual-id="' + escapeHtml(m.id) + '">' +
+        '<div class="mc-manual-meta"><span class="mc-tag mc-tag-cat">manual first</span><span class="mc-tag">' + escapeHtml(m.priceToTest || '') + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(m.title) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(m.promise || '') + '</div>' +
+        '<div class="mc-card-foot">Buyer: ' + escapeHtml(m.targetBuyer || '') + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderManualProfile(m) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Manual-first play</span><span class="mc-tag">' + escapeHtml(m.priceToTest || '') + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(m.title) + '</h2>' +
+      '<p class="mc-detail-sub">' + escapeHtml(m.promise || '') + '</p>' +
+      metaPair('Target buyer', m.targetBuyer) +
+      metaPair('Pain', m.pain) +
+      bulletList('Manual version (deliver by hand for first 1-3 clients)', m.manualVersion) +
+      bulletList('Automate later (only the steps that repeated for 3 clients)', m.automationLater) +
+      metaPair('Price to test', m.priceToTest) +
+      metaPair('Scaled price', m.scaledPrice) +
+      metaPair('Success metric', m.successMetric) +
+      metaPair('Risk', m.risk) +
+      metaPair('Scope boundary', m.scopeBoundary) +
+      srcChips(m.sourceIds);
+  }
+
+  /* ============================================
+     VALIDATION INTERVIEW SPRINT
+     ============================================ */
+  function buildValidationSprint() {
+    var c = document.getElementById('mc-validation-card');
+    if (!c || typeof VALIDATION_INTERVIEW_SPRINT === 'undefined') return;
+    var v = VALIDATION_INTERVIEW_SPRINT;
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Validation sprint</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(v.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(v.goal || '') + '</p>' +
+      bulletList('Rules', v.rules) +
+      bulletList('Workflow questions (do not pitch — harvest buyer language)', v.questions) +
+      bulletList('Output of the 10 calls', v.output);
+  }
+
+  /* ============================================
+     OFFER STRESS TEST
+     ============================================ */
+  function buildOfferStressTests() {
+    var grid = document.getElementById('mc-stress-grid');
+    if (!grid || typeof OFFER_STRESS_TEST === 'undefined') return;
+    grid.innerHTML = OFFER_STRESS_TEST.map(function (s) {
+      return '<button class="mc-stress-card" data-stress-id="' + escapeHtml(s.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">stress test</span><span class="mc-tag">' + escapeHtml(s.timeline || '') + '</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(s.offer) + '</div>' +
+        '<div class="mc-card-take">' + escapeHtml(s.promise || '') + '</div>' +
+        '<div class="mc-card-foot">' + escapeHtml(s.price || '') + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderStressTestProfile(s) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Offer stress test</span><span class="mc-tag">' + escapeHtml(s.timeline || '') + '</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(s.offer) + '</h2>' +
+      metaPair('Problem', s.problem) +
+      metaPair('Promise', s.promise) +
+      metaPair('Timeline', s.timeline) +
+      metaPair('Price', s.price) +
+      metaPair('Process guarantee', s.guaranteeOrRiskReversal) +
+      bulletList('Bonuses', s.bonuses) +
+      metaPair('Internal scarcity question', s.internalScarcityQuestion) +
+      bulletList('Skeptical buyer objections (and answers)', s.skepticalBuyerObjections) +
+      metaPair('Stronger version', s.strongerVersion);
+  }
+
+  /* ============================================
+     VALUE-BASED PRICING CALCULATOR
+     ============================================ */
+  function buildValuePricing() {
+    var c = document.getElementById('mc-pricing-card');
+    if (!c || typeof VALUE_BASED_PRICING_CALCULATOR === 'undefined') return;
+    var v = VALUE_BASED_PRICING_CALCULATOR;
+    function fieldRow(f) {
+      return '<div class="mc-vp-row"><div class="mc-vp-row-label">' + escapeHtml(f.label) + '</div><div class="mc-vp-row-val">' + escapeHtml(f.example) + '</div></div>';
+    }
+    function scenario(sc) {
+      var ins = sc.inputs || {};
+      var mod = sc.modelled || {};
+      function row(k, v) { return '<div class="mc-vp-row"><div class="mc-vp-row-label">' + escapeHtml(k) + '</div><div class="mc-vp-row-val">' + escapeHtml(String(v)) + '</div></div>'; }
+      return '<div class="mc-vp-scenario"><div class="mc-block-h">' + escapeHtml(sc.label) + '</div>' +
+        '<div class="mc-vp-cols">' +
+          '<div class="mc-vp-col"><div class="mc-vp-col-h">Inputs</div>' +
+            row('Dormant leads', ins.dormantLeads) +
+            row('Reachable %', Math.round((ins.reachablePercent || 0) * 100) + '%') +
+            row('Reply rate', Math.round((ins.replyRate || 0) * 100) + '%') +
+            row('Booking rate', Math.round((ins.bookingRate || 0) * 100) + '%') +
+            row('Close rate', Math.round((ins.closeRate || 0) * 100) + '%') +
+            row('Avg customer value', 'AUD $' + (ins.averageCustomerValue || 0).toLocaleString()) +
+            row('Gross margin', Math.round((ins.grossMargin || 0) * 100) + '%') +
+            row('Project fee', 'AUD $' + (ins.projectFee || 0).toLocaleString()) +
+          '</div>' +
+          '<div class="mc-vp-col"><div class="mc-vp-col-h">Modelled (illustrative — not a promise)</div>' +
+            row('Reachable leads', (mod.reachableLeads || 0).toLocaleString()) +
+            row('Replies', (mod.replies || 0).toLocaleString()) +
+            row('Bookings', (mod.bookings || 0).toLocaleString()) +
+            row('Customers', (mod.customers || 0).toLocaleString()) +
+            row('Gross revenue', 'AUD $' + (mod.grossRevenue || 0).toLocaleString()) +
+            row('Gross profit', 'AUD $' + (mod.grossProfit || 0).toLocaleString()) +
+            row('Fee ratio (fee / gross profit)', mod.feeRatio) +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+    c.innerHTML = '<div class="mc-pfm-head">' +
+        '<div class="mc-pfm-tag">Value-based pricing</div>' +
+        '<div class="mc-pfm-title">' + escapeHtml(v.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-pfm-rec">' + escapeHtml(v.description || '') + '</p>' +
+      '<div class="mc-block"><div class="mc-block-h">Inputs to estimate</div><div class="mc-vp-fields">' +
+        (v.fields || []).map(fieldRow).join('') +
+      '</div></div>' +
+      bulletList('Formulas', v.formulas) +
+      bulletList('Guidance', v.guidance) +
+      '<div class="mc-block"><div class="mc-block-h">Example scenarios</div>' +
+        (v.exampleScenarios || []).map(scenario).join('') +
+      '</div>';
+  }
+
+  /* ============================================
+     PROOF ASSET BUILDER
+     ============================================ */
+  function buildProofAssets() {
+    var grid = document.getElementById('mc-proof-grid');
+    if (!grid || typeof PROOF_ASSET_BUILDER === 'undefined') return;
+    grid.innerHTML = PROOF_ASSET_BUILDER.map(function (p) {
+      return '<button class="mc-proof-card" data-proof-id="' + escapeHtml(p.id) + '">' +
+        '<div class="mc-card-meta"><span class="mc-tag mc-tag-cat">proof asset</span></div>' +
+        '<div class="mc-card-title">' + escapeHtml(p.title) + '</div>' +
+        '<div class="mc-card-take">Used for: ' + escapeHtml(p.usedFor || '') + '</div>' +
+      '</button>';
+    }).join('');
+  }
+  function renderProofProfile(p) {
+    return '<button class="mc-detail-close" aria-label="Close">×</button>' +
+      '<div class="mc-detail-meta"><span class="mc-tag mc-tag-cat">Proof asset</span></div>' +
+      '<h2 class="mc-detail-title">' + escapeHtml(p.title) + '</h2>' +
+      '<p class="mc-detail-sub">Used for: ' + escapeHtml(p.usedFor || '') + '</p>' +
+      bulletList('Before metrics (capture at kickoff)', p.beforeMetrics) +
+      bulletList('After metrics (capture at read-out)', p.afterMetrics) +
+      bulletList('Screenshots to capture', p.screenshotsToCapture) +
+      metaPair('Testimonial ask', p.testimonialAsk) +
+      metaPair('Case-study template', p.caseStudyTemplate);
+  }
+
+  /* ============================================
+     OUTREACH COMPLIANCE WARNING (AU / ACMA)
+     ============================================ */
+  function buildOutreachWarning() {
+    var c = document.getElementById('mc-outreach-warning');
+    if (!c || typeof OUTREACH_COMPLIANCE_WARNING === 'undefined') return;
+    var w = OUTREACH_COMPLIANCE_WARNING;
+    c.innerHTML = '<div class="mc-warning-head">' +
+        '<span class="mc-tag mc-tag-cat">' + escapeHtml(w.jurisdiction || 'AU') + '</span>' +
+        '<span class="mc-tag mc-tag-warn">compliance</span>' +
+        '<div class="mc-warning-title">' + escapeHtml(w.title) + '</div>' +
+      '</div>' +
+      '<p class="mc-warning-body">' + escapeHtml(w.body) + '</p>' +
+      bulletList('Rules', w.rules) +
+      '<div class="mc-block"><div class="mc-block-h mc-launch-h--warn">What NOT to do</div><ul class="mc-list">' +
+        (w.whatNotToDo || []).map(function (i) { return '<li>' + escapeHtml(i) + '</li>'; }).join('') +
+      '</ul></div>' +
+      bulletList('Safer defaults', w.saferDefaults) +
+      srcChips(w.sourceIds);
+  }
+
+  /* ============================================
      EVENTS
      ============================================ */
   function bindClicks() {
@@ -1117,6 +1296,12 @@
       if (outBtn) { var op = OUTREACH_CAMPAIGN_PACKS.filter(function (x) { return x.id === outBtn.dataset.outreachId; })[0]; if (op) { e.preventDefault(); openPanel(renderOutreachProfile(op)); return; } }
       var scopeBtn = t.closest('[data-scope-i]');
       if (scopeBtn) { var si = parseInt(scopeBtn.dataset.scopeI, 10); var sc = SCOPE_BOUNDARY_LIBRARY[si]; if (sc) { e.preventDefault(); openPanel(renderScopeProfile(sc)); return; } }
+      var manualBtn = t.closest('[data-manual-id]');
+      if (manualBtn) { var mn = MANUAL_FULFILMENT_LAB.filter(function (x) { return x.id === manualBtn.dataset.manualId; })[0]; if (mn) { e.preventDefault(); openPanel(renderManualProfile(mn)); return; } }
+      var stressBtn = t.closest('[data-stress-id]');
+      if (stressBtn) { var st = OFFER_STRESS_TEST.filter(function (x) { return x.id === stressBtn.dataset.stressId; })[0]; if (st) { e.preventDefault(); openPanel(renderStressTestProfile(st)); return; } }
+      var proofBtn = t.closest('[data-proof-id]');
+      if (proofBtn) { var pr = PROOF_ASSET_BUILDER.filter(function (x) { return x.id === proofBtn.dataset.proofId; })[0]; if (pr) { e.preventDefault(); openPanel(renderProofProfile(pr)); return; } }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
   }
@@ -1215,10 +1400,16 @@
     buildOfferLadders();
     buildDeliveryRecipes();
     buildDealEngine();
+    buildManualFulfilmentLab();
+    buildValidationSprint();
     buildNicheScorecard();
-    buildDemoToDeal();
     buildDailyEngine();
+    buildDemoToDeal();
+    buildValuePricing();
+    buildOfferStressTests();
+    buildProofAssets();
     buildMoneyMath();
+    buildOutreachWarning();
     buildOutreachPacks();
     buildScopeBoundaries();
     buildPipelineTemplate();
