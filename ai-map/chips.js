@@ -356,19 +356,39 @@
     var outAnnual = $('#map-chips-calc-annual');
     if (!fields.every(Boolean) || !outIT || !outTWh || !outCost || !outAnnual) return;
 
+    function fmtEnergy(twh) {
+      // Pick a sensible unit: TWh ≥ 1, otherwise GWh (with up to 2 decimals),
+      // otherwise MWh. Avoids showing tiny "0.005 TWh"-style values.
+      if (twh >= 1)   return (Math.round(twh * 100) / 100).toLocaleString() + ' TWh';
+      if (twh >= 0.001) {
+        var gwh = twh * 1000;
+        var rounded = gwh >= 100 ? Math.round(gwh) : (Math.round(gwh * 10) / 10);
+        return rounded.toLocaleString() + ' GWh';
+      }
+      var mwh = twh * 1e6;
+      return (Math.round(mwh)).toLocaleString() + ' MWh';
+    }
+
+    function fmtPower(mw) {
+      // Show MW for sub-GW loads; switch to GW for >= 1,000 MW.
+      if (mw >= 1000) return (Math.round((mw / 1000) * 100) / 100) + ' GW';
+      if (mw >= 10)   return (Math.round(mw * 10) / 10) + ' MW';
+      return (Math.round(mw * 100) / 100) + ' MW';
+    }
+
     function recalc() {
       var gpus  = parseFloat(fields[0].value)  || 0;
       var watts = parseFloat(fields[1].value)  || 0;
       var util  = (parseFloat(fields[2].value) || 0) / 100;
       var price = parseFloat(fields[3].value)  || 0;
-      var hourly = parseFloat(fields[4].value) || 0; // approximate $ per GPU per hour, allocated cost
+      var hourly = parseFloat(fields[4].value) || 0; // $ per GPU per hour, allocated cost
       var itPowerMW = (gpus * watts) / 1e6;
       var twh = itPowerMW * util * 8760 / 1e6;
       var kwh = twh * 1e9;
       var energyCost = kwh * price;
       var hardwareCost = gpus * util * 8760 * hourly;
-      outIT.textContent = (Math.round(itPowerMW * 100) / 100) + ' MW';
-      outTWh.textContent = (Math.round(twh * 1000) / 1000) + ' TWh';
+      outIT.textContent = fmtPower(itPowerMW);
+      outTWh.textContent = fmtEnergy(twh);
       outCost.textContent = money(energyCost) + ' / yr';
       outAnnual.textContent = money(energyCost + hardwareCost) + ' / yr';
     }

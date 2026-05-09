@@ -668,10 +668,10 @@ var CHIPS_ECONOMICS = {
 
 /* Calculator presets */
 var CHIPS_CALC_PRESETS = [
-  { id: 'srv-8',     label: '8-GPU server',         gpus: 8,     watts: 700, util: 70, price: 0.08, hourly: 32, tag: 'Single HGX H100 / MI300X-class baseboard.' },
-  { id: 'rack-72',   label: '72-GPU NVL72 rack',    gpus: 72,    watts: 1000, util: 80, price: 0.08, hourly: 45, tag: 'A single GB200 NVL72 reference rack.' },
-  { id: 'cluster-1k',label: '1,000-GPU cluster',    gpus: 1000,  watts: 750, util: 75, price: 0.07, hourly: 38, tag: 'Mid-tier training cluster with InfiniBand fabric.' },
-  { id: 'factory-100k', label: '100,000-GPU AI factory', gpus: 100000, watts: 800, util: 80, price: 0.06, hourly: 32, tag: 'Frontier AI factory; multi-billion-dollar capex.' }
+  { id: 'srv-8',     label: '8-GPU server',         gpus: 8,     watts: 700, util: 70, price: 0.08, hourly: 10, tag: 'Single HGX H100 / MI300X-class baseboard. ~AWS p5 list-equivalent.' },
+  { id: 'rack-72',   label: '72-GPU NVL72 rack',    gpus: 72,    watts: 1000, util: 80, price: 0.08, hourly: 12, tag: 'A single GB200 NVL72 reference rack at announced cloud pricing.' },
+  { id: 'cluster-1k',label: '1,000-GPU cluster',    gpus: 1000,  watts: 750, util: 75, price: 0.07, hourly: 5,  tag: 'Mid-tier training cluster with InfiniBand fabric, blended reserved + on-demand.' },
+  { id: 'factory-100k', label: '100,000-GPU AI factory', gpus: 100000, watts: 800, util: 80, price: 0.06, hourly: 3, tag: 'Frontier AI factory at-scale TCO (capex amortised + energy + ops).' }
 ];
 
 /* Misconceptions for the Basics tab */
