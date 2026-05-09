@@ -360,42 +360,52 @@
     });
   }
 
-  /* --- Wire energy chips with a [data-tab] attribute so they open the
-         Energy deep-dive section at the right tab. --- */
+  /* --- Wire taxonomy chips with a [data-tab] attribute so they open the
+         right deep-dive section at the right tab.
+         Format:  data-tab="energy:world" | "chips:hardware" | (legacy) "constraints" */
+  function openDeepTab(rawTab) {
+    var section = 'energy';
+    var tab = rawTab;
+    var colon = rawTab.indexOf(':');
+    if (colon > 0) {
+      section = rawTab.slice(0, colon);
+      tab = rawTab.slice(colon + 1);
+    }
+
+    var prefix = '.map-' + section;
+    var tabs = document.querySelectorAll(prefix + '-tab');
+    var panes = document.querySelectorAll(prefix + '-pane');
+    if (!tabs.length) return;
+
+    tabs.forEach(function (b) {
+      var on = b.dataset.tab === tab;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('tabindex', on ? '0' : '-1');
+    });
+    panes.forEach(function (p) { p.classList.toggle('is-active', p.dataset.tab === tab); });
+
+    /* Scroll to the deep-dive section */
+    var target = document.getElementById(section + '-deep-dive');
+    if (target) {
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo(0, top);
+    }
+  }
+
   function bindEnergyChips() {
-    var openEnergyTab = function (tab) {
-      /* Switch tab in the energy section if energy.js has loaded its tabs */
-      var tabs = document.querySelectorAll('.map-energy-tab');
-      var panes = document.querySelectorAll('.map-energy-pane');
-      tabs.forEach(function (b) {
-        var on = b.dataset.tab === tab;
-        b.classList.toggle('is-active', on);
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-        b.setAttribute('tabindex', on ? '0' : '-1');
-      });
-      panes.forEach(function (p) { p.classList.toggle('is-active', p.dataset.tab === tab); });
-
-      /* Scroll to the energy section. Use instant scroll for reliability;
-         smooth scrolling is silently dropped in some embed contexts. */
-      var target = document.getElementById('energy-deep-dive');
-      if (target) {
-        var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
-        window.scrollTo(0, top);
-      }
-    };
-
     document.addEventListener('click', function (e) {
       var chip = e.target.closest && e.target.closest('.map-chip[data-tab]');
       if (!chip) return;
       e.preventDefault();
-      openEnergyTab(chip.dataset.tab);
+      openDeepTab(chip.dataset.tab);
     });
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       var el = document.activeElement;
       if (!el || !el.classList || !el.classList.contains('map-chip') || !el.dataset.tab) return;
       e.preventDefault();
-      openEnergyTab(el.dataset.tab);
+      openDeepTab(el.dataset.tab);
     });
   }
 

@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="../style.css?v=16">
   <link rel="stylesheet" href="ai-map.css?v=12">
   <link rel="stylesheet" href="energy.css?v=2">
+  <link rel="stylesheet" href="chips.css?v=1">
 
   <script type="application/ld+json">
   {
@@ -403,6 +404,191 @@
     </div>
   </section>
 
+  <!-- ========== CHIPS DEEP DIVE ========== -->
+  <section class="map-chips" id="chips-deep-dive" aria-label="Chips deep dive">
+    <div class="container">
+      <div class="map-chips-head">
+        <div>
+          <p class="map-chips-eyebrow">Chips layer · deep dive</p>
+          <h2 class="map-chips-title">Chips: where electricity becomes intelligence.</h2>
+          <p class="map-chips-thesis">
+            Chips are not just GPUs. The AI chip layer is the full <em>compute engine</em>: accelerator architecture,
+            memory, packaging, interconnects, networking, software, manufacturing and supply chain. The countries and
+            companies that secure all of it together will define who scales AI.
+          </p>
+        </div>
+        <span class="map-chips-badge" id="map-chips-badge">latest available</span>
+      </div>
+
+      <!-- Intel summary -->
+      <div class="map-chips-intel" id="map-chips-intel" aria-label="Chips intelligence summary"></div>
+
+      <!-- Flow chain -->
+      <div class="map-chips-flow-wrap">
+        <h3 class="map-chips-flow-h-eyebrow">Electricity → tokens</h3>
+        <div class="map-chips-flow" id="map-chips-flow" aria-label="From electricity to tokens"></div>
+      </div>
+
+      <!-- Five overview pills -->
+      <div class="map-chips-pills" id="map-chips-pills" role="tablist" aria-label="Chips subtopics"></div>
+
+      <!-- Tabs -->
+      <div class="map-chips-tabs" role="tablist" aria-label="Chips deep-dive sections">
+        <button class="map-chips-tab" data-tab="basics"      role="tab" aria-selected="false" tabindex="-1" type="button">Basics</button>
+        <button class="map-chips-tab" data-tab="stack"       role="tab" aria-selected="false" tabindex="-1" type="button">Stack</button>
+        <button class="map-chips-tab" data-tab="hardware"    role="tab" aria-selected="false" tabindex="-1" type="button">Hardware</button>
+        <button class="map-chips-tab" data-tab="bottlenecks" role="tab" aria-selected="false" tabindex="-1" type="button">Bottlenecks</button>
+        <button class="map-chips-tab" data-tab="supply"      role="tab" aria-selected="false" tabindex="-1" type="button">Supply chain</button>
+        <button class="map-chips-tab" data-tab="economics"   role="tab" aria-selected="false" tabindex="-1" type="button">Economics</button>
+      </div>
+
+      <!-- Pane: Basics -->
+      <div class="map-chips-pane" data-tab="basics" role="tabpanel">
+        <h3 class="map-chips-h2">Chip types — what does each one actually do?</h3>
+        <p class="map-chips-sub">CPUs, GPUs, TPUs, custom hyperscaler silicon, AMD Instinct, Intel Gaudi, wafer-scale, LPUs and edge NPUs &mdash; nine cards, each with its best use, its weakness, and a concrete example.</p>
+        <div class="map-chips-types" id="map-chips-types"></div>
+
+        <h3 class="map-chips-h2" style="margin-top:36px">Which chip for which job?</h3>
+        <p class="map-chips-sub">A practical first cut, not a benchmark. Always validate on your workload, your software stack and your latency target.</p>
+        <div class="map-chips-jobs" id="map-chips-jobs"></div>
+
+        <h3 class="map-chips-h2" style="margin-top:36px">Misconceptions to drop</h3>
+        <p class="map-chips-sub">The fastest way to think clearly about AI chips is to stop carrying these around.</p>
+        <div class="map-chips-myths" id="map-chips-myths"></div>
+      </div>
+
+      <!-- Pane: Stack -->
+      <div class="map-chips-pane" data-tab="stack" role="tabpanel">
+        <h3 class="map-chips-h2">The AI chip stack — eight layers</h3>
+        <p class="map-chips-sub">From transistors to global supply chain. Each layer enables the one above it, and any single layer can become the binding constraint.</p>
+        <div class="map-chips-stack" id="map-chips-stack"></div>
+      </div>
+
+      <!-- Pane: Hardware -->
+      <div class="map-chips-pane" data-tab="hardware" role="tabpanel">
+        <h3 class="map-chips-h2">Hardware benchmark cards</h3>
+        <p class="map-chips-sub">Vendor-published specs for the major AI accelerators. Use these to compare at a glance &mdash; not as a benchmark substitute. <span class="map-chips-count" id="map-chips-count"></span></p>
+
+        <div class="map-chips-hw-warning">
+          <p class="map-chips-hw-warning-h">Read this before reading the cards</p>
+          <p class="map-chips-hw-warning-d">
+            Peak FLOPS are marketing numbers unless paired with memory pressure, interconnect, software stack,
+            utilization and the actual workload. Two chips with the same peak BF16 number can have very different
+            tokens-per-second on the same model.
+          </p>
+        </div>
+
+        <div class="map-chips-hw-controls">
+          <input class="map-chips-search" id="map-chips-search" type="search" placeholder="Search by name, vendor or use case (e.g. inference, training, HBM)" aria-label="Search hardware">
+          <select class="map-chips-vendor" id="map-chips-vendor" aria-label="Filter by vendor"></select>
+        </div>
+
+        <div class="map-chips-hw" id="map-chips-hw"></div>
+      </div>
+
+      <!-- Pane: Bottlenecks -->
+      <div class="map-chips-pane" data-tab="bottlenecks" role="tabpanel">
+        <div class="map-chips-block" id="map-chips-memory"></div>
+        <div class="map-chips-block" id="map-chips-interconnect"></div>
+      </div>
+
+      <!-- Pane: Supply chain -->
+      <div class="map-chips-pane" data-tab="supply" role="tabpanel">
+        <h3 class="map-chips-h2">Who actually makes AI chips?</h3>
+        <p class="map-chips-sub">No single country can ship a frontier AI chip end-to-end. The map below traces the value chain; the cards below it read each major jurisdiction.</p>
+
+        <div class="map-chips-supply-map" id="map-chips-supply-map"></div>
+
+        <h3 class="map-chips-h2" style="margin-top:24px">Country reads</h3>
+        <p class="map-chips-sub">For each: what is strong, what is weak, why it matters for AI, and the bottleneck to fix first.</p>
+        <div class="map-chips-countries" id="map-chips-countries"></div>
+      </div>
+
+      <!-- Pane: Economics -->
+      <div class="map-chips-pane" data-tab="economics" role="tabpanel">
+        <h3 class="map-chips-h2">Real cost is not just chip price</h3>
+        <p class="map-chips-sub">Twelve line items decide the actual dollars-per-token of an AI workload.</p>
+        <div class="map-chips-econ">
+          <div class="map-chips-econ-card">
+            <h4 class="map-chips-econ-h">Total cost stack</h4>
+            <ul class="map-chips-econ-list" id="map-chips-econ-stack"></ul>
+          </div>
+          <div class="map-chips-econ-card">
+            <h4 class="map-chips-econ-h">Training vs inference</h4>
+            <p class="map-chips-block-sub">Training builds the model. Inference runs the business. The chip you want for one is rarely the chip you want for the other.</p>
+            <div class="map-chips-tvi" id="map-chips-tvi"></div>
+            <p class="map-chips-block-call"><strong>Why it matters</strong><span id="map-chips-tvi-punch"></span></p>
+          </div>
+        </div>
+
+        <div class="map-chips-calc">
+          <h4 class="map-chips-calc-h">AI hardware cost intuition</h4>
+          <p class="map-chips-calc-sub">Pick a preset or edit the inputs. Numbers are illustrative; not a quote.</p>
+
+          <div class="map-chips-presets" id="map-chips-presets" aria-label="Calculator presets"></div>
+
+          <div class="map-chips-calc-grid">
+            <div class="map-chips-calc-field">
+              <label class="map-chips-calc-label" for="map-chips-calc-gpus">Accelerators</label>
+              <input class="map-chips-calc-input" id="map-chips-calc-gpus" type="number" min="1" step="1" value="1000">
+            </div>
+            <div class="map-chips-calc-field">
+              <label class="map-chips-calc-label" for="map-chips-calc-watts">Avg power per accelerator (W)</label>
+              <input class="map-chips-calc-input" id="map-chips-calc-watts" type="number" min="100" step="50" value="750">
+            </div>
+            <div class="map-chips-calc-field">
+              <label class="map-chips-calc-label" for="map-chips-calc-util">Utilisation %</label>
+              <input class="map-chips-calc-input" id="map-chips-calc-util" type="number" min="1" max="100" step="1" value="75">
+            </div>
+            <div class="map-chips-calc-field">
+              <label class="map-chips-calc-label" for="map-chips-calc-price">Price ($/kWh)</label>
+              <input class="map-chips-calc-input" id="map-chips-calc-price" type="number" min="0" step="0.01" value="0.07">
+            </div>
+            <div class="map-chips-calc-field">
+              <label class="map-chips-calc-label" for="map-chips-calc-hourly">Allocated GPU-hour ($)</label>
+              <input class="map-chips-calc-input" id="map-chips-calc-hourly" type="number" min="0" step="0.5" value="38">
+            </div>
+          </div>
+          <div class="map-chips-calc-out">
+            <div>
+              <p class="map-chips-calc-out-h">Total IT power</p>
+              <p class="map-chips-calc-out-val" id="map-chips-calc-itpower">— MW</p>
+            </div>
+            <div>
+              <p class="map-chips-calc-out-h">Annual energy</p>
+              <p class="map-chips-calc-out-val" id="map-chips-calc-twh">— TWh</p>
+            </div>
+            <div>
+              <p class="map-chips-calc-out-h">Annual energy cost</p>
+              <p class="map-chips-calc-out-val" id="map-chips-calc-cost">— / yr</p>
+            </div>
+            <div>
+              <p class="map-chips-calc-out-h">Total run-rate (energy + allocated)</p>
+              <p class="map-chips-calc-out-val" id="map-chips-calc-annual">— / yr</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-chips-take">
+          <h4 class="map-chips-take-h">Strategic takeaways</h4>
+          <ul class="map-chips-take-list" id="map-chips-take-list"></ul>
+        </div>
+      </div>
+
+      <!-- Sources -->
+      <div class="map-chips-sources">
+        <p class="map-chips-sources-h">Sources &amp; methodology</p>
+        <p class="map-chips-sub" style="font-size:12.5px; max-width:760px; margin: 0 0 14px;">
+          Hardware specs are taken from official vendor product pages, datasheets and architecture briefs (NVIDIA,
+          AMD, Google Cloud TPU docs, AWS Neuron docs, Intel Gaudi, Cerebras, Groq, Apple). Geopolitical and
+          supply-chain reads draw on TSMC + ASML disclosures, SIA / CSIS reports, Reuters coverage, and the
+          official Singapore EDB / Malaysia MIDA sector pages. "Latest available" labels apply throughout.
+        </p>
+        <div class="map-chips-sources-grouped" id="map-chips-sources-grouped"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== TAXONOMY GRID ========== -->
   <section class="map-tax-section" id="map-tax-section" aria-label="AI taxonomy">
     <div class="container">
@@ -461,7 +647,9 @@
   <script src="../script.js?v=12"></script>
   <script src="data.js?v=12"></script>
   <script src="energy-data.js?v=2"></script>
-  <script src="ai-map.js?v=12"></script>
+  <script src="chips-data.js?v=1"></script>
+  <script src="ai-map.js?v=13"></script>
   <script src="energy.js?v=2"></script>
+  <script src="chips.js?v=1"></script>
 </body>
 </html>
