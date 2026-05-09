@@ -160,6 +160,7 @@ var ENERGY_COUNTRIES = [
     id: 'cn', name: 'China', region: 'Asia',
     gen: 10000, year: 2024, peakGW: 1450,
     mix: { coal: 58, gas: 3, nuclear: 5, hydro: 13, wind: 9, solar: 8, other: 4 },
+    readiness: 'scale',
     dc: 'High and rising',
     read: 'Largest electricity system in the world. Massive solar, wind and ultra-high-voltage transmission build-out. AI campuses can be sited near new clean generation.',
     bottleneck: 'Coal still dominant; balancing renewables across regions is the engineering challenge.'
@@ -168,6 +169,7 @@ var ENERGY_COUNTRIES = [
     id: 'us', name: 'United States', region: 'North America',
     gen: 4300, year: 2024, peakGW: 760,
     mix: { coal: 16, gas: 43, nuclear: 18, hydro: 6, wind: 10, solar: 6, other: 1 },
+    readiness: 'bottleneck',
     dc: 'Hyperscaler hub',
     read: 'World\'s largest data-centre market. Gas-heavy mix, large nuclear fleet, fast-growing solar + storage. Hyperscalers dominate new connection requests.',
     bottleneck: 'Grid-interconnection queues, transformer lead times, and local-permitting fights — especially in PJM, ERCOT and Dominion.'
@@ -176,6 +178,7 @@ var ENERGY_COUNTRIES = [
     id: 'eu', name: 'European Union', region: 'Europe',
     gen: 2750, year: 2024, peakGW: 410,
     mix: { coal: 13, gas: 14, nuclear: 24, hydro: 12, wind: 19, solar: 11, other: 7 },
+    readiness: 'clean',
     dc: 'Concentrated in FLAP-D',
     read: 'High clean share (renewables + nuclear ~66%). Strong climate policy. Frankfurt-London-Amsterdam-Paris-Dublin (FLAP-D) is the main DC corridor.',
     bottleneck: 'Electricity prices, permitting timelines and local moratoria (e.g. Amsterdam, Frankfurt, Dublin) on new data centres.'
@@ -184,6 +187,7 @@ var ENERGY_COUNTRIES = [
     id: 'in', name: 'India', region: 'Asia',
     gen: 1950, year: 2024, peakGW: 250,
     mix: { coal: 74, gas: 3, nuclear: 3, hydro: 8, wind: 4, solar: 6, other: 2 },
+    readiness: 'fast',
     dc: 'Rapidly growing',
     read: 'Demand growing the fastest of any major economy. Massive solar build-out and ambitious capacity targets.',
     bottleneck: 'Coal dependence, grid reliability, transmission congestion and rising cooling demand in hot states.'
@@ -192,6 +196,7 @@ var ENERGY_COUNTRIES = [
     id: 'ru', name: 'Russia', region: 'Europe / Asia',
     gen: 1180, year: 2023, peakGW: 165,
     mix: { coal: 16, gas: 47, nuclear: 19, hydro: 17, wind: 0, solar: 0, other: 1 },
+    readiness: 'isolated',
     dc: 'Limited foreign DC presence',
     read: 'Large gas, hydro and nuclear base. Cheap domestic electricity but limited foreign hyperscaler presence due to sanctions and geopolitics.',
     bottleneck: 'Geopolitical and sanctions risk dominates any AI infrastructure conversation.'
@@ -200,6 +205,7 @@ var ENERGY_COUNTRIES = [
     id: 'jp', name: 'Japan', region: 'Asia',
     gen: 1000, year: 2023, peakGW: 158,
     mix: { coal: 30, gas: 33, nuclear: 9, hydro: 8, wind: 1, solar: 11, other: 8 },
+    readiness: 'clean',
     dc: 'Tokyo + Osaka hubs',
     read: 'Tokyo and Osaka are major DC hubs. Nuclear restart programme is gradual; solar growing strongly.',
     bottleneck: 'Limited land, high electricity prices, and slow nuclear restarts after Fukushima.'
@@ -208,6 +214,7 @@ var ENERGY_COUNTRIES = [
     id: 'kr', name: 'South Korea', region: 'Asia',
     gen: 620, year: 2024, peakGW: 100,
     mix: { coal: 32, gas: 28, nuclear: 31, hydro: 1, wind: 1, solar: 5, other: 2 },
+    readiness: 'firm',
     dc: 'Growing Seoul cluster',
     read: 'Strong nuclear fleet, advanced semiconductor and battery industry. Korean hyperscalers and chipmakers anchor demand.',
     bottleneck: 'High population density, transmission constraints between south coast generation and Seoul demand.'
@@ -216,6 +223,7 @@ var ENERGY_COUNTRIES = [
     id: 'ca', name: 'Canada', region: 'North America',
     gen: 640, year: 2023, peakGW: 110,
     mix: { coal: 4, gas: 11, nuclear: 14, hydro: 60, wind: 6, solar: 1, other: 4 },
+    readiness: 'firm',
     dc: 'Quebec, Alberta, Ontario',
     read: 'Hydro-dominated grid (Quebec, BC, Manitoba) gives some of the cleanest electricity in the OECD. Cold climate helps cooling.',
     bottleneck: 'Long transmission distances; some provinces (Alberta) are still gas-heavy.'
@@ -224,6 +232,7 @@ var ENERGY_COUNTRIES = [
     id: 'br', name: 'Brazil', region: 'Latin America',
     gen: 720, year: 2024, peakGW: 110,
     mix: { coal: 2, gas: 6, nuclear: 2, hydro: 58, wind: 14, solar: 11, other: 7 },
+    readiness: 'firm',
     dc: 'São Paulo cluster',
     read: 'Hydro-dominated grid plus rapid solar and wind growth. Among the cleanest large grids in the world.',
     bottleneck: 'Drought-driven hydro variability; transmission from northeast wind/solar to southeast load.'
@@ -232,6 +241,7 @@ var ENERGY_COUNTRIES = [
     id: 'au', name: 'Australia', region: 'Oceania',
     gen: 280, year: 2024, peakGW: 35,
     mix: { coal: 44, gas: 16, nuclear: 0, hydro: 5, wind: 13, solar: 19, other: 3 },
+    readiness: 'dirty',
     dc: 'Sydney + Melbourne',
     read: 'Highest residential rooftop-solar penetration in the world. Coal still anchors baseload; planned exits being staggered.',
     bottleneck: 'Coal-fleet retirements, transmission build-out (Rewiring the Nation) and east-coast gas tightness.'
@@ -240,6 +250,7 @@ var ENERGY_COUNTRIES = [
     id: 'sg', name: 'Singapore', region: 'Asia',
     gen: 60, year: 2024, peakGW: 7.7,
     mix: { coal: 1, gas: 94, nuclear: 0, hydro: 0, wind: 0, solar: 4, other: 1 },
+    readiness: 'hub',
     dc: 'Major regional hub',
     read: 'Highly reliable grid, strong fibre, talent and finance. ~60 TWh generation in 2024 (EMA Singapore Energy Statistics 2025).',
     bottleneck: 'Land and power-constrained. New DC capacity is approved through a controlled pipeline; importing low-carbon power via interconnectors is strategic.'
@@ -248,6 +259,7 @@ var ENERGY_COUNTRIES = [
     id: 'my', name: 'Malaysia', region: 'Asia',
     gen: 190, year: 2024, peakGW: 21,
     mix: { coal: 45, gas: 36, nuclear: 0, hydro: 14, wind: 0, solar: 4, other: 1 },
+    readiness: 'spillover',
     dc: 'Johor / Iskandar boom',
     read: 'Johor / Iskandar is absorbing Singapore-spillover DC demand on cheaper land and power. National solar capacity is rising under the LSS programmes.',
     bottleneck: 'Coal and gas still central; grid reinforcement and substations around Johor are the hard part of meeting committed DC load.'
@@ -256,6 +268,7 @@ var ENERGY_COUNTRIES = [
     id: 'id', name: 'Indonesia', region: 'Asia',
     gen: 340, year: 2024, peakGW: 50,
     mix: { coal: 62, gas: 19, nuclear: 0, hydro: 7, wind: 0, solar: 1, other: 11 },
+    readiness: 'dirty',
     dc: 'Jakarta cluster',
     read: 'Large coal fleet plus rising captive industrial generation. Geothermal is a strategic clean firm resource.',
     bottleneck: 'Coal dependence, complicated transmission across thousands of islands, captive-power policy questions.'
@@ -264,6 +277,7 @@ var ENERGY_COUNTRIES = [
     id: 'vn', name: 'Vietnam', region: 'Asia',
     gen: 310, year: 2024, peakGW: 49,
     mix: { coal: 45, gas: 8, nuclear: 0, hydro: 26, wind: 4, solar: 14, other: 3 },
+    readiness: 'fast',
     dc: 'Growing manufacturing-led DC',
     read: 'Rapid solar boom in 2019–2021; demand growth among the fastest in Asia.',
     bottleneck: 'North-south transmission constraints; recent peak-summer load-shedding in the north.'
@@ -272,6 +286,7 @@ var ENERGY_COUNTRIES = [
     id: 'sa', name: 'Saudi Arabia', region: 'Middle East',
     gen: 410, year: 2024, peakGW: 70,
     mix: { coal: 0, gas: 50, nuclear: 0, hydro: 0, wind: 1, solar: 4, other: 45 },
+    readiness: 'sovereign',
     dc: 'Strategic Vision 2030 push',
     read: 'Cheap domestic gas and oil; aggressive renewables targets under Vision 2030; building a sovereign AI/cloud stack.',
     bottleneck: 'Cooling load is enormous; converting from oil-fired generation to gas + renewables is mid-stream.'
@@ -280,6 +295,7 @@ var ENERGY_COUNTRIES = [
     id: 'ae', name: 'UAE', region: 'Middle East',
     gen: 165, year: 2024, peakGW: 32,
     mix: { coal: 1, gas: 76, nuclear: 16, hydro: 0, wind: 0, solar: 6, other: 1 },
+    readiness: 'sovereign',
     dc: 'Strong sovereign-cloud push',
     read: 'Barakah nuclear plant gives a large clean firm base. Solar farms (Al Dhafra, Mohammed bin Rashid) among the cheapest in the world.',
     bottleneck: 'Cooling load and water; gas still dominant overall.'
@@ -288,6 +304,7 @@ var ENERGY_COUNTRIES = [
     id: 'gb', name: 'United Kingdom', region: 'Europe',
     gen: 285, year: 2024, peakGW: 47,
     mix: { coal: 1, gas: 26, nuclear: 13, hydro: 2, wind: 30, solar: 5, other: 23 },
+    readiness: 'clean',
     dc: 'London cluster',
     read: 'Coal almost gone (last plant closed 2024). Strong offshore wind. Grid is tight around the south-east where load and DC demand concentrate.',
     bottleneck: 'Connection queues stretched into the 2030s; transmission build between Scottish wind and English load.'
@@ -296,6 +313,7 @@ var ENERGY_COUNTRIES = [
     id: 'fr', name: 'France', region: 'Europe',
     gen: 545, year: 2024, peakGW: 95,
     mix: { coal: 1, gas: 7, nuclear: 65, hydro: 12, wind: 9, solar: 5, other: 1 },
+    readiness: 'firm',
     dc: 'Paris cluster',
     read: 'Heavily nuclear, low-carbon by default, large net exporter to neighbours. Attractive for clean-power-sensitive workloads.',
     bottleneck: 'Permitting, ageing nuclear fleet maintenance windows, transmission to industrial sites.'
@@ -304,6 +322,7 @@ var ENERGY_COUNTRIES = [
     id: 'de', name: 'Germany', region: 'Europe',
     gen: 520, year: 2024, peakGW: 80,
     mix: { coal: 24, gas: 14, nuclear: 0, hydro: 4, wind: 28, solar: 14, other: 16 },
+    readiness: 'clean',
     dc: 'Frankfurt cluster',
     read: 'Renewables now ~58% of generation. Nuclear fully phased out in 2023. Coal exit ongoing.',
     bottleneck: 'High retail electricity prices, north-to-south transmission ("SuedLink"), grid stability without inertia from coal/nuclear.'
@@ -312,6 +331,7 @@ var ENERGY_COUNTRIES = [
     id: 'nl', name: 'Netherlands', region: 'Europe',
     gen: 125, year: 2024, peakGW: 19,
     mix: { coal: 8, gas: 30, nuclear: 3, hydro: 0, wind: 25, solar: 23, other: 11 },
+    readiness: 'bottleneck',
     dc: 'Amsterdam (AMS-IX)',
     read: 'Major DC hub. Large solar and offshore-wind fleets. Amsterdam municipality has paused new DC permits in some zones.',
     bottleneck: 'Grid congestion is now the official reason hyperscalers cannot get new connections in many regions ("net-congestie").'
@@ -320,79 +340,67 @@ var ENERGY_COUNTRIES = [
     id: 'ie', name: 'Ireland', region: 'Europe',
     gen: 33, year: 2024, peakGW: 6.5,
     mix: { coal: 4, gas: 46, nuclear: 0, hydro: 2, wind: 32, solar: 4, other: 12 },
+    readiness: 'hub',
     dc: 'Dublin — globally outsized',
     read: 'Data centres consumed >20% of Ireland\'s electricity in 2023 (CSO Ireland), the highest national share in the world.',
     bottleneck: 'EirGrid moratoria on new Dublin DC connections; reliance on gas backup; tight winter peaks.'
   }
 ];
 
-/* Deeper read for the priority countries the user called out */
+/* Deeper read for the priority countries.
+   Each card answers four questions:
+   strong   — what works
+   weak     — what limits it
+   matter   — why it matters for AI
+   bottleneck — the single thing to fix first */
 var ENERGY_COUNTRY_DEEP = [
   {
-    id: 'cn-deep', name: 'China',
-    headline: 'Largest electricity system on the planet',
-    bullets: [
-      'Annual generation around 10,000 TWh — about a third of global electricity (IEA + Ember 2024 data).',
-      'Coal still the single largest source by share, but its share is declining as solar and wind explode.',
-      'World-leading ultra-high-voltage transmission (1,100 kV DC links) move power from western generation to eastern load.',
-      'Dominant clean-tech manufacturing base — solar panels, wind turbines, batteries, electrolysers.'
-    ],
-    aiTake: 'Huge power base, huge manufacturing base, huge appetite for AI compute. The strategic question is how fast coal share falls and how the grid balances variable renewables across thousands of kilometres.'
+    id: 'cn-deep', name: 'China', readiness: 'scale',
+    headline: 'Largest electricity system on the planet — coal still anchors it',
+    strong: 'Around 10,000 TWh of annual generation (about a third of global). World-leading 1,100 kV ultra-high-voltage transmission moves western clean generation to eastern load. Dominant clean-tech manufacturing base — solar, wind, batteries, electrolysers.',
+    weak: 'Coal is still the single largest source by share. Solar and wind growth is enormous in absolute terms but the system has to balance variable output across thousands of kilometres.',
+    matter: 'Strategic implication for AI: a power base no rival can match in the medium term, paired with the manufacturing depth to build the chips, batteries, transformers and racks that AI campuses need.',
+    bottleneck: 'How fast coal share falls and how the grid balances variable renewables across regions; political signal also matters for foreign hyperscalers.'
   },
   {
-    id: 'us-deep', name: 'United States',
+    id: 'us-deep', name: 'United States', readiness: 'bottleneck',
     headline: 'Hyperscaler-led demand growth meets a constrained grid',
-    bullets: [
-      'Annual generation around 4,300 TWh; gas is dominant (~43%), nuclear is large and reliable (~18%).',
-      'Solar and battery storage are the fastest-growing sources of new capacity.',
-      'Data-centre electricity use is projected to roughly double by 2030 (DOE / LBNL 2024 update).',
-      'PJM, ERCOT and Dominion are the three regions where AI campuses are most concentrated.'
-    ],
-    aiTake: 'The bottleneck is the grid, not the generators. Connection queues, transformer lead times, transmission upgrades and local permitting now decide where compute gets built. Natural gas and nuclear are both seeing a quiet revival to firm up new AI load.'
+    strong: '~4,300 TWh of annual generation. Gas dominant (~43%), nuclear large and reliable (~18%). Solar and battery storage are the fastest-growing new capacity. Largest data-centre market in the world.',
+    weak: 'Connection queues, transformer lead times and local permitting now decide where compute actually gets built. PJM, ERCOT and Dominion are the three constrained regions absorbing the most AI load.',
+    matter: 'Strategic implication for AI: hyperscaler concentration plus deep gas, nuclear and renewables means the resources exist; the question is whether the grid can deliver them on the AI timeline.',
+    bottleneck: 'The grid, not the generators. Transmission upgrades, queue reform and transformer supply chains are the binding constraints; gas peakers and nuclear restarts are filling the firm-power gap.'
   },
   {
-    id: 'eu-deep', name: 'European Union',
+    id: 'eu-deep', name: 'European Union', readiness: 'clean',
     headline: 'Clean power advantage, cost and permitting drag',
-    bullets: [
-      'Renewables + nuclear ≈ 66% of generation; among the cleanest large grids in the world.',
-      'Coal share roughly halved over the past decade.',
-      'Strong climate policy and CBAM-style carbon pricing create both a tailwind and a cost.',
-      'FLAP-D — Frankfurt, London, Amsterdam, Paris, Dublin — is the main DC corridor.'
-    ],
-    aiTake: 'Clean electricity is genuinely available, but retail prices and permitting timelines are the constraint. Several core DC cities (Amsterdam, Frankfurt, Dublin) have moratoria or de-facto pauses on new sites.'
+    strong: 'Renewables + nuclear ≈ 66% of generation — among the cleanest large grids in the world. Strong climate policy. Coal share halved over the past decade. FLAP-D corridor (Frankfurt, London, Amsterdam, Paris, Dublin) anchors the main DC market.',
+    weak: 'Retail electricity prices are high. Permitting can take years. Several core DC cities have moratoria or de-facto pauses on new sites (Amsterdam, Frankfurt, Dublin).',
+    matter: 'Strategic implication for AI: the cleanest large grid available, but the most expensive and slowest to build on. Better suited to inference and clean-power-sensitive workloads than greenfield mega-campuses.',
+    bottleneck: 'Cost + permitting + local grid headroom. Site availability, not generation, is the binding constraint in the corridor cities.'
   },
   {
-    id: 'in-deep', name: 'India',
-    headline: 'Fastest demand growth, biggest coal dependence',
-    bullets: [
-      'Annual generation around 1,950 TWh and growing rapidly.',
-      'Coal still produces roughly three-quarters of electricity.',
-      'Solar capacity has expanded enormously; ambitious 500 GW non-fossil target by 2030.',
-      'Industrial cooling demand is rising fast as the economy grows and temperatures climb.'
-    ],
-    aiTake: 'Long-term AI infrastructure opportunity is large, but power reliability, cooling water and transmission still gate hyperscale build-out.'
+    id: 'in-deep', name: 'India', readiness: 'fast',
+    headline: 'Fastest demand growth in any major economy — biggest coal dependence',
+    strong: '~1,950 TWh of generation and rising rapidly. Solar capacity has expanded enormously under ambitious 500 GW non-fossil target by 2030. Large young workforce, growing domestic cloud market.',
+    weak: 'Coal still produces ~three-quarters of electricity. Grid reliability and transmission congestion vary widely by state. Cooling demand rising as temperatures climb.',
+    matter: 'Strategic implication for AI: long-term opportunity is large; near-term hyperscale build-out is gated by reliability and water more than by cost.',
+    bottleneck: 'Reliability and transmission, especially in the hot industrial states; coal exposure is a separate carbon-reporting risk for cleaner-grade workloads.'
   },
   {
-    id: 'sg-deep', name: 'Singapore',
-    headline: 'Talent + capital strong, physically constrained',
-    bullets: [
-      'Around 60 TWh generation in 2024 — small but extremely reliable (EMA Singapore Energy Statistics).',
-      'Natural gas dominates the fuel mix (~94%); solar share is small because land is small.',
-      'New DC capacity is allocated through a controlled pipeline (DC-CFA) rather than being open-ended.',
-      'Strategic moves include cross-border interconnectors and renewable imports from neighbours.'
-    ],
-    aiTake: 'Singapore is the regional hub for finance, talent and submarine cables, but it cannot physically host all the AI compute its neighbourhood wants. The natural pattern is Singapore-led demand spilling into Johor and the wider region.'
+    id: 'sg-deep', name: 'Singapore', readiness: 'hub',
+    headline: 'Trust-rich, not power-rich — strategically essential anyway',
+    strong: '~60 TWh of extremely reliable generation. Strong fibre, talent, finance and regulation. Hub of submarine cables and regional cloud presence. New DC capacity allocated through a controlled DC-CFA pipeline.',
+    weak: 'Tiny land area; gas dominates the fuel mix (~94%); domestic renewables are limited. New DC capacity is rationed deliberately.',
+    matter: 'Strategic implication for AI: Singapore is not power-rich, but it is trust-rich — stable, connected, enterprise-friendly and regionally strategic. That is exactly why Malaysia (especially Johor) becomes relevant as the spillover destination.',
+    bottleneck: 'Land and electricity. Cross-border interconnectors and renewable imports are the long-term play; Johor is the practical short-term release valve.'
   },
   {
-    id: 'my-deep', name: 'Malaysia',
-    headline: 'Beneficiary of regional spillover — if it solves the grid',
-    bullets: [
-      'Annual generation around 190 TWh; coal and gas roughly 80% combined (Energy Commission Malaysia statistics).',
-      'Solar potential is meaningful and rising under the LSS5 / CGPP programmes.',
-      'Johor / Iskandar is absorbing Singapore-spillover DC demand on cheaper land and power.',
-      'Reuters and TNB updates track ongoing grid-reinforcement work around Johor and Klang Valley.'
-    ],
-    aiTake: 'The advantage is land + cost + Singapore proximity. The bottleneck is power: substation capacity, grid reinforcement, and the slow process of reducing coal dependence while DC demand surges.'
+    id: 'my-deep', name: 'Malaysia', readiness: 'spillover',
+    headline: 'Spillover candidate — if grid build-out keeps up with DC demand',
+    strong: '~190 TWh generation; cheaper power and land than Singapore; rising solar capacity under LSS5 / CGPP programmes. Johor / Iskandar is the obvious geographic landing zone for Singapore-spillover demand.',
+    weak: 'Coal + gas are still ~80% combined. Substation capacity around Johor and Klang Valley is being reinforced but DC demand has been booked faster than equipment lead times.',
+    matter: 'Strategic implication for AI: a real opportunity to capture the regional overflow — but only if grid reinforcement, transformer supply and clean-power additions hit the same timeline as the campuses being announced.',
+    bottleneck: 'Substation + transmission build around Johor; pace of reducing coal share without compromising reliability while DC load surges.'
   }
 ];
 
@@ -439,3 +447,176 @@ var ENERGY_SOURCES = [
   { label: 'DOE / LBNL — 2024 United States Data Center Energy Usage Report', url: 'https://www.energy.gov/eere/femp/articles/lbnl-report-finds-us-data-centers-consumed-176-twh-2023-roughly-44-total-us' },
   { label: 'Reuters / TNB — Malaysia grid reinforcement around Johor (ongoing reporting)', url: 'https://www.reuters.com/business/energy/' }
 ];
+
+/* ============================================
+   ENERGY_INTEL_SUMMARY — top-of-section briefing
+   ============================================
+   Seven punchy truths an informed reader should be able to recall.
+   ============================================ */
+var ENERGY_INTEL_SUMMARY = [
+  {
+    h: 'AI scales on secured megawatts, not just GPUs.',
+    d: 'Chips are the headline; power, transmission, transformers and time-to-power are the actual constraint.'
+  },
+  {
+    h: 'China has unmatched electricity scale — but remains coal-heavy.',
+    d: '~10,000 TWh/yr (Ember 2024). World-leading UHV transmission. Coal share is falling but still the single largest source.'
+  },
+  {
+    h: 'The US has hyperscaler demand, gas, nuclear and land — and serious grid bottlenecks.',
+    d: 'Connection queues, transformer lead times and local permitting now decide where AI campuses get built (PJM, ERCOT, Dominion).'
+  },
+  {
+    h: 'Europe has cleaner power but higher cost and slower permitting.',
+    d: 'Renewables + nuclear ≈ 66% of generation. Several core DC cities (Amsterdam, Frankfurt, Dublin) have moratoria or de-facto pauses.'
+  },
+  {
+    h: 'Singapore is strategically important but power and land constrained.',
+    d: '~60 TWh/yr generation (EMA 2024). New DC capacity allocated through a controlled pipeline; renewables imported via interconnectors.'
+  },
+  {
+    h: 'Malaysia could absorb Singapore spillover — if the grid keeps up.',
+    d: 'Johor / Iskandar is winning on land and price; the bottleneck is substations and a still-coal-heavy mix.'
+  },
+  {
+    h: 'AI infrastructure now depends on chips + power + land + cooling + regulation.',
+    d: 'Any single missing item can stall a project for years. Time-to-power under 24–36 months is a competitive moat.'
+  }
+];
+
+/* ============================================
+   ENERGY_FLOW — from power plant to token
+   ============================================
+   Eight stages a watt of grid electricity passes through before it
+   becomes a token of model output.
+   ============================================ */
+var ENERGY_FLOW = [
+  { id: 'source',    h: 'Energy source',     d: 'Coal, gas, nuclear, hydro, wind, solar, geothermal — chemical, kinetic, nuclear or solar energy waiting to be converted.' },
+  { id: 'gen',       h: 'Generation',        d: 'Turbine + generator, or photovoltaic panel + DC. Output measured in MW.' },
+  { id: 'trans',     h: 'Transmission',      d: 'Step-up to 100s of kV, run for tens to thousands of km on the high-voltage grid.' },
+  { id: 'sub',       h: 'Substation',        d: 'Step-down to medium voltage; gateway for the campus connection. Often the longest-pole supply item.' },
+  { id: 'dc',        h: 'Data centre',       d: 'Switchgear, UPS, batteries, backup gens. Total facility power = IT load × PUE.' },
+  { id: 'cooling',   h: 'Cooling + UPS',     d: 'Chillers, dry coolers, liquid loops, water — the difference between PUE 1.1 and 1.7.' },
+  { id: 'gpu',       h: 'GPU cluster',       d: 'Tens of thousands of accelerators, NVLink fabric, optical interconnects, HBM.' },
+  { id: 'compute',   h: 'Train + serve',     d: 'Forward + backward passes; tokens per second; throughput limited by power, memory and network.' },
+  { id: 'tokens',    h: 'Tokens',            d: 'The final unit you pay for. Every token has an electricity bill behind it.' }
+];
+
+/* ============================================
+   ENERGY_READINESS — qualitative AI power-readiness labels
+   ============================================ */
+var ENERGY_READINESS = {
+  scale:       { label: 'Scale advantage',                tone: 'good',    note: 'Massive electricity base, room to grow, strong industrial backbone.' },
+  bottleneck:  { label: 'Grid bottlenecked',              tone: 'warn',    note: 'Plenty of generation; queues, transformers and permitting are the hard part.' },
+  clean:       { label: 'Clean but constrained',          tone: 'mid',     note: 'Low-carbon mix; cost, permitting or land are the binding constraint.' },
+  hub:         { label: 'Strategic hub',                  tone: 'good',    note: 'Connectivity, regulation and trust make it disproportionately important.' },
+  spillover:   { label: 'Spillover candidate',            tone: 'mid',     note: 'Land + cost advantage near a constrained hub; gated by grid build-out.' },
+  fast:        { label: 'Fast-growing, reliability-constrained', tone: 'warn', note: 'Demand surging; reliability, transmission or fuel exposure caps execution.' },
+  dirty:       { label: 'Cheap but dirty',                tone: 'warn',    note: 'Affordable power, high carbon intensity, exposure to coal- or oil-heavy mix.' },
+  firm:        { label: 'Cool firm grid',                 tone: 'good',    note: 'Clean, dispatchable base (hydro / nuclear / geothermal). Naturally AI-friendly.' },
+  sovereign:   { label: 'Sovereign AI bet',               tone: 'mid',     note: 'State-led capital, cheap energy, strategic ambition; track record still being built.' },
+  isolated:    { label: 'Geopolitically isolated',        tone: 'warn',    note: 'Domestic capacity present; foreign hyperscalers structurally absent.' }
+};
+
+/* ============================================
+   ENERGY_MISCONCEPTIONS — common myths the reader should drop
+   ============================================ */
+var ENERGY_MISCONCEPTIONS = [
+  { myth: 'Capacity is the same as generation.', truth: 'Capacity is what a plant <em>can</em> produce in a moment (GW). Generation is what it <em>actually</em> produced over time (TWh). Solar has high capacity but a low capacity factor.' },
+  { myth: 'Generation equals grid availability.', truth: 'Plenty of countries can generate the megawatts but cannot deliver them where the campus wants to be. Transmission and substations are the real choke points.' },
+  { myth: 'Renewable capacity equals 24/7 firm power.', truth: 'Solar and wind are variable. AI clusters need 24/7. Annual renewable matching is easy; hourly carbon-free matching is hard.' },
+  { myth: 'Data centres dominate global electricity.', truth: 'Globally still small (~1.5% in 2024 per IEA). <em>Locally</em> they can be enormous — over 20% of national electricity in Ireland.' },
+  { myth: 'Cheap electricity is enough.', truth: 'Useless without interconnection. A site with $0.04/kWh power and a 5-year queue loses to a $0.09/kWh site with a connection in 18 months.' },
+  { myth: 'Nuclear is fast.', truth: 'Nuclear is reliable and dense, but new builds are 8–12+ years from commitment to first electron. Restarts and SMRs help, slowly.' },
+  { myth: 'Solar alone solves AI power.', truth: 'Solar is the cheapest new generation in many markets, but needs storage, transmission and firming to serve AI loads through nights and cloudy weeks.' },
+  { myth: 'Lots of installed capacity = ready for AI.', truth: 'A country can have abundant generation and still be slow for AI: queues, transformers, water, permitting, political acceptance. Time-to-power is the real metric.' }
+];
+
+/* ============================================
+   ENERGY_CALC_PRESETS — quick scenarios for the calculator
+   ============================================
+   Each preset sets IT load, PUE and price defaults that match
+   commonly cited industry numbers; utilisation kept high (85%).
+   ============================================ */
+var ENERGY_CALC_PRESETS = [
+  { id: 'inference-50',  label: '50 MW inference site',    it: 50,   pue: 1.30, util: 85, price: 0.08, tag: 'Steady-state inference workload, mid-tier campus.' },
+  { id: 'standard-100',  label: '100 MW standard DC',      it: 100,  pue: 1.40, util: 80, price: 0.09, tag: 'Mainstream cloud / mixed workload, conventional cooling.' },
+  { id: 'campus-500',    label: '500 MW AI campus',        it: 500,  pue: 1.20, util: 88, price: 0.07, tag: 'Hyperscaler-scale AI campus, liquid cooling, large PPA.' },
+  { id: 'frontier-1000', label: '1 GW frontier campus',    it: 1000, pue: 1.15, util: 92, price: 0.06, tag: 'Power-plant scale; only viable in select grid regions.' }
+];
+
+/* ============================================
+   ENERGY_SIZE_GUIDE — plain-language size labels
+   ============================================ */
+var ENERGY_SIZE_GUIDE = [
+  { mw: 50,    label: 'Sub-utility-scale',     text: 'A few hundred racks. Manageable on existing local distribution; rarely a planning event.' },
+  { mw: 100,   label: 'Serious industrial load', text: 'Comparable to a small city. Triggers utility planning conversations and a dedicated substation.' },
+  { mw: 500,   label: 'Major grid planning problem', text: 'Equivalent to half a typical gas plant. Multi-year transmission and PPA negotiation required.' },
+  { mw: 1000,  label: 'Power-plant-scale AI campus', text: '1 GW = roughly one big nuclear or coal unit. Only a handful of sites in the world can absorb this in under 36 months.' }
+];
+
+/* ============================================
+   ENERGY_TIMELINE — time-to-power stages
+   ============================================ */
+var ENERGY_TIMELINE = [
+  { id: 't-site',        h: 'Site selection',                d: 'Land, zoning, water, fibre, proximity to substation. 2–6 months.' },
+  { id: 't-grid',        h: 'Grid study + queue entry',      d: 'Utility studies system impact + queues your project. 6–18 months in heavily congested grids.' },
+  { id: 't-intercon',    h: 'Interconnection approval',      d: 'Approved connection capacity + cost-share allocation. 6–24+ months in PJM, parts of EU, Singapore.' },
+  { id: 't-equipment',   h: 'Substation + transformer procurement', d: 'Large step-down transformers have global lead times of 18–36+ months.' },
+  { id: 't-construction', h: 'Construction',                 d: 'Civil works, MEP, switchgear, fibre, cooling. 12–24 months for a hyperscale site.' },
+  { id: 't-commissioning', h: 'Commissioning + ramp',        d: 'Energise, witness tests, phased ramp from a few MW to full load. 3–9 months.' },
+  { id: 't-power',       h: 'Time-to-power',                 d: 'Total: typically 24–48 months. Under 24 months is a real competitive moat in 2025–26.' }
+];
+
+/* ============================================
+   ENERGY_SOURCES_GROUPED — sources organised by use
+   ============================================ */
+var ENERGY_SOURCES_GROUPED = [
+  {
+    group: 'Global electricity data',
+    items: [
+      { label: 'IEA — Global Energy Review 2026 (preliminary)',           url: 'https://www.iea.org/reports/global-energy-review-2026' },
+      { label: 'Ember — Global Electricity Review 2025',                   url: 'https://ember-energy.org/latest-insights/global-electricity-review-2025/' },
+      { label: 'Our World in Data — Electricity dataset',                  url: 'https://ourworldindata.org/electricity-mix' },
+      { label: 'Energy Institute — Statistical Review of World Energy 2025', url: 'https://www.energyinst.org/statistical-review' }
+    ]
+  },
+  {
+    group: 'United States',
+    items: [
+      { label: 'EIA — U.S. Electric Power Monthly + Annual',               url: 'https://www.eia.gov/electricity/' },
+      { label: 'DOE / LBNL — 2024 U.S. Data Center Energy Usage Report',   url: 'https://www.energy.gov/eere/femp/articles/lbnl-report-finds-us-data-centers-consumed-176-twh-2023-roughly-44-total-us' }
+    ]
+  },
+  {
+    group: 'Europe',
+    items: [
+      { label: 'Eurostat — Electricity production and consumption',        url: 'https://ec.europa.eu/eurostat/web/energy' },
+      { label: 'Ember — European Electricity Review',                      url: 'https://ember-energy.org/topics/european-electricity-review/' },
+      { label: 'CSO Ireland — Data Centres Metered Electricity Consumption', url: 'https://www.cso.ie/en/statistics/energy/datacentresmeteredelectricityconsumption/' }
+    ]
+  },
+  {
+    group: 'Singapore',
+    items: [
+      { label: 'EMA — Singapore Energy Statistics 2025',                   url: 'https://www.ema.gov.sg/resources/singapore-energy-statistics' },
+      { label: 'EMA — Data Centre Call for Application (DC-CFA)',          url: 'https://www.ema.gov.sg/' }
+    ]
+  },
+  {
+    group: 'Malaysia',
+    items: [
+      { label: 'Energy Commission Malaysia — statistics portal',           url: 'https://meih.st.gov.my/' },
+      { label: 'TNB — system + generation reporting',                      url: 'https://www.tnb.com.my/' },
+      { label: 'Reuters — Malaysia grid + Johor data-centre coverage',     url: 'https://www.reuters.com/business/energy/' }
+    ]
+  },
+  {
+    group: 'Data centres + AI energy',
+    items: [
+      { label: 'IEA — Energy and AI (2025)',                               url: 'https://www.iea.org/reports/energy-and-ai' },
+      { label: 'Hyperscaler sustainability reports (Microsoft, Google, AWS, Meta)', url: 'https://www.iea.org/reports/energy-and-ai' }
+    ]
+  }
+];
+

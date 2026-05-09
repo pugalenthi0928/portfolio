@@ -218,6 +218,7 @@
       tbody.innerHTML = visible.map(function (r) {
         return '<tr>' +
           '<td class="col-name">' + esc(r.name) + '<div class="col-region">' + esc(r.region) + ' · ' + r.year + '</div></td>' +
+          '<td class="col-readiness">' + (r.readiness ? readinessBadge(r.readiness) : '') + '</td>' +
           '<td class="col-num">' + fmt(r.gen) + '</td>' +
           '<td class="col-num">' + (r.peakGW != null ? fmt(r.peakGW) : '—') + '</td>' +
           '<td class="col-mix">' + esc(mixSummary(r.mix)) + '</td>' +
@@ -233,18 +234,33 @@
     if (search) search.addEventListener('input', renderRows);
     if (sel) sel.addEventListener('change', renderRows);
 
-    /* Deep dive cards */
+    /* Deep dive cards (Strong / Weak / Why it matters / Bottleneck) */
     var deepEl = $('#map-energy-deep');
     if (deepEl) {
       deepEl.innerHTML = deep.map(function (d) {
         return '<article class="map-energy-deep-card">' +
-          '<p class="map-energy-deep-name">' + esc(d.name) + '</p>' +
+          '<div class="map-energy-deep-head">' +
+            '<p class="map-energy-deep-name">' + esc(d.name) + '</p>' +
+            (d.readiness ? readinessBadge(d.readiness) : '') +
+          '</div>' +
           '<h3 class="map-energy-deep-headline">' + esc(d.headline) + '</h3>' +
-          '<ul class="map-energy-deep-bullets">' + d.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') + '</ul>' +
-          '<div class="map-energy-deep-take"><strong>AI take</strong>' + esc(d.aiTake) + '</div>' +
+          '<dl class="map-energy-deep-grid">' +
+            '<dt>Strong</dt><dd>' + esc(d.strong) + '</dd>' +
+            '<dt>Weak</dt><dd>' + esc(d.weak) + '</dd>' +
+            '<dt>Why it matters for AI</dt><dd>' + esc(d.matter) + '</dd>' +
+            '<dt>Bottleneck</dt><dd>' + esc(d.bottleneck) + '</dd>' +
+          '</dl>' +
         '</article>';
       }).join('');
     }
+  }
+
+  /* Render a small readiness badge for a given readiness key */
+  function readinessBadge(key) {
+    if (typeof ENERGY_READINESS === 'undefined') return '';
+    var def = ENERGY_READINESS[key];
+    if (!def) return '';
+    return '<span class="map-energy-ready map-energy-ready--' + esc(def.tone || 'mid') + '" title="' + esc(def.note || '') + '">' + esc(def.label) + '</span>';
   }
 
   /* ============================================
@@ -351,6 +367,148 @@
   }
 
   /* ============================================
+     INTEL SUMMARY — top-of-section briefing
+     ============================================ */
+  function renderIntel() {
+    var el = $('#map-energy-intel');
+    if (!el || typeof ENERGY_INTEL_SUMMARY === 'undefined') return;
+    el.innerHTML = ENERGY_INTEL_SUMMARY.map(function (item, i) {
+      var n = (i + 1).toString().padStart(2, '0');
+      return '<article class="map-energy-intel-card">' +
+        '<span class="map-energy-intel-num">' + n + '</span>' +
+        '<h3 class="map-energy-intel-h">' + esc(item.h) + '</h3>' +
+        '<p class="map-energy-intel-d">' + esc(item.d) + '</p>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     FLOW CHAIN — power plant to token
+     ============================================ */
+  function renderFlow() {
+    var el = $('#map-energy-flow');
+    if (!el || typeof ENERGY_FLOW === 'undefined') return;
+    el.innerHTML = ENERGY_FLOW.map(function (s, i) {
+      return '<div class="map-energy-flow-step" style="--i:' + i + '">' +
+        '<div class="map-energy-flow-dot"></div>' +
+        '<div class="map-energy-flow-body">' +
+          '<h4 class="map-energy-flow-h">' + esc(s.h) + '</h4>' +
+          '<p class="map-energy-flow-d">' + esc(s.d) + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     MISCONCEPTIONS
+     ============================================ */
+  function renderMisconceptions() {
+    var el = $('#map-energy-myths');
+    if (!el || typeof ENERGY_MISCONCEPTIONS === 'undefined') return;
+    el.innerHTML = ENERGY_MISCONCEPTIONS.map(function (m) {
+      return '<article class="map-energy-myth">' +
+        '<p class="map-energy-myth-h"><span class="map-energy-myth-tag">Myth</span>' + esc(m.myth) + '</p>' +
+        '<p class="map-energy-myth-d"><span class="map-energy-myth-tag map-energy-myth-tag--truth">Truth</span>' + m.truth + '</p>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     CALCULATOR PRESETS + SIZE GUIDE
+     ============================================ */
+  function bindPresets() {
+    var el = $('#map-energy-presets');
+    if (!el || typeof ENERGY_CALC_PRESETS === 'undefined') return;
+    el.innerHTML = ENERGY_CALC_PRESETS.map(function (p) {
+      return '<button class="map-energy-preset" type="button" data-preset="' + esc(p.id) + '" title="' + esc(p.tag) + '">' +
+        '<span class="map-energy-preset-mw">' + p.it + ' MW</span>' +
+        '<span class="map-energy-preset-name">' + esc(p.label.replace(/^\d+\s*MW\s*/i, '').replace(/^\d+\s*GW\s*/i, '')) + '</span>' +
+      '</button>';
+    }).join('');
+
+    el.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.map-energy-preset');
+      if (!btn) return;
+      var preset = ENERGY_CALC_PRESETS.filter(function (p) { return p.id === btn.dataset.preset; })[0];
+      if (!preset) return;
+      var fields = { it: preset.it, pue: preset.pue, util: preset.util, price: preset.price };
+      Object.keys(fields).forEach(function (k) {
+        var input = $('#map-energy-calc-' + k);
+        if (input) {
+          input.value = fields[k];
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+      $$('.map-energy-preset').forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+    });
+  }
+
+  function renderSizeGuide() {
+    var el = $('#map-energy-size');
+    if (!el || typeof ENERGY_SIZE_GUIDE === 'undefined') return;
+    el.innerHTML = ENERGY_SIZE_GUIDE.map(function (s) {
+      var unit = s.mw >= 1000 ? (s.mw / 1000) + ' GW' : s.mw + ' MW';
+      return '<div class="map-energy-size-row">' +
+        '<span class="map-energy-size-mw">' + esc(unit) + '</span>' +
+        '<span class="map-energy-size-name">' + esc(s.label) + '</span>' +
+        '<span class="map-energy-size-text">' + esc(s.text) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     TIME-TO-POWER TIMELINE
+     ============================================ */
+  function renderTimeline() {
+    var el = $('#map-energy-timeline');
+    if (!el || typeof ENERGY_TIMELINE === 'undefined') return;
+    el.innerHTML = ENERGY_TIMELINE.map(function (s, i) {
+      var n = (i + 1).toString().padStart(2, '0');
+      var last = i === ENERGY_TIMELINE.length - 1;
+      return '<div class="map-energy-tl-step' + (last ? ' is-final' : '') + '">' +
+        '<div class="map-energy-tl-num">' + n + '</div>' +
+        '<div class="map-energy-tl-body">' +
+          '<h4 class="map-energy-tl-h">' + esc(s.h) + '</h4>' +
+          '<p class="map-energy-tl-d">' + esc(s.d) + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     READINESS LEGEND
+     ============================================ */
+  function renderReadinessLegend() {
+    var el = $('#map-energy-ready-legend');
+    if (!el || typeof ENERGY_READINESS === 'undefined') return;
+    el.innerHTML = Object.keys(ENERGY_READINESS).map(function (k) {
+      var def = ENERGY_READINESS[k];
+      return '<div class="map-energy-ready-leg-row">' +
+        '<span class="map-energy-ready map-energy-ready--' + esc(def.tone) + '">' + esc(def.label) + '</span>' +
+        '<span class="map-energy-ready-leg-note">' + esc(def.note) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     GROUPED SOURCES
+     ============================================ */
+  function renderGroupedSources() {
+    var el = $('#map-energy-sources-grouped');
+    if (!el || typeof ENERGY_SOURCES_GROUPED === 'undefined') return;
+    el.innerHTML = ENERGY_SOURCES_GROUPED.map(function (g) {
+      return '<div class="map-energy-srcgrp">' +
+        '<h4 class="map-energy-srcgrp-h">' + esc(g.group) + '</h4>' +
+        '<ul class="map-energy-srcgrp-list">' +
+          g.items.map(function (s) {
+            return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a></li>';
+          }).join('') +
+        '</ul>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
      LAST-UPDATED BADGE
      ============================================ */
   function renderBadge() {
@@ -364,16 +522,24 @@
      INIT
      ============================================ */
   function init() {
+    renderIntel();
+    renderFlow();
     renderPills();
     bindTabs();
     renderGlossary();
+    renderMisconceptions();
     renderGlobal();
+    renderReadinessLegend();
     renderCountries();
     bindCalculator();
+    bindPresets();
+    renderSizeGuide();
     renderWhere();
     renderConstraints();
+    renderTimeline();
     renderTakeaways();
     renderSources();
+    renderGroupedSources();
     renderBadge();
 
     /* Default tab */
