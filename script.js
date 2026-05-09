@@ -739,67 +739,78 @@ function initMobileMenu() {
 // Open on hover (desktop), tap (touch), Escape to close, click-outside to close.
 // ============================================
 function initAtlasDropdown() {
-  const dropdown = document.querySelector('.nav-dropdown');
-  if (!dropdown) return;
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
+  if (!dropdowns.length) return;
 
-  const trigger = dropdown.querySelector('.nav-dropdown-trigger');
-  const menu = dropdown.querySelector('.nav-dropdown-menu');
-  if (!trigger || !menu) return;
+  const closers = [];
 
-  let openTimer = null;
-  let closeTimer = null;
+  dropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    const menu = dropdown.querySelector('.nav-dropdown-menu');
+    if (!trigger || !menu) return;
 
-  const open = () => {
-    clearTimeout(closeTimer);
-    dropdown.classList.add('is-open');
-    trigger.setAttribute('aria-expanded', 'true');
-  };
+    let openTimer = null;
+    let closeTimer = null;
 
-  const close = () => {
-    clearTimeout(openTimer);
-    dropdown.classList.remove('is-open');
+    const open = () => {
+      clearTimeout(closeTimer);
+      // Close any siblings
+      dropdowns.forEach((other) => {
+        if (other !== dropdown) other.classList.remove('is-open');
+      });
+      dropdown.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+
+    const close = () => {
+      clearTimeout(openTimer);
+      dropdown.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+    closers.push({ dropdown, close });
+
+    trigger.setAttribute('aria-haspopup', 'true');
     trigger.setAttribute('aria-expanded', 'false');
-  };
 
-  trigger.setAttribute('aria-haspopup', 'true');
-  trigger.setAttribute('aria-expanded', 'false');
+    // Hover: open with tiny delay to avoid flicker
+    dropdown.addEventListener('mouseenter', () => {
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(open, 60);
+    });
+    dropdown.addEventListener('mouseleave', () => {
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(close, 140);
+    });
 
-  // Hover: open with tiny delay to avoid flicker
-  dropdown.addEventListener('mouseenter', () => {
-    clearTimeout(closeTimer);
-    openTimer = setTimeout(open, 60);
-  });
-  dropdown.addEventListener('mouseleave', () => {
-    clearTimeout(openTimer);
-    closeTimer = setTimeout(close, 140);
-  });
+    // Click on trigger: toggle (let the link still navigate to its anchor)
+    trigger.addEventListener('click', (e) => {
+      if (dropdown.classList.contains('is-open')) {
+        // Allow second click to navigate; do nothing
+      } else {
+        e.preventDefault();
+        open();
+      }
+    });
 
-  // Click on trigger: toggle (let the link still navigate to #atlases)
-  trigger.addEventListener('click', (e) => {
-    if (dropdown.classList.contains('is-open')) {
-      // Allow second click to navigate; do nothing
-    } else {
-      e.preventDefault();
-      open();
-    }
-  });
-
-  // Focus inside dropdown opens it; blur closes it after a tick
-  dropdown.addEventListener('focusin', open);
-  dropdown.addEventListener('focusout', () => {
-    setTimeout(() => {
-      if (!dropdown.contains(document.activeElement)) close();
-    }, 0);
+    // Focus inside dropdown opens it; blur closes it after a tick
+    dropdown.addEventListener('focusin', open);
+    dropdown.addEventListener('focusout', () => {
+      setTimeout(() => {
+        if (!dropdown.contains(document.activeElement)) close();
+      }, 0);
+    });
   });
 
-  // Click outside closes
+  // Click outside closes all
   document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target)) close();
+    closers.forEach(({ dropdown, close }) => {
+      if (!dropdown.contains(e.target)) close();
+    });
   });
 
-  // Escape closes
+  // Escape closes all
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
+    if (e.key === 'Escape') closers.forEach(({ close }) => close());
   });
 }
 

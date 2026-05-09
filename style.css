@@ -548,6 +548,25 @@ img {
   transform: translateY(0);
 }
 
+.nav-mobile-group {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #6f7784);
+  padding: 18px 0 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s var(--ease);
+}
+
+.nav-mobile.active .nav-mobile-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ============================================
    HERO
    ============================================ */
@@ -3057,7 +3076,8 @@ img {
 .nav-dropdown-item--accelerated .nav-dropdown-label { color: #F0784A; }
 .nav-dropdown-item--applied    .nav-dropdown-label { color: #5EEAD4; }
 .nav-dropdown-item--money      .nav-dropdown-label { color: #F6C267; }
-.nav-dropdown-item--science    .nav-dropdown-label { color: #87F3DF; }
+.nav-dropdown-item--science    .nav-dropdown-label { color: #FCA5A5; }
+.nav-dropdown-item--money-map  .nav-dropdown-label { color: #F6C267; }
 .nav-dropdown-title {
   font-size: 14px;
   font-weight: 600;
