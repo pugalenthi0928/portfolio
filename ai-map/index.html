@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="../style.css?v=16">
   <link rel="stylesheet" href="ai-map.css?v=12">
   <link rel="stylesheet" href="energy.css?v=2">
-  <link rel="stylesheet" href="chips.css?v=1">
+  <link rel="stylesheet" href="chips.css?v=2">
 
   <script type="application/ld+json">
   {
@@ -434,12 +434,14 @@
 
       <!-- Tabs -->
       <div class="map-chips-tabs" role="tablist" aria-label="Chips deep-dive sections">
-        <button class="map-chips-tab" data-tab="basics"      role="tab" aria-selected="false" tabindex="-1" type="button">Basics</button>
-        <button class="map-chips-tab" data-tab="stack"       role="tab" aria-selected="false" tabindex="-1" type="button">Stack</button>
-        <button class="map-chips-tab" data-tab="hardware"    role="tab" aria-selected="false" tabindex="-1" type="button">Hardware</button>
-        <button class="map-chips-tab" data-tab="bottlenecks" role="tab" aria-selected="false" tabindex="-1" type="button">Bottlenecks</button>
-        <button class="map-chips-tab" data-tab="supply"      role="tab" aria-selected="false" tabindex="-1" type="button">Supply chain</button>
-        <button class="map-chips-tab" data-tab="economics"   role="tab" aria-selected="false" tabindex="-1" type="button">Economics</button>
+        <button class="map-chips-tab" data-tab="basics"          role="tab" aria-selected="false" tabindex="-1" type="button">Basics</button>
+        <button class="map-chips-tab" data-tab="stack"           role="tab" aria-selected="false" tabindex="-1" type="button">Stack</button>
+        <button class="map-chips-tab" data-tab="hardware"        role="tab" aria-selected="false" tabindex="-1" type="button">Hardware</button>
+        <button class="map-chips-tab" data-tab="bottlenecks"     role="tab" aria-selected="false" tabindex="-1" type="button">Bottlenecks</button>
+        <button class="map-chips-tab" data-tab="train-inference" role="tab" aria-selected="false" tabindex="-1" type="button">Train vs inference</button>
+        <button class="map-chips-tab" data-tab="supply"          role="tab" aria-selected="false" tabindex="-1" type="button">Supply chain</button>
+        <button class="map-chips-tab" data-tab="geopolitics"     role="tab" aria-selected="false" tabindex="-1" type="button">Geopolitics</button>
+        <button class="map-chips-tab" data-tab="economics"       role="tab" aria-selected="false" tabindex="-1" type="button">Economics</button>
       </div>
 
       <!-- Pane: Basics -->
@@ -492,6 +494,32 @@
         <div class="map-chips-block" id="map-chips-interconnect"></div>
       </div>
 
+      <!-- Pane: Train vs inference -->
+      <div class="map-chips-pane" data-tab="train-inference" role="tabpanel">
+        <h3 class="map-chips-h2">Training builds the model. Inference runs the business.</h3>
+        <p class="map-chips-sub">
+          Same silicon family, different optimisations. Below: the two workloads as visual flows, then a side-by-side
+          read across seven axes that decide which chip you actually want.
+        </p>
+
+        <div class="map-chips-ti-pair">
+          <div class="map-chips-ti-card">
+            <p class="map-chips-ti-card-h">Training</p>
+            <p class="map-chips-ti-card-name">Dataset + chips + time → model weights</p>
+            <div class="map-chips-ti-flow" id="map-chips-train-flow"></div>
+          </div>
+          <div class="map-chips-ti-card">
+            <p class="map-chips-ti-card-h">Inference</p>
+            <p class="map-chips-ti-card-name">User query + weights + KV cache → tokens</p>
+            <div class="map-chips-ti-flow" id="map-chips-inf-flow"></div>
+          </div>
+        </div>
+
+        <div class="map-chips-ti-table" id="map-chips-ti-table" aria-label="Training vs inference comparison"></div>
+
+        <p class="map-chips-ti-take"><strong>Strategic read</strong><span id="map-chips-ti-take-text">—</span></p>
+      </div>
+
       <!-- Pane: Supply chain -->
       <div class="map-chips-pane" data-tab="supply" role="tabpanel">
         <h3 class="map-chips-h2">Who actually makes AI chips?</h3>
@@ -502,6 +530,23 @@
         <h3 class="map-chips-h2" style="margin-top:24px">Country reads</h3>
         <p class="map-chips-sub">For each: what is strong, what is weak, why it matters for AI, and the bottleneck to fix first.</p>
         <div class="map-chips-countries" id="map-chips-countries"></div>
+      </div>
+
+      <!-- Pane: Geopolitics -->
+      <div class="map-chips-pane" data-tab="geopolitics" role="tabpanel">
+        <h3 class="map-chips-h2">Advanced AI chips are strategic assets</h3>
+        <p class="map-chips-sub" id="map-chips-geo-context"></p>
+        <ul class="map-chips-block-list" id="map-chips-geo-why"></ul>
+
+        <h3 class="map-chips-h2" style="margin-top:24px">Geopolitical bottleneck map</h3>
+        <p class="map-chips-sub">Each major jurisdiction with its role in the chain, where its leverage sits, and where its risk sits. Most leverage points are concentrated in fewer than ten countries.</p>
+        <div class="map-chips-geo-map" id="map-chips-geo-map"></div>
+
+        <h3 class="map-chips-h2" style="margin-top:24px">Export-controls timeline</h3>
+        <p class="map-chips-sub">A high-level read of the post-2022 export-control cycle. Use as a directional summary, not as legal guidance.</p>
+        <div class="map-chips-geo-timeline" id="map-chips-geo-timeline"></div>
+
+        <p class="map-chips-geo-punch" id="map-chips-geo-punch">—</p>
       </div>
 
       <!-- Pane: Economics -->
@@ -569,10 +614,14 @@
           </div>
         </div>
 
-        <div class="map-chips-take">
-          <h4 class="map-chips-take-h">Strategic takeaways</h4>
-          <ul class="map-chips-take-list" id="map-chips-take-list"></ul>
-        </div>
+      </div>
+
+      <!-- Strategic summary — always visible after the tabs -->
+      <div class="map-chips-strategic">
+        <p class="map-chips-strategic-eyebrow">Strategic summary · what chips mean for AI power</p>
+        <h3 class="map-chips-strategic-h">Energy decides how much compute can run. Chips decide how efficiently it becomes intelligence.</h3>
+        <ul class="map-chips-take-list" id="map-chips-take-list"></ul>
+        <p class="map-chips-strategic-final">The Chips layer is the conversion layer of AI: it turns electricity into computation, and computation into model capability.</p>
       </div>
 
       <!-- Sources -->
@@ -647,9 +696,9 @@
   <script src="../script.js?v=12"></script>
   <script src="data.js?v=12"></script>
   <script src="energy-data.js?v=2"></script>
-  <script src="chips-data.js?v=1"></script>
+  <script src="chips-data.js?v=2"></script>
   <script src="ai-map.js?v=13"></script>
   <script src="energy.js?v=2"></script>
-  <script src="chips.js?v=1"></script>
+  <script src="chips.js?v=2"></script>
 </body>
 </html>

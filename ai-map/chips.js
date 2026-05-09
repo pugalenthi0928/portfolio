@@ -404,6 +404,96 @@
   }
 
   /* ============================================
+     TRAIN VS INFERENCE
+     ============================================ */
+  function renderTrainInference() {
+    var t = (typeof CHIPS_TRAIN_INFERENCE !== 'undefined') ? CHIPS_TRAIN_INFERENCE : null;
+    if (!t) return;
+
+    var trainEl = $('#map-chips-train-flow');
+    if (trainEl) {
+      trainEl.innerHTML = t.trainingFlow.map(function (s, i, arr) {
+        return '<div class="map-chips-ti-step">' +
+          '<div class="map-chips-ti-step-h">' + esc(s.h) + '</div>' +
+          '<div class="map-chips-ti-step-d">' + esc(s.d) + '</div>' +
+          (i < arr.length - 1 ? '<div class="map-chips-ti-arrow">→</div>' : '') +
+        '</div>';
+      }).join('');
+    }
+    var infEl = $('#map-chips-inf-flow');
+    if (infEl) {
+      infEl.innerHTML = t.inferenceFlow.map(function (s, i, arr) {
+        return '<div class="map-chips-ti-step">' +
+          '<div class="map-chips-ti-step-h">' + esc(s.h) + '</div>' +
+          '<div class="map-chips-ti-step-d">' + esc(s.d) + '</div>' +
+          (i < arr.length - 1 ? '<div class="map-chips-ti-arrow">→</div>' : '') +
+        '</div>';
+      }).join('');
+    }
+
+    var cmpEl = $('#map-chips-ti-table');
+    if (cmpEl) {
+      cmpEl.innerHTML =
+        '<div class="map-chips-ti-row map-chips-ti-row--head">' +
+          '<div>Axis</div><div>Training</div><div>Inference</div>' +
+        '</div>' +
+        t.comparison.map(function (r) {
+          return '<div class="map-chips-ti-row">' +
+            '<div class="map-chips-ti-axis">' + esc(r.axis) + '</div>' +
+            '<div>' + esc(r.train) + '</div>' +
+            '<div>' + esc(r.inf) + '</div>' +
+          '</div>';
+        }).join('');
+    }
+
+    var takeEl = $('#map-chips-ti-take-text');
+    if (takeEl) takeEl.textContent = t.takeaway;
+  }
+
+  /* ============================================
+     GEOPOLITICS
+     ============================================ */
+  function renderGeopolitics() {
+    var g = (typeof CHIPS_GEOPOLITICS !== 'undefined') ? CHIPS_GEOPOLITICS : null;
+    if (!g) return;
+
+    var contextEl = $('#map-chips-geo-context');
+    if (contextEl) contextEl.textContent = g.context;
+
+    var whyEl = $('#map-chips-geo-why');
+    if (whyEl) whyEl.innerHTML = g.whyMatters.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('');
+
+    var mapEl = $('#map-chips-geo-map');
+    if (mapEl) {
+      mapEl.innerHTML = g.bottlenecks.map(function (b) {
+        return '<article class="map-chips-geo-card">' +
+          '<div class="map-chips-geo-head">' +
+            '<span class="map-chips-geo-country">' + esc(b.country) + '</span>' +
+            '<span class="map-chips-geo-role">' + esc(b.role) + '</span>' +
+          '</div>' +
+          '<dl class="map-chips-geo-grid">' +
+            '<dt>Leverage</dt><dd>' + esc(b.leverage) + '</dd>' +
+            '<dt>Risk</dt><dd>' + esc(b.risk) + '</dd>' +
+          '</dl>' +
+        '</article>';
+      }).join('');
+    }
+
+    var tlEl = $('#map-chips-geo-timeline');
+    if (tlEl) {
+      tlEl.innerHTML = g.exportControlsTimeline.map(function (e) {
+        return '<div class="map-chips-geo-tl-row">' +
+          '<div class="map-chips-geo-tl-when">' + esc(e.h) + '</div>' +
+          '<div class="map-chips-geo-tl-d">' + esc(e.d) + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    var puncEl = $('#map-chips-geo-punch');
+    if (puncEl) puncEl.textContent = g.punchline;
+  }
+
+  /* ============================================
      TAKEAWAYS + SOURCES
      ============================================ */
   function renderTakeaways() {
@@ -447,6 +537,8 @@
     renderEconomics();
     bindPresets();
     bindCalculator();
+    renderTrainInference();
+    renderGeopolitics();
     renderTakeaways();
     renderSources();
 
@@ -455,7 +547,7 @@
     var h = (window.location.hash || '').replace(/^#/, '');
     if (h.indexOf('chips-') === 0) {
       var t = h.replace('chips-', '');
-      if (['basics', 'stack', 'hardware', 'bottlenecks', 'supply', 'economics'].indexOf(t) >= 0) {
+      if (['basics', 'stack', 'hardware', 'bottlenecks', 'train-inference', 'supply', 'geopolitics', 'economics'].indexOf(t) >= 0) {
         selectTab(t, false);
       }
     }

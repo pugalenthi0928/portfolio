@@ -322,6 +322,38 @@ var CHIPS_HARDWARE = [
     source: 'AMD MI350 series announcement (2024–25)'
   },
   {
+    id: 'gb300-nvl72', vendor: 'NVIDIA', name: 'GB300 NVL72 (Blackwell Ultra)', generation: 'Blackwell Ultra',
+    use: 'Frontier training + reasoning-model inference at rack scale',
+    mem: '~21 TB HBM3e aggregate (72× B300, ~288 GB per GPU)',
+    memBW: 'Aggregate ~720 TB/s across the rack (vendor-disclosed targets)',
+    fp16: 'Higher than GB200 NVL72 (vendor-disclosed; benchmark conditions vary)',
+    fp8:  'FP4 inference throughput materially uplifted vs GB200 (vendor)',
+    interconnect: 'NVLink Switch fabric — same all-to-all topology as GB200 NVL72',
+    precisions: 'FP64, TF32, BF16, FP16, FP8, FP4, INT8',
+    system: '36 GB300 superchips (72 B300 + 36 Grace) per liquid-cooled rack',
+    software: 'CUDA, TensorRT-LLM, Dynamo + reasoning-model serving stacks',
+    strength: 'Targets reasoning-model inference and 1-trillion-parameter serving.',
+    weakness: 'Vendor-disclosed targets; volume ramp through 2025; rack power envelope is in the 130+ kW class.',
+    take: 'NVIDIA\'s 2025 successor to GB200 NVL72; treat numbers as vendor targets until third-party benchmarks land.',
+    source: 'NVIDIA Blackwell Ultra / GTC 2025 announcement'
+  },
+  {
+    id: 'trainium3', vendor: 'AWS', name: 'Trainium3', generation: 'Trn3',
+    use: 'Training + inference at AWS scale (vendor-disclosed)',
+    mem: 'Vendor-disclosed targets — capacity uplift vs Trainium2',
+    memBW: 'Vendor-disclosed targets',
+    fp16: 'Up to ~4× Trainium2 instance performance (vendor-claimed)',
+    fp8:  'FP8 inference path; FP4 not the headline metric (vendor)',
+    interconnect: 'Next-generation NeuronLink fabric',
+    precisions: 'FP32, BF16, FP16, FP8, INT8',
+    system: 'Trn3-class instances; UltraServers and UltraClusters at scale',
+    software: 'AWS Neuron SDK, PyTorch on Neuron, JAX on Neuron',
+    strength: 'Step-change targets for AWS-native training + inference economics.',
+    weakness: 'Vendor-disclosed targets; full datasheets and MLPerf-style numbers still pending.',
+    take: 'Treat as a directional read until production benchmarks land.',
+    source: 'AWS re:Invent 2024 announcement'
+  },
+  {
     id: 'tpu-v5p', vendor: 'Google', name: 'TPU v5p', generation: 'TPU v5',
     use: 'Frontier training inside Google Cloud',
     mem: '95 GB HBM', memBW: '2.8 TB/s',
@@ -651,8 +683,70 @@ var CHIPS_MISCONCEPTIONS = [
   { myth: 'More HBM solves everything.',                                   truth: 'HBM helps memory pressure, but packaging, cost, thermals, software and interconnect still matter.' },
   { myth: 'NVIDIA is only ahead because of hardware.',                     truth: 'CUDA, libraries, networking, systems integration and developer mindshare are arguably the bigger moat.' },
   { myth: 'China can simply copy frontier AI chips.',                      truth: 'Leading-edge chips need EUV, EDA, HBM, packaging, yield learning, software ecosystem and supply-chain depth — not a single missing item.' },
-  { myth: 'Inference will be cheap automatically.',                        truth: 'Reasoning models, long context, multimodal inputs and low-latency serving can make inference extremely compute-intensive. Costs do not always fall.' }
+  { myth: 'Inference will be cheap automatically.',                        truth: 'Reasoning models, long context, multimodal inputs and low-latency serving can make inference extremely compute-intensive. Costs do not always fall.' },
+  { myth: 'One chip benchmark tells the full story.',                      truth: 'Real performance depends on workload, batch size, sequence length, precision, compiler, model architecture and cluster configuration. Always read the conditions, not the headline number.' }
 ];
+
+/* ============================================
+   CHIPS_TRAIN_INFERENCE — dedicated tab content
+   ============================================ */
+var CHIPS_TRAIN_INFERENCE = {
+  headline: 'Training builds the model. Inference runs the business.',
+  trainingFlow: [
+    { h: 'Dataset',      d: 'Curated tokens, multimodal data, code corpora, synthetic data.' },
+    { h: '+ chips',      d: 'GPU / TPU / Trainium clusters running data + tensor + pipeline + expert parallelism.' },
+    { h: '+ time',       d: 'Days to months of continuous distributed compute on tens of thousands of accelerators.' },
+    { h: '→ weights',    d: 'A frozen set of model parameters (and an optimizer state checkpoint along the way).' }
+  ],
+  inferenceFlow: [
+    { h: 'User query',          d: 'Prompt tokens streamed in from an API, app or agent.' },
+    { h: '+ model weights',     d: 'Parameters loaded from HBM into compute units.' },
+    { h: '+ KV cache',          d: 'Per-request keys/values that grow with context length.' },
+    { h: '→ tokens',            d: 'Streamed output, billed per token at a price the chip layer ultimately decides.' }
+  ],
+  comparison: [
+    { axis: 'Workload pattern',     train: 'Bursty, large-batch, all-out',                              inf: 'Continuous, small-batch (or batched serving), latency-bounded' },
+    { axis: 'Memory pressure',      train: 'Weights + activations + gradients + optimizer + checkpoints', inf: 'Weights + KV cache (linear with context length)' },
+    { axis: 'Interconnect demand',  train: 'Heavy all-to-all + collective communication',                inf: 'Light during decode; heavier during prefill + MoE routing' },
+    { axis: 'Latency tolerance',    train: 'Throughput-bound; latency does not matter to the user',      inf: 'Strict per-token + per-request latency targets' },
+    { axis: 'Precision',            train: 'BF16 / FP16 dominant; FP8 emerging',                          inf: 'FP8 / INT8 / FP4 increasingly viable' },
+    { axis: 'Cost shape',           train: 'Capex chunks: a training run, a checkpoint',                  inf: 'Opex stream: dollars-per-token, every second' },
+    { axis: 'Scaling primitive',    train: 'Parallelism (data / tensor / pipeline / expert)',             inf: 'Batching, sharding, prefill-decode split, KV-cache management' }
+  ],
+  takeaway: 'A chip that\'s excellent for training is rarely the best chip for serving millions of users. Same silicon, different optimisations — and often different chips entirely.'
+};
+
+/* ============================================
+   CHIPS_GEOPOLITICS — bottleneck map + export-control read
+   ============================================ */
+var CHIPS_GEOPOLITICS = {
+  headline: 'Advanced AI chips are strategic assets',
+  context: 'Every leading-edge AI chip touches multiple jurisdictions before it boots. Concentration in a small number of countries makes the chip layer geopolitical: who can buy, manufacture and deploy frontier compute is now a security question, not just an industrial one.',
+  whyMatters: [
+    'AI capability scales with chips, and chips scale with manufacturing access.',
+    'Defence, intelligence, robotics, surveillance, science and economic competitiveness all flow through the same supply chain.',
+    'No single country owns the full chain — semiconductor independence is a multi-decade industrial program, not a procurement decision.'
+  ],
+  bottlenecks: [
+    { id: 'us', country: 'United States',  role: 'Design + EDA + cloud demand + export controls',         leverage: 'Designs the dominant accelerators; owns Synopsys/Cadence EDA; is the rule-writer for export controls.', risk: 'Manufacturing capacity at the leading edge; reliance on Taiwan + South Korea for production.' },
+    { id: 'tw', country: 'Taiwan',         role: 'Leading-edge logic manufacturing',                       leverage: 'TSMC is the volume foundry for almost every flagship AI chip and operates the dominant CoWoS line.', risk: 'Single-jurisdiction concentration is the most-cited geopolitical risk in semiconductors.' },
+    { id: 'nl', country: 'Netherlands',    role: 'EUV + High-NA lithography',                              leverage: 'ASML is the only producer of EUV scanners — without them, no leading-edge node exists.',           risk: 'Single-supplier monopoly under continuous US-China export-control pressure.' },
+    { id: 'kr', country: 'South Korea',    role: 'HBM + memory + alt-foundry',                             leverage: 'SK hynix + Samsung supply most HBM3/HBM3e to NVIDIA and AMD; Samsung Foundry is the second-largest leading-edge foundry.', risk: 'HBM yield + capacity ramp; foundry execution at sub-3 nm.' },
+    { id: 'jp', country: 'Japan',          role: 'Materials + equipment + sensors',                        leverage: 'Photoresists, gases, silicon wafers, key tools (Tokyo Electron, Screen, Lasertec, Disco) — without them no fab runs.', risk: 'Limited leading-edge logic manufacturing today; rebuilding scale through Rapidus + JASM takes a decade.' },
+    { id: 'sg', country: 'Singapore',      role: 'Manufacturing + equipment hub',                          leverage: 'Around 1 in 10 chips made globally and ~20% of global semiconductor equipment manufacturing (Singapore EDB / SEMI).', risk: 'Land, labour, power and cost limit headline-grabbing leading-edge fab construction.' },
+    { id: 'my', country: 'Malaysia',       role: 'Assembly + test + packaging (OSAT)',                     leverage: 'Roughly 13% of global ATP volume — Penang especially. Final stage where chips become products.', risk: 'Mostly back-end; advanced packaging is the obvious move up the value chain.' },
+    { id: 'cn', country: 'China',          role: 'Demand + domestic substitution under restriction',       leverage: 'Largest single AI market; SMIC, Huawei (Ascend), Cambricon, Biren and growing tooling ecosystem; sovereign-AI program.', risk: 'EUV access blocked; HBM and advanced-packaging gap; software ecosystem fragmented; foreign hyperscalers structurally absent.' }
+  ],
+  exportControlsTimeline: [
+    { h: 'Oct 2022',  d: 'BIS introduces sweeping controls on advanced chips, EDA and semiconductor equipment to China; sets the FLOPS / interconnect thresholds that define "frontier" exports.' },
+    { h: 'Jan 2023',  d: 'Joint US–Netherlands–Japan agreement aligns equipment-export restrictions; ASML EUV exports to China remain blocked.' },
+    { h: 'Oct 2023',  d: 'BIS tightens 2022 controls; closes A800/H800 workarounds and imposes per-chip performance + interconnect tests.' },
+    { h: '2024',      d: 'New rules cover HBM exports, GAA tooling and advanced-packaging tools; closes additional workaround paths.' },
+    { h: '2025',      d: 'Continued cycle of restriction, workaround and re-tightening; AI Diffusion rule and country-tier system formalise frontier-AI access categories.' }
+  ],
+  punchline: 'The more restricted a chip, the more strategic it is. The more strategic it is, the more incentive there is to build alternatives. That\'s the whole game.'
+};
+
 
 /* Strategic takeaways */
 var CHIPS_TAKEAWAYS = [
