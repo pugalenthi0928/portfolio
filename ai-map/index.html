@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="ai-map.css?v=12">
   <link rel="stylesheet" href="energy.css?v=2">
   <link rel="stylesheet" href="chips.css?v=2">
+  <link rel="stylesheet" href="infra.css?v=1">
 
   <script type="application/ld+json">
   {
@@ -638,6 +639,205 @@
     </div>
   </section>
 
+  <!-- ========== INFRASTRUCTURE DEEP DIVE ========== -->
+  <section class="map-infra" id="infra-deep-dive" aria-label="Infrastructure deep dive">
+    <div class="container">
+      <div class="map-infra-head">
+        <div>
+          <p class="map-infra-eyebrow">Infrastructure layer · deep dive</p>
+          <h2 class="map-infra-title">Infrastructure: the operating system of AI.</h2>
+          <p class="map-infra-thesis">
+            Infrastructure is where chips become <em>usable systems</em>. It is the layer that turns raw accelerators
+            into reliable AI products through distributed computing, networking, storage, scheduling, serving,
+            MLOps, observability, security and data-centre operations.
+          </p>
+        </div>
+        <span class="map-infra-badge">latest available</span>
+      </div>
+
+      <!-- Intel summary -->
+      <div class="map-infra-intel" id="map-infra-intel" aria-label="Infrastructure intelligence summary"></div>
+
+      <!-- Flow chain -->
+      <div class="map-infra-flow-wrap">
+        <h3 class="map-infra-flow-h-eyebrow">Energy → application</h3>
+        <div class="map-infra-flow" id="map-infra-flow" aria-label="From energy to application"></div>
+      </div>
+
+      <!-- Five overview pills -->
+      <div class="map-infra-pills" id="map-infra-pills" role="tablist" aria-label="Infrastructure subtopics"></div>
+
+      <!-- Tabs -->
+      <div class="map-infra-tabs" role="tablist" aria-label="Infrastructure deep-dive sections">
+        <button class="map-infra-tab" data-tab="basics"        role="tab" aria-selected="false" tabindex="-1" type="button">Basics</button>
+        <button class="map-infra-tab" data-tab="stack"         role="tab" aria-selected="false" tabindex="-1" type="button">Stack</button>
+        <button class="map-infra-tab" data-tab="training"      role="tab" aria-selected="false" tabindex="-1" type="button">Training</button>
+        <button class="map-infra-tab" data-tab="inference"     role="tab" aria-selected="false" tabindex="-1" type="button">Inference</button>
+        <button class="map-infra-tab" data-tab="fabric"        role="tab" aria-selected="false" tabindex="-1" type="button">Network &amp; storage</button>
+        <button class="map-infra-tab" data-tab="orchestration" role="tab" aria-selected="false" tabindex="-1" type="button">Orchestration &amp; MLOps</button>
+        <button class="map-infra-tab" data-tab="factory"       role="tab" aria-selected="false" tabindex="-1" type="button">AI factory &amp; reliability</button>
+        <button class="map-infra-tab" data-tab="economics"     role="tab" aria-selected="false" tabindex="-1" type="button">Economics</button>
+      </div>
+
+      <!-- Pane: Basics -->
+      <div class="map-infra-pane" data-tab="basics" role="tabpanel">
+        <h3 class="map-infra-h2">Infrastructure 101 — what each primitive actually does</h3>
+        <p class="map-infra-sub">Ten foundational concepts. Read these once and the rest of the section makes more sense.</p>
+        <div class="map-infra-prims" id="map-infra-prims"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">The AI infrastructure ladder</h3>
+        <p class="map-infra-sub">From a laptop to a hyperscale AI factory. Each rung adds an order of magnitude of complexity.</p>
+        <div class="map-infra-ladder" id="map-infra-ladder"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Misconceptions to drop</h3>
+        <p class="map-infra-sub">The fastest way to think clearly about AI infrastructure is to stop carrying these around.</p>
+        <div class="map-infra-myths" id="map-infra-myths"></div>
+      </div>
+
+      <!-- Pane: Stack -->
+      <div class="map-infra-pane" data-tab="stack" role="tabpanel">
+        <h3 class="map-infra-h2">The AI infrastructure stack — ten layers</h3>
+        <p class="map-infra-sub">From the building to the audit log. Any one layer can become the binding constraint on a real workload.</p>
+        <div class="map-infra-stack" id="map-infra-stack"></div>
+      </div>
+
+      <!-- Pane: Training -->
+      <div class="map-infra-pane" data-tab="training" role="tabpanel">
+        <div class="map-infra-block" id="map-infra-training"></div>
+      </div>
+
+      <!-- Pane: Inference -->
+      <div class="map-infra-pane" data-tab="inference" role="tabpanel">
+        <div class="map-infra-block" id="map-infra-inference"></div>
+      </div>
+
+      <!-- Pane: Network + Storage -->
+      <div class="map-infra-pane" data-tab="fabric" role="tabpanel">
+        <div id="map-infra-fabric"></div>
+      </div>
+
+      <!-- Pane: Orchestration + MLOps -->
+      <div class="map-infra-pane" data-tab="orchestration" role="tabpanel">
+        <div id="map-infra-orchestration"></div>
+      </div>
+
+      <!-- Pane: AI factory + reliability -->
+      <div class="map-infra-pane" data-tab="factory" role="tabpanel">
+        <div id="map-infra-factory"></div>
+      </div>
+
+      <!-- Pane: Economics -->
+      <div class="map-infra-pane" data-tab="economics" role="tabpanel">
+        <h3 class="map-infra-h2">The economics of AI infrastructure</h3>
+        <p class="map-infra-sub">
+          Real cost is not just GPUs. It is silicon + servers + network + storage + power + cooling + space + ops +
+          utilisation losses. The calculator below is an intuition tool — pick a preset, edit any field.
+        </p>
+
+        <div class="map-infra-calc">
+          <h4 class="map-infra-calc-h">AI infrastructure cost intuition</h4>
+          <p class="map-infra-calc-sub">
+            Pick a preset or edit the inputs. Energy = IT load × PUE × utilisation × 8,760 h. Numbers are
+            illustrative; not a quote.
+          </p>
+
+          <div class="map-infra-presets" id="map-infra-presets" aria-label="Calculator presets"></div>
+
+          <div class="map-infra-calc-grid">
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-gpus">Accelerators</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-gpus" type="number" min="1" step="1" value="1000">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-watts">Avg power per GPU (W)</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-watts" type="number" min="100" step="50" value="750">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-util">Utilisation %</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-util" type="number" min="1" max="100" step="1" value="80">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-pue">PUE</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-pue" type="number" min="1" max="2.5" step="0.01" value="1.25">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-price">Price ($/kWh)</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-price" type="number" min="0" step="0.01" value="0.07">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-hwcost">HW cost / GPU ($)</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-hwcost" type="number" min="0" step="500" value="32000">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-depr">Depreciation (years)</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-depr" type="number" min="1" max="10" step="1" value="4">
+            </div>
+            <div class="map-infra-calc-field">
+              <label class="map-infra-calc-label" for="map-infra-calc-tps">Tokens/sec / GPU</label>
+              <input class="map-infra-calc-input" id="map-infra-calc-tps" type="number" min="0" step="50" value="2200">
+            </div>
+          </div>
+
+          <div class="map-infra-calc-out">
+            <div>
+              <p class="map-infra-calc-out-h">IT power</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-itpower">— MW</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Facility power (× PUE)</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-facpower">— MW</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Annual energy</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-twh">— TWh</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Annual electricity</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-elec">— / yr</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Annual depreciation</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-depr-y">— / yr</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Cost / GPU-hour</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-gph">$—</p>
+            </div>
+            <div>
+              <p class="map-infra-calc-out-h">Cost / million tokens</p>
+              <p class="map-infra-calc-out-val" id="map-infra-calc-cpm">$—</p>
+            </div>
+          </div>
+          <p class="map-infra-calc-warn">These are intuition tools, not quotes. Real costs depend on workload, contracts, utilisation, hardware, cooling and region.</p>
+        </div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Where AI infrastructure breaks</h3>
+        <p class="map-infra-sub">A symptom-cause table from production. The first thing you should do when something goes wrong is read this column from left to right.</p>
+        <div class="map-infra-bottle" id="map-infra-bottle" aria-label="Symptom-cause table"></div>
+      </div>
+
+      <!-- Strategic summary — always visible after the tabs -->
+      <div class="map-infra-strategic">
+        <p class="map-infra-strategic-eyebrow">Strategic summary · what infrastructure means for AI power</p>
+        <h3 class="map-infra-strategic-h">Infrastructure is the coordination layer of AI: it turns chips into clusters, clusters into services, and services into products.</h3>
+        <ul class="map-infra-take-list" id="map-infra-take-list"></ul>
+        <p class="map-infra-strategic-final">Without it, model capability stays as a research result. With it, model capability becomes product performance.</p>
+      </div>
+
+      <!-- Sources -->
+      <div class="map-infra-sources">
+        <p class="map-infra-sources-h">Sources &amp; methodology</p>
+        <p class="map-infra-sub" style="font-size:12.5px; max-width:760px; margin: 0 0 14px;">
+          Tool descriptions are functional summaries of official documentation (Kubernetes, Slurm, Ray, PyTorch
+          Distributed, JAX, NCCL, vLLM, NVIDIA TensorRT-LLM, SGLang, HuggingFace TGI, NVIDIA Triton, MLflow, W&amp;B,
+          Kubeflow, OpenTelemetry, Prometheus, Grafana). Vendor-claimed performance is flagged as such; benchmarks
+          should be cross-checked against MLPerf and your own workload.
+        </p>
+        <div class="map-infra-sources-grouped" id="map-infra-sources-grouped"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== TAXONOMY GRID ========== -->
   <section class="map-tax-section" id="map-tax-section" aria-label="AI taxonomy">
     <div class="container">
@@ -697,8 +897,10 @@
   <script src="data.js?v=12"></script>
   <script src="energy-data.js?v=2"></script>
   <script src="chips-data.js?v=3"></script>
-  <script src="ai-map.js?v=13"></script>
+  <script src="infra-data.js?v=1"></script>
+  <script src="ai-map.js?v=14"></script>
   <script src="energy.js?v=2"></script>
   <script src="chips.js?v=3"></script>
+  <script src="infra.js?v=1"></script>
 </body>
 </html>
