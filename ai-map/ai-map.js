@@ -260,7 +260,8 @@
 
       var chipsHTML = cat.items.map(function (item) {
         var tipHTML = item.t ? '<span class="map-chip-tip">' + item.t + '</span>' : '';
-        return '<span class="map-chip" data-l="' + item.l + '" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '" tabindex="0" aria-label="' + item.n + (item.t ? ': ' + item.t : '') + '">' + item.n + tipHTML + '</span>';
+        var tabAttr = item.tab ? ' data-tab="' + item.tab + '" role="link" style="background:' + bg(item.l) + ';color:' + txt(item.l) + '; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.15); text-underline-offset: 3px;"' : ' style="background:' + bg(item.l) + ';color:' + txt(item.l) + '"';
+        return '<span class="map-chip" data-l="' + item.l + '"' + tabAttr + ' tabindex="0" aria-label="' + item.n + (item.t ? ': ' + item.t : '') + '">' + item.n + tipHTML + '</span>';
       }).join('');
 
       block.innerHTML =
@@ -359,6 +360,45 @@
     });
   }
 
+  /* --- Wire energy chips with a [data-tab] attribute so they open the
+         Energy deep-dive section at the right tab. --- */
+  function bindEnergyChips() {
+    var openEnergyTab = function (tab) {
+      /* Switch tab in the energy section if energy.js has loaded its tabs */
+      var tabs = document.querySelectorAll('.map-energy-tab');
+      var panes = document.querySelectorAll('.map-energy-pane');
+      tabs.forEach(function (b) {
+        var on = b.dataset.tab === tab;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.setAttribute('tabindex', on ? '0' : '-1');
+      });
+      panes.forEach(function (p) { p.classList.toggle('is-active', p.dataset.tab === tab); });
+
+      /* Scroll to the energy section. Use instant scroll for reliability;
+         smooth scrolling is silently dropped in some embed contexts. */
+      var target = document.getElementById('energy-deep-dive');
+      if (target) {
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+        window.scrollTo(0, top);
+      }
+    };
+
+    document.addEventListener('click', function (e) {
+      var chip = e.target.closest && e.target.closest('.map-chip[data-tab]');
+      if (!chip) return;
+      e.preventDefault();
+      openEnergyTab(chip.dataset.tab);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var el = document.activeElement;
+      if (!el || !el.classList || !el.classList.contains('map-chip') || !el.dataset.tab) return;
+      e.preventDefault();
+      openEnergyTab(el.dataset.tab);
+    });
+  }
+
   /* --- Init --- */
   document.addEventListener('DOMContentLoaded', function () {
     buildCake();
@@ -369,5 +409,6 @@
     animateCakeBuild();
     handleHash();
     bindArrowKeys();
+    bindEnergyChips();
   });
 })();

@@ -1,0 +1,891 @@
+/* ============================================
+   ENERGY DEEP DIVE — section styles
+   ============================================
+   Scoped under .map-energy. Reuses portfolio-wide tokens
+   (--bg, --bg-alt, --text, --border etc.) and the
+   --energy-* tokens declared in ai-map.css.
+   ============================================ */
+
+.map-energy {
+  padding: 80px 0 64px;
+  border-top: 1px solid var(--border-light);
+  background:
+    radial-gradient(60% 50% at 80% 0%, rgba(240, 176, 96, 0.04), transparent 60%),
+    radial-gradient(45% 40% at 5% 30%, rgba(212, 137, 42, 0.03), transparent 60%);
+}
+
+.map-energy-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.map-energy-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--energy-t);
+  margin: 0 0 12px;
+}
+
+.map-energy-title {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 14px;
+  max-width: 22ch;
+}
+
+.map-energy-thesis {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0;
+}
+
+.map-energy-thesis em {
+  font-style: italic;
+  color: var(--energy-t);
+}
+
+.map-energy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.map-energy-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--energy-bd);
+  border-radius: 50%;
+}
+
+/* ============================================
+   OVERVIEW PILL-CARDS — five subtopics
+   ============================================ */
+.map-energy-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 28px 0 36px;
+}
+
+.map-energy-pill {
+  position: relative;
+  text-align: left;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--energy-bd);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+}
+
+.map-energy-pill:hover,
+.map-energy-pill:focus-visible {
+  border-color: var(--energy-bd);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.map-energy-pill-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--energy-t);
+  margin-bottom: 6px;
+}
+
+.map-energy-pill-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  margin: 0 0 6px;
+}
+
+.map-energy-pill-text {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+.map-energy-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.map-energy-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  letter-spacing: 0.005em;
+}
+
+.map-energy-tab:hover { color: var(--text-secondary); }
+.map-energy-tab.is-active {
+  color: var(--energy-t);
+  border-bottom-color: var(--energy-bd);
+}
+
+.map-energy-pane { display: none; }
+.map-energy-pane.is-active { display: block; }
+
+/* ============================================
+   COMMON SECTION HEADINGS INSIDE PANES
+   ============================================ */
+.map-energy-h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.map-energy-sub {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  max-width: 720px;
+}
+
+/* ============================================
+   GLOSSARY CARDS (Basics tab)
+   ============================================ */
+.map-energy-glossary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.map-energy-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.map-energy-card-h {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+}
+.map-energy-card-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+.map-energy-card-eg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--text-tertiary);
+  border-left: 2px solid var(--energy-bd);
+  padding: 4px 0 4px 10px;
+  margin: 0;
+}
+
+/* ============================================
+   GLOBAL DASHBOARD (World tab)
+   ============================================ */
+.map-energy-dashboard {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+@media (max-width: 720px) {
+  .map-energy-dashboard { grid-template-columns: 1fr; }
+}
+
+.map-energy-stat-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+.map-energy-stat-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 6px;
+}
+.map-energy-stat-big {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.map-energy-stat-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  margin-left: 6px;
+}
+.map-energy-stat-note {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 8px 0 0;
+}
+
+/* Stacked bar — generation mix */
+.map-energy-mix {
+  display: flex;
+  width: 100%;
+  height: 14px;
+  background: var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 14px 0 12px;
+}
+.map-energy-mix-seg {
+  height: 100%;
+  position: relative;
+  cursor: help;
+}
+.map-energy-mix-seg::after {
+  content: attr(data-label) ' ' attr(data-share) '%';
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1A1918;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 5;
+}
+.map-energy-mix-seg:hover::after { opacity: 1; }
+
+.map-energy-mix-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+.map-energy-mix-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.map-energy-mix-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.map-energy-growth {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.map-energy-growth-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px dashed var(--border-light);
+  padding: 6px 0;
+  font-size: 13px;
+}
+.map-energy-growth-row:last-child { border-bottom: none; }
+.map-energy-growth-label { color: var(--text-secondary); }
+.map-energy-growth-val {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--energy-t);
+  font-weight: 600;
+}
+.map-energy-growth-src {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  margin-left: 6px;
+}
+
+.map-energy-punchlines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.map-energy-punchlines li {
+  position: relative;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  padding: 8px 0 8px 22px;
+  border-bottom: 1px solid var(--border-light);
+}
+.map-energy-punchlines li:last-child { border-bottom: none; }
+.map-energy-punchlines li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--energy-bd);
+}
+
+.map-energy-dc-callout {
+  margin-top: 18px;
+  background: linear-gradient(180deg, rgba(240, 176, 96, 0.06), transparent 90%), var(--bg-alt);
+  border: 1px solid rgba(240, 176, 96, 0.35);
+  border-left: 4px solid var(--energy-bd);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.map-energy-dc-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--energy-t);
+  margin: 0 0 8px;
+}
+.map-energy-dc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 8px 0 10px;
+}
+.map-energy-dc-stat {
+  display: flex;
+  flex-direction: column;
+}
+.map-energy-dc-stat-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.map-energy-dc-stat-label {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ============================================
+   COUNTRY TABLE (Countries tab)
+   ============================================ */
+.map-energy-table-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.map-energy-search {
+  flex: 1;
+  min-width: 220px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+}
+.map-energy-search:focus {
+  outline: none;
+  border-color: var(--energy-bd);
+}
+.map-energy-region {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.map-energy-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--bg-alt);
+}
+.map-energy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.map-energy-table th,
+.map-energy-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+  vertical-align: top;
+}
+.map-energy-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.02);
+}
+.map-energy-table tbody tr:hover {
+  background: rgba(240, 176, 96, 0.04);
+}
+.map-energy-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.map-energy-table .col-num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.map-energy-table .col-name {
+  font-weight: 600;
+  color: var(--text);
+}
+.map-energy-table .col-region {
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+}
+.map-energy-table .col-mix {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.map-energy-table .col-bottleneck {
+  white-space: normal;
+  max-width: 320px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.map-energy-table .col-read {
+  white-space: normal;
+  max-width: 360px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+/* ============================================
+   COUNTRY DEEP-DIVE CARDS
+   ============================================ */
+.map-energy-deep {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+}
+.map-energy-deep-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--energy-bd);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+.map-energy-deep-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--energy-t);
+  margin: 0 0 6px;
+}
+.map-energy-deep-headline {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.map-energy-deep-bullets {
+  margin: 0 0 14px;
+  padding-left: 18px;
+}
+.map-energy-deep-bullets li {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.map-energy-deep-bullets li::marker { color: var(--energy-bd); }
+.map-energy-deep-take {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: rgba(240, 176, 96, 0.05);
+  border-left: 2px solid var(--energy-bd);
+  padding: 10px 12px;
+  border-radius: 0 6px 6px 0;
+}
+.map-energy-deep-take strong {
+  color: var(--energy-t);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+/* ============================================
+   AI COMPUTE TAB
+   ============================================ */
+.map-energy-econ {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+@media (max-width: 720px) { .map-energy-econ { grid-template-columns: 1fr; } }
+.map-energy-econ-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+.map-energy-econ-h {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+  letter-spacing: -0.005em;
+}
+.map-energy-econ-list {
+  margin: 0;
+  padding-left: 18px;
+}
+.map-energy-econ-list li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.map-energy-econ-list li::marker { color: var(--energy-bd); }
+
+/* Calculator */
+.map-energy-calc {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+}
+.map-energy-calc-h {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.map-energy-calc-sub {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin: 0 0 16px;
+}
+.map-energy-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.map-energy-calc-field { display: flex; flex-direction: column; gap: 4px; }
+.map-energy-calc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.map-energy-calc-input {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  -moz-appearance: textfield;
+}
+.map-energy-calc-input::-webkit-outer-spin-button,
+.map-energy-calc-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.map-energy-calc-input:focus { outline: none; border-color: var(--energy-bd); }
+
+.map-energy-calc-out {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  border-top: 1px dashed var(--border-light);
+  padding-top: 14px;
+}
+.map-energy-calc-out-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 4px;
+}
+.map-energy-calc-out-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--energy-t);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Country comparison toggle */
+.map-energy-where {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+.map-energy-where-h {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.map-energy-where-sub {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin: 0 0 16px;
+}
+.map-energy-where-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.map-energy-where-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.map-energy-where-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.map-energy-where-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.map-energy-where-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.map-energy-where-bar-track {
+  flex: 1;
+  height: 5px;
+  background: var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.map-energy-where-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--energy-bd), var(--energy-t));
+  transition: width 0.3s ease;
+}
+.map-energy-where-bar-num {
+  width: 28px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* ============================================
+   CONSTRAINTS CHECKLIST
+   ============================================ */
+.map-energy-checklist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+.map-energy-check {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px;
+  align-items: start;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.map-energy-check-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--energy-t);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+.map-energy-check-h {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.map-energy-check-d {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   STRATEGIC TAKEAWAYS
+   ============================================ */
+.map-energy-take {
+  background: linear-gradient(180deg, rgba(240, 176, 96, 0.05), transparent 90%), var(--bg-alt);
+  border: 1px solid rgba(240, 176, 96, 0.35);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-top: 28px;
+}
+.map-energy-take-h {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--energy-t);
+  margin: 0 0 10px;
+}
+.map-energy-take-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.map-energy-take-list li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text);
+  position: relative;
+  padding-left: 22px;
+}
+.map-energy-take-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--energy-bd);
+  font-weight: 700;
+}
+
+/* ============================================
+   SOURCE NOTES
+   ============================================ */
+.map-energy-sources {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+}
+.map-energy-sources-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 0 0 12px;
+}
+.map-energy-sources-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 6px 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.map-energy-sources-list li {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.map-energy-sources-list a {
+  color: var(--energy-t);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(240, 176, 96, 0.35);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.map-energy-sources-list a:hover {
+  color: var(--text);
+  border-bottom-color: var(--text);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 600px) {
+  .map-energy { padding: 56px 0 48px; }
+  .map-energy-pills { grid-template-columns: 1fr; }
+  .map-energy-tab { padding: 9px 10px; font-size: 12.5px; }
+  .map-energy-take { padding: 22px 20px; }
+  .map-energy-econ-card,
+  .map-energy-stat-card,
+  .map-energy-calc,
+  .map-energy-where { padding: 18px 18px; }
+}

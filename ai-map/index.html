@@ -23,8 +23,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css?v=11">
-  <link rel="stylesheet" href="ai-map.css?v=11">
+  <link rel="stylesheet" href="../style.css?v=16">
+  <link rel="stylesheet" href="ai-map.css?v=12">
+  <link rel="stylesheet" href="energy.css?v=1">
 
   <script type="application/ld+json">
   {
@@ -126,6 +127,241 @@
     </div>
   </section>
 
+  <!-- ========== ENERGY DEEP DIVE ========== -->
+  <section class="map-energy" id="energy-deep-dive" aria-label="Energy deep dive">
+    <div class="container">
+      <div class="map-energy-head">
+        <div>
+          <p class="map-energy-eyebrow">Energy layer · deep dive</p>
+          <h2 class="map-energy-title">Energy: the hard floor under AI.</h2>
+          <p class="map-energy-thesis">
+            Every AI system begins as an electricity problem. Chips turn electricity into computation; data centres
+            turn grid capacity into intelligence. The countries and companies that can secure <em>cheap, reliable,
+            scalable power</em> will have a structural advantage in AI.
+          </p>
+        </div>
+        <span class="map-energy-badge" id="map-energy-badge">latest available</span>
+      </div>
+
+      <!-- Five subtopic pill-cards -->
+      <div class="map-energy-pills" id="map-energy-pills" role="tablist" aria-label="Energy subtopics"></div>
+
+      <!-- Tabs -->
+      <div class="map-energy-tabs" role="tablist" aria-label="Energy deep-dive sections">
+        <button class="map-energy-tab" data-tab="basics"      role="tab" aria-selected="false" tabindex="-1" type="button">Basics</button>
+        <button class="map-energy-tab" data-tab="world"       role="tab" aria-selected="false" tabindex="-1" type="button">World</button>
+        <button class="map-energy-tab" data-tab="countries"   role="tab" aria-selected="false" tabindex="-1" type="button">Countries</button>
+        <button class="map-energy-tab" data-tab="compute"     role="tab" aria-selected="false" tabindex="-1" type="button">AI compute</button>
+        <button class="map-energy-tab" data-tab="constraints" role="tab" aria-selected="false" tabindex="-1" type="button">Constraints</button>
+      </div>
+
+      <!-- Pane: Basics -->
+      <div class="map-energy-pane" data-tab="basics" role="tabpanel">
+        <h3 class="map-energy-h2">Energy 101 — the mental model</h3>
+        <p class="map-energy-sub">
+          Eight short cards. Read them once and you will understand most newspaper energy stories better than the
+          journalist writing them.
+        </p>
+        <div class="map-energy-glossary" id="map-energy-glossary"></div>
+      </div>
+
+      <!-- Pane: World -->
+      <div class="map-energy-pane" data-tab="world" role="tabpanel">
+        <h3 class="map-energy-h2">Global electricity dashboard</h3>
+        <p class="map-energy-sub">
+          Latest reliable picture of how much electricity the world generates, what it comes from, and how data
+          centres fit into the global mix.
+        </p>
+
+        <div class="map-energy-dashboard">
+          <div class="map-energy-stat-card">
+            <p class="map-energy-stat-h">Global electricity generation</p>
+            <div class="map-energy-stat-big" id="map-energy-total"></div>
+            <p class="map-energy-stat-note" id="map-energy-total-note"></p>
+
+            <div class="map-energy-mix" id="map-energy-mix"></div>
+            <div class="map-energy-mix-legend" id="map-energy-mix-legend"></div>
+          </div>
+
+          <div class="map-energy-stat-card">
+            <p class="map-energy-stat-h">Renewables + nuclear share</p>
+            <div class="map-energy-stat-big" id="map-energy-clean"></div>
+            <p class="map-energy-stat-note" id="map-energy-clean-note"></p>
+
+            <div class="map-energy-growth" id="map-energy-growth"></div>
+          </div>
+        </div>
+
+        <ul class="map-energy-punchlines" id="map-energy-punchlines"></ul>
+
+        <div class="map-energy-dc-callout" id="map-energy-dc"></div>
+      </div>
+
+      <!-- Pane: Countries -->
+      <div class="map-energy-pane" data-tab="countries" role="tabpanel">
+        <h3 class="map-energy-h2">Country comparison</h3>
+        <p class="map-energy-sub">
+          Twenty-one countries and regions, ordered by relevance to AI infrastructure planning. Type to search by
+          name, region, source mix or bottleneck. <span id="map-energy-count" style="color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size: 12px;"></span>
+        </p>
+
+        <div class="map-energy-table-controls">
+          <input class="map-energy-search" id="map-energy-search" type="search" placeholder="Search country, region or bottleneck (e.g. Johor, queue, hydro)" aria-label="Search countries">
+          <select class="map-energy-region" id="map-energy-region" aria-label="Filter by region"></select>
+        </div>
+
+        <div class="map-energy-table-wrap">
+          <table class="map-energy-table">
+            <thead>
+              <tr>
+                <th>Country / region</th>
+                <th class="col-num">Generation, TWh</th>
+                <th class="col-num">Peak, GW</th>
+                <th>Mix (rounded)</th>
+                <th>Data-centre relevance</th>
+                <th>AI power-readiness read</th>
+                <th>Main bottleneck</th>
+              </tr>
+            </thead>
+            <tbody id="map-energy-tbody"></tbody>
+          </table>
+        </div>
+
+        <h3 class="map-energy-h2" style="margin-top:36px">Deep-dive cards</h3>
+        <p class="map-energy-sub">A more honest read on the six countries that matter most to the question, "where does AI compute physically scale next?"</p>
+        <div class="map-energy-deep" id="map-energy-deep"></div>
+      </div>
+
+      <!-- Pane: AI compute -->
+      <div class="map-energy-pane" data-tab="compute" role="tabpanel">
+        <h3 class="map-energy-h2">AI data-centre power economics</h3>
+        <p class="map-energy-sub">
+          A 100 MW data centre is already a major industrial load. A 1 GW AI campus is power-plant scale. Electricity
+          turns into tokens; the price you pay flows through to every API call.
+        </p>
+
+        <div class="map-energy-econ">
+          <div class="map-energy-econ-card">
+            <h4 class="map-energy-econ-h">Why size matters</h4>
+            <ul class="map-energy-econ-list">
+              <li><strong>100 MW</strong> data centre = roughly the load of a small city.</li>
+              <li><strong>1 GW</strong> AI campus = power-plant scale; planning has to happen with utilities directly.</li>
+              <li>Total facility power = IT load &times; PUE. A PUE of 1.5 means every 1 kWh of compute costs 1.5 kWh of grid power.</li>
+              <li>Modern liquid-cooled AI campuses target a PUE of <strong>1.10&ndash;1.20</strong>; older air-cooled sites are 1.4&ndash;1.7.</li>
+            </ul>
+          </div>
+          <div class="map-energy-econ-card">
+            <h4 class="map-energy-econ-h">The real cost stack</h4>
+            <ul class="map-energy-econ-list">
+              <li>Electricity price (energy + capacity + transmission charges).</li>
+              <li>Grid connection &mdash; substations and high-voltage drop-points.</li>
+              <li>Transformer and substation lead times (often 18&ndash;36+ months).</li>
+              <li>Backup generation, batteries and resilience zoning (N+1, 2N).</li>
+              <li>Cooling water, chillers, dry coolers or liquid loops.</li>
+              <li>Long-term PPA structure, often 10&ndash;20 years.</li>
+              <li>Land, permits and political acceptance.</li>
+              <li>Time-to-power: under 24&ndash;36 months is now a competitive moat.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="map-energy-calc">
+          <h4 class="map-energy-calc-h">Data-centre annual energy + cost calculator</h4>
+          <p class="map-energy-calc-sub">Edit the inputs. Numbers are illustrative for planning, not a quote.</p>
+          <div class="map-energy-calc-grid">
+            <div class="map-energy-calc-field">
+              <label class="map-energy-calc-label" for="map-energy-calc-it">IT load (MW)</label>
+              <input class="map-energy-calc-input" id="map-energy-calc-it" type="number" min="1" step="1" value="100">
+            </div>
+            <div class="map-energy-calc-field">
+              <label class="map-energy-calc-label" for="map-energy-calc-pue">PUE</label>
+              <input class="map-energy-calc-input" id="map-energy-calc-pue" type="number" min="1" max="2.5" step="0.01" value="1.2">
+            </div>
+            <div class="map-energy-calc-field">
+              <label class="map-energy-calc-label" for="map-energy-calc-util">Utilisation %</label>
+              <input class="map-energy-calc-input" id="map-energy-calc-util" type="number" min="1" max="100" step="1" value="85">
+            </div>
+            <div class="map-energy-calc-field">
+              <label class="map-energy-calc-label" for="map-energy-calc-price">Price ($/kWh)</label>
+              <input class="map-energy-calc-input" id="map-energy-calc-price" type="number" min="0" step="0.01" value="0.08">
+            </div>
+          </div>
+          <div class="map-energy-calc-out">
+            <div>
+              <p class="map-energy-calc-out-h">Total facility load</p>
+              <p class="map-energy-calc-out-val" id="map-energy-calc-facility">— MW</p>
+            </div>
+            <div>
+              <p class="map-energy-calc-out-h">Annual energy</p>
+              <p class="map-energy-calc-out-val" id="map-energy-calc-twh">— TWh</p>
+            </div>
+            <div>
+              <p class="map-energy-calc-out-h">Annual electricity cost</p>
+              <p class="map-energy-calc-out-val" id="map-energy-calc-cost">— / yr</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-energy-where">
+          <h4 class="map-energy-where-h">Where would a 500 MW AI campus be easier to power?</h4>
+          <p class="map-energy-where-sub">
+            Qualitative score (1&ndash;10) on four axes: available megawatts now, time-to-power, electricity price, and grid
+            cleanliness. These are reads on the country / corridor, not a guarantee for any specific site.
+          </p>
+          <div class="map-energy-where-grid" id="map-energy-where-grid"></div>
+        </div>
+
+        <h3 class="map-energy-h2" style="margin-top:36px">Renewable integration for compute</h3>
+        <p class="map-energy-sub">
+          Solar and wind are cheap and scalable but variable. AI clusters need 24/7 reliable power. Hourly-matched
+          clean energy is much harder than buying annual renewable certificates.
+        </p>
+        <div class="map-energy-econ">
+          <div class="map-energy-econ-card">
+            <h4 class="map-energy-econ-h">What "matching" actually means</h4>
+            <ul class="map-energy-econ-list">
+              <li>Annual matching: total clean kWh procured ≥ total kWh consumed over a year. Easy, weak.</li>
+              <li>Hourly matching (24/7 carbon-free): every hour of consumption is matched by clean generation in the same hour and grid region. Hard, real.</li>
+              <li>Firm clean sources matter: nuclear, hydro, geothermal, biomass with carbon capture, batteries with long-duration storage.</li>
+              <li>Demand response: shifting flexible workloads (some training, batch inference) to clean-rich hours.</li>
+            </ul>
+          </div>
+          <div class="map-energy-econ-card">
+            <h4 class="map-energy-econ-h">Inverters, frequency, inertia</h4>
+            <ul class="map-energy-econ-list">
+              <li>Solar and batteries output DC. The grid runs on AC at 50 or 60 Hz. Inverters convert and synchronise.</li>
+              <li>Grid-following inverters need a stable grid frequency to lock onto. They cannot start a dead grid alone.</li>
+              <li>Grid-forming inverters can help create and support frequency. Critical as the share of variable renewables rises.</li>
+              <li>Synchronous machines (turbines spinning) give the grid inertia. Inverter-based grids need new ways to keep frequency steady.</li>
+              <li>Reactive power and fault ride-through keep voltage stable when something trips. Modern equipment must be tuned for both.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pane: Constraints -->
+      <div class="map-energy-pane" data-tab="constraints" role="tabpanel">
+        <h3 class="map-energy-h2">Before an AI campus can exist, these must be true</h3>
+        <p class="map-energy-sub">
+          A practical pre-flight checklist. Any single missing item can kill a project for years. Cheap GPUs do not
+          help if the substation does not exist.
+        </p>
+        <div class="map-energy-checklist" id="map-energy-checklist"></div>
+
+        <div class="map-energy-take">
+          <h4 class="map-energy-take-h">Strategic takeaways</h4>
+          <ul class="map-energy-take-list" id="map-energy-take-list"></ul>
+        </div>
+      </div>
+
+      <!-- Sources -->
+      <div class="map-energy-sources">
+        <p class="map-energy-sources-h">Sources &amp; methodology</p>
+        <ul class="map-energy-sources-list" id="map-energy-sources-list"></ul>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== TAXONOMY GRID ========== -->
   <section class="map-tax-section" id="map-tax-section" aria-label="AI taxonomy">
     <div class="container">
@@ -181,8 +417,10 @@
     </div>
   </footer>
 
-  <script src="../script.js?v=11"></script>
-  <script src="data.js?v=11"></script>
-  <script src="ai-map.js?v=11"></script>
+  <script src="../script.js?v=12"></script>
+  <script src="data.js?v=12"></script>
+  <script src="energy-data.js?v=1"></script>
+  <script src="ai-map.js?v=12"></script>
+  <script src="energy.js?v=1"></script>
 </body>
 </html>
