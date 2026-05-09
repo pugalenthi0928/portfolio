@@ -1,0 +1,567 @@
+/* The Scientific Process — premium dark editorial */
+:root {
+  --bg: #0b0e13;
+  --bg-alt: #161a22;
+  --bg-elev: #1c2129;
+  --border-light: #1f2731;
+  --border: #2a323e;
+  --text: #e8ecf1;
+  --text-secondary: #aab1bc;
+  --text-tertiary: #6f7784;
+  --core: #5eead4;          /* science / clarity teal */
+  --core-dim: rgba(94, 234, 212, 0.12);
+  --core-glow: rgba(94, 234, 212, 0.22);
+  --warn: #fbd38d;
+  --danger: #f87171;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: inherit; text-decoration: none; }
+
+.sp-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.sp-container--prose { max-width: 760px; }
+@media (max-width: 720px) {
+  .sp-container { padding: 0 18px; }
+}
+
+/* ============================================
+   TOPBAR
+   ============================================ */
+.sp-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 14, 19, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-light);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.sp-topbar-home {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sp-topbar-home:hover { color: var(--text); }
+.sp-topbar-nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.sp-topbar-nav a {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: color 160ms ease;
+}
+.sp-topbar-nav a:hover { color: var(--core); }
+@media (max-width: 720px) {
+  .sp-topbar { flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 18px; }
+  .sp-topbar-nav { flex-wrap: wrap; gap: 10px 14px; }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.sp-hero {
+  padding: 96px 0 72px;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+.sp-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 25% 25%, rgba(94, 234, 212, 0.08), transparent 70%),
+    radial-gradient(50% 40% at 80% 70%, rgba(94, 234, 212, 0.04), transparent 70%);
+  pointer-events: none;
+}
+.sp-hero > .sp-container { position: relative; }
+.sp-hero-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--core);
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--core-dim);
+  margin-bottom: 32px;
+}
+.sp-hero-title {
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0 0 28px;
+  color: var(--text);
+  max-width: 18ch;
+}
+.sp-hero-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--core);
+}
+.sp-hero-sub {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 0 36px;
+}
+.sp-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.sp-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--bg-alt);
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+  letter-spacing: 0.005em;
+}
+.sp-cta:hover { border-color: var(--core); color: var(--core); transform: translateY(-1px); }
+.sp-cta-primary { background: var(--core); color: #04211c; border-color: var(--core); }
+.sp-cta-primary:hover { background: #87f3df; border-color: #87f3df; color: #04211c; }
+
+/* ============================================
+   SECTION BLOCKS
+   ============================================ */
+.sp-section { padding: 72px 0; border-bottom: 1px solid var(--border-light); }
+.sp-section--tight { padding: 44px 0; }
+.sp-section-head { margin-bottom: 32px; max-width: 760px; }
+.sp-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin: 0 0 16px;
+}
+.sp-section-title {
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.018em;
+  margin: 0 0 16px;
+  color: var(--text);
+}
+.sp-section-sub {
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0;
+}
+
+/* ============================================
+   PROSE BLOCKS
+   ============================================ */
+.sp-prose { max-width: 720px; }
+.sp-prose p {
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--text);
+  margin: 0 0 22px;
+}
+.sp-prose p strong { color: var(--text); font-weight: 600; }
+.sp-prose ul, .sp-prose ol {
+  margin: 0 0 24px;
+  padding-left: 22px;
+  color: var(--text-secondary);
+}
+.sp-prose li {
+  font-size: 16px;
+  line-height: 1.85;
+  margin-bottom: 8px;
+}
+.sp-prose li::marker { color: var(--core); }
+
+/* Pull-quote */
+.sp-pull {
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  padding: 28px 0;
+  border-top: 1px solid var(--core);
+  border-bottom: 0.5px solid var(--border-light);
+  margin: 36px 0;
+  font-style: italic;
+}
+.sp-pull--big {
+  font-size: clamp(24px, 2.6vw, 32px);
+  border-top-width: 2px;
+}
+
+/* ============================================
+   GRID + CARD COMMONS
+   ============================================ */
+.sp-grid { display: grid; gap: 14px; }
+.sp-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.sp-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.sp-grid--auto { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+@media (max-width: 880px) {
+  .sp-grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .sp-grid--2, .sp-grid--3 { grid-template-columns: 1fr; }
+}
+
+.sp-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.sp-card:hover { border-color: rgba(94, 234, 212, 0.45); transform: translateY(-1px); }
+.sp-card-h {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+}
+.sp-card-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  margin: 0;
+}
+.sp-card-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   PROCESS STEPS — "What science actually is"
+   ============================================ */
+.sp-process {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  counter-reset: step;
+  margin-top: 28px;
+}
+.sp-process-step {
+  background: var(--bg-elev);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+}
+.sp-process-step::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--core);
+  display: block;
+  margin-bottom: 4px;
+}
+.sp-process-step-h { font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.sp-process-step-t { font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); margin: 0; }
+
+/* ============================================
+   EVIDENCE LADDER
+   ============================================ */
+.sp-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+}
+.sp-rung {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 18px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  transition: border-color 160ms ease;
+  position: relative;
+}
+.sp-rung:hover { border-left-color: var(--core); }
+.sp-rung-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  align-self: start;
+}
+.sp-rung-bar {
+  height: 4px;
+  background: var(--bg-elev);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+  width: 80px;
+}
+.sp-rung-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--core), #87f3df);
+}
+.sp-rung-body { display: flex; flex-direction: column; gap: 4px; }
+.sp-rung-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0; letter-spacing: -0.005em; }
+.sp-rung-text { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin: 0; }
+.sp-rung-ex {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin-top: 4px;
+}
+/* Strength accent — higher rungs = brighter accent */
+.sp-rung[data-strength="1"] .sp-rung-bar-fill { width: 12%; }
+.sp-rung[data-strength="2"] .sp-rung-bar-fill { width: 22%; }
+.sp-rung[data-strength="3"] .sp-rung-bar-fill { width: 34%; }
+.sp-rung[data-strength="4"] .sp-rung-bar-fill { width: 46%; }
+.sp-rung[data-strength="5"] .sp-rung-bar-fill { width: 58%; }
+.sp-rung[data-strength="6"] .sp-rung-bar-fill { width: 70%; }
+.sp-rung[data-strength="7"] .sp-rung-bar-fill { width: 82%; }
+.sp-rung[data-strength="8"] .sp-rung-bar-fill { width: 92%; }
+.sp-rung[data-strength="9"] .sp-rung-bar-fill { width: 100%; }
+@media (max-width: 600px) {
+  .sp-rung { grid-template-columns: 1fr; gap: 8px; }
+  .sp-rung-bar { width: 100%; }
+}
+
+/* ============================================
+   CHECKLIST GRID
+   ============================================ */
+.sp-checklist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-top: 28px;
+}
+.sp-check {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  align-items: start;
+  transition: border-color 160ms ease;
+}
+.sp-check:hover { border-color: rgba(94, 234, 212, 0.4); }
+.sp-check-mark {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--core);
+  font-weight: 700;
+  line-height: 1.5;
+}
+.sp-check-text { font-size: 13.5px; line-height: 1.6; color: var(--text); margin: 0; }
+
+/* ============================================
+   COMPARISON TWO-COLUMN
+   ============================================ */
+.sp-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+.sp-compare-cell {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+}
+.sp-compare-cell--science {
+  border-left: 3px solid var(--core);
+}
+.sp-compare-cell--other {
+  border-left: 3px solid var(--text-tertiary);
+}
+.sp-compare-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--core);
+  margin: 0 0 12px;
+}
+.sp-compare-cell--other .sp-compare-h { color: var(--text-tertiary); }
+.sp-compare-cell ul { margin: 0; padding-left: 18px; }
+.sp-compare-cell li { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 6px; }
+.sp-compare-cell li::marker { color: var(--core); }
+.sp-compare-cell--other li::marker { color: var(--text-tertiary); }
+@media (max-width: 720px) {
+  .sp-compare { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   CALLOUT WARNING
+   ============================================ */
+.sp-callout {
+  background: linear-gradient(180deg, rgba(251, 211, 141, 0.06), transparent 90%), var(--bg-alt);
+  border: 1px solid rgba(251, 211, 141, 0.4);
+  border-left: 4px solid var(--warn);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 28px 0;
+}
+.sp-callout-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warn);
+  margin: 0 0 8px;
+}
+.sp-callout-text { font-size: 15px; line-height: 1.7; color: var(--text); margin: 0; }
+
+/* ============================================
+   NUMBERED LIST (belief framework)
+   ============================================ */
+.sp-numbered {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 28px;
+  counter-reset: nlist;
+}
+.sp-numbered-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: start;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.sp-numbered-item::before {
+  counter-increment: nlist;
+  content: counter(nlist, decimal-leading-zero);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--core);
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+}
+.sp-numbered-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0;
+}
+
+/* ============================================
+   REFERENCES
+   ============================================ */
+.sp-refs { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.sp-ref {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 12px 16px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: border-color 160ms ease;
+}
+.sp-ref:hover { border-color: rgba(94, 234, 212, 0.4); }
+.sp-ref-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--core);
+  letter-spacing: 0.04em;
+}
+.sp-ref-body { display: flex; flex-direction: column; gap: 4px; }
+.sp-ref-title { font-size: 14.5px; font-weight: 600; color: var(--text); line-height: 1.45; }
+.sp-ref-meta { font-size: 12px; color: var(--text-tertiary); line-height: 1.5; font-family: 'JetBrains Mono', monospace; }
+.sp-ref a { color: var(--core); }
+.sp-ref a:hover { text-decoration: underline; }
+
+/* ============================================
+   THESIS BLOCK (final)
+   ============================================ */
+.sp-thesis {
+  background: linear-gradient(180deg, rgba(94, 234, 212, 0.05), transparent 90%), var(--bg-alt);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  border-radius: var(--radius);
+  padding: 36px 36px;
+  margin-top: 24px;
+}
+.sp-thesis-text {
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.55;
+  color: var(--text);
+  font-style: italic;
+  margin: 0 0 16px;
+}
+.sp-thesis-final {
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.45;
+  color: var(--core);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 600px) {
+  .sp-thesis { padding: 26px 22px; }
+}
+
+/* ============================================
+   FOOTER STRIP
+   ============================================ */
+.sp-footer {
+  padding: 36px 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+.sp-footer a { color: var(--text-secondary); }
+.sp-footer a:hover { color: var(--core); }
+
+/* ============================================
+   UTIL
+   ============================================ */
+::selection { background: var(--core-glow); color: var(--text); }
