@@ -563,11 +563,13 @@
     var el = $('#map-infra-bottle');
     if (!el || typeof INFRA_BOTTLENECKS === 'undefined') return;
     el.innerHTML =
-      '<div class="map-infra-bottle-row map-infra-bottle-row--head"><div>Symptom</div><div>Likely cause</div></div>' +
+      '<div class="map-infra-bottle-row map-infra-bottle-row--head"><div>Symptom</div><div>Likely layer</div><div>Possible cause</div><div>First thing to check</div></div>' +
       INFRA_BOTTLENECKS.map(function (b) {
         return '<div class="map-infra-bottle-row">' +
           '<div class="map-infra-bottle-symptom">' + esc(b.symptom) + '</div>' +
-          '<div>' + esc(b.causes) + '</div>' +
+          '<div class="map-infra-bottle-layer">' + esc(b.layer) + '</div>' +
+          '<div>' + esc(b.cause) + '</div>' +
+          '<div>' + esc(b.check) + '</div>' +
         '</div>';
       }).join('');
   }
@@ -597,6 +599,192 @@
   }
 
   /* ============================================
+     PROMPT-TO-TOKEN FLOW (Inference tab)
+     ============================================ */
+  function renderPromptFlow() {
+    var el = $('#map-infra-prompt-flow');
+    if (!el || typeof INFRA_PROMPT_FLOW === 'undefined') return;
+    el.innerHTML = INFRA_PROMPT_FLOW.map(function (s, i) {
+      var n = (i + 1).toString().padStart(2, '0');
+      return '<div class="map-infra-mini-card">' +
+        '<h5 class="map-infra-mini-h"><span class="map-infra-mini-n">' + n + '</span>' + esc(s.h) + '</h5>' +
+        '<p class="map-infra-mini-d">' + esc(s.d) + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     TRAINING JOB LIFECYCLE (Training tab)
+     ============================================ */
+  function renderTrainingLifecycle() {
+    var el = $('#map-infra-train-lifecycle');
+    if (!el || typeof INFRA_TRAINING_LIFECYCLE === 'undefined') return;
+    el.innerHTML = INFRA_TRAINING_LIFECYCLE.map(function (s, i) {
+      var n = (i + 1).toString().padStart(2, '0');
+      return '<div class="map-infra-mini-card">' +
+        '<h5 class="map-infra-mini-h"><span class="map-infra-mini-n">' + n + '</span>' + esc(s.h) + '</h5>' +
+        '<p class="map-infra-mini-d">' + esc(s.d) + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     TRAINING vs INFERENCE comparison table
+     ============================================ */
+  function renderTrainVsInf() {
+    var el = $('#map-infra-tvi');
+    if (!el || typeof INFRA_TRAIN_VS_INF === 'undefined') return;
+    el.innerHTML =
+      '<div class="map-infra-tvi-row map-infra-tvi-row--head">' +
+        '<div>Dimension</div><div>Training</div><div>Inference</div>' +
+      '</div>' +
+      INFRA_TRAIN_VS_INF.map(function (r) {
+        return '<div class="map-infra-tvi-row">' +
+          '<div class="map-infra-tvi-axis">' + esc(r.axis) + '</div>' +
+          '<div>' + esc(r.train) + '</div>' +
+          '<div>' + esc(r.inf) + '</div>' +
+        '</div>';
+      }).join('');
+  }
+
+  /* ============================================
+     DECISION MATRIX (Basics tab)
+     ============================================ */
+  function renderDecisionMatrix() {
+    var el = $('#map-infra-decision');
+    if (!el || typeof INFRA_DECISION_MATRIX === 'undefined') return;
+    el.innerHTML = INFRA_DECISION_MATRIX.map(function (d) {
+      return '<article class="map-infra-decision-card">' +
+        '<h4 class="map-infra-decision-q">' + esc(d.q) + '</h4>' +
+        '<dl class="map-infra-decision-grid">' +
+          '<dt>Pattern</dt><dd>' + esc(d.pattern) + '</dd>' +
+          '<dt>Tools</dt><dd class="map-infra-decision-tools">' + esc(d.tools) + '</dd>' +
+          '<dt>Bottleneck</dt><dd>' + esc(d.bottleneck) + '</dd>' +
+          '<dt>Avoid</dt><dd class="map-infra-decision-avoid">' + esc(d.avoid) + '</dd>' +
+        '</dl>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     INFERENCE DIAGNOSTICS (Inference tab)
+     ============================================ */
+  function renderInferenceDiag() {
+    var el = $('#map-infra-inf-diag');
+    if (!el || typeof INFRA_INFERENCE_DIAG === 'undefined') return;
+    el.innerHTML = INFRA_INFERENCE_DIAG.map(function (d) {
+      return '<article class="map-infra-diag-card">' +
+        '<h4 class="map-infra-diag-h">' + esc(d.symptom) + '</h4>' +
+        '<ul class="map-infra-diag-list">' +
+          d.causes.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') +
+        '</ul>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     OBSERVABILITY CONTROL ROOM (Inference tab)
+     ============================================ */
+  function renderObservability() {
+    var el = $('#map-infra-obs');
+    if (!el || typeof INFRA_OBSERVABILITY === 'undefined') return;
+    var o = INFRA_OBSERVABILITY;
+    el.innerHTML =
+      '<p class="map-infra-block-call"><strong>Observability mantra</strong>' + esc(o.headline) + '</p>' +
+      '<div class="map-infra-obs-grid">' +
+        o.metrics.map(function (m) {
+          return '<div class="map-infra-obs-card">' +
+            '<h5 class="map-infra-obs-h">' + esc(m.h) + '</h5>' +
+            '<p class="map-infra-obs-d">' + esc(m.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<p class="map-infra-block-call"><strong>Three pillars</strong>' + esc(o.pillars) + '</p>';
+  }
+
+  /* ============================================
+     REFERENCE ARCHITECTURES (AI factory tab)
+     ============================================ */
+  function renderRefArchs() {
+    var el = $('#map-infra-refarch');
+    if (!el || typeof INFRA_REFERENCE_ARCHS === 'undefined') return;
+    el.innerHTML = INFRA_REFERENCE_ARCHS.map(function (a, i) {
+      var letter = String.fromCharCode(65 + i); // A, B, C, D
+      return '<article class="map-infra-arch-card">' +
+        '<div class="map-infra-arch-head">' +
+          '<span class="map-infra-arch-letter">' + letter + '</span>' +
+          '<div>' +
+            '<h4 class="map-infra-arch-title">' + esc(a.title) + '</h4>' +
+            '<p class="map-infra-arch-when">' + esc(a.when) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<ul class="map-infra-arch-blocks">' +
+          a.blocks.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+        '</ul>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     BUILD vs BUY (Economics tab)
+     ============================================ */
+  function renderBuildVsBuy() {
+    var el = $('#map-infra-bvb');
+    if (!el || typeof INFRA_BUILD_VS_BUY === 'undefined') return;
+    var b = INFRA_BUILD_VS_BUY;
+    el.innerHTML =
+      '<h3 class="map-infra-h2">' + esc(b.headline) + '</h3>' +
+      '<p class="map-infra-sub">' + esc(b.framing) + '</p>' +
+      '<div class="map-infra-bvb-grid">' +
+        '<div class="map-infra-bvb-card map-infra-bvb-card--build">' +
+          '<h4 class="map-infra-bvb-h">Build yourself when…</h4>' +
+          '<ul class="map-infra-bvb-list">' + b.build.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+        '<div class="map-infra-bvb-card map-infra-bvb-card--buy">' +
+          '<h4 class="map-infra-bvb-h">Buy / managed when…</h4>' +
+          '<ul class="map-infra-bvb-list">' + b.buy.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+        '<div class="map-infra-bvb-card map-infra-bvb-card--hybrid">' +
+          '<h4 class="map-infra-bvb-h">Hybrid (most realistic path)</h4>' +
+          '<ul class="map-infra-bvb-list">' + b.hybrid.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+      '</div>' +
+      '<p class="map-infra-block-call"><strong>Punchline</strong>' + esc(b.punchline) + '</p>';
+  }
+
+  /* ============================================
+     MATURITY MODEL (Basics tab)
+     ============================================ */
+  function renderMaturity() {
+    var el = $('#map-infra-maturity');
+    if (!el || typeof INFRA_MATURITY === 'undefined') return;
+    el.innerHTML = INFRA_MATURITY.map(function (m) {
+      return '<div class="map-infra-mat-row">' +
+        '<div class="map-infra-mat-lvl">L' + esc(m.lvl) + '</div>' +
+        '<div>' +
+          '<h4 class="map-infra-mat-name">' + esc(m.name) + '</h4>' +
+          '<p class="map-infra-mat-d">' + esc(m.d) + '</p>' +
+          '<p class="map-infra-mat-tells"><strong>Tells:</strong> ' + esc(m.tells) + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     BAD PATTERNS (Economics tab)
+     ============================================ */
+  function renderBadPatterns() {
+    var el = $('#map-infra-bad');
+    if (!el || typeof INFRA_BAD_PATTERNS === 'undefined') return;
+    el.innerHTML = INFRA_BAD_PATTERNS.map(function (p) {
+      return '<article class="map-infra-bad-card">' +
+        '<h5 class="map-infra-bad-h">' + esc(p.h) + '</h5>' +
+        '<p class="map-infra-bad-d">' + p.d + '</p>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
      INIT
      ============================================ */
   function init() {
@@ -613,6 +801,16 @@
     renderFabric();
     renderOrchestration();
     renderFactory();
+    renderPromptFlow();
+    renderTrainingLifecycle();
+    renderTrainVsInf();
+    renderDecisionMatrix();
+    renderInferenceDiag();
+    renderObservability();
+    renderRefArchs();
+    renderBuildVsBuy();
+    renderMaturity();
+    renderBadPatterns();
     bindPresets();
     bindCalculator();
     renderBottlenecks();

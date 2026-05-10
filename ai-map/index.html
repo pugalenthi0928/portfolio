@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="ai-map.css?v=12">
   <link rel="stylesheet" href="energy.css?v=2">
   <link rel="stylesheet" href="chips.css?v=2">
-  <link rel="stylesheet" href="infra.css?v=1">
+  <link rel="stylesheet" href="infra.css?v=2">
 
   <script type="application/ld+json">
   {
@@ -689,6 +689,14 @@
         <p class="map-infra-sub">From a laptop to a hyperscale AI factory. Each rung adds an order of magnitude of complexity.</p>
         <div class="map-infra-ladder" id="map-infra-ladder"></div>
 
+        <h3 class="map-infra-h2" style="margin-top:32px">AI infrastructure maturity model</h3>
+        <p class="map-infra-sub">Where is your team today? Six levels from "demo" to "AI factory", with the giveaway tells for each.</p>
+        <div class="map-infra-maturity" id="map-infra-maturity"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Decision matrix — what should you actually build?</h3>
+        <p class="map-infra-sub">Pick the row that matches your context. Each card shows the recommended pattern, the tools likely involved, the bottleneck to plan for, and the obvious things to avoid.</p>
+        <div class="map-infra-decision" id="map-infra-decision"></div>
+
         <h3 class="map-infra-h2" style="margin-top:32px">Misconceptions to drop</h3>
         <p class="map-infra-sub">The fastest way to think clearly about AI infrastructure is to stop carrying these around.</p>
         <div class="map-infra-myths" id="map-infra-myths"></div>
@@ -704,11 +712,34 @@
       <!-- Pane: Training -->
       <div class="map-infra-pane" data-tab="training" role="tabpanel">
         <div class="map-infra-block" id="map-infra-training"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:24px">Training job lifecycle — 13 stages of a real run</h3>
+        <p class="map-infra-sub">What actually happens when a distributed training job kicks off. Each stage is a place where something can fail; each is a place where good infra earns its keep.</p>
+        <div class="map-infra-mini" id="map-infra-train-lifecycle"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Training vs inference — they need different infrastructure</h3>
+        <p class="map-infra-sub">Eleven dimensions, two columns. The most common architecture mistake is assuming the training stack is also the serving stack.</p>
+        <div class="map-infra-tvi" id="map-infra-tvi" aria-label="Training vs inference comparison"></div>
       </div>
 
       <!-- Pane: Inference -->
       <div class="map-infra-pane" data-tab="inference" role="tabpanel">
-        <div class="map-infra-block" id="map-infra-inference"></div>
+        <h3 class="map-infra-h2">Prompt-to-token: what really happens when a user sends a message</h3>
+        <p class="map-infra-sub">
+          Seventeen stages between the typed prompt and the streamed answer. The model is one step. Everything else
+          is the production system around it — and it decides speed, reliability, safety and cost.
+        </p>
+        <div class="map-infra-mini" id="map-infra-prompt-flow"></div>
+
+        <div class="map-infra-block" id="map-infra-inference" style="margin-top:24px"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:24px">What causes slow AI responses? — diagnostic guide</h3>
+        <p class="map-infra-sub">Four symptom families, each with the most common causes. Use as a triage checklist when latency or cost regress.</p>
+        <div class="map-infra-diag" id="map-infra-inf-diag"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Observability control room</h3>
+        <p class="map-infra-sub">The metrics an on-call engineer actually watches at 3am. Logs, metrics and traces are the three pillars; OpenTelemetry standardises all three.</p>
+        <div id="map-infra-obs"></div>
       </div>
 
       <!-- Pane: Network + Storage -->
@@ -718,12 +749,26 @@
 
       <!-- Pane: Orchestration + MLOps -->
       <div class="map-infra-pane" data-tab="orchestration" role="tabpanel">
+        <div class="map-infra-orch-warn">
+          <p class="map-infra-orch-warn-h">Read this first</p>
+          <p class="map-infra-orch-warn-d">
+            Do not confuse <strong>workflow orchestration</strong> (Airflow / Dagster / Prefect),
+            <strong>container orchestration</strong> (Kubernetes / Nomad), and
+            <strong>GPU job scheduling</strong> (Slurm / Volcano / KubeRay / Ray). They solve different
+            problems. Mature AI orgs use more than one — and confusing them is one of the most common
+            sources of "Kubernetes can't run my training" pain.
+          </p>
+        </div>
         <div id="map-infra-orchestration"></div>
       </div>
 
       <!-- Pane: AI factory + reliability -->
       <div class="map-infra-pane" data-tab="factory" role="tabpanel">
         <div id="map-infra-factory"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:24px">Reference architectures — four blueprints by scale</h3>
+        <p class="map-infra-sub">Concrete starting points. Pick the row that matches your context, then steal the building blocks. None are universally optimal; they are honest defaults.</p>
+        <div class="map-infra-archs" id="map-infra-refarch"></div>
       </div>
 
       <!-- Pane: Economics -->
@@ -811,9 +856,16 @@
           <p class="map-infra-calc-warn">These are intuition tools, not quotes. Real costs depend on workload, contracts, utilisation, hardware, cooling and region.</p>
         </div>
 
-        <h3 class="map-infra-h2" style="margin-top:32px">Where AI infrastructure breaks</h3>
-        <p class="map-infra-sub">A symptom-cause table from production. The first thing you should do when something goes wrong is read this column from left to right.</p>
-        <div class="map-infra-bottle" id="map-infra-bottle" aria-label="Symptom-cause table"></div>
+        <h3 class="map-infra-h2" style="margin-top:32px">Where AI infrastructure breaks — diagnostic table</h3>
+        <p class="map-infra-sub">A four-column on-call diagnostic. Symptom → likely layer → possible cause → first thing to check. Read it left-to-right when something is on fire.</p>
+        <div class="map-infra-bottle" id="map-infra-bottle" aria-label="Bottleneck diagnostic table"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Build vs buy</h3>
+        <div id="map-infra-bvb"></div>
+
+        <h3 class="map-infra-h2" style="margin-top:32px">Bad AI infrastructure patterns</h3>
+        <p class="map-infra-sub">Thirteen anti-patterns. Most outages, blown budgets and bad postmortems trace back to one of these. Knowing them is most of the work.</p>
+        <div class="map-infra-bad" id="map-infra-bad"></div>
       </div>
 
       <!-- Strategic summary — always visible after the tabs -->
@@ -897,10 +949,10 @@
   <script src="data.js?v=12"></script>
   <script src="energy-data.js?v=2"></script>
   <script src="chips-data.js?v=3"></script>
-  <script src="infra-data.js?v=1"></script>
+  <script src="infra-data.js?v=2"></script>
   <script src="ai-map.js?v=14"></script>
   <script src="energy.js?v=2"></script>
   <script src="chips.js?v=3"></script>
-  <script src="infra.js?v=1"></script>
+  <script src="infra.js?v=2"></script>
 </body>
 </html>

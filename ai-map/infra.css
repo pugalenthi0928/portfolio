@@ -1041,6 +1041,469 @@
 }
 
 /* ============================================
+   MINI-CARD NUMBERED VARIANT (prompt flow + training lifecycle)
+   ============================================ */
+.map-infra-mini-n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--infra-t);
+  font-weight: 700;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* ============================================
+   TRAIN vs INFERENCE TABLE
+   ============================================ */
+.map-infra-tvi {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 22px;
+}
+.map-infra-tvi-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 1.6fr;
+  gap: 12px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+.map-infra-tvi-row:last-child { border-bottom: none; }
+.map-infra-tvi-row--head {
+  background: rgba(127, 119, 221, 0.06);
+  color: var(--infra-t);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.map-infra-tvi-axis { color: var(--text); font-weight: 600; }
+@media (max-width: 720px) {
+  .map-infra-tvi-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 14px; }
+  .map-infra-tvi-row--head { display: none; }
+  .map-infra-tvi-row .map-infra-tvi-axis {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--infra-t);
+  }
+  .map-infra-tvi-row > div::before {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .map-infra-tvi-row > div:nth-child(2)::before { content: 'Training'; }
+  .map-infra-tvi-row > div:nth-child(3)::before { content: 'Inference'; }
+}
+
+/* ============================================
+   DECISION MATRIX
+   ============================================ */
+.map-infra-decision {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.map-infra-decision-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--infra-bd);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.map-infra-decision-q {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+}
+.map-infra-decision-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px 12px;
+  margin: 0;
+}
+.map-infra-decision-grid dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--infra-t);
+  font-weight: 700;
+  margin: 0;
+}
+.map-infra-decision-grid dt:nth-of-type(4) { color: #f0a070; }   /* Avoid */
+.map-infra-decision-grid dd {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 2px 0 4px;
+}
+.map-infra-decision-tools { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+.map-infra-decision-avoid { color: #f0c4a4; }
+
+/* ============================================
+   INFERENCE DIAGNOSTICS
+   ============================================ */
+.map-infra-diag {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.map-infra-diag-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid #f0a070;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.map-infra-diag-h {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+}
+.map-infra-diag-list { margin: 0; padding-left: 18px; }
+.map-infra-diag-list li {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.map-infra-diag-list li::marker { color: #f0a070; }
+
+/* ============================================
+   OBSERVABILITY CONTROL ROOM
+   ============================================ */
+.map-infra-obs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+.map-infra-obs-card {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px 12px;
+  position: relative;
+}
+.map-infra-obs-card::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--infra-bd);
+  box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.18);
+  opacity: 0.6;
+}
+.map-infra-obs-h {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+  letter-spacing: -0.005em;
+}
+.map-infra-obs-d {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   REFERENCE ARCHITECTURES
+   ============================================ */
+.map-infra-archs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.map-infra-arch-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--infra-bd);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.map-infra-arch-head {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.map-infra-arch-letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--infra-t);
+  background: rgba(127, 119, 221, 0.16);
+  border: 1px solid rgba(127, 119, 221, 0.4);
+  border-radius: 8px;
+  padding: 6px 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+  align-self: start;
+}
+.map-infra-arch-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+  letter-spacing: -0.005em;
+}
+.map-infra-arch-when {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+.map-infra-arch-blocks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.map-infra-arch-blocks li {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  padding: 4px 0 4px 14px;
+  position: relative;
+  border-bottom: 1px dashed var(--border-light);
+}
+.map-infra-arch-blocks li:last-child { border-bottom: none; }
+.map-infra-arch-blocks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--infra-bd);
+}
+
+/* ============================================
+   BUILD vs BUY
+   ============================================ */
+.map-infra-bvb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0;
+}
+@media (max-width: 880px) { .map-infra-bvb-grid { grid-template-columns: 1fr; } }
+.map-infra-bvb-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.map-infra-bvb-card--build  { border-left: 3px solid var(--infra-bd); }
+.map-infra-bvb-card--buy    { border-left: 3px solid #5DCAA5; }
+.map-infra-bvb-card--hybrid { border-left: 3px solid var(--energy-bd, #D4892A); }
+.map-infra-bvb-h {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+  letter-spacing: -0.005em;
+}
+.map-infra-bvb-list {
+  margin: 0;
+  padding-left: 18px;
+  list-style: none;
+}
+.map-infra-bvb-list li {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 14px;
+}
+.map-infra-bvb-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--infra-bd);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ============================================
+   MATURITY MODEL
+   ============================================ */
+.map-infra-maturity {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+.map-infra-mat-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--infra-bd);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.map-infra-mat-lvl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--infra-t);
+  background: rgba(127, 119, 221, 0.16);
+  border: 1px solid rgba(127, 119, 221, 0.4);
+  border-radius: 6px;
+  padding: 8px 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+  align-self: start;
+}
+.map-infra-mat-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+  letter-spacing: -0.005em;
+}
+.map-infra-mat-d {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 6px;
+}
+.map-infra-mat-tells {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin: 0;
+  font-style: italic;
+}
+.map-infra-mat-tells strong {
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--infra-t);
+  margin-right: 6px;
+}
+
+/* ============================================
+   BAD PATTERNS
+   ============================================ */
+.map-infra-bad {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.map-infra-bad-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid #f87171;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.map-infra-bad-h {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #f8b1b1;
+  margin: 0 0 6px;
+  letter-spacing: -0.005em;
+}
+.map-infra-bad-d {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.map-infra-bad-d em { font-style: normal; color: var(--infra-t); font-weight: 600; }
+
+/* ============================================
+   BOTTLENECK 4-COL TABLE
+   ============================================ */
+.map-infra-bottle-row {
+  grid-template-columns: 1fr 0.8fr 1.4fr 1.4fr;
+}
+.map-infra-bottle-layer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--infra-t);
+}
+@media (max-width: 720px) {
+  .map-infra-bottle-row {
+    grid-template-columns: 1fr; gap: 4px; padding: 14px 16px;
+  }
+  .map-infra-bottle-row--head { display: none; }
+  .map-infra-bottle-row > div::before {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .map-infra-bottle-row > div:nth-child(2)::before { content: 'Layer'; }
+  .map-infra-bottle-row > div:nth-child(3)::before { content: 'Cause'; }
+  .map-infra-bottle-row > div:nth-child(4)::before { content: 'First check'; }
+}
+
+/* ============================================
+   ORCHESTRATION WARNING CALLOUT
+   ============================================ */
+.map-infra-orch-warn {
+  background: linear-gradient(180deg, rgba(248, 113, 113, 0.05), transparent 95%), var(--bg-alt);
+  border: 1px solid rgba(248, 113, 113, 0.36);
+  border-left: 4px solid #f87171;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 0 0 18px;
+}
+.map-infra-orch-warn-h {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f8b1b1;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+.map-infra-orch-warn-d {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0;
+}
+.map-infra-orch-warn-d strong { color: var(--infra-t); }
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 600px) {

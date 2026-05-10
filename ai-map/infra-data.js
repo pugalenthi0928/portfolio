@@ -393,16 +393,18 @@ var INFRA_CALC_PRESETS = [
   { id: 'frontier-100k', label: '100,000-GPU frontier cluster', gpus: 100000, watts: 800, util: 85, pue: 1.15, price: 0.06, hwCost: 32000, deprYears: 4, tps: 2800, tag: 'Frontier AI cluster — only a handful exist worldwide.' }
 ];
 
-/* Bottleneck symptom-cause table */
+/* Bottleneck symptom → layer → cause → first-thing-to-check.
+   This is the on-call diagnostic table. */
 var INFRA_BOTTLENECKS = [
-  { symptom: 'GPUs idle, low utilisation',           causes: 'Slow data loader · network congestion · scheduler placement · CPU pre-processing bottleneck.' },
-  { symptom: 'Latency spikes',                       causes: 'Bad batching · queue build-up · KV-cache pressure · routing churn · cold-start of large weights.' },
-  { symptom: 'Training crashes',                     causes: 'Node failure · OOM · NCCL / network issue · checkpoint corruption · driver / firmware mismatch.' },
-  { symptom: 'High cost per token',                  causes: 'Poor batching · low utilisation · oversized model for the task · weak quantisation strategy.' },
-  { symptom: 'Inconsistent outputs',                 causes: 'Model versioning gap · prompt versioning gap · stale cache · A/B traffic leak.' },
-  { symptom: 'Slow deployment',                      causes: 'Weak CI/CD · manual approvals · no model registry · brittle infra-as-code.' },
-  { symptom: 'Frequent regional incidents',          causes: 'No DR plan · single AZ deploy · capacity not pre-warmed · no traffic shed strategy.' },
-  { symptom: 'Compliance / audit gaps',              causes: 'Missing audit logs · no per-tenant isolation · weak access control · no data-handling agreement.' }
+  { symptom: 'GPUs idle, low utilisation',  layer: 'Storage / data',  cause: 'Slow data loader, CPU pre-processing bottleneck, network congestion, bad scheduler placement.', check: 'Storage throughput · CPU pre-processing util · NCCL traces · scheduler placement.' },
+  { symptom: 'Latency spikes',              layer: 'Serving',         cause: 'Queue build-up, batching collapse, KV-cache pressure, cold-start of large weights, routing churn.', check: 'p95 / p99 latency · queue depth · batch size · cold-start logs.' },
+  { symptom: 'Training crashes',            layer: 'Runtime / network', cause: 'Node failure, OOM, NCCL / fabric issue, checkpoint corruption, driver / firmware mismatch.', check: 'Node logs · GPU memory · NCCL traces · interconnect counters.' },
+  { symptom: 'Cost explosion',              layer: 'Economics',       cause: 'Low utilisation, wrong model size, no quantisation, over-provisioning, weak routing.', check: 'GPU utilisation · cost-per-token by route · model-size mix.' },
+  { symptom: 'Bad outputs after deploy',    layer: 'MLOps',           cause: 'Wrong model version, stale prompt template, traffic leak between A/B variants.',                check: 'Model registry · release logs · A/B routing config.' },
+  { symptom: 'Cannot scale users',          layer: 'Orchestration',   cause: 'Autoscaler thresholds, router saturation, load-balancer misconfig.',                          check: 'HPA / Karpenter signals · router metrics · LB error rate.' },
+  { symptom: 'Frequent regional incidents', layer: 'Reliability',     cause: 'No DR plan, single-AZ deploy, capacity not pre-warmed, no traffic-shed strategy.',            check: 'Regional capacity · failover playbook · blast-radius scoping.' },
+  { symptom: 'Compliance / audit gaps',     layer: 'Governance',      cause: 'Missing audit logs, weak access control, no per-tenant isolation, no DPA in place.',          check: 'Audit-log coverage · IAM review · tenant-isolation tests.' },
+  { symptom: 'Security incident',           layer: 'Governance',      cause: 'Weak auth, leaked secrets, prompt-injection success, data exfiltration through tools.',       check: 'Access logs · secret rotation · output classifiers · tool sandboxing.' }
 ];
 
 /* Misconceptions */
@@ -418,17 +420,329 @@ var INFRA_MISCONCEPTIONS = [
   { myth: 'AI factories are just bigger data centres.',                 truth: 'They are accelerator-dense, liquid-cooled compute plants co-designed across chips, network, storage and serving software.' }
 ];
 
-/* Strategic takeaways */
+/* Strategic takeaways — the five-line stack framing the user can carry around. */
 var INFRA_TAKEAWAYS = [
-  'Energy decides how much compute can exist. Chips decide how fast it computes.',
-  'Infrastructure decides whether chips become usable, reliable, scalable systems.',
-  'Networking decides whether many GPUs act as one machine.',
-  'Storage decides whether data can feed the cluster fast enough.',
-  'Scheduling decides whether expensive compute is used efficiently.',
-  'Serving decides whether models become products.',
-  'MLOps decides whether AI can be improved safely and rolled back when it isn\'t.',
-  'Observability decides whether failures can be seen, fixed and audited.',
-  'AI factories are the industrial form of intelligence production.'
+  'Energy decides whether compute can exist.',
+  'Chips decide how efficiently electricity becomes computation.',
+  'Infrastructure decides whether computation becomes a reliable product.',
+  'Models decide what the system can reason over.',
+  'Applications decide where the capability becomes useful.'
+];
+
+/* ============================================
+   PROMPT-TO-TOKEN FLOW
+   ============================================
+   The sequence the user's prompt actually traverses in production. */
+var INFRA_PROMPT_FLOW = [
+  { h: 'User prompt',         d: 'Text / image / audio enters the app or agent.' },
+  { h: 'Frontend / app',      d: 'Web, mobile, or agent client formats the request.' },
+  { h: 'API gateway',         d: 'TLS, request shaping, regional entry point.' },
+  { h: 'Auth',                d: 'Bearer token / OAuth / signed request → tenant identity.' },
+  { h: 'Rate limit',          d: 'Per-tenant + global limits; abuse + burst protection.' },
+  { h: 'Safety / input checks', d: 'Prompt-injection filters, content classifiers, jailbreak detection.' },
+  { h: 'Model router',        d: 'Picks the right model + region + adapter for this request.' },
+  { h: 'Queue',               d: 'Backpressure if the chosen model is at capacity; SLAs decide who waits.' },
+  { h: 'Inference server',    d: 'vLLM / TRT-LLM / SGLang / TGI / Triton hosts the weights.' },
+  { h: 'Tokenizer',           d: 'Text → token IDs (or multi-modal embedding for VLM input).' },
+  { h: 'Prefill',             d: 'One forward pass over the prompt → initial KV cache.' },
+  { h: 'Decode',              d: 'Token-at-a-time autoregressive generation; dominates latency + cost.' },
+  { h: 'KV cache',            d: 'Per-request keys/values held in HBM; grows with context length.' },
+  { h: 'Streaming response',  d: 'Server-sent events / chunked HTTP back to the client.' },
+  { h: 'Logging',             d: 'Request, response, latency, token counts → trace store.' },
+  { h: 'Eval + monitoring',   d: 'Quality samples, safety checks, drift signals into dashboards.' },
+  { h: 'Billing',              d: 'Token + tool-use accounting; cost-per-tenant attribution.' }
+];
+
+/* ============================================
+   TRAINING JOB LIFECYCLE
+   ============================================
+   The 13 stages a real training job runs through. */
+var INFRA_TRAINING_LIFECYCLE = [
+  { h: 'Dataset prep',           d: 'Tokenise, dedupe, filter, shard for the cluster topology.' },
+  { h: 'Data loading',           d: 'Streams shards over the fabric; pre-fetches to local NVMe + RAM.' },
+  { h: 'Distributed workers',    d: 'Workers launched across nodes via Slurm / Ray / Kubernetes.' },
+  { h: 'GPU allocation',         d: 'Topology-aware placement: NVLink islands, NUMA, per-rack collectives.' },
+  { h: 'Forward pass',           d: 'Tensor + pipeline parallelism within node; activations cached.' },
+  { h: 'Backward pass',          d: 'Gradients computed; checkpointed activations recomputed if needed.' },
+  { h: 'Gradient sync',          d: 'All-reduce across data-parallel ranks (NCCL ring / tree).' },
+  { h: 'Optimizer step',         d: 'AdamW / Lion / etc. update sharded weights (FSDP / ZeRO).' },
+  { h: 'Checkpointing',          d: 'Async, sharded, deduplicated state to checkpoint storage.' },
+  { h: 'Evaluation',             d: 'Periodic eval on held-out + adversarial sets; loss curves watched.' },
+  { h: 'Failure recovery',       d: 'Detect bad nodes / NaNs / stragglers → preempt → restart from last checkpoint.' },
+  { h: 'Experiment tracking',    d: 'Hyperparams, code commit, dataset version, metrics → MLflow / W&B.' },
+  { h: 'Model registry',         d: 'Final weights registered with version, lineage, eval scores.' }
+];
+
+/* ============================================
+   TRAINING vs INFERENCE — strong comparison table
+   ============================================ */
+var INFRA_TRAIN_VS_INF = [
+  { axis: 'Main goal',         train: 'Maximum throughput over a long, fault-tolerant run.',                inf: 'Reliable low-latency serving at acceptable cost-per-token.' },
+  { axis: 'Main bottleneck',   train: 'Synchronisation, network bandwidth, fault recovery, data loading.',  inf: 'KV-cache pressure, batching efficiency, cold starts, queue depth.' },
+  { axis: 'Compute pattern',   train: 'Bursty, dense, all-out. Mostly large matmuls.',                       inf: 'Continuous, latency-bounded. Prefill (parallel) + decode (sequential).' },
+  { axis: 'Memory pressure',   train: 'Weights + activations + grads + optimizer + checkpoints.',            inf: 'Weights + KV cache that grows with context length.' },
+  { axis: 'Network pressure',  train: 'Heavy collectives (all-reduce, all-to-all).',                          inf: 'Lighter east-west during decode; heavier during prefill + MoE routing.' },
+  { axis: 'Latency tolerance', train: 'Throughput-bound — latency does not matter to the user.',              inf: 'Strict per-token + per-request latency targets.' },
+  { axis: 'Failure cost',      train: 'A failed run can lose days × thousands of GPUs.',                      inf: 'A regional outage can break a public product in seconds.' },
+  { axis: 'Scaling method',    train: 'Parallelism (data / tensor / pipeline / expert / ZeRO).',              inf: 'Horizontal autoscaling, model routing, sharding, replica pools.' },
+  { axis: 'Cost metric',       train: '$ per training run · GPU-days · MFU.',                                  inf: '$ per million tokens · req/sec / GPU · tokens/sec / GPU.' },
+  { axis: 'Typical tools',     train: 'PyTorch + FSDP / Megatron / DeepSpeed, NCCL, Slurm, MLflow / W&B.',     inf: 'vLLM, TensorRT-LLM, SGLang, TGI, Triton, Kubernetes + autoscaler.' },
+  { axis: 'What breaks first', train: 'Network / NCCL / a single bad node / storage path.',                   inf: 'Cold starts / KV-cache OOM / autoscaler lag / safety filter saturation.' }
+];
+
+/* ============================================
+   INFRASTRUCTURE DECISION MATRIX
+   ============================================
+   Practical "what should I build?" by context. */
+var INFRA_DECISION_MATRIX = [
+  {
+    q: 'Training a frontier foundation model',
+    pattern: 'Slurm-or-K8s scheduler + InfiniBand cluster + parallel filesystem + Megatron / FSDP + W&B / MLflow + checkpointing + on-call SRE.',
+    tools: 'Slurm · K8s + Volcano / Kueue · NCCL · Megatron-LM · FSDP · DeepSpeed · MLflow · W&B',
+    bottleneck: 'Network fabric, checkpoint storage, fault tolerance, time-to-power for the cluster.',
+    avoid: 'Kubernetes alone without HPC primitives. Single-AZ. No checkpointing. No incident playbook.'
+  },
+  {
+    q: 'Fine-tuning open-weights models',
+    pattern: '8–256-GPU cluster · LoRA / QLoRA · PyTorch FSDP · MLflow / W&B · model registry · automated eval suite.',
+    tools: 'PyTorch · FSDP · LoRA · DeepSpeed · MLflow · W&B · Hugging Face',
+    bottleneck: 'Eval discipline + dataset hygiene + careful regression testing.',
+    avoid: 'Training without held-out evals. Skipping versioning. Deploying with no rollback.'
+  },
+  {
+    q: 'Serving open-source LLMs (your weights, your stack)',
+    pattern: 'Model gateway + vLLM / SGLang / TensorRT-LLM behind autoscaler · KV-cache-aware routing · safety filters · observability · fallback provider.',
+    tools: 'vLLM · TensorRT-LLM · SGLang · TGI · Triton · Kubernetes (Karpenter / HPA) · Envoy / Istio · Prometheus + Grafana',
+    bottleneck: 'KV cache, batching efficiency, latency spikes, autoscaling lag, GPU memory.',
+    avoid: 'One model server with no routing, no monitoring, no fallback, no rate limit, no safety filter.'
+  },
+  {
+    q: 'Building an agent product (tool-use, planning, RAG)',
+    pattern: 'Agent framework · model router · vector DB · evals + judge · prompt + tool registries · cost + tool-use accounting · safety controls.',
+    tools: 'LangChain / LangGraph · DSPy · OpenAI / Anthropic / open models · Pinecone / Milvus / pgvector · LangSmith / Helicone',
+    bottleneck: 'Eval quality, prompt + tool versioning, latency budget across multi-step calls, cost-per-task.',
+    avoid: 'No evals. No tool sandboxing. Unlimited recursion / step depth. Hard-coded prompts in app code.'
+  },
+  {
+    q: 'Running enterprise AI internally',
+    pattern: 'Internal model gateway + per-team rate limits + private inference cluster (or curated providers) · audit logs · SSO · DLP · model + prompt registry.',
+    tools: 'Vault / Doppler · OPA · OpenTelemetry · internal feature store · enterprise model gateway',
+    bottleneck: 'Compliance + audit + tenant isolation + data residency + change-management velocity.',
+    avoid: 'Shadow IT against public APIs with sensitive data. No audit. No DLP. No rate limits.'
+  },
+  {
+    q: 'Running an AI research lab',
+    pattern: 'Slurm cluster · shared parallel filesystem · curated model + dataset registry · experiment tracking · reproducible images · GPU-quota system.',
+    tools: 'Slurm · Lustre / GPFS / Weka · Apptainer · MLflow · W&B · Hugging Face Hub',
+    bottleneck: 'Reproducibility, fair GPU sharing, experiment provenance, data lineage.',
+    avoid: 'Per-researcher snowflakes. No shared registry. No quota system. Unmanaged conda envs.'
+  },
+  {
+    q: 'Running edge / on-device AI',
+    pattern: 'Quantised model · CoreML / TFLite / ONNX runtime · staged OTA updates · device telemetry · server-side fallback for hard cases.',
+    tools: 'CoreML · TFLite · ONNX Runtime · llama.cpp · MLC LLM · Apple Neural Engine · Qualcomm Hexagon',
+    bottleneck: 'Memory + power on device, model size, OTA + rollback, telemetry privacy.',
+    avoid: 'Shipping un-evaluated models. No rollback path. No on-device telemetry. Ignoring battery + thermals.'
+  }
+];
+
+/* ============================================
+   INFERENCE DIAGNOSTICS — symptom → cause for slow AI responses
+   ============================================ */
+var INFRA_INFERENCE_DIAG = [
+  {
+    symptom: 'High first-token latency (TTFT)',
+    causes: [
+      'Cold start of the model weights into HBM.',
+      'Long queue at the chosen model / region.',
+      'Slow prefill on a long prompt.',
+      'Overloaded router (per-region capacity / connection limits).',
+      'Model is too large for the workload (consider smaller / quantised).'
+    ]
+  },
+  {
+    symptom: 'Slow generation (low tokens/sec)',
+    causes: [
+      'Decode bottleneck (sequential by definition).',
+      'Low batching efficiency — batch collapsed mid-flight.',
+      'Memory-bandwidth bound on small batches.',
+      'KV cache pressure forcing eviction or paging.',
+      'Quantisation pathway not enabled on suitable hardware.'
+    ]
+  },
+  {
+    symptom: 'Random latency spikes (p95 / p99)',
+    causes: [
+      'Autoscaling lag (warm pool exhausted, cold replicas joining).',
+      'Network congestion on east-west fabric.',
+      'Noisy neighbours on a shared GPU.',
+      'GPU memory fragmentation forcing eviction.',
+      'Logging / storage backpressure pausing the serving loop.'
+    ]
+  },
+  {
+    symptom: 'High cost per token',
+    causes: [
+      'Poor batching → low utilisation per GPU.',
+      'Wrong model size for the task (frontier model on easy queries).',
+      'No quantisation (FP8 / INT8 / INT4).',
+      'Reasoning / chain-of-thought always-on regardless of query.',
+      'Inefficient routing (no fast path for cached / simple requests).'
+    ]
+  }
+];
+
+/* ============================================
+   OBSERVABILITY CONTROL ROOM
+   ============================================
+   The metrics an on-call engineer actually watches. */
+var INFRA_OBSERVABILITY = {
+  headline: 'Without observability you do not have infrastructure. You have expensive machines and guesses.',
+  metrics: [
+    { h: 'GPU utilisation',      d: 'Real device % busy, not "GPU allocated". Below 50% means money on the floor.' },
+    { h: 'Tokens / sec',         d: 'Throughput per GPU + cluster aggregate. The headline capacity number.' },
+    { h: 'Time to first token',  d: 'TTFT — first user-visible signal. Dominated by prefill + queue + cold start.' },
+    { h: 'p50 / p95 / p99',      d: 'Median, tail, worst-tail latency. Tails dominate user experience.' },
+    { h: 'Queue time',           d: 'Time before a request begins serving. Often dominates p99 under load.' },
+    { h: 'Batch size (live)',    d: 'Continuous-batch fill level. Drops mean throughput drops.' },
+    { h: 'KV cache usage',       d: '% HBM used by per-request KV. Pressure here is the binding constraint at long context.' },
+    { h: 'Memory usage',         d: 'HBM + system RAM. Watch for fragmentation.' },
+    { h: 'Error rate',           d: '5xx, timeouts, model errors. Spikes during deploys = regression signal.' },
+    { h: 'Cost / M tokens',      d: 'The economics metric. Tracks utilisation × model × batching choices.' },
+    { h: 'Request volume',       d: 'Per-tenant + global RPS. Drives autoscaling decisions.' },
+    { h: 'Fallback rate',        d: '% requests routed to a backup model / provider. Indicates upstream degradation.' },
+    { h: 'Failed jobs',          d: 'Training / batch jobs that failed (and why).' },
+    { h: 'Checkpoint duration',  d: 'How long a checkpoint blocks the training loop.' },
+    { h: 'Network throughput',   d: 'East-west + storage bandwidth at the rack and cluster level.' },
+    { h: 'Storage throughput',   d: 'Data-loader read rate. The number that turns idle GPUs into busy ones.' }
+  ],
+  pillars: 'Logs (events) · metrics (numeric time-series) · traces (distributed request paths) — the three classic pillars. OpenTelemetry standardises all three; Prometheus + Grafana is the most common open stack.'
+};
+
+/* ============================================
+   REFERENCE ARCHITECTURES — four practical blueprints
+   ============================================ */
+var INFRA_REFERENCE_ARCHS = [
+  {
+    id: 'startup-app',  title: 'Startup LLM app',
+    when: 'Early-stage product, fast iteration, hosted models, hours-to-deploy.',
+    blocks: [
+      'Frontend / mobile app',
+      'API gateway + auth + rate limit',
+      'Hosted model provider (or thin abstraction)',
+      'Vector DB (if RAG)',
+      'Prompt + version management',
+      'Eval set + scheduled regression',
+      'Observability + traces',
+      'Billing + cost monitoring'
+    ]
+  },
+  {
+    id: 'self-hosted',  title: 'Self-hosted open-source model',
+    when: 'You need control, data residency, custom adapters, predictable cost at volume.',
+    blocks: [
+      'Kubernetes (Karpenter / HPA / KubeRay)',
+      'vLLM / SGLang / TensorRT-LLM serving',
+      'GPU node pool (e.g. H100 / H200 / MI300X)',
+      'Model registry + adapter store',
+      'Autoscaling + KV-cache-aware routing',
+      'Logs + metrics + traces',
+      'Monitoring + paging',
+      'Fallback model or hosted provider'
+    ]
+  },
+  {
+    id: 'research',     title: 'Research training cluster',
+    when: 'A lab, a research team, or a pre-production training environment.',
+    blocks: [
+      'Slurm or K8s + Volcano scheduler',
+      'Shared parallel filesystem (Lustre / GPFS / Weka)',
+      'Distributed training framework (Megatron / FSDP / DeepSpeed)',
+      'Checkpoint storage + restart',
+      'Experiment tracking (MLflow / W&B)',
+      'GPU monitoring + cluster dashboards',
+      'Failure recovery + straggler detection',
+      'Reproducible images (Apptainer / Docker)'
+    ]
+  },
+  {
+    id: 'factory',     title: 'Hyperscale AI factory',
+    when: 'Frontier training + inference at hundreds of MW + tens-of-thousands of GPUs.',
+    blocks: [
+      'High-density power + UPS + generators',
+      'Liquid cooling (D2C or immersion)',
+      'Accelerator-dense racks (100–130 kW)',
+      'InfiniBand or AI-Ethernet east-west fabric',
+      'Parallel filesystem + checkpoint pipeline',
+      'Cluster scheduler (Slurm + custom)',
+      'Production training stack',
+      'Production inference stack',
+      'Monitoring + 24/7 control room',
+      'Security + governance + compliance',
+      'Cost accounting at workload + rack level'
+    ]
+  }
+];
+
+/* ============================================
+   BUILD vs BUY
+   ============================================ */
+var INFRA_BUILD_VS_BUY = {
+  headline: 'Build, buy, or hybrid?',
+  framing: 'Most startups should not start by building an AI factory. They should start by proving demand, then optimise infrastructure around real workloads.',
+  build: [
+    'Infrastructure is your moat (latency, custom hardware, data locality).',
+    'Workloads are unusual (long context, custom serving paths, exotic precision).',
+    'Cost at scale justifies the engineering investment.',
+    'You have strong infra engineers and a multi-year roadmap.',
+    'Data, security or compliance constraints demand control.'
+  ],
+  buy: [
+    'Speed-to-market matters more than infra optimisation.',
+    'Team is small; opportunity cost of building infra is high.',
+    'Workload is standard (chat, RAG, summarisation).',
+    'Usage is uncertain or bursty; you do not know the workload yet.',
+    'Model quality / product-market fit is unproven.'
+  ],
+  hybrid: [
+    'Use APIs early; collect real workload data.',
+    'Self-host stable, well-understood workloads later.',
+    'Keep at least one fallback provider live for capacity + outages.',
+    'Use managed Kubernetes + cloud GPUs before owning hardware.',
+    'Move workloads in-house only when the curve clearly bends.'
+  ],
+  punchline: 'Architecture decisions get more expensive every quarter you defer them — and they get more expensive every quarter you make them too early.'
+};
+
+/* ============================================
+   AI INFRA MATURITY MODEL — Levels 0–5
+   ============================================ */
+var INFRA_MATURITY = [
+  { lvl: '0', name: 'Demo',             d: 'Notebook + local script + manual prompt testing. Nothing in production.', tells: 'No deploys. No monitoring. No evals.' },
+  { lvl: '1', name: 'Prototype',        d: 'API calls behind a simple app. Manual deploy. Basic logs.',                tells: 'Logs exist. Deploys are manual. Versioning is "ask the engineer".' },
+  { lvl: '2', name: 'Early production', d: 'Model gateway + monitoring + evals + prompt / version tracking + fallback provider.', tells: 'You can answer "what model + prompt served that request?".' },
+  { lvl: '3', name: 'Scaled production', d: 'Autoscaling + cost monitoring + CI/CD + model registry + canary + incident response.', tells: 'You have a paging rotation. You have rolled back at least once.' },
+  { lvl: '4', name: 'AI platform',      d: 'Reusable training / serving platform + governance + multi-team workflows + central observability + security controls.', tells: 'Multiple teams ship on the same internal platform. Audit logs exist by default.' },
+  { lvl: '5', name: 'AI factory',       d: 'Dedicated compute + high-density infrastructure + optimised training + inference + full cost accounting + operations control room.', tells: 'You measure cost-per-token at the rack level. You publish or operate a workload-specific architecture.' }
+];
+
+/* ============================================
+   BAD AI INFRASTRUCTURE PATTERNS — anti-pattern catalogue
+   ============================================ */
+var INFRA_BAD_PATTERNS = [
+  { h: 'One giant model for every task',         d: 'Frontier model used on simple queries; cost balloons; latency suffers. Route by complexity.' },
+  { h: 'No evaluation pipeline',                  d: 'Vibes-only deploys. Regressions ship to users; you find out in support tickets.' },
+  { h: 'No prompt / model versioning',            d: 'You cannot reproduce a behaviour from a week ago. Bug reports become unanswerable.' },
+  { h: 'No fallback model or provider',           d: 'Single-vendor outage = full outage. No graceful degradation path.' },
+  { h: 'No observability',                        d: 'Expensive machines and guesses. Postmortems read "we think" instead of "we know".' },
+  { h: 'No cost-per-token tracking',              d: 'Cost explosions are detected by the finance team, not engineering.' },
+  { h: 'No rate limiting',                        d: 'A single tenant or bug can drain the budget in an afternoon.' },
+  { h: 'No rollback path',                        d: 'A bad deploy means firefighting forwards instead of reverting cleanly.' },
+  { h: 'Overusing agents when workflows work',    d: 'Five-step agent for a two-step deterministic workflow. Latency, cost and reliability all worse.' },
+  { h: 'Self-hosting too early',                  d: 'Building inference infra before the product has demand. Most of the cost lands on a dead workload.' },
+  { h: 'Assuming cloud removes architecture',     d: 'Cloud removes <em>some</em> problems. Cost, reliability and scaling decisions are still yours.' },
+  { h: 'Ignoring data pipelines',                 d: 'Beautiful model + broken data path = idle GPUs and stale fine-tunes.' },
+  { h: 'Ignoring latency until launch',           d: 'p95 / p99 are not retro-fittable. Architect for tail latency from day one.' }
 ];
 
 /* Sources, grouped */
