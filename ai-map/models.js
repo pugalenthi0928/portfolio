@@ -523,12 +523,13 @@
     var el = $('#map-models-bottle');
     if (!el || typeof MODELS_BOTTLENECKS === 'undefined') return;
     el.innerHTML =
-      '<div class="map-models-bottle-row map-models-bottle-row--head"><div>Symptom</div><div>Likely cause</div><div>First thing to check</div></div>' +
+      '<div class="map-models-bottle-row map-models-bottle-row--head"><div>Symptom</div><div>Likely cause</div><div>First check</div><div>Fix pattern</div></div>' +
       MODELS_BOTTLENECKS.map(function (b) {
         return '<div class="map-models-bottle-row">' +
           '<div class="map-models-bottle-symptom">' + esc(b.symptom) + '</div>' +
           '<div>' + esc(b.cause) + '</div>' +
           '<div>' + esc(b.check) + '</div>' +
+          '<div class="map-models-bottle-fix">' + esc(b.fix) + '</div>' +
         '</div>';
       }).join('');
   }
@@ -661,6 +662,318 @@
   }
 
   /* ============================================
+     PROMPT-TO-OUTCOME FLOW
+     ============================================ */
+  function renderOutcomeFlow() {
+    var el = $('#map-models-outcome-flow');
+    if (!el || typeof MODELS_OUTCOME_FLOW === 'undefined') return;
+    el.innerHTML = MODELS_OUTCOME_FLOW.map(function (s, i) {
+      var n = (i + 1).toString().padStart(2, '0');
+      return '<div class="map-models-mini-card">' +
+        '<h5 class="map-models-mini-h"><span class="map-models-mini-n">' + n + '</span>' + esc(s.h) + '</h5>' +
+        '<p class="map-models-mini-d">' + esc(s.d) + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     SYSTEM PATTERNS — 7 cards
+     ============================================ */
+  function renderSystemPatterns() {
+    var el = $('#map-models-patterns');
+    if (!el || typeof MODELS_SYSTEM_PATTERNS === 'undefined') return;
+    el.innerHTML = MODELS_SYSTEM_PATTERNS.map(function (p) {
+      return '<article class="map-models-pat">' +
+        '<div class="map-models-pat-head">' +
+          '<span class="map-models-pat-letter">' + esc(p.id) + '</span>' +
+          '<h4 class="map-models-pat-name">' + esc(p.name) + '</h4>' +
+        '</div>' +
+        '<ul class="map-models-pat-blocks">' +
+          p.blocks.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+        '</ul>' +
+        '<dl class="map-models-pat-meta">' +
+          '<dt>Best for</dt><dd>' + esc(p.best) + '</dd>' +
+          '<dt>Breaks when</dt><dd class="map-models-pat-breaks">' + esc(p.breaks) + '</dd>' +
+        '</dl>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     RAG / FT / LC / MEM / TOOLS DECISION TREE
+     ============================================ */
+  function renderDecisionTree() {
+    var el = $('#map-models-tree');
+    if (!el || typeof MODELS_DECISION_TREE === 'undefined') return;
+    var t = MODELS_DECISION_TREE;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">' + esc(t.headline) + '</h3>' +
+      '<div class="map-models-tree">' +
+        t.steps.map(function (s, i) {
+          var n = (i + 1).toString().padStart(2, '0');
+          return '<div class="map-models-tree-step">' +
+            '<div class="map-models-tree-num">Q' + n + '</div>' +
+            '<div>' +
+              '<p class="map-models-tree-q">' + esc(s.q) + '</p>' +
+              '<p class="map-models-tree-a">' + esc(s.a) + '</p>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<p class="map-models-block-call"><strong>Strong line</strong>' + esc(t.punchline) + '</p>';
+  }
+
+  /* ============================================
+     MODEL ROUTING LADDER
+     ============================================ */
+  function renderRoutingLadder() {
+    var el = $('#map-models-routing');
+    if (!el || typeof MODELS_ROUTING_LADDER === 'undefined') return;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">Model routing strategy — the escalation ladder</h3>' +
+      '<p class="map-models-block-sub">Strong AI products rarely send every request to the most expensive model. Each rung adds capability and cost; escalate only when the previous rung does not earn its keep.</p>' +
+      '<div class="map-models-ladder">' +
+        MODELS_ROUTING_LADDER.map(function (r) {
+          return '<div class="map-models-ladder-row">' +
+            '<div class="map-models-ladder-num">' + esc(r.lvl) + '</div>' +
+            '<div>' +
+              '<h4 class="map-models-ladder-h">' + esc(r.name) + '</h4>' +
+              '<p class="map-models-ladder-d">' + esc(r.d) + '</p>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<h4 class="map-models-econ-h" style="margin-top:18px">When to escalate</h4>' +
+      '<ul class="map-models-block-list">' +
+        MODELS_ROUTING_ESCALATE.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') +
+      '</ul>';
+  }
+
+  /* ============================================
+     REASONING — when helps / when wastes / 4-tier comparison
+     ============================================ */
+  function renderReasoningTiers() {
+    var el = $('#map-models-reasoning-tiers');
+    if (!el || typeof MODELS_REASONING_TIERS === 'undefined') return;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">Fast · reasoning · tool-assisted · human review</h3>' +
+      '<p class="map-models-block-sub">When to spend reasoning, when to use tools, when to involve a person. Cost and risk go up the line; latency goes down (in the bad way).</p>' +
+      '<div class="map-models-tiers">' +
+        '<div class="map-models-tiers-row map-models-tiers-row--head"><div>Dimension</div><div>Fast model</div><div>Reasoning model</div><div>Tool-assisted reasoning</div><div>Human review</div></div>' +
+        MODELS_REASONING_TIERS.map(function (r) {
+          return '<div class="map-models-tiers-row">' +
+            '<div class="map-models-tiers-axis">' + esc(r.axis) + '</div>' +
+            '<div>' + esc(r.fast) + '</div>' +
+            '<div>' + esc(r.reason) + '</div>' +
+            '<div>' + esc(r.tool) + '</div>' +
+            '<div>' + esc(r.human) + '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+
+      '<div class="map-models-when">' +
+        '<div class="map-models-when-card use">' +
+          '<h4 class="map-models-when-h">When reasoning helps</h4>' +
+          '<ul>' + MODELS_REASONING_HELPS.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+        '<div class="map-models-when-card avoid">' +
+          '<h4 class="map-models-when-h">When reasoning wastes money</h4>' +
+          '<ul>' + MODELS_REASONING_WASTES.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+      '</div>' +
+
+      '<p class="map-models-block-call"><strong>Warning</strong>More reasoning tokens do not guarantee truth. Reasoning improves search through possible answers, but the model can still reason from false assumptions or bad context.</p>';
+  }
+
+  /* ============================================
+     EVALUATION HARNESS
+     ============================================ */
+  function renderEvalHarness() {
+    var el = $('#map-models-eval-harness');
+    if (!el || typeof MODELS_EVAL_HARNESS === 'undefined') return;
+    var H = MODELS_EVAL_HARNESS;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">Evaluation harness</h3>' +
+      '<p class="map-models-block-sub">A repeatable pipeline. Build it once; reuse it for every model decision the team makes.</p>' +
+
+      '<h4 class="map-models-econ-h">The pipeline</h4>' +
+      '<div class="map-models-mini">' +
+        H.pipeline.map(function (s) {
+          return '<div class="map-models-mini-card">' +
+            '<h5 class="map-models-mini-h">' + esc(s.h) + '</h5>' +
+            '<p class="map-models-mini-d">' + esc(s.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+
+      '<h4 class="map-models-econ-h" style="margin-top:18px">Evaluation types</h4>' +
+      '<div class="map-models-mini">' +
+        H.types.map(function (t) {
+          return '<div class="map-models-mini-card">' +
+            '<h5 class="map-models-mini-h">' + esc(t.h) + '</h5>' +
+            '<p class="map-models-mini-d">' + esc(t.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+
+      '<h4 class="map-models-econ-h" style="margin-top:18px">Minimum viable eval set</h4>' +
+      '<p class="map-models-block-sub">If you have nothing else, ship this. Total: 110 examples. Hand-curated, locked, versioned.</p>' +
+      '<div class="map-models-mvp">' +
+        H.minViable.map(function (m) {
+          return '<div class="map-models-mvp-row">' +
+            '<div class="map-models-mvp-n">' + esc(String(m.n)) + '</div>' +
+            '<div>' +
+              '<h5 class="map-models-mvp-h">' + esc(m.label) + '</h5>' +
+              '<p class="map-models-mvp-d">' + esc(m.d) + '</p>' +
+            '</div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+
+      '<p class="map-models-block-call"><strong>Strong line</strong>' + esc(H.punchline) + '</p>';
+  }
+
+  /* ============================================
+     OBSERVABILITY CONTROL ROOM
+     ============================================ */
+  function renderObservability() {
+    var el = $('#map-models-obs');
+    if (!el || typeof MODELS_OBSERVABILITY === 'undefined') return;
+    var O = MODELS_OBSERVABILITY;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">Model observability — production control room</h3>' +
+      '<p class="map-models-block-call"><strong>Mantra</strong>' + esc(O.headline) + '</p>' +
+      '<div class="map-models-obs-grid">' +
+        O.metrics.map(function (m) {
+          return '<div class="map-models-obs-card">' +
+            '<h5 class="map-models-obs-h">' + esc(m.h) + '</h5>' +
+            '<p class="map-models-obs-d">' + esc(m.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<p class="map-models-block-call"><strong>Punchline</strong>' + esc(O.punchline) + '</p>';
+  }
+
+  /* ============================================
+     BAD PATTERNS
+     ============================================ */
+  function renderBadPatterns() {
+    var el = $('#map-models-bad');
+    if (!el || typeof MODELS_BAD_PATTERNS === 'undefined') return;
+    el.innerHTML = MODELS_BAD_PATTERNS.map(function (p) {
+      return '<article class="map-models-bad-card">' +
+        '<h5 class="map-models-bad-h">' + esc(p.h) + '</h5>' +
+        '<p class="map-models-bad-d">' + esc(p.d) + '</p>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     MATURITY MODEL
+     ============================================ */
+  function renderMaturity() {
+    var el = $('#map-models-maturity');
+    if (!el || typeof MODELS_MATURITY === 'undefined') return;
+    el.innerHTML = MODELS_MATURITY.map(function (m) {
+      return '<div class="map-models-mat-row">' +
+        '<div class="map-models-mat-lvl">L' + esc(m.lvl) + '</div>' +
+        '<div>' +
+          '<h4 class="map-models-mat-name">' + esc(m.name) + '</h4>' +
+          '<p class="map-models-mat-d">' + esc(m.d) + '</p>' +
+          '<p class="map-models-mat-tells"><strong>Tells:</strong> ' + esc(m.tells) + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ============================================
+     LANDSCAPE BY ROLE
+     ============================================ */
+  function renderLandscapeByRole() {
+    var el = $('#map-models-landscape-role');
+    if (!el || typeof MODELS_LANDSCAPE_BY_ROLE === 'undefined') return;
+    el.innerHTML = MODELS_LANDSCAPE_BY_ROLE.map(function (r) {
+      return '<article class="map-models-role-card">' +
+        '<h4 class="map-models-role-h">' + esc(r.h) + '</h4>' +
+        '<p class="map-models-role-d">' + esc(r.d) + '</p>' +
+        '<dl class="map-models-role-meta">' +
+          '<dt>Where it fits</dt><dd>' + esc(r.fits) + '</dd>' +
+          '<dt>Main trade-off</dt><dd>' + esc(r.tradeoff) + '</dd>' +
+          '<dt>What to evaluate</dt><dd>' + esc(r.evaluate) + '</dd>' +
+        '</dl>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     ARCHITECTURE EXAMPLES — flow lanes
+     ============================================ */
+  function renderArchExamples() {
+    var el = $('#map-models-arch-examples');
+    if (!el || typeof MODELS_ARCH_EXAMPLES === 'undefined') return;
+    el.innerHTML = MODELS_ARCH_EXAMPLES.map(function (a) {
+      return '<article class="map-models-archex">' +
+        '<div class="map-models-archex-head">' +
+          '<span class="map-models-archex-letter">' + esc(a.id) + '</span>' +
+          '<h4 class="map-models-archex-h">' + esc(a.h) + '</h4>' +
+        '</div>' +
+        '<div class="map-models-archex-flow">' +
+          a.flow.map(function (s, i, arr) {
+            return '<span class="map-models-archex-step">' + esc(s) + '</span>' + (i < arr.length - 1 ? '<span class="map-models-archex-arrow">→</span>' : '');
+          }).join('') +
+        '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  /* ============================================
+     ECONOMICS INTERPRETATION
+     ============================================ */
+  function renderEconInterpret() {
+    var el = $('#map-models-econ-interpret');
+    if (!el || typeof MODELS_ECON_INTERPRET === 'undefined') return;
+    var E = MODELS_ECON_INTERPRET;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">' + esc(E.headline) + '</h3>' +
+      '<div class="map-models-mini">' +
+        E.questions.map(function (q) {
+          return '<div class="map-models-mini-card">' +
+            '<h5 class="map-models-mini-h">' + esc(q.q) + '</h5>' +
+            '<p class="map-models-mini-d">' + esc(q.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+      '<p class="map-models-block-call"><strong>Punchline</strong>' + E.punchline + '</p>';
+  }
+
+  /* ============================================
+     SAFETY AS SYSTEM DESIGN
+     ============================================ */
+  function renderSafetySystem() {
+    var el = $('#map-models-safety-system');
+    if (!el || typeof MODELS_SAFETY_SYSTEM === 'undefined') return;
+    var S = MODELS_SAFETY_SYSTEM;
+    el.innerHTML =
+      '<h3 class="map-models-block-h">Safety as system design</h3>' +
+      '<p class="map-models-block-sub">' + esc(S.headline) + '</p>' +
+
+      '<h4 class="map-models-econ-h">Nine control surfaces</h4>' +
+      '<div class="map-models-mini">' +
+        S.surfaces.map(function (s) {
+          return '<div class="map-models-mini-card">' +
+            '<h5 class="map-models-mini-h">' + esc(s.h) + '</h5>' +
+            '<p class="map-models-mini-d">' + esc(s.d) + '</p>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+
+      '<h4 class="map-models-econ-h" style="margin-top:18px">Controls to put in place</h4>' +
+      '<ul class="map-models-block-list">' +
+        S.controls.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') +
+      '</ul>';
+  }
+
+  /* ============================================
      INIT
      ============================================ */
   function init() {
@@ -685,6 +998,19 @@
     renderEval();
     renderSafety();
     renderBottlenecks();
+    renderOutcomeFlow();
+    renderSystemPatterns();
+    renderDecisionTree();
+    renderRoutingLadder();
+    renderReasoningTiers();
+    renderEvalHarness();
+    renderObservability();
+    renderBadPatterns();
+    renderMaturity();
+    renderLandscapeByRole();
+    renderArchExamples();
+    renderEconInterpret();
+    renderSafetySystem();
     bindPresets();
     bindCalculator();
     renderRefArchs();

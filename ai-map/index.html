@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="energy.css?v=2">
   <link rel="stylesheet" href="chips.css?v=2">
   <link rel="stylesheet" href="infra.css?v=2">
-  <link rel="stylesheet" href="models.css?v=1">
+  <link rel="stylesheet" href="models.css?v=2">
 
   <script type="application/ld+json">
   {
@@ -940,6 +940,10 @@
         <p class="map-models-sub">Five mix-ups that block clear thinking about models. Learn them, drop them.</p>
         <div class="map-models-confusion" id="map-models-confusion"></div>
 
+        <h3 class="map-models-h2" style="margin-top:32px">Model maturity model</h3>
+        <p class="map-models-sub">Where is your team today? Six levels from "demo" to "model operating system" with the giveaway tells for each.</p>
+        <div class="map-models-maturity" id="map-models-maturity"></div>
+
         <h3 class="map-models-h2" style="margin-top:32px">Misconceptions to drop</h3>
         <p class="map-models-sub">The longer myth-truth list. Most bad model decisions trace back to one of these.</p>
         <div class="map-models-myths" id="map-models-myths"></div>
@@ -968,6 +972,8 @@
         <h3 class="map-models-h2" style="margin-top:32px">Reasoning models</h3>
         <div class="map-models-block" id="map-models-reasoning"></div>
 
+        <div class="map-models-block" id="map-models-reasoning-tiers"></div>
+
         <h3 class="map-models-h2" style="margin-top:8px">Multimodal models</h3>
         <div class="map-models-block" id="map-models-multimodal"></div>
       </div>
@@ -982,14 +988,29 @@
         <p class="map-models-sub">When to choose each path. Most serious products end up hybrid.</p>
         <div class="map-models-decision" id="map-models-decision"></div>
 
-        <h3 class="map-models-h2" style="margin-top:32px">Frontier model landscape</h3>
-        <p class="map-models-sub">A strategic read on the major ecosystems. Not a vendor catalogue — what each is strong at, where it fits, and the risks.</p>
+        <h3 class="map-models-h2" style="margin-top:32px">Frontier landscape — by role, not vendor</h3>
+        <p class="map-models-sub">Ten roles the frontier landscape actually breaks into. Use this as a living framework when picking a model — not a leaderboard.</p>
+        <div id="map-models-landscape-role"></div>
+
+        <h3 class="map-models-h2" style="margin-top:32px">Frontier model landscape — by ecosystem</h3>
+        <p class="map-models-sub">For reference. The ecosystem read for each major closed lab, open-weight ecosystem, and specialist category.</p>
         <div id="map-models-landscape"></div>
       </div>
 
       <!-- Pane: Building -->
       <div class="map-models-pane" data-tab="building" role="tabpanel">
-        <h3 class="map-models-h2">Which model should I use? — model selection matrix</h3>
+        <h3 class="map-models-h2">From prompt to product outcome</h3>
+        <p class="map-models-sub">
+          Fourteen stages between a user goal and the improvement loop. The model is one stage. The surrounding loop
+          decides reliability, cost, safety and usefulness.
+        </p>
+        <div class="map-models-mini" id="map-models-outcome-flow" aria-label="Prompt-to-outcome flow"></div>
+
+        <h3 class="map-models-h2" style="margin-top:32px">Model system patterns</h3>
+        <p class="map-models-sub">Seven canonical shapes of AI product. Most real products are one of these or a composition.</p>
+        <div class="map-models-patterns" id="map-models-patterns"></div>
+
+        <h3 class="map-models-h2" style="margin-top:32px">Which model should I use? — model selection matrix</h3>
         <p class="map-models-sub">Fifteen common workloads, each with a model-type recommendation, key capability, sensitivity ratings, evaluation method and what to avoid. The best AI product rarely uses one model — it uses a model system.</p>
         <div class="map-models-sel" id="map-models-selection" aria-label="Model selection matrix"></div>
 
@@ -997,26 +1018,44 @@
         <p class="map-models-sub">Five ways the model can reach beyond its weights. They are complementary, not competitors.</p>
         <div id="map-models-knowledge"></div>
 
+        <div class="map-models-block" id="map-models-tree"></div>
+
+        <div class="map-models-block" id="map-models-routing"></div>
+
         <h3 class="map-models-h2" style="margin-top:32px">Agents and tool use</h3>
         <div class="map-models-block" id="map-models-agents"></div>
 
         <h3 class="map-models-h2" style="margin-top:8px">Reference architectures</h3>
         <p class="map-models-sub">Seven concrete blueprint cards from chatbot to autonomous workflow agent. Steal the building blocks for your context.</p>
         <div class="map-models-archs" id="map-models-refarch"></div>
+
+        <h3 class="map-models-h2" style="margin-top:32px">Concrete architecture examples</h3>
+        <p class="map-models-sub">Six real product flows as horizontal pipelines. Steal the lane that looks like your product.</p>
+        <div id="map-models-arch-examples"></div>
+
+        <h3 class="map-models-h2" style="margin-top:32px">Bad model system patterns</h3>
+        <p class="map-models-sub">Seventeen anti-patterns. Most blown budgets, bad postmortems and sad demos trace back to one of these.</p>
+        <div class="map-models-bad" id="map-models-bad"></div>
       </div>
 
       <!-- Pane: Evaluation -->
       <div class="map-models-pane" data-tab="evaluation" role="tabpanel">
         <div class="map-models-block" id="map-models-eval"></div>
 
-        <h3 class="map-models-h2" style="margin-top:24px">Where model systems break — diagnostic table</h3>
-        <p class="map-models-sub">Symptom → likely cause → first thing to check. The on-call triage list when a deployed model misbehaves.</p>
+        <div class="map-models-block" id="map-models-eval-harness"></div>
+
+        <div class="map-models-block" id="map-models-obs"></div>
+
+        <h3 class="map-models-h2" style="margin-top:24px">Where model systems break — 4-column diagnostic</h3>
+        <p class="map-models-sub">Symptom → likely cause → first thing to check → fix pattern. Fifteen rows. The on-call triage list when a deployed model misbehaves.</p>
         <div class="map-models-bottle" id="map-models-bottle" aria-label="Model bottlenecks"></div>
       </div>
 
       <!-- Pane: Safety -->
       <div class="map-models-pane" data-tab="safety" role="tabpanel">
         <div class="map-models-block" id="map-models-safety"></div>
+
+        <div class="map-models-block" id="map-models-safety-system"></div>
       </div>
 
       <!-- Pane: Economics -->
@@ -1097,6 +1136,8 @@
           </div>
           <p class="map-models-calc-warn">These are intuition tools, not quotes. Real cost depends on provider pricing, caching, routing, latency, model mix, retries and evaluation overhead.</p>
         </div>
+
+        <div class="map-models-block" id="map-models-econ-interpret"></div>
       </div>
 
       <!-- Strategic summary — always visible after the tabs -->
@@ -1181,11 +1222,11 @@
   <script src="energy-data.js?v=2"></script>
   <script src="chips-data.js?v=3"></script>
   <script src="infra-data.js?v=2"></script>
-  <script src="models-data.js?v=1"></script>
+  <script src="models-data.js?v=2"></script>
   <script src="ai-map.js?v=15"></script>
   <script src="energy.js?v=2"></script>
   <script src="chips.js?v=3"></script>
   <script src="infra.js?v=2"></script>
-  <script src="models.js?v=1"></script>
+  <script src="models.js?v=2"></script>
 </body>
 </html>

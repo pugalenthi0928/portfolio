@@ -44,16 +44,16 @@ var MODELS_TOPICS = [
   }
 ];
 
-/* Top-of-section briefing — eight punchy truths */
+/* Top-of-section briefing — seven sharp truths.
+   Reframed as the model-systems executive summary. */
 var MODELS_INTEL_SUMMARY = [
-  { h: 'A model is a learned function, not magic.',                              d: 'It maps inputs to useful outputs by compressing patterns from data into weights — nothing more, nothing less.' },
-  { h: 'Modern AI is built on chips + data + optimization.',                     d: 'Massive datasets meet massive compute through training pipelines that took years of engineering to refine.' },
-  { h: 'Transformers won because attention scales.',                             d: 'Self-attention lets every token look at every other token; that turned out to be the right inductive bias for language and beyond.' },
-  { h: 'Reasoning models trade latency for capability.',                         d: 'They spend more inference-time compute to solve harder tasks. Slower and pricier per call; better on math, coding, planning.' },
-  { h: 'Multimodal models read more than text.',                                 d: 'Image, audio, video, code, documents, UI screenshots, sometimes action spaces. Real work is rarely just text.' },
-  { h: 'Open-weight models change the control surface.',                          d: 'They shift cost, privacy, sovereignty and customization — and they introduce real deployment + safety responsibility.' },
-  { h: 'Benchmarks are useful and incomplete.',                                  d: 'They measure narrow skills. Real products need their own evals across task success, latency, cost, safety and reliability.' },
-  { h: 'The best model fits the workload, not the leaderboard.',                  d: 'Right model + right routing + right retrieval + right evals beats "the biggest model" almost every time.' }
+  { h: 'The model is not the product.',                              d: 'The product is model + workflow + data + tools + evaluation + UX. Choose the model last; design the system first.' },
+  { h: 'The best model is not always the largest model.',            d: 'It is the model that fits the task, cost, latency, risk and context. Right-sizing is a feature, not a compromise.' },
+  { h: 'Most serious AI products use multiple models, not one.',     d: 'Small for routing, medium for normal traffic, frontier for hard reasoning, specialist for OCR / embeddings / speech / image. One model = wasted dollars or wasted quality.' },
+  { h: 'RAG, fine-tuning, long context, memory and tools solve different problems.', d: 'Confuse them and you build the wrong thing. Each has its own failure modes; each composes with the others.' },
+  { h: 'Reasoning models are powerful — and slower and more expensive.', d: 'Use them where reasoning earns its cost. Default reasoning everywhere blows the bill without lifting quality on simple traffic.' },
+  { h: 'Evaluation is the difference between a demo and a system.',  d: 'A model decision without an eval set is just a vibe. Evals are how you know quality changed — for better or worse.' },
+  { h: 'Routing, caching and fallback are now product architecture decisions.', d: 'They sit alongside auth and rate limiting. The team that ignores them is paying for it twice — in cost and in incidents.' }
 ];
 
 /* Visual flow: data to deployment loop */
@@ -449,18 +449,23 @@ var MODELS_CALC_PRESETS = [
   { id: 'enterprise-doc', label: 'Enterprise document analyst', inTok: 8000, outTok: 1200, reqDay: 10000, inPrice: 1.50, outPrice: 6.00, reasonMul: 2, cache: 0.30, retrieval: 0.0015, review: 0.10, tag: 'Long-context + retrieval + structured output + human approval.' }
 ];
 
-/* Where models break — symptom-cause-check */
+/* Where model products break — symptom · cause · first check · fix pattern */
 var MODELS_BOTTLENECKS = [
-  { symptom: 'Hallucinated answer',         cause: 'Weak grounding, bad prompt, missing retrieval, low-quality source.', check: 'Retrieval recall · citation rate · source quality · prompt structure.' },
-  { symptom: 'Slow response',               cause: 'Long context or reasoning model on a fast-path query.',                check: 'Token count · model route · reasoning budget · TTFT.' },
-  { symptom: 'High cost per request',       cause: 'Wrong model size, no caching, no routing.',                              check: 'Cost-per-task · cache hit rate · model mix.' },
-  { symptom: 'Bad RAG answer',              cause: 'Retrieval failure: chunking, embeddings, reranker or metadata.',         check: 'Top-k recall · reranker score · chunk overlap · metadata filters.' },
-  { symptom: 'Agent loops forever',         cause: 'Weak stopping criteria, no budget, no success check.',                   check: 'Agent state · tool logs · step budget · success criterion.' },
-  { symptom: 'Bad structured output',       cause: 'No schema validation, no retries.',                                       check: 'JSON-schema validation · parser logs · retry strategy.' },
-  { symptom: 'Model ignores key context',   cause: 'Context overload, bad prompt structure, irrelevant retrieval.',            check: 'Chunk order · context relevance · system prompt clarity.' },
-  { symptom: 'Unsafe action',               cause: 'Weak tool permissions, no approval gate, no sandboxing.',                  check: 'Tool permission scope · approval flow · audit logs.' },
-  { symptom: 'Weak domain performance',     cause: 'No domain eval set; benchmark mismatch.',                                  check: 'Test set on real workload · expert review · regression suite.' },
-  { symptom: 'Good benchmark, bad product', cause: 'Benchmark does not match real task profile.',                              check: 'Production telemetry · task success metrics · user-observed errors.' }
+  { symptom: 'Hallucinated answer',                              cause: 'Weak grounding; missing or low-quality retrieval; over-confident model.', check: 'Retrieval recall · citation rate · source quality.',                fix: 'Add or improve RAG; require citations; lower temperature; gate confident output on retrieval coverage.' },
+  { symptom: 'Bad citation (cited but wrong)',                   cause: 'Citation generated post-hoc; citation step unverified.',                  check: 'Citation alignment vs answer; spot-check sample.',                  fix: 'Verify citations against retrieved chunks; reject answer if mismatch; red-team cite-step.' },
+  { symptom: 'RAG answer misses obvious document',               cause: 'Retrieval / chunking / reranker / metadata problem.',                      check: 'Retrieved chunks + metadata; query rewriting; top-k recall.',         fix: 'Improve chunking; add reranker; add query rewriting; evaluate retrieval separately.' },
+  { symptom: 'Agent loops forever',                              cause: 'Weak stopping criteria; no step budget; no success check.',                check: 'Agent state · tool logs · step budget · success criterion.',          fix: 'Add explicit success criterion + step budget + max-tool-calls; force re-plan or stop.' },
+  { symptom: 'Agent uses wrong tool',                            cause: 'Tool descriptions are unclear; permissions are too permissive.',           check: 'Tool descriptions · permission scope · per-tool eval set.',           fix: 'Tighten tool docs + per-tool eval; restrict permissions; route by tool intent first.' },
+  { symptom: 'Output is not valid JSON / schema',                cause: 'No schema validation; no retry; wrong serialisation path.',                check: 'JSON-schema validation · parser logs · retry strategy.',              fix: 'Use structured-output / JSON-schema mode; validate; retry with repair prompt.' },
+  { symptom: 'Slow response',                                    cause: 'Long context or reasoning model on a fast-path query.',                    check: 'Token count · model route · reasoning budget · TTFT.',                fix: 'Route easy queries to a small model; cap reasoning budget; trim context.' },
+  { symptom: 'High cost per request',                            cause: 'Wrong model size; no caching; no routing.',                                check: 'Cost-per-task · cache hit rate · model mix.',                         fix: 'Add prompt cache; route by complexity; rightsize model; quantise where viable.' },
+  { symptom: 'User says answer is generic',                      cause: 'Weak context personalisation; no memory; same prompt for everyone.',       check: 'System prompt · retrieval scope · memory enabled?',                   fix: 'Add user context / memory; specialise system prompts per workflow.' },
+  { symptom: 'Model refuses too much',                           cause: 'Over-tuned safety; over-broad system prompt.',                             check: 'Refusal rate · false-positive set · system prompt language.',         fix: 'Loosen system prompt; per-tenant policy; eval refusals on legitimate tasks.' },
+  { symptom: 'Model takes an unsafe action',                     cause: 'Weak tool permissions; no approval gate; no sandboxing.',                  check: 'Tool permission scope · approval flow · audit logs.',                 fix: 'Scope tool tokens; add human approval gate; sandbox + blast-radius limits.' },
+  { symptom: 'Long-context answer misses key point',             cause: 'Context overload; relevant chunk drowned by irrelevant content.',           check: 'Chunk order · context relevance · system prompt clarity.',            fix: 'Reduce context; rerank by relevance; pin key sources; ask the question first, content second.' },
+  { symptom: 'Fine-tuned model becomes worse',                   cause: 'Capability regression on general tasks; bad eval set.',                    check: 'Pre / post regression suite · held-out evals · safety evals.',        fix: 'Train with mix of general + domain data; freeze layers selectively; revert + re-evaluate.' },
+  { symptom: 'Open-source cheaper on paper, expensive in practice', cause: 'Underestimated infra + ops + eval cost; low utilisation.',              check: 'Real cost-per-token incl. infra · utilisation · eng time.',           fix: 'Compare fully-loaded TCO; consolidate workloads; or move to managed API for low-volume tasks.' },
+  { symptom: 'Works in demo but fails in production',            cause: 'Demo runs on the happy path; production hits long tail + load.',           check: 'Production telemetry · long-tail eval set · load + concurrency.',      fix: 'Build a real eval set from production traces; load-test; add fallback + rate limiting.' }
 ];
 
 /* Misconceptions — the catalogue */
@@ -496,6 +501,334 @@ var MODELS_TAKEAWAYS = [
   'Models decide what the system can understand, generate, reason about and act on.',
   'Applications decide where the capability becomes useful.'
 ];
+
+/* ============================================
+   PROMPT-TO-PRODUCT-OUTCOME FLOW (top-of-section, after intel)
+   ============================================ */
+var MODELS_OUTCOME_FLOW = [
+  { h: 'User goal',           d: 'A clear thing the user is trying to accomplish in this product.' },
+  { h: 'Task classification', d: 'Quick sort: easy chat, hard reasoning, code, retrieval, action, voice.' },
+  { h: 'Model router',        d: 'Picks a tier: small / medium / specialist / frontier / reasoning / human.' },
+  { h: 'Context builder',     d: 'Assembles system prompt, user context, retrieved chunks, memory, examples.' },
+  { h: 'Retrieval / memory / tools', d: 'Pulls knowledge, looks up state, calls APIs / search / code execution.' },
+  { h: 'Selected model',      d: 'The right model for the routed tier — possibly more than one per request.' },
+  { h: 'Reasoning or fast response', d: 'Either a normal forward pass or an extended-thinking path.' },
+  { h: 'Structured output',   d: 'JSON / schema / typed object the surrounding system can consume.' },
+  { h: 'Validation',          d: 'Schema check, citation alignment, math recompute, business-rule gate.' },
+  { h: 'Safety check',        d: 'Output classifier, content + IP filters, action-level approval gate.' },
+  { h: 'User-facing answer / action', d: 'Streamed response, tool action, document, voice reply.' },
+  { h: 'Feedback',            d: 'Thumbs · edit · accept · escalate · time-on-task.' },
+  { h: 'Evaluation log',      d: 'Inputs, model, version, latency, cost, citations, outcome — all stored.' },
+  { h: 'Improvement loop',    d: 'Eval set updates → routing tweaks → prompt + tool fixes → next release.' }
+];
+
+/* ============================================
+   MODEL SYSTEM PATTERNS — seven canonical shapes
+   ============================================ */
+var MODELS_SYSTEM_PATTERNS = [
+  {
+    id: 'A', name: 'Simple chatbot',
+    blocks: ['One model', 'Prompt template', 'Basic logging'],
+    best: 'Low-risk Q&A or simple assistant UX.',
+    breaks: 'When facts, workflow or reliability matter.'
+  },
+  {
+    id: 'B', name: 'RAG assistant',
+    blocks: ['Retriever', 'Reranker', 'Model with citations', 'Eval + feedback'],
+    best: 'Company docs, policies, research, internal knowledge.',
+    breaks: 'When retrieval quality is poor — bad chunks beat any model.'
+  },
+  {
+    id: 'C', name: 'Model router',
+    blocks: ['Small model for easy', 'Frontier for hard', 'Specialist for OCR / embed / speech / image / code'],
+    best: 'Cost + quality balance across mixed traffic.',
+    breaks: 'When routing is poorly evaluated or routes silently regress.'
+  },
+  {
+    id: 'D', name: 'Agentic workflow',
+    blocks: ['Planner', 'Tool registry', 'Memory', 'Permissions', 'Evaluator + audit'],
+    best: 'Multi-step tasks: browser, computer-use, code, ops.',
+    breaks: 'When goals, tool permissions or stopping criteria are weak.'
+  },
+  {
+    id: 'E', name: 'Human-in-the-loop',
+    blocks: ['Model drafts or analyses', 'Human reviews high-risk outputs', 'Audit log + rollback'],
+    best: 'Legal, medical, finance, compliance, enterprise workflows.',
+    breaks: 'When the review process is unclear or reviewers are saturated.'
+  },
+  {
+    id: 'F', name: 'Fine-tuned specialist',
+    blocks: ['Base model', 'Domain-tuned weights', 'Per-task system prompt', 'Regression evals'],
+    best: 'Repeatable structured behaviour, narrow style, format consistency.',
+    breaks: 'When used as a factual database — fine-tuning does not memorise reliably.'
+  },
+  {
+    id: 'G', name: 'Local / private model',
+    blocks: ['Self-hosted or on-device', 'Quantised weights', 'Local retrieval', 'Local audit'],
+    best: 'Privacy, latency, offline, sovereignty.',
+    breaks: 'When the team underestimates infra + serving + evaluation cost.'
+  }
+];
+
+/* ============================================
+   RAG / FT / LONG CONTEXT / MEMORY / TOOLS — decision tree
+   ============================================ */
+var MODELS_DECISION_TREE = {
+  headline: 'RAG vs fine-tuning vs long context vs memory vs tools — a decision tree',
+  steps: [
+    { q: 'Does the model need changing or up-to-date facts?',                    a: 'Use RAG or tool / search.' },
+    { q: 'Does it need a different style, format or repeated behaviour?',         a: 'Use fine-tuning or few-shot prompting.' },
+    { q: 'Does it need to inspect a large document once?',                        a: 'Use long context.' },
+    { q: 'Does it need to remember user preferences across sessions?',            a: 'Use memory.' },
+    { q: 'Does it need to take action or reach live systems?',                    a: 'Use tools / APIs.' },
+    { q: 'Is the task high-risk (legal, medical, money, compliance, security)?', a: 'Add human review, validation, audit logs and restricted permissions.' }
+  ],
+  punchline: 'Fine-tuning is usually not the first answer for factual knowledge. Retrieval, tools and evaluation usually come first.'
+};
+
+/* ============================================
+   MODEL ROUTING LADDER
+   ============================================ */
+var MODELS_ROUTING_LADDER = [
+  { lvl: '01', name: 'Rules / deterministic code',  d: 'Regex, lookup tables, classical ML — fastest + cheapest path. Use first whenever it works.' },
+  { lvl: '02', name: 'Small model',                  d: 'Cheap, fast routing + classification + simple summarisation.' },
+  { lvl: '03', name: 'Medium model',                 d: 'Default for most user requests. Mid-tier cost + latency.' },
+  { lvl: '04', name: 'Specialist model',             d: 'Embeddings, reranker, OCR, speech, vision, code-tuned. Picked by intent, not size.' },
+  { lvl: '05', name: 'Frontier model',               d: 'Premium reasoning + agent control on hard requests. Reserved for tasks that earn the cost.' },
+  { lvl: '06', name: 'Reasoning model',              d: 'Extended-thinking budget for math, coding, planning, deep analysis. Pay only when it pays back.' },
+  { lvl: '07', name: 'Human review',                 d: 'For high-stakes outputs: legal, medical, financial, compliance, irreversible actions.' }
+];
+var MODELS_ROUTING_ESCALATE = [
+  'Model uncertainty is high (low-confidence logits, refusal, contradictory tools).',
+  'Task is high-risk (money, health, law, compliance, reputation).',
+  'User is paying for premium quality on this request.',
+  'Previous tier failed validation or schema check.',
+  'Answer needs deep, multi-step reasoning.',
+  'Output affects irreversible actions, regulated domains or production data.'
+];
+
+/* ============================================
+   REASONING — when-helps / when-wastes + 4-column comparison
+   ============================================ */
+var MODELS_REASONING_HELPS = [
+  'Complex coding (multi-file, repo-scale, debugging).',
+  'Math problems beyond pattern match.',
+  'Multi-step planning + decomposition.',
+  'Research synthesis across many sources.',
+  'Agent workflows with tool chains.',
+  'Legal / policy reasoning with cited sources.',
+  'Financial analysis with edge cases.',
+  'Scientific reasoning with verification.'
+];
+var MODELS_REASONING_WASTES = [
+  'Simple summarisation.',
+  'Classification.',
+  'Extraction.',
+  'FAQ answers from a small grounded corpus.',
+  'Short copywriting.',
+  'High-volume low-margin tasks.',
+  'Latency-sensitive chat where simple models work.'
+];
+var MODELS_REASONING_TIERS = [
+  { axis: 'Best for',         fast: 'High-volume chat, simple tasks.',                      reason: 'Math, deep coding, planning, multi-step analysis.',                tool: 'Reasoning that needs live data, code execution or retrieval.',  human: 'High-stakes outputs and irreversible actions.' },
+  { axis: 'Cost',             fast: 'Cheap.',                                              reason: 'Expensive (reasoning tokens dominate).',                            tool: 'Reasoning cost + tool / retrieval cost.',                        human: 'Highest — human time + slower throughput.' },
+  { axis: 'Latency',          fast: 'Sub-second to a few seconds.',                        reason: 'Tens of seconds to minutes on the hardest tasks.',                   tool: 'Reasoning + tool round-trip latency.',                            human: 'Minutes to hours.' },
+  { axis: 'Risk',             fast: 'Confident wrong answers on hard tasks.',              reason: 'Reasons from bad assumptions if context is wrong.',                  tool: 'Tool errors propagate; verify each tool output.',                  human: 'Reviewer fatigue, inconsistency, escalation backlog.' },
+  { axis: 'Failure mode',     fast: 'Underthinks; misses subtle steps.',                   reason: 'Overthinks simple problems; wastes tokens.',                         tool: 'Hallucinated tool results; bad arg passing.',                       human: 'Bottleneck; queue backlog.' },
+  { axis: 'Product use case', fast: 'Default for most B2C + B2B chat.',                    reason: 'Premium tier, hard tasks, agent loops.',                             tool: 'Research, analytics, code execution, calc-heavy reasoning.',         human: 'Compliance, legal, medical, regulated outputs.' }
+];
+
+/* ============================================
+   EVALUATION HARNESS
+   ============================================ */
+var MODELS_EVAL_HARNESS = {
+  pipeline: [
+    { h: 'Define task',                d: 'What does success look like? Precise input → expected output → grading rule.' },
+    { h: 'Collect real examples',      d: 'From production traces, user logs, support tickets, support transcripts.' },
+    { h: 'Build golden dataset',       d: 'Curated, expert-graded; locked + versioned; reused across model candidates.' },
+    { h: 'Define pass / fail',         d: 'Exact-match, rubric, cite-aligned, schema-valid, task-completed, etc.' },
+    { h: 'Run model candidates',       d: 'Same dataset, same prompts, same harness — change one variable at a time.' },
+    { h: 'Compare quality + cost + latency', d: 'Tokens, $/task, p50 / p95 / p99, hallucination rate, citation rate.' },
+    { h: 'Human review',               d: 'Expert pairwise comparisons + qualitative pass on tricky tasks.' },
+    { h: 'Red-team',                   d: 'Adversarial prompts + safety + abuse cases; jailbreak suite.' },
+    { h: 'Production A/B',             d: 'Live traffic comparison; the closest thing to "production truth".' },
+    { h: 'Monitor failures',           d: 'Telemetry, drift, escalation, bad-citation rate, refusal rate.' },
+    { h: 'Update eval set',            d: 'New failure → new golden example → next regression cycle.' }
+  ],
+  types: [
+    { h: 'Exact match',           d: 'Substring or canonical-form comparison; for extraction + structured output.' },
+    { h: 'Rubric grading',        d: 'Fixed checklist scored by humans or calibrated LLM-as-judge.' },
+    { h: 'Human preference',      d: 'Pairwise comparison; the closest thing to "which one feels better".' },
+    { h: 'Citation accuracy',     d: '% of answers whose citations actually support the claim.' },
+    { h: 'Hallucination rate',    d: '% of unsupported claims relative to grounded sources.' },
+    { h: 'Task completion',       d: 'For agents — did the goal get achieved end-to-end?' },
+    { h: 'Tool success rate',     d: '% of tool calls that succeeded with correct args + parsed result.' },
+    { h: 'Latency',               d: 'TTFT + p50 / p95 / p99 across the eval set.' },
+    { h: 'Cost / successful task', d: 'Dollars spent per task that actually shipped.' },
+    { h: 'Safety failure rate',   d: '% of cases that violate policy under red-team prompts.' },
+    { h: 'User acceptance rate',  d: '% of outputs the user accepted, edited or thumbsed up.' }
+  ],
+  minViable: [
+    { n: 20, label: 'Easy examples',           d: 'Sanity baseline: any reasonable model should pass.' },
+    { n: 20, label: 'Normal examples',         d: 'The bulk of real traffic.' },
+    { n: 20, label: 'Hard examples',           d: 'Long context, multi-step, ambiguous.' },
+    { n: 20, label: 'Adversarial examples',    d: 'Prompt injection, tricky phrasing, near-policy boundaries.' },
+    { n: 20, label: 'Real user examples',      d: 'Sampled from production traces (anonymised).' },
+    { n: 10, label: 'Safety-sensitive examples', d: 'Sensitive topics, refusal expectations, jailbreak patterns.' }
+  ],
+  punchline: 'A model decision without an eval set is just a vibe.'
+};
+
+/* ============================================
+   MODEL OBSERVABILITY — production control room
+   ============================================ */
+var MODELS_OBSERVABILITY = {
+  headline: 'You cannot improve what you cannot observe.',
+  metrics: [
+    { h: 'Request volume',        d: 'Per-tenant + global RPS. Drives autoscaling + capacity decisions.' },
+    { h: 'Input tokens',          d: 'Per-request + aggregate. Long-prompt drift = cost drift.' },
+    { h: 'Output tokens',         d: 'Per-request + aggregate. Verbose models = expensive models.' },
+    { h: 'Reasoning tokens',      d: 'Hidden / extended-thinking budget. Watch this independently.' },
+    { h: 'Latency',               d: 'p50 / p95 / p99 across the model fleet.' },
+    { h: 'Time to first token',   d: 'TTFT — the user-visible perceived speed.' },
+    { h: 'Cost / request',        d: 'Per-model + per-route + per-tenant. The economics signal.' },
+    { h: 'Cost / successful task', d: 'The metric that matters more than raw $/token.' },
+    { h: 'Fallback rate',         d: '% of requests routed to a backup model / provider.' },
+    { h: 'Tool-call success rate', d: '% of tool calls that returned a valid, parseable result.' },
+    { h: 'Retrieval hit rate',    d: '% of RAG queries that returned a relevant chunk.' },
+    { h: 'Citation accuracy',     d: '% of cited answers whose citations actually support the claim.' },
+    { h: 'Hallucination reports', d: 'User flags + automated detector counts over time.' },
+    { h: 'User thumbs up / down', d: 'The cheapest preference signal in production.' },
+    { h: 'Safety filter rate',    d: 'Inputs blocked + outputs rewritten + approvals required.' },
+    { h: 'Human escalation rate', d: '% of cases that reached a human reviewer.' },
+    { h: 'Model version',         d: 'Pinned per request. Enables incident replay + regression tracing.' },
+    { h: 'Prompt version',        d: 'Pinned per request. Enables prompt-level A/B + rollback.' }
+  ],
+  punchline: 'Model quality must be logged, measured and reviewed. Otherwise you are flying blind on the most expensive part of the product.'
+};
+
+/* ============================================
+   BAD MODEL SYSTEM PATTERNS — anti-pattern catalogue
+   ============================================ */
+var MODELS_BAD_PATTERNS = [
+  { h: 'One giant model for every task',         d: 'Frontier reasoning model on simple chat. Cost + latency tank without lifting quality on most traffic.' },
+  { h: 'No evaluation dataset',                  d: 'Vibes-only deploys. Regressions ship; you find out from support tickets.' },
+  { h: 'No model routing',                       d: 'Every request hits the same tier. Half are wasted; the other half are underserved.' },
+  { h: 'No fallback model or provider',          d: 'Single-vendor outage = full outage. No graceful degradation path.' },
+  { h: 'No source grounding',                    d: 'Confident answers with no citations. Users find the hallucinations before you do.' },
+  { h: 'No schema validation on structured output', d: 'JSON parse errors in production. Retry-on-failure is not a strategy if you never check.' },
+  { h: 'No human review for high-risk actions',  d: 'Money / law / health / compliance with no approval gate. One bad output = real-world harm.' },
+  { h: 'Fine-tuning before testing RAG',          d: 'Expensive training run for a problem that retrieval would have solved.' },
+  { h: 'Long context as a dumping ground',       d: '200k tokens stuffed in; the model misses the one chunk that mattered.' },
+  { h: 'Agents with too many tools',             d: 'Confused planners; wrong tool calls; impossible-to-debug traces.' },
+  { h: 'No permissioning for tools',             d: 'Tool credentials grant more than the agent ever needed. Blast radius is huge.' },
+  { h: 'No prompt / model versioning',           d: 'You cannot reproduce yesterday\'s output. Bug reports become unanswerable.' },
+  { h: 'No cost tracking',                       d: 'Cost explosions detected by finance, not engineering.' },
+  { h: 'No latency tracking',                    d: 'Tail latency invisible until users churn.' },
+  { h: 'No red-team testing',                    d: 'Found by users + journalists, not by the team.' },
+  { h: 'Choosing models from leaderboards only', d: 'Generic ranking + adversarial test sets ≠ your workload. Test on your data.' },
+  { h: 'Building with hype instead of workload', d: 'Reasoning, multimodal, agents, MCP… picked because they are trending, not because the product needs them.' }
+];
+
+/* ============================================
+   MODEL MATURITY MODEL — Levels 0–5
+   ============================================ */
+var MODELS_MATURITY = [
+  { lvl: '0', name: 'Demo',                d: 'Single prompt, manual testing, no evals, no logs.',
+                                            tells: 'No deploys. No version pins. No telemetry.' },
+  { lvl: '1', name: 'Prototype',           d: 'Prompt template + API call + basic app + manual feedback.',
+                                            tells: 'Logs exist. Deploys are manual. Versioning is "ask the engineer".' },
+  { lvl: '2', name: 'Early production',    d: 'Documented model choice + logging + basic eval set + fallback path + cost monitoring.',
+                                            tells: 'You can answer "what model + prompt served that request?".' },
+  { lvl: '3', name: 'Reliable product',    d: 'RAG / tools where needed, model routing, versioned prompts, evaluation pipeline, monitoring, human review on risky cases.',
+                                            tells: 'You have a paging rotation; you have rolled back at least once.' },
+  { lvl: '4', name: 'Model platform',      d: 'Reusable model gateway + standardised evals + safety controls + observability + multi-model routing + automated regression tests.',
+                                            tells: 'Multiple teams ship on the same internal model gateway.' },
+  { lvl: '5', name: 'Model operating system', d: 'Continuous feedback loop, adaptive routing, task-specific evals, cost-quality optimisation, governance, deployment discipline, human + automated review loops.',
+                                            tells: 'Routing tunes itself on production data; regressions are caught before users see them.' }
+];
+
+/* ============================================
+   FRONTIER LANDSCAPE — by ROLE, not vendor
+   ============================================ */
+var MODELS_LANDSCAPE_BY_ROLE = [
+  { id: 'frontier',  h: 'Frontier reasoning + general intelligence',  d: 'The cutting edge of what models can do today.',                          fits: 'Hard agent tasks, math, deep coding, novel reasoning.',                      tradeoff: 'Cost + latency are the highest in the stack.',                                 evaluate: 'Hard reasoning + agent + adversarial set, on your workload.' },
+  { id: 'enterprise', h: 'Enterprise-safe assistants',                 d: 'Frontier-tier with stronger safety, audit and contract guarantees.',     fits: 'Regulated industries, large companies, compliance-bound deployments.',         tradeoff: 'Slightly behind absolute frontier on raw capability.',                          evaluate: 'Safety + audit + contractual SLAs alongside capability.' },
+  { id: 'open',      h: 'Open-weight ecosystems',                       d: 'Self-host, customise, run locally; you own the safety surface.',          fits: 'Predictable volume, privacy, sovereignty, customisation.',                      tradeoff: 'Deployment, ops + eval responsibility moves to you.',                            evaluate: 'TCO at your real volume; capability gap on your tasks; safety eval coverage.' },
+  { id: 'coding',    h: 'Coding models',                                 d: 'Tuned for repo, diff, debugging + agentic dev.',                          fits: 'Code assistants, refactor agents, repo-scale tools.',                          tradeoff: 'Less general; can underperform frontier on non-code tasks.',                    evaluate: 'Test pass rate · diff acceptance · review time saved.' },
+  { id: 'multimodal', h: 'Multimodal models',                            d: 'Text + image + audio + video + UI screenshots in one model.',             fits: 'Document, UI, perception + cross-modal reasoning.',                            tradeoff: 'Performance varies sharply by modality; charts + spatial reasoning still hard.', evaluate: 'Per-modality eval + grounding accuracy.' },
+  { id: 'voice',     h: 'Voice / audio models',                          d: 'STT, TTS, realtime voice agents, audio understanding.',                   fits: 'Call centres, meetings, agents, accessibility.',                              tradeoff: 'Latency-sensitive; quality varies by accent + noise.',                          evaluate: 'WER, TTFB, interruption handling, accent + noise robustness.' },
+  { id: 'image-video', h: 'Image / video generation',                    d: 'Diffusion or autoregressive generation of pixels + frames.',              fits: 'Creative tools, design, marketing, video, simulation.',                        tradeoff: 'Controllability + IP risk + content-policy nuance.',                            evaluate: 'Acceptance rate · prompt adherence · safety rejection · IP filter.' },
+  { id: 'embed',     h: 'Embedding + reranker models',                  d: 'Turn data into vectors + reorder retrieved results.',                     fits: 'Search, RAG, recommendations, dedup, clustering.',                              tradeoff: 'Domain fit drives quality more than headline benchmarks.',                       evaluate: 'Top-k recall + reranker uplift on your corpus.' },
+  { id: 'edge',      h: 'Small / on-device models',                      d: 'Run on phones, laptops, browsers, cars.',                                 fits: 'Privacy, latency, offline, user-owned compute.',                                tradeoff: 'Smaller capability envelope; OTA + battery + thermals.',                         evaluate: 'On-device latency · battery · OTA + rollback story.' },
+  { id: 'agent',     h: 'Agent / computer-use models',                   d: 'Tuned for tool use, browser, computer, planning.',                       fits: 'Browser agents, ops automation, computer-use workflows.',                       tradeoff: 'Higher failure modes (loops, wrong tool, prompt injection).',                    evaluate: 'Task completion · steps-to-goal · safe-action rate.' }
+];
+
+/* ============================================
+   CONCRETE PRODUCT ARCHITECTURE EXAMPLES — flow tracks
+   ============================================ */
+var MODELS_ARCH_EXAMPLES = [
+  { id: 'A', h: 'RAG knowledge base',
+    flow: ['Documents', 'Chunking', 'Embeddings', 'Vector DB', 'Reranker', 'Model', 'Citations', 'Feedback', 'Evals'] },
+  { id: 'B', h: 'Sales assistant',
+    flow: ['CRM context', 'Lead profile', 'Message generator', 'Tone guardrails', 'Human review', 'Send + log result'] },
+  { id: 'C', h: 'Coding agent',
+    flow: ['Repo index', 'Planner', 'Code model', 'Sandbox', 'Tests', 'Diff', 'Human approval', 'Merge'] },
+  { id: 'D', h: 'Compliance analyst',
+    flow: ['Policy docs', 'Retrieval', 'Compliance reasoning model', 'Citation validation', 'Human approval', 'Audit log'] },
+  { id: 'E', h: 'Voice agent',
+    flow: ['Speech-to-text', 'Dialogue manager', 'LLM + tool calls', 'Text-to-speech', 'Interruption handling', 'Call summary'] },
+  { id: 'F', h: 'Research assistant',
+    flow: ['Search', 'Source ranking', 'Extraction', 'Synthesis', 'Citation check', 'Uncertainty note', 'Report'] }
+];
+
+/* ============================================
+   ECONOMICS INTERPRETATION — post-calculator commentary
+   ============================================ */
+var MODELS_ECON_INTERPRET = {
+  headline: 'After the calculator: what is actually driving cost?',
+  questions: [
+    { q: 'What drives cost most?',                              d: 'Compare input × in-price vs output × out-price. Often output dominates because of long generations.' },
+    { q: 'Is this workload input-heavy or output-heavy?',        d: 'Input-heavy (RAG, doc analysis) → caching helps. Output-heavy (writing, reasoning) → smaller model or better stop conditions help.' },
+    { q: 'Would caching help?',                                  d: 'If the same prefix recurs (system prompt, knowledge base) — prompt caching can cut input cost 30–80%.' },
+    { q: 'Would routing help?',                                  d: 'If only ~10% of requests need frontier reasoning, routing the rest to a smaller model is the highest-leverage change.' },
+    { q: 'Would a smaller model work?',                          d: 'Run an A/B on user-graded outputs at the smaller tier. Most chat traffic is over-served.' },
+    { q: 'Is human review the biggest cost?',                    d: 'If review % > 5% and DAU is non-trivial, review costs dominate. Tighten review criteria + add automated pre-checks.' },
+    { q: 'Is latency target forcing expensive serving?',          d: 'Aggressive TTFT can pin you to a premium tier. Decide if the user actually feels the difference at p95.' }
+  ],
+  punchline: 'Cost per token matters. Cost per <em>successful task</em> matters more.'
+};
+
+/* ============================================
+   SAFETY AS SYSTEM DESIGN — 9 control surfaces
+   ============================================ */
+var MODELS_SAFETY_SYSTEM = {
+  headline: 'Safe AI is not just a polite model. It is a constrained, observable, testable system.',
+  surfaces: [
+    { h: 'Input safety',      d: 'Prompt-injection filters, content classifiers, tenant rate limits.' },
+    { h: 'Output safety',     d: 'Output classifiers, policy checks, refusal calibration, citation validation.' },
+    { h: 'Tool safety',       d: 'Per-tool permissions, allow-lists, sandboxing, dry-run mode for risky actions.' },
+    { h: 'Data privacy',      d: 'PII redaction in + out, no-train flags, tenant isolation, regional data residency.' },
+    { h: 'Retrieval safety',  d: 'Source grounding, citation verification, retrieved-content filters, freshness checks.' },
+    { h: 'Agent safety',      d: 'Step budgets, success criteria, blast-radius limits, irreversible-action gates.' },
+    { h: 'Human approval',    d: 'Approval queues for high-risk outputs / actions; reviewer training + load balancing.' },
+    { h: 'Logging + audit',   d: 'Per-request model + prompt + tool versions; replayable traces; regulator-ready reports.' },
+    { h: 'Incident response', d: 'Paging, kill-switches, rollback, status comms, blameless postmortems.' }
+  ],
+  controls: [
+    'Role-based access on the model gateway.',
+    'Tool permission levels (read · write · admin).',
+    'Sandboxing for code execution + browser use.',
+    'Approval gates for irreversible actions.',
+    'Source citation required + verified.',
+    'Schema validation on structured output.',
+    'Restricted action allow-lists per agent.',
+    'Capability + safety evals on every release.',
+    'Red-team suites updated each cycle.',
+    'Drift monitoring + escalation playbooks.',
+    'One-click rollback to last-known-good.'
+  ]
+};
 
 /* Sources, grouped */
 var MODELS_SOURCES_GROUPED = [
