@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css?v=16">
   <link rel="stylesheet" href="ai-map.css?v=12">
+  <link rel="stylesheet" href="frame.css?v=1">
   <link rel="stylesheet" href="energy.css?v=2">
   <link rel="stylesheet" href="chips.css?v=2">
   <link rel="stylesheet" href="infra.css?v=2">
@@ -127,6 +128,141 @@
       <div class="map-controls">
         <div class="map-legend" id="map-legend" role="group" aria-label="Layer filter"></div>
         <button class="map-show-all" id="map-show-all">Show all</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STRATEGIC FRAME ========== -->
+  <section class="map-frame" id="map-frame" aria-label="Does energy decide who wins AI">
+    <div class="container">
+      <div class="map-frame-head">
+        <p class="map-frame-eyebrow">Strategic note · framing the stack</p>
+        <h2 class="map-frame-title">Does energy decide who wins AI?</h2>
+        <p class="map-frame-sub">Energy is the hard floor. But the winner is whoever turns electricity into useful intelligence most efficiently.</p>
+      </div>
+
+      <div class="map-frame-thesis">
+        <p>The claim "whoever has the most energy wins AI" is partly true, but incomplete. A better version: <strong>whoever can turn electricity into useful intelligence at the lowest cost, fastest deployment speed and largest scale has the advantage.</strong></p>
+        <p>AI is becoming an industrial-scale electricity problem, so energy matters. But energy alone does not win. The real edge is intelligence-per-watt, intelligence-per-dollar, intelligence-per-chip, and distribution into real products. <em>Lack of energy can make you lose. Having energy does not guarantee you win.</em></p>
+      </div>
+
+      <div class="map-frame-equation">
+        <h3 class="map-frame-h">The better equation</h3>
+        <p class="map-frame-h-sub">Three framings of the same question, in order of usefulness.</p>
+        <div class="map-frame-eq-rows">
+          <div class="map-frame-eq-row map-frame-eq-row--old">
+            <span class="map-frame-eq-tag">Old</span>
+            <span class="map-frame-eq-text">Most energy wins.</span>
+          </div>
+          <div class="map-frame-eq-row map-frame-eq-row--better">
+            <span class="map-frame-eq-tag">Better</span>
+            <span class="map-frame-eq-text">Most useful intelligence per watt wins.</span>
+          </div>
+          <div class="map-frame-eq-row map-frame-eq-row--best">
+            <span class="map-frame-eq-tag">Best</span>
+            <span class="map-frame-eq-text">Useful intelligence per watt × chips × infrastructure × models × applications.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="map-frame-h">Where each layer matters</h3>
+      <p class="map-frame-h-sub">Five compact reads on what each layer actually decides — colour-coded to the cake-stack above.</p>
+      <div class="map-frame-cards">
+        <article class="map-frame-card map-frame-card--energy">
+          <p class="map-frame-card-eyebrow">Energy</p>
+          <h4 class="map-frame-card-h">Energy sets the ceiling</h4>
+          <p class="map-frame-card-d">Power decides how much compute can physically run. Cheap, reliable, fast-to-connect electricity becomes a moat once data centres reach hundreds of megawatts or gigawatt scale. But raw energy without chips, infra, models and customers is just unused capacity.</p>
+        </article>
+        <article class="map-frame-card map-frame-card--chips">
+          <p class="map-frame-card-eyebrow">Chips</p>
+          <h4 class="map-frame-card-h">Chips change the conversion rate</h4>
+          <p class="map-frame-card-d">Better accelerators turn the same electricity into more tokens, lower latency and cheaper training or inference. A chip advantage can beat a pure energy advantage — the question is not megawatts alone, but useful compute per megawatt.</p>
+        </article>
+        <article class="map-frame-card map-frame-card--infra">
+          <p class="map-frame-card-eyebrow">Infrastructure</p>
+          <h4 class="map-frame-card-h">Infra decides utilisation</h4>
+          <p class="map-frame-card-d">Poor infrastructure wastes expensive chips and electricity. Scheduling, networking, cooling, serving, batching, caching, observability and distributed training decide whether hardware becomes reliable AI output or idle capital.</p>
+        </article>
+        <article class="map-frame-card map-frame-card--models">
+          <p class="map-frame-card-eyebrow">Models</p>
+          <h4 class="map-frame-card-h">Models decide capability per compute</h4>
+          <p class="map-frame-card-d">Better architectures, better data, better training, distillation, sparsity, MoE, state-space models and reasoning systems can change how much capability you get from the same compute budget.</p>
+        </article>
+        <article class="map-frame-card map-frame-card--apps">
+          <p class="map-frame-card-eyebrow">Applications</p>
+          <h4 class="map-frame-card-h">Applications decide value</h4>
+          <p class="map-frame-card-d">Even frontier capability is not automatically a business. Applications turn model output into workflows, revenue, productivity, trust and distribution. The best stack still loses if it does not solve a real problem.</p>
+        </article>
+      </div>
+
+      <h3 class="map-frame-h">What if chips, infra or models get much better?</h3>
+      <p class="map-frame-h-sub">Three scenarios that move the bottleneck.</p>
+      <div class="map-frame-scenarios">
+        <article class="map-frame-scen">
+          <h4 class="map-frame-scen-h"><span class="map-frame-scen-num">01</span>If chips get better</h4>
+          <ul class="map-frame-scen-list">
+            <li>Energy per token falls.</li>
+            <li>Total demand may still rise — cheaper AI creates more usage.</li>
+            <li>Jevons-style effect: efficiency can expand consumption instead of reducing it.</li>
+          </ul>
+          <p class="map-frame-scen-d"><strong>Conclusion</strong>Better chips weaken the energy bottleneck per task, but may increase total AI deployment.</p>
+        </article>
+        <article class="map-frame-scen">
+          <h4 class="map-frame-scen-h"><span class="map-frame-scen-num">02</span>If infrastructure gets better</h4>
+          <ul class="map-frame-scen-list">
+            <li>Higher GPU utilisation.</li>
+            <li>Better batching, caching, routing and serving.</li>
+            <li>A smaller well-run cluster can outperform a larger but poorly run one.</li>
+          </ul>
+          <p class="map-frame-scen-d"><strong>Conclusion</strong>Infra is what turns raw power and chips into actual throughput.</p>
+        </article>
+        <article class="map-frame-scen">
+          <h4 class="map-frame-scen-h"><span class="map-frame-scen-num">03</span>If models get better</h4>
+          <ul class="map-frame-scen-list">
+            <li>Better architectures can reduce brute-force scaling.</li>
+            <li>Transformers dominate today, but they are not guaranteed to be the final architecture.</li>
+            <li>Efficiency patterns: MoE, state-space models like Mamba, retrieval, distillation, quantisation, sparsity, routing, small specialists.</li>
+          </ul>
+          <p class="map-frame-scen-d"><strong>Conclusion</strong>A large architecture breakthrough could shift the bottleneck — until compute demand disappears, energy still matters.</p>
+        </article>
+      </div>
+
+      <h3 class="map-frame-h">Bottleneck shifts</h3>
+      <p class="map-frame-h-sub">The winning layer is usually the current bottleneck.</p>
+      <div class="map-frame-flow">
+        <span class="map-frame-flow-step">Energy</span>
+        <span class="map-frame-flow-arrow">→</span>
+        <span class="map-frame-flow-step">Chips</span>
+        <span class="map-frame-flow-arrow">→</span>
+        <span class="map-frame-flow-step">Infrastructure</span>
+        <span class="map-frame-flow-arrow">→</span>
+        <span class="map-frame-flow-step">Models</span>
+        <span class="map-frame-flow-arrow">→</span>
+        <span class="map-frame-flow-step">Applications</span>
+      </div>
+      <ul class="map-frame-bottleneck-list">
+        <li><strong>When power is scarce</strong>energy wins.</li>
+        <li><strong>When GPUs are scarce</strong>chips win.</li>
+        <li><strong>When utilisation is poor</strong>infrastructure wins.</li>
+        <li><strong>When capability is weak</strong>models win.</li>
+        <li><strong>When adoption is weak</strong>applications win.</li>
+      </ul>
+
+      <div class="map-frame-myread">
+        <p class="map-frame-myread-eyebrow">My read</p>
+        <p class="map-frame-myread-body">For the next few years, energy is one of the major bottlenecks in frontier AI because data centres are becoming industrial power projects. But energy is not the whole game. The winner is not simply the country or company with the most electricity. The winner is the one that combines cheap reliable power, advanced chips, high-utilisation infrastructure, efficient models, and applications that turn capability into real economic value.</p>
+        <p class="map-frame-myread-punch">Energy will not automatically win the AI war. But lack of energy can make you lose it.</p>
+      </div>
+
+      <div class="map-frame-sources">
+        <p class="map-frame-sources-h">Sources</p>
+        <ul>
+          <li><a href="https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary" target="_blank" rel="noopener">IEA — Key Questions on Energy and AI</a> · global data-centre electricity use is projected to roughly double from 485 TWh in 2025 to 950 TWh in 2030, with AI-focused data-centre electricity tripling in that window.</li>
+          <li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al. — Attention Is All You Need</a> · introduced the Transformer, an attention-based architecture that displaced recurrent and convolutional sequence models.</li>
+          <li><a href="https://arxiv.org/abs/2312.00752" target="_blank" rel="noopener">Gu &amp; Dao — Mamba</a> · alternative sequence-model architecture; original paper claims linear scaling in sequence length and higher inference throughput than Transformers.</li>
+          <li><a href="https://arxiv.org/abs/2401.04088" target="_blank" rel="noopener">Mistral AI — Mixtral of Experts</a> · sparse MoE example: many total parameters, fewer active per token.</li>
+        </ul>
+        <p class="map-frame-sources-note">These are evidence that architecture and efficiency research is active — not proof that Transformers are obsolete.</p>
       </div>
     </div>
   </section>
@@ -959,7 +1095,35 @@
         <h3 class="map-models-h2" style="margin-top:32px">Transformer mental model</h3>
         <div class="map-models-block" id="map-models-transformer"></div>
 
-        <h3 class="map-models-h2" style="margin-top:8px">Model families</h3>
+        <article class="map-frame-arch-card">
+          <p class="map-frame-arch-card-eyebrow">Architecture uncertainty</p>
+          <h4 class="map-frame-arch-card-h">Transformers are dominant, not final.</h4>
+          <p class="map-frame-arch-card-d">The Transformer unlocked modern AI by replacing recurrent and convolution-heavy sequence systems with attention-based architectures. But it should not be treated as the final form. New architectures and efficiency patterns matter because they can change the compute curve. If an architecture gives a 2&ndash;5&times; efficiency gain, energy still matters. If it gives a 100&times; gain in useful capability per watt, the stack reshuffles.</p>
+          <div class="map-frame-arch-table">
+            <div class="map-frame-arch-row map-frame-arch-row--head">
+              <div>Efficiency improvement</div>
+              <div>Strategic meaning</div>
+            </div>
+            <div class="map-frame-arch-row">
+              <div>2&ndash;5&times;</div>
+              <div>Lower cost, but energy still matters.</div>
+            </div>
+            <div class="map-frame-arch-row">
+              <div>10&ndash;50&times;</div>
+              <div>Chips, infra and architecture become more decisive.</div>
+            </div>
+            <div class="map-frame-arch-row">
+              <div>100&times;+</div>
+              <div>The bottleneck could shift dramatically.</div>
+            </div>
+            <div class="map-frame-arch-row">
+              <div>Architecture + chips + infra together</div>
+              <div>The whole AI map changes.</div>
+            </div>
+          </div>
+        </article>
+
+        <h3 class="map-models-h2" style="margin-top:24px">Model families</h3>
         <p class="map-models-sub">Different shapes of model for different jobs. The serious products use more than one.</p>
         <div class="map-models-families" id="map-models-families"></div>
       </div>
