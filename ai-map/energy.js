@@ -163,6 +163,32 @@
       var dc = g.dataCentres;
       var dcEl = $('#map-energy-dc');
       if (dcEl) {
+        var bodyText  = dc.body || dc.note || '';
+        var dcGrowthHtml = '';
+        if (dc.growth && dc.growth.length) {
+          dcGrowthHtml = '<div class="map-energy-growth" style="margin-top: 12px">' +
+            dc.growth.map(function (r) {
+              return '<div class="map-energy-growth-row">' +
+                '<span class="map-energy-growth-label">' + esc(r.label) + '</span>' +
+                '<span class="map-energy-growth-val">' + esc(r.value) + '<span class="map-energy-growth-src"> · ' + esc(r.src) + '</span></span>' +
+              '</div>';
+            }).join('') +
+          '</div>';
+        }
+        var supportingHtml = '';
+        if (dc.supportingFacts && dc.supportingFacts.length) {
+          supportingHtml = '<ul class="map-energy-econ-list" style="margin-top: 12px">' +
+            dc.supportingFacts.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') +
+          '</ul>';
+        }
+        var punchHtml = '';
+        if (dc.punchline) {
+          punchHtml = '<p class="map-energy-stat-note" style="margin-top: 12px; color: var(--text); font-weight: 600;">' + esc(dc.punchline) + '</p>';
+        }
+        var localHtml = '';
+        if (dc.localPunchline) {
+          localHtml = '<p class="map-energy-stat-note" style="margin-top: 6px"><strong style="color:var(--text)">Local picture: </strong>' + esc(dc.localPunchline) + '</p>';
+        }
         dcEl.innerHTML =
           '<p class="map-energy-dc-h">Data centres — globally small, locally enormous</p>' +
           '<div class="map-energy-dc-grid">' +
@@ -171,8 +197,11 @@
             '<div class="map-energy-dc-stat"><span class="map-energy-dc-stat-num">~' + fmt(dc.projectedTWh2030) + ' TWh</span><span class="map-energy-dc-stat-label">projected 2030 (IEA)</span></div>' +
             '<div class="map-energy-dc-stat"><span class="map-energy-dc-stat-num">~' + dc.projectedShare2030 + '%</span><span class="map-energy-dc-stat-label">projected share 2030</span></div>' +
           '</div>' +
-          '<p class="map-energy-stat-note">' + esc(dc.note) + '</p>' +
-          '<p class="map-energy-stat-note" style="margin-top:8px"><strong style="color:var(--text)">Local picture: </strong>' + esc(dc.localPunchline) + '</p>';
+          '<p class="map-energy-stat-note">' + esc(bodyText) + '</p>' +
+          dcGrowthHtml +
+          supportingHtml +
+          punchHtml +
+          localHtml;
       }
     }
   }

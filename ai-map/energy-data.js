@@ -105,46 +105,59 @@ var ENERGY_GLOSSARY = [
 
 /* Global snapshot for the World dashboard */
 var ENERGY_GLOBAL = {
-  asOf: 'latest available — 2024 actuals reported in 2025–early 2026',
-  totalGenerationTWh: 30856,
-  totalGenerationNote: 'Ember Global Electricity Review 2025 reports 30,856 TWh of generation in 2024.',
-  renewableShare: 32,
-  fossilShare: 60,
-  cleanShare: 41,
-  cleanShareNote: 'Renewables + nuclear ≈ 41% of global electricity (Ember 2025).',
-  /* Generation mix by source — share of total electricity, 2024 */
+  asOf: 'latest available — 2025 actuals · Ember 2026 / IEA 2026',
+  totalGenerationTWh: 31700,
+  totalGenerationNote: 'Ember Global Electricity Review 2026 reports global power generation reached roughly 31,700 TWh in 2025.',
+  renewableShare: 33.8,
+  fossilShare: 57.3,
+  cleanShare: 42.6,
+  cleanShareNote: 'Low-carbon electricity — renewables plus nuclear — reached 42.6% of global generation in 2025 (Ember 2026).',
+  /* Generation mix by source — share of total electricity, 2025 (rounded) */
   mix: [
-    { id: 'coal',    label: 'Coal',         share: 34.4, color: '#5A4633', note: 'Still the single largest source globally; share is declining slowly but absolute generation is roughly flat.' },
-    { id: 'gas',     label: 'Gas',          share: 21.7, color: '#A87E58', note: 'Dominant in the US, Middle East, Singapore.' },
-    { id: 'hydro',   label: 'Hydro',        share: 14.3, color: '#3A7BA8', note: 'Largest single clean source. Concentrated in China, Brazil, Canada, Norway.' },
-    { id: 'nuclear', label: 'Nuclear',      share:  9.0, color: '#9C7AC9', note: 'Roughly flat globally; growing in China and reviving in the US, Korea, France, UK.' },
-    { id: 'wind',    label: 'Wind',         share:  8.1, color: '#6CA9C5', note: 'Mostly onshore; offshore is a smaller but growing share.' },
-    { id: 'solar',   label: 'Solar',        share:  6.9, color: '#F0B060', note: 'Fastest-growing source. Generation rose ~29% in 2024 (Ember 2025).' },
-    { id: 'other',   label: 'Bio + geo + other', share: 2.8, color: '#7A8A6A', note: 'Bioenergy, geothermal, marine, oil-fired and a small bucket of "other".' },
-    { id: 'oil',     label: 'Oil',          share:  2.8, color: '#3F3F47', note: 'Mostly islands and remote grids; small and shrinking.' }
+    { id: 'coal',    label: 'Coal',                          share: 33.0, color: '#5A4633', note: 'Largest single fuel source. Renewables overtook coal as a category in 2025 for the first time in over a century.' },
+    { id: 'gas',     label: 'Gas',                           share: 21.8, color: '#A87E58', note: 'Dominant in the US, Middle East, Singapore.' },
+    { id: 'hydro',   label: 'Hydro',                         share: 13.9, color: '#3A7BA8', note: 'Largest single clean source. Concentrated in China, Brazil, Canada, Norway.' },
+    { id: 'nuclear', label: 'Nuclear',                       share:  8.9, color: '#9C7AC9', note: 'Roughly flat globally; growing in China and reviving in the US, Korea, France, UK.' },
+    { id: 'solar',   label: 'Solar',                         share:  8.8, color: '#F0B060', note: 'Standout growth engine — generation rose about 30% in 2025, adding ~636 TWh in one year (Ember 2026).' },
+    { id: 'wind',    label: 'Wind',                          share:  8.5, color: '#6CA9C5', note: 'Mostly onshore; offshore is smaller but growing. About +8% in 2025 (IEA 2026).' },
+    { id: 'other',   label: 'Bio + geo + other renewables',  share:  2.6, color: '#7A8A6A', note: 'Bioenergy, geothermal, marine and a small bucket of "other" renewables.' },
+    { id: 'oil',     label: 'Oil + other fossil',            share:  2.5, color: '#3F3F47', note: 'Mostly islands and remote grids; small and shrinking.' }
   ],
   growth: [
-    { label: 'Solar generation, 2024 vs 2023', value: '+29%', src: 'Ember 2025' },
-    { label: 'Wind generation, 2024 vs 2023',  value: '+8%',  src: 'Ember 2025' },
-    { label: 'Battery storage capacity, 2024', value: '~+50% YoY', src: 'IEA Renewables 2024' },
-    { label: 'Coal generation, 2024 vs 2023',  value: '~+1%', src: 'Ember 2025' },
-    { label: 'Global electricity demand, 2024 vs 2023', value: '+4%', src: 'IEA Global Energy Review 2025' }
+    { label: 'Renewables vs coal, 2025',                 value: '33.8% vs 33.0%', src: 'Ember 2026' },
+    { label: 'Solar generation, 2025 vs 2024',           value: '+30%',           src: 'Ember 2026' },
+    { label: 'Solar added generation, 2025',             value: '+636 TWh',       src: 'Ember 2026' },
+    { label: 'Wind generation, 2025 vs 2024',            value: '+8%',            src: 'IEA 2026' },
+    { label: 'Global electricity demand, 2025 vs 2024',  value: '+3%',            src: 'IEA Global Energy Review 2026' }
   ],
   dataCentres: {
-    nowTWh: 415,
-    nowYear: 2024,
+    nowTWh: 485,
+    nowYear: 2025,
     nowShare: 1.5,
-    projectedTWh2030: 945,
+    projectedTWh2030: 950,
     projectedShare2030: 3,
-    note: 'IEA Energy and AI 2025 estimates global data-centre electricity use at ~415 TWh in 2024 (~1.5% of global electricity), projected to roughly double to ~945 TWh by 2030. AI workloads are the main growth driver.',
-    localPunchline: 'Globally small; locally enormous. In Ireland, data centres already consume more than 20% of national electricity. In Northern Virginia they have made the regional grid one of the most constrained in the United States.'
+    body: 'Globally, data centres are still a small part of total electricity demand. But they are becoming a major local grid issue because demand is concentrated in specific regions, arrives quickly, and requires reliable power.',
+    growth: [
+      { label: 'Data-centre electricity demand, 2025',           value: '+17%', src: 'IEA Energy and AI 2026' },
+      { label: 'AI-focused data-centre electricity demand, 2025', value: '+50%', src: 'IEA Energy and AI 2026' }
+    ],
+    supportingFacts: [
+      'IEA estimates data-centre electricity demand grew about 17% in 2025.',
+      'AI-focused data-centre electricity demand grew about 50% in 2025.',
+      'IEA projects total data-centre electricity to roughly double from 485 TWh in 2025 to 950 TWh in 2030.',
+      'AI-focused data-centre electricity is projected to triple over the same period.',
+      'By 2030, data centres may account for around 3% of global electricity demand.'
+    ],
+    punchline: 'The global number looks small. The local grid impact can be huge.',
+    localPunchline: 'In Ireland, data centres already consume more than 20% of national electricity. In Northern Virginia they have made the regional grid one of the most constrained in the United States.'
   },
   punchlines: [
-    'Global electricity demand is now around 30,000+ TWh per year and rising at roughly 4% annually.',
-    'Renewables are about one-third of generation; renewables + nuclear ≈ 41%.',
-    'Coal remains the single largest source globally — driven by China, India and parts of Southeast Asia.',
-    'Solar is the fastest-growing source on every continent.',
-    'Data centres are a small share of global electricity but a huge share of demand growth in specific grid regions.'
+    'Global electricity generation is now roughly 31,700 TWh per year.',
+    'Renewables reached 33.8% of global electricity in 2025, overtaking coal as a category for the first time in more than a century.',
+    'Coal still remained the largest single fuel source at around 33.0% of generation.',
+    'Low-carbon electricity — renewables plus nuclear — reached 42.6% of global generation.',
+    'Solar was the standout growth engine: generation rose about 30%, adding roughly 636 TWh in one year.',
+    'Data centres are still a small share of global electricity, but their demand grew about 17% in 2025. AI-focused data centres grew even faster, around 50%.'
   ]
 };
 
