@@ -522,7 +522,7 @@ var ENERGY_READINESS = {
    ENERGY_MISCONCEPTIONS — common myths the reader should drop
    ============================================ */
 var ENERGY_MISCONCEPTIONS = [
-  { myth: 'Capacity is the same as generation.', truth: 'Capacity is what a plant <em>can</em> produce in a moment (GW). Generation is what it <em>actually</em> produced over time (TWh). Solar has high capacity but a low capacity factor.' },
+  { myth: 'Capacity = electricity produced.', truth: '<em>Capacity is potential. Generation is reality.</em><br><br>Capacity is the maximum power a plant can deliver at a point in time, measured in GW. Generation is how much electricity it actually delivered over time, measured in TWh.<br><br>This is why capacity factor matters. A solar farm may have large installed capacity, but if the sun is not shining, it is not producing at full output. In AI, what matters is not just how much power exists on paper, but how much reliable electricity can actually run data centres.' },
   { myth: 'Generation equals grid availability.', truth: 'Plenty of countries can generate the megawatts but cannot deliver them where the campus wants to be. Transmission and substations are the real choke points.' },
   { myth: 'Renewable capacity equals 24/7 firm power.', truth: 'Solar and wind are variable. AI clusters need 24/7. Annual renewable matching is easy; hourly carbon-free matching is hard.' },
   { myth: 'Data centres dominate global electricity.', truth: 'Globally still small (~1.5% in 2024 per IEA). <em>Locally</em> they can be enormous — over 20% of national electricity in Ireland.' },
