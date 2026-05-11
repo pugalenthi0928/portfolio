@@ -83,8 +83,10 @@
     flagMb: false, flagInterview: false, flagFounder: false, flagResearch: false,
     fcDeck: [], fcIndex: 0,
     quizDeck: [], quizIndex: 0, quizCorrect: 0, quizAnswered: false,
-    interviewIndex: 0
+    interviewIndex: 0,
+    browseLimit: 50
   };
+  var PAGE_SIZE = 50;
 
   function questionMatches(q) {
     var s = state.search.trim().toLowerCase();
@@ -321,6 +323,7 @@
     else if (state.mode === 'interview') renderInterview();
     else if (state.mode === 'founder') renderPrompts('founder');
     else if (state.mode === 'researcher') renderPrompts('researcher');
+    renderProgress();
   }
 
   /* ============================================
@@ -349,12 +352,13 @@
         phases().map(function (p) { return '<option value="' + esc(p.id) + '">' + esc(p.label + ' · ' + p.theme) + '</option>'; }).join('');
     }
 
+    function resetPaging() { state.browseLimit = PAGE_SIZE; }
     var search = $('#kb-search');
-    if (search) search.addEventListener('input', function (e) { state.search = e.target.value; renderActiveMode(); });
-    if (lvl) lvl.addEventListener('change', function (e) { state.level = e.target.value; LS.set(LS.KEY_LEVEL, state.level); renderActiveMode(); });
-    if (dm)  dm.addEventListener('change',  function (e) { state.domain = e.target.value; renderActiveMode(); });
-    if (tp)  tp.addEventListener('change',  function (e) { state.type = e.target.value; renderActiveMode(); });
-    if (ph)  ph.addEventListener('change',  function (e) { state.phase = e.target.value; renderActiveMode(); });
+    if (search) search.addEventListener('input', function (e) { state.search = e.target.value; resetPaging(); renderActiveMode(); });
+    if (lvl) lvl.addEventListener('change', function (e) { state.level = e.target.value; LS.set(LS.KEY_LEVEL, state.level); resetPaging(); renderActiveMode(); });
+    if (dm)  dm.addEventListener('change',  function (e) { state.domain = e.target.value; resetPaging(); renderActiveMode(); });
+    if (tp)  tp.addEventListener('change',  function (e) { state.type = e.target.value; resetPaging(); renderActiveMode(); });
+    if (ph)  ph.addEventListener('change',  function (e) { state.phase = e.target.value; resetPaging(); renderActiveMode(); });
 
     $$('.kb-toggle').forEach(function (t) {
       t.addEventListener('click', function () {
@@ -379,19 +383,23 @@
   function renderBrowse() {
     var pane = $('#kb-pane-browse'); if (!pane) return;
     var rows = currentFiltered();
+    var total = rows.length;
+    var visible = rows.slice(0, state.browseLimit);
     var meta = $('#kb-result-meta');
-    if (meta) meta.textContent = rows.length + ' / ' + bank().length + ' questions';
+    if (meta) {
+      meta.textContent = visible.length + ' shown / ' + total + ' matching / ' + bank().length + ' total';
+    }
 
     if (!rows.length) {
       pane.innerHTML = '<div class="kb-result-meta" style="padding: 24px 0">No questions match your filters. Try clearing the search or toggles.</div>';
       return;
     }
     var groups = {}, order = [];
-    rows.forEach(function (q) {
+    visible.forEach(function (q) {
       if (!groups[q.domain]) { groups[q.domain] = []; order.push(q.domain); }
       groups[q.domain].push(q);
     });
-    pane.innerHTML = order.map(function (dom) {
+    var html = order.map(function (dom) {
       var dObj = domains().filter(function (d) { return d.id === dom; })[0] || { id: dom, short: '' };
       return '<section class="kb-domain-block kb-fade-in">' +
         '<h3 class="kb-domain-block-h">' + esc(dom) + '</h3>' +
@@ -399,7 +407,18 @@
         '<div class="kb-list">' + groups[dom].map(renderCard).join('') + '</div>' +
       '</section>';
     }).join('');
+    if (state.browseLimit < total) {
+      var remaining = total - state.browseLimit;
+      var next = Math.min(remaining, PAGE_SIZE);
+      html += '<div class="kb-loadmore"><button class="kb-loadmore-btn" type="button" id="kb-loadmore">Load ' + next + ' more &middot; ' + remaining + ' remaining</button></div>';
+    }
+    pane.innerHTML = html;
     pane.addEventListener('click', onCardClick, { once: true });
+    var lm = $('#kb-loadmore');
+    if (lm) lm.addEventListener('click', function () {
+      state.browseLimit += PAGE_SIZE;
+      renderBrowse();
+    });
   }
   function onCardClick(e) {
     var card = e.target.closest && e.target.closest('.kb-card');
@@ -545,7 +564,8 @@
     if (action === 'known')      { LS.addToSet(LS.KEY_KNOWN, qid); LS.removeFromSet(LS.KEY_MISSED, qid); state.fcIndex++; }
     else if (action === 'missed'){ LS.addToSet(LS.KEY_MISSED, qid); LS.removeFromSet(LS.KEY_KNOWN, qid); state.fcIndex++; }
     else if (action === 'skip')  { state.fcIndex++; }
-    else if (action === 'reset') { LS.set(LS.KEY_KNOWN, []); LS.set(LS.KEY_MISSED, []); drawFlashcard(); return; }
+    else if (action === 'reset') { LS.set(LS.KEY_KNOWN, []); LS.set(LS.KEY_MISSED, []); renderProgress(); drawFlashcard(); return; }
+    renderProgress();
     drawFlashcard();
   }
 
@@ -720,6 +740,51 @@
         '</article>';
       }).join('') +
     '</div>';
+  }
+
+  /* ============================================
+     PROGRESS SUMMARY — top of question bank
+     ============================================ */
+  function renderProgress() {
+    var el = $('#kb-progress'); if (!el) return;
+    var done = LS.get(LS.KEY_DONE, []);
+    var known = LS.get(LS.KEY_KNOWN, []);
+    var missed = LS.get(LS.KEY_MISSED, []);
+    var quizHistory = LS.get(LS.KEY_QUIZ, []);
+    var totalCorrect = 0, totalAnswered = 0;
+    quizHistory.forEach(function (r) { totalCorrect += (r.correct || 0); totalAnswered += (r.total || 0); });
+    var accuracy = totalAnswered > 0 ? Math.round(100 * totalCorrect / totalAnswered) : null;
+
+    /* Current focus: prefer explicit filter, else most-viewed domain */
+    var focus = '—';
+    if (state.domain !== 'all') focus = state.domain;
+    else if (state.phase !== 'all') {
+      var p = phaseById(state.phase);
+      focus = p ? ('Phase ' + p.label) : state.phase;
+    } else if (done.length) {
+      var domCounts = {};
+      done.forEach(function (id) {
+        var q = findById(id);
+        if (q) domCounts[q.domain] = (domCounts[q.domain] || 0) + 1;
+      });
+      var top = Object.keys(domCounts).sort(function (a, b) { return domCounts[b] - domCounts[a]; })[0];
+      if (top) focus = top;
+    }
+
+    var cards = [
+      { num: done.length,                          label: 'questions viewed' },
+      { num: known.length,                         label: 'flashcards known' },
+      { num: missed.length,                        label: 'flashcards missed' },
+      { num: accuracy != null ? accuracy + '%' : '—', label: 'quiz accuracy' },
+      { num: quizHistory.length,                   label: 'quizzes run' },
+      { num: focus,                                label: 'current focus' }
+    ];
+    el.innerHTML = cards.map(function (c) {
+      return '<div class="kb-progress-card">' +
+        '<div class="kb-progress-num">' + esc(String(c.num)) + '</div>' +
+        '<div class="kb-progress-label">' + esc(c.label) + '</div>' +
+      '</div>';
+    }).join('');
   }
 
   /* ============================================
