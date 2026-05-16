@@ -674,7 +674,92 @@
 
       <!-- Pane: Basics -->
       <div class="map-chips-pane" data-tab="basics" role="tabpanel">
-        <h3 class="map-chips-h2">Chip types — what does each one actually do?</h3>
+        <h3 class="map-chips-h2">Why AI Chips Are Splitting by Workload</h3>
+        <p class="map-chips-sub">
+          AI chips are not just &ldquo;faster computers&rdquo;. They are specialised machines for turning electricity into
+          matrix multiplication at trillion-scale. CPUs, GPUs, and TPUs exist because different workloads need different
+          hardware. As AI matures, <em>training</em> and <em>inference</em> are splitting into different chip-design
+          problems.
+        </p>
+
+        <!-- Part 1: CPU vs GPU vs TPU -->
+        <div class="map-chips-types">
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">CPU</p>
+            <h4 class="map-chips-type-h">General-purpose control</h4>
+            <p class="map-chips-type-row">
+              A handful of sophisticated cores with deep control logic, large caches, branch prediction, and flexibility.
+              Excellent for operating systems, orchestration, databases, application logic, and serial tasks. Not enough
+              parallel arithmetic units to drive trillion-scale neural-network matrix multiplication.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">GPU</p>
+            <h4 class="map-chips-type-h">Parallel computation</h4>
+            <p class="map-chips-type-row">
+              Thousands of simpler cores that apply the same operation across many pieces of data at once. Originally
+              built for graphics, where millions of pixels can be processed in parallel. Neural networks rely on the same
+              parallel matrix math, which made GPUs the accidental engine of deep learning.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">TPU / AI accelerator</p>
+            <h4 class="map-chips-type-h">Specialised matrix engine</h4>
+            <p class="map-chips-type-row">
+              Sacrifices general-purpose flexibility for efficiency on tensor operations. Systolic-array designs push
+              data through grids of simple compute units, doing matrix multiplication with very little wasted control
+              overhead. Higher performance per watt on AI workloads; less useful for arbitrary code.
+            </p>
+          </article>
+        </div>
+
+        <!-- Part 2: Training vs inference primer -->
+        <h3 class="map-chips-h2" style="margin-top:32px">Training and inference are different workloads</h3>
+        <p class="map-chips-sub">
+          The same silicon family runs both, but the optimisations diverge. <strong>Training</strong> builds the model.
+          <strong>Inference</strong> runs it. Two different bottlenecks, two different chip-design problems.
+        </p>
+        <div class="map-chips-types">
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Training</p>
+            <h4 class="map-chips-type-h">Build the model</h4>
+            <p class="map-chips-type-row">
+              Compute-bound and interconnect-heavy. Needs raw floating-point throughput, large batch processing,
+              high-bandwidth memory, and very fast chip-to-chip communication so gradients can be shared across many
+              accelerators each step. Rewards scale and cluster networking.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Inference</p>
+            <h4 class="map-chips-type-h">Run the model</h4>
+            <p class="map-chips-type-row">
+              Often memory-bound and latency-sensitive. The system must load weights, manage the KV cache for context,
+              generate tokens quickly, and minimise cost per token. Agentic AI raises the stakes &mdash; one user task can
+              trigger many sequential model and tool calls, so inference efficiency drives the unit economics.
+            </p>
+          </article>
+        </div>
+
+        <!-- Part 3: Strategic callout + what-this-means -->
+        <div class="map-chips-block" style="margin-top: 20px">
+          <h4 class="map-chips-block-h">Strategic read</h4>
+          <p class="map-chips-block-sub">
+            AI hardware is moving from one-chip-fits-all to workload-specific design. The frontier training cluster
+            wants maximum throughput and interconnect. The production inference fleet wants low latency, memory
+            efficiency, reliability, and cost control. This is why the AI chip market is splitting into training
+            accelerators, inference accelerators, hyperscaler custom silicon, edge NPUs, and specialised AI processors.
+          </p>
+          <ul class="map-chips-block-list">
+            <li>Chips are no longer just about peak FLOPS &mdash; utilisation, memory and interconnect decide real throughput.</li>
+            <li>Memory bandwidth and chip-to-chip interconnect are becoming as important as raw compute.</li>
+            <li>Training rewards scale, throughput, and cluster networking.</li>
+            <li>Inference rewards latency, utilisation, KV-cache efficiency, and cost per generated token.</li>
+            <li>Agentic AI increases demand for efficient inference because one task may require many model and tool calls.</li>
+            <li>Hyperscalers design custom silicon because workload control can become a structural cost advantage.</li>
+          </ul>
+        </div>
+
+        <h3 class="map-chips-h2" style="margin-top:36px">Chip types — what does each one actually do?</h3>
         <p class="map-chips-sub">CPUs, GPUs, TPUs, custom hyperscaler silicon, AMD Instinct, Intel Gaudi, wafer-scale, LPUs and edge NPUs &mdash; nine cards, each with its best use, its weakness, and a concrete example.</p>
         <div class="map-chips-types" id="map-chips-types"></div>
 
