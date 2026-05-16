@@ -801,6 +801,85 @@
           </ul>
         </div>
 
+        <!-- Beyond Nvidia: workload fragmentation in the chip market -->
+        <h3 class="map-chips-h2" style="margin-top:36px">Beyond Nvidia: the rise of custom AI silicon</h3>
+        <p class="map-chips-sub">
+          AI compute is no longer a single market. Nvidia GPUs became the default engine because they are flexible,
+          programmable, and excellent at large-scale parallel math &mdash; and that flexibility still matters, especially for
+          frontier training. But production AI is increasingly an <em>inference</em> problem: serving tokens quickly,
+          reliably, and cheaply across millions of requests. As that side of the workload grows, specialised silicon
+          becomes attractive &mdash; a buyer who knows the workload can trade general-purpose flexibility for better latency,
+          utilisation, power efficiency, and cost per token.
+        </p>
+
+        <div class="map-chips-types">
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">General-purpose AI GPU</p>
+            <h4 class="map-chips-type-h">Flexible training and inference</h4>
+            <p class="map-chips-type-row">
+              Best ecosystem, broad programmability, deep software moat &mdash; CUDA, kernels, libraries, model code &mdash; and useful
+              across many AI and non-AI workloads. <em>Examples:</em> Nvidia data-centre GPUs. The default platform when
+              the workload is varied or not yet stable.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Hyperscaler ASIC</p>
+            <h4 class="map-chips-type-h">Custom cloud-scale AI compute</h4>
+            <p class="map-chips-type-row">
+              Useful when a cloud provider controls the workload end-to-end and wants lower cost, better performance
+              per watt, and less dependence on external chip supply. <em>Examples:</em> Google TPU, AWS Trainium and
+              Inferentia, Microsoft Maia, Meta MTIA.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Wafer-scale AI chip</p>
+            <h4 class="map-chips-type-h">Very-large-chip compute</h4>
+            <p class="map-chips-type-row">
+              Pushes more compute and memory onto one very large piece of silicon to cut chip-to-chip communication
+              overhead. Targets training and inference where interconnect is the binding constraint. <em>Examples:</em>
+              Cerebras-style wafer-scale engines.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Inference accelerator</p>
+            <h4 class="map-chips-type-h">Fast token generation</h4>
+            <p class="map-chips-type-row">
+              Optimised for low-latency inference, high throughput, and cost-efficient serving. Trades training
+              generality for serving speed and tokens-per-dollar. <em>Examples:</em> Groq-style LPUs, SambaNova,
+              d-Matrix, and other inference-focused ASICs.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Edge NPU</p>
+            <h4 class="map-chips-type-h">Local inference on device</h4>
+            <p class="map-chips-type-row">
+              Moves smaller AI workloads onto phones, laptops, cameras, and embedded devices &mdash; lower latency, better
+              privacy, offline use, and reduced cloud cost. <em>Examples:</em> Apple Neural Engine, Qualcomm Hexagon,
+              Intel / AMD / Arm NPUs.
+            </p>
+          </article>
+        </div>
+
+        <div class="map-chips-block" style="margin-top: 20px">
+          <h4 class="map-chips-block-h">Read it as workload fragmentation, not Nvidia versus everyone</h4>
+          <p class="map-chips-block-sub">
+            The durable lesson is not &ldquo;Nvidia is losing&rdquo; or that any single challenger will win. The durable lesson is
+            that AI compute is fragmenting by workload. Frontier training clusters, cloud inference fleets, enterprise
+            agents, consumer-device AI, and specialised scientific workloads will not all use the same hardware forever.
+            Even Nvidia has shown interest in inference-specific technology through major licensing, partnership, and
+            talent-related moves &mdash; the incumbent itself treats inference as its own category.
+          </p>
+          <ul class="map-chips-block-list">
+            <li>Nvidia remains the default platform for flexible AI compute, especially for training.</li>
+            <li>Custom ASICs become more attractive when the workload is predictable and high-volume.</li>
+            <li>Inference may become the largest economic battleground &mdash; models have to be served continuously, agents call them in long chains.</li>
+            <li>Cost per token, latency, and utilisation become as important as peak FLOPS.</li>
+            <li>Memory bandwidth, networking, and software tooling matter as much as the silicon.</li>
+            <li>Hyperscalers have a structural advantage because they control both the demand and the infrastructure.</li>
+            <li>Startups compete by specialising for a workload, not by copying the Nvidia stack head-on.</li>
+          </ul>
+        </div>
+
         <h3 class="map-chips-h2" style="margin-top:36px">Chip types — what does each one actually do?</h3>
         <p class="map-chips-sub">CPUs, GPUs, TPUs, custom hyperscaler silicon, AMD Instinct, Intel Gaudi, wafer-scale, LPUs and edge NPUs &mdash; nine cards, each with its best use, its weakness, and a concrete example.</p>
         <div class="map-chips-types" id="map-chips-types"></div>
