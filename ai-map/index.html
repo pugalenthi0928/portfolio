@@ -713,6 +713,48 @@
           </article>
         </div>
 
+        <!-- Why GPUs won AI -->
+        <h3 class="map-chips-h2" style="margin-top:32px">Why GPUs won AI</h3>
+        <p class="map-chips-sub">
+          Graphics and neural networks look unrelated, but they share the same deeper pattern: <em>huge amounts of
+          parallel math</em>. Graphics applies the same transformations across millions of pixels and vertices. Neural
+          networks apply multiply-add operations across enormous matrices. Hardware built for one turned out to be ideal
+          for the other.
+        </p>
+
+        <div class="map-chips-types">
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Analogy &middot; CPU</p>
+            <h4 class="map-chips-type-h">Jumbo jet</h4>
+            <p class="map-chips-type-row">
+              Fast, flexible, many routes, many cargo types. The right vehicle when each trip is different and the
+              itinerary matters more than the volume moved.
+            </p>
+          </article>
+          <article class="map-chips-type">
+            <p class="map-chips-type-name">Analogy &middot; GPU</p>
+            <h4 class="map-chips-type-h">Cargo ship</h4>
+            <p class="map-chips-type-row">
+              Less flexible. Slower for any single trip. But moves enormous volume of the same cargo at once. The right
+              vehicle when you have huge amounts of similar work to do in parallel.
+            </p>
+          </article>
+        </div>
+
+        <div class="map-chips-block" style="margin-top: 20px">
+          <h4 class="map-chips-block-h">What is actually inside a modern GPU</h4>
+          <p class="map-chips-block-sub">
+            A GPU is not a faster CPU. It trades flexibility for parallel throughput by stacking thousands of simple
+            arithmetic units, feeding them data through very wide memory pipes.
+          </p>
+          <ul class="map-chips-block-list">
+            <li><strong>Many simple arithmetic cores.</strong> Each one is much less capable than a CPU core. The workhorse operation is <em>fused multiply-add</em> &mdash; multiplying two numbers and adding a third in a single step.</li>
+            <li><strong>Tensor cores.</strong> Specialised units that perform matrix multiplication and addition directly &mdash; the central operation of neural networks. This is what made modern GPUs especially good for AI rather than just generally parallel.</li>
+            <li><strong>Same instruction, many data points (SIMD / SIMT).</strong> The thousands of cores execute the same operation across different pieces of data at the same time. Graphics, mining, and deep learning all fit this shape, which is why one chip family serves all three.</li>
+            <li><strong>Very high memory bandwidth.</strong> Thousands of cores starve without data. The AI chip race is partly a memory-bandwidth race: raw compute is wasted if the chip cannot be fed fast enough.</li>
+          </ul>
+        </div>
+
         <!-- Part 2: Training vs inference primer -->
         <h3 class="map-chips-h2" style="margin-top:32px">Training and inference are different workloads</h3>
         <p class="map-chips-sub">
