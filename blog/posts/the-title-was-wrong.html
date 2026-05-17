@@ -10,10 +10,10 @@
   <meta property="og:description" content="Everyone remembers 'Attention Is All You Need' as the attention paper. The real innovation was something later summaries under-emphasized, and it explains everything that came after.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/the-title-was-wrong.html">
-  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="og:image" content="https://pugalenthimagendran.com/the-title-was-wrong-hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The title was wrong. That's what made it historic. | Pugalenthi Magendran">
-  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/the-title-was-wrong-hero.jpg">
   <meta name="twitter:description" content="Everyone remembers 'Attention Is All You Need' as the attention paper. The real innovation was something later summaries under-emphasized, and it explains everything that came after.">
   <meta name="view-transition" content="same-origin">
   <script type="application/ld+json">
@@ -170,6 +170,35 @@
       font-size: 10px;
       color: var(--color-text-tertiary);
       white-space: nowrap;
+    }
+
+    /* Hero image, breaks out of the text column for visual weight */
+    .essay-hero-figure {
+      margin: 0 -120px 3rem;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: #0E1A20;
+      border: 0.5px solid var(--color-border-tertiary);
+    }
+    .essay-hero-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .essay-hero-cap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--color-text-tertiary);
+      padding: 12px 18px 14px;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      background: var(--color-background-secondary);
+    }
+    @media (max-width: 1024px) {
+      .essay-hero-figure { margin-left: -40px; margin-right: -40px; }
+    }
+    @media (max-width: 720px) {
+      .essay-hero-figure { margin-left: 0; margin-right: 0; border-radius: var(--border-radius-md); }
     }
 
     /* Lede paragraph */
@@ -564,6 +593,11 @@
           </div>
           <div class="essay-read-time">10 min read</div>
         </div>
+
+        <figure class="essay-hero-figure">
+          <img src="../../the-title-was-wrong-hero.jpg" alt="On the left, a row of glowing blocks connected by arrows sits inside a dark stone slab, representing sequential recurrent computation. A jagged crack splits the slab. On the right, a luminous grid of glowing nodes connected by arching lines extends across a circuit board, representing fully parallel self-attention." loading="eager">
+          <figcaption class="essay-hero-cap">Sequential on the left. Parallel on the right. The crack is where the architecture changed.</figcaption>
+        </figure>
 
         <div class="essay-body">
 
