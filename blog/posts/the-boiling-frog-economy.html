@@ -45,7 +45,7 @@
   <link rel="stylesheet" href="../blog.css?v=11">
   <style>
     /* ============================================
-       ESSAY FORMAT — Technical Editorial
+       ESSAY FORMAT, Technical Editorial
        Scoped under .essay-format
        ============================================ */
 
@@ -169,7 +169,7 @@
       white-space: nowrap;
     }
 
-    /* Hero image — break out of the 680px column for visual weight */
+    /* Hero image, breaks out of the 680px column for visual weight */
     .essay-hero-figure {
       margin: 0 -120px 3rem;
       border-radius: var(--border-radius-lg);
@@ -376,6 +376,51 @@
       border-bottom-color: var(--color-text-primary);
     }
 
+    /* Timeline windows */
+    .essay-timeline {
+      margin: 2rem 0 2.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+    }
+    .essay-tl-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1.75rem;
+      padding: 1.5rem 0;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .essay-tl-when {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      padding-top: 0.4rem;
+      white-space: nowrap;
+    }
+    .essay-tl-what h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      font-style: normal;
+      color: var(--color-text-primary);
+      margin: 0 0 0.6rem;
+      letter-spacing: 0;
+      line-height: 1.3;
+    }
+    .essay-tl-what p {
+      margin: 0;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--color-text-primary);
+    }
+    @media (max-width: 600px) {
+      .essay-tl-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.25rem 0; }
+      .essay-tl-when { padding-top: 0; font-size: 0.72rem; }
+      .essay-tl-what h3 { font-size: 1.05rem; }
+      .essay-tl-what p { font-size: 0.95rem; }
+    }
+
     /* ============================================
        RESPONSIVE
        ============================================ */
@@ -501,7 +546,7 @@
 
           <p>The water gets warmer.</p>
 
-          <p>That is the Boiling Frog Economy: a world where AI does not immediately destroy the job market, but slowly weakens the ladder that allowed ordinary people to climb. The danger is not only that some jobs disappear. The deeper danger is that the first rung disappears first.</p>
+          <p>That is the Boiling Frog Economy: a world where AI does not immediately destroy the job market, but slowly weakens the ladder that ordinary people climb.</p>
 
           <p>For decades, the path into the middle class was built on imperfect but functional steps. A person went to university, found an entry-level role, did repetitive work, learned from mistakes, gained judgment, became useful, moved up, saved money, and eventually built some security. The work at the bottom was often boring: writing drafts, fixing bugs, reviewing documents, making spreadsheets, answering customers, preparing slides, summarising research. But those tasks had a hidden purpose. They trained people.</p>
 
@@ -514,19 +559,19 @@
           <div class="essay-stats-row">
             <div>
               <div class="essay-number">40%</div>
-              <div class="essay-stat-label">Global jobs exposed to AI &mdash; IMF<sup><a href="#fn1">1</a></sup></div>
+              <div class="essay-stat-label">Global jobs exposed to AI &middot; IMF<sup><a href="#fn1">1</a></sup></div>
             </div>
             <div>
               <div class="essay-number">16%</div>
-              <div class="essay-stat-label">Decline in early-career employment in highly exposed roles &mdash; Stanford<sup><a href="#fn2">2</a></sup></div>
+              <div class="essay-stat-label">Decline in early-career employment in highly exposed roles &middot; Stanford<sup><a href="#fn2">2</a></sup></div>
             </div>
             <div>
               <div class="essay-number">$4.4T</div>
-              <div class="essay-stat-label">Annual generative-AI value at upper end &mdash; McKinsey<sup><a href="#fn4">4</a></sup></div>
+              <div class="essay-stat-label">Annual generative-AI value at upper end &middot; McKinsey<sup><a href="#fn4">4</a></sup></div>
             </div>
             <div>
               <div class="essay-number">+78M</div>
-              <div class="essay-stat-label">Net new jobs by 2030 &mdash; WEF<sup><a href="#fn8">8</a></sup></div>
+              <div class="essay-stat-label">Net new jobs by 2030 &middot; WEF<sup><a href="#fn8">8</a></sup></div>
             </div>
           </div>
 
@@ -560,15 +605,29 @@
 
           <p>This is why the strongest early warning signs are appearing around young workers. A Stanford Digital Economy Lab study found that early-career workers aged 22 to 25 in highly AI-exposed occupations experienced a 16% relative employment decline, while experienced workers in the same occupations remained more stable or continued to grow.<sup><a href="#fn2">2</a></sup> It is one of the most important signals in the entire AI labour debate. It suggests AI may not flatten the labour market all at once. It may hollow it from the bottom.</p>
 
-          <p>The senior survives because they know what good looks like. The junior struggles because the tasks that would have taught them what good looks like are now automated.</p>
+          <p>The senior survives because they know what good looks like. The junior struggles because the tasks that would have taught them what good looks like are now done by the machine. The same tool that raises the ceiling also lowers the staircase.</p>
 
           <div class="essay-pull">AI may not replace the expert first. It may replace the training ground that creates the next expert.</div>
 
-          <div class="essay-callout"><p>This creates a strange paradox. AI makes expert work more productive while making it harder to become an expert. The same tool that raises the ceiling lowers the staircase.</p></div>
+          <hr class="essay-hr">
+
+          <h2>III. The strongest argument against this thesis</h2>
+
+          <p>This view deserves its sharpest opponent. The optimistic case is neither silly nor naive, and the people who hold it can point at history.</p>
+
+          <p>The argument runs roughly like this. Every previous wave of technology eventually created more work than it destroyed. Tractors did not produce permanent agricultural unemployment; they freed labour for industries that did not yet exist. Personal computers did not erase the office; they enlarged it. The internet vaporised plenty of intermediaries and minted entire industries no one had drawn on a roadmap. By that pattern, AI should be another lever in the long story of capital making humans more productive, not a wall that humans cannot climb. If it lowers the cost of starting a company, a careful operator with good taste and a model subscription can compete with a whole agency. If it raises the floor for novices, a first-year analyst with AI may already match a third-year analyst without one. If frontier tools become commoditised, the small operator gains as much as the platform giant.</p>
+
+          <p>Some of that will be true. Probably more of it than the pessimists allow. New categories of work will appear. The cost curve of building things will keep falling. Individuals with judgment and access will do work that used to require firms.</p>
+
+          <p>The hard question is not whether new jobs appear. It is whether they appear in time, in the right places, and for the right people. New industries usually take a decade or longer to absorb the workers a previous wave displaced. They tend to need different skills, often skills that come from training the displaced cannot easily afford. They concentrate geographically, with a handful of cities collecting most of the upside while older labour markets contract. The historical comfort that &ldquo;technology eventually creates more jobs than it destroys&rdquo; rests on a quieter assumption: that the new jobs were within reach of ordinary people. That is the assumption AI most directly tests.</p>
+
+          <p>So the real question is not &ldquo;Will there be jobs?&rdquo; It is whether the path from no experience to high-leverage work remains realistic for someone without capital, network or geography on their side. If that path stays open, the optimists are right and most of the rest of this essay is wrong. If it narrows, technology can keep producing jobs in aggregate while still producing an economy where ordinary people lose ground.</p>
+
+          <p>The wager of this essay is that the second version is the one we are entering.</p>
 
           <hr class="essay-hr">
 
-          <h2>III. The broken ladder</h2>
+          <h2>IV. The broken ladder</h2>
 
           <p>A healthy economy does not only need jobs. It needs <em>pathways</em>.</p>
 
@@ -580,11 +639,11 @@
 
           <p>That is the deeper social risk. A person may still find work. But the work may not lead anywhere. They may be employed but stuck. Productive but poor. Busy but unable to accumulate. Educated but unable to enter the first serious role. Surrounded by software that makes everything faster except their own escape from insecurity.</p>
 
-          <p>This is how a society becomes more rigid without looking broken. There are still jobs. There is still growth. There is still innovation. But fewer people can cross from the bottom into the high-leverage layer. The ladder does not collapse with noise. It becomes thinner, more selective, and harder to find.</p>
+          <p>This is how a society becomes more rigid without looking broken. There is still growth and there are still jobs. Fewer people can cross from the bottom into the high-leverage layer. The ladder does not collapse with noise. It becomes thinner, more selective, and harder to find.</p>
 
           <hr class="essay-hr">
 
-          <h2>IV. Labour versus ownership</h2>
+          <h2>V. Labour versus ownership</h2>
 
           <p>The deepest AI question is not technical. It is economic.</p>
 
@@ -600,11 +659,11 @@
 
           <p>That means GDP can go up while workers feel poorer. Corporate margins can improve while entry-level hiring declines. Founders can build leaner companies while graduates struggle to get interviews. A country can become more productive while ordinary people lose leverage.</p>
 
-          <p>That is the part people often miss. AI does not need to make humans useless to change the balance of power. It only needs to make many forms of labour less scarce. When labour is less scarce, ownership matters more. If you want to see where this ownership stack actually lives &mdash; energy, chips, infrastructure, models, applications &mdash; that is the five-layer geometry I mapped in the <a class="essay-link" href="../../ai-map/">AI Map</a>.</p>
+          <p>That is the part people often miss. AI does not need to make humans useless to change the balance of power. It only needs to make many forms of labour less scarce. When labour is less scarce, ownership matters more. If you want to see where this ownership stack actually lives (energy, chips, infrastructure, models, applications), that is the five-layer geometry I mapped in the <a class="essay-link" href="../../ai-map/">AI Map</a>.</p>
 
           <hr class="essay-hr">
 
-          <h2>V. Software engineering is the preview</h2>
+          <h2>VI. Software engineering is the preview</h2>
 
           <p>Software is where this future is easiest to see.</p>
 
@@ -622,7 +681,7 @@
 
           <hr class="essay-hr">
 
-          <h2>VI. Why the crisis may not look like a crisis</h2>
+          <h2>VII. Why the crisis may not look like a crisis</h2>
 
           <p>A major mistake is assuming that if AI were truly disruptive, unemployment would already be exploding. That is not how structural change always appears.</p>
 
@@ -638,45 +697,51 @@
 
           <hr class="essay-hr">
 
-          <h2>VII. The realistic forecast</h2>
+          <h2>VIII. The timeline of the boiling</h2>
 
-          <p>The most likely future is not instant collapse. It is uneven compression.</p>
+          <p>If the optimistic case were obviously right, the unemployment data would already look like a problem. It does not. Goldman Sachs projects roughly 6 to 7 percent of workers displaced over a ten-year transition, with a wider band of 3 to 14 percent depending on adoption speed.<sup><a href="#fn7">7</a></sup> The World Economic Forum forecasts 170 million new roles and 92 million displaced by 2030, a net positive of 78 million jobs.<sup><a href="#fn8">8</a></sup> Aggregate numbers like that are the favourite tools of the optimist, and they are not wrong. They simply do not describe what individual people experience while the transition runs.</p>
 
-          <p>Goldman Sachs estimates that AI could displace around 6&ndash;7% of workers over a 10-year transition, with a wider range of 3&ndash;14% depending on adoption speed and assumptions.<sup><a href="#fn7">7</a></sup> The World Economic Forum expects major churn by 2030: 170 million new roles created, 92 million displaced, and a net gain of 78 million jobs.<sup><a href="#fn8">8</a></sup> But churn is not comfort. The people displaced are not automatically the people who get the new jobs.</p>
+          <p>The transition has its own shape. Here is the version I think is most plausible.</p>
 
-          <p>That is the key. The economy can create jobs in aggregate and still become crueler at the individual level.</p>
+          <div class="essay-timeline">
 
-          <p>A displaced admin worker does not automatically become an AI infrastructure engineer. A junior developer squeezed out of entry-level roles does not automatically become a senior architect. A content writer replaced by automated production does not automatically own a media company. A call-centre worker displaced by AI support does not automatically move into cybersecurity.</p>
+            <div class="essay-tl-row">
+              <div class="essay-tl-when">2026 &ndash; 2027</div>
+              <div class="essay-tl-what">
+                <h3>Hidden disruption</h3>
+                <p>AI becomes ordinary inside writing, software, support, research, admin, marketing and analysis. Firms do not announce replacements. They slow junior hiring, trim contractor budgets and raise output expectations for the staff they keep. The headline unemployment rate stays calm. Inside companies, the org charts quietly begin to change shape.</p>
+              </div>
+            </div>
 
-          <p>The transition has friction. People have rent, debt, families, visas, geography, confidence, and limited time. Economists can say &ldquo;new jobs will be created,&rdquo; but humans do not teleport between occupations.</p>
+            <div class="essay-tl-row">
+              <div class="essay-tl-when">2028 &ndash; 2030</div>
+              <div class="essay-tl-what">
+                <h3>Workflow redesign</h3>
+                <p>Teams get rebuilt around AI-assisted seniors. Junior hiring narrows to the candidates already fluent in the tools. Routine digital labour falls in price. Revenue per employee rises. The gap widens between AI-native operators and the people doing replaceable task work next to them. Promotions skip rungs that used to exist.</p>
+              </div>
+            </div>
 
-          <p>So the best forecast is not mass unemployment as the base case. It is a more unequal economy with a narrower bridge into good work.</p>
+            <div class="essay-tl-row">
+              <div class="essay-tl-when">2030 &ndash; 2035</div>
+              <div class="essay-tl-what">
+                <h3>Mobility divergence</h3>
+                <p>New jobs exist, in line with the WEF projection. The ladder into high-income work is narrower and more selective. Ownership, judgment, trust, domain knowledge and distribution become the load-bearing skills. Workers without scarce capabilities or accumulated assets find their bargaining power weaker. Society does not collapse. Upward mobility quietly does.</p>
+              </div>
+            </div>
 
-          <h3>The financial-shock version</h3>
+          </div>
 
-          <p>There is also a financial-crisis version of the story, but it probably does not begin with unemployment. It begins with overinvestment.</p>
+          <p>There are alternative versions of this story. One is a financial-shock scenario, in which AI valuations and infrastructure spending outrun real revenue, the bubble corrects, and firms use the downturn to cut headcount they had hesitated to cut before. Another, raised most often outside rich countries, is the collapse of outsourced digital labour as a development pathway. Both are possible. Neither replaces the central forecast, which is uneven compression rather than sudden disaster.</p>
 
-          <p>AI requires enormous spending on chips, data centres, cloud infrastructure, energy, cooling, networking, and software integration. If investors believe AI will transform every industry, capital floods into the sector. Valuations rise. Companies spend aggressively. Infrastructure gets built ahead of proven demand. That can create a bubble.</p>
-
-          <p>If the revenue does not arrive fast enough, the correction could be painful. AI companies could fall. Chip demand could reset. Data-centre projects could be delayed. High-growth firms could cut costs. The same companies that promised AI productivity could use the downturn as justification for layoffs.</p>
-
-          <p>So yes, an AI-related financial shock is possible. But the more likely path is not &ldquo;AI causes famine by replacing all workers.&rdquo; It is <em>AI creates a productivity boom, an investment boom, an asset bubble, and then a correction where workers absorb the downside while owners already captured much of the upside</em>. That is how modern capitalism often works. The gains are privatised early. The pain is socialised later.</p>
-
-          <h3>The famine scenario is not the main fear</h3>
-
-          <p>In rich countries, literal famine caused by AI unemployment is unlikely. Australia, the US, Canada, Europe, Japan, and similar economies have welfare systems, food supply chains, central banks, taxation capacity, and political pressure mechanisms. But AI can still worsen global fragility. If outsourced digital labour becomes less valuable, countries that depended on back-office services, call centres, content work, basic software work or remote admin may lose one development pathway. Stacked alongside food inflation, climate shocks, debt stress, weak currencies and unstable governments, AI can become one pressure inside a larger crisis.</p>
-
-          <p>So the famine argument is too extreme as the central forecast. The inequality argument is not.</p>
-
-          <p>The real danger is a world where poor and middle-income people are not starving, but they are trapped. They work constantly, but cannot buy assets. They use AI tools, but do not own AI systems. They produce value, but capture little of it. They compete globally against software while paying local rent. That is not famine. But it is a form of economic powerlessness.</p>
+          <p>People do not move between occupations the way tokens move between buckets. They have rent, debt, families, visas, geography and limited time. Economists can write that &ldquo;new jobs will be created&rdquo; and be entirely correct, while the displaced admin worker does not become an AI infrastructure engineer, the squeezed junior developer does not become a senior architect, and the call-centre worker does not move into cybersecurity. Aggregate gain coexists with individual immobility. That is what the timeline is really about.</p>
 
           <hr class="essay-hr">
 
-          <h2>VIII. What the Boiling Frog Economy feels like</h2>
+          <h2>IX. What the Boiling Frog Economy feels like</h2>
 
           <p>It does not feel like the end of the world.</p>
 
-          <p>It feels like applying for 300 jobs and hearing nothing. It feels like being told AI is a tool while your entry-level role disappears. It feels like watching companies announce record productivity with smaller teams. It feels like seeing founders raise millions with five employees while graduates fight for internships. It feels like freelance rates collapsing because clients believe AI can do the first 80%. It feels like every job requiring experience, but fewer places willing to give it. It feels like being employed but unable to save. It feels like being surrounded by progress that somehow does not make your life easier.</p>
+          <p>It feels like applying for 300 jobs and hearing nothing. It feels like watching companies announce record productivity with smaller teams. It feels like freelance rates collapsing because clients believe AI can do the first 80%. It feels like every job requiring experience, while fewer places are willing to give it. It feels like being surrounded by progress that somehow does not make your life easier.</p>
 
           <p>This is why the frog metaphor works.</p>
 
@@ -688,7 +753,7 @@
 
           <hr class="essay-hr">
 
-          <h2>IX. What survives</h2>
+          <h2>X. What survives</h2>
 
           <p>The conclusion is not that humans are doomed. The conclusion is that the safe strategy changes.</p>
 
@@ -698,25 +763,19 @@
 
           <p>That is why judgment matters more, not less.</p>
 
-          <p>When output becomes cheap, taste becomes valuable. When code becomes cheap, architecture becomes valuable. When content becomes cheap, trust becomes valuable. When information becomes cheap, interpretation becomes valuable. When labour becomes less scarce, ownership becomes decisive.</p>
+          <p>When output becomes cheap, taste becomes valuable. When code becomes cheap, architecture becomes valuable. When labour becomes less scarce, ownership becomes decisive.</p>
 
-          <p>The Aristotle move I wrote about in an <a class="essay-link" href="no-alexander-without-aristotle.html">earlier essay</a> &mdash; learning how to think before being given anything to think about &mdash; matters more in this world, not less. It is the only capability AI cannot hand you for free.</p>
+          <p>The Aristotle move I wrote about in an <a class="essay-link" href="no-alexander-without-aristotle.html">earlier essay</a>, learning how to think before being given anything to think about, matters more in this world, not less. It is the only capability AI cannot hand you for free.</p>
 
           <hr class="essay-hr">
 
           <h2>The final thesis</h2>
 
-          <p>AI will not necessarily break the job market in one dramatic moment. It may do something more subtle.</p>
+          <p>AI will not necessarily break the job market in one dramatic moment. It may do something more subtle. Routine work gets cheaper. Junior roles thin out. Seniors become more productive. Teams contract. Wages in exposed work weaken. Income concentrates toward owners. The route up narrows. Years later, people look up and realise the ladder has been burning the whole time.</p>
 
-          <p>It may make routine work cheaper. Then it may reduce the need for juniors. Then it may make seniors more productive. Then it may shrink teams. Then it may weaken wages in exposed work. Then it may shift income toward owners. Then it may make upward mobility harder. Then, years later, people will look around and realise the ladder has been burning the whole time.</p>
+          <p>That is the Boiling Frog Economy. Not the sudden end of work, but the slow loss of worker leverage. Not machines replacing everyone, but a system where the people who own the models, platforms, data, compute and distribution gain power faster than everyone else can adapt.</p>
 
-          <p>That is the Boiling Frog Economy.</p>
-
-          <p>Not the sudden end of work. The slow loss of worker leverage. Not machines replacing everyone. A system where the people who own the machines, platforms, data, compute and distribution gain power faster than everyone else can adapt.</p>
-
-          <p>The central question of the AI age is not simply:</p>
-
-          <div class="essay-pull">What jobs will disappear? &mdash; the wrong question. The one underneath it: <em>who owns the systems that make everyone else more replaceable?</em></div>
+          <div class="essay-pull">The question of the Boiling Frog Economy is not whether humans will still work. It is whether work will still be enough to climb.</div>
 
           <hr class="essay-hr">
 
@@ -744,7 +803,7 @@
 
           <p class="essay-closer">This is Essay No. 003. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
 
-          <div class="essay-sig">&mdash; Pugalenthi Magendran</div>
+          <div class="essay-sig">Pugalenthi Magendran</div>
 
         </div><!-- .essay-body -->
 
