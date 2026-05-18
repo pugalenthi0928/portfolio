@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yann LeCun&rsquo;s Billion-Dollar Bet: Intelligence Beyond the Next Token | Pugalenthi Magendran</title>
+  <meta name="description" content="Yann LeCun thinks LLMs are powerful but not enough for human-like intelligence. His bet is JEPA, world models, and AI systems that predict, plan, and understand the physical world.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/yann-lecun-billion-dollar-bet.html">
+  <meta property="og:title" content="Yann LeCun&rsquo;s Billion-Dollar Bet: Intelligence Beyond the Next Token | Pugalenthi Magendran">
+  <meta property="og:description" content="LeCun&rsquo;s argument is not that LLMs are useless. It is that real intelligence may require world models that predict consequences, plan actions, and understand reality beyond text.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/yann-lecun-billion-dollar-bet.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-18">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI / World Models">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="LLMs">
+  <meta property="article:tag" content="world models">
+  <meta property="article:tag" content="JEPA">
+  <meta property="article:tag" content="Yann LeCun">
+  <meta property="article:tag" content="deep learning">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yann LeCun&rsquo;s Billion-Dollar Bet: Intelligence Beyond the Next Token | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="LeCun&rsquo;s argument is not that LLMs are useless. It is that real intelligence may require world models that predict consequences, plan actions, and understand reality beyond text.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Yann LeCun&rsquo;s Billion-Dollar Bet: Intelligence Beyond the Next Token",
+    "description": "Yann LeCun thinks LLMs are powerful but not enough for human-like intelligence. His bet is JEPA, world models, and AI systems that predict, plan, and understand the physical world.",
+    "url": "https://pugalenthimagendran.com/blog/posts/yann-lecun-billion-dollar-bet.html",
+    "datePublished": "2026-05-18",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/yann-lecun-billion-dollar-bet.html",
+    "keywords": "AI, LLMs, world models, JEPA, Yann LeCun, deep learning, AGI"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=11">
+  <style>
+    /* ============================================
+       ESSAY FORMAT, Technical Editorial
+       Scoped under .essay-format
+       ============================================ */
+
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+
+    .essay-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 0 2rem;
+    }
+
+    .essay-issue {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 3rem;
+    }
+
+    .essay-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      color: var(--color-text-tertiary);
+      background: none;
+    }
+
+    .essay-hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+
+    .essay-deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      border-left: 2px solid var(--color-border-tertiary);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+    }
+
+    .essay-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3rem;
+    }
+
+    .essay-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+
+    .essay-meta-text { flex: 1; }
+
+    .essay-author {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-text-primary);
+      letter-spacing: 0.04em;
+    }
+
+    .essay-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+
+    .essay-read-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+
+    .essay-lede {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .essay-body p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+
+    .essay-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 3rem 0 1.25rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-style: normal;
+    }
+
+    .essay-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin: 2rem 0 1rem;
+    }
+
+    .essay-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      border-top: 2px solid var(--color-text-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      padding: 1.5rem 0;
+      margin: 2.5rem 0;
+      text-align: left;
+    }
+
+    /* Key idea callout, more prominent than essay-callout */
+    .essay-key {
+      background: var(--color-background-secondary);
+      border-left: 3px solid var(--color-text-primary);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      padding: 1.1rem 1.4rem;
+      margin: 2rem 0 2.5rem;
+    }
+    .essay-key-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.45rem;
+    }
+    .essay-key p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* Inline emphasis line, a bold standalone statement inside prose */
+    .essay-body p.essay-line {
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-size: 1.07rem;
+    }
+
+    .essay-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      padding: 1.75rem;
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-lg);
+    }
+
+    .essay-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--color-border-secondary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .essay-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--color-text-tertiary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    .essay-hr {
+      border: none;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      margin: 3rem 0;
+    }
+
+    .essay-ornament {
+      color: var(--color-border-secondary);
+      text-align: left;
+      margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    .essay-closer {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.975rem;
+      line-height: 1.95;
+      color: var(--color-text-secondary);
+      font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .essay-sig {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin-top: 1.75rem;
+    }
+
+    .essay-footnote {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.82rem;
+      color: var(--color-text-tertiary);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      line-height: 1.7;
+    }
+    .essay-footnote a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-bottom: 0.5px dotted var(--color-border-tertiary);
+    }
+    .essay-footnote a:hover {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-text-secondary);
+    }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+
+    .essay-body sup a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: 0.7em;
+      padding: 0 2px;
+      border-bottom: none;
+    }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    /* Inline cross-link */
+    .essay-body a.essay-link {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      transition: border-color 180ms ease;
+    }
+    .essay-body a.essay-link:hover {
+      border-bottom-color: var(--color-text-primary);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .essay-stats-row { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 1.25rem; }
+      .essay-number { font-size: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.8rem; }
+      .essay-deck { font-size: 0.95rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.3rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stats-row { grid-template-columns: 1fr 1fr; }
+      .essay-number { font-size: 1.7rem; }
+      .essay-stat-label { font-size: 0.62rem; }
+      .essay-key p { font-size: 0.95rem; }
+      .essay-body p.essay-line { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 004 &nbsp;&middot;&nbsp; AI &amp; world models &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI</span>
+          <span class="tag">world models</span>
+          <span class="tag">JEPA</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">deep learning</span>
+        </div>
+
+        <h1 class="essay-hed">Yann LeCun&rsquo;s Billion-Dollar <em>Bet.</em></h1>
+
+        <div class="essay-deck">Intelligence beyond the next token. Why one of deep learning&rsquo;s founders thinks LLMs are powerful, but not enough for real intelligence.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">10 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The AI world has a strange habit of turning serious technical disagreements into slogans.</p>
+
+          <p>One camp says large language models will scale all the way to artificial general intelligence. More data, more compute, more reasoning traces, more tools, more agents. Keep scaling the next-token machine and intelligence will emerge.</p>
+
+          <p>Yann LeCun thinks that view is wrong. Not slightly wrong. Fundamentally wrong.</p>
+
+          <p>LeCun is not some random AI skeptic. He is one of the central figures behind the deep learning revolution. In 2018, ACM awarded LeCun, Geoffrey Hinton, and Yoshua Bengio for &ldquo;conceptual and engineering breakthroughs&rdquo; that made deep neural networks a critical component of computing.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>So when LeCun rejects the dominant path of AI, the disagreement matters.</p>
+
+          <p>His claim is not that LLMs are useless. That would be a lazy reading. LLMs are obviously useful. They write, summarise, code, translate, reason through text, and already power products used by millions of people. His deeper claim is that language models are not the right foundation for machines that understand reality, plan reliably, and act in the physical world.</p>
+
+          <p>That is why he left Meta and co-founded Advanced Machine Intelligence, or AMI, with Alexandre LeBrun, with LeCun serving as executive chairman. In March 2026, Reuters reported that AMI raised $1.03 billion at a $3.5 billion pre-money valuation to commercialise AI systems built around reasoning, planning, and world models.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>LeCun&rsquo;s bet is not that LLMs are useless. It is that intelligence requires models that can predict consequences, plan actions, and understand the world beyond text.</p>
+          </div>
+
+          <div class="essay-stats-row">
+            <div>
+              <div class="essay-number">$1.03B</div>
+              <div class="essay-stat-label">AMI seed raise &middot; Reuters<sup><a href="#fn2">2</a></sup></div>
+            </div>
+            <div>
+              <div class="essay-number">$3.5B</div>
+              <div class="essay-stat-label">AMI pre-money valuation &middot; Reuters<sup><a href="#fn2">2</a></sup></div>
+            </div>
+            <div>
+              <div class="essay-number">1.2B</div>
+              <div class="essay-stat-label">Parameters in V-JEPA 2 world model &middot; Meta<sup><a href="#fn10">10</a></sup></div>
+            </div>
+            <div>
+              <div class="essay-number">2018</div>
+              <div class="essay-stat-label">Turing Award shared with Hinton and Bengio &middot; ACM<sup><a href="#fn1">1</a></sup></div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2>I. First, what is an LLM?</h2>
+
+          <p>An LLM, or large language model, is an AI system trained on massive amounts of text to predict tokens. A token is not exactly a word. It can be a word, part of a word, punctuation, or a small text fragment. When an LLM writes a sentence, it generates one token at a time. It looks at the context and predicts what token should come next.</p>
+
+          <p>The modern LLM era was made possible by the Transformer architecture, introduced in the 2017 paper <em>Attention Is All You Need</em>. The Transformer replaced older recurrent and convolutional sequence models with an attention-based architecture that could process language more efficiently and at larger scale.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>GPT-1 then showed the power of a simple recipe: pretrain a Transformer on unlabeled text using a language modelling objective, then fine-tune on supervised tasks. The original OpenAI paper described this as unsupervised pretraining followed by supervised fine-tuning.<sup><a href="#fn5">5</a></sup></p>
+
+          <p>This sounds almost too simple. Predict the next token enough times and the model starts learning grammar, facts, style, logic, code, and patterns of reasoning. But there is one detail that matters more than any other for the rest of this argument.</p>
+
+          <div class="essay-pull">An LLM learns through language. It learns from a compressed symbolic record of the world, not from the world itself.</div>
+
+          <p>That is both its superpower and its weakness.</p>
+
+          <hr class="essay-hr">
+
+          <h2>II. Why LeCun thinks LLMs are not enough</h2>
+
+          <p>LeCun&rsquo;s argument starts with a simple observation: language is not reality.</p>
+
+          <p>Language is a human-made interface. It is already compressed. When someone writes &ldquo;the glass fell off the table and shattered,&rdquo; the messy physical details have been reduced into a neat sentence. The sentence does not contain the full trajectory, the forces, the material properties, the sound, the edge angle, or the thousands of tiny visual cues involved.</p>
+
+          <p>An LLM sees the sentence. A child sees the world. That difference matters.</p>
+
+          <p>In LeCun&rsquo;s 2022 position paper, <em>A Path Towards Autonomous Machine Intelligence</em>, he argued that autonomous intelligent agents need predictive world models, intrinsic objectives, hierarchical planning, and joint embedding architectures trained with self-supervised learning.<sup><a href="#fn6">6</a></sup></p>
+
+          <p>A world model is an internal model of how the world changes. It lets a system ask one question that an LLM cannot answer from text alone: if I do this, what happens next?</p>
+
+          <p>A robot needs that. A self-driving car needs it. A useful home assistant needs it. A genuinely agentic AI needs it. This is the sharpest distinction in the whole debate.</p>
+
+          <div class="essay-pull">LLMs predict the next token. World models predict the next state of the world.</div>
+
+          <hr class="essay-hr">
+
+          <h2>III. What is JEPA?</h2>
+
+          <p>JEPA stands for Joint Embedding Predictive Architecture. It is not a single model. It is an architecture, a training framework that can be applied to images, video, audio, and other modalities. That is a small distinction with large consequences.</p>
+
+          <p>A normal generative model tries to predict missing data directly. If part of an image is missing, it tries to reconstruct the missing pixels. If part of a sentence is missing, it tries to predict the missing words.</p>
+
+          <p>JEPA does something different. It does not try to predict every pixel or every word. Instead, it converts inputs into embeddings, which are compressed numerical representations, and then learns to predict the embedding of one part of the input from the embedding of another part.</p>
+
+          <p class="essay-line">In plain English: JEPA learns to predict meaning, structure, and state, not surface detail.</p>
+
+          <p>Imagine watching a video of a ball rolling across a table. A pixel-prediction model tries to guess the exact colour value of every pixel in the next frame. That includes shadows, background noise, lighting changes, and tiny irrelevant details. A JEPA-style model tries to learn the abstract structure: the ball is moving, the table has an edge, gravity exists, the ball may fall if it crosses the boundary. That is closer to common sense.</p>
+
+          <p>This is why LeCun is obsessed with prediction in representation space. Instead of predicting every pixel in the next video frame, the model maps the video and target frame into embeddings, then predicts the next embedding. The system can focus on salient features and discard unpredictable noise.</p>
+
+          <hr class="essay-hr">
+
+          <h2>IV. I-JEPA, V-JEPA, and V-JEPA 2</h2>
+
+          <p>I-JEPA, developed by Mahmoud Assran and colleagues with LeCun among the authors, applied this idea to images.<sup><a href="#fn7">7</a></sup><sup><a href="#fn8">8</a></sup> The model sees part of an image and predicts the representation of another part. The goal is to learn semantic visual representations without relying on hand-crafted augmentations or labels.</p>
+
+          <p>V-JEPA extended the idea to video. Meta described V-JEPA as a non-generative model that learns by predicting missing or masked parts of a video in an abstract representation space. Unlike generative models, it does not need to fill in every missing pixel. It can discard unpredictable information and focus on higher-level conceptual structure.<sup><a href="#fn9">9</a></sup></p>
+
+          <p>V-JEPA 2 pushed this further into robotics. Meta described it as a 1.2 billion-parameter world model trained on video, designed for visual understanding, prediction, zero-shot planning, and robot control in new environments.<sup><a href="#fn10">10</a></sup></p>
+
+          <p>This is the part that makes LeCun&rsquo;s bet more than philosophy.</p>
+
+          <p>If JEPA can learn useful world models from video, then a robot does not need to be trained separately on 10,000 examples of pouring water, 10,000 examples of pouring juice, and 10,000 examples of pouring into different cup shapes. It could learn the underlying concept: liquids flow downward, containers fill from the bottom, objects block motion, gravity is constant.</p>
+
+          <p class="essay-line">That is the dream. Not a chatbot with arms. A machine with physical intuition.</p>
+
+          <hr class="essay-hr">
+
+          <h2>V. Why robotics exposes the weakness of LLMs</h2>
+
+          <p>Robotics is where the &ldquo;just scale LLMs&rdquo; argument becomes harder.</p>
+
+          <p>Text is forgiving. If an AI writes a weak paragraph, you edit it. If it hallucinates, you check it. If it gives a bad plan, nothing necessarily breaks. Robots do not live in that world.</p>
+
+          <p>A robot must deal with friction, weight, occlusion, deformable objects, liquid, fragile items, moving humans, unknown rooms, and consequences. If it gets the next action wrong, it may break the glass, spill the water, damage the object, or hurt someone. LeCun&rsquo;s claim is that an agentic system cannot be reliable unless it can predict what will happen before it acts.</p>
+
+          <p>AMI&rsquo;s investor announcement describes the company&rsquo;s world models as systems that learn abstract representations of reality, predict how situations evolve, predict how actions lead to consequences, and plan sequences of actions under real-world constraints.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>So the debate is not really LLMs versus JEPA. It is something deeper.</p>
+
+          <div class="essay-pull">Can intelligence be learned from language alone, or does intelligence require grounded predictive models of the world?</div>
+
+          <p>LeCun says grounded world models are required.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VI. But LeCun has been wrong before, right?</h2>
+
+          <p>Yes, but the history is more interesting than &ldquo;LeCun was wrong.&rdquo; LeCun has often been early. Sometimes too early.</p>
+
+          <p>In the 2000s, Geoffrey Hinton&rsquo;s work on deep belief nets and layer-wise unsupervised pretraining helped revive interest in deep networks. Hinton and colleagues showed a fast greedy algorithm for learning deep belief networks one layer at a time, using unsupervised learning to initialise deeper systems.<sup><a href="#fn11">11</a></sup> That was a real breakthrough. It helped reopen the door to deep learning.</p>
+
+          <p>But the exact recipe did not become the final dominant path. As GPUs, data, better activations, better initialisation, batch normalisation, residual networks, and large supervised datasets improved, the field moved away from greedy layer-wise unsupervised pretraining as the main method for training deep networks. Then language models changed the story again.</p>
+
+          <p>LeCun had long argued that learning from raw data would be central to intelligence. His famous &ldquo;cake&rdquo; analogy, originally framed around unsupervised learning and later updated around self-supervised learning, argued that the bulk of intelligence comes from learning from raw data, while supervised learning is only the icing and reinforcement learning is the cherry.</p>
+
+          <p>So was LeCun wrong? The most accurate version is this.</p>
+
+          <p class="essay-line">He was right about self-supervision, but wrong or early about where it would first explode.</p>
+
+          <p>He expected learning from the world, especially vision and video, to be the key path. Instead, the first massive breakthrough came from language. GPT-style models turned self-supervised next-token prediction into the most commercially important AI paradigm in the world. That should make anyone humble.</p>
+
+          <p>It also makes his current bet more interesting. LeCun is not rejecting the lesson of LLMs. He is trying to take the deeper lesson, self-supervised learning at scale, and apply it to world understanding rather than text generation.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VII. The strongest counterargument to LeCun</h2>
+
+          <p>The strongest argument against LeCun is that scaling keeps surprising everyone.</p>
+
+          <p>Many people once said next-token prediction was too shallow to produce reasoning. Then LLMs started writing code, solving competition mathematics problems, using tools, passing professional exams, and helping with research.</p>
+
+          <p>There is also evidence that LLMs may learn more than surface text. A 2024 ICLR paper, <em>Language Models Represent Space and Time</em>, found that Llama-2 models learned linear representations of space and time and identified &ldquo;space neurons&rdquo; and &ldquo;time neurons,&rdquo; suggesting that modern LLMs may contain basic ingredients of world models.<sup><a href="#fn12">12</a></sup></p>
+
+          <p>There is another path too: generative video models. OpenAI&rsquo;s Sora technical report argued that scaling video generation models is a promising route toward general-purpose simulators of the physical world, while also being explicit about limitations such as failures in basic physics, object permanence, and state changes.<sup><a href="#fn13">13</a></sup></p>
+
+          <p>So LeCun could be wrong in one specific way. Maybe world models do emerge implicitly from scaled multimodal generative models. Maybe the future is not pure JEPA. Maybe it is LLMs plus video models plus reinforcement learning plus tools plus memory plus explicit planning. Maybe next-token prediction is not the final form, but it becomes one module inside a larger intelligence stack. That is a serious possibility, not a strawman.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VIII. The strongest argument for LeCun</h2>
+
+          <p>The strongest argument for LeCun is that intelligence is not the same as verbal competence.</p>
+
+          <p>Humans do not learn the world by reading every book first. Babies build models of objects, gravity, space, cause and effect, and social behaviour long before they can write essays. Animals cannot write language, but they navigate the world. A cat cannot explain physics, but it has enough physical intuition to jump, balance, hunt, avoid obstacles, and interact with objects.</p>
+
+          <p>That is the uncomfortable point. If a house cat has better physical common sense than our best robots, our current paradigm is probably missing something fundamental.</p>
+
+          <p>LeCun&rsquo;s bet is that the missing piece is not more text. It is predictive abstraction. A system must learn compact representations of reality, predict how those representations change, and use those predictions to plan.</p>
+
+          <p>DINOv3 is part of this broader movement. Meta described it as a self-supervised vision model that creates universal vision backbones and achieves strong results across image classification, segmentation, object tracking, and other downstream vision tasks.<sup><a href="#fn14">14</a></sup></p>
+
+          <p>LeJEPA, released in 2025 by Randall Balestriero and Yann LeCun, tries to make JEPA-style learning more principled by replacing many training heuristics with a theoretically grounded objective called SIGReg. The paper frames JEPA as a blueprint for learning manipulable representations of the world and its dynamics.<sup><a href="#fn15">15</a></sup></p>
+
+          <p>This matters because LeCun is not just making speeches. A research programme is forming around the claim.</p>
+
+          <hr class="essay-hr">
+
+          <h2>IX. The real question</h2>
+
+          <p>The question is not whether LLMs are intelligent. They are intelligent in some ways. The question is whether they are the right architecture for the next jump: autonomous systems that reason, plan, and act reliably in the real world.</p>
+
+          <p>LeCun says no. The mainstream AI industry says: maybe yes, or at least yes enough to keep scaling. A more balanced reading is this.</p>
+
+          <p>LLMs are extraordinary engines for language, knowledge, code, and symbolic reasoning. But the world is not made of tokens. It is continuous, noisy, physical, causal, and occasionally dangerous. The closer AI gets to action, the more it needs prediction. The more it needs prediction, the more it needs world models.</p>
+
+          <p>So LeCun&rsquo;s bet is not anti-LLM. It is post-LLM. It says the next frontier is not a model that can answer any question. It is a model that can ask one question well.</p>
+
+          <div class="essay-pull">What will happen if I do this?</div>
+
+          <p>That may be the difference between a chatbot and an intelligent agent. And if LeCun is right, the next great AI race will not be won by the system that writes the best paragraph. It will be won by the system that understands the world well enough to act in it.</p>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> ACM (2018). <a href="https://awards.acm.org/about/2018-turing" target="_blank" rel="noopener">Turing Award citation for Yann LeCun, Geoffrey Hinton and Yoshua Bengio</a>, &ldquo;for conceptual and engineering breakthroughs that have made deep neural networks a critical component of computing.&rdquo;</p>
+
+            <p id="fn2"><sup>2</sup> Reuters (10 March 2026). <a href="https://www.reuters.com/business/ex-meta-ai-chief-yann-lecuns-ami-raises-103-billion-alternative-ai-approach-2026-03-10/" target="_blank" rel="noopener">Ex-Meta AI chief Yann LeCun&rsquo;s AMI raises $1.03 billion for alternative AI approach</a>. Reports AMI&rsquo;s $1.03B seed raise at a $3.5B pre-money valuation to commercialise reasoning, planning and world-model systems.</p>
+
+            <p id="fn3"><sup>3</sup> Cathay Innovation (2026). <a href="https://www.cathaycapital.com/advanced-machine-intelligence-ami-is-enabling-the-next-ai-revolution-built-on-foundational-world-models/" target="_blank" rel="noopener">Advanced Machine Intelligence (AMI) is enabling the next AI revolution built on foundational world models</a>. Investor announcement describing AMI&rsquo;s thesis around foundational world models.</p>
+
+            <p id="fn4"><sup>4</sup> Vaswani et al. (2017). <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention Is All You Need</a>. The Transformer architecture, the substrate for nearly every modern LLM.</p>
+
+            <p id="fn5"><sup>5</sup> Radford et al., OpenAI (2018). <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf" target="_blank" rel="noopener">Improving Language Understanding by Generative Pre-Training</a>. The original GPT paper describing unsupervised pretraining followed by supervised fine-tuning.</p>
+
+            <p id="fn6"><sup>6</sup> LeCun (2022). <a href="https://openreview.net/pdf?id=BZ5a1r-kVsf" target="_blank" rel="noopener">A Path Towards Autonomous Machine Intelligence</a>. Position paper arguing for predictive world models, intrinsic objectives, hierarchical planning, and joint embedding architectures.</p>
+
+            <p id="fn7"><sup>7</sup> Meta AI (2023). <a href="https://ai.meta.com/blog/yann-lecun-ai-model-i-jepa/" target="_blank" rel="noopener">I-JEPA: a human-like AI model</a>. Meta&rsquo;s blog introducing I-JEPA and the joint-embedding predictive idea.</p>
+
+            <p id="fn8"><sup>8</sup> Assran et al. (2023). <a href="https://arxiv.org/abs/2301.08243" target="_blank" rel="noopener">Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture</a>. The I-JEPA paper, lead author Mahmoud Assran, with LeCun among the authors.</p>
+
+            <p id="fn9"><sup>9</sup> Meta AI (2024). <a href="https://ai.meta.com/blog/v-jepa-yann-lecun-ai-model-video-joint-embedding-predictive-architecture/" target="_blank" rel="noopener">V-JEPA: the next step toward advanced machine intelligence</a>. Extends the JEPA idea from images to video in an abstract representation space.</p>
+
+            <p id="fn10"><sup>10</sup> Meta AI (2025). <a href="https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/" target="_blank" rel="noopener">V-JEPA 2 world model and new benchmarks</a>. A 1.2B-parameter world model trained on video for understanding, prediction, zero-shot planning and robot control.</p>
+
+            <p id="fn11"><sup>11</sup> Hinton, Osindero &amp; Teh (2006). <a href="https://www.stats.ox.ac.uk/~teh/research/unsup/nc2006.pdf" target="_blank" rel="noopener">A Fast Learning Algorithm for Deep Belief Nets</a>. The greedy layer-wise unsupervised pretraining paper that helped reopen deep learning.</p>
+
+            <p id="fn12"><sup>12</sup> Gurnee &amp; Tegmark (2024). <a href="https://arxiv.org/abs/2310.02207" target="_blank" rel="noopener">Language Models Represent Space and Time</a>. Finds linear representations of space and time inside Llama-2, with identifiable &ldquo;space neurons&rdquo; and &ldquo;time neurons.&rdquo;</p>
+
+            <p id="fn13"><sup>13</sup> OpenAI (2024). <a href="https://openai.com/index/video-generation-models-as-world-simulators/" target="_blank" rel="noopener">Video generation models as world simulators</a>. Sora technical report arguing that scaled video generation is a promising route toward general-purpose simulators, while flagging limitations in physics and object permanence.</p>
+
+            <p id="fn14"><sup>14</sup> Meta AI (2025). <a href="https://ai.meta.com/blog/dinov3-self-supervised-vision-model/" target="_blank" rel="noopener">DINOv3</a>. A self-supervised vision model providing universal backbones for downstream vision tasks.</p>
+
+            <p id="fn15"><sup>15</sup> Balestriero &amp; LeCun (2025). <a href="https://arxiv.org/abs/2511.08544" target="_blank" rel="noopener">LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics</a>. Replaces JEPA training heuristics with a theoretically grounded SIGReg objective; frames JEPA as a blueprint for learning manipulable representations of the world and its dynamics.</p>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 004. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=10"></script>
+  <script src="../blog.js?v=12"></script>
+</body>
+</html>
