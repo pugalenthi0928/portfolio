@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AI Memory Wall | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of why AI has made DRAM, HBM, advanced packaging, lithography, and semiconductor equipment central to the future of computing.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/ai-memory-wall.html">
+  <meta property="og:title" content="The AI Memory Wall | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of why AI has made DRAM, HBM, advanced packaging, lithography, and semiconductor equipment central to the future of computing.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/ai-memory-wall.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="DRAM">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="Memory">
+  <meta property="article:tag" content="Semicap">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Micron">
+  <meta property="article:tag" content="Samsung">
+  <meta property="article:tag" content="SK hynix">
+  <meta property="article:tag" content="Data Centers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The AI Memory Wall | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of why AI has made DRAM, HBM, advanced packaging, lithography, and semiconductor equipment central to the future of computing.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The AI Memory Wall",
+    "description": "An original 2026 analysis of why AI has made DRAM, HBM, advanced packaging, lithography, and semiconductor equipment central to the future of computing.",
+    "url": "https://pugalenthimagendran.com/blog/posts/ai-memory-wall.html",
+    "datePublished": "2026-05-20",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/ai-memory-wall.html",
+    "keywords": "AI Infrastructure, Semiconductors, DRAM, HBM, Memory, TSMC, ASML, Micron, Samsung, SK hynix, Semicap, Data Centers"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       ESSAY FORMAT, Technical Editorial
+       Scoped under .essay-format
+       (Shared with other essays; kept inline to match existing post convention.)
+       ============================================ */
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 3rem;
+    }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+      padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none;
+    }
+    .essay-hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+      line-height: 1.12; color: var(--color-text-primary);
+      margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck {
+      font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300;
+      line-height: 1.65; color: var(--color-text-secondary);
+      border-left: 2px solid var(--color-border-tertiary);
+      padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic;
+    }
+    .essay-meta {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3rem;
+    }
+    .essay-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--color-text-secondary); flex-shrink: 0;
+    }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamp {
+      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 4px;
+      color: var(--accent, #F0784A);
+      border: 1px solid rgba(240,120,74,0.30);
+      background: rgba(240,120,74,0.06);
+      margin-left: 12px; vertical-align: middle;
+    }
+    .essay-lede {
+      font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400;
+      line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p {
+      font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300;
+      line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25;
+      letter-spacing: 0; font-style: normal;
+    }
+    .essay-pull {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400;
+      font-style: italic; line-height: 1.5; color: var(--color-text-primary);
+      border-top: 2px solid var(--color-text-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      padding: 1.5rem 0; margin: 2.5rem 0; text-align: left;
+    }
+    .essay-key {
+      background: var(--color-background-secondary);
+      border-left: 3px solid var(--color-text-primary);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem;
+    }
+    .essay-key-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 0.45rem;
+    }
+    .essay-key p {
+      font-family: 'Source Serif 4', serif; font-size: 1.02rem;
+      line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400;
+    }
+    .essay-body p.essay-line {
+      font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem;
+    }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament {
+      color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em;
+    }
+    .essay-closer {
+      font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95;
+      color: var(--color-text-secondary); font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem; margin-top: 3.5rem;
+    }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote {
+      font-family: 'Source Serif 4', serif; font-size: 0.82rem;
+      color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7;
+    }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       MEMORY WALL POST, original diagrams + figures
+       Scoped under .essay-mw
+       ============================================ */
+    .essay-mw {
+      --mw-accent: #F0784A;
+      --mw-accent-soft: rgba(240,120,74,0.10);
+      --mw-accent-faint: rgba(240,120,74,0.04);
+      --mw-bd: rgba(255,255,255,0.08);
+      --mw-bd-soft: rgba(255,255,255,0.05);
+    }
+
+    /* Figure scaffolding shared across diagrams */
+    .mw-fig {
+      margin: 2.5rem 0 2.75rem;
+      padding: 24px 22px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--mw-bd);
+      background: linear-gradient(180deg, var(--mw-accent-faint) 0%, transparent 60%), var(--bg-alt);
+    }
+    .mw-fig-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mw-accent);
+      margin-bottom: 14px;
+    }
+    .mw-fig-cap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--mw-bd-soft);
+      line-height: 1.6;
+    }
+
+    /* 2020 thesis callout */
+    .mw-thesis {
+      margin: 2rem 0 2.5rem;
+      padding: 22px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--mw-accent);
+      background: linear-gradient(180deg, var(--mw-accent-soft) 0%, transparent 80%), var(--bg-alt);
+      position: relative;
+    }
+    .mw-thesis-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mw-accent);
+      margin-bottom: 10px;
+    }
+    .mw-thesis-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* 2020 vs 2026 comparison card */
+    .mw-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 2rem 0 2.5rem;
+    }
+    .mw-col {
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--mw-bd);
+      background: var(--bg-alt);
+    }
+    .mw-col-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .mw-col-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 10px;
+    }
+    .mw-col-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+    }
+    .mw-col--now {
+      border-color: var(--mw-accent);
+      background:
+        linear-gradient(180deg, var(--mw-accent-soft) 0%, transparent 70%),
+        var(--bg-alt);
+    }
+    .mw-col--now .mw-col-label { color: var(--mw-accent); }
+
+    /* Terms / glossary box */
+    .mw-terms {
+      margin: 2rem 0 2.5rem;
+      padding: 20px 22px;
+      border-radius: 10px;
+      border: 0.5px dashed var(--color-border-tertiary);
+      background: var(--bg-alt);
+    }
+    .mw-terms-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .mw-terms dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 6px 16px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+    .mw-terms dt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--mw-accent);
+      padding-top: 2px;
+    }
+    .mw-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Memory wall diagram (GPU + HBM stacks + interposer) */
+    .mw-memory {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 6px;
+    }
+    .mw-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .mw-hbm {
+      padding: 14px 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--mw-bd);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%), var(--bg-alt);
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--color-text-secondary);
+      position: relative;
+    }
+    .mw-hbm::before {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px; right: 2px;
+      height: 1.5px;
+      background: var(--mw-accent);
+      opacity: 0.7;
+      border-radius: 2px;
+    }
+    .mw-hbm small {
+      display: block;
+      margin-top: 4px;
+      font-size: 9px;
+      color: var(--color-text-tertiary);
+      letter-spacing: 0.06em;
+    }
+    .mw-gpu {
+      padding: 22px 18px;
+      border-radius: 8px;
+      border: 1.5px solid var(--mw-accent);
+      background:
+        linear-gradient(135deg, var(--mw-accent-soft) 0%, transparent 70%),
+        var(--bg-alt);
+      text-align: center;
+    }
+    .mw-gpu-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mw-accent);
+    }
+    .mw-gpu-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 4px 0 2px;
+    }
+    .mw-gpu-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      color: var(--color-text-tertiary);
+    }
+    .mw-interposer {
+      margin-top: 4px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 0.5px dashed var(--color-border-tertiary);
+      background: rgba(255,255,255,0.015);
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      color: var(--color-text-tertiary);
+    }
+
+    /* AI stack layer cake */
+    .mw-stack { display: flex; flex-direction: column; gap: 4px; }
+    .mw-layer {
+      display: grid;
+      grid-template-columns: 32px 1fr 90px;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--mw-bd);
+      background: var(--bg-alt);
+    }
+    .mw-layer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--mw-accent);
+      letter-spacing: 0.08em;
+    }
+    .mw-layer-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      letter-spacing: -0.005em;
+    }
+    .mw-layer-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.10em;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      text-align: right;
+    }
+    .mw-layer--app   { background: linear-gradient(90deg, rgba(255,255,255,0.04), transparent 50%), var(--bg-alt); }
+    .mw-layer--accel { background: linear-gradient(90deg, var(--mw-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--mw-accent); }
+    .mw-layer--hbm   { background: linear-gradient(90deg, var(--mw-accent-faint), transparent 80%), var(--bg-alt); }
+    .mw-layer--power { background: linear-gradient(90deg, rgba(108,191,224,0.06), transparent 60%), var(--bg-alt); }
+
+    /* Equipment growth bar chart */
+    .mw-bars {
+      display: grid;
+      grid-template-columns: 80px 1fr 80px;
+      gap: 8px 14px;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+    .mw-bars-year {
+      color: var(--color-text-secondary);
+      letter-spacing: 0.06em;
+    }
+    .mw-bars-track {
+      position: relative;
+      height: 22px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.025);
+      overflow: hidden;
+    }
+    .mw-bars-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--mw-accent) 0%, rgba(240,120,74,0.55) 100%);
+      border-radius: 4px;
+    }
+    .mw-bars-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 1.5px;
+      background: var(--color-text-primary);
+      opacity: 0.4;
+    }
+    .mw-bars-pct {
+      color: var(--mw-accent);
+      letter-spacing: 0.04em;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* Value chain grid */
+    .mw-chain {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .mw-chain-node {
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--mw-bd);
+      background: var(--bg-alt);
+    }
+    .mw-chain-cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mw-accent);
+      margin-bottom: 6px;
+    }
+    .mw-chain-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+    }
+
+    /* Further reading list */
+    .mw-fr {
+      margin-top: 2.5rem;
+      padding-top: 1.75rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+    }
+    .mw-fr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 14px;
+    }
+    .mw-fr ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .mw-fr li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--color-text-secondary);
+    }
+    .mw-fr li a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .mw-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .mw-compare { grid-template-columns: 1fr; }
+      .mw-row { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+      .mw-hbm { padding: 10px 4px 8px; font-size: 9px; }
+      .mw-chain { grid-template-columns: 1fr; }
+      .mw-bars { grid-template-columns: 60px 1fr 70px; }
+      .mw-terms dl { grid-template-columns: 90px 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamp { display: block; margin: 8px 0 0; }
+      .mw-layer { grid-template-columns: 28px 1fr; }
+      .mw-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-mw">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 012 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Semiconductors</span>
+          <span class="tag">DRAM</span>
+          <span class="tag">HBM</span>
+          <span class="tag">Memory</span>
+          <span class="tag">Semicap</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">ASML</span>
+          <span class="tag">Micron</span>
+          <span class="tag">Samsung</span>
+          <span class="tag">SK hynix</span>
+          <span class="tag">Data Centers</span>
+        </div>
+
+        <h1 class="essay-hed">The AI <em>Memory Wall</em>.<span class="essay-stamp">Original analysis</span></h1>
+
+        <div class="essay-deck">Why DRAM, HBM, packaging, and semicap became the new center of computing.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The AI boom is usually described as a GPU shortage. That is only half true. The deeper bottleneck is memory: bandwidth, capacity, power, packaging, and the equipment needed to manufacture it.</p>
+
+          <p>A GPU without enough memory bandwidth is like a supercar with a blocked fuel line. The engine can be powerful, but the system cannot feed it fast enough. As models grow, inference becomes always-on infrastructure, context windows expand, agents call tools repeatedly, and data centers become power constrained, the bottleneck shifts from pure compute to the full memory system around compute.</p>
+
+          <p class="essay-line">This is the AI memory wall.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The AI race is described as a race for GPUs. The deeper race is for memory bandwidth, advanced packaging, lithography, and the equipment that produces all three. Moore&rsquo;s Law did not die. It fragmented across the stack.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2>I. The 2020 thesis still holds. AI multiplied it.</h2>
+
+          <p>In May 2020, Dylan Patel published a piece on SemiAnalysis arguing that Moore&rsquo;s Law was effectively over for DRAM, and that this was excellent news for semiconductor capital equipment makers.<sup><a href="#fn1">1</a></sup> The argument was tidy. Cell shrink in DRAM had slowed. Each new node was buying less density than the previous one. Yet demand for memory was not slowing. The math left only one place for the missing bits to come from: more wafers, more cleanroom space, more equipment.</p>
+
+          <p>I revisited that piece because it has aged better than almost any other infrastructure call from that period. AI did not just confirm it. AI multiplied it. Memory went from a background commodity into a strategic bottleneck inside two years.</p>
+
+          <div class="mw-thesis">
+            <div class="mw-thesis-label">2020 thesis</div>
+            <p class="mw-thesis-text">When DRAM density scaling slows, bit growth becomes more dependent on wafers, fabs, cleanroom space, and semiconductor capital equipment.</p>
+          </div>
+
+          <p>The thesis was conservative in 2020. It assumed steady AI demand. The actual 2024 to 2026 cycle delivered an AI capex wave large enough to reorder the priorities of every memory maker, every foundry, and every advanced packaging line on the planet.</p>
+
+          <hr class="essay-hr">
+
+          <h2>II. From shrink economics to system economics</h2>
+
+          <p>The old semiconductor story was simple. Shrink transistors. Increase density. Reduce cost per function. Repeat every two years. Most of the industry, most of the writing about the industry, and most of the strategy work around the industry assumed this would continue.</p>
+
+          <p>The new AI infrastructure story has more parts. The accelerator still matters. So does the memory next to it. So does the package that connects them. So does the power that feeds the rack. So does the equipment that produces every layer below. The economics moved from one variable to a system.</p>
+
+          <div class="mw-compare">
+            <div class="mw-col">
+              <div class="mw-col-label">Old scaling model</div>
+              <h3 class="mw-col-title">Cheaper transistors</h3>
+              <div class="mw-col-body">
+                Logic shrink &rarr; better compute &rarr; lower cost per transistor. One axis. One target.
+              </div>
+            </div>
+            <div class="mw-col mw-col--now">
+              <div class="mw-col-label">New AI infrastructure model</div>
+              <h3 class="mw-col-title">Feeding compute</h3>
+              <div class="mw-col-body">
+                Compute + memory bandwidth + packaging + power + interconnect + equipment capacity. Many axes. One system goal: tokens per second per watt per dollar.
+              </div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2>III. Why DRAM scaling is hard</h2>
+
+          <p>DRAM stores each bit as a small amount of charge on a capacitor next to a transistor. Shrink the cell and you fight five forces at once. Leakage gets worse because thinner dielectrics let charge escape. Refresh gets more expensive because cells must be re-energized more often to avoid losing data. Noise margins shrink. Reliability gets harder because every process variation matters more at small dimensions. Yield gets harder because more masks, more steps, and more EUV exposures stack up.</p>
+
+          <p>Density gains are still happening. They are just incremental, expensive, and capital intensive. Each new node consumes more equipment per bit than the last. That is the missing context behind most coverage of the memory cycle: bit growth has become a wafer story, not a node story.</p>
+
+          <div class="mw-terms" role="complementary" aria-label="Glossary">
+            <div class="mw-terms-label">Quick terms</div>
+            <dl>
+              <dt>DRAM</dt><dd>The working memory next to the CPU or GPU. Loses its data when power is removed.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory. DRAM dies stacked vertically, connected through silicon, sitting next to the accelerator.</dd>
+              <dt>WFE</dt><dd>Wafer fab equipment. The tools that make chips: deposition, etch, lithography, metrology, test.</dd>
+              <dt>EUV</dt><dd>Extreme ultraviolet lithography. The light source that prints the smallest features on modern chips.</dd>
+              <dt>CoWoS</dt><dd>TSMC&rsquo;s advanced packaging family. Integrates a logic die and HBM stacks onto an interposer.</dd>
+              <dt>TSV</dt><dd>Through-silicon via. Vertical electrical connections that let stacked dies talk to each other.</dd>
+              <dt>Semicap</dt><dd>Semiconductor capital equipment companies. ASML, Applied Materials, Lam Research, Tokyo Electron, KLA, and the packaging and test specialists.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2>IV. AI exposed the memory wall</h2>
+
+          <p>An AI accelerator can perform trillions of operations per second. To do that, it needs to move model weights, activations, embeddings, and KV cache through its memory system. When the calculation is fast and the data movement is slow, raw FLOPS stop mattering. The bottleneck becomes bandwidth and power per bit moved. This is not new physics. It is what every systems engineer has tried to explain for years. AI just made the cost of getting it wrong large enough to show up on a balance sheet.</p>
+
+          <p>Inference economics makes this worse than training. Training is a finite project. Inference is a recurring tax on every product. Every additional user, every longer context, every retrieval, every multimodal input, every tool call from an agent: each one is a memory event.</p>
+
+          <div class="essay-pull">The future of AI infrastructure is not only about how fast we can calculate. It is about how cheaply and reliably we can move data into the calculation.</div>
+
+          <hr class="essay-hr">
+
+          <h2>V. HBM is not just better DRAM</h2>
+
+          <p>HBM stacks DRAM dies vertically, wires them together through silicon, and places the resulting tower millimeters away from the accelerator on an advanced package. The result is a wide, short, parallel memory path that no DDR5 module on a motherboard can match. The product is not faster DRAM. It is a different topology.</p>
+
+          <p>The three HBM4 leaders entering 2026 made the topology jump explicit:</p>
+
+          <ul style="font-family: 'Source Serif 4', serif; font-size: 1.0rem; line-height: 1.85; color: var(--color-text-primary); padding-left: 1.5rem; margin: 0 0 1.5rem;">
+            <li>Samsung began commercial HBM4 shipment with a 4nm logic base die, a transfer speed of 11.7 Gbps and up to 13 Gbps in flexible deployments, and a stack bandwidth up to 3.3 TB/s.<sup><a href="#fn7">7</a></sup></li>
+            <li>Micron went into high-volume production of 36 GB 12-high HBM4 designed into NVIDIA&rsquo;s Vera Rubin platform, citing more than 2.8 TB/s per stack and 20% better power efficiency than its prior generation.<sup><a href="#fn5">5</a></sup></li>
+            <li>SK hynix completed HBM4 development with 2,048 I/O terminals, more than 10 Gbps operating speed, and more than a 40% power efficiency improvement, and prepared for mass production.<sup><a href="#fn9">9</a></sup></li>
+            <li>Samsung and AMD expanded their collaboration so HBM4 sits inside the AMD Instinct MI455X accelerator and DDR5 sits inside EPYC at rack scale, with new partnerships announced for next-generation AI memory.<sup><a href="#fn8">8</a></sup></li>
+          </ul>
+
+          <p>None of those numbers come free. Each requires advanced packaging, through-silicon vias, base die logic, thermal management, careful testing, and yield learning that took years to build. HBM is not a memory chip. It is a system integration product.</p>
+
+          <figure class="mw-fig" aria-label="Diagram: GPU surrounded by HBM stacks on an interposer">
+            <div class="mw-fig-label">Diagram 01 &middot; The HBM topology</div>
+            <div class="mw-memory">
+              <div class="mw-row">
+                <div class="mw-hbm">HBM<small>stack 1</small></div>
+                <div class="mw-hbm">HBM<small>stack 2</small></div>
+                <div class="mw-hbm">HBM<small>stack 3</small></div>
+                <div class="mw-hbm">HBM<small>stack 4</small></div>
+              </div>
+              <div class="mw-gpu">
+                <div class="mw-gpu-label">Accelerator</div>
+                <div class="mw-gpu-title">GPU / AI ASIC</div>
+                <div class="mw-gpu-sub">Compute die on advanced package</div>
+              </div>
+              <div class="mw-row">
+                <div class="mw-hbm">HBM<small>stack 5</small></div>
+                <div class="mw-hbm">HBM<small>stack 6</small></div>
+                <div class="mw-hbm">HBM<small>stack 7</small></div>
+                <div class="mw-hbm">HBM<small>stack 8</small></div>
+              </div>
+              <div class="mw-interposer">Interposer &middot; CoWoS / advanced packaging substrate</div>
+            </div>
+            <div class="mw-fig-cap">Bandwidth comes from proximity, parallelism, and packaging. The memory does not sit on a board. It sits on the substrate, next to the accelerator, behind thousands of short, wide connections.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2>VI. Packaging became part of Moore&rsquo;s Law</h2>
+
+          <p>For decades, Moore&rsquo;s Law felt like a transistor story. Smaller, denser, cheaper, with the action happening at the wafer. In AI infrastructure, the action moved into the package and into the system.</p>
+
+          <p>TSMC&rsquo;s CoWoS family integrates the logic die and the HBM stacks onto an interposer that handles the high-bandwidth wiring between them. CoWoS-L extends the approach with larger interposers and more advanced interconnects for HPC products. TSMC has also pushed System-on-Wafer work that integrates logic and HBM at wafer scale for data center compute, blurring the line between packaging and silicon.<sup><a href="#fn6">6</a></sup></p>
+
+          <p>The implication is structural. The new scaling stack is no longer just &ldquo;the chip.&rdquo; It is a layered system where the bottleneck can be anywhere from the model down to the grid.</p>
+
+          <figure class="mw-fig" aria-label="Diagram: the AI scaling stack from application down to power">
+            <div class="mw-fig-label">Diagram 02 &middot; The new scaling stack</div>
+            <div class="mw-stack">
+              <div class="mw-layer mw-layer--app">
+                <div class="mw-layer-num">08</div>
+                <div class="mw-layer-name">Application / model</div>
+                <div class="mw-layer-tag">Demand</div>
+              </div>
+              <div class="mw-layer">
+                <div class="mw-layer-num">07</div>
+                <div class="mw-layer-name">Inference serving</div>
+                <div class="mw-layer-tag">Token econ</div>
+              </div>
+              <div class="mw-layer mw-layer--accel">
+                <div class="mw-layer-num">06</div>
+                <div class="mw-layer-name">Accelerator (GPU / ASIC)</div>
+                <div class="mw-layer-tag">Compute</div>
+              </div>
+              <div class="mw-layer mw-layer--hbm">
+                <div class="mw-layer-num">05</div>
+                <div class="mw-layer-name">HBM &amp; high-bandwidth memory</div>
+                <div class="mw-layer-tag">Bandwidth</div>
+              </div>
+              <div class="mw-layer">
+                <div class="mw-layer-num">04</div>
+                <div class="mw-layer-name">CoWoS / advanced packaging</div>
+                <div class="mw-layer-tag">Integration</div>
+              </div>
+              <div class="mw-layer">
+                <div class="mw-layer-num">03</div>
+                <div class="mw-layer-name">Lithography &amp; process (EUV)</div>
+                <div class="mw-layer-tag">Print</div>
+              </div>
+              <div class="mw-layer">
+                <div class="mw-layer-num">02</div>
+                <div class="mw-layer-name">Semicap tools (WFE, packaging, test)</div>
+                <div class="mw-layer-tag">Production</div>
+              </div>
+              <div class="mw-layer mw-layer--power">
+                <div class="mw-layer-num">01</div>
+                <div class="mw-layer-name">Data center power, cooling, grid</div>
+                <div class="mw-layer-tag">Energy</div>
+              </div>
+            </div>
+            <div class="mw-fig-cap">The bottleneck can sit anywhere in this stack. In 2026 it sits mostly in layers 03 to 05: HBM, packaging, and the equipment that produces them.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2>VII. Semicap is the hidden beneficiary</h2>
+
+          <p>If memory demand rises faster than density scaling, the equipment industry has to absorb the difference. Every missing bit of density has to be repaid in wafers, process steps, lithography exposures, deposition cycles, etch passes, metrology checks, packaging operations, and tester time. That is exactly the structural picture the 2020 thesis predicted, just larger.</p>
+
+          <p>Three concrete signals from the equipment side:</p>
+
+          <ul style="font-family: 'Source Serif 4', serif; font-size: 1.0rem; line-height: 1.85; color: var(--color-text-primary); padding-left: 1.5rem; margin: 0 0 1.5rem;">
+            <li>SEMI projects DRAM equipment sales to grow 15.4% to $22.5 billion in 2025, then 15.1% in 2026, then 7.8% in 2027, driven by HBM ramps and advanced DRAM nodes for AI and data center demand.<sup><a href="#fn3">3</a></sup></li>
+            <li>ASML expects DRAM EUV lithography spending to compound at 15% to 25% per year from 2025 through 2030, citing AI-driven advanced logic and DRAM as the structural driver.<sup><a href="#fn2">2</a></sup></li>
+            <li>Applied Materials extended partnerships with Micron and SK hynix on next-generation DRAM, HBM, NAND, materials, process integration, and 3D packaging through its EPIC Center.<sup><a href="#fn10">10</a></sup><sup><a href="#fn11">11</a></sup></li>
+          </ul>
+
+          <figure class="mw-fig" aria-label="Bar chart: SEMI DRAM equipment growth projections">
+            <div class="mw-fig-label">Chart 01 &middot; DRAM equipment growth, SEMI projections</div>
+            <div class="mw-bars" role="list">
+              <div class="mw-bars-year" role="listitem">2025</div>
+              <div class="mw-bars-track"><div class="mw-bars-fill" style="width: 92%"></div></div>
+              <div class="mw-bars-pct">+15.4%</div>
+
+              <div class="mw-bars-year">2026</div>
+              <div class="mw-bars-track"><div class="mw-bars-fill" style="width: 90%"></div></div>
+              <div class="mw-bars-pct">+15.1%</div>
+
+              <div class="mw-bars-year">2027</div>
+              <div class="mw-bars-track"><div class="mw-bars-fill" style="width: 47%"></div></div>
+              <div class="mw-bars-pct">+7.8%</div>
+            </div>
+            <div class="mw-fig-cap">Year-over-year DRAM equipment sales growth, three consecutive years of double-digit and high single-digit expansion driven by HBM and advanced nodes. Source: SEMI World Fab Forecast and equipment outlook releases.<sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <p>If you take the 2025 baseline at $22.5 billion and compound the projected growth, the run rate by the end of 2027 is meaningfully above $28 billion in DRAM equipment alone. That is one slice of the broader WFE market. The same logic applies, with different coefficients, to advanced logic equipment, packaging tools, EUV lithography, and test.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VIII. Inference makes this worse</h2>
+
+          <p>Training is episodic. A frontier lab spends a fixed amount of capital, trains a model, and writes off the cost over the model&rsquo;s useful life. Inference is the opposite. It is continuous. Once AI is embedded into search, coding, agents, customer support, enterprise software, robots, and scientific workflows, every generated token becomes an infrastructure event.</p>
+
+          <p>Each lever pushes in the same direction:</p>
+
+          <ul style="font-family: 'Source Serif 4', serif; font-size: 1.0rem; line-height: 1.85; color: var(--color-text-primary); padding-left: 1.5rem; margin: 0 0 1.5rem;">
+            <li>More users means more inference per second.</li>
+            <li>Longer context windows mean larger KV caches per request.</li>
+            <li>Agents mean more repeated calls per task.</li>
+            <li>Retrieval-augmented generation means more storage and more memory pressure.</li>
+            <li>Multimodal models mean larger inputs and larger activations.</li>
+            <li>Real-time systems mean latency pressure, which favors larger memory and faster bandwidth over deeper batching.</li>
+            <li>Data center power is the hard cap on top of all of this.</li>
+          </ul>
+
+          <p>Micron made this explicit in its FY2026 Q2 prepared remarks: AI is driving DRAM and NAND data center bit TAM above 50% of total industry TAM for the first time in calendar 2026, with AI and traditional server demand running into inadequate DRAM and NAND supply, and with HBM, LPDRAM, DDR, and SSDs increasingly designed in as a portfolio for AI inference architectures optimized around token economics.<sup><a href="#fn4">4</a></sup></p>
+
+          <p class="essay-line">When more than half of the data center memory market is being shaped by AI workloads, memory is no longer a commodity input. It is part of the product.</p>
+
+          <hr class="essay-hr">
+
+          <h2>IX. Who benefits</h2>
+
+          <p>This is a value-chain map, not investment advice. The point is to show that the AI boom is not one company&rsquo;s story. It is a stack story, and the value spreads across that stack in proportion to how scarce each layer becomes.</p>
+
+          <figure class="mw-fig" aria-label="Diagram: AI memory value chain map">
+            <div class="mw-fig-label">Diagram 03 &middot; The value chain, layer by layer</div>
+            <div class="mw-chain">
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Memory makers</div>
+                <div class="mw-chain-body">Micron, Samsung, SK hynix. They turn the HBM topology into a product line.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Foundries &amp; packaging</div>
+                <div class="mw-chain-body">TSMC, Samsung Foundry. CoWoS and System-on-Wafer integration sit here.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Lithography</div>
+                <div class="mw-chain-body">ASML. EUV intensity rises for both advanced logic and advanced DRAM.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Wafer fab equipment</div>
+                <div class="mw-chain-body">Applied Materials, Lam Research, Tokyo Electron, KLA. Deposition, etch, metrology.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Packaging &amp; test</div>
+                <div class="mw-chain-body">ASE, Amkor, Teradyne, Advantest. HBM bring-up, KGD test, and final packaging.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">AI accelerators</div>
+                <div class="mw-chain-body">Nvidia, AMD, custom ASIC teams at hyperscalers and startups.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Data center operators</div>
+                <div class="mw-chain-body">Microsoft, Google, Amazon, Meta, Oracle, CoreWeave and the new build-to-suit AI data center class.</div>
+              </div>
+              <div class="mw-chain-node">
+                <div class="mw-chain-cat">Power &amp; cooling</div>
+                <div class="mw-chain-body">Liquid cooling, electrical distribution, grid capacity. Often the rate-limiting step.</div>
+              </div>
+            </div>
+            <div class="mw-fig-cap">Each box can become a bottleneck on its own. The AI memory wall is not a single shortage. It is a shifting list of which layer is tightest this quarter.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2>X. What could break the thesis</h2>
+
+          <p>A serious piece needs counterarguments. The case for memory as the new center of computing has several honest failure modes.</p>
+
+          <ul style="font-family: 'Source Serif 4', serif; font-size: 1.0rem; line-height: 1.85; color: var(--color-text-primary); padding-left: 1.5rem; margin: 0 0 1.5rem;">
+            <li><strong>AI capex could slow.</strong> If frontier training plateaus or unit economics disappoint, HBM and packaging capacity that was built for a 2027 demand curve could meet a 2026 demand curve. Memory is famously cyclical. Every up-cycle has been followed by inventory pain.</li>
+            <li><strong>Models could become more memory-efficient.</strong> Quantization, sparsity, mixture-of-experts routing, better KV cache management, and learned compression could reduce memory per token. Some of this is already happening.</li>
+            <li><strong>Custom ASICs could rewire the architecture.</strong> If hyperscaler chips converge on different memory topologies, the HBM cluster that benefits today may face design changes that shift demand to other forms of memory.</li>
+            <li><strong>Attention could change.</strong> More efficient attention mechanisms or new architectures could reduce KV cache pressure, which is one of the largest drivers of HBM scaling.</li>
+            <li><strong>Geopolitics could distort demand.</strong> Export controls, on-shoring incentives, and regional fab build-outs can pull supply and demand apart in ways that obscure the underlying trend.</li>
+            <li><strong>Packaging bottlenecks could resolve.</strong> CoWoS capacity has been the headline constraint for two years. If it eases, the chain rebalances and another link becomes the bottleneck.</li>
+          </ul>
+
+          <p>None of these are reasons to ignore the thesis. They are reasons to hold it loosely and watch the signals.</p>
+
+          <hr class="essay-hr">
+
+          <h2>XI. The final thesis</h2>
+
+          <p>The old world was about cheaper transistors. The new world is about feeding compute.</p>
+
+          <p>Moore&rsquo;s Law did not simply die. It fragmented. Part of it moved into EUV. Part of it moved into HBM. Part of it moved into CoWoS. Part of it moved into power delivery. Part of it moved into semicap. Part of it moved into the economics of every generated token.</p>
+
+          <div class="essay-pull">The AI memory wall is not one shortage. It is a permanent reshuffling of where value sits in the computing stack.</div>
+
+          <p>That is why memory may be one of the most important infrastructure stories of 2026. Not the chips on the headlines. The bandwidth, packaging, lithography, and equipment under them. If you want to understand where the AI economy actually runs, look two layers below the GPU and one layer above the grid.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (May 2020). <em>Moore&rsquo;s Law is Dead for DRAM, and That is Great for SemiCap.</em> SemiAnalysis. Historical anchor for the thesis that slower DRAM density scaling shifts bit growth onto wafer capacity and semiconductor capital equipment. Used as inspiration only. Original work, no charts or wording copied.</p>
+
+            <p id="fn2"><sup>2</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/419103cb23dfeaa4/original/asml-2025-annual-report-financial-performance-section.pdf" target="_blank" rel="noopener">2025 Annual Report, financial performance section</a>. AI-driven advanced logic and DRAM, DRAM EUV lithography spending CAGR of 15% to 25% from 2025 to 2030, lithography intensity discussion.</p>
+
+            <p id="fn3"><sup>3</sup> SEMI (2025). <a href="https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports" target="_blank" rel="noopener">Global Semiconductor Equipment Sales Projected to Reach a Record of $156 Billion in 2027</a>. Source for the global equipment forecast and the DRAM equipment growth path of 15.4% to $22.5 billion in 2025, 15.1% in 2026, and 7.8% in 2027, with HBM and AI/data center demand cited as the drivers.</p>
+
+            <p id="fn4"><sup>4</sup> Micron Technology (2026). <a href="https://investors.micron.com/static-files/e089f8c0-065d-47b8-9d02-bfa863cdb357" target="_blank" rel="noopener">FY2026 Q2 prepared remarks</a>. AI demand driving DRAM and NAND data center bit TAM above 50% of total industry TAM in calendar 2026; AI and traditional server demand constrained by inadequate DRAM and NAND supply; HBM, LPDRAM, DDR DRAM, and SSDs framed as a portfolio for AI inference architectures optimized for token economics.</p>
+
+            <p id="fn5"><sup>5</sup> Micron Technology (2026). <a href="https://investors.micron.com/news-releases/news-release-details/micron-high-volume-production-hbm4-designed-nvidia-vera-rubin" target="_blank" rel="noopener">Micron Begins High-Volume Production of HBM4 Designed into NVIDIA Vera Rubin</a>. 36 GB 12-high HBM4, more than 2.8 TB/s bandwidth per stack, 20% better power efficiency than the previous generation.</p>
+
+            <p id="fn6"><sup>6</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">Annual Reports</a>. CoWoS packaging integrating SoCs and HBM stacks, CoWoS-L for large HPC products using advanced interposer and interconnect approaches, and System-on-Wafer work that integrates logic and HBM at wafer scale for data center computing.</p>
+
+            <p id="fn7"><sup>7</sup> Samsung Electronics (2025). <a href="https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing" target="_blank" rel="noopener">Samsung Ships Industry-First Commercial HBM4 with Ultimate Performance for AI Computing</a>. Mass production HBM4 at 11.7 Gbps transfer speed, up to 13 Gbps configurations, up to 3.3 TB/s per stack, on a 4nm logic base die.</p>
+
+            <p id="fn8"><sup>8</sup> Samsung Electronics (2026). <a href="https://news.samsung.com/global/samsung-and-amd-expand-strategic-collaboration-on-next-generation-ai-memory-solutions" target="_blank" rel="noopener">Samsung and AMD Expand Strategic Collaboration on Next-Generation AI Memory Solutions</a>. HBM4 for the AMD Instinct MI455X, DDR5 for EPYC, rack-scale AI platform memory needs.</p>
+
+            <p id="fn9"><sup>9</sup> SK hynix (2025). <a href="https://www.prnewswire.com/news-releases/sk-hynix-completes-worlds-first-hbm4-development-and-readies-mass-production-302554538.html" target="_blank" rel="noopener">SK hynix Completes World&rsquo;s First HBM4 Development and Readies Mass Production</a>. 2,048 I/O terminals, more than 10 Gbps operating speed, more than 40% power efficiency improvement, mass production readiness.</p>
+
+            <p id="fn10"><sup>10</sup> Applied Materials (2026). <a href="https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-micron-partner-advance-us-innovation-next" target="_blank" rel="noopener">Applied Materials and Micron Partner to Advance U.S. Innovation in Next-Generation AI Memory</a>. Next-generation DRAM, HBM, NAND research and development, EPIC Center collaboration, AI memory process innovation.</p>
+
+            <p id="fn11"><sup>11</sup> Reuters (2026). <a href="https://www.reuters.com/technology/applied-materials-sk-hynix-partner-next-gen-ai-memory-development-2026-03-10/" target="_blank" rel="noopener">Applied Materials, SK hynix partner on next-generation AI memory development</a>. Applied Materials partnerships with Micron and SK hynix, EPIC Center context, 3D packaging and process integration.</p>
+          </div>
+
+          <div class="mw-fr">
+            <div class="mw-fr-label">Further reading</div>
+            <ul>
+              <li><a href="https://www.semi.org/en/products-services/market-data/world-fab-forecast" target="_blank" rel="noopener">SEMI World Fab Forecast</a>. Quarterly tracking of fab capacity, capex, and equipment spending by region and product type.</li>
+              <li><a href="https://www.asml.com/en/investors" target="_blank" rel="noopener">ASML Investor Relations</a>. Lithography intensity, EUV roadmap, and DRAM EUV scenarios.</li>
+              <li><a href="https://investors.micron.com/" target="_blank" rel="noopener">Micron Investor Relations</a>. Quarterly memory market commentary across HBM, LPDRAM, DDR, and NAND.</li>
+              <li><a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">TSMC Annual Reports</a>. Packaging roadmap, CoWoS family, and System-on-Wafer disclosures.</li>
+              <li><a href="https://news.skhynix.com/" target="_blank" rel="noopener">SK hynix Newsroom</a>. HBM4 and next-generation memory milestones.</li>
+              <li><a href="https://news.samsung.com/global/" target="_blank" rel="noopener">Samsung Global Newsroom</a>. Memory and foundry roadmap announcements.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 012. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=16"></script>
+</body>
+</html>

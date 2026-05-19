@@ -158,17 +158,19 @@ function createFeaturedCard(post, totalCount) {
 // Explicit slug -> topic mapping so each essay lands in the
 // right bucket regardless of how its tags happen to be ordered.
 // Order of BLOG_TOPIC_ORDER controls the on-page rendering order.
-const BLOG_TOPIC_ORDER = ['agents', 'platforms', 'cognition', 'research'];
+const BLOG_TOPIC_ORDER = ['infrastructure', 'agents', 'platforms', 'cognition', 'research'];
 
 const BLOG_TOPIC_LABELS = {
-  agents:     'AI agents, software & accountability',
-  platforms:  'Platforms, attention & memory',
-  cognition:  'Labour, cognition & culture',
-  research:   'Research & first principles',
-  other:      'Other essays'
+  infrastructure: 'AI infrastructure & hardware',
+  agents:         'AI agents, software & accountability',
+  platforms:      'Platforms, attention & memory',
+  cognition:      'Labour, cognition & culture',
+  research:       'Research & first principles',
+  other:          'Other essays'
 };
 
 const BLOG_POST_TOPIC = {
+  'ai-memory-wall':                 'infrastructure',
   'liability-laundering':           'agents',
   'prompt-is-not-infrastructure':   'agents',
   'the-cheap-code-era':             'agents',
