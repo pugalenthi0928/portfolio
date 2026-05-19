@@ -151,37 +151,45 @@ function createFeaturedCard(post, totalCount) {
 // ============================================
 // TOPIC GROUPS — group archive by primary theme
 // ============================================
-// Topic taxonomy: tag-token -> { label, order }.
-// First match wins, in declaration order.
-const BLOG_TOPICS = [
-  { key: 'agents',         match: ['agents','ai agents','coding agents','agentic'],                       label: 'Agents & autonomous workflows' },
-  { key: 'security',       match: ['security','prompt injection','liability','governance','accountability','antitrust'], label: 'Security, liability & governance' },
-  { key: 'platforms',      match: ['platforms','interfaces','distribution','seo','intent economy','attention economy','free services','privacy','lock-in'], label: 'Platforms, attention & distribution' },
-  { key: 'cognition',      match: ['model monoculture','cognitive diversity','culture','systemic risk','memory','personal context'], label: 'Cognition, memory & culture' },
-  { key: 'economy',        match: ['economy','labour','inequality','systems','automation'],                label: 'Economy, labour & systems' },
-  { key: 'engineering',    match: ['software engineering','software','vibe coding'],                       label: 'Software engineering' },
-  { key: 'research',       match: ['deep learning','transformers','llms','llm','world models','jepa','yann lecun','technical'], label: 'Research & deep learning' },
-  { key: 'foundations',    match: ['knowledge','education','intelligence','first principles'],             label: 'Foundations & first principles' }
-];
+// Explicit slug -> topic mapping so each essay lands in the
+// right bucket regardless of how its tags happen to be ordered.
+// Order of BLOG_TOPIC_ORDER controls the on-page rendering order.
+const BLOG_TOPIC_ORDER = ['agents', 'platforms', 'cognition', 'research'];
+
+const BLOG_TOPIC_LABELS = {
+  agents:     'AI agents, software & accountability',
+  platforms:  'Platforms, attention & memory',
+  cognition:  'Labour, cognition & culture',
+  research:   'Research & first principles',
+  other:      'Other essays'
+};
+
+const BLOG_POST_TOPIC = {
+  'liability-laundering':           'agents',
+  'prompt-is-not-infrastructure':   'agents',
+  'the-cheap-code-era':             'agents',
+  'interface-coup':                 'platforms',
+  'free-intelligence-trap':         'platforms',
+  'memory-moat':                    'platforms',
+  'model-monoculture':              'cognition',
+  'the-boiling-frog-economy':       'cognition',
+  'yann-lecun-billion-dollar-bet':  'research',
+  'the-title-was-wrong':            'research',
+  'no-alexander-without-aristotle': 'research'
+};
 
 function classifyPost(post) {
-  const lowerTags = (post.tags || []).map(t => t.toLowerCase());
-  for (const topic of BLOG_TOPICS) {
-    if (lowerTags.some(t => topic.match.includes(t))) return topic;
-  }
-  return { key: 'other', label: 'Other essays' };
+  const key = BLOG_POST_TOPIC[post.slug] || 'other';
+  return { key, label: BLOG_TOPIC_LABELS[key] };
 }
 
 function renderTopicGroups(host, posts) {
-  // Skip the very newest post (already featured), but include it in groups too
-  // so the topic archive remains complete. We just show it as a normal card here.
   const buckets = new Map();
-  for (const topic of BLOG_TOPICS) buckets.set(topic.key, { topic, items: [] });
-  buckets.set('other', { topic: { key: 'other', label: 'Other essays' }, items: [] });
+  BLOG_TOPIC_ORDER.forEach(k => buckets.set(k, { key: k, label: BLOG_TOPIC_LABELS[k], items: [] }));
 
   posts.forEach(p => {
     const t = classifyPost(p);
-    if (!buckets.has(t.key)) buckets.set(t.key, { topic: t, items: [] });
+    if (!buckets.has(t.key)) buckets.set(t.key, { key: t.key, label: t.label, items: [] });
     buckets.get(t.key).items.push(p);
   });
 
@@ -189,7 +197,7 @@ function renderTopicGroups(host, posts) {
   wrap.className = 'blog-topics';
 
   let renderedIdx = 0;
-  buckets.forEach(({ topic, items }) => {
+  buckets.forEach(({ key, label, items }) => {
     if (items.length === 0) return;
     const section = document.createElement('section');
     section.className = 'blog-topic';
@@ -201,7 +209,7 @@ function renderTopicGroups(host, posts) {
     section.innerHTML =
       '<div class="blog-topic-head">' +
         '<span class="blog-topic-label">' + idx + ' &nbsp;&middot;&nbsp; Topic</span>' +
-        '<h3 class="blog-topic-name">' + escapeHTML(topic.label) + '</h3>' +
+        '<h3 class="blog-topic-name">' + escapeHTML(label) + '</h3>' +
         '<span class="blog-topic-count">' + items.length + ' essay' + (items.length === 1 ? '' : 's') + '</span>' +
       '</div>' +
       '<div class="blog-topic-grid">' + cards + '</div>';

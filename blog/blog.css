@@ -449,7 +449,15 @@
 /* ============================================
    BLOG INDEX VISUAL UPGRADE
    Scoped, additive. Does not modify existing rules.
+   Uses the site's own --accent and --text variables; falls back
+   to the live values from style.css (#F0784A accent, #E7E5E4 text).
    ============================================ */
+
+:root {
+  --blog-accent: var(--accent, #F0784A);
+  --blog-accent-soft: rgba(240, 120, 74, 0.06);
+  --blog-accent-faint: rgba(240, 120, 74, 0.03);
+}
 
 .blog-page { position: relative; }
 
@@ -459,65 +467,60 @@
   padding-bottom: 56px;
   position: relative;
 }
-.blog-hero-v2::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(to right, var(--border, rgba(0,0,0,0.08)) 0%, transparent 100%);
-  margin-top: 48px;
-}
 .blog-hero-issue {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-tertiary, #707070);
-  margin-bottom: 28px;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
 }
 .blog-hero-v2 .blog-hero-title {
-  font-size: clamp(36px, 6vw, 64px);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(40px, 6.2vw, 68px);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.04;
   letter-spacing: -0.025em;
-  margin-bottom: 20px;
-  max-width: 16ch;
+  color: var(--text);
+  margin: 0 0 18px;
+  max-width: 14ch;
 }
 .blog-hero-v2 .blog-hero-subtitle {
-  font-size: 18px;
-  line-height: 1.65;
-  color: var(--text-secondary, #555);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text-secondary);
   max-width: 640px;
-  margin-bottom: 36px;
+  margin: 0 0 40px;
 }
 .blog-hero-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
+  align-items: baseline;
+  gap: 56px;
   padding-top: 28px;
-  border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
-  margin-top: 4px;
+  border-top: 1px solid var(--border-light);
 }
 .blog-hero-stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  min-width: 80px;
+  gap: 6px;
 }
 .blog-hero-stat-num {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 1;
-  color: var(--text, #1a1a1a);
   letter-spacing: -0.01em;
+  color: var(--text);
 }
 .blog-hero-stat-label {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
 }
 
 /* --- Section scaffolding --- */
@@ -525,14 +528,15 @@
   padding: 56px 0;
 }
 .blog-section-featured {
-  padding-top: 48px;
+  padding-top: 56px;
+  padding-bottom: 28px;
 }
 .blog-section-all {
   padding-top: 40px;
   padding-bottom: 96px;
 }
 .blog-section-head {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   max-width: 720px;
 }
 .blog-section-eyebrow {
@@ -541,32 +545,36 @@
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent, #D4A574);
+  color: var(--blog-accent);
   margin-bottom: 10px;
 }
 .blog-section-title {
-  font-size: clamp(22px, 3.2vw, 30px);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(24px, 3.4vw, 32px);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.015em;
-  color: var(--text, #1a1a1a);
+  color: var(--text);
   margin: 0 0 10px;
 }
 .blog-section-sub {
-  font-size: 15.5px;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16px;
+  font-weight: 300;
   line-height: 1.65;
-  color: var(--text-secondary, #555);
+  color: var(--text-secondary);
   margin: 0;
+  max-width: 640px;
 }
 
 /* --- Featured card (magazine cover) --- */
 .blog-featured-card {
   display: block;
   position: relative;
-  border: 1px solid var(--border, rgba(0,0,0,0.1));
-  border-radius: 18px;
-  padding: 44px 44px 40px;
-  background: linear-gradient(180deg, rgba(212,165,116,0.04) 0%, transparent 60%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 36px 32px;
+  background: linear-gradient(180deg, var(--blog-accent-soft) 0%, transparent 55%);
   transition: transform 320ms cubic-bezier(.2,.7,.2,1), border-color 320ms ease, box-shadow 320ms ease;
   overflow: hidden;
 }
@@ -574,70 +582,69 @@
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--accent, #D4A574) 0%, transparent 70%);
-  opacity: 0.9;
+  height: 2px;
+  background: linear-gradient(to right, var(--blog-accent) 0%, transparent 65%);
 }
 .blog-featured-card:hover {
   transform: translateY(-2px);
-  border-color: var(--accent, #D4A574);
-  box-shadow: 0 18px 40px -22px rgba(0,0,0,0.18);
+  border-color: var(--blog-accent);
+  box-shadow: 0 18px 40px -22px rgba(0,0,0,0.45);
 }
 .blog-featured-num {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent, #D4A574);
-  margin-bottom: 14px;
+  color: var(--blog-accent);
+  margin-bottom: 16px;
 }
 .blog-featured-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(28px, 4.5vw, 44px);
+  font-size: clamp(28px, 4.4vw, 42px);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--text, #1a1a1a);
+  color: var(--text);
   margin: 0 0 18px;
   max-width: 22ch;
 }
 .blog-featured-excerpt {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--text-secondary, #555);
-  margin: 0 0 24px;
-  max-width: 640px;
   font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 17px;
   font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0 0 22px;
+  max-width: 640px;
 }
 .blog-featured-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
   margin-bottom: 18px;
 }
 .blog-featured-meta-sep {
-  color: var(--accent, #D4A574);
+  color: var(--blog-accent);
 }
 .blog-featured-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 .blog-featured-tag {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
   letter-spacing: 0.06em;
   padding: 4px 10px;
-  border: 1px solid var(--border, rgba(0,0,0,0.12));
+  border: 1px solid var(--border-light);
   border-radius: 999px;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
   background: transparent;
 }
 .blog-featured-cta {
@@ -649,7 +656,7 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text, #1a1a1a);
+  color: var(--text);
   transition: gap 220ms ease, color 220ms ease;
 }
 .blog-featured-cta svg {
@@ -658,7 +665,7 @@
   transition: transform 220ms ease;
 }
 .blog-featured-card:hover .blog-featured-cta {
-  color: var(--accent, #D4A574);
+  color: var(--blog-accent);
   gap: 12px;
 }
 .blog-featured-card:hover .blog-featured-cta svg {
@@ -669,39 +676,43 @@
 .blog-topics {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 36px;
 }
 .blog-topic {
-  border-top: 1px solid var(--border-light, rgba(0,0,0,0.08));
-  padding-top: 28px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 24px;
 }
 .blog-topic-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 .blog-topic-label {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
 }
 .blog-topic-name {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 22px;
+  font-size: clamp(20px, 2.4vw, 24px);
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--text, #1a1a1a);
+  color: var(--text);
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 .blog-topic-count {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
   letter-spacing: 0.08em;
+  flex-shrink: 0;
 }
 .blog-topic-grid {
   display: grid;
@@ -713,41 +724,42 @@
 .blog-mini {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-light, rgba(0,0,0,0.08));
-  border-radius: 12px;
-  padding: 18px 20px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 16px 18px;
   transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
   background: transparent;
 }
 .blog-mini:hover {
-  border-color: var(--accent, #D4A574);
+  border-color: var(--blog-accent);
   transform: translateY(-2px);
-  background: rgba(212,165,116,0.03);
+  background: var(--blog-accent-faint);
 }
 .blog-mini-meta {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
   letter-spacing: 0.08em;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
   margin-bottom: 8px;
 }
 .blog-mini-title {
+  font-family: var(--font-sans, 'Inter', sans-serif);
   font-size: 16px;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: -0.005em;
-  color: var(--text, #1a1a1a);
+  color: var(--text);
   margin: 0;
   transition: color 220ms ease;
 }
 .blog-mini:hover .blog-mini-title {
-  color: var(--accent, #D4A574);
+  color: var(--blog-accent);
 }
 
-/* --- All-essays grid: layered card upgrade (additive, sits on top of existing .blog-card rules) --- */
+/* --- All-essays grid: layered card upgrade (sits on top of existing .blog-card rules) --- */
 .blog-section-all .blog-card {
   position: relative;
-  padding: 28px 0 30px;
+  padding: 24px 0 26px;
 }
 .blog-section-all .blog-card-link {
   display: grid;
@@ -762,38 +774,51 @@
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: var(--text-tertiary, #707070);
-  padding-top: 4px;
+  color: var(--text-tertiary);
+  padding-top: 3px;
+  transition: color 220ms ease;
 }
 .blog-section-all .blog-card:hover .blog-card-num {
-  color: var(--accent, #D4A574);
+  color: var(--blog-accent);
 }
 .blog-section-all .blog-card-meta {
   margin-bottom: 8px;
 }
 .blog-section-all .blog-card-title {
-  font-size: 22px;
-  letter-spacing: -0.01em;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
 }
 .blog-section-all .blog-card-excerpt {
   font-family: 'Source Serif 4', Georgia, serif;
   font-weight: 300;
   font-size: 15.5px;
+  line-height: 1.65;
   max-width: 720px;
 }
 .blog-section-all .blog-card-tags {
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 4px;
 }
 .blog-section-all .blog-card-tags .tag {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 10.5px;
   letter-spacing: 0.06em;
   padding: 3px 10px;
-  border: 1px solid var(--border-light, rgba(0,0,0,0.08));
+  border: 1px solid var(--border-light);
   border-radius: 999px;
   background: transparent;
-  color: var(--text-tertiary, #707070);
+  color: var(--text-tertiary);
+}
+
+/* --- Filters: refresh to match accent + spacing --- */
+.blog-section-all .blog-filters {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-light);
 }
 
 /* --- Subtle scroll-reveal animation hook (extends the existing data-animate pattern) --- */
@@ -836,37 +861,49 @@
     padding-top: 120px;
     padding-bottom: 40px;
   }
+  .blog-hero-v2 .blog-hero-title {
+    max-width: none;
+  }
   .blog-hero-stats {
-    gap: 28px;
+    gap: 32px;
   }
   .blog-section {
     padding: 40px 0;
   }
+  .blog-section-featured {
+    padding-top: 32px;
+  }
   .blog-featured-card {
-    padding: 28px 24px 26px;
+    padding: 26px 22px 24px;
     border-radius: 14px;
   }
   .blog-featured-title {
-    font-size: clamp(24px, 6vw, 32px);
-  }
-  .blog-featured-excerpt {
-    font-size: 16px;
+    max-width: none;
   }
   .blog-topic-grid {
     grid-template-columns: 1fr;
+  }
+  .blog-section-all .blog-card-title {
+    font-size: 20px;
   }
 }
 @media (max-width: 480px) {
   .blog-hero-v2 {
     padding-top: 100px;
   }
+  .blog-hero-stats {
+    gap: 24px;
+  }
   .blog-hero-stat-num {
-    font-size: 22px;
+    font-size: 24px;
   }
   .blog-section-all .blog-card-title {
     font-size: 18px;
   }
   .blog-featured-card {
-    padding: 22px 18px 22px;
+    padding: 20px 18px;
+  }
+  .blog-featured-num {
+    margin-bottom: 12px;
   }
 }
