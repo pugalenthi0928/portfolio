@@ -1,0 +1,736 @@
+/* ============================================
+   BUILDER OS — shared styles for /labs/, /founder-notes/, /reading-room/
+   Loaded after style.css; reuses --accent / --text / --bg-alt tokens.
+   Scoped via .labs-page / .notes-page / .reading-page to avoid leak.
+   ============================================ */
+
+/* --- Per-page accent variables. Override on .labs-page etc. --- */
+.labs-page    { --bos-accent: #F0784A; --bos-accent-soft: rgba(240,120,74,0.10); --bos-accent-faint: rgba(240,120,74,0.04); }
+.notes-page   { --bos-accent: #4AB4C8; --bos-accent-soft: rgba(74,180,200,0.10); --bos-accent-faint: rgba(74,180,200,0.04); }
+.reading-page { --bos-accent: #B794F4; --bos-accent-soft: rgba(183,148,244,0.10); --bos-accent-faint: rgba(183,148,244,0.04); }
+
+/* --- Shared page hero --- */
+.bos-hero {
+  padding: 160px 0 80px;
+  position: relative;
+}
+.bos-hero .container {
+  max-width: 980px;
+}
+.bos-hero-issue {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+}
+.bos-hero-issue strong { color: var(--bos-accent); font-weight: 500; }
+.bos-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.bos-hero-title em { font-style: italic; font-weight: 400; }
+.bos-hero-subtitle {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--bos-accent);
+  padding-left: 18px;
+  margin: 0 0 28px;
+  max-width: 720px;
+}
+.bos-hero-intro {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text);
+  max-width: 680px;
+  margin: 0;
+}
+
+/* --- Shared page section frame --- */
+.bos-section {
+  padding: 72px 0;
+  border-top: 1px solid var(--border-light);
+}
+.bos-section .container { max-width: 1180px; }
+.bos-section-head { margin-bottom: 36px; max-width: 720px; }
+.bos-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bos-accent);
+  display: block;
+  margin-bottom: 10px;
+}
+.bos-section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 0 14px;
+}
+.bos-section-sub {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.0rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- Lab card grid --- */
+.bos-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+.bos-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 26px 28px 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-alt);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  overflow: hidden;
+}
+.bos-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--bos-accent);
+  opacity: 0.6;
+  transition: opacity 220ms ease, height 220ms ease;
+  pointer-events: none;
+}
+.bos-card:hover,
+.bos-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--bos-accent);
+  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bos-accent-faint) 100%);
+  outline: none;
+}
+.bos-card:hover::before { opacity: 1; height: 3px; }
+.bos-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bos-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.02);
+}
+.bos-status--active   { color: #5DCAA5; border-color: rgba(93,202,165,0.30); background: rgba(93,202,165,0.06); }
+.bos-status--shipped  { color: #6CBFE0; border-color: rgba(108,191,224,0.30); background: rgba(108,191,224,0.06); }
+.bos-status--research { color: #B794F4; border-color: rgba(183,148,244,0.30); background: rgba(183,148,244,0.06); }
+.bos-status--prototype{ color: #E8B468; border-color: rgba(232,180,104,0.30); background: rgba(232,180,104,0.06); }
+.bos-status--idea     { color: var(--text-tertiary); border-color: rgba(255,255,255,0.08); }
+.bos-cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+.bos-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  color: var(--text);
+  margin: 0;
+}
+.bos-card-desc {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+.bos-card-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 0;
+}
+.bos-card-metrics span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-tertiary);
+}
+.bos-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--bos-accent);
+  margin-top: 6px;
+}
+.bos-card-cta svg { transition: transform 220ms ease; }
+.bos-card:hover .bos-card-cta svg { transform: translate(3px, -3px); }
+.bos-card--muted { opacity: 0.72; }
+.bos-card--muted .bos-card-cta { color: var(--text-tertiary); }
+
+/* --- Process / method strip --- */
+.bos-process {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  counter-reset: step;
+}
+.bos-process-step {
+  position: relative;
+  padding: 22px 18px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+}
+.bos-process-step::before {
+  counter-increment: step;
+  content: "0" counter(step);
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--bos-accent);
+  margin-bottom: 10px;
+}
+.bos-process-step h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+.bos-process-step p {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- Focus card row (3 cards) --- */
+.bos-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.bos-focus-card {
+  padding: 24px 24px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+  position: relative;
+}
+.bos-focus-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bos-accent);
+  margin-bottom: 14px;
+}
+.bos-focus-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.bos-focus-card p {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- CTA band --- */
+.bos-cta-band {
+  padding: 64px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background:
+    linear-gradient(180deg, var(--bos-accent-soft) 0%, transparent 60%),
+    var(--bg-alt);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.bos-cta-band::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--bos-accent) 0%, transparent 70%);
+}
+.bos-cta-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.bos-cta-sub {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto 24px;
+}
+.bos-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--bos-accent);
+  color: #1a1a1a;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 200ms ease, filter 200ms ease;
+}
+.bos-cta-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.bos-cta-btn svg { transition: transform 220ms ease; }
+.bos-cta-btn:hover svg { transform: translateX(3px); }
+
+/* ============================================
+   Founder Notes — note cards
+   ============================================ */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.note-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
+  position: relative;
+}
+.note-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--bos-accent);
+  background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bos-accent-faint) 100%);
+}
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.note-meta .bos-cat { color: var(--bos-accent); }
+.note-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.note-summary {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+.note-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--bos-accent);
+  margin-top: 4px;
+}
+
+/* Category chip row */
+.notes-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 4px;
+}
+.notes-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: rgba(255,255,255,0.02);
+  color: var(--text-secondary);
+  cursor: default;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.notes-chip:hover {
+  border-color: var(--bos-accent);
+  color: var(--bos-accent);
+}
+
+/* Note philosophy callout */
+.notes-philosophy {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  line-height: 1.4;
+  color: var(--text);
+  border-left: 2px solid var(--bos-accent);
+  padding: 10px 0 10px 22px;
+  max-width: 680px;
+}
+
+/* ============================================
+   Reading Room — shelf cards, resource table, passes
+   ============================================ */
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.shelf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px 26px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-alt);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+.shelf-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--shelf-accent, var(--bos-accent));
+  opacity: 0.7;
+  transition: opacity 220ms ease, width 220ms ease;
+}
+.shelf-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--shelf-accent, var(--bos-accent));
+}
+.shelf-card:hover::before { width: 4px; opacity: 1; }
+.shelf-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--shelf-accent, var(--bos-accent));
+}
+.shelf-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.22;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+.shelf-desc {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.shelf-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.10em;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+/* per-shelf accent colors */
+.shelf-card--ai          { --shelf-accent: #B794F4; }
+.shelf-card--software    { --shelf-accent: #6CBFE0; }
+.shelf-card--intelligence{ --shelf-accent: #8ED9A8; }
+.shelf-card--startups    { --shelf-accent: #E8B468; }
+.shelf-card--trust       { --shelf-accent: #E8916B; }
+.shelf-card--writing     { --shelf-accent: #F4C5D7; }
+
+/* Resource table */
+.reading-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.93rem;
+}
+.reading-table thead th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.reading-table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+  transition: background 180ms ease;
+}
+.reading-table tbody tr:hover {
+  background: rgba(255,255,255,0.015);
+}
+.reading-table td {
+  padding: 16px 14px;
+  vertical-align: top;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.reading-table td.resource-title {
+  color: var(--text);
+  font-weight: 500;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0rem;
+}
+.reading-table td.resource-why {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+.resource-pill {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  color: var(--text-tertiary);
+  margin-right: 6px;
+}
+.resource-pill--book    { color: #B794F4; border-color: rgba(183,148,244,0.30); }
+.resource-pill--paper   { color: #6CBFE0; border-color: rgba(108,191,224,0.30); }
+.resource-pill--essay   { color: #5DCAA5; border-color: rgba(93,202,165,0.30); }
+.resource-pill--lecture { color: #E8B468; border-color: rgba(232,180,104,0.30); }
+.resource-pill--tool    { color: #E8916B; border-color: rgba(232,145,107,0.30); }
+.resource-pill--company { color: #F4C5D7; border-color: rgba(244,197,215,0.30); }
+.resource-pill--beg     { color: var(--text-tertiary); }
+.resource-pill--int     { color: var(--text-secondary); }
+.resource-pill--adv     { color: var(--text); }
+
+.shelf-anchor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--bos-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.shelf-anchor:hover { color: var(--text); }
+
+/* Section break inside the reading table */
+.reading-shelf-row td {
+  padding: 24px 14px 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+/* Read passes */
+.read-passes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.read-pass {
+  padding: 24px 22px 22px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-alt);
+}
+.read-pass-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bos-accent);
+  margin-bottom: 12px;
+}
+.read-pass h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.read-pass p {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   Homepage — Build, Think, Study trio
+   Reuses .atlas-grid breakpoints; uses .bos-trio-card
+   ============================================ */
+.bos-trio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.bos-trio-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 30px 26px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg-alt);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 240ms ease, background 240ms ease;
+}
+.bos-trio-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--trio-accent, var(--accent));
+  opacity: 0.85;
+}
+.bos-trio-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--trio-accent, var(--accent));
+}
+.bos-trio-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--trio-accent, var(--accent));
+}
+.bos-trio-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0;
+}
+.bos-trio-desc {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+.bos-trio-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--trio-accent, var(--accent));
+  margin-top: 4px;
+}
+.bos-trio-cta svg { transition: transform 220ms ease; }
+.bos-trio-card:hover .bos-trio-cta svg { transform: translate(3px, -3px); }
+
+.bos-trio-card--labs    { --trio-accent: #F0784A; }
+.bos-trio-card--notes   { --trio-accent: #4AB4C8; }
+.bos-trio-card--reading { --trio-accent: #B794F4; }
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 900px) {
+  .bos-card-grid,
+  .notes-grid,
+  .shelf-grid     { grid-template-columns: 1fr; gap: 12px; }
+  .bos-process    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bos-focus-grid,
+  .read-passes,
+  .bos-trio-grid  { grid-template-columns: 1fr; gap: 12px; }
+  .reading-table  { display: block; overflow-x: auto; }
+  .bos-hero       { padding: 130px 0 56px; }
+  .bos-section    { padding: 48px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bos-card, .bos-card::before,
+  .note-card, .shelf-card, .shelf-card::before,
+  .bos-trio-card, .bos-cta-btn,
+  .bos-card-cta svg, .bos-trio-cta svg { transition: none !important; }
+  .bos-card:hover, .note-card:hover,
+  .shelf-card:hover, .bos-trio-card:hover,
+  .bos-cta-btn:hover { transform: none !important; }
+}
