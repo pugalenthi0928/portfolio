@@ -35,8 +35,8 @@
     }
   }
   </script>
-  <link rel="stylesheet" href="../style.css?v=10">
-  <link rel="stylesheet" href="blog.css?v=10">
+  <link rel="stylesheet" href="../style.css?v=21">
+  <link rel="stylesheet" href="blog.css?v=12">
 </head>
 <body>
 
@@ -86,30 +86,71 @@
     <a href="../#contact">Contact</a>
   </nav>
 
-  <main>
-  <!-- ========== BLOG HERO ========== -->
-  <section class="blog-hero">
-    <div class="container">
-      <h1 class="blog-hero-title">Blog</h1>
-      <p class="blog-hero-subtitle">Thoughts on AI, ML, and building things that work.</p>
-    </div>
-  </section>
+  <main class="blog-page">
 
-  <!-- ========== FILTERS ========== -->
-  <div class="container">
-    <div class="blog-filters" id="blog-filters"></div>
-  </div>
-
-  <!-- ========== BLOG GRID ========== -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container">
-      <div class="blog-grid" id="blog-grid">
-        <noscript>
-          <p class="blog-empty">Please enable JavaScript to view blog posts, or visit individual post pages directly.</p>
-        </noscript>
+    <!-- ========== BLOG HERO ========== -->
+    <section class="blog-hero blog-hero-v2">
+      <div class="container">
+        <div class="blog-hero-issue" data-animate="fade-up">A serial publication &nbsp;&middot;&nbsp; Essays on intelligence, systems, and the AI economy &nbsp;&middot;&nbsp; Melbourne</div>
+        <h1 class="blog-hero-title" data-animate="fade-up">Notes from inside the AI stack.</h1>
+        <p class="blog-hero-subtitle" data-animate="fade-up">A running set of essays on how AI is reshaping work, software, attention, and trust. Long-form, source-backed, and written for people who want to understand the field, not just keep up with it.</p>
+        <div class="blog-hero-stats" data-animate="fade-up" id="blog-hero-stats">
+          <div class="blog-hero-stat">
+            <span class="blog-hero-stat-num" id="blog-stat-posts">&hellip;</span>
+            <span class="blog-hero-stat-label">essays</span>
+          </div>
+          <div class="blog-hero-stat">
+            <span class="blog-hero-stat-num" id="blog-stat-topics">&hellip;</span>
+            <span class="blog-hero-stat-label">topics</span>
+          </div>
+          <div class="blog-hero-stat">
+            <span class="blog-hero-stat-num" id="blog-stat-updated">&hellip;</span>
+            <span class="blog-hero-stat-label">last updated</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ========== FEATURED ========== -->
+    <section class="blog-section blog-section-featured">
+      <div class="container">
+        <div class="blog-section-head" data-animate="fade-up">
+          <span class="blog-section-eyebrow">Latest essay</span>
+          <h2 class="blog-section-title">Just published</h2>
+        </div>
+        <div id="blog-featured"></div>
+      </div>
+    </section>
+
+    <!-- ========== ARCHIVE BY TOPIC ========== -->
+    <section class="blog-section">
+      <div class="container">
+        <div class="blog-section-head" data-animate="fade-up">
+          <span class="blog-section-eyebrow">Archive</span>
+          <h2 class="blog-section-title">Read by theme</h2>
+          <p class="blog-section-sub">Essays grouped by the part of the stack they cover. Same posts, more useful map.</p>
+        </div>
+        <div id="blog-topics"></div>
+      </div>
+    </section>
+
+    <!-- ========== ALL POSTS ========== -->
+    <section class="blog-section blog-section-all">
+      <div class="container">
+        <div class="blog-section-head" data-animate="fade-up">
+          <span class="blog-section-eyebrow">All essays</span>
+          <h2 class="blog-section-title">Full archive</h2>
+          <p class="blog-section-sub">Filter by tag, or browse the complete list newest first.</p>
+        </div>
+        <div class="blog-filters" id="blog-filters"></div>
+        <div class="blog-grid" id="blog-grid">
+          <noscript>
+            <p class="blog-empty">Please enable JavaScript to view blog posts, or visit individual post pages directly under /blog/posts/.</p>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========== FOOTER ========== -->
