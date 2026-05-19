@@ -1308,17 +1308,30 @@ function initParticleCanvas() {
   createParticles();
   animId = requestAnimationFrame(animate);
 
-  // Expose canvas reveal for hero entrance choreography
+  // Expose canvas reveal for hero entrance choreography.
+  // Idempotent: only the first caller starts the fade.
+  let revealStarted = false;
   revealParticleCanvas = function() {
+    if (revealStarted) return;
+    revealStarted = true;
     const fadeStart = performance.now();
-    const fadeDuration = 1200;
+    const fadeDuration = 600; // ms — quick fade so neurons feel present, not late
     function fadeIn(now) {
       const progress = Math.min((now - fadeStart) / fadeDuration, 1);
       canvasOpacity = progress * progress; // ease-in quadratic
+      // animate() self-terminates whenever combinedOpacity hits 0
+      // (line ~1153). Keep the loop alive while we're ramping back up.
+      startLoop();
       if (progress < 1) requestAnimationFrame(fadeIn);
     }
     requestAnimationFrame(fadeIn);
   };
+
+  // Start the canvas reveal immediately on first paint instead of waiting
+  // for the preloader + fonts.ready chain. The preloader visually covers
+  // the canvas anyway, so by the time it dissolves the neurons are already
+  // at full opacity behind it. No perceived lag.
+  revealParticleCanvas();
 }
 
 // ============================================
