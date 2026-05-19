@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'boring-back-end-boom':           'infrastructure',
   'density-illusion':               'infrastructure',
   'modem-to-antenna-war':           'infrastructure',
   'nvidia-ai-factory-arm':          'infrastructure',
