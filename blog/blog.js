@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'mediatek-fragmented-compute-war':'infrastructure',
   'dry-resist-war':                 'infrastructure',
   'ai-memory-wall':                 'infrastructure',
   'liability-laundering':           'agents',

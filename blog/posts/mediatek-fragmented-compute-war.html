@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaTek and the Fragmented Compute War | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of how MediaTek moved from Android smartphone SoCs into flagship silicon, edge AI, automotive platforms, and custom data-center ASICs in a fragmented compute world.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/mediatek-fragmented-compute-war.html">
+  <meta property="og:title" content="MediaTek and the Fragmented Compute War | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of how MediaTek moved from Android smartphone SoCs into flagship silicon, edge AI, automotive platforms, and custom data-center ASICs in a fragmented compute world.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/mediatek-fragmented-compute-war.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="MediaTek">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI ASICs">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Huawei">
+  <meta property="article:tag" content="SMIC">
+  <meta property="article:tag" content="Qualcomm">
+  <meta property="article:tag" content="Edge AI">
+  <meta property="article:tag" content="Smartphones">
+  <meta property="article:tag" content="Data Centers">
+  <meta property="article:tag" content="Geopolitics">
+  <meta property="article:tag" content="Custom Silicon">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MediaTek and the Fragmented Compute War | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of how MediaTek moved from Android smartphone SoCs into flagship silicon, edge AI, automotive platforms, and custom data-center ASICs in a fragmented compute world.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "MediaTek and the Fragmented Compute War",
+    "description": "An original 2026 analysis of how MediaTek moved from Android smartphone SoCs into flagship silicon, edge AI, automotive platforms, and custom data-center ASICs in a fragmented compute world.",
+    "url": "https://pugalenthimagendran.com/blog/posts/mediatek-fragmented-compute-war.html",
+    "datePublished": "2026-05-20",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/mediatek-fragmented-compute-war.html",
+    "keywords": "MediaTek, Semiconductors, AI ASICs, TSMC, Huawei, SMIC, Qualcomm, Edge AI, Smartphones, Data Centers, Geopolitics, Custom Silicon"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       ESSAY FORMAT, Technical Editorial (shared with other essays)
+       ============================================ */
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 3rem;
+    }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+      padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none;
+    }
+    .essay-hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+      line-height: 1.12; color: var(--color-text-primary);
+      margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck {
+      font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300;
+      line-height: 1.65; color: var(--color-text-secondary);
+      border-left: 2px solid var(--color-border-tertiary);
+      padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic;
+    }
+    .essay-meta {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3rem;
+    }
+    .essay-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--color-text-secondary); flex-shrink: 0;
+    }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps {
+      display: inline-flex; flex-wrap: wrap; gap: 8px;
+      vertical-align: middle; margin-left: 12px;
+    }
+    .essay-stamp {
+      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 4px;
+      color: var(--accent, #F0784A);
+      border: 1px solid rgba(240,120,74,0.30);
+      background: rgba(240,120,74,0.06);
+    }
+    .essay-stamp--muted {
+      color: var(--color-text-tertiary);
+      border-color: var(--color-border-tertiary);
+      background: rgba(255,255,255,0.02);
+    }
+    .essay-lede {
+      font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400;
+      line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p {
+      font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300;
+      line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25;
+      letter-spacing: 0; font-style: normal;
+    }
+    .essay-pull {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400;
+      font-style: italic; line-height: 1.5; color: var(--color-text-primary);
+      border-top: 2px solid var(--color-text-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      padding: 1.5rem 0; margin: 2.5rem 0; text-align: left;
+    }
+    .essay-key {
+      background: var(--color-background-secondary);
+      border-left: 3px solid var(--color-text-primary);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem;
+    }
+    .essay-key-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 0.45rem;
+    }
+    .essay-key p {
+      font-family: 'Source Serif 4', serif; font-size: 1.02rem;
+      line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400;
+    }
+    .essay-body p.essay-line {
+      font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem;
+    }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament {
+      color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em;
+    }
+    .essay-closer {
+      font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95;
+      color: var(--color-text-secondary); font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem; margin-top: 3.5rem;
+    }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote {
+      font-family: 'Source Serif 4', serif; font-size: 0.82rem;
+      color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7;
+    }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       MEDIATEK POST, original diagrams + figures
+       Scoped under .essay-mt
+       ============================================ */
+    .essay-mt {
+      --mt-accent: #F0784A;
+      --mt-accent-soft: rgba(240,120,74,0.10);
+      --mt-accent-faint: rgba(240,120,74,0.04);
+      --mt-bd: rgba(255,255,255,0.08);
+      --mt-bd-soft: rgba(255,255,255,0.05);
+      --mt-cool: #6CBFE0;
+      --mt-cool-soft: rgba(108,191,224,0.10);
+      --mt-warm: #F0784A;
+      --mt-warm-soft: rgba(240,120,74,0.10);
+      --mt-purple: #B794F4;
+      --mt-purple-soft: rgba(183,148,244,0.10);
+      --mt-green: #5DCAA5;
+      --mt-green-soft: rgba(93,202,165,0.10);
+      --mt-amber: #E8B468;
+      --mt-amber-soft: rgba(232,180,104,0.10);
+    }
+
+    /* Table of contents */
+    .mt-toc {
+      margin: 0 0 2.5rem;
+      padding: 18px 22px 20px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .mt-toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 12px;
+    }
+    .mt-toc ol {
+      list-style: none; padding: 0; margin: 0;
+      counter-reset: toc;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px;
+    }
+    .mt-toc li {
+      counter-increment: toc;
+      font-family: 'Inter', sans-serif; font-size: 0.88rem;
+      color: var(--color-text-secondary); line-height: 1.5;
+    }
+    .mt-toc li::before {
+      content: counter(toc, decimal-leading-zero) ".";
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--mt-accent); margin-right: 8px; letter-spacing: 0.06em;
+    }
+    .mt-toc a {
+      color: var(--color-text-secondary); text-decoration: none;
+      border-bottom: 0.5px dotted transparent;
+      transition: color 180ms ease, border-color 180ms ease;
+    }
+    .mt-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .mt-fig {
+      margin: 2.5rem 0 2.75rem;
+      padding: 24px 22px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--mt-bd);
+      background:
+        linear-gradient(180deg, var(--mt-accent-faint) 0%, transparent 60%),
+        var(--bg-alt);
+    }
+    .mt-fig-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--mt-accent); margin-bottom: 14px;
+    }
+    .mt-fig-cap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-top: 14px; padding-top: 10px;
+      border-top: 0.5px solid var(--mt-bd-soft); line-height: 1.6;
+    }
+
+    /* 2020 thesis callout */
+    .mt-thesis {
+      margin: 2rem 0 2.5rem;
+      padding: 22px 24px; border-radius: 10px;
+      border: 1px solid var(--mt-accent);
+      background:
+        linear-gradient(180deg, var(--mt-accent-soft) 0%, transparent 80%),
+        var(--bg-alt);
+    }
+    .mt-thesis-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mt-accent); margin-bottom: 10px;
+    }
+    .mt-thesis-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1.15rem; line-height: 1.55;
+      color: var(--color-text-primary); margin: 0;
+    }
+
+    /* 2020 vs 2026 map (cards side by side, with central node lists) */
+    .mt-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 2rem 0 2.5rem;
+    }
+    .mt-map-col {
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--mt-bd);
+      background: var(--bg-alt);
+    }
+    .mt-map-col--past {
+      background: linear-gradient(180deg, var(--mt-cool-soft) 0%, transparent 70%), var(--bg-alt);
+      border-color: rgba(108,191,224,0.40);
+    }
+    .mt-map-col--past .mt-map-label { color: var(--mt-cool); }
+    .mt-map-col--now {
+      background: linear-gradient(180deg, var(--mt-accent-soft) 0%, transparent 70%), var(--bg-alt);
+      border-color: var(--mt-accent);
+    }
+    .mt-map-col--now .mt-map-label { color: var(--mt-accent); }
+    .mt-map-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 12px;
+    }
+    .mt-map-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--color-text-primary); margin: 0 0 12px;
+    }
+    .mt-map-list {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; gap: 6px;
+    }
+    .mt-map-list li {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.04em;
+      color: var(--color-text-secondary);
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: rgba(255,255,255,0.015);
+    }
+    .mt-map-list li strong {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    /* Revenue identity shift */
+    .mt-shift {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 2rem 0 2.5rem;
+    }
+    .mt-shift-col {
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--mt-bd);
+      background: var(--bg-alt);
+    }
+    .mt-shift-old {
+      background: linear-gradient(180deg, var(--mt-cool-soft) 0%, transparent 70%), var(--bg-alt);
+      border-color: rgba(108,191,224,0.40);
+    }
+    .mt-shift-old .mt-shift-eyebrow { color: var(--mt-cool); }
+    .mt-shift-new {
+      background: linear-gradient(180deg, var(--mt-accent-soft) 0%, transparent 70%), var(--bg-alt);
+      border-color: var(--mt-accent);
+    }
+    .mt-shift-new .mt-shift-eyebrow { color: var(--mt-accent); }
+    .mt-shift-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .mt-shift-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--color-text-primary); margin: 0 0 12px;
+    }
+    .mt-pills {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .mt-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; letter-spacing: 0.04em;
+      padding: 5px 10px; border-radius: 999px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: rgba(255,255,255,0.02);
+      color: var(--color-text-secondary);
+    }
+    .mt-pill--strong {
+      color: var(--mt-accent);
+      border-color: rgba(240,120,74,0.40);
+      background: rgba(240,120,74,0.06);
+    }
+
+    /* Edge-to-cloud silicon stack */
+    .mt-stack { display: flex; flex-direction: column; gap: 4px; }
+    .mt-layer {
+      display: grid;
+      grid-template-columns: 32px 1fr 110px;
+      align-items: center; gap: 14px;
+      padding: 12px 16px; border-radius: 6px;
+      border: 1px solid var(--mt-bd);
+      background: var(--bg-alt);
+    }
+    .mt-layer-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--mt-accent); letter-spacing: 0.08em;
+    }
+    .mt-layer-name {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500;
+      color: var(--color-text-primary); letter-spacing: -0.005em;
+    }
+    .mt-layer-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+      letter-spacing: 0.10em; color: var(--color-text-tertiary);
+      text-transform: uppercase; text-align: right;
+    }
+    .mt-layer--cloud { background: linear-gradient(90deg, var(--mt-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--mt-accent); }
+    .mt-layer--edge  { background: linear-gradient(90deg, var(--mt-cool-soft), transparent 60%), var(--bg-alt); }
+    .mt-layer--auto  { background: linear-gradient(90deg, var(--mt-amber-soft), transparent 60%), var(--bg-alt); }
+
+    /* Glossary */
+    .mt-terms {
+      margin: 2rem 0 2.5rem;
+      padding: 20px 22px; border-radius: 10px;
+      border: 0.5px dashed var(--color-border-tertiary);
+      background: var(--bg-alt);
+    }
+    .mt-terms-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 12px;
+    }
+    .mt-terms dl {
+      margin: 0;
+      display: grid; grid-template-columns: 150px 1fr;
+      gap: 6px 16px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem; line-height: 1.5;
+    }
+    .mt-terms dt {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      letter-spacing: 0.04em; color: var(--mt-accent); padding-top: 2px;
+    }
+    .mt-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Value chain grid */
+    .mt-chain { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .mt-chain-node {
+      padding: 14px 16px; border-radius: 8px;
+      border: 1px solid var(--mt-bd); background: var(--bg-alt);
+    }
+    .mt-chain-cat {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--mt-accent); margin-bottom: 6px;
+    }
+    .mt-chain-body {
+      font-family: 'Source Serif 4', serif; font-size: 0.92rem;
+      line-height: 1.5; color: var(--color-text-secondary);
+    }
+
+    /* Counterargument list */
+    .mt-counter {
+      margin: 1.5rem 0 2rem;
+      padding: 20px 22px; border-radius: 10px;
+      border: 1px solid var(--mt-bd); background: var(--bg-alt);
+    }
+    .mt-counter-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 12px;
+    }
+    .mt-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .mt-counter li {
+      counter-increment: risk;
+      font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7;
+      color: var(--color-text-primary);
+      padding: 10px 0 10px 38px; position: relative;
+      border-bottom: 0.5px solid var(--mt-bd-soft);
+    }
+    .mt-counter li:last-child { border-bottom: none; }
+    .mt-counter li::before {
+      content: counter(risk, decimal-leading-zero);
+      position: absolute; left: 0; top: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+      letter-spacing: 0.06em; color: var(--mt-accent);
+    }
+    .mt-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+
+    /* Stat label inside body */
+    .mt-stat {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; color: var(--mt-accent);
+      letter-spacing: 0.04em; padding: 2px 6px;
+      border-radius: 3px; background: var(--mt-accent-faint);
+    }
+    .mt-stat--down {
+      color: var(--mt-cool);
+      background: rgba(108,191,224,0.10);
+    }
+
+    /* Further reading */
+    .mt-fr {
+      margin-top: 2.5rem;
+      padding-top: 1.75rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+    }
+    .mt-fr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 14px;
+    }
+    .mt-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .mt-fr li {
+      font-family: 'Source Serif 4', serif; font-size: 0.95rem;
+      line-height: 1.55; color: var(--color-text-secondary);
+    }
+    .mt-fr li a {
+      color: var(--color-text-primary); text-decoration: none;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .mt-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .mt-map, .mt-shift { grid-template-columns: 1fr; }
+      .mt-chain { grid-template-columns: 1fr; }
+      .mt-toc ol { grid-template-columns: 1fr; }
+      .mt-terms dl { grid-template-columns: 120px 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .mt-layer { grid-template-columns: 28px 1fr; }
+      .mt-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-mt">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 014 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">MediaTek</span>
+          <span class="tag">Semiconductors</span>
+          <span class="tag">AI ASICs</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">Huawei</span>
+          <span class="tag">SMIC</span>
+          <span class="tag">Qualcomm</span>
+          <span class="tag">Edge AI</span>
+          <span class="tag">Smartphones</span>
+          <span class="tag">Data Centers</span>
+          <span class="tag">Geopolitics</span>
+          <span class="tag">Custom Silicon</span>
+        </div>
+
+        <h1 class="essay-hed">MediaTek and the <em>Fragmented Compute</em> War.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">How a Taiwan fabless chip company moved from mid-range Android SoCs into flagship phones, edge AI, automotive, and custom data-center silicon.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">In 2020, the MediaTek thesis was Huawei substitution. In 2026, the story is bigger. Compute is fragmenting across phones, edge devices, cars, hyperscalers, and national supply chains. MediaTek sits in the middle.</p>
+
+          <nav class="mt-toc" aria-label="Article contents">
+            <div class="mt-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2020">The 2020 thesis</a></li>
+              <li><a href="#sec-2026">What changed by 2026</a></li>
+              <li><a href="#sec-notcheap">Not just cheap Android</a></li>
+              <li><a href="#sec-tsmc">The TSMC access advantage</a></li>
+              <li><a href="#sec-phones">Phones mature, value rising</a></li>
+              <li><a href="#sec-edge">Smart Edge nearly as big as phones</a></li>
+              <li><a href="#sec-asic">The real surprise is AI ASICs</a></li>
+              <li><a href="#sec-stack">Why MediaTek has the skill stack</a></li>
+              <li><a href="#sec-geo">The geopolitical middle position</a></li>
+              <li><a href="#sec-chain">Value chain map</a></li>
+              <li><a href="#sec-risks">What could break the thesis</a></li>
+              <li><a href="#sec-final">The fragmented compute war</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2020, the MediaTek thesis was simple. Huawei was being cut off from advanced chip manufacturing. US export controls threatened Huawei&rsquo;s Kirin smartphone chips, 5G chips, and broader silicon roadmap. The obvious conclusion was that Huawei and Chinese Android OEMs would need alternative SoCs, and MediaTek stood to benefit.</p>
+
+          <p>That thesis was directionally right. The 2026 version is more interesting.</p>
+
+          <p>Huawei did not disappear. SMIC and Huawei shipped 7nm-class Kirin chips inside the Mate 60 Pro.<sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup> But Huawei also did not fully escape the constraints, and the follow-on Kirin 9020 in the Mate 70 looked incremental rather than a major redesign.<sup><a href="#fn4">4</a></sup> Qualcomm remains the premium Android incumbent. Apple has its own silicon. Xiaomi is experimenting with in-house chips. Hyperscalers want custom AI ASICs. Automakers want AI cockpits. Edge devices need on-device inference. TSMC&rsquo;s leading-edge capacity is becoming more strategic every year.</p>
+
+          <p class="essay-line">The story is no longer &ldquo;Huawei loses, MediaTek wins.&rdquo; The story is fragmentation. MediaTek sits in the middle of it.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The correct 2026 claim is not that MediaTek wins because Huawei got blocked. The correct claim is that MediaTek benefits from compute fragmentation, but only if it keeps moving up the value chain faster than its old smartphone business slows down.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2020">I. The 2020 thesis</h2>
+
+          <p>In May 2020, Dylan Patel published a SemiAnalysis piece arguing that MediaTek stood to gain the most from the new US-China cold war.<sup><a href="#fn1">1</a></sup> The argument was tidy. Huawei&rsquo;s Kirin roadmap was under pressure from export controls. Chinese Android OEMs needed an alternative non-US SoC supplier. MediaTek&rsquo;s Dimensity 5G line lined up well with sub-6 GHz 5G, which mattered more globally than mmWave. The framing was largely a smartphone SoC story.</p>
+
+          <p>I revisited that piece because it has aged in a way most cold war predictions did not. The direction was correct. The shape of the win turned out to be different. The 2020 framing read MediaTek as a phone-chip substitution play. The 2026 reality is a wider story about who builds compute when every region, OEM, and cloud wants more control over silicon.</p>
+
+          <div class="mt-thesis">
+            <div class="mt-thesis-label">2020 thesis</div>
+            <p class="mt-thesis-text">If Huawei loses access to advanced self-designed chips, Chinese Android OEMs will need alternative SoC suppliers. MediaTek could benefit by moving up from lower-end Android phones into the mid-to-premium 5G market.</p>
+          </div>
+
+          <p>The piece was conservative in 2020. It assumed the export controls would hold, the Huawei recovery would be limited, and the smartphone SoC market would be the centre of the action. Two of those held. The third moved.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2026">II. What changed by 2026</h2>
+
+          <p>Six years later, three facts complicate the simple substitution story.</p>
+
+          <p>First, Huawei is not dead. TechInsights teardowns confirmed that SMIC manufactured the Kirin 9000S in the Mate 60 Pro on its 7nm-class N+2 technology, a made-in-China milestone that Reuters reported as a real breakthrough.<sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup> Second, Huawei is not unconstrained. TechInsights described the Mate 70 Kirin 9020 as incremental rather than a major redesign, consistent with SMIC remaining behind the leading edge.<sup><a href="#fn4">4</a></sup> Third, Taiwan added Huawei and SMIC to its export control list, requiring Taiwanese firms to obtain government permits before exporting to either company.<sup><a href="#fn5">5</a></sup> The simple binary of 2020 has become a fractured market.</p>
+
+          <p>That is the new strategic environment MediaTek operates in. Not a Huawei collapse. Not a Huawei comeback. A constrained Huawei, a fragmented Chinese OEM base, a more strategic TSMC, and a global silicon roadmap pulled in many directions at once.</p>
+
+          <div class="mt-map">
+            <div class="mt-map-col mt-map-col--past">
+              <div class="mt-map-label">2020 simple map</div>
+              <h3 class="mt-map-title">Huawei blocked &rarr; MediaTek opportunity</h3>
+              <ul class="mt-map-list">
+                <li><strong>Huawei Kirin</strong> &middot; under export control pressure</li>
+                <li><strong>Chinese OEMs</strong> &middot; need a non-US SoC supplier</li>
+                <li><strong>MediaTek Dimensity</strong> &middot; the substitution candidate</li>
+              </ul>
+            </div>
+            <div class="mt-map-col mt-map-col--now">
+              <div class="mt-map-label">2026 fragmented map</div>
+              <h3 class="mt-map-title">Many silicon roads, no single winner</h3>
+              <ul class="mt-map-list">
+                <li><strong>Huawei</strong> &middot; constrained domestic silicon with SMIC</li>
+                <li><strong>Qualcomm</strong> &middot; premium Android incumbent</li>
+                <li><strong>Apple</strong> &middot; internal silicon, vertical model</li>
+                <li><strong>MediaTek</strong> &middot; TSMC-linked neutral platform</li>
+                <li><strong>Hyperscalers</strong> &middot; custom ASIC demand</li>
+                <li><strong>Nvidia</strong> &middot; AI ecosystem and partnerships</li>
+                <li><strong>Chinese OEMs</strong> &middot; multi-vendor approach</li>
+                <li><strong>Edge AI &amp; auto</strong> &middot; new compute footprint</li>
+              </ul>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-notcheap">III. MediaTek is no longer just cheap Android</h2>
+
+          <p>The old MediaTek brand was low-cost Android SoCs. That brand was useful, but it understates what the company is now trying to be. Dimensity flagships are competing in premium Android. The TSMC N2P tape-out signals leading-edge intent rather than mid-tier survival.<sup><a href="#fn7">7</a></sup> Smart Edge Platforms is climbing toward half of revenue. AI accelerator ASIC projects for US hyperscale customers are on the public record.<sup><a href="#fn6">6</a></sup><sup><a href="#fn11">11</a></sup> A Grace Blackwell Superchip was co-designed with Nvidia for the DGX Spark workstation.<sup><a href="#fn9">9</a></sup><sup><a href="#fn10">10</a></sup></p>
+
+          <p>None of those pieces fits a story of MediaTek as a discount Android shop.</p>
+
+          <p class="essay-line">MediaTek&rsquo;s story is not that smartphones are booming. It is that silicon content and silicon complexity are rising across more device categories.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-tsmc">IV. The TSMC access advantage</h2>
+
+          <p>The most important structural difference between Huawei and MediaTek is not design talent. It is manufacturing access.</p>
+
+          <p>Huawei has to work around export controls and SMIC&rsquo;s constrained roadmap. MediaTek can ride TSMC&rsquo;s leading-edge cadence. The company has announced a flagship SoC tape-out on TSMC&rsquo;s enhanced N2P process, with the first chipset expected in late 2026. MediaTek describes N2P as offering up to <span class="mt-stat">18% performance</span> improvement at the same power, around <span class="mt-stat">36% power reduction</span> at the same speed, and roughly <span class="mt-stat">1.2x logic density</span> versus N3E.<sup><a href="#fn7">7</a></sup> TSMC&rsquo;s own 2025 annual report places N2P and A16 volume production in the second half of 2026 and the next A14 node in 2028.<sup><a href="#fn8">8</a></sup></p>
+
+          <p>That is a wide gap. Not because TSMC is the only foundry, but because no other foundry can offer the same combination of process maturity, packaging integration, and AI/HPC customer base at the leading edge today. MediaTek being on TSMC is not a small detail. It is a strategic position.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-phones">V. Smartphones are mature, but premium silicon still matters</h2>
+
+          <p>This is not a smartphone boom story. Smartphones are mature and cyclical. MediaTek&rsquo;s own Q1 2026 numbers showed Mobile Phone revenue down <span class="mt-stat mt-stat--down">17% QoQ</span> and <span class="mt-stat mt-stat--down">15% YoY</span>, with Mobile Phone at <span class="mt-stat">49% of revenue</span>.<sup><a href="#fn6">6</a></sup> Counterpoint described 2025 as a year of only modest global smartphone shipment growth, with 2026 facing softness as components are pulled toward AI data center prioritisation.<sup><a href="#fn12">12</a></sup></p>
+
+          <p>If MediaTek were still a unit-growth story, those numbers would be the headline. They are not, because the value per chip is rising. Premium silicon wins, higher ASPs, AI on-device features, better modems, and content-per-device gains start to matter more than handset shipment counts.</p>
+
+          <p class="essay-line">The smartphone market is not exploding. The value per useful chip is.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-edge">VI. Smart Edge is becoming nearly as important as phones</h2>
+
+          <p>The segment that quietly recasts MediaTek as something other than a phone-chip company is Smart Edge Platforms. In Q1 2026 it grew <span class="mt-stat">23% sequentially</span> and <span class="mt-stat">13% year over year</span>, reaching <span class="mt-stat">46% of total revenue</span>.<sup><a href="#fn6">6</a></sup> The drivers MediaTek calls out span connectivity, computing, automotive, and broader share gains, including Wi-Fi, broadband, TVs, automotive cockpit silicon, IoT, edge AI, and local inference.</p>
+
+          <p>You can see the identity shift in the revenue mix. Phones still pay the bills, but they no longer define the company.</p>
+
+          <div class="mt-shift">
+            <div class="mt-shift-col mt-shift-old">
+              <div class="mt-shift-eyebrow">Old MediaTek</div>
+              <h3 class="mt-shift-title">Phones first</h3>
+              <div class="mt-pills">
+                <span class="mt-pill mt-pill--strong">Phones</span>
+                <span class="mt-pill">Connectivity</span>
+                <span class="mt-pill">Smart home</span>
+              </div>
+            </div>
+            <div class="mt-shift-col mt-shift-new">
+              <div class="mt-shift-eyebrow">New MediaTek</div>
+              <h3 class="mt-shift-title">Edge to cloud platform</h3>
+              <div class="mt-pills">
+                <span class="mt-pill mt-pill--strong">Phones</span>
+                <span class="mt-pill mt-pill--strong">Smart Edge</span>
+                <span class="mt-pill mt-pill--strong">Automotive</span>
+                <span class="mt-pill mt-pill--strong">Connectivity</span>
+                <span class="mt-pill mt-pill--strong">Custom ASIC</span>
+                <span class="mt-pill">Edge AI</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-asic">VII. The real surprise is AI ASICs</h2>
+
+          <p>The most interesting line in MediaTek&rsquo;s Q1 2026 commentary was not about phones or edge devices. It was the public framing of the AI accelerator ASIC program.</p>
+
+          <p>MediaTek said its first AI accelerator ASIC project for a US hyperscale customer was on schedule, with around <span class="mt-stat">US$2 billion</span> revenue contribution expected in Q4 2026 and the project scaling to multiple billions in 2027. A second AI accelerator ASIC project is underway with mass production targeted by the end of 2027. The company also framed the cloud ASIC TAM at <span class="mt-stat">US$70&ndash;80 billion in 2027</span> and reiterated a 10 to 15 percent share target.<sup><a href="#fn6">6</a></sup><sup><a href="#fn11">11</a></sup></p>
+
+          <p>This is not normal smartphone silicon. It is a serious bid to become a custom silicon execution partner for hyperscalers that want their own AI chips, but do not want to build a frontier design and supply-chain organisation from scratch.</p>
+
+          <p class="essay-line">MediaTek is not trying to beat Nvidia head-on. It is trying to become the design and integration partner behind customers who want their own AI silicon.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-stack">VIII. Why MediaTek has the right skill stack</h2>
+
+          <p>AI accelerator ASICs need a specific cluster of capabilities. Power-efficient design. High-speed interfaces. Memory subsystem design. Die-to-die interconnect. HBM integration. SerDes. Voltage regulation. Packaging awareness. Customer-specific integration. TSMC execution discipline.</p>
+
+          <p>MediaTek talks about the AI ASIC effort in those exact terms. The company has discussed work on 400G SerDes, 64G die-to-die interconnect, an advanced 3.5D platform, custom HBM solutions, and integrated voltage regulators for future multi-kilowatt XPUs.<sup><a href="#fn6">6</a></sup> The Nvidia GB10 Grace Blackwell Superchip, which powers the DGX Spark workstation, was co-designed with MediaTek. MediaTek contributed CPU, memory subsystem, and high-speed interface design work. GB10 pairs a Grace 20-core Arm CPU, a Blackwell GPU, and 128 GB unified memory, delivering up to 1 PFLOP of AI performance in a desktop form factor.<sup><a href="#fn9">9</a></sup><sup><a href="#fn10">10</a></sup></p>
+
+          <p>That is the through-line. Phones taught MediaTek low-power design. Modems taught connectivity. Consumer SoCs taught system integration. High-volume devices taught execution discipline. AI ASICs need all of those skills, but scaled up to multi-kilowatt and hyperscale-grade reliability.</p>
+
+          <figure class="mt-fig" aria-label="Diagram: MediaTek across the edge-to-cloud silicon stack">
+            <div class="mt-fig-label">Diagram &middot; The edge-to-cloud silicon stack</div>
+            <div class="mt-stack">
+              <div class="mt-layer mt-layer--cloud">
+                <div class="mt-layer-num">07</div>
+                <div class="mt-layer-name">Hyperscaler AI ASICs (custom silicon partner)</div>
+                <div class="mt-layer-tag">Cloud</div>
+              </div>
+              <div class="mt-layer mt-layer--cloud">
+                <div class="mt-layer-num">06</div>
+                <div class="mt-layer-name">AI workstation / DGX Spark co-design</div>
+                <div class="mt-layer-tag">Cloud-Edge</div>
+              </div>
+              <div class="mt-layer mt-layer--auto">
+                <div class="mt-layer-num">05</div>
+                <div class="mt-layer-name">Automotive cockpit and ADAS compute</div>
+                <div class="mt-layer-tag">Auto</div>
+              </div>
+              <div class="mt-layer mt-layer--edge">
+                <div class="mt-layer-num">04</div>
+                <div class="mt-layer-name">Smart edge: TV, broadband, Wi-Fi, IoT</div>
+                <div class="mt-layer-tag">Edge</div>
+              </div>
+              <div class="mt-layer mt-layer--edge">
+                <div class="mt-layer-num">03</div>
+                <div class="mt-layer-name">Flagship Dimensity smartphone SoCs</div>
+                <div class="mt-layer-tag">Phone</div>
+              </div>
+              <div class="mt-layer">
+                <div class="mt-layer-num">02</div>
+                <div class="mt-layer-name">Connectivity and modem platforms</div>
+                <div class="mt-layer-tag">Comms</div>
+              </div>
+              <div class="mt-layer">
+                <div class="mt-layer-num">01</div>
+                <div class="mt-layer-name">TSMC advanced process and packaging</div>
+                <div class="mt-layer-tag">Foundation</div>
+              </div>
+            </div>
+            <div class="mt-fig-cap">Each higher layer reuses what the layers below it taught the company. The AI ASIC layer is not a green-field move. It is a stack extension.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-geo">IX. The geopolitical middle position</h2>
+
+          <p>MediaTek occupies a strange but valuable place in the geopolitics of compute. Taiwan-based. TSMC-linked. Not American. Not Chinese. Android-OEM-friendly. Globally integrated. Dependent on US-aligned semiconductor tools and TSMC, and exposed to Taiwan-related risk.</p>
+
+          <p>That position has been re-priced by the export control environment. Taiwan&rsquo;s own export control list now includes Huawei and SMIC, with Taiwanese firms required to obtain permits before exporting to either.<sup><a href="#fn5">5</a></sup> US controls continue to limit advanced semiconductor access to China at large. Huawei and SMIC remain on the constrained side of that line. TSMC continues to define what leading-edge looks like.</p>
+
+          <p>The strategic interpretation is uncomfortable but honest. MediaTek benefits from being neutral enough for many OEMs around the world, but its neutrality is not independence.</p>
+
+          <p class="essay-line">MediaTek is neutral, but not detached. Its neutrality works because it is plugged into TSMC, not because it is outside geopolitics.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-chain">X. Value chain map</h2>
+
+          <p>This is a value-chain map, not investment advice. The point is to show the shape of the dependency. Compute fragmentation is a multi-vendor environment, and MediaTek&rsquo;s value capture depends on how many of these adjacent boxes it can either serve, partner with, or stay neutral to.</p>
+
+          <figure class="mt-fig" aria-label="Diagram: MediaTek value chain map">
+            <div class="mt-fig-label">Diagram &middot; The value chain</div>
+            <div class="mt-chain">
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Foundry</div>
+                <div class="mt-chain-body">TSMC. Defines the leading edge MediaTek can access.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Fabless platform</div>
+                <div class="mt-chain-body">MediaTek. Designs SoCs and AI ASICs without owning fabs.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Premium Android rival</div>
+                <div class="mt-chain-body">Qualcomm. Defending the top of Android SoCs.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Internal silicon</div>
+                <div class="mt-chain-body">Apple, Huawei HiSilicon, Xiaomi. Vertical models.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Chinese foundry constraint</div>
+                <div class="mt-chain-body">SMIC. Capable but limited without leading-edge tools.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">AI ecosystem partner</div>
+                <div class="mt-chain-body">Nvidia. GB10 co-design, broader AI stack.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Hyperscaler customers</div>
+                <div class="mt-chain-body">US cloud operators commissioning custom AI silicon.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Device OEMs</div>
+                <div class="mt-chain-body">Oppo, Vivo, Xiaomi, Samsung, Lenovo, automakers.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">Edge markets</div>
+                <div class="mt-chain-body">Phones, smart TVs, Wi-Fi, broadband, automotive, IoT.</div>
+              </div>
+              <div class="mt-chain-node">
+                <div class="mt-chain-cat">ASIC stack pieces</div>
+                <div class="mt-chain-body">SerDes, HBM, die-to-die, packaging, voltage regulation.</div>
+              </div>
+            </div>
+            <div class="mt-fig-cap">This is a value-chain map, not investment advice. MediaTek&rsquo;s strategic value rises with the number of these boxes it touches.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Quick terms</h2>
+
+          <div class="mt-terms" role="complementary" aria-label="Glossary">
+            <div class="mt-terms-label">Glossary</div>
+            <dl>
+              <dt>SoC</dt><dd>System-on-chip. A single chip integrating CPU, GPU, memory controllers, modem, and other blocks.</dd>
+              <dt>Fabless</dt><dd>Chip company that designs chips but does not manufacture them.</dd>
+              <dt>Foundry</dt><dd>Company that manufactures chips on behalf of fabless designers.</dd>
+              <dt>ASIC</dt><dd>Application-specific integrated circuit. A chip designed for a particular workload.</dd>
+              <dt>AI ASIC</dt><dd>Custom chip designed for AI workloads, typically inference or training acceleration.</dd>
+              <dt>Edge AI</dt><dd>AI computation on devices near the user rather than only in cloud data centers.</dd>
+              <dt>NPU</dt><dd>Neural processing unit. An on-chip accelerator for neural network operations.</dd>
+              <dt>SerDes</dt><dd>Serializer/deserializer. The high-speed I/O block that moves data between chips.</dd>
+              <dt>Die-to-die</dt><dd>Communication between chiplets inside the same package.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory. Stacked DRAM dies sitting next to an accelerator on an advanced package.</dd>
+              <dt>TSMC N2P</dt><dd>An enhanced 2nm process platform from TSMC, scheduled for second-half 2026 volume production.</dd>
+              <dt>Export controls</dt><dd>Government rules restricting technology exports to specified entities or countries.</dd>
+              <dt>Hyperscaler</dt><dd>A large cloud or data-center operator, e.g. Microsoft, Google, Amazon, Meta, Oracle.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">XI. What could break the thesis</h2>
+
+          <p>A serious piece needs counterarguments. The case for MediaTek as a beneficiary of compute fragmentation has more than one honest failure mode.</p>
+
+          <div class="mt-counter" aria-label="Counterarguments">
+            <div class="mt-counter-label">Risks &amp; counterarguments</div>
+            <ol>
+              <li><strong>Huawei improves faster than expected.</strong> A faster recovery on the Kirin roadmap, even on SMIC&rsquo;s constrained technology, would shrink the Chinese OEM substitution opportunity.</li>
+              <li><strong>Qualcomm defends premium Android.</strong> The top of the Android SoC market is where ASPs and margins live. Qualcomm is not a passive incumbent.</li>
+              <li><strong>OEMs build in-house silicon.</strong> Xiaomi and others moving more design in-house compresses MediaTek&rsquo;s phone TAM at the top, even if unit volumes hold.</li>
+              <li><strong>Smartphone demand stays soft.</strong> A second weak year of handset shipments amplifies the Q1 2026 mobile decline and stresses the volume base.</li>
+              <li><strong>AI ASIC concentration risk.</strong> Multi-billion-dollar ASIC programs concentrated on a small number of hyperscale customers carry execution and customer-power risk.</li>
+              <li><strong>ASIC revenue is lumpy.</strong> Project-based silicon revenue does not arrive smoothly. Quarter-to-quarter volatility can swamp the operational story.</li>
+              <li><strong>TSMC capacity and pricing.</strong> Leading-edge wafer cost is rising. MediaTek&rsquo;s gross margins on flagship and custom silicon must defend against that.</li>
+              <li><strong>Taiwan geopolitical risk.</strong> Any escalation around Taiwan would re-price every Taiwan-based fabless company, MediaTek included.</li>
+              <li><strong>China exposure under restriction.</strong> Tighter US-China rules could complicate sales to certain Chinese customers or platforms.</li>
+              <li><strong>Margins in custom silicon.</strong> Hyperscalers negotiate hard. Custom silicon revenue can be large at lower margin than mainstream merchant SoCs.</li>
+              <li><strong>Nvidia and hyperscalers keep more in-house.</strong> If they pull more integration work back in-house, MediaTek&rsquo;s partner role narrows.</li>
+              <li><strong>Edge AI monetisation is slow.</strong> Smart Edge growth is real, but on-device AI monetisation has been slower than the hype curve suggested.</li>
+            </ol>
+          </div>
+
+          <p>The correct claim is not that MediaTek wins the new cold war. The correct claim is that MediaTek benefits from compute fragmentation if it keeps moving up the value chain.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XII. The fragmented compute war</h2>
+
+          <p>In 2020, the question was: who supplies Huawei if Kirin gets blocked? In 2026, the question is bigger: who supplies compute in a world where every region, device maker, cloud provider, and AI platform wants more control over silicon?</p>
+
+          <p>That is where MediaTek becomes interesting. It can sell flagship SoCs to Android OEMs that want an alternative to Qualcomm. It can supply connectivity and compute into edge devices. It can support automotive AI cockpits. It can use TSMC&rsquo;s 2nm roadmap. It can co-design with Nvidia at the high end and build ASICs for US hyperscalers at the system level. It can benefit from China&rsquo;s reluctance to depend fully on US suppliers, while still operating inside the TSMC-centred advanced manufacturing ecosystem.</p>
+
+          <div class="essay-pull">MediaTek benefits from fragmentation, but only if it keeps moving up the value chain faster than its old smartphone business slows down.</div>
+
+          <p>That is the 2026 MediaTek story. Not cheap Android chips. Not just Huawei substitution. A neutral fabless silicon platform for a fragmented compute world.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (May 2020). <em>Mediatek Stands to Gain the Most from the New Cold War.</em> SemiAnalysis. Historical anchor for the substitution thesis. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> TechInsights (2023). <a href="https://www.techinsights.com/blog/techinsights-finds-smic-7nm-n2-huawei-mate-60-pro" target="_blank" rel="noopener">TechInsights finds SMIC 7nm (N+2) in Huawei Mate 60 Pro</a>. Identification of the Kirin 9000S on SMIC&rsquo;s 7nm-class N+2 process inside the Mate 60 Pro, framed as a made-in-China manufacturing milestone, more advanced than SMIC 14nm but not at 5nm-class equivalence.</p>
+
+            <p id="fn3"><sup>3</sup> Reuters (Sep 4 2023). <a href="https://www.reuters.com/technology/teardown-huaweis-new-phone-shows-chinas-chip-breakthrough-2023-09-04/" target="_blank" rel="noopener">Teardown of Huawei&rsquo;s new phone shows China&rsquo;s chip breakthrough</a>. Reuters validation of the TechInsights teardown and broader context on Huawei and SMIC at 7nm.</p>
+
+            <p id="fn4"><sup>4</sup> Reuters (Dec 11 2024). <a href="https://www.reuters.com/technology/huaweis-new-mate-70-phone-chip-shows-no-major-redesign-techinsights-says-2024-12-11/" target="_blank" rel="noopener">Huawei&rsquo;s new Mate 70 phone chip shows no major redesign, TechInsights says</a>. Coverage of the Kirin 9020 as incremental rather than a major redesign, consistent with continued SMIC 7nm-class manufacturing.</p>
+
+            <p id="fn5"><sup>5</sup> Associated Press (2025). <a href="https://apnews.com/article/china-taiwan-huawei-smic-export-restrictions-semiconductor-6f43d0b9f34d39258ca3e3c1406d9055" target="_blank" rel="noopener">Taiwan adds Huawei and SMIC to export controls list</a>. Taiwan requiring its firms to obtain government permits before exporting to either company, with geopolitical context.</p>
+
+            <p id="fn6"><sup>6</sup> MediaTek (Q1 2026). <a href="https://www.mediatek.com/hubfs/MediaTek%20Assets/Pdfs/Quarterly%20Earnings%20Release/2026/Quarterly%20Earnings%20Release-2026Q1/%E8%AA%AA%E6%98%8E%E6%9C%83%E9%80%90%E5%AD%97%E7%A8%BF.pdf" target="_blank" rel="noopener">Q1 2026 earnings transcript</a>. Mobile Phone revenue down 17% QoQ and 15% YoY, Mobile Phone 49% of revenue, Smart Edge Platforms 46% of revenue with 23% QoQ and 13% YoY growth, first AI accelerator ASIC project tracking to around US$2 billion in Q4 2026 and scaling to multiple billions in 2027, second AI accelerator ASIC project targeting mass production by end of 2027, and discussion of 400G SerDes, 64G die-to-die, 3.5D platform, custom HBM, integrated voltage regulators, cloud ASIC TAM of US$70&ndash;80B in 2027 with a 10 to 15 percent share target.</p>
+
+            <p id="fn7"><sup>7</sup> MediaTek (2025). <a href="https://www.mediatek.com/press-room/mediatek-develops-chip-utilizing-tsmcs-2nm-process-achieving-milestones-in-performance-andpower-efficiency" target="_blank" rel="noopener">MediaTek develops chip utilizing TSMC&rsquo;s 2nm process</a>. Flagship SoC tape-out on TSMC N2P, first chipset expected late 2026, up to 18% performance improvement at same power, around 36% power reduction at same speed, and 1.2x logic density versus N3E.</p>
+
+            <p id="fn8"><sup>8</sup> TSMC (2025). <a href="https://investor.tsmc.com/static/annualReports/2025/english/index.html" target="_blank" rel="noopener">2025 Annual Report</a>. N2P and A16 volume production scheduled for second half of 2026 and A14 for 2028, with AI/HPC and mobile roadmap context and TSMC&rsquo;s advanced process leadership.</p>
+
+            <p id="fn9"><sup>9</sup> MediaTek (2025). <a href="https://www.mediatek.com/press-room/newly-launched-nvidia-dgx-spark-features-gb10-superchip-co-designed-by-mediatek" target="_blank" rel="noopener">NVIDIA DGX Spark features GB10 Superchip co-designed by MediaTek</a>. GB10 Grace Blackwell Superchip with MediaTek-led CPU, memory subsystem, and high-speed interface design, paired with Nvidia&rsquo;s Blackwell GPU.</p>
+
+            <p id="fn10"><sup>10</sup> Nvidia. <a href="https://www.nvidia.com/en-au/products/workstations/dgx-spark/" target="_blank" rel="noopener">DGX Spark product page</a>. DGX Spark system with 20-core Grace Arm CPU, Blackwell GPU, 128 GB unified memory, and up to 1 PFLOP of AI performance for developer workstation use.</p>
+
+            <p id="fn11"><sup>11</sup> Reuters (Oct 31 2025). <a href="https://www.reuters.com/business/media-telecom/taiwans-mediatek-targets-billions-ai-accelerator-chip-revenue-by-2027-2025-10-31/" target="_blank" rel="noopener">Taiwan&rsquo;s MediaTek targets billions in AI accelerator chip revenue by 2027</a>. Independent confirmation of MediaTek targeting billions of dollars in AI accelerator revenue by 2027 and broader data-center ASIC TAM context.</p>
+
+            <p id="fn12"><sup>12</sup> Reuters (Jan 12 2026). <a href="https://www.reuters.com/business/media-telecom/apple-leads-global-smartphone-market-with-20-share-2025-says-counterpoint-2026-01-12/" target="_blank" rel="noopener">Apple leads global smartphone market with 20% share in 2025, says Counterpoint</a>. 2025 smartphone market context, modest shipment growth, and 2026 softness driven by component pressure linked to AI data center prioritisation.</p>
+          </div>
+
+          <div class="mt-fr">
+            <div class="mt-fr-label">Further reading</div>
+            <ul>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. Companion essay on DRAM, HBM, packaging, and semicap as the new center of computing.</li>
+              <li><a href="dry-resist-war.html" class="essay-link">The Dry Resist War</a>. Companion essay on why Lam&rsquo;s Aether could become critical to AI-era chipmaking.</li>
+              <li><a href="https://investor.mediatek.com/" target="_blank" rel="noopener">MediaTek Investor Relations</a>. Quarterly transcripts, segment commentary, and Smart Edge/AI ASIC framing.</li>
+              <li><a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">TSMC Annual Reports</a>. Process roadmap, packaging, and AI/HPC positioning.</li>
+              <li><a href="https://www.techinsights.com/" target="_blank" rel="noopener">TechInsights</a>. Independent teardown analyses of Kirin and other advanced silicon.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 014. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=18"></script>
+</body>
+</html>
