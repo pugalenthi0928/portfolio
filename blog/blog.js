@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'density-illusion':               'infrastructure',
   'modem-to-antenna-war':           'infrastructure',
   'nvidia-ai-factory-arm':          'infrastructure',
   'mediatek-fragmented-compute-war':'infrastructure',

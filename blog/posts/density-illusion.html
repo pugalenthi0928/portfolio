@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Density Illusion | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of why Apple's A14 exposed the gap between theoretical transistor density and real chip density, and why AI-era chips now depend on SRAM, memory bandwidth, packaging, power delivery, and architecture.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/density-illusion.html">
+  <meta property="og:title" content="The Density Illusion | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of why Apple's A14 exposed the gap between theoretical transistor density and real chip density, and why AI-era chips now depend on SRAM, memory bandwidth, packaging, power delivery, and architecture.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/density-illusion.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Apple Silicon">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="SRAM">
+  <meta property="article:tag" content="Moore's Law">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Chips">
+  <meta property="article:tag" content="Transistor Density">
+  <meta property="article:tag" content="Packaging">
+  <meta property="article:tag" content="Memory Bandwidth">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Advanced Nodes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Density Illusion | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of why Apple's A14 exposed the gap between theoretical transistor density and real chip density, and why AI-era chips now depend on SRAM, memory bandwidth, packaging, power delivery, and architecture.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Density Illusion",
+    "description": "An original 2026 analysis of why Apple's A14 exposed the gap between theoretical transistor density and real chip density, and why AI-era chips now depend on SRAM, memory bandwidth, packaging, power delivery, and architecture.",
+    "url": "https://pugalenthimagendran.com/blog/posts/density-illusion.html",
+    "datePublished": "2026-05-20",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/density-illusion.html",
+    "keywords": "Apple Silicon, TSMC, SRAM, Moore's Law, Semiconductors, AI Chips, Transistor Density, Packaging, Memory Bandwidth, ASML, Advanced Nodes"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       ESSAY FORMAT (shared scoped styles)
+       ============================================ */
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       DENSITY ILLUSION POST, original diagrams
+       Scoped under .essay-di
+       ============================================ */
+    .essay-di {
+      --di-accent: #F0784A;
+      --di-accent-soft: rgba(240,120,74,0.10);
+      --di-accent-faint: rgba(240,120,74,0.04);
+      --di-bd: rgba(255,255,255,0.08);
+      --di-bd-soft: rgba(255,255,255,0.05);
+      --di-cool: #6CBFE0;
+      --di-cool-soft: rgba(108,191,224,0.10);
+      --di-purple: #B794F4;
+      --di-purple-soft: rgba(183,148,244,0.10);
+      --di-green: #5DCAA5;
+      --di-green-soft: rgba(93,202,165,0.10);
+      --di-amber: #E8B468;
+      --di-amber-soft: rgba(232,180,104,0.10);
+      --di-rose: #E8916B;
+    }
+
+    /* Table of contents */
+    .di-toc {
+      margin: 0 0 2.5rem;
+      padding: 18px 22px 20px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .di-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .di-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .di-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .di-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--di-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .di-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .di-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .di-fig {
+      margin: 2.5rem 0 2.75rem;
+      padding: 24px 22px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--di-bd);
+      background:
+        linear-gradient(180deg, var(--di-accent-faint) 0%, transparent 60%),
+        var(--bg-alt);
+    }
+    .di-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--di-accent); margin-bottom: 14px; }
+    .di-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--di-bd-soft); line-height: 1.6; }
+
+    /* 2020 thesis callout */
+    .di-thesis {
+      margin: 2rem 0 2.5rem;
+      padding: 22px 24px; border-radius: 10px;
+      border: 1px solid var(--di-accent);
+      background:
+        linear-gradient(180deg, var(--di-accent-soft) 0%, transparent 80%),
+        var(--bg-alt);
+    }
+    .di-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--di-accent); margin-bottom: 10px; }
+    .di-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Marketing vs product density comparison */
+    .di-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 2rem 0 2.5rem; }
+    .di-compare-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--di-bd); background: var(--bg-alt); }
+    .di-compare-col--marketing { background: linear-gradient(180deg, var(--di-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .di-compare-col--marketing .di-compare-eyebrow { color: var(--di-cool); }
+    .di-compare-col--product { background: linear-gradient(180deg, var(--di-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--di-accent); }
+    .di-compare-col--product .di-compare-eyebrow { color: var(--di-accent); }
+    .di-compare-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .di-compare-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .di-compare-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .di-compare-col li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .di-compare-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .di-compare-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Real SoC block composition grid */
+    .di-soc { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .di-soc-block {
+      padding: 14px 10px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--di-bd);
+      background: var(--bg-alt);
+      text-align: center;
+    }
+    .di-soc-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--color-text-primary); line-height: 1.2;
+    }
+    .di-soc-share {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; letter-spacing: 0.04em;
+      color: var(--color-text-tertiary);
+      margin-top: 4px;
+    }
+    .di-soc-block--logic { background: linear-gradient(180deg, var(--di-accent-soft), transparent), var(--bg-alt); border-color: rgba(240,120,74,0.40); }
+    .di-soc-block--sram  { background: linear-gradient(180deg, var(--di-cool-soft), transparent), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .di-soc-block--analog { background: linear-gradient(180deg, var(--di-amber-soft), transparent), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .di-soc-block--accel { background: linear-gradient(180deg, var(--di-green-soft), transparent), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .di-soc-block--io   { background: linear-gradient(180deg, var(--di-purple-soft), transparent), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .di-soc-block--over { background: linear-gradient(180deg, rgba(232,145,107,0.10), transparent), var(--bg-alt); border-color: rgba(232,145,107,0.40); }
+
+    /* Scaling mismatch horizontal bars */
+    .di-mismatch {
+      display: grid;
+      grid-template-columns: 110px 1fr 80px;
+      gap: 8px 14px;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+    .di-mismatch-label { color: var(--color-text-secondary); letter-spacing: 0.04em; }
+    .di-mismatch-track {
+      position: relative; height: 22px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.025);
+      overflow: hidden;
+    }
+    .di-mismatch-fill {
+      position: absolute; top: 0; left: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--di-accent) 0%, rgba(240,120,74,0.55) 100%);
+      border-radius: 4px;
+    }
+    .di-mismatch-fill--cool { background: linear-gradient(90deg, var(--di-cool) 0%, rgba(108,191,224,0.55) 100%); }
+    .di-mismatch-fill--amber { background: linear-gradient(90deg, var(--di-amber) 0%, rgba(232,180,104,0.55) 100%); }
+    .di-mismatch-fill--rose { background: linear-gradient(90deg, var(--di-rose) 0%, rgba(232,145,107,0.55) 100%); }
+    .di-mismatch-val { color: var(--di-accent); letter-spacing: 0.04em; text-align: right; font-weight: 500; }
+    .di-mismatch-val--cool { color: var(--di-cool); }
+    .di-mismatch-val--amber { color: var(--di-amber); }
+    .di-mismatch-val--rose { color: var(--di-rose); }
+
+    /* New scaling stack layer cake */
+    .di-stack { display: flex; flex-direction: column; gap: 4px; }
+    .di-layer {
+      display: grid;
+      grid-template-columns: 32px 1fr 110px;
+      align-items: center; gap: 14px;
+      padding: 12px 16px; border-radius: 6px;
+      border: 1px solid var(--di-bd);
+      background: var(--bg-alt);
+    }
+    .di-layer-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--di-accent); letter-spacing: 0.08em; }
+    .di-layer-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .di-layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-transform: uppercase; text-align: right; }
+    .di-layer--soft { background: linear-gradient(90deg, var(--di-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--di-accent); }
+    .di-layer--mid  { background: linear-gradient(90deg, var(--di-cool-soft), transparent 60%), var(--bg-alt); }
+    .di-layer--phys { background: linear-gradient(90deg, var(--di-amber-soft), transparent 60%), var(--bg-alt); }
+
+    /* Timeline */
+    .di-timeline { display: grid; grid-template-columns: 110px 1fr; gap: 4px 18px; position: relative; }
+    .di-timeline::before { content: ''; position: absolute; left: 110px; top: 0; bottom: 0; width: 1px; background: var(--di-bd); }
+    .di-tl-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--di-accent); padding: 12px 18px 12px 0; text-align: right; position: relative; }
+    .di-tl-year::after { content: ''; position: absolute; right: -4px; top: 19px; width: 8px; height: 8px; border-radius: 50%; background: var(--di-accent); border: 2px solid var(--bg-alt); }
+    .di-tl-event { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); padding: 10px 0; border-bottom: 0.5px solid var(--di-bd-soft); }
+    .di-tl-event:last-child { border-bottom: none; }
+    .di-tl-event strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* TSMC node roadmap mini-table */
+    .di-roadmap {
+      display: grid;
+      grid-template-columns: 70px 1fr 130px;
+      align-items: stretch;
+      border: 1px solid var(--di-bd);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .di-roadmap-head {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 70px 1fr 130px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      background: rgba(255,255,255,0.02);
+      border-bottom: 0.5px solid var(--di-bd-soft);
+    }
+    .di-roadmap-head span { padding: 8px 14px; }
+    .di-roadmap-row {
+      display: contents;
+    }
+    .di-roadmap-cell {
+      padding: 12px 14px;
+      border-bottom: 0.5px solid var(--di-bd-soft);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+    }
+    .di-roadmap-cell--node {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--di-accent);
+    }
+    .di-roadmap-cell--date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.04em;
+      text-align: right;
+    }
+    .di-roadmap-row:last-child .di-roadmap-cell { border-bottom: none; }
+
+    /* Glossary */
+    .di-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .di-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .di-terms dl { margin: 0; display: grid; grid-template-columns: 160px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .di-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--di-accent); padding-top: 2px; }
+    .di-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counterargument list */
+    .di-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--di-bd); background: var(--bg-alt); }
+    .di-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .di-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .di-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--di-bd-soft); }
+    .di-counter li:last-child { border-bottom: none; }
+    .di-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--di-accent); }
+    .di-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+
+    /* Inline stat */
+    .di-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--di-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--di-accent-faint); }
+
+    /* Further reading */
+    .di-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .di-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .di-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .di-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .di-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .di-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .di-toc ol { grid-template-columns: 1fr; }
+      .di-compare { grid-template-columns: 1fr; }
+      .di-soc { grid-template-columns: repeat(3, 1fr); }
+      .di-terms dl { grid-template-columns: 120px 1fr; }
+      .di-timeline { grid-template-columns: 80px 1fr; }
+      .di-timeline::before { left: 80px; }
+      .di-tl-year { padding-right: 14px; }
+      .di-mismatch { grid-template-columns: 90px 1fr 70px; }
+      .di-roadmap, .di-roadmap-head { grid-template-columns: 60px 1fr 100px; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .di-soc { grid-template-columns: repeat(2, 1fr); }
+      .di-layer { grid-template-columns: 28px 1fr; }
+      .di-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-di">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 017 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Apple Silicon</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">SRAM</span>
+          <span class="tag">Moore&rsquo;s Law</span>
+          <span class="tag">Semiconductors</span>
+          <span class="tag">AI Chips</span>
+          <span class="tag">Transistor Density</span>
+          <span class="tag">Packaging</span>
+          <span class="tag">Memory Bandwidth</span>
+          <span class="tag">ASML</span>
+          <span class="tag">Advanced Nodes</span>
+        </div>
+
+        <h1 class="essay-hed">The <em>Density</em> Illusion.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Apple&rsquo;s A14 exposed the end of easy transistor scaling, and why AI chips now depend on SRAM, memory bandwidth, packaging, power delivery, and architecture.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">A14 looked like a perfect Moore&rsquo;s Law win: TSMC 5nm, 11.8 billion transistors, and a tiny die. The real lesson was the gap between theoretical density and usable density. In the AI era, progress no longer comes from shrinking logic alone. It comes from SRAM, memory bandwidth, packaging, power delivery, and architecture.</p>
+
+          <nav class="di-toc" aria-label="Article contents">
+            <div class="di-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2020">The 2020 thesis</a></li>
+              <li><a href="#sec-marketing">Marketing density vs product density</a></li>
+              <li><a href="#sec-sram">SRAM is the hidden bottleneck</a></li>
+              <li><a href="#sec-ai">Why AI makes the problem worse</a></li>
+              <li><a href="#sec-tsmc">TSMC is still scaling, but scaling changed shape</a></li>
+              <li><a href="#sec-apple">Apple&rsquo;s answer: architecture, memory, on-device AI</a></li>
+              <li><a href="#sec-stack">The new scaling stack</a></li>
+              <li><a href="#sec-cost">Why cost scaling also matters</a></li>
+              <li><a href="#sec-risks">What could break the thesis</a></li>
+              <li><a href="#sec-final">The density illusion</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2020, Apple&rsquo;s A14 looked like a clean Moore&rsquo;s Law victory. It was built on TSMC&rsquo;s 5nm process. It packed <span class="di-stat">11.8 billion</span> transistors into a die of roughly <span class="di-stat">88 mm&sup2;</span>, which worked out to about <span class="di-stat">134 million</span> transistors per square millimetre.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup> On paper, that sounds like pure progress.</p>
+
+          <p>The more interesting story was the gap. The A14 did not reach TSMC&rsquo;s full theoretical N5 density. The uploaded SemiAnalysis piece estimated Apple captured only around 78% of theoretical N5 density on this chip, even though prior Apple SoCs had landed closer to the theoretical line. That was not because Apple forgot how to design chips. It was not because TSMC failed. It was because a real SoC is not made of one thing.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>A process node can shrink logic transistors aggressively, but an actual SoC contains CPU cores, GPU cores, neural engines, SRAM caches, analog circuits, memory controllers, I/O blocks, display and media engines, security IP, and physical-design overhead. Those parts do not scale at the same rate.</p>
+
+          <p class="essay-line">That is the density illusion.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The correct claim is not that Moore&rsquo;s Law is dead. The correct claim is that Moore&rsquo;s Law became a system problem. Transistors still improve. Nodes still advance. But the benefit no longer arrives automatically as cheaper, denser, smaller chips. It arrives as a negotiation across SRAM, memory bandwidth, packaging, power delivery, and architecture.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2020">I. The 2020 thesis</h2>
+
+          <p>In October 2020, Dylan Patel published a SemiAnalysis piece on Apple&rsquo;s A14. He estimated 11.8 billion transistors, a die size around 88 mm&sup2;, and a resulting effective density near 134 million transistors per square millimetre.<sup><a href="#fn1">1</a></sup> Those numbers were not the point. The point was the delta between Apple&rsquo;s effective density and TSMC&rsquo;s headline N5 logic-density number, and the explanation: SRAM and analog do not shrink like pure logic, and a real SoC is dominated by exactly the blocks that scale worst.</p>
+
+          <p>I revisited that piece because it stopped looking like a one-chip footnote and started looking like the structural story of the next six years.</p>
+
+          <div class="di-thesis">
+            <div class="di-thesis-label">2020 thesis</div>
+            <p class="di-thesis-text">A foundry can improve theoretical logic density, but a real SoC only captures part of that gain because SRAM, analog, I/O, and design overhead do not shrink evenly.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-marketing">II. Marketing density vs product density</h2>
+
+          <p>The industry talks about density as if the whole chip shrinks evenly. It does not. Marketing density is usually a representative logic figure that the foundry publishes for node-to-node comparison. Product density is what a real chip achieves once SRAM, analog, I/O, accelerators, and physical-design overhead are included.</p>
+
+          <div class="di-compare">
+            <div class="di-compare-col di-compare-col--marketing">
+              <div class="di-compare-eyebrow">Marketing density</div>
+              <h3 class="di-compare-title">An ideal logic shrink</h3>
+              <ul>
+                <li><strong>Basis</strong> &middot; representative logic cells.</li>
+                <li><strong>Use</strong> &middot; comparing nodes against each other.</li>
+                <li><strong>Strength</strong> &middot; useful for roadmap framing.</li>
+                <li><strong>Limit</strong> &middot; not what a product actually achieves.</li>
+              </ul>
+            </div>
+            <div class="di-compare-col di-compare-col--product">
+              <div class="di-compare-eyebrow">Product density</div>
+              <h3 class="di-compare-title">What a real SoC delivers</h3>
+              <ul>
+                <li><strong>Basis</strong> &middot; logic + SRAM + analog + I/O + accelerators + overhead.</li>
+                <li><strong>Use</strong> &middot; tracking real chip generations.</li>
+                <li><strong>Strength</strong> &middot; honest about scaling friction.</li>
+                <li><strong>Limit</strong> &middot; chip-specific, harder to compare cleanly.</li>
+              </ul>
+            </div>
+          </div>
+
+          <figure class="di-fig" aria-label="Diagram: composition of a real SoC by block type">
+            <div class="di-fig-label">Diagram 01 &middot; A real SoC is not one thing</div>
+            <div class="di-soc">
+              <div class="di-soc-block di-soc-block--logic">
+                <div class="di-soc-name">Logic</div>
+                <div class="di-soc-share">CPU / GPU / NPU cores</div>
+              </div>
+              <div class="di-soc-block di-soc-block--sram">
+                <div class="di-soc-name">SRAM</div>
+                <div class="di-soc-share">L1 / L2 / SLC / buffers</div>
+              </div>
+              <div class="di-soc-block di-soc-block--analog">
+                <div class="di-soc-name">Analog</div>
+                <div class="di-soc-share">PLLs / regulators</div>
+              </div>
+              <div class="di-soc-block di-soc-block--accel">
+                <div class="di-soc-name">Accelerators</div>
+                <div class="di-soc-share">Media / NE / display</div>
+              </div>
+              <div class="di-soc-block di-soc-block--io">
+                <div class="di-soc-name">I/O</div>
+                <div class="di-soc-share">DRAM / PHYs</div>
+              </div>
+              <div class="di-soc-block di-soc-block--over">
+                <div class="di-soc-name">Overhead</div>
+                <div class="di-soc-share">Routing / floorplan</div>
+              </div>
+            </div>
+            <div class="di-fig-cap">Six rough block types, six different scaling rates. The headline density number describes one of them, not the chip.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sram">III. SRAM is the hidden bottleneck</h2>
+
+          <p>SRAM is the fast memory built directly into the chip. It shows up everywhere: registers, L1, L2, system-level cache, GPU cache, neural-engine buffers, branch predictors, interconnect buffers. Modern designs need more SRAM, not less, because larger caches and local scratchpads are how chips hide the latency of going off-die.</p>
+
+          <p>The problem is that SRAM does not scale like logic. The uploaded SemiAnalysis piece identified slow SRAM scaling as a primary reason A14 fell short of N5&rsquo;s theoretical line, and the same dynamic shows up at later nodes.<sup><a href="#fn1">1</a></sup> TSMC&rsquo;s own 2nm SRAM research reports <span class="di-stat">38.1 Mb/mm&sup2;</span> in a 2 nm CMOS nanosheet technology with a <span class="di-stat">0.021 &mu;m&sup2;</span> high-density bitcell, and frames the result as roughly <span class="di-stat">1.1x</span> denser than the prior node thanks to design-technology co-optimisation.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>That is real progress. It is also the kind of progress that no longer looks like a clean shrink. SRAM moves more slowly than logic. Analog and I/O move more slowly than SRAM. So the effective SoC density is a weighted average, dragged down by exactly the parts AI chips need more of.</p>
+
+          <figure class="di-fig" aria-label="Bars: scaling mismatch across block types">
+            <div class="di-fig-label">Diagram 02 &middot; The scaling mismatch</div>
+            <div class="di-mismatch" role="list">
+              <div class="di-mismatch-label" role="listitem">Logic shrink</div>
+              <div class="di-mismatch-track"><div class="di-mismatch-fill" style="width: 92%"></div></div>
+              <div class="di-mismatch-val">strong</div>
+
+              <div class="di-mismatch-label">SRAM shrink</div>
+              <div class="di-mismatch-track"><div class="di-mismatch-fill di-mismatch-fill--cool" style="width: 55%"></div></div>
+              <div class="di-mismatch-val di-mismatch-val--cool">moderate</div>
+
+              <div class="di-mismatch-label">Analog / I/O</div>
+              <div class="di-mismatch-track"><div class="di-mismatch-fill di-mismatch-fill--amber" style="width: 28%"></div></div>
+              <div class="di-mismatch-val di-mismatch-val--amber">weak</div>
+
+              <div class="di-mismatch-label">Effective SoC</div>
+              <div class="di-mismatch-track"><div class="di-mismatch-fill di-mismatch-fill--rose" style="width: 62%"></div></div>
+              <div class="di-mismatch-val di-mismatch-val--rose">weighted</div>
+            </div>
+            <div class="di-fig-cap">Illustrative directional bars, not exact ratios. Logic keeps moving. SRAM is dragging its feet. AI chips need more of both.<sup><a href="#fn1">1</a></sup><sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <p class="essay-line">Logic keeps moving. SRAM is dragging its feet. AI chips need more of both.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">IV. Why AI makes the problem worse</h2>
+
+          <p>AI workloads do not only need raw compute. They need data movement. On-device AI needs model weights resident in fast memory, activation buffers, cache, memory bandwidth, low latency, and low energy per generated token. Cloud AI multiplies the same demands: HBM, DRAM, interconnect, advanced packaging, power delivery, and data-center-scale infrastructure to keep accelerators fed.</p>
+
+          <p>ASML&rsquo;s 2025 strategic report makes this explicit. AI requires leading-edge, high-performance processor chips, and a significant increase in DRAM chips compared with traditional compute architectures. Advanced Logic and AI-related DRAM are the two structural drivers of lithography demand.<sup><a href="#fn8">8</a></sup></p>
+
+          <p>The trouble is that DRAM and on-die SRAM are exactly the places where scaling is harder. AI is pulling on the part of the stack that does not shrink cleanly.</p>
+
+          <p class="essay-line">The A14 density gap was an early warning for the AI era.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-tsmc">V. TSMC is still scaling, but scaling changed shape</h2>
+
+          <p>TSMC is not failing. It is the leader. What changed is the texture of scaling. Node progress is now multi-dimensional. Nanosheets, backside power, design-technology co-optimisation, advanced packaging, and 3D stacking each contribute a slice of the gain, where a node-to-node shrink used to do most of the work alone.</p>
+
+          <p>The 2025-2026 roadmap looks like this on the public record. N2 entered volume production in 4Q25 with first-generation nanosheet transistors. N2P is scheduled for second-half 2026 volume production. A16 integrates nanosheet transistors with Super Power Rail backside power delivery. A13, debuted at TSMC&rsquo;s 2026 symposium as a direct shrink of A14, provides a 6% area saving from A14 and is scheduled for production in 2029, one year after A14.<sup><a href="#fn4">4</a></sup><sup><a href="#fn5">5</a></sup><sup><a href="#fn9">9</a></sup></p>
+
+          <figure class="di-fig" aria-label="Table: TSMC node roadmap 2025-2029">
+            <div class="di-fig-label">Table &middot; TSMC node roadmap, 2025&ndash;2029</div>
+            <div class="di-roadmap">
+              <div class="di-roadmap-head">
+                <span>Node</span>
+                <span>What it is</span>
+                <span>Production</span>
+              </div>
+              <div class="di-roadmap-row">
+                <div class="di-roadmap-cell di-roadmap-cell--node">N2</div>
+                <div class="di-roadmap-cell">First-generation nanosheet transistor process. The big node transition.</div>
+                <div class="di-roadmap-cell di-roadmap-cell--date">4Q 2025</div>
+              </div>
+              <div class="di-roadmap-row">
+                <div class="di-roadmap-cell di-roadmap-cell--node">N2P</div>
+                <div class="di-roadmap-cell">Enhanced N2 with performance and power improvements.</div>
+                <div class="di-roadmap-cell di-roadmap-cell--date">H2 2026</div>
+              </div>
+              <div class="di-roadmap-row">
+                <div class="di-roadmap-cell di-roadmap-cell--node">A16</div>
+                <div class="di-roadmap-cell">Nanosheet transistors plus Super Power Rail backside power delivery.</div>
+                <div class="di-roadmap-cell di-roadmap-cell--date">2026 / 2027 ramp</div>
+              </div>
+              <div class="di-roadmap-row">
+                <div class="di-roadmap-cell di-roadmap-cell--node">A14</div>
+                <div class="di-roadmap-cell">Next-generation logic node beyond A16, AI/HPC focused.</div>
+                <div class="di-roadmap-cell di-roadmap-cell--date">2028</div>
+              </div>
+              <div class="di-roadmap-row">
+                <div class="di-roadmap-cell di-roadmap-cell--node">A13</div>
+                <div class="di-roadmap-cell">Direct shrink of A14 with backward-compatible design rules and ~6% area savings.</div>
+                <div class="di-roadmap-cell di-roadmap-cell--date">2029</div>
+              </div>
+            </div>
+            <div class="di-fig-cap">Scaling is no longer one big shrink. It is many small wins layered together. Sources: TSMC technology pages and 2026 North America Technology Symposium briefings.<sup><a href="#fn4">4</a></sup><sup><a href="#fn5">5</a></sup></div>
+          </figure>
+
+          <p class="essay-line">The old node shrink was like pressing the whole chip smaller. The new node shrink is like negotiating with physics, one block at a time.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-apple">VI. Apple&rsquo;s answer is architecture, memory, and on-device AI</h2>
+
+          <p>Apple&rsquo;s 2026 silicon argument is no longer mostly about transistor counts. It is about what the chip can do once the easy shrink stops paying.</p>
+
+          <p>M5 is built on third-generation 3 nm technology. Apple says it adds a next-generation 10-core GPU architecture with a Neural Accelerator in each GPU core, a 16-core Neural Engine, and unified memory bandwidth of <span class="di-stat">153 GB/s</span>, with up to <span class="di-stat">4x</span> peak GPU compute performance for AI compared with M4. Apple frames the unified memory architecture as the reason devices can run larger AI models entirely on-device.<sup><a href="#fn6">6</a></sup> M4 itself, on second-generation 3 nm, was already a <span class="di-stat">28 billion</span>-transistor chip with a <span class="di-stat">38 TOPS</span> Neural Engine.<sup><a href="#fn7">7</a></sup></p>
+
+          <p>The marketing structure of those announcements is the giveaway. The headline is not &ldquo;we shrank transistors.&rdquo; The headline is &ldquo;we improved GPU AI acceleration, neural acceleration, memory bandwidth, performance per watt, and the ability to run real models on the device.&rdquo;</p>
+
+          <figure class="di-fig" aria-label="Timeline: Apple A14 to M5">
+            <div class="di-fig-label">Timeline &middot; A14 to M5, where the story changed</div>
+            <div class="di-timeline">
+              <div class="di-tl-year">2020</div>
+              <div class="di-tl-event"><strong>A14 on TSMC N5</strong>. 11.8B transistors, ~88 mm&sup2;, ~134M transistors/mm&sup2;, well below the theoretical N5 density line.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup></div>
+
+              <div class="di-tl-year">2022&ndash;23</div>
+              <div class="di-tl-event"><strong>M2 / A16 family</strong>. Performance-per-watt and accelerator gains start to lead marketing language. Density growth slows relative to N5.</div>
+
+              <div class="di-tl-year">2024</div>
+              <div class="di-tl-event"><strong>M4 on second-gen 3 nm</strong>. 28 billion transistors, 38 TOPS Neural Engine, explicit AI framing.<sup><a href="#fn7">7</a></sup></div>
+
+              <div class="di-tl-year">2025</div>
+              <div class="di-tl-event"><strong>M5 on third-gen 3 nm</strong>. Neural Accelerator in each GPU core, 16-core NE, 153 GB/s unified memory, &gt;4x M4 GPU AI compute. The pitch is system, not transistor count.<sup><a href="#fn6">6</a></sup></div>
+
+              <div class="di-tl-year">2026 +</div>
+              <div class="di-tl-event"><strong>N2 era opens</strong> with nanosheets and Super Power Rail entering the picture. Apple keeps converting limited density gains into AI throughput, memory, and on-device model size.<sup><a href="#fn4">4</a></sup></div>
+            </div>
+            <div class="di-fig-cap">Apple&rsquo;s marketing story shifted from &ldquo;more transistors&rdquo; to &ldquo;more useful compute per watt, more memory bandwidth, more models on-device.&rdquo;</div>
+          </figure>
+
+          <p class="essay-line">The best chip is no longer simply the densest chip. The best chip is the one that converts limited density gains into useful system performance.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-stack">VII. The new scaling stack</h2>
+
+          <p>If A14 told us that one number cannot describe a chip, the AI era tells us that the scaling story spans the full stack. Each layer contributes a slice of the gain, and the layer mix is what wins generations.</p>
+
+          <figure class="di-fig" aria-label="Diagram: the new scaling stack">
+            <div class="di-fig-label">Diagram 03 &middot; The new scaling stack</div>
+            <div class="di-stack">
+              <div class="di-layer di-layer--soft">
+                <div class="di-layer-num">10</div>
+                <div class="di-layer-name">Application / AI workload</div>
+                <div class="di-layer-tag">Demand</div>
+              </div>
+              <div class="di-layer di-layer--soft">
+                <div class="di-layer-num">09</div>
+                <div class="di-layer-name">Software frameworks &amp; compilers</div>
+                <div class="di-layer-tag">Lever</div>
+              </div>
+              <div class="di-layer di-layer--mid">
+                <div class="di-layer-num">08</div>
+                <div class="di-layer-name">Architecture &amp; workload-specific accelerators</div>
+                <div class="di-layer-tag">Design</div>
+              </div>
+              <div class="di-layer di-layer--mid">
+                <div class="di-layer-num">07</div>
+                <div class="di-layer-name">Compute cores (CPU, GPU, NPU)</div>
+                <div class="di-layer-tag">Logic</div>
+              </div>
+              <div class="di-layer di-layer--mid">
+                <div class="di-layer-num">06</div>
+                <div class="di-layer-name">SRAM &amp; cache hierarchy</div>
+                <div class="di-layer-tag">Memory</div>
+              </div>
+              <div class="di-layer di-layer--mid">
+                <div class="di-layer-num">05</div>
+                <div class="di-layer-name">Memory bandwidth &amp; unified memory</div>
+                <div class="di-layer-tag">Bandwidth</div>
+              </div>
+              <div class="di-layer di-layer--phys">
+                <div class="di-layer-num">04</div>
+                <div class="di-layer-name">Packaging, chiplets, 3D stacking</div>
+                <div class="di-layer-tag">Integration</div>
+              </div>
+              <div class="di-layer di-layer--phys">
+                <div class="di-layer-num">03</div>
+                <div class="di-layer-name">Backside power &amp; interconnect</div>
+                <div class="di-layer-tag">Routing</div>
+              </div>
+              <div class="di-layer di-layer--phys">
+                <div class="di-layer-num">02</div>
+                <div class="di-layer-name">Transistor process (nanosheet, future CFET)</div>
+                <div class="di-layer-tag">Device</div>
+              </div>
+              <div class="di-layer di-layer--phys">
+                <div class="di-layer-num">01</div>
+                <div class="di-layer-name">Lithography &amp; equipment (EUV, High-NA)</div>
+                <div class="di-layer-tag">Print</div>
+              </div>
+            </div>
+            <div class="di-fig-cap">Moore&rsquo;s Law became a full-stack problem. No single layer dominates the curve anymore.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-cost">VIII. Why cost scaling also matters</h2>
+
+          <p>Density is not the only thing that broke down. Even where transistors continue to shrink, the cost per useful transistor has not fallen the way it used to. The reasons are mundane and additive. Advanced wafers cost more. EUV tools are expensive. Process complexity rises. Yield learning takes time. Design and verification cost rise. Packaging costs rise. HBM and advanced memory cost rise. Every node demands more DTCO engineering than the last.</p>
+
+          <p>The uploaded SemiAnalysis piece argued that cost per transistor was already slowing around N5.<sup><a href="#fn1">1</a></sup> Six years later, that observation reads as conservative. The economic magic of Moore&rsquo;s Law was not only more transistors. It was cheaper useful transistors. That part is harder now.</p>
+
+          <p class="essay-line">If density only buys you a fraction of the historical shrink, and cost stops falling at the same rate, the only way forward is to extract more value per transistor.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Quick terms</h2>
+
+          <div class="di-terms" role="complementary" aria-label="Glossary">
+            <div class="di-terms-label">Glossary</div>
+            <dl>
+              <dt>Transistor density</dt><dd>Number of transistors per unit area.</dd>
+              <dt>Theoretical density</dt><dd>Idealised process-node density, usually based on representative logic structures.</dd>
+              <dt>Effective density</dt><dd>Density a real product actually achieves once SRAM, analog, I/O, and overhead are included.</dd>
+              <dt>SRAM</dt><dd>Fast on-chip memory used for caches and buffers.</dd>
+              <dt>Logic</dt><dd>Circuits that perform computation and control.</dd>
+              <dt>Analog / I/O</dt><dd>Circuits that connect the chip to the outside world and handle non-digital behaviour.</dd>
+              <dt>DTCO</dt><dd>Design-technology co-optimisation. Joint tuning of the process and the design that runs on it.</dd>
+              <dt>Backside power</dt><dd>Power delivered from the back of the wafer to reduce front-side routing congestion.</dd>
+              <dt>Nanosheet</dt><dd>Transistor architecture that follows FinFETs for better electrostatic control.</dd>
+              <dt>Chiplet</dt><dd>A smaller die combined with others inside a package to form a larger system.</dd>
+              <dt>Advanced packaging</dt><dd>Technologies that integrate multiple dies or stack memory close to logic.</dd>
+              <dt>Unified memory</dt><dd>A shared memory pool accessed by CPU, GPU, NE, and other blocks on Apple Silicon.</dd>
+              <dt>Memory bandwidth</dt><dd>How much data can move between memory and compute per second.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">IX. What could break the thesis</h2>
+
+          <p>A serious piece needs counterarguments. The case that Moore&rsquo;s Law has become a system problem has plausible challenges.</p>
+
+          <div class="di-counter" aria-label="Counterarguments">
+            <div class="di-counter-label">Risks &amp; counterarguments</div>
+            <ol>
+              <li><strong>SRAM keeps improving.</strong> DTCO and new bitcell designs continue to lift on-die memory density, just at a slower pace than logic.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>3D stacking restores effective density.</strong> Stacking logic, memory, or both vertically can recover area that 2D shrink no longer provides.</li>
+              <li><strong>Backside power frees routing.</strong> Super Power Rail and similar approaches make denser logic practical even when 2D shrink slows.<sup><a href="#fn4">4</a></sup></li>
+              <li><strong>Chiplets improve product economics.</strong> Yield improves when dies are smaller, and integration costs may fall as packaging matures.</li>
+              <li><strong>Specialised accelerators trade density for performance.</strong> Domain-specific designs can outpace general-purpose density gains.</li>
+              <li><strong>Future device architectures.</strong> CFETs and stacked devices may extend the device-physics curve beyond nanosheets.</li>
+              <li><strong>Software optimisation.</strong> Better compilers, quantisation, and inference scheduling can reduce hardware pressure per workload.</li>
+              <li><strong>AI model efficiency.</strong> Sparsity, mixture-of-experts, and smaller specialised models can soften memory and density demand.</li>
+            </ol>
+          </div>
+
+          <p>Scaling is not dead. The easy interpretation of scaling is dead. The mistake is not believing in progress. The mistake is believing progress still comes from one number.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">X. The density illusion</h2>
+
+          <p>A14 was not a failure. It was a warning. The node kept scaling. The chip did not scale like the marketing number. In 2026, that warning has become the semiconductor story.</p>
+
+          <p>Logic still shrinks. Transistors still improve. TSMC still leads. Apple still builds world-class chips. But real progress now comes from how well a company turns partial density gains into full system performance. SRAM matters. Memory bandwidth matters. Packaging matters. Power delivery matters. Architecture matters. Software matters.</p>
+
+          <div class="essay-pull">Moore&rsquo;s Law is no longer one curve. It is a system problem.</div>
+
+          <p>That is the density illusion. And in the AI era, it is the constraint that shapes everything above it.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Oct 2020). <em>Apple&rsquo;s A14 Packs 134 Million Transistors/mm&sup2;, but Falls Short of TSMC&rsquo;s Density Claims.</em> SemiAnalysis. Historical anchor for the A14 effective-density gap and the SRAM-scaling explanation. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Apple (Sep 2020). <a href="https://www.apple.com/newsroom/2020/09/apple-introduces-all-new-ipad-air/" target="_blank" rel="noopener">Apple introduces the all-new iPad Air</a>. Official A14 context including the 5 nm chip, 11.8 billion transistor count, and Neural Engine framing.</p>
+
+            <p id="fn3"><sup>3</sup> TSMC Research. <a href="https://research.tsmc.com/page/memory/4.html" target="_blank" rel="noopener">2 nm CMOS Nanosheet SRAM</a>. 38.1 Mb/mm&sup2; SRAM, 0.021 &mu;m&sup2; high-density bitcell, ~1.1x SRAM density improvement versus the previous node via DTCO.</p>
+
+            <p id="fn4"><sup>4</sup> TSMC. <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_A16" target="_blank" rel="noopener">A16 technology page</a>. Nanosheet transistors with Super Power Rail backside power delivery. N2 volume production in 4Q25 and N2P scheduled for the second half of 2026 per TSMC technology disclosures.</p>
+
+            <p id="fn5"><sup>5</sup> TSMC (2026). <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">North America Technology Symposium 2026 briefing</a>. A13 debuted as a direct shrink of A14 with ~6% area savings, backward-compatible design rules, and production scheduled in 2029.</p>
+
+            <p id="fn6"><sup>6</sup> Apple (Oct 2025). <a href="https://www.apple.com/au/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/" target="_blank" rel="noopener">Apple unleashes M5</a>. Third-generation 3 nm process, 10-core GPU with a Neural Accelerator in each core, 16-core Neural Engine, 153 GB/s unified memory bandwidth, and up to 4x peak GPU compute for AI versus M4.</p>
+
+            <p id="fn7"><sup>7</sup> Apple (May 2024). <a href="https://www.apple.com/au/newsroom/2024/05/apple-introduces-m4-chip/" target="_blank" rel="noopener">Apple introduces M4</a>. Second-generation 3 nm, 28 billion transistors, 38 TOPS Neural Engine, performance-per-watt framing.</p>
+
+            <p id="fn8"><sup>8</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf" target="_blank" rel="noopener">2025 Annual Report, strategic report section</a>. AI requires leading-edge, high-performance processor chips and a significant increase in DRAM chips compared with traditional compute architectures, with advanced Logic and AI-related DRAM as the structural drivers of lithography demand.</p>
+
+            <p id="fn9"><sup>9</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">2025 Annual Report</a>. Advanced process roadmap and AI/HPC packaging context including 3DFabric and CoWoS positioning. Used as confirmatory context for the node roadmap.</p>
+          </div>
+
+          <div class="di-fr">
+            <div class="di-fr-label">Further reading</div>
+            <ul>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. Companion essay on DRAM, HBM, packaging, and semicap as the new center of computing.</li>
+              <li><a href="dry-resist-war.html" class="essay-link">The Dry Resist War</a>. Patterning as a strategic process technology for AI-era chipmaking.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. How vertical system integration replaced ISA ownership as the moat.</li>
+              <li><a href="modem-to-antenna-war.html" class="essay-link">The Modem-to-Antenna War</a>. Apple unbundling Qualcomm&rsquo;s modem-RF stack one layer at a time.</li>
+              <li><a href="mediatek-fragmented-compute-war.html" class="essay-link">MediaTek and the Fragmented Compute War</a>. A Taiwan fabless platform across Android, edge AI, automotive, and hyperscaler ASICs.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 017. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=21"></script>
+</body>
+</html>
