@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dry Resist War | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of why Lam Research's Aether dry resist matters for EUV, High-NA lithography, DRAM, HBM, AI chips, and the future of semiconductor scaling.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/dry-resist-war.html">
+  <meta property="og:title" content="The Dry Resist War | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of why Lam Research's Aether dry resist matters for EUV, High-NA lithography, DRAM, HBM, AI chips, and the future of semiconductor scaling.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/dry-resist-war.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="EUV">
+  <meta property="article:tag" content="Dry Resist">
+  <meta property="article:tag" content="Lam Research">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="High-NA EUV">
+  <meta property="article:tag" content="DRAM">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Semicap">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Dry Resist War | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of why Lam Research's Aether dry resist matters for EUV, High-NA lithography, DRAM, HBM, AI chips, and the future of semiconductor scaling.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Dry Resist War",
+    "description": "An original 2026 analysis of why Lam Research's Aether dry resist matters for EUV, High-NA lithography, DRAM, HBM, AI chips, and the future of semiconductor scaling.",
+    "url": "https://pugalenthimagendran.com/blog/posts/dry-resist-war.html",
+    "datePublished": "2026-05-20",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/dry-resist-war.html",
+    "keywords": "Semiconductors, EUV, Dry Resist, Lam Research, ASML, TSMC, High-NA EUV, DRAM, HBM, AI Infrastructure, Semicap"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       ESSAY FORMAT, Technical Editorial
+       Scoped under .essay-format
+       (Shared with other essays; kept inline to match existing post convention.)
+       ============================================ */
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 3rem;
+    }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em;
+      padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none;
+    }
+    .essay-hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+      line-height: 1.12; color: var(--color-text-primary);
+      margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck {
+      font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300;
+      line-height: 1.65; color: var(--color-text-secondary);
+      border-left: 2px solid var(--color-border-tertiary);
+      padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic;
+    }
+    .essay-meta {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3rem;
+    }
+    .essay-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      color: var(--color-text-secondary); flex-shrink: 0;
+    }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamp {
+      display: inline-block; font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 4px;
+      color: var(--accent, #F0784A);
+      border: 1px solid rgba(240,120,74,0.30);
+      background: rgba(240,120,74,0.06);
+      margin-left: 12px; vertical-align: middle;
+    }
+    .essay-lede {
+      font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400;
+      line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p {
+      font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300;
+      line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem;
+    }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25;
+      letter-spacing: 0; font-style: normal;
+    }
+    .essay-pull {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400;
+      font-style: italic; line-height: 1.5; color: var(--color-text-primary);
+      border-top: 2px solid var(--color-text-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      padding: 1.5rem 0; margin: 2.5rem 0; text-align: left;
+    }
+    .essay-key {
+      background: var(--color-background-secondary);
+      border-left: 3px solid var(--color-text-primary);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem;
+    }
+    .essay-key-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-text-tertiary); margin-bottom: 0.45rem;
+    }
+    .essay-key p {
+      font-family: 'Source Serif 4', serif; font-size: 1.02rem;
+      line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400;
+    }
+    .essay-body p.essay-line {
+      font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem;
+    }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament {
+      color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em;
+    }
+    .essay-closer {
+      font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95;
+      color: var(--color-text-secondary); font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem; margin-top: 3.5rem;
+    }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote {
+      font-family: 'Source Serif 4', serif; font-size: 0.82rem;
+      color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7;
+    }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       DRY RESIST POST, original diagrams + figures
+       Scoped under .essay-dr
+       ============================================ */
+    .essay-dr {
+      --dr-accent: #F0784A;
+      --dr-accent-soft: rgba(240,120,74,0.10);
+      --dr-accent-faint: rgba(240,120,74,0.04);
+      --dr-bd: rgba(255,255,255,0.08);
+      --dr-bd-soft: rgba(255,255,255,0.05);
+      --dr-wet: #6CBFE0;        /* cooler blue for wet resist */
+      --dr-wet-soft: rgba(108,191,224,0.10);
+      --dr-dry: #F0784A;        /* warm orange for dry resist */
+      --dr-dry-soft: rgba(240,120,74,0.10);
+    }
+
+    /* Table of contents */
+    .dr-toc {
+      margin: 0 0 2.5rem;
+      padding: 18px 22px 20px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .dr-toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .dr-toc ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: toc;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 22px;
+    }
+    .dr-toc li {
+      counter-increment: toc;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+    .dr-toc li::before {
+      content: counter(toc, decimal-leading-zero) ".";
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--dr-accent);
+      margin-right: 8px;
+      letter-spacing: 0.06em;
+    }
+    .dr-toc a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-bottom: 0.5px dotted transparent;
+      transition: color 180ms ease, border-color 180ms ease;
+    }
+    .dr-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Shared figure */
+    .dr-fig {
+      margin: 2.5rem 0 2.75rem;
+      padding: 24px 22px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--dr-bd);
+      background:
+        linear-gradient(180deg, var(--dr-accent-faint) 0%, transparent 60%),
+        var(--bg-alt);
+    }
+    .dr-fig-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dr-accent);
+      margin-bottom: 14px;
+    }
+    .dr-fig-cap {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--dr-bd-soft);
+      line-height: 1.6;
+    }
+
+    /* 2020 thesis callout */
+    .dr-thesis {
+      margin: 2rem 0 2.5rem;
+      padding: 22px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--dr-accent);
+      background:
+        linear-gradient(180deg, var(--dr-accent-soft) 0%, transparent 80%),
+        var(--bg-alt);
+    }
+    .dr-thesis-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dr-accent);
+      margin-bottom: 10px;
+    }
+    .dr-thesis-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* Two-column comparison card (2020 vs 2026, wet vs dry) */
+    .dr-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 2rem 0 2.5rem;
+    }
+    .dr-col {
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--dr-bd);
+      background: var(--bg-alt);
+    }
+    .dr-col-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .dr-col-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 10px;
+    }
+    .dr-col-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+    }
+    .dr-col--wet { border-color: rgba(108,191,224,0.45); background: linear-gradient(180deg, var(--dr-wet-soft) 0%, transparent 70%), var(--bg-alt); }
+    .dr-col--wet .dr-col-label { color: var(--dr-wet); }
+    .dr-col--dry { border-color: var(--dr-dry); background: linear-gradient(180deg, var(--dr-dry-soft) 0%, transparent 70%), var(--bg-alt); }
+    .dr-col--dry .dr-col-label { color: var(--dr-dry); }
+    .dr-col--now { border-color: var(--dr-accent); background: linear-gradient(180deg, var(--dr-accent-soft) 0%, transparent 70%), var(--bg-alt); }
+    .dr-col--now .dr-col-label { color: var(--dr-accent); }
+
+    /* Glossary box */
+    .dr-terms {
+      margin: 2rem 0 2.5rem;
+      padding: 20px 22px;
+      border-radius: 10px;
+      border: 0.5px dashed var(--color-border-tertiary);
+      background: var(--bg-alt);
+    }
+    .dr-terms-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .dr-terms dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 6px 16px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+    .dr-terms dt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--dr-accent);
+      padding-top: 2px;
+    }
+    .dr-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Wet vs dry process flow diagram (horizontal step strip) */
+    .dr-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      position: relative;
+    }
+    .dr-flow-step {
+      position: relative;
+      padding: 16px 12px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--dr-bd);
+      background: var(--bg-alt);
+    }
+    .dr-flow-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--dr-accent);
+      opacity: 0.55;
+      border-radius: 2px;
+      transition: opacity 200ms ease;
+    }
+    .dr-flow-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--dr-accent);
+      margin-bottom: 6px;
+    }
+    .dr-flow-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+    .dr-flow-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: var(--color-text-tertiary);
+    }
+    .dr-flow--wet .dr-flow-step::before { background: var(--dr-wet); }
+    .dr-flow--wet .dr-flow-num            { color: var(--dr-wet); }
+    .dr-flow--dry .dr-flow-step::before { background: var(--dr-dry); }
+    .dr-flow--dry .dr-flow-num            { color: var(--dr-dry); }
+
+    /* Subtle arrow indicator between steps */
+    .dr-flow-step:not(:last-child)::after {
+      content: '\203A';
+      position: absolute;
+      right: -5px; top: 50%;
+      transform: translate(50%, -50%);
+      font-size: 16px;
+      color: var(--color-text-tertiary);
+      line-height: 1;
+      z-index: 1;
+    }
+
+    /* Layer-stack diagram (pattern transfer & manufacturing stack) */
+    .dr-stack { display: flex; flex-direction: column; gap: 4px; }
+    .dr-layer {
+      display: grid;
+      grid-template-columns: 32px 1fr 110px;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--dr-bd);
+      background: var(--bg-alt);
+    }
+    .dr-layer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--dr-accent);
+      letter-spacing: 0.08em;
+    }
+    .dr-layer-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      letter-spacing: -0.005em;
+    }
+    .dr-layer-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.10em;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      text-align: right;
+    }
+    .dr-layer--hot {
+      background: linear-gradient(90deg, var(--dr-accent-soft), transparent 60%), var(--bg-alt);
+      border-color: var(--dr-accent);
+    }
+    .dr-layer--wet {
+      background: linear-gradient(90deg, var(--dr-wet-soft), transparent 60%), var(--bg-alt);
+    }
+
+    /* Value chain grid */
+    .dr-chain {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .dr-chain-node {
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--dr-bd);
+      background: var(--bg-alt);
+    }
+    .dr-chain-cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dr-accent);
+      margin-bottom: 6px;
+    }
+    .dr-chain-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+    }
+
+    /* Counterargument list */
+    .dr-counter {
+      margin: 1.5rem 0 2rem;
+      padding: 20px 22px;
+      border-radius: 10px;
+      border: 1px solid var(--dr-bd);
+      background: var(--bg-alt);
+      position: relative;
+    }
+    .dr-counter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+    .dr-counter ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: risk;
+    }
+    .dr-counter li {
+      counter-increment: risk;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.97rem;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      padding: 10px 0 10px 38px;
+      position: relative;
+      border-bottom: 0.5px solid var(--dr-bd-soft);
+    }
+    .dr-counter li:last-child { border-bottom: none; }
+    .dr-counter li::before {
+      content: counter(risk, decimal-leading-zero);
+      position: absolute;
+      left: 0; top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--dr-accent);
+    }
+    .dr-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+
+    /* Stat label inside body */
+    .dr-stat {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--dr-accent);
+      letter-spacing: 0.04em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: var(--dr-accent-faint);
+    }
+
+    /* Further reading list */
+    .dr-fr {
+      margin-top: 2.5rem;
+      padding-top: 1.75rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+    }
+    .dr-fr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 14px;
+    }
+    .dr-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .dr-fr li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--color-text-secondary);
+    }
+    .dr-fr li a {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    .dr-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .dr-compare { grid-template-columns: 1fr; }
+      .dr-flow { grid-template-columns: repeat(2, 1fr); }
+      .dr-flow-step:not(:last-child)::after { display: none; }
+      .dr-chain { grid-template-columns: 1fr; }
+      .dr-toc ol { grid-template-columns: 1fr; }
+      .dr-terms dl { grid-template-columns: 110px 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamp { display: block; margin: 8px 0 0; }
+      .dr-flow { grid-template-columns: 1fr; }
+      .dr-layer { grid-template-columns: 28px 1fr; }
+      .dr-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-dr">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 013 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Semiconductors</span>
+          <span class="tag">EUV</span>
+          <span class="tag">Dry Resist</span>
+          <span class="tag">Lam Research</span>
+          <span class="tag">ASML</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">High-NA EUV</span>
+          <span class="tag">DRAM</span>
+          <span class="tag">HBM</span>
+          <span class="tag">Semicap</span>
+        </div>
+
+        <h1 class="essay-hed">The <em>Dry Resist</em> War.<span class="essay-stamp">Original analysis</span></h1>
+
+        <div class="essay-deck">Why Lam&rsquo;s Aether could become critical to AI-era chipmaking.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The AI chip race is usually described through GPUs and HBM. But underneath that visible battle sits a quieter manufacturing problem: turning fragile EUV images into clean, repeatable, low-defect patterns on silicon.</p>
+
+          <nav class="dr-toc" aria-label="Article contents">
+            <div class="dr-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2020">The 2020 thesis</a></li>
+              <li><a href="#sec-2026">The 2026 update</a></li>
+              <li><a href="#sec-wet">What wet resist does</a></li>
+              <li><a href="#sec-dry">What dry resist changes</a></li>
+              <li><a href="#sec-ai">Why this matters for AI chips</a></li>
+              <li><a href="#sec-memory">DRAM and HBM make it interesting</a></li>
+              <li><a href="#sec-highna">High-NA EUV raises the stakes</a></li>
+              <li><a href="#sec-tsmc">TSMC and the low-NA extension</a></li>
+              <li><a href="#sec-business">Why this is a Lam business story</a></li>
+              <li><a href="#sec-chain">Value chain map</a></li>
+              <li><a href="#sec-risks">What could break the thesis</a></li>
+              <li><a href="#sec-final">The dry resist war</a></li>
+            </ol>
+          </nav>
+
+          <p>The AI chip race is usually described as a fight over GPUs, HBM, and advanced packaging. That is the visible layer. Underneath it sits a quieter manufacturing problem. How do you keep printing smaller, cleaner, more reliable patterns on silicon when features are approaching atomic scale?</p>
+
+          <p>EUV lithography solved one part of the scaling problem. It gave chipmakers shorter-wavelength light and removed the need for some brutal multi-patterning flows. But EUV did not remove the physics of pattern transfer. The scanner exposes the wafer. The resist absorbs the photons. The image becomes a chemical or physical pattern. That pattern must survive development. Then it must be transferred into real device layers through etch and deposition.</p>
+
+          <p class="essay-line">At advanced nodes, the resist is no longer a boring chemical layer. It becomes a yield bottleneck.</p>
+
+          <p>That is why Lam Research&rsquo;s Aether dry resist matters.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>EUV solved part of the scaling problem. It did not solve pattern transfer. Dry resist is one of the strategic process modules trying to bridge what the scanner can expose and what the wafer can preserve.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2020">I. The 2020 thesis</h2>
+
+          <p>In May 2020, Dylan Patel published a piece on SemiAnalysis arguing that Lam&rsquo;s dry resist work could grow into a multi-billion dollar business as EUV adoption made traditional wet patterning flows harder to scale.<sup><a href="#fn1">1</a></sup> The argument was structural. Wet resist worked beautifully for DUV and for early EUV layers. As features shrank, stochastic effects, line collapse, line-edge roughness, and the cruel dose-versus-defectivity tradeoff began to bite harder. Lam, an equipment company anchored in deposition, etch, and clean, was trying to expand its role inside the EUV patterning module.</p>
+
+          <p>I revisited that piece because the question it asked is no longer hypothetical. Production tools are being placed in fabs. Memory makers are picking horses. High-NA EUV is starting to arrive. Patterning has moved from a back-of-the-paper concern into the front of every advanced fab&rsquo;s roadmap.</p>
+
+          <div class="dr-thesis">
+            <div class="dr-thesis-label">2020 thesis</div>
+            <p class="dr-thesis-text">If EUV makes wet resist and develop flows harder to scale, then dry resist could become a new process module inside advanced patterning, and the equipment company that owns it could capture meaningful new revenue.</p>
+          </div>
+
+          <p>The piece was conservative in 2020. It assumed steady AI demand and the standard advanced-node cadence. Neither of those held. The actual 2024 to 2026 AI capex cycle made the patterning question more urgent and more strategic.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2026">II. The 2026 update</h2>
+
+          <p>Six years later the thesis is no longer about whether dry resist could matter. It is about which layers it wins, how fast it scales, and how much of the broader patterning module Lam can take.</p>
+
+          <p>Four concrete moves on the public record:</p>
+
+          <ul style="font-family: 'Source Serif 4', serif; font-size: 1.0rem; line-height: 1.85; color: var(--color-text-primary); padding-left: 1.5rem; margin: 0 0 1.5rem;">
+            <li>In January 2025, Lam said its Aether dry photoresist had been adopted as production tool of record by a leading memory manufacturer for advanced DRAM processes.<sup><a href="#fn2">2</a></sup></li>
+            <li>Two weeks earlier, Lam announced an imec qualification establishing a <span class="dr-stat">28nm pitch</span> directly printed in dry photoresist for back-end-of-line logic at <span class="dr-stat">2nm and below</span>, with extendibility flagged toward High-NA EUV.<sup><a href="#fn3">3</a></sup></li>
+            <li>In September 2025, Lam and JSR/Inpria entered a cross-licensing and collaboration agreement covering EUV patterning materials, metal oxide resists, dry resist, High-NA EUV, and advanced films, signalling that the materials side of the ecosystem is being structurally aligned around the new flows.<sup><a href="#fn5">5</a></sup></li>
+            <li>In March 2026, IBM and Lam announced a five-year collaboration focused on sub-1nm logic scaling, High-NA EUV, novel materials, and fabrication processes.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></li>
+          </ul>
+
+          <p>The macro picture matches. ASML&rsquo;s 2025 annual report frames AI as the structural driver of EUV demand and projects advanced Logic EUV lithography spending growing at <span class="dr-stat">10 to 20% CAGR</span> from 2025 to 2030, and DRAM EUV lithography spending at <span class="dr-stat">15 to 25% CAGR</span> over the same period.<sup><a href="#fn8">8</a></sup> SEMI projects global semiconductor equipment sales reaching a record <span class="dr-stat">$156 billion</span> in 2027, with DRAM equipment growing 15.4% in 2025, 15.1% in 2026, and 7.8% in 2027 on HBM and advanced node demand for AI and data centers.<sup><a href="#fn9">9</a></sup></p>
+
+          <div class="dr-compare">
+            <div class="dr-col">
+              <div class="dr-col-label">2020 framing</div>
+              <h3 class="dr-col-title">An early patterning bet</h3>
+              <div class="dr-col-body">
+                Dry resist as a forward-looking EUV thesis. Mostly relevant for leading-edge logic. Largely unproven in production. Upside framed as &ldquo;could become a multi-billion dollar business.&rdquo;
+              </div>
+            </div>
+            <div class="dr-col dr-col--now">
+              <div class="dr-col-label">2026 reality</div>
+              <h3 class="dr-col-title">A production roadmap</h3>
+              <div class="dr-col-body">
+                Aether selected for advanced DRAM. Imec direct-print at 28nm pitch. JSR/Inpria materials alignment. IBM five-year sub-1nm collaboration. Adjacent to High-NA EUV, advanced packaging, and AI-driven memory and logic capex.
+              </div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-wet">III. What wet resist does, simply</h2>
+
+          <p>Wet resist is the boring, useful workhorse of patterning. A liquid resist is spun onto the wafer as a thin film. The wafer is exposed to light. A wet chemistry develops the pattern by dissolving away either the exposed or unexposed regions. Etch and deposition then transfer the pattern into the device layers.</p>
+
+          <p>It works because the ecosystem is enormous. Track tools, resist chemistries, develop chemistries, inspection, and rework flows are all mature. For DUV and most early EUV layers, the wet flow is fast, reliable, and well understood. It is not going anywhere for the bulk of the wafer.</p>
+
+          <p>It gets harder at advanced pitches for a small set of physically stubborn reasons. EUV photons are scarce per unit area, so dose has to climb to expose reliably. Higher dose costs throughput and money. Wet development can warp narrow features through capillary forces, which produces line collapse and pattern degradation. Edge roughness becomes a meaningful fraction of the linewidth. Stochastic events, where a few missing photons or chemical events ruin a single feature, accumulate into yield loss. None of this kills wet resist. All of it raises the cost of staying on it as pitches shrink.</p>
+
+          <figure class="dr-fig" aria-label="Diagram: Traditional wet resist flow">
+            <div class="dr-fig-label">Diagram 01 &middot; Traditional wet resist flow</div>
+            <div class="dr-flow dr-flow--wet">
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">01</div>
+                <div class="dr-flow-name">Spin coat</div>
+                <div class="dr-flow-desc">Liquid resist applied to a spinning wafer.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">02</div>
+                <div class="dr-flow-name">EUV exposure</div>
+                <div class="dr-flow-desc">Scanner exposes the resist image.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">03</div>
+                <div class="dr-flow-name">Wet development</div>
+                <div class="dr-flow-desc">Chemistry dissolves the pattern.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">04</div>
+                <div class="dr-flow-name">Etch transfer</div>
+                <div class="dr-flow-desc">Pattern is etched into the device layer.</div>
+              </div>
+            </div>
+            <div class="dr-fig-cap">Wet flow. Mature, fast, well understood. Capillary forces, dose limits, and stochastic effects start to bite at extreme pitches.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-dry">IV. What dry resist changes</h2>
+
+          <p>Lam&rsquo;s Aether replaces the liquid resist with a vacuum-deposited film built from metal-organic compounds. Lam says these compounds absorb three to five times more EUV light than traditional carbon-based resist materials.<sup><a href="#fn4">4</a></sup> The development step is also dry, performed in vacuum, which removes the capillary forces that collapse the smallest wet-developed lines.</p>
+
+          <p>The downstream chain matters more than any one of those steps. Better photon absorption can reduce the EUV dose needed for a given fidelity, which protects scanner throughput. Lower dose at constant fidelity is a direct cost win, since the scanner is the most expensive tool in the fab. Dry development reduces line collapse and a class of wet-chemistry defects. Fewer process steps reduces the opportunities for pattern degradation between exposure and etch. Lam also frames Aether as integrating cleanly with its Nimbus underlayer and dry plasma develop tools, which extends the company&rsquo;s role from a single resist step to a fuller patterning module.</p>
+
+          <figure class="dr-fig" aria-label="Diagram: Aether dry resist flow">
+            <div class="dr-fig-label">Diagram 02 &middot; Dry resist flow</div>
+            <div class="dr-flow dr-flow--dry">
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">01</div>
+                <div class="dr-flow-name">Dry deposition</div>
+                <div class="dr-flow-desc">Vacuum-deposited metal-organic film.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">02</div>
+                <div class="dr-flow-name">EUV exposure</div>
+                <div class="dr-flow-desc">Higher EUV absorption per nm.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">03</div>
+                <div class="dr-flow-name">Dry development</div>
+                <div class="dr-flow-desc">No capillary forces, lower collapse.</div>
+              </div>
+              <div class="dr-flow-step">
+                <div class="dr-flow-num">04</div>
+                <div class="dr-flow-name">Etch transfer</div>
+                <div class="dr-flow-desc">Pattern is etched into the device layer.</div>
+              </div>
+            </div>
+            <div class="dr-fig-cap">Dry flow. Vacuum deposition. Higher EUV absorption. Dry develop. The shape of the flow is the same. The physics of each step is different.</div>
+          </figure>
+
+          <div class="dr-compare">
+            <div class="dr-col dr-col--wet">
+              <div class="dr-col-label">Wet flow</div>
+              <h3 class="dr-col-title">Mature, broad, defending</h3>
+              <div class="dr-col-body">
+                Spin coat, wet develop, deep ecosystem, fast cycle time, low risk. Wins almost every layer that does not need extreme pitch resolution.
+              </div>
+            </div>
+            <div class="dr-col dr-col--dry">
+              <div class="dr-col-label">Dry flow</div>
+              <h3 class="dr-col-title">Vacuum, dense, advancing</h3>
+              <div class="dr-col-body">
+                Dry deposition, dry develop, higher EUV absorption, lower defectivity target. Production proof on advanced DRAM and imec qualification on 2nm BEOL. Still must beat wet on cost of ownership layer by layer.
+              </div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">V. Why this matters for AI chips</h2>
+
+          <p>Patterning matters because every advanced chip starts as a patterning problem. The GPU on the headlines, the HBM stacks around it, the interposer underneath, the DRAM in the memory module, the NAND in the storage tier, the I/O dies on the package: every one of them has to be printed first, then transferred, then yielded.</p>
+
+          <p>AI demand pushes on every one of those layers at once. Frontier accelerators need leading-edge logic. HBM and DRAM need advanced memory scaling. Advanced packaging needs more interposer real estate. Every additional EUV layer is also another patterning step. If those steps cost too much, or yield too poorly, the AI roadmap shifts.</p>
+
+          <p class="essay-line">The AI boom does not only pull on Nvidia. It pulls on the entire manufacturing stack.</p>
+
+          <figure class="dr-fig" aria-label="Diagram: pattern transfer stack inside an EUV process module">
+            <div class="dr-fig-label">Diagram 03 &middot; The pattern transfer stack</div>
+            <div class="dr-stack">
+              <div class="dr-layer">
+                <div class="dr-layer-num">06</div>
+                <div class="dr-layer-name">EUV scanner exposure</div>
+                <div class="dr-layer-tag">ASML</div>
+              </div>
+              <div class="dr-layer dr-layer--hot">
+                <div class="dr-layer-num">05</div>
+                <div class="dr-layer-name">Resist (wet or dry, metal oxide)</div>
+                <div class="dr-layer-tag">Resist makers / Lam</div>
+              </div>
+              <div class="dr-layer dr-layer--hot">
+                <div class="dr-layer-num">04</div>
+                <div class="dr-layer-name">Underlayer / hardmask (e.g. Nimbus)</div>
+                <div class="dr-layer-tag">Lam</div>
+              </div>
+              <div class="dr-layer dr-layer--wet">
+                <div class="dr-layer-num">03</div>
+                <div class="dr-layer-name">Develop (wet track or dry plasma)</div>
+                <div class="dr-layer-tag">TEL / Lam</div>
+              </div>
+              <div class="dr-layer">
+                <div class="dr-layer-num">02</div>
+                <div class="dr-layer-name">Etch / deposition transfer</div>
+                <div class="dr-layer-tag">Lam / AMAT / TEL</div>
+              </div>
+              <div class="dr-layer">
+                <div class="dr-layer-num">01</div>
+                <div class="dr-layer-name">Inspection &amp; metrology</div>
+                <div class="dr-layer-tag">KLA</div>
+              </div>
+            </div>
+            <div class="dr-fig-cap">Pattern transfer is a stack, not a step. Aether attacks layers 05, 04, and 03 in a way that compounds across the rest.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-memory">VI. DRAM and HBM make it interesting</h2>
+
+          <p>The 2020 thesis was largely a logic story. EUV had just arrived at TSMC and Samsung leading-edge logic. The 2026 version is also a memory story. That is what made me revisit the question.</p>
+
+          <p>Three signals matter. Lam said Aether was adopted as production tool of record by a leading memory manufacturer for advanced DRAM in January 2025.<sup><a href="#fn2">2</a></sup> ASML expects DRAM EUV lithography spending to compound at 15 to 25 percent annually from 2025 to 2030.<sup><a href="#fn8">8</a></sup> SEMI projects DRAM equipment growth driven by HBM ramps and advanced DRAM nodes for AI and data center demand.<sup><a href="#fn9">9</a></sup></p>
+
+          <p>If advanced memory uses more EUV and more difficult patterning, then dry resist could matter beyond logic. The careful version of the claim is the right one. Dry resist may not dominate every memory layer. It could win selected critical layers where dose, defectivity, pattern fidelity, and cost of ownership justify adoption. That is still a large prize, because critical layers are where the cycle time and yield damage compounds.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-highna">VII. High-NA EUV raises the stakes</h2>
+
+          <p>High-NA EUV improves imaging resolution by increasing the numerical aperture of the scanner optics. Smaller features become printable. The downside is that smaller features make pattern transfer harder, not easier. A better scanner is not enough if the resist and the etch stack cannot preserve what the scanner exposed.</p>
+
+          <p>ASML said in May 2026 that the first commercial chips made with its High-NA EUV machines were expected within months, with Intel, Samsung, and SK hynix moving forward and TSMC remaining more cautious about adoption timing.<sup><a href="#fn10">10</a></sup> IBM and Lam framed their five-year collaboration explicitly around High-NA EUV process flows for sub-1nm logic, novel materials, and fabrication processes.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></p>
+
+          <p class="essay-line">High-NA can print smaller. Dry resist helps make smaller printable features actually manufacturable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-tsmc">VIII. TSMC and the low-NA extension</h2>
+
+          <p>TSMC has reportedly been working to extend current low-NA EUV tools further instead of moving to High-NA immediately, while continuing to push its own process and packaging roadmap.<sup><a href="#fn12">12</a></sup> The schedule on the public record is structural. N2 entered high-volume manufacturing in late 2025, N2P and A16 are scheduled for the second half of 2026, A14 is planned for 2028, and the CoWoS family continues to expand to support AI systems.<sup><a href="#fn11">11</a></sup></p>
+
+          <p>That does not weaken the dry resist thesis. It may strengthen it. If fabs want to extend low-NA EUV longer, they need more process integration around the scanner. Better resist. Better underlayers. Better etch. Better deposition. Better metrology. Better defect control. Each of those is a slot Lam wants to occupy, and Aether is the most visible new piece.</p>
+
+          <p>The same logic applies in the other direction. If High-NA adoption accelerates faster than expected at Intel, Samsung, and SK hynix, the patterning challenge there is even harder, and the case for dry resist is also stronger. Either path keeps the patterning module strategic.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-business">IX. Why this is a Lam business model story</h2>
+
+          <p>Lam does not sell EUV scanners. ASML does. Lam sells the process tools around the scanner: deposition, etch, clean, dry development, films, and now a meaningful slice of the resist-related patterning module. Aether is important to Lam not only because it improves yield. It is important because it gives Lam a chance to take a larger slice of the EUV patterning module, alongside an ecosystem partner stack in materials.</p>
+
+          <p>Lam frames Aether as a suite of EUV solutions, including dry photoresist, the Nimbus underlayer, and dry plasma develop, with claims about reduced scanner dose, lower defectivity, lower waste, and lower cost. The company has publicly discussed a roughly <span class="dr-stat">$1.5 billion</span> cumulative incremental revenue target across the patterning portfolio over the next five years.<sup><a href="#fn7">7</a></sup> That is a meaningful slice of a single equipment company&rsquo;s growth, even before you assume any second-order effects from a dry-resist transition.</p>
+
+          <p>This is a semiconductor value-chain analysis, not investment advice. The point is that the structure of who captures value is changing. Some of that value will sit with ASML for scanners. Some will sit with TEL for traditional track and etch. Some will sit with KLA for metrology and inspection. Some will sit with materials makers like JSR/Inpria. The new question is how much of the patterning module migrates toward Lam if dry resist scales.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-chain">X. Value chain map</h2>
+
+          <p>This is a value-chain map, not investment advice. The point is to make the shape of the dependency visible. The AI memory and logic build is a multi-vendor effort across lithography, materials, deposition, etch, packaging, and metrology, and dry resist is one new link, not the whole chain.</p>
+
+          <figure class="dr-fig" aria-label="Diagram: dry resist value chain map">
+            <div class="dr-fig-label">Diagram 04 &middot; The value chain</div>
+            <div class="dr-chain">
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Lithography</div>
+                <div class="dr-chain-body">ASML. EUV and High-NA EUV scanners.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Dry resist / process integration</div>
+                <div class="dr-chain-body">Lam Research. Aether, Nimbus underlayer, dry plasma develop.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Wet develop &amp; track</div>
+                <div class="dr-chain-body">Tokyo Electron and related ecosystem.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Materials</div>
+                <div class="dr-chain-body">JSR, Inpria, and other resist and underlayer makers.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Foundries</div>
+                <div class="dr-chain-body">TSMC, Samsung, Intel Foundry.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Memory makers</div>
+                <div class="dr-chain-body">Samsung, SK hynix, Micron.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Research ecosystem</div>
+                <div class="dr-chain-body">imec, IBM Albany, NY CREATES.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Inspection &amp; metrology</div>
+                <div class="dr-chain-body">KLA and others. The yield witnesses.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Advanced packaging</div>
+                <div class="dr-chain-body">TSMC CoWoS, ASE, Amkor and others.</div>
+              </div>
+              <div class="dr-chain-node">
+                <div class="dr-chain-cat">Customers</div>
+                <div class="dr-chain-body">Nvidia, AMD, hyperscaler ASIC teams, AI accelerator startups.</div>
+              </div>
+            </div>
+            <div class="dr-fig-cap">This is a value-chain map, not investment advice. Each box can become a bottleneck. Dry resist is one of the newer links, sitting between lithography and etch.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Quick terms</h2>
+
+          <div class="dr-terms" role="complementary" aria-label="Glossary">
+            <div class="dr-terms-label">Glossary</div>
+            <dl>
+              <dt>EUV</dt><dd>Extreme ultraviolet lithography. The current leading-edge light source for printing the smallest features.</dd>
+              <dt>High-NA EUV</dt><dd>Next-generation EUV with higher numerical aperture for finer resolution at the cost of tool complexity and price.</dd>
+              <dt>Resist</dt><dd>Light-sensitive material that turns the EUV image into a developable pattern on the wafer.</dd>
+              <dt>Wet resist</dt><dd>Resist applied as a liquid and developed with a wet chemistry. The traditional patterning workhorse.</dd>
+              <dt>Dry resist</dt><dd>Resist deposited and developed in vacuum. The challenger flow Aether targets.</dd>
+              <dt>Dose</dt><dd>EUV energy delivered per area to expose the resist. Lower dose for the same fidelity is a direct cost win.</dd>
+              <dt>Defectivity</dt><dd>Unwanted errors in the printed pattern. Goes up sharply at extreme pitches.</dd>
+              <dt>Line-edge roughness</dt><dd>Wiggle along the edge of a patterned line, measured in nanometers.</dd>
+              <dt>Line collapse</dt><dd>Narrow resist features that fall over during development, often from capillary forces in wet flows.</dd>
+              <dt>BEOL</dt><dd>Back end of line. The interconnect layers built above the transistors.</dd>
+              <dt>Semicap</dt><dd>Semiconductor capital equipment. ASML, Applied Materials, Lam, TEL, KLA, and the packaging and test specialists.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory. Stacked DRAM dies on an advanced package next to the accelerator.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">XI. What could break the thesis</h2>
+
+          <p>A serious piece needs counterarguments. The case for dry resist has more than one honest failure mode.</p>
+
+          <div class="dr-counter" aria-label="Counterarguments">
+            <div class="dr-counter-label">Risks &amp; counterarguments</div>
+            <ol>
+              <li><strong>Wet incumbents defend.</strong> JSR, TEL, and the wet ecosystem are not standing still. New chemistries, hybrid flows, and underlayer improvements could push wet resist further than expected, slowing dry adoption.</li>
+              <li><strong>Dry only wins selected layers.</strong> The realistic outcome is critical-layer adoption, not full conversion. Revenue capture is real but narrower than bull cases.</li>
+              <li><strong>High-NA slower than expected.</strong> If High-NA adoption stalls at Intel, Samsung, and SK hynix, one major demand vector for dry flows softens.</li>
+              <li><strong>Throughput must beat incumbents.</strong> Dose savings only matter if scanner throughput and overall fab cycle time improve at the system level, not just in the resist step.</li>
+              <li><strong>Cost of ownership in HVM.</strong> Cost per wafer pass needs to be defensible in high-volume manufacturing, not just in pilot lines.</li>
+              <li><strong>Memory is cyclical.</strong> Even with a structural AI tailwind, memory capex has historically swung hard. Every up-cycle has been followed by inventory pain.</li>
+              <li><strong>Long qualification cycles.</strong> Customer process qualification takes years. Production wins announced today may not translate into revenue at scale for several cycles.</li>
+              <li><strong>TSMC extends low-NA longer.</strong> TSMC&rsquo;s pace is the single biggest influence on the leading-edge logic patterning market. A slower High-NA migration shifts the demand curve.</li>
+              <li><strong>Materials competition.</strong> Metal oxide and dry resist materials are not exclusive to one equipment partner. Other equipment makers can pair with the same materials makers.</li>
+              <li><strong>Financial sizing.</strong> Dry resist may become technically important without producing the multi-billion-dollar outcome that the 2020 framing implied.</li>
+            </ol>
+          </div>
+
+          <p>The correct claim is not that dry resist replaces everything. The correct claim is that as EUV is pushed harder by AI-era logic and memory, dry resist has become one of the most important process technologies to watch.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XII. The dry resist war</h2>
+
+          <p>The AI era is making chip manufacturing more complex, not less. The industry needs more advanced logic, more DRAM, more HBM, more advanced packaging, more power efficiency, and more yield from every wafer.</p>
+
+          <p>EUV is central to that roadmap, but EUV alone is not enough. At the smallest dimensions, the bottleneck moves into the messy middle. Resist. Underlayers. Development. Etch. Pattern transfer. Defectivity. Cost of ownership. That is where Lam is making its bet.</p>
+
+          <div class="essay-pull">EUV made smaller printing possible. High-NA EUV pushes it further. But the next decade of scaling will not be won by exposure alone.</div>
+
+          <p>It will be won by the companies that can turn fragile nanoscale patterns into real, repeatable, low-defect device structures. That is the dry resist war. And in the AI era, it matters much more than it did in 2020.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (May 2020). <em>LAM Research (LRCX) Dry Deposit and Resist Could Become a Multi-Billion Dollar Business.</em> SemiAnalysis. Historical anchor for the thesis that dry resist could become a meaningful new process module at EUV nodes. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Lam Research (Jan 29 2025). <a href="https://investor.lamresearch.com/2025-01-29-Breakthrough-EUV-Dry-Photoresist-Technology-from-Lam-Research-Adopted-by-Leading-Memory-Manufacturer" target="_blank" rel="noopener">Breakthrough EUV Dry Photoresist Technology from Lam Research Adopted by Leading Memory Manufacturer</a>. Aether adopted as production tool of record by a leading memory manufacturer for advanced DRAM processes, with discussion of dry resist underlayers, films, dry development, and dose/defectivity tradeoffs.</p>
+
+            <p id="fn3"><sup>3</sup> Lam Research (Jan 14 2025). <a href="https://investor.lamresearch.com/2025-01-14-Lam-Research-Establishes-28nm-Pitch-in-High-Resolution-Patterning-Through-Dry-Photoresist-Technology" target="_blank" rel="noopener">Lam Research Establishes 28nm Pitch in High-Resolution Patterning Through Dry Photoresist Technology</a>. Imec qualification for direct-print 28nm pitch BEOL logic at 2nm and below, extendibility to High-NA EUV, and claims on defectivity, dose, resolution, and sustainability.</p>
+
+            <p id="fn4"><sup>4</sup> Lam Research. <a href="https://www.lamresearch.com/products/our-solutions/aether/" target="_blank" rel="noopener">Aether product page</a>. Description of the vacuum-based dry process, metal-organic compounds, three-to-five-times higher EUV light absorption than traditional carbon-based resist materials, single-print patterning, and cost/complexity claims.</p>
+
+            <p id="fn5"><sup>5</sup> Lam Research, JSR Corporation, and Inpria Corporation (Sep 15 2025). <a href="https://investor.lamresearch.com/2025-09-15-Lam-Research-and-JSR-Corporation-Inpria-Corporation-Enter-Cross-Licensing%2C-Collaboration-Agreement-to-Advance-Semiconductor-Manufacturing" target="_blank" rel="noopener">Cross-Licensing and Collaboration Agreement to Advance Semiconductor Manufacturing</a>. Coverage of EUV patterning materials, metal oxide resists, Aether dry resist, High-NA EUV, and advanced films.</p>
+
+            <p id="fn6"><sup>6</sup> IBM (Mar 10 2026). <a href="https://newsroom.ibm.com/2026-03-10-ibm-and-lam-research-announce-collaboration-to-advance-sub-1nm-logic-scaling" target="_blank" rel="noopener">IBM and Lam Research Announce Collaboration to Advance Sub-1nm Logic Scaling</a>. Five-year collaboration on sub-1nm logic, High-NA EUV, novel materials, and fabrication processes.</p>
+
+            <p id="fn7"><sup>7</sup> Lam Research (Mar 2026). <a href="https://newsroom.lamresearch.com/ibm-lam-sub-1nm-logic-aether-dry-resist?blog=true" target="_blank" rel="noopener">IBM &amp; Lam: sub-1nm logic and Aether dry resist</a>. Company commentary on Aether paired with Lam etch and deposition, pattern fidelity, reduced process steps, and sub-1nm process integration. Also referenced for Lam&rsquo;s public framing of patterning revenue ambition over the next five years.</p>
+
+            <p id="fn8"><sup>8</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf" target="_blank" rel="noopener">2025 Annual Report, strategic report section</a>. AI driving advanced Logic and DRAM EUV exposures and spending. Advanced Logic EUV lithography spending CAGR of 10 to 20% from 2025 to 2030. DRAM EUV lithography spending CAGR of 15 to 25% over the same period.</p>
+
+            <p id="fn9"><sup>9</sup> SEMI (2025). <a href="https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-projected-to-reach-a-record-of-156-billion-dollars-in-2027-semi-reports" target="_blank" rel="noopener">Global Semiconductor Equipment Sales Projected to Reach a Record of $156 Billion in 2027</a>. Source for global equipment forecast and DRAM equipment growth path of 15.4% in 2025, 15.1% in 2026, and 7.8% in 2027, driven by HBM and AI/data center demand.</p>
+
+            <p id="fn10"><sup>10</sup> Reuters (May 19 2026). <a href="https://www.reuters.com/business/asml-says-first-chips-new-high-na-machines-arrive-months-2026-05-19/" target="_blank" rel="noopener">ASML says first chips made with High-NA machines to arrive in months</a>. Adoption split between Intel, Samsung, and SK hynix versus TSMC&rsquo;s more cautious stance.</p>
+
+            <p id="fn11"><sup>11</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">Annual Reports</a>. N2 high-volume manufacturing timing, N2P and A16 schedule for H2 2026, A14 schedule for 2028, and CoWoS/SoIC advanced packaging context for AI systems.</p>
+
+            <p id="fn12"><sup>12</sup> Reuters (April 2026). <em>TSMC shows smaller, faster chips without pricey new tool from ASML.</em> Coverage of TSMC extending current EUV tools, cautious High-NA adoption, and advanced packaging direction for AI chip systems. Referenced as a representative public source on TSMC&rsquo;s low-NA extension posture.</p>
+          </div>
+
+          <div class="dr-fr">
+            <div class="dr-fr-label">Further reading</div>
+            <ul>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. Companion essay on why DRAM, HBM, packaging, and semicap became the new center of computing.</li>
+              <li><a href="https://www.semi.org/en/products-services/market-data/world-fab-forecast" target="_blank" rel="noopener">SEMI World Fab Forecast</a>. Quarterly tracking of fab capacity, capex, and equipment spending by region and product type.</li>
+              <li><a href="https://www.asml.com/en/investors" target="_blank" rel="noopener">ASML Investor Relations</a>. Lithography intensity, EUV roadmap, and High-NA scenarios.</li>
+              <li><a href="https://investor.lamresearch.com/" target="_blank" rel="noopener">Lam Research Investor Relations</a>. Quarterly commentary on the Aether patterning portfolio.</li>
+              <li><a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">TSMC Annual Reports</a>. Process roadmap, EUV adoption posture, and advanced packaging.</li>
+              <li><a href="https://www.imec-int.com/en" target="_blank" rel="noopener">imec</a>. Research collaborations on EUV patterning, materials, and integration.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 013. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=17"></script>
+</body>
+</html>

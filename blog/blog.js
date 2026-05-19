@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'dry-resist-war':                 'infrastructure',
   'ai-memory-wall':                 'infrastructure',
   'liability-laundering':           'agents',
   'prompt-is-not-infrastructure':   'agents',
