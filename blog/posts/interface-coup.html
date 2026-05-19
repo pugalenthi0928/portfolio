@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Interface Coup | Pugalenthi Magendran</title>
+  <meta name="description" content="AI will not merely replace search. It may replace the interface layer. When assistants become the front door, apps become callable infrastructure and distribution moves from visibility to permission.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/interface-coup.html">
+  <meta property="og:title" content="The Interface Coup | Pugalenthi Magendran">
+  <meta property="og:description" content="AI will not merely replace search. It may replace the interface layer. When assistants become the front door, apps become callable infrastructure and distribution moves from visibility to permission.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/interface-coup.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-19">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI interfaces & distribution">
+  <meta property="article:tag" content="AI">
+  <meta property="article:tag" content="interfaces">
+  <meta property="article:tag" content="agents">
+  <meta property="article:tag" content="distribution">
+  <meta property="article:tag" content="SEO">
+  <meta property="article:tag" content="platforms">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Interface Coup | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="AI will not merely replace search. It may replace the interface layer. When assistants become the front door, apps become callable infrastructure and distribution moves from visibility to permission.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Interface Coup",
+    "description": "AI will not merely replace search. It may replace the interface layer. When assistants become the front door, apps become callable infrastructure and distribution moves from visibility to permission.",
+    "url": "https://pugalenthimagendran.com/blog/posts/interface-coup.html",
+    "datePublished": "2026-05-19",
+    "author": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran",
+      "url": "https://pugalenthimagendran.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Pugalenthi Magendran"
+    },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/interface-coup.html",
+    "keywords": "AI, interfaces, agents, distribution, SEO, platforms"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=11">
+  <style>
+    /* ============================================
+       ESSAY FORMAT, Technical Editorial
+       Scoped under .essay-format
+       ============================================ */
+
+    .essay-format {
+      --color-text-primary: var(--text);
+      --color-text-secondary: var(--text-secondary);
+      --color-text-tertiary: var(--text-tertiary);
+      --color-background-secondary: var(--bg-alt);
+      --color-border-primary: var(--border);
+      --color-border-secondary: var(--border);
+      --color-border-tertiary: var(--border-light);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+
+    .essay-page { max-width: 680px; margin: 0 auto; padding: 0 0 2rem; }
+
+    .essay-issue {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 3rem;
+    }
+
+    .essay-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .essay-tag-row .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      color: var(--color-text-tertiary);
+      background: none;
+    }
+
+    .essay-hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+
+    .essay-deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      border-left: 2px solid var(--color-border-tertiary);
+      padding-left: 1.25rem;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+    }
+
+    .essay-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 3rem;
+    }
+    .essay-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--color-background-secondary);
+      border: 0.5px solid var(--color-border-tertiary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+    }
+    .essay-meta-text { flex: 1; }
+    .essay-author {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-text-primary);
+      letter-spacing: 0.04em;
+    }
+    .essay-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+    .essay-read-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+
+    .essay-lede {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .essay-body p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--color-text-primary);
+      margin-bottom: 1.5rem;
+    }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+
+    .essay-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 3rem 0 1.25rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-style: normal;
+    }
+
+    .essay-pull {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      border-top: 2px solid var(--color-text-primary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      padding: 1.5rem 0;
+      margin: 2.5rem 0;
+      text-align: left;
+    }
+
+    .essay-key {
+      background: var(--color-background-secondary);
+      border-left: 3px solid var(--color-text-primary);
+      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+      padding: 1.1rem 1.4rem;
+      margin: 2rem 0 2.5rem;
+    }
+    .essay-key-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.45rem;
+    }
+    .essay-key p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .essay-body p.essay-line {
+      font-weight: 600;
+      color: var(--color-text-primary);
+      font-size: 1.07rem;
+    }
+
+    .essay-hr {
+      border: none;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      margin: 3rem 0;
+    }
+
+    .essay-ornament {
+      color: var(--color-border-secondary);
+      text-align: left;
+      margin: 2.75rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+    }
+
+    .essay-closer {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.975rem;
+      line-height: 1.95;
+      color: var(--color-text-secondary);
+      font-style: italic;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      padding-top: 2.25rem;
+      margin-top: 3.5rem;
+    }
+    .essay-sig {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin-top: 1.75rem;
+    }
+
+    .essay-footnote {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.82rem;
+      color: var(--color-text-tertiary);
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+      line-height: 1.7;
+    }
+    .essay-footnote a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      border-bottom: 0.5px dotted var(--color-border-tertiary);
+    }
+    .essay-footnote a:hover {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-text-secondary);
+    }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+
+    .essay-body sup a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: 0.7em;
+      padding: 0 2px;
+      border-bottom: none;
+    }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    .essay-body a.essay-link {
+      color: var(--color-text-primary);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      transition: border-color 180ms ease;
+    }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.8rem; }
+      .essay-deck { font-size: 0.95rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.3rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-key p { font-size: 0.95rem; }
+      .essay-body p.essay-line { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 010 &nbsp;&middot;&nbsp; AI interfaces &amp; distribution &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI</span>
+          <span class="tag">interfaces</span>
+          <span class="tag">agents</span>
+          <span class="tag">distribution</span>
+          <span class="tag">SEO</span>
+          <span class="tag">platforms</span>
+        </div>
+
+        <h1 class="essay-hed">The Interface <em>Coup.</em></h1>
+
+        <div class="essay-deck">When AI becomes the front door, every app becomes a backend.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The internet used to be a place you visited.</p>
+
+          <p>You opened Google to search. You opened Amazon to buy. You opened Expedia to book. You opened Spotify to listen. You opened Canva to design. You opened Notion to write. You opened Salesforce to manage customers. The app owned the interaction. That was the old contract.</p>
+
+          <p>The next internet may not work like that. You may not open ten apps. You may ask one assistant: find me the best flight, check my calendar, compare hotels, avoid tourist areas, use my saved preferences, book the safest option, and send the itinerary to my partner.</p>
+
+          <p>At that moment, the assistant is not a search box. It is not a chatbot. It is not another app. It is the front door. And when AI becomes the front door, every other app becomes something different. Not gone, not irrelevant, but pushed backward into the stack.</p>
+
+          <p class="essay-line">A website is something a human visits. A tool is something an agent calls.</p>
+
+          <p>That is the interface coup.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>AI will not merely replace search. It may replace the interface layer. When assistants become the front door, apps become callable infrastructure and distribution moves from visibility to permission.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2>I. The old internet was built around destinations</h2>
+
+          <p>The web was designed around movement. You clicked links, opened tabs, compared pages, browsed, searched, filtered, signed in, checked reviews, and chose. This sounds ordinary because it became ordinary. But it was a distribution system. A business won when a human arrived at its surface. The homepage mattered. The search result mattered. The app icon mattered. The checkout flow mattered. The dashboard mattered. The brand mattered because the brand helped the user decide where to go.</p>
+
+          <p>The old internet was a geography of destinations. Search engines were maps. Apps were places. Feeds were streets. Marketplaces were malls. Browsers were vehicles. Users were drivers.</p>
+
+          <p>That geography shaped the entire digital economy. SEO existed because users searched before they clicked. App stores existed because users installed before they used. Social marketing existed because users discovered before they bought. Web design existed because users arrived before they trusted. Every company fought for the same thing: <em>get the user to come here.</em></p>
+
+          <p>AI changes the verb. The user may no longer come here. The user may ask an assistant to handle it.</p>
+
+          <hr class="essay-hr">
+
+          <h2>II. Search routed attention. AI routes intent.</h2>
+
+          <p>Search was the first great interface coup. Before search, the web was too large to navigate manually. Google became powerful because it routed attention. It decided which pages appeared first, which were invisible, which sites earned traffic, and which businesses lived or died on ranking. But search still preserved a human loop. The user searched, scanned, clicked, compared, chose.</p>
+
+          <p>AI reduces that loop. Google&rsquo;s introduction of AI Mode in Search points in this direction: an AI-first experience where conversational search and AI-generated overviews sit at the centre rather than the edge.<sup><a href="#fn3">3</a></sup> Reuters reported that earlier in 2025 Google had already tested a version of its search engine with no traditional blue links at all, only AI-generated answers and follow-up interaction.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>That is not just a new search feature. It is a change in who does the searching. The user does not inspect ten results. The system synthesises the result space first. The human enters after the machine has already compressed the internet into an answer. The deeper shift is agentic. The user no longer asks only &ldquo;what are the best hotels in Kyoto?&rdquo; The user asks: <em>plan the trip.</em></p>
+
+          <p class="essay-line">Attention is where the user looks. Intent is what the user wants done.</p>
+
+          <p>The company that routes attention controls discovery. The company that routes intent controls action. That is a more powerful position.</p>
+
+          <hr class="essay-hr">
+
+          <h2>III. Apps inside ChatGPT are not a feature. They are a distribution strategy.</h2>
+
+          <p>OpenAI&rsquo;s app integrations make the direction obvious. At DevDay 2025 OpenAI introduced apps inside ChatGPT and a new Apps SDK, with launch partners including Booking.com, Canva, Coursera, Expedia, Figma, Spotify and Zillow operating directly inside the ChatGPT interface.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup></p>
+
+          <p>The important part is the location. <em>Inside</em> ChatGPT. Not &ldquo;click out to Canva.&rdquo; Not &ldquo;open Zillow separately.&rdquo; Not &ldquo;search for Expedia.&rdquo; Not &ldquo;launch Spotify from your home screen.&rdquo; The assistant becomes the place where other apps appear.</p>
+
+          <p>OpenAI can describe apps in ChatGPT as making ChatGPT more useful. That is true. It is also incomplete. Bringing apps into the assistant is not only a user-experience improvement. It changes who owns the first interaction. Canva, Expedia, Spotify, Figma and Zillow still provide the capability. ChatGPT becomes the interface where the user&rsquo;s intent is interpreted and routed.</p>
+
+          <p>This is not just a better search or app experience. It is a redistribution of interface power. The company that owns the assistant does not need to own every service. It only needs to decide which service gets called. In the old model, the app fought for the user&rsquo;s direct attention. In the new model, the app may need to fight for the assistant&rsquo;s selection. The customer relationship moves one layer up. The assistant owns the conversation. The app provides capability underneath it.</p>
+
+          <div class="essay-pull">The assistant does not need to replace every app. It only needs to stand in front of them.</div>
+
+          <hr class="essay-hr">
+
+          <h2>IV. The web was built for clicks. The next web is built for calls.</h2>
+
+          <p>A human can understand a messy page. A human can notice the &ldquo;book now&rdquo; button, read the cancellation policy, compare prices, judge whether the design looks trustworthy, and decide whether the offer feels legitimate. Agents need something else. They need tools, schemas, permissions, structured data, verified inventory, clear pricing, machine-readable policies, reliable APIs, auditable actions, reversible transactions, and trust signals that software can interpret.</p>
+
+          <p>This is why Anthropic&rsquo;s Model Context Protocol matters. MCP was introduced as an open standard so AI assistants could connect directly to data sources and tools, replacing the custom one-off integrations every model previously needed.<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup> It is not just developer plumbing. It is a sign of the new architecture.</p>
+
+          <p class="essay-line">The old web connected humans to pages. The agentic web connects models to tools.</p>
+
+          <p>That is the real interface shift. A company can have the best website in the world and still lose if the assistant cannot understand, trust or execute against it. The future web will still have pages. The valuable layer will increasingly be callable.</p>
+
+          <p>Once that shift takes hold, a company&rsquo;s website changes function. It is no longer only a destination for humans. It becomes an evidence surface for machines. The assistant needs to know whether the company is real, whether the product exists, whether the policy is current, whether the pricing is accurate, whether the reviews are trustworthy, whether the inventory is available, whether the action can be completed, whether the user has authorised it, and what happens when something goes wrong afterward. In the old world, a polished landing page helped humans trust you. In the new world, structured trust helps agents call you.</p>
+
+          <hr class="essay-hr">
+
+          <h2>V. The new SEO is agent trust</h2>
+
+          <p>SEO was about convincing search engines that your page deserved attention. Agent optimisation will be about convincing AI systems that your service deserves action. That is a very different game. A search engine sends a user to a page. An agent may choose a vendor, fill a form, make a booking, compare prices, retrieve data, place an order, schedule a meeting, call an API, or decline to show an option at all. Ranking is no longer only about visibility. It is about permission to act.</p>
+
+          <p>Google has already had to update its spam policies to address attempts to manipulate AI-generated search results, a sign that generative-engine optimisation and recommendation poisoning are becoming real problems before agentic distribution has even fully matured.<sup><a href="#fn7">7</a></sup> The next phase will not just be search engine optimisation. It will be recommendation-engine manipulation, generative-engine optimisation, and agent-selection warfare.</p>
+
+          <p>The old question was &ldquo;can we rank?&rdquo; The new question is whether we can be trusted enough to be chosen. And trust will not mean a nice brand. It will mean things an agent can operationalise: structured pricing, real inventory, clear cancellation policy, fresh data, reliable APIs, a verified business, reversible actions, explicit user permissions, auditable records, the assistant&rsquo;s confidence that the transaction can be completed safely.</p>
+
+          <p>The new SEO is not only about content. It is about operational trust.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VI. The app does not die. It retreats.</h2>
+
+          <p>The lazy version of this argument is that apps are dead. That is wrong. Apps will not disappear. Humans still want rich interfaces, browsing, play, discovery, beauty, brand, emotion, immersion, control, and visual comparison. Nobody wants every human experience collapsed into a grey text box. People will still open Instagram, YouTube, Spotify, Figma, Canva, games, dashboards, marketplaces and creative tools.</p>
+
+          <p>The app survives where the experience itself matters. A photographer may still want Lightroom. A designer may still want Figma. A music lover may still want Spotify. A founder may still want to browse a website before trusting a company. A traveller may still want to scroll through beautiful hotel photos. The interface coup is not that apps vanish. It is that many routine interactions move upstream.</p>
+
+          <p>When the user knows what they want, they may not visit the app. They may delegate. The app remains the place for exploration. The assistant becomes the place for execution. Browsing survives. Routine collapses.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VII. Invisible mediation is the real power</h2>
+
+          <p>The word &ldquo;agent&rdquo; is useful here because it already exists in commerce. A buyer&rsquo;s agent acts on behalf of the buyer. A travel agent used to compare options, manage bookings, call suppliers, and translate messy preference into a finished itinerary. A real estate agent filters information, negotiates access, and shapes choice before the buyer sees the full market. AI agents revive that structure at software scale. The assistant becomes an agent of intent.</p>
+
+          <p>But this raises a hard question. Whose agent is it? The user&rsquo;s? The platform&rsquo;s? The merchant&rsquo;s? The advertiser&rsquo;s? The model provider&rsquo;s? The ecosystem partner&rsquo;s? When a human opens a marketplace, they can see some of the structure. They know they are in Amazon, Expedia, Airbnb, Uber Eats, Google Search or the App Store. They may not understand every ranking factor, but they at least know which arena they are in. With an assistant, the arena disappears.</p>
+
+          <p>The user sees a recommendation. They may not see which options were excluded, which sources were queried, which vendors were preferred, which results were sponsored, which APIs were available, which companies had integrations, which policies shaped the answer, which data was stale, which partner paid, which action was easiest for the assistant to complete, or which option was never considered because it was not machine-readable.</p>
+
+          <p class="essay-line">A bad search result can be challenged by clicking another result. A bad assistant route may never show the road not taken.</p>
+
+          <p>That is the new opacity. Not hidden ads inside a feed. Hidden routing inside an answer. The user may feel like they are choosing. The assistant may have already chosen the choice set.</p>
+
+          <p>Traditional monopoly is easy to see. One company owns the market, the network, the app store, the operating system. Interface monopoly is quieter. A company may not own the hotel, the airline, the bank, the design tool, the delivery service, or the CRM. It may simply own the assistant that decides which one gets called. That is enough.</p>
+
+          <div class="essay-pull">The company that owns the front door does not need to own every room. It only needs to control the hallway.</div>
+
+          <p>Apple controlled distribution through the phone. Google controlled discovery through search. Meta controlled attention through feeds. AI assistants may control intent through delegation. Each layer is more intimate than the last. The phone was where apps lived. Search was where questions began. The feed was where attention flowed. The assistant is where intention becomes action.</p>
+
+          <hr class="essay-hr">
+
+          <h2>VIII. The protocol layer becomes political</h2>
+
+          <p>MCP and similar standards look technical. They are technical. But protocol choices become market choices. A protocol decides how tools describe themselves, how permissions are requested, how identity is handled, how state changes are approved, how a user knows what the agent did, how trust travels between systems. That means agent protocols will shape competition. Who gets discovered? Who gets called? Who can prove reliability? Who sets the consent standard? Who owns the logs? Who controls the integration directory? Who arbitrates abuse? Who can revoke access? Who can observe the transaction?</p>
+
+          <p>The protocol layer is not neutral infrastructure. It is governance disguised as plumbing. Security researchers are already warning that MCP-style systems carry new risks. An early security analysis of MCP catalogued attack surfaces across its lifecycle, including malicious tool descriptions, prompt-injection through tool outputs, indirect data exfiltration, and supply-chain risks in shared server registries.<sup><a href="#fn8">8</a></sup> A later empirical study of open-source MCP servers found vulnerable implementations in the wild, suggesting that the same rails that let agents act will also be the rails that attackers target.<sup><a href="#fn9">9</a></sup></p>
+
+          <p>The agentic web will need trust, not just connectivity.</p>
+
+          <hr class="essay-hr">
+
+          <h2>IX. The strongest counterargument, and what it leaves intact</h2>
+
+          <p>The honest essay has to admit the obvious. This will be useful. The current internet is exhausting. Too many tabs, too many pop-ups, too many dark patterns, too many sign-ups, too many fake reviews, too many comparison pages pretending to be objective, too many apps for tasks that should be simple. People do not love managing interfaces. They love outcomes. A good assistant can reduce friction, compare options patiently, remember preferences, avoid scams, translate policies, automate boring steps, help disabled users, help busy workers, help people who are not digitally fluent. The old web forced everyone to become a part-time operator. The agentic web promises to make software operate itself. That is genuinely valuable.</p>
+
+          <p>There is also a serious objection. People may not want assistants doing everything. They may want to browse. They may distrust automated decisions. They may prefer direct relationships with brands. They may not want a model choosing restaurants, doctors, insurance, schools, lawyers, investments, or software tools for them. That objection is right. The future will not be total delegation. It will be selective delegation.</p>
+
+          <p>People will delegate low-emotion, high-friction tasks first: finding forms, summarising policies, comparing prices, booking routine travel, rescheduling appointments, buying repeat items, filtering options, moving data between tools, preparing drafts, coordinating calendars, executing known workflows. They will retain control where taste, identity, risk, pleasure or trust matters. But that still changes the internet, because most economic activity is not romance, it is routine. Most software use is not exploration, it is task completion. Most websites are not experiences, they are friction between the user and the outcome.</p>
+
+          <p>That friction is exactly what assistants will attack. Apps survive. The centre of gravity moves.</p>
+
+          <hr class="essay-hr">
+
+          <h2>X. What companies must become</h2>
+
+          <p>The strategic advice is brutally simple. Companies must become callable. That does not mean every business needs an AI gimmick. It means the business must be understandable and executable by agents. A company has to ask whether an assistant can understand what it offers, verify its claims, access current pricing, check availability, compare it fairly, complete the action, explain the tradeoffs, reverse or cancel the action, prove what happened, and do all of this without lying to the user.</p>
+
+          <p>This is not only a technical checklist. It is a business-model test. If the assistant cannot understand you, you are invisible. If it cannot trust you, you are excluded. If it cannot call you, you are a brochure in a world of APIs. There is a real risk that this creates a new disadvantage for small businesses. The old web was already hard: rank on Google, buy ads, build websites, earn reviews, fight platforms. The agentic web adds one more requirement: be legible to machines. A restaurant that cannot expose availability may be ignored by a booking assistant. A retailer with messy inventory may be skipped. A consultant with an unclear offering may not be recommended. A SaaS product without clean APIs may not be callable. A regulated service without verifiable compliance claims may be filtered out.</p>
+
+          <p class="essay-line">The new digital divide is not only online versus offline. It is callable versus invisible.</p>
+
+          <p>The old internet rewarded being found. The agentic internet will reward being usable by machines. This is not the death of brand. It is the relocation of brand into trust infrastructure.</p>
+
+          <hr class="essay-hr">
+
+          <p>The internet&rsquo;s power used to belong to destinations. Then it belonged to search engines that routed attention. Then it belonged to feeds that shaped desire. Now it may belong to assistants that route intent.</p>
+
+          <p>That is the interface coup. The company that controls the prompt does not need to own every service. It only needs to decide which service gets called. Apps will not disappear. Websites will not disappear. Brands will not disappear. But their position changes. They move from the front of the user experience to the back of the assistant&rsquo;s workflow.</p>
+
+          <p>The next internet is not only browsed. It is delegated. And in a delegated internet, the most important question is no longer where the user clicks.</p>
+
+          <div class="essay-pull">Who does the assistant trust enough to act on?</div>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> OpenAI (2025). <a href="https://openai.com/index/introducing-apps-in-chatgpt-and-the-new-apps-sdk/" target="_blank" rel="noopener">Introducing apps in ChatGPT and the new Apps SDK</a>. Announces a developer SDK and the first wave of partner apps embedded directly inside the ChatGPT interface rather than reached through external launches.</p>
+
+            <p id="fn2"><sup>2</sup> Roth (2025). <a href="https://www.theverge.com/news/793039/openai-chatgpt-apps-developers-sdk-canva-zillow-devday-2025" target="_blank" rel="noopener">OpenAI introduces apps in ChatGPT and a new Apps SDK at DevDay 2025</a>, The Verge. Lists launch partners including Booking.com, Canva, Coursera, Expedia, Figma, Spotify and Zillow operating from inside ChatGPT.</p>
+
+            <p id="fn3"><sup>3</sup> Google (2025). <a href="https://blog.google/products/search/google-search-ai-mode-update/" target="_blank" rel="noopener">An update on AI Mode in Search</a>. Frames AI Mode as a conversational, AI-first search experience built around AI Overviews and follow-up interaction rather than traditional blue-link browsing.</p>
+
+            <p id="fn4"><sup>4</sup> Reuters (5 March 2025). <a href="https://www.reuters.com/technology/artificial-intelligence/google-tests-an-ai-only-version-its-search-engine-2025-03-05/" target="_blank" rel="noopener">Google tests an AI-only version of its search engine</a>. Reports an experimental version of Search that returns AI-generated answers without traditional blue links.</p>
+
+            <p id="fn5"><sup>5</sup> Anthropic (2024). <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">Introducing the Model Context Protocol</a>. Describes MCP as an open standard for connecting AI assistants directly to data sources and tools, replacing the bespoke per-integration approach.</p>
+
+            <p id="fn6"><sup>6</sup> Lawler (2024). <a href="https://www.theverge.com/2024/11/25/24305774/anthropic-model-context-protocol-data-sources" target="_blank" rel="noopener">Anthropic launches tool to connect AI systems directly to datasets</a>, The Verge. Reporting on MCP&rsquo;s framing as a connector layer for the agentic web.</p>
+
+            <p id="fn7"><sup>7</sup> The Verge (2025). <a href="https://www.theverge.com/tech/931416/google-ai-search-spam-policy" target="_blank" rel="noopener">Google updates its spam policy to address attempts to manipulate AI search results</a>. Documents the first public moves against generative-engine optimisation and recommendation poisoning.</p>
+
+            <p id="fn8"><sup>8</sup> Hou et al. (2025). <a href="https://arxiv.org/abs/2504.03767" target="_blank" rel="noopener">Model Context Protocol (MCP): Landscape, Security Threats, and Future Research Directions</a>. Catalogues lifecycle-level attack surfaces in MCP, from malicious tool descriptions and prompt injection through tool outputs to indirect data exfiltration and supply-chain risks in server registries.</p>
+
+            <p id="fn9"><sup>9</sup> Empirical MCP study (2025). <a href="https://arxiv.org/abs/2506.13538" target="_blank" rel="noopener">An Empirical Study of Vulnerabilities in Open-Source MCP Servers</a>. Surveys real MCP server implementations in the wild and finds recurring vulnerability patterns, suggesting the same rails that let agents act will be the rails attackers target.</p>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 010. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=10"></script>
+  <script src="../blog.js?v=12"></script>
+</body>
+</html>
