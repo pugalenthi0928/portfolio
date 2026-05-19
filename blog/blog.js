@@ -92,14 +92,18 @@ async function loadBlogPosts() {
 // ============================================
 function renderHeroStats(posts) {
   const elPosts = document.getElementById('blog-stat-posts');
-  const elTopics = document.getElementById('blog-stat-topics');
+  const elThemes = document.getElementById('blog-stat-themes');
   const elUpdated = document.getElementById('blog-stat-updated');
-  if (!elPosts && !elTopics && !elUpdated) return;
+  if (!elPosts && !elThemes && !elUpdated) return;
 
   if (elPosts) elPosts.textContent = posts.length;
 
-  const allTags = [...new Set(posts.flatMap(p => p.tags))];
-  if (elTopics) elTopics.textContent = allTags.length;
+  // Use the actual topic-group count (themes the archive is organised into),
+  // not the unique-tag count which is confusing.
+  if (elThemes) {
+    const themeKeys = new Set(posts.map(p => (BLOG_POST_TOPIC[p.slug] || 'other')));
+    elThemes.textContent = themeKeys.size;
+  }
 
   if (elUpdated) {
     const newest = posts[0] && posts[0].date;
@@ -232,15 +236,25 @@ function miniCardHTML(post) {
 
 
 // ============================================
-// CARD NUMBER — prepend an "essay no." badge to the archive cards
+// CARD NUMBER — wrap the existing card body, prepend an "essay no." badge,
+// so the archive layout cleanly becomes a 2-column grid (number | body)
 // ============================================
 function addNumberToCard(card, num) {
   const link = card.querySelector('.blog-card-link');
   if (!link) return;
+
+  // Wrap existing children into a single body container so the
+  // grid-template-columns: 56px 1fr layout has exactly two grid items.
+  const body = document.createElement('div');
+  body.className = 'blog-card-body';
+  while (link.firstChild) body.appendChild(link.firstChild);
+
   const numEl = document.createElement('div');
   numEl.className = 'blog-card-num';
   numEl.textContent = 'No. ' + num;
-  link.insertBefore(numEl, link.firstChild);
+
+  link.appendChild(numEl);
+  link.appendChild(body);
 }
 
 
@@ -336,7 +350,13 @@ function filterByTag(tag, filtersContainer) {
 // SCROLL REVEAL — For dynamically loaded cards
 // ============================================
 function initScrollRevealForBlog() {
-  const elements = document.querySelectorAll('.blog-card[data-animate]');
+  // Observe any animatable element on the blog page that hasn't already
+  // been revealed by the site-wide scroll-reveal. This covers the
+  // dynamically inserted .blog-featured-card, .blog-topic sections,
+  // and .blog-card archive entries, in addition to the original
+  // .blog-card[data-animate] target.
+  const selector = '.blog-page [data-animate]:not(.visible), .blog-card[data-animate]:not(.visible)';
+  const elements = document.querySelectorAll(selector);
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -351,6 +371,19 @@ function initScrollRevealForBlog() {
   });
 
   elements.forEach(el => observer.observe(el));
+
+  // Immediately reveal anything that's already in (or above) the viewport
+  // when this runs. IntersectionObserver fires asynchronously and can
+  // briefly leave above-the-fold content invisible during JS-driven
+  // navigation; this guarantees first paint after JSON load looks correct.
+  requestAnimationFrame(() => {
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  });
 }
 
 
