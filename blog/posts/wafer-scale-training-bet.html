@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Wafer-Scale Training Bet | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of Tesla Dojo, fan-out wafer-scale packaging, TSMC InFO_SoW, power delivery, cooling, AI5/AI6, and why AI scaling is becoming package-scale and rack-scale.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/wafer-scale-training-bet.html">
+  <meta property="og:title" content="The Wafer-Scale Training Bet | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of Tesla Dojo, fan-out wafer-scale packaging, TSMC InFO_SoW, power delivery, cooling, AI5/AI6, and why AI scaling is becoming package-scale and rack-scale.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/wafer-scale-training-bet.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Tesla Dojo">
+  <meta property="article:tag" content="AI Hardware">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="InFO_SoW">
+  <meta property="article:tag" content="Fan-Out Wafer">
+  <meta property="article:tag" content="AI5">
+  <meta property="article:tag" content="AI6">
+  <meta property="article:tag" content="Samsung">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="SoIC">
+  <meta property="article:tag" content="SoW-X">
+  <meta property="article:tag" content="AI Training">
+  <meta property="article:tag" content="Autonomy">
+  <meta property="article:tag" content="Robotics">
+  <meta property="article:tag" content="Chiplets">
+  <meta property="article:tag" content="Power Delivery">
+  <meta property="article:tag" content="Cooling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Wafer-Scale Training Bet | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of Tesla Dojo, fan-out wafer-scale packaging, TSMC InFO_SoW, power delivery, cooling, AI5/AI6, and why AI scaling is becoming package-scale and rack-scale.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Wafer-Scale Training Bet",
+    "description": "An original 2026 analysis of Tesla Dojo, fan-out wafer-scale packaging, TSMC InFO_SoW, power delivery, cooling, AI5/AI6, and why AI scaling is becoming package-scale and rack-scale.",
+    "url": "https://pugalenthimagendran.com/blog/posts/wafer-scale-training-bet.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/wafer-scale-training-bet.html",
+    "keywords": "Tesla Dojo, AI Hardware, Advanced Packaging, TSMC, InFO_SoW, Fan-Out Wafer, AI5, AI6, Samsung, CoWoS, SoIC, SoW-X, AI Training, Autonomy, Robotics, Chiplets, Power Delivery, Cooling"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       WAFER-SCALE TRAINING BET, scoped under .essay-wtb
+       ============================================ */
+    .essay-wtb {
+      --wtb-accent: #F0784A;
+      --wtb-accent-soft: rgba(240,120,74,0.10);
+      --wtb-accent-faint: rgba(240,120,74,0.04);
+      --wtb-bd: rgba(255,255,255,0.08);
+      --wtb-bd-soft: rgba(255,255,255,0.05);
+      --wtb-cool: #6CBFE0;
+      --wtb-cool-soft: rgba(108,191,224,0.10);
+      --wtb-purple: #B794F4;
+      --wtb-purple-soft: rgba(183,148,244,0.10);
+      --wtb-green: #5DCAA5;
+      --wtb-green-soft: rgba(93,202,165,0.10);
+      --wtb-amber: #E8B468;
+      --wtb-amber-soft: rgba(232,180,104,0.10);
+      --wtb-red: #E07A8B;
+      --wtb-red-soft: rgba(224,122,139,0.10);
+    }
+
+    .wtb-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .wtb-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .wtb-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .wtb-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .wtb-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--wtb-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .wtb-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .wtb-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    .wtb-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--wtb-bd); background: linear-gradient(180deg, var(--wtb-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .wtb-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--wtb-accent); margin-bottom: 14px; }
+    .wtb-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--wtb-bd-soft); line-height: 1.6; }
+
+    .wtb-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--wtb-accent); background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .wtb-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--wtb-accent); margin-bottom: 10px; }
+    .wtb-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* 5x5 D1 die training tile (original CSS visual, not Tesla image) */
+    .wtb-tile { display: grid; grid-template-columns: 1fr; gap: 8px; max-width: 360px; margin: 1rem auto 0; padding: 16px; border-radius: 12px; border: 1px solid var(--wtb-accent); background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .wtb-tile-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--wtb-accent); text-align: center; margin-bottom: 4px; }
+    .wtb-tile-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 6px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-tile-cell { aspect-ratio: 1; border-radius: 3px; background: rgba(240,120,74,0.18); border: 0.5px solid rgba(240,120,74,0.40); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--wtb-accent); letter-spacing: 0.04em; }
+    .wtb-tile-frame { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); text-align: center; padding: 6px 0 0; letter-spacing: 0.06em; }
+    .wtb-tile-frame span { padding: 4px 6px; border-radius: 4px; background: rgba(255,255,255,0.03); border: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-tile-cap { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); text-align: center; line-height: 1.5; padding-top: 4px; }
+
+    /* InFO_SoW explainer */
+    .wtb-info { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .wtb-info-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-info-col--old { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-info-col--old .wtb-info-eyebrow { color: var(--wtb-cool); }
+    .wtb-info-col--new { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+    .wtb-info-col--new .wtb-info-eyebrow { color: var(--wtb-accent); }
+    .wtb-info-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .wtb-info-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .wtb-info-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* Packaging compare 3-column */
+    .wtb-pkg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .wtb-pkg-card { padding: 16px 14px 14px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-pkg-card--a { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-pkg-card--a .wtb-pkg-cat { color: var(--wtb-cool); }
+    .wtb-pkg-card--b { background: linear-gradient(180deg, var(--wtb-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .wtb-pkg-card--b .wtb-pkg-cat { color: var(--wtb-purple); }
+    .wtb-pkg-card--c { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+    .wtb-pkg-card--c .wtb-pkg-cat { color: var(--wtb-accent); }
+    .wtb-pkg-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .wtb-pkg-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .wtb-pkg-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.55; color: var(--color-text-secondary); margin: 0 0 6px; }
+    .wtb-pkg-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; background: rgba(255,255,255,0.04); color: var(--color-text-tertiary); }
+
+    /* Tile-to-cabinet flow */
+    .wtb-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: stretch; margin: 1rem 0 0; }
+    .wtb-flow-step { padding: 14px 10px; border-radius: 8px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); text-align: center; }
+    .wtb-flow-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--wtb-accent); margin-bottom: 4px; }
+    .wtb-flow-name { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .wtb-flow-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .wtb-flow-step--a { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-flow-step--b { background: linear-gradient(180deg, var(--wtb-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .wtb-flow-step--c { background: linear-gradient(180deg, var(--wtb-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .wtb-flow-step--d { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+    .wtb-flow-step--e { background: linear-gradient(180deg, var(--wtb-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* Stat row */
+    .wtb-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .wtb-stat-card { padding: 13px 10px; border-radius: 8px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); text-align: center; }
+    .wtb-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--wtb-accent); line-height: 1.1; }
+    .wtb-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .wtb-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--wtb-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--wtb-accent-faint); }
+
+    /* SRAM vs HBM split */
+    .wtb-mem { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .wtb-mem-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-mem-col--hbm { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-mem-col--hbm .wtb-mem-eyebrow { color: var(--wtb-cool); }
+    .wtb-mem-col--sram { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+    .wtb-mem-col--sram .wtb-mem-eyebrow { color: var(--wtb-accent); }
+    .wtb-mem-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+    .wtb-mem-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .wtb-mem-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* Strategy shift timeline */
+    .wtb-strat { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .wtb-strat-card { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-strat-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--wtb-accent); margin-bottom: 6px; }
+    .wtb-strat-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.25; }
+    .wtb-strat-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+    .wtb-strat-card--a { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-strat-card--b { background: linear-gradient(180deg, var(--wtb-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .wtb-strat-card--c { background: linear-gradient(180deg, var(--wtb-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .wtb-strat-card--d { background: linear-gradient(180deg, var(--wtb-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .wtb-strat-card--e { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+
+    /* TSMC packaging roadmap */
+    .wtb-roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .wtb-rm-card { padding: 12px 10px 10px; border-radius: 8px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); text-align: center; }
+    .wtb-rm-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--wtb-accent); margin-bottom: 4px; }
+    .wtb-rm-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .wtb-rm-body { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Old vs new scaling lens */
+    .wtb-lens { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .wtb-lens-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-lens-col--old { background: linear-gradient(180deg, var(--wtb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .wtb-lens-col--old .wtb-lens-eyebrow { color: var(--wtb-cool); }
+    .wtb-lens-col--new { background: linear-gradient(180deg, var(--wtb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--wtb-accent); }
+    .wtb-lens-col--new .wtb-lens-eyebrow { color: var(--wtb-accent); }
+    .wtb-lens-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .wtb-lens-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .wtb-lens-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .wtb-lens-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .wtb-lens-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .wtb-lens-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Nvidia vs Tesla compare */
+    .wtb-matrix { margin: 1rem 0 0; border-radius: 10px; border: 1px solid var(--wtb-bd); overflow: hidden; background: var(--bg-alt); }
+    .wtb-matrix-head, .wtb-matrix-row { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 0; }
+    .wtb-matrix-head > div { padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); border-bottom: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-matrix-head > div + div { border-left: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-matrix-head > div:nth-child(2) { color: var(--wtb-green); }
+    .wtb-matrix-head > div:nth-child(3) { color: var(--wtb-accent); }
+    .wtb-matrix-row { border-top: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-matrix-row:first-of-type { border-top: none; }
+    .wtb-matrix-row > div { padding: 12px 16px; font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .wtb-matrix-row > div + div { border-left: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-matrix-row > div:first-child { font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-primary); font-weight: 500; letter-spacing: -0.005em; }
+    .wtb-matrix-row > div:nth-child(2) { background: rgba(93,202,165,0.06); }
+    .wtb-matrix-row > div:nth-child(3) { background: rgba(240,120,74,0.06); }
+
+    /* Caution */
+    .wtb-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--wtb-amber); background: linear-gradient(180deg, var(--wtb-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .wtb-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--wtb-amber); margin-bottom: 8px; }
+    .wtb-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .wtb-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .wtb-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .wtb-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .wtb-terms dl { margin: 0; display: grid; grid-template-columns: 160px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .wtb-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--wtb-accent); padding-top: 2px; }
+    .wtb-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .wtb-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .wtb-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .wtb-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-counter li:last-child { border-bottom: none; }
+    .wtb-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--wtb-accent); }
+    .wtb-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .wtb-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--wtb-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .wtb-counter--bull li::before { color: var(--wtb-green); }
+
+    .wtb-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--wtb-bd); background: var(--bg-alt); }
+    .wtb-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .wtb-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .wtb-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--wtb-bd-soft); }
+    .wtb-watch li:last-child, .wtb-watch li:nth-last-child(2) { border-bottom: none; }
+    .wtb-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--wtb-accent); background: transparent; }
+
+    /* Further reading */
+    .wtb-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .wtb-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .wtb-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .wtb-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .wtb-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .wtb-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .wtb-toc ol { grid-template-columns: 1fr; }
+      .wtb-info, .wtb-mem, .wtb-lens { grid-template-columns: 1fr; }
+      .wtb-pkg { grid-template-columns: 1fr; }
+      .wtb-flow, .wtb-strat { grid-template-columns: repeat(2, 1fr); }
+      .wtb-roadmap { grid-template-columns: repeat(2, 1fr); }
+      .wtb-stat-row { grid-template-columns: repeat(2, 1fr); }
+      .wtb-matrix-head, .wtb-matrix-row { grid-template-columns: 1fr; }
+      .wtb-matrix-head > div + div, .wtb-matrix-row > div + div { border-left: none; border-top: 0.5px solid var(--wtb-bd-soft); }
+      .wtb-terms dl { grid-template-columns: 130px 1fr; }
+      .wtb-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .wtb-flow, .wtb-strat, .wtb-roadmap, .wtb-stat-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <article class="article essay-format essay-wtb">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 038 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Tesla Dojo</span>
+          <span class="tag">Advanced Packaging</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">InFO_SoW</span>
+          <span class="tag">Fan-Out Wafer</span>
+          <span class="tag">AI5</span>
+          <span class="tag">AI6</span>
+          <span class="tag">Samsung</span>
+          <span class="tag">CoWoS</span>
+          <span class="tag">SoIC</span>
+          <span class="tag">SoW-X</span>
+          <span class="tag">Robotics</span>
+          <span class="tag">Power Delivery</span>
+          <span class="tag">Cooling</span>
+        </div>
+
+        <h1 class="essay-hed">The Wafer-Scale <em>Training Bet</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">How Tesla&rsquo;s Dojo showed that AI scaling is a packaging, power, cooling, and software problem, not just a chip problem.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">Dojo was not just a custom chip. It was Tesla&rsquo;s extreme bet that fan-out wafer packaging, dense interconnect, SRAM-heavy compute, water cooling, power delivery, and custom software could create a training computer tuned for autonomy. In 2026, the dedicated Dojo path looks less central as Tesla shifts toward AI5 and AI6. But the core lesson aged well: AI scaling is moving from chip-level performance to package-level and rack-level integration.</p>
+
+          <nav class="wtb-toc" aria-label="Article contents">
+            <div class="wtb-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis was about the package</a></li>
+              <li><a href="#sec-info">InFO_SoW, explained simply</a></li>
+              <li><a href="#sec-limits">Why normal multi-chip packages hit limits</a></li>
+              <li><a href="#sec-conf">Tesla later confirmed the important part</a></li>
+              <li><a href="#sec-power">Power and cooling were not afterthoughts</a></li>
+              <li><a href="#sec-sram">SRAM instead of HBM was the other clue</a></li>
+              <li><a href="#sec-vert">Dojo was Tesla&rsquo;s most extreme vertical-integration bet</a></li>
+              <li><a href="#sec-update">The 2026 update is not a clean Dojo victory lap</a></li>
+              <li><a href="#sec-ai56">AI5 and AI6 are the new center of gravity</a></li>
+              <li><a href="#sec-pkg">Why the packaging thesis aged better than the Dojo thesis</a></li>
+              <li><a href="#sec-comp">The package is becoming the computer</a></li>
+              <li><a href="#sec-vsn">Dojo vs Nvidia: the real comparison</a></li>
+              <li><a href="#sec-sw">The software problem</a></li>
+              <li><a href="#sec-biz">The business lesson</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The wafer-scale training bet</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, Tesla teased a strange object. It did not look like a normal GPU. It did not look like a normal accelerator card. It looked like a compute slab. A cold plate. A carrier. A 5&times;5 grid of chips. Connectors. Power delivery. BGA pads. No visible HBM.</p>
+
+          <p>The uploaded SemiAnalysis article looked at that image and made the important guess: this might not be a normal chip package at all. It might be Tesla&rsquo;s first move toward a system-on-wafer training engine, possibly using TSMC&rsquo;s InFO_SoW packaging technology.<sup><a href="#fn1">1</a></sup></p>
+
+          <p class="essay-line">That was the real insight. Not &ldquo;Tesla made a chip.&rdquo; The deeper point was that Tesla was trying to turn packaging into a training architecture.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>Tesla&rsquo;s Dojo was an early, extreme version of the problem every AI hardware company now faces: scaling AI compute is not just about faster chips. It is about packaging, interconnect, memory, power, cooling, software, and workload fit. The dedicated Dojo path looks less central after Tesla shifted focus toward AI5 and AI6, but the system-level lesson aged well. AI hardware is becoming package-scale and rack-scale, and Tesla saw that early.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis was about the package</h2>
+
+          <p>In August 2021, Dylan Patel published a SemiAnalysis piece reading the Tesla AI Day teaser image as a package-scale system rather than a normal chip. The visible structure showed a 5&times;5 chip grid, a cold plate, connectors, a carrier, BGA pads, and power delivery. The piece compared it to TSMC&rsquo;s InFO_SoW research and argued that the fan-out wafer-scale structure could serve as the carrier itself, enabling close-packed chip arrays with lower latency, higher bandwidth density, and lower power-delivery impedance than CoWoS-style interposers or flip-chip MCMs. It also noted the absence of visible HBM or DRAM and speculated the design relied heavily on on-die SRAM, somewhat in the spirit of Cerebras.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="wtb-thesis">
+            <div class="wtb-thesis-label">2021 thesis</div>
+            <p class="wtb-thesis-text">Dojo was not trying to build one huge chip. It was trying to make many chips behave like one huge training surface.</p>
+          </div>
+
+          <figure class="wtb-fig" aria-label="Schematic of a 25-die training tile">
+            <div class="wtb-fig-label">Diagram &middot; Schematic of a 25-die training tile (original visual)</div>
+            <div class="wtb-tile" aria-label="5x5 die grid with frame elements">
+              <div class="wtb-tile-label">Training tile &middot; 25 dies as one surface</div>
+              <div class="wtb-tile-grid">
+                <div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div>
+                <div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div>
+                <div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div>
+                <div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div>
+                <div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div><div class="wtb-tile-cell">D1</div>
+              </div>
+              <div class="wtb-tile-frame">
+                <span>cold plate</span>
+                <span>fan-out tile</span>
+                <span>power delivery</span>
+              </div>
+              <div class="wtb-tile-cap">25 known-good D1 dies on a fanout-wafer process; 9 PFLOPS; 36 TB/s off-tile bandwidth (Tesla / Cadence framing).<sup><a href="#fn2">2</a></sup></div>
+            </div>
+            <div class="wtb-fig-cap">A schematic, original visual. The Tesla teaser image is not reproduced; cell counts and frame elements are stylised to communicate the package-as-system idea.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-info">II. InFO_SoW, explained simply</h2>
+
+          <p>InFO_SoW stands for Integrated Fan-Out System-on-Wafer. Instead of mounting many chips onto a normal package substrate or PCB, the wafer-scale fan-out structure becomes part of the system. Chips can be placed close together, connected densely, powered more efficiently, and cooled as one integrated structure. The 2021 SemiAnalysis piece was speculating from the teaser image, but later Dojo technical coverage confirmed the important direction: fan-out wafer-scale integration.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="wtb-fig" aria-label="Substrate-PCB vs fan-out wafer-scale">
+            <div class="wtb-fig-label">Diagram &middot; Substrate / PCB vs fan-out wafer-scale</div>
+            <div class="wtb-info">
+              <div class="wtb-info-col wtb-info-col--old">
+                <div class="wtb-info-eyebrow">Traditional</div>
+                <h3 class="wtb-info-title">Substrate + PCB</h3>
+                <p class="wtb-info-body">Many dies mounted on a normal package substrate and PCB. Chip-to-chip paths are longer, power-delivery impedance is higher, and cooling is added on top of an already-complex stack.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="wtb-info-col wtb-info-col--new">
+                <div class="wtb-info-eyebrow">Fan-out wafer-scale</div>
+                <h3 class="wtb-info-title">Tile as carrier</h3>
+                <p class="wtb-info-body">The fan-out structure becomes the carrier itself. Chip-to-chip paths get shorter, bandwidth density rises, PDN impedance drops, and the tile is cooled as one integrated system.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup></p>
+              </div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original split. The exact InFO_SoW label matters less than the architecture &mdash; fan-out wafer-scale integration as a package-as-system bet.</div>
+          </figure>
+
+          <p class="essay-line">Tesla did not need the exact InFO_SoW label for the thesis to be right. The important part was fan-out wafer-scale integration.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-limits">III. Why normal multi-chip packages hit limits</h2>
+
+          <p>AI training wants many chips to behave like one machine. Normal packaging has tradeoffs.</p>
+
+          <figure class="wtb-fig" aria-label="Packaging comparison">
+            <div class="wtb-fig-label">Diagram &middot; CoWoS / interposer vs flip-chip MCM vs fan-out wafer-scale</div>
+            <div class="wtb-pkg">
+              <div class="wtb-pkg-card wtb-pkg-card--a">
+                <div class="wtb-pkg-cat">Approach 01</div>
+                <h3 class="wtb-pkg-name">CoWoS / interposer</h3>
+                <p class="wtb-pkg-body">High bandwidth, strong HBM integration, but interposer-size and stitching constraints as systems grow.</p>
+                <span class="wtb-pkg-tag">reticle-bound</span>
+              </div>
+              <div class="wtb-pkg-card wtb-pkg-card--b">
+                <div class="wtb-pkg-cat">Approach 02</div>
+                <h3 class="wtb-pkg-name">Flip-chip MCM</h3>
+                <p class="wtb-pkg-body">Avoids interposer limits, but lower wire density and higher power cost per chip-to-chip transfer.</p>
+                <span class="wtb-pkg-tag">density-limited</span>
+              </div>
+              <div class="wtb-pkg-card wtb-pkg-card--c">
+                <div class="wtb-pkg-cat">Approach 03</div>
+                <h3 class="wtb-pkg-name">Fan-out wafer-scale</h3>
+                <p class="wtb-pkg-body">Keeps chips close and communication dense; reduces power and latency penalties. Creates packaging, yield, and thermal challenges.<sup><a href="#fn1">1</a></sup></p>
+                <span class="wtb-pkg-tag">tile-as-system</span>
+              </div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original three-column compare. The packaging problem is really an interconnect problem; the interconnect problem becomes a training problem.</div>
+          </figure>
+
+          <p class="essay-line">The packaging problem is really an interconnect problem. The interconnect problem becomes a training problem.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-conf">IV. Tesla later confirmed the important part</h2>
+
+          <p>Cadence&rsquo;s technical summary of Tesla&rsquo;s AI Day material describes 25 known-good D1 dies integrated onto a fanout-wafer process that preserves bandwidth between adjacent D1 chips, delivering <span class="wtb-stat">9 PFLOPS</span> per training tile with <span class="wtb-stat">36 TB/s</span> of off-tile bandwidth.<sup><a href="#fn2">2</a></sup> The exact brand-name path (InFO_SoW or another flavour) matters less than the architecture: many dies connected as one training tile.</p>
+
+          <p class="essay-line">The package was the computer.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-power">V. Power and cooling were not afterthoughts</h2>
+
+          <p>The 2021 SemiAnalysis piece emphasised the cold plate, cited InFO_SoW&rsquo;s ability to support ~7,000W of power, and compared that with Nvidia A100 configurations as high as 500W, noting multiple inlets and outlets consistent with water cooling.<sup><a href="#fn1">1</a></sup> Cadence&rsquo;s summary reports Tesla&rsquo;s training tile taking <span class="wtb-stat">52V DC</span>, drawing <span class="wtb-stat">18,000 A</span>, dissipating <span class="wtb-stat">15kW</span> of heat, and delivering <span class="wtb-stat">9 PFLOPS</span> in less than one cubic foot.<sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="wtb-fig" aria-label="Tile-to-cabinet flow">
+            <div class="wtb-fig-label">Diagram &middot; D1 dies &rarr; tile &rarr; cabinet</div>
+            <div class="wtb-flow">
+              <div class="wtb-flow-step wtb-flow-step--a"><div class="wtb-flow-num">01</div><div class="wtb-flow-name">D1 dies</div><div class="wtb-flow-sub">25 known-good D1<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="wtb-flow-step wtb-flow-step--b"><div class="wtb-flow-num">02</div><div class="wtb-flow-name">Fan-out tile</div><div class="wtb-flow-sub">9 PF / 36 TB/s<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="wtb-flow-step wtb-flow-step--c"><div class="wtb-flow-num">03</div><div class="wtb-flow-name">Power delivery</div><div class="wtb-flow-sub">52V, 18,000A<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="wtb-flow-step wtb-flow-step--d"><div class="wtb-flow-num">04</div><div class="wtb-flow-name">Cold plate</div><div class="wtb-flow-sub">15kW dissipated<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="wtb-flow-step wtb-flow-step--e"><div class="wtb-flow-num">05</div><div class="wtb-flow-name">Cabinet / ExaPOD</div><div class="wtb-flow-sub">training system</div></div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original 5-step flow. Power, cooling, and the tile are the same architecture.</div>
+          </figure>
+
+          <p class="essay-line">At Dojo scale, the chip is not the product. The powered, cooled, connected tile is the product.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sram">VI. SRAM instead of HBM was the other clue</h2>
+
+          <p>The 2021 piece noted no visible HBM or DRAM in the teaser and speculated the design relied heavily on on-die SRAM, somewhat like Cerebras.<sup><a href="#fn1">1</a></sup> Most leading AI accelerators lean on HBM because training workloads are memory-hungry. Tesla&rsquo;s Dojo design appeared to make a different bet: keep compute tiles tightly connected, use large on-die local memory, stream data through the training fabric, and optimise around Tesla&rsquo;s specific vision workload.</p>
+
+          <figure class="wtb-fig" aria-label="HBM-heavy vs SRAM-heavy memory strategy">
+            <div class="wtb-fig-label">Diagram &middot; HBM-heavy vs SRAM-heavy memory strategy</div>
+            <div class="wtb-mem">
+              <div class="wtb-mem-col wtb-mem-col--hbm">
+                <div class="wtb-mem-eyebrow">Mainstream</div>
+                <h3 class="wtb-mem-title">HBM-heavy</h3>
+                <p class="wtb-mem-body">High-bandwidth memory stacks beside the accelerator. Broad workload fit, deep ecosystem, dominant for general-purpose training.</p>
+              </div>
+              <div class="wtb-mem-col wtb-mem-col--sram">
+                <div class="wtb-mem-eyebrow">Dojo-style</div>
+                <h3 class="wtb-mem-title">SRAM-heavy</h3>
+                <p class="wtb-mem-body">Large on-die / on-tile SRAM with tight inter-die fabric. Narrower workload fit, but lower memory-movement penalty if the workload maps cleanly to the tile.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original split. Architectural emphasis, not absolute absence of external memory.</div>
+          </figure>
+
+          <p class="essay-line">Dojo was not a generic GPU clone. It was a workload-specific memory and interconnect bet.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-vert">VII. Dojo was Tesla&rsquo;s most extreme vertical-integration bet</h2>
+
+          <p>Dojo made sense in Tesla logic. Tesla has fleet video, autonomy training, perception models, planning models, robotics ambitions, closed-loop data generation, and the ability to tune hardware and software together. The dream was lower dependence on Nvidia, lower training cost, faster model iteration, and a system tuned to Tesla&rsquo;s own data loop. But this required Tesla to own or coordinate silicon, packaging, power delivery, cooling, compiler, runtime, training software, data-center system design, reliability engineering, supply chain, and multiple generations of hardware.</p>
+
+          <p class="essay-line">Vertical integration gives control. It also gives you every problem.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-update">VIII. The 2026 update is not a clean Dojo victory lap</h2>
+
+          <p>Reuters reported that Bloomberg said Tesla was disbanding its Dojo supercomputer team, citing Musk saying it did not make sense for Tesla to divide resources across two very different AI chip designs and that Tesla would focus effort on AI5, AI6, and later chips, which he described as excellent for inference and at least pretty good for training.<sup><a href="#fn3">3</a></sup></p>
+
+          <div class="wtb-caution" role="note" aria-label="Reading the Dojo shift">
+            <div class="wtb-caution-label">Reading the shift</div>
+            <h3 class="wtb-caution-title">Dojo&rsquo;s reorganisation is not a verdict on packaging.</h3>
+            <p>The reporting describes a streamlining of Tesla&rsquo;s AI chip teams toward AI5 / AI6, not a rejection of fan-out wafer-scale ideas industry-wide. It tells you about Tesla&rsquo;s priorities. It does not tell you that the package-as-system thesis is wrong; TSMC&rsquo;s SoW-X roadmap suggests the opposite direction.<sup><a href="#fn7">7</a></sup></p>
+          </div>
+
+          <p class="essay-line">Dojo showed the architecture problem. AI5 and AI6 show the product-priority problem.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai56">IX. AI5 and AI6 are the new center of gravity</h2>
+
+          <p>Reuters reported Tesla signed a ~$16.5B chip-supply deal with Samsung, with Musk saying Samsung&rsquo;s Taylor, Texas factory would make Tesla&rsquo;s next-generation AI6 chip; Samsung currently makes Tesla&rsquo;s AI4 chips, and TSMC was slated to make AI5 first in Taiwan and then Arizona according to Musk.<sup><a href="#fn4">4</a></sup> Reuters also reported Musk saying Tesla may tape out AI6 in December 2026, with a Samsung executive saying Tesla chips based on Samsung&rsquo;s advanced 2nm process were planned for production in the second half of 2027.<sup><a href="#fn5">5</a></sup></p>
+
+          <figure class="wtb-fig" aria-label="Dojo to AI5/AI6 strategy shift">
+            <div class="wtb-fig-label">Diagram &middot; Dojo &rarr; AI5 / AI6 strategy shift</div>
+            <div class="wtb-strat">
+              <div class="wtb-strat-card wtb-strat-card--a"><div class="wtb-strat-year">2021</div><h3 class="wtb-strat-name">Dojo teaser</h3><div class="wtb-strat-body">5x5 tile, fan-out direction.<sup><a href="#fn1">1</a></sup></div></div>
+              <div class="wtb-strat-card wtb-strat-card--b"><div class="wtb-strat-year">2022&ndash;24</div><h3 class="wtb-strat-name">Dojo build-out</h3><div class="wtb-strat-body">25 D1 dies, 9 PF tile, ExaPOD.<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="wtb-strat-card wtb-strat-card--c"><div class="wtb-strat-year">2024&ndash;25</div><h3 class="wtb-strat-name">Cost / priority test</h3><div class="wtb-strat-body">Custom path competes with GPU spend.</div></div>
+              <div class="wtb-strat-card wtb-strat-card--d"><div class="wtb-strat-year">2025</div><h3 class="wtb-strat-name">Dojo streamlined</h3><div class="wtb-strat-body">Resources move to AI5 / AI6.<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="wtb-strat-card wtb-strat-card--e"><div class="wtb-strat-year">2026&ndash;27</div><h3 class="wtb-strat-name">AI5 / AI6</h3><div class="wtb-strat-body">TSMC + Samsung; inference-first chips.<sup><a href="#fn4">4</a></sup><sup><a href="#fn5">5</a></sup></div></div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original timeline. Years are approximate; key milestones per cited reporting.</div>
+          </figure>
+
+          <p class="essay-line">Dojo was a training-supercomputer bet. AI5 and AI6 are deployment-scale AI-chip bets.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-pkg">X. Why the packaging thesis aged better than the Dojo thesis</h2>
+
+          <p>TSMC&rsquo;s 2026 North America Technology Symposium materials describe a packaging roadmap with 5.5-reticle CoWoS today, 14-reticle CoWoS by 2028 supporting roughly 10 large compute dies and 20 HBM stacks, and a 40-reticle SoW-X System-on-Wafer technology targeted for 2029, alongside SoIC 3D stacking and COUPE co-packaged optics.<sup><a href="#fn7">7</a></sup></p>
+
+          <figure class="wtb-fig" aria-label="TSMC packaging roadmap">
+            <div class="wtb-fig-label">Diagram &middot; TSMC packaging roadmap, simplified</div>
+            <div class="wtb-roadmap">
+              <div class="wtb-rm-card"><div class="wtb-rm-cat">Today</div><h3 class="wtb-rm-name">CoWoS 5.5R</h3><div class="wtb-rm-body">compute + HBM<sup><a href="#fn7">7</a></sup></div></div>
+              <div class="wtb-rm-card"><div class="wtb-rm-cat">2028</div><h3 class="wtb-rm-name">CoWoS 14R</h3><div class="wtb-rm-body">~10 dies + 20 HBM<sup><a href="#fn7">7</a></sup></div></div>
+              <div class="wtb-rm-card"><div class="wtb-rm-cat">Cross-cut</div><h3 class="wtb-rm-name">SoIC + COUPE</h3><div class="wtb-rm-body">3D stacking, optics<sup><a href="#fn7">7</a></sup></div></div>
+              <div class="wtb-rm-card"><div class="wtb-rm-cat">2029</div><h3 class="wtb-rm-name">SoW-X 40R</h3><div class="wtb-rm-body">system-on-wafer<sup><a href="#fn7">7</a></sup></div></div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original visual of TSMC&rsquo;s public roadmap framing. The package-as-system idea Tesla previewed is now the industry direction.</div>
+          </figure>
+
+          <p class="essay-line">Tesla may not have won the Dojo war, but it was early to the packaging battlefield.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-comp">XI. The package is becoming the computer</h2>
+
+          <p>AI scaling used to look like: faster chip &rarr; faster training. Now it looks like: chip + HBM + package + interconnect + power + cooling + rack + software partitioning. The bottlenecks are chip-to-chip bandwidth, HBM capacity and bandwidth, package size, reticle limits, substrate / interposer complexity, power delivery, cooling, optical I/O, rack networking, compiler / runtime, and workload partitioning.</p>
+
+          <figure class="wtb-fig" aria-label="Old vs new scaling lens">
+            <div class="wtb-fig-label">Diagram &middot; Old scaling lens vs new scaling lens</div>
+            <div class="wtb-lens">
+              <div class="wtb-lens-col wtb-lens-col--old">
+                <div class="wtb-lens-eyebrow">Old lens</div>
+                <h3 class="wtb-lens-title">Chip &rarr; server</h3>
+                <ul>
+                  <li><strong>Bottleneck</strong> &middot; single-chip performance.</li>
+                  <li><strong>Scaling unit</strong> &middot; one accelerator.</li>
+                  <li><strong>Constraint</strong> &middot; transistor count.</li>
+                  <li><strong>Result</strong> &middot; servers full of independent chips.</li>
+                </ul>
+              </div>
+              <div class="wtb-lens-col wtb-lens-col--new">
+                <div class="wtb-lens-eyebrow">New lens</div>
+                <h3 class="wtb-lens-title">Die &rarr; package &rarr; tile &rarr; rack</h3>
+                <ul>
+                  <li><strong>Bottleneck</strong> &middot; chip-to-chip bandwidth, power, cooling.</li>
+                  <li><strong>Scaling unit</strong> &middot; package + tile + rack.<sup><a href="#fn7">7</a></sup></li>
+                  <li><strong>Constraint</strong> &middot; interconnect, memory, energy.</li>
+                  <li><strong>Result</strong> &middot; AI factory designed as one system.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="wtb-fig-cap">A simplified, original split. The unit of AI scaling moved from chip to package to rack.</div>
+          </figure>
+
+          <p class="essay-line">The package is becoming the unit of AI scaling.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-vsn">XII. Dojo vs Nvidia: the real comparison</h2>
+
+          <p>The Dojo-vs-Nvidia comparison is not "custom chip vs GPU." It is platform vs vertical integration.</p>
+
+          <div class="wtb-matrix" aria-label="Nvidia platform vs Tesla Dojo vertical integration">
+            <div class="wtb-matrix-head">
+              <div>Dimension</div>
+              <div>Nvidia path</div>
+              <div>Tesla Dojo path</div>
+            </div>
+            <div class="wtb-matrix-row"><div>Hardware</div><div>Mature GPU + HBM + NVLink + DGX rack-scale systems.</div><div>Custom D1 dies + fan-out training tile + custom cabinet.<sup><a href="#fn2">2</a></sup></div></div>
+            <div class="wtb-matrix-row"><div>Memory</div><div>HBM-heavy.</div><div>SRAM-heavy / on-tile memory bet.<sup><a href="#fn1">1</a></sup></div></div>
+            <div class="wtb-matrix-row"><div>Networking</div><div>NVLink + InfiniBand + Spectrum-X.</div><div>On-tile fabric + custom interconnect.<sup><a href="#fn2">2</a></sup></div></div>
+            <div class="wtb-matrix-row"><div>Software</div><div>CUDA + libraries + ecosystem.</div><div>Tesla compiler / runtime / training stack.</div></div>
+            <div class="wtb-matrix-row"><div>Workload fit</div><div>Broad, flexible.</div><div>Optimised for Tesla&rsquo;s vision data loop.</div></div>
+            <div class="wtb-matrix-row"><div>Iteration</div><div>Through external supplier scale.</div><div>Through internal control.</div></div>
+          </div>
+
+          <p class="essay-line">Nvidia sells a platform. Dojo was Tesla trying to build a machine for one company&rsquo;s data loop.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sw">XIII. The software problem</h2>
+
+          <p>A beautiful tile is not enough. To make Dojo work, Tesla needed a compiler, runtime, training-framework support, model partitioning, debugging tools, reliability management, fault tolerance, scheduling, data pipeline, developer productivity, and a migration path from existing GPU workflows. None of those are easy. None of them get cheaper at custom-hardware scale.</p>
+
+          <p class="essay-line">A custom accelerator fails quietly when the software team cannot make the hardware convenient.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-biz">XIV. The business lesson</h2>
+
+          <p>Hardware ambition is not enough. The architecture has to map to business leverage. Dojo had a clear technical reason: Tesla-specific training. But the business test is whether it reduced cost enough, sped training enough, justified a separate team, kept up with Nvidia&rsquo;s roadmap, justified custom software, scaled reliably, and helped cars and robots ship faster. Those are a lot of bars to clear in parallel.</p>
+
+          <p class="essay-line">Dojo&rsquo;s enemy was not only Nvidia. Dojo&rsquo;s enemy was the cost of becoming Nvidia, TSMC packaging, a compiler company, and a data-center operator at the same time.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XV. What could break the thesis?</h2>
+
+          <p>Dojo showed technical ambition, but not enough proven business leverage to keep the dedicated path central.</p>
+
+          <div class="wtb-counter" aria-label="Bear case">
+            <div class="wtb-counter-label">Bear case &middot; what could break the thesis</div>
+            <ol>
+              <li><strong>Custom too narrow.</strong> Dojo may have been too custom for Tesla&rsquo;s evolving AI roadmap.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>GPU still wins on cost.</strong> External GPUs and AI5 / AI6 may be better uses of Tesla resources.</li>
+              <li><strong>Training &harr; inference shift.</strong> Dedicated training chips can become obsolete if inference dominates.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Schedule risk.</strong> Samsung 2nm or TSMC AI5 schedules may slip.<sup><a href="#fn5">5</a></sup></li>
+              <li><strong>Nvidia ecosystem.</strong> Nvidia&rsquo;s software / network / cloud stack remains very hard to beat.</li>
+              <li><strong>Software burden.</strong> Custom stacks are expensive to maintain.</li>
+              <li><strong>Fan-out hard problems.</strong> Yield and thermal challenges scale with package size.<sup><a href="#fn1">1</a></sup></li>
+              <li><strong>Compiler ceiling.</strong> A beautiful package is wasted if the compiler / runtime is not productive.</li>
+              <li><strong>Autonomy &ne; compute-bound.</strong> Tesla&rsquo;s autonomy progress may not be bottlenecked by training hardware alone.</li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XVI. What could break the bear case?</h2>
+
+          <p>Even if Dojo changes form, the lesson survives.</p>
+
+          <div class="wtb-counter wtb-counter--bull" aria-label="Bull case">
+            <div class="wtb-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>Early lesson advantage.</strong> Tesla learned package-scale AI hardware earlier than most.<sup><a href="#fn1">1</a></sup></li>
+              <li><strong>Reusable IP.</strong> Dojo lessons feed AI5, AI6, robotics, autonomy, and future infrastructure.</li>
+              <li><strong>Data + workload control.</strong> Tesla has unique data and workload control.</li>
+              <li><strong>Training &harr; inference convergence.</strong> Future chips may serve both well.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Package-scale mainstreams.</strong> SoW-X / CoWoS 14R / SoIC validate the direction.<sup><a href="#fn7">7</a></sup></li>
+              <li><strong>Power / cooling reusable.</strong> Lessons travel even if the tile architecture changes form.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Robotics scale.</strong> Optimus and physical AI add new training-compute demand.</li>
+              <li><strong>Vertical integration still rare.</strong> Few companies can co-design data, model, and silicon.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">Even if Dojo changes form, the lesson survives: AI compute is constrained by bandwidth, power, cooling, packaging, and software.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XVII. What to watch</h2>
+
+          <div class="wtb-watch" aria-label="What to watch">
+            <div class="wtb-watch-label">What to watch</div>
+            <ul>
+              <li>Whether Tesla continues using Dojo systems internally.<sup><a href="#fn3">3</a></sup></li>
+              <li>AI5 tape-out and production timing.<sup><a href="#fn4">4</a></sup></li>
+              <li>AI6 tape-out timing.<sup><a href="#fn5">5</a></sup></li>
+              <li>Samsung 2nm yield and schedule.<sup><a href="#fn5">5</a></sup></li>
+              <li>TSMC AI5 production in Taiwan / Arizona.<sup><a href="#fn4">4</a></sup></li>
+              <li>Tesla&rsquo;s actual training-compute spending.</li>
+              <li>Nvidia usage inside Tesla.</li>
+              <li>AMD usage inside Tesla, if any.</li>
+              <li>Whether Dojo software survives in AI5 / AI6 workflows.</li>
+              <li>Optimus training requirements.</li>
+              <li>Autonomy model size and data growth.</li>
+              <li>Tesla&rsquo;s FSD training cadence.</li>
+              <li>Package-scale AI hardware trends.<sup><a href="#fn7">7</a></sup></li>
+              <li>TSMC SoW-X roadmap.<sup><a href="#fn7">7</a></sup></li>
+              <li>CoWoS capacity and package size evolution.<sup><a href="#fn7">7</a></sup></li>
+              <li>HBM dependence vs SRAM-heavy architectures.</li>
+              <li>Power and cooling architecture for AI clusters.<sup><a href="#fn2">2</a></sup></li>
+              <li>Whether custom accelerators beat GPU clusters in narrow workloads.</li>
+              <li>Vertical-integration economics across hyperscalers and OEMs.</li>
+              <li>Optical I/O and COUPE adoption.<sup><a href="#fn7">7</a></sup></li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="wtb-terms" aria-label="Glossary">
+            <div class="wtb-terms-label">Glossary</div>
+            <dl>
+              <dt>Dojo</dt><dd>Tesla&rsquo;s custom AI training supercomputer project.</dd>
+              <dt>D1</dt><dd>Tesla&rsquo;s Dojo training chip.</dd>
+              <dt>Training tile</dt><dd>Package-level unit containing multiple D1 dies.</dd>
+              <dt>Known-good die</dt><dd>A chip die tested before integration.</dd>
+              <dt>Fan-out wafer</dt><dd>Packaging process that redistributes connections outward from dies to enable dense integration.</dd>
+              <dt>InFO_SoW</dt><dd>TSMC Integrated Fan-Out System-on-Wafer technology.</dd>
+              <dt>CoWoS</dt><dd>TSMC advanced packaging technology using interposers, often for AI / HPC chips with HBM.</dd>
+              <dt>Interposer</dt><dd>Intermediate layer connecting dies and memory at high bandwidth.</dd>
+              <dt>Reticle limit</dt><dd>Maximum lithography exposure field size.</dd>
+              <dt>MCM</dt><dd>Multi-chip module.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory.</dd>
+              <dt>SRAM</dt><dd>Fast on-chip memory.</dd>
+              <dt>PDN</dt><dd>Power delivery network.</dd>
+              <dt>Cold plate</dt><dd>Liquid-cooling structure used to remove heat.</dd>
+              <dt>AI5 / AI6</dt><dd>Tesla&rsquo;s next-generation AI chip roadmap, per public reporting.</dd>
+              <dt>Tape-out</dt><dd>Final chip design handoff before manufacturing.</dd>
+              <dt>System-on-wafer</dt><dd>Approach where many chips or chiplets are integrated across wafer-scale structures.</dd>
+              <dt>Rack-scale AI</dt><dd>AI compute designed at rack or data-center scale rather than single-chip scale.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XVIII. The wafer-scale training bet</h2>
+
+          <p>Dojo was not just a chip.</p>
+
+          <p>It was a bet that Tesla could make a training computer out of packaging, power delivery, cooling, interconnect, SRAM, and software.</p>
+
+          <div class="essay-pull">In 2026, the dedicated Dojo story looks weaker because Tesla shifted toward AI5 and AI6. But the core insight aged well: AI scaling is moving from chip-level performance to package-level and rack-level integration. The package is becoming the computer.</div>
+
+          <p>The Dojo path may not have produced Tesla&rsquo;s Nvidia killer. It did produce an early proof that AI hardware is a system problem, not a chip problem. Tesla&rsquo;s reorganisation around AI5 and AI6 is a priority shift, not a refutation of the packaging thesis. TSMC&rsquo;s CoWoS, SoIC, COUPE, and SoW-X roadmap continues exactly where the 2021 Tesla teaser pointed: toward larger packages, denser interconnect, and rack-level integration.</p>
+
+          <p>The companies that win the next AI cycle will be the ones that treat the package, the rack, and the software stack as one design problem. Tesla saw that early. Others are catching up now.</p>
+
+          <p>That is the wafer-scale training bet.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Aug 2021). <em>Tesla AI Day Supercomputer Chip Teaser | Is This The First Deployment Of TSMC InFO_SoW?</em> SemiAnalysis. Historical anchor for the package-scale framing &mdash; 5x5 chip array, cold plate, carrier, BGA pads, power delivery, InFO_SoW speculation, fan-out wafer-scale framing, comparison with CoWoS-style interposers and flip-chip MCMs, reticle-limit context, ~7,000W vs Nvidia A100 ~500W power framing, water-cooling implications, and SRAM-heavy speculation. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Cadence. <a href="https://community.cadence.com/cadence_blogs_8/b/breakfast-bytes/posts/not-chips-tesla-s-dojo" target="_blank" rel="noopener">Not chips: Tesla&rsquo;s Dojo</a>. Technical summary covering 25 known-good D1 dies on a fanout-wafer process, ~9 PFLOPS per training tile, ~36 TB/s off-tile bandwidth, ~52V DC, ~18,000A current draw, ~15kW heat dissipation, and the tile / cabinet / ExaPOD framing.</p>
+
+            <p id="fn3"><sup>3</sup> Reuters (Aug 2025). <a href="https://www.reuters.com/business/autos-transportation/tesla-streamline-its-ai-chip-design-work-musk-says-2025-08-07/" target="_blank" rel="noopener">Tesla to streamline its AI chip design work, Musk says</a>. Bloomberg-via-Reuters reporting that Tesla was disbanding its Dojo supercomputer team, with Musk saying it did not make sense to divide resources across two very different AI chip designs and that Tesla would focus on AI5, AI6, and later chips described as excellent for inference and at least pretty good for training.</p>
+
+            <p id="fn4"><sup>4</sup> Reuters (Jul 2025). <a href="https://www.reuters.com/business/tesla-samsung-165-billion-supply-deal-may-spur-chipmakers-us-contract-business-2025-07-28/" target="_blank" rel="noopener">Tesla&rsquo;s $16.5B Samsung chip supply deal</a>. Samsung&rsquo;s Taylor, Texas factory framed to make Tesla&rsquo;s AI6; Samsung currently making AI4; TSMC slated to make AI5 first in Taiwan and then Arizona per Musk; self-driving / Optimus / broader AI context.</p>
+
+            <p id="fn5"><sup>5</sup> Reuters (Mar 2026). <a href="https://www.reuters.com/business/autos-transportation/musk-says-tesla-may-tape-out-next-generation-ai6-chips-december-2026-03-19/" target="_blank" rel="noopener">Musk says Tesla may tape out AI6 in December 2026</a>. Samsung executive cited saying Tesla chips based on Samsung&rsquo;s advanced 2nm process were planned for production in the second half of 2027.</p>
+
+            <p id="fn6"><sup>6</sup> Tesla AI Day 2021 and subsequent Tesla technical presentations remain the original sources for D1 chip, training tile, cabinet, ExaPOD, and software stack framing. This essay relies on the Cadence technical summary (fn2) and SemiAnalysis 2021 framing (fn1) for the specific numbers used; no Tesla material is reproduced.</p>
+
+            <p id="fn7"><sup>7</sup> TSMC (2026). <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 North America Technology Symposium</a>. CoWoS expansion (5.5-reticle today, 14-reticle by 2028, ~10 dies + 20 HBM at 14R), SoIC 3D stacking, COUPE co-packaged optics, and 40-reticle SoW-X System-on-Wafer targeted for 2029.</p>
+
+            <p id="fn8"><sup>8</sup> Public Hot Chips and other credible Dojo technical coverage is referenced in this essay only at the level the Cadence summary (fn2) and SemiAnalysis 2021 framing (fn1) already disclose. Specific microarchitecture claims are made only where verifiable.</p>
+
+            <p id="fn9"><sup>9</sup> Public Nvidia developer / DGX materials are referenced only as comparative platform context. This essay does not reproduce Nvidia visuals or marketing.</p>
+
+            <p id="fn10"><sup>10</sup> TSMC packaging materials (CoWoS, InFO, SoIC, SoW) provide additional context for the system-level packaging direction. The essay uses the 2026 symposium framing (fn7) as the primary citation rather than restating individual product pages.</p>
+          </div>
+
+          <div class="wtb-fr">
+            <div class="wtb-fr-label">Further reading</div>
+            <ul>
+              <li><a href="wafer-scale-latency-bet.html" class="essay-link">The Wafer-Scale Latency Bet</a>. Cerebras and the case for removing chip boundaries (Cerebras vs Dojo contrast).</li>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="gaa-credibility-test.html" class="essay-link">The GAA Credibility Test</a>. Samsung Foundry&rsquo;s 2nm comeback as a trust test, not a transistor story.</li>
+              <li><a href="when-ai-runs-out-of-copper.html" class="essay-link">When AI Runs Out of Copper</a>. Optical I/O, co-packaged optics, and the race to replace copper with light.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="bubble-that-became-infrastructure.html" class="essay-link">The Bubble That Became Infrastructure</a>. Why Nvidia&rsquo;s 2021 overvaluation story turned into the AI factory thesis.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="power-efficiency-layer.html" class="essay-link">The Power Efficiency Layer</a>. Why Power Integrations sits at the quiet intersection of GaN, EVs, grids, and AI data-center power.</li>
+              <li><a href="networked-ai-bet.html" class="essay-link">The Networked AI Bet</a>. Tenstorrent&rsquo;s open, Ethernet-native attack on the AI compute stack.</li>
+              <li><a href="ai-chip-software-wall.html" class="essay-link">The AI Chip Software Wall</a>. Why specialised silicon alone was not enough to beat Nvidia.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 038. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=42"></script>
+</body>
+</html>

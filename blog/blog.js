@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'wafer-scale-training-bet':       'infrastructure',
   'semiconductor-substitution-ladder': 'infrastructure',
   'power-efficiency-layer':         'infrastructure',
   'foundry-trust-test':             'infrastructure',
