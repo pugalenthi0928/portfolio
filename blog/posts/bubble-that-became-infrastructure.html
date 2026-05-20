@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bubble That Became Infrastructure | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of how Nvidia's 2021 overvaluation story evolved into the AI factory thesis, and why the new risk is AI capex digestion rather than crypto GPUs.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/bubble-that-became-infrastructure.html">
+  <meta property="og:title" content="The Bubble That Became Infrastructure | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of how Nvidia's 2021 overvaluation story evolved into the AI factory thesis, and why the new risk is AI capex digestion rather than crypto GPUs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/bubble-that-became-infrastructure.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="AI Factory">
+  <meta property="article:tag" content="CUDA">
+  <meta property="article:tag" content="Blackwell">
+  <meta property="article:tag" content="Rubin">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="Datacenter">
+  <meta property="article:tag" content="Hyperscalers">
+  <meta property="article:tag" content="GPU">
+  <meta property="article:tag" content="Accelerated Computing">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Capex">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Bubble That Became Infrastructure | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of how Nvidia's 2021 overvaluation story evolved into the AI factory thesis, and why the new risk is AI capex digestion rather than crypto GPUs.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Bubble That Became Infrastructure",
+    "description": "An original 2026 analysis of how Nvidia's 2021 overvaluation story evolved into the AI factory thesis, and why the new risk is AI capex digestion rather than crypto GPUs.",
+    "url": "https://pugalenthimagendran.com/blog/posts/bubble-that-became-infrastructure.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/bubble-that-became-infrastructure.html",
+    "keywords": "Nvidia, AI Factory, CUDA, Blackwell, Rubin, AI Infrastructure, Semiconductors, TSMC, HBM, CoWoS, Datacenter, Hyperscalers, GPU, Accelerated Computing, ASML, Capex"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay-format styles (inline, matching post convention) */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       BUBBLE THAT BECAME INFRASTRUCTURE, scoped under .essay-btb
+       ============================================ */
+    .essay-btb {
+      --btb-accent: #F0784A;
+      --btb-accent-soft: rgba(240,120,74,0.10);
+      --btb-accent-faint: rgba(240,120,74,0.04);
+      --btb-bd: rgba(255,255,255,0.08);
+      --btb-bd-soft: rgba(255,255,255,0.05);
+      --btb-cool: #6CBFE0;
+      --btb-cool-soft: rgba(108,191,224,0.10);
+      --btb-purple: #B794F4;
+      --btb-purple-soft: rgba(183,148,244,0.10);
+      --btb-green: #5DCAA5;
+      --btb-green-soft: rgba(93,202,165,0.10);
+      --btb-amber: #E8B468;
+      --btb-amber-soft: rgba(232,180,104,0.10);
+      --btb-red: #E07A8B;
+      --btb-red-soft: rgba(224,122,139,0.10);
+    }
+
+    .btb-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .btb-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .btb-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .btb-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .btb-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--btb-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .btb-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .btb-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    .btb-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--btb-bd); background: linear-gradient(180deg, var(--btb-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .btb-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--btb-accent); margin-bottom: 14px; }
+    .btb-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--btb-bd-soft); line-height: 1.6; }
+
+    .btb-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--btb-accent); background: linear-gradient(180deg, var(--btb-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .btb-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--btb-accent); margin-bottom: 10px; }
+    .btb-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Bubble ingredients grid */
+    .btb-ing { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .btb-ing-card { padding: 14px 12px 12px; border-radius: 8px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-ing-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--btb-red); margin-bottom: 4px; }
+    .btb-ing-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .btb-ing-body { font-family: 'Source Serif 4', serif; font-size: 0.85rem; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* Aged right vs aged wrong */
+    .btb-aged { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .btb-aged-col { padding: 20px 20px 18px; border-radius: 10px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-aged-col--right { background: linear-gradient(180deg, var(--btb-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .btb-aged-col--right .btb-aged-eyebrow { color: var(--btb-green); }
+    .btb-aged-col--wrong { background: linear-gradient(180deg, var(--btb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--btb-accent); }
+    .btb-aged-col--wrong .btb-aged-eyebrow { color: var(--btb-accent); }
+    .btb-aged-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .btb-aged-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .btb-aged-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .btb-aged-col li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .btb-aged-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .btb-aged-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* GPU company vs AI factory split */
+    .btb-evol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .btb-evol-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-evol-col--past { background: linear-gradient(180deg, var(--btb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .btb-evol-col--past .btb-evol-eyebrow { color: var(--btb-cool); }
+    .btb-evol-col--now { background: linear-gradient(180deg, var(--btb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--btb-accent); }
+    .btb-evol-col--now .btb-evol-eyebrow { color: var(--btb-accent); }
+    .btb-evol-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .btb-evol-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .btb-evol-layers { display: flex; flex-direction: column; gap: 3px; }
+    .btb-evol-layer { padding: 7px 12px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--color-text-primary); background: rgba(255,255,255,0.03); border: 0.5px solid var(--btb-bd-soft); letter-spacing: -0.005em; }
+    .btb-evol-col--past .btb-evol-layer { background: rgba(108,191,224,0.06); border-color: rgba(108,191,224,0.20); }
+    .btb-evol-col--now .btb-evol-layer { background: rgba(240,120,74,0.06); border-color: rgba(240,120,74,0.20); }
+
+    /* Full-stack AI factory */
+    .btb-stack { display: flex; flex-direction: column; gap: 4px; }
+    .btb-layer { display: grid; grid-template-columns: 32px 1fr 150px; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-layer-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--btb-accent); letter-spacing: 0.08em; }
+    .btb-layer-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .btb-layer-name span { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; color: var(--color-text-secondary); margin-left: 6px; }
+    .btb-layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-transform: uppercase; text-align: right; }
+    .btb-layer--silicon { background: linear-gradient(90deg, var(--btb-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--btb-accent); }
+    .btb-layer--system { background: linear-gradient(90deg, var(--btb-cool-soft), transparent 60%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .btb-layer--sw { background: linear-gradient(90deg, var(--btb-amber-soft), transparent 60%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .btb-layer--app { background: linear-gradient(90deg, var(--btb-green-soft), transparent 60%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .btb-layer--cust { background: linear-gradient(90deg, var(--btb-purple-soft), transparent 60%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+
+    /* Stat row */
+    .btb-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .btb-stat-card { padding: 13px 12px; border-radius: 8px; border: 1px solid var(--btb-bd); background: var(--bg-alt); text-align: center; }
+    .btb-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--btb-accent); line-height: 1.1; }
+    .btb-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .btb-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--btb-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--btb-accent-faint); }
+
+    /* Supply-chain stack tiles */
+    .btb-supply { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .btb-supply-card { padding: 12px 10px 10px; border-radius: 8px; border: 1px solid var(--btb-bd); background: var(--bg-alt); text-align: center; }
+    .btb-supply-cat { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--btb-accent); margin-bottom: 4px; }
+    .btb-supply-name { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .btb-supply-body { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Capex digestion loop */
+    .btb-loop { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: stretch; margin: 1rem 0 0; }
+    .btb-loop-step { padding: 14px 10px; border-radius: 8px; border: 1px solid var(--btb-bd); background: var(--bg-alt); text-align: center; }
+    .btb-loop-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--btb-accent); margin-bottom: 4px; }
+    .btb-loop-name { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .btb-loop-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .btb-loop-step--a { background: linear-gradient(180deg, var(--btb-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .btb-loop-step--b { background: linear-gradient(180deg, var(--btb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--btb-accent); }
+    .btb-loop-step--c { background: linear-gradient(180deg, var(--btb-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .btb-loop-step--d { background: linear-gradient(180deg, var(--btb-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .btb-loop-step--e { background: linear-gradient(180deg, var(--btb-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .btb-loop-back { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-align: center; margin-top: 8px; padding-top: 8px; border-top: 0.5px dashed var(--btb-bd-soft); }
+
+    /* Risk cards */
+    .btb-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .btb-risk-card { padding: 16px 16px 14px; border-radius: 10px; border: 1px solid var(--btb-red); background: linear-gradient(180deg, var(--btb-red-soft) 0%, transparent 80%), var(--bg-alt); }
+    .btb-risk-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--btb-red); margin-bottom: 8px; }
+    .btb-risk-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .btb-risk-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-secondary); }
+
+    /* Custom silicon threat map */
+    .btb-custom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .btb-custom-card { padding: 12px 12px 10px; border-radius: 8px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-custom-cat { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--btb-amber); margin-bottom: 4px; }
+    .btb-custom-name { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .btb-custom-body { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Caution */
+    .btb-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--btb-amber); background: linear-gradient(180deg, var(--btb-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .btb-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--btb-amber); margin-bottom: 8px; }
+    .btb-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .btb-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .btb-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .btb-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .btb-terms dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .btb-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--btb-accent); padding-top: 2px; }
+    .btb-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .btb-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .btb-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .btb-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--btb-bd-soft); }
+    .btb-counter li:last-child { border-bottom: none; }
+    .btb-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--btb-accent); }
+    .btb-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .btb-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--btb-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .btb-counter--bull li::before { color: var(--btb-green); }
+
+    .btb-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--btb-bd); background: var(--bg-alt); }
+    .btb-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .btb-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .btb-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--btb-bd-soft); }
+    .btb-watch li:last-child, .btb-watch li:nth-last-child(2) { border-bottom: none; }
+    .btb-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--btb-accent); background: transparent; }
+
+    /* Further reading */
+    .btb-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .btb-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .btb-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .btb-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .btb-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .btb-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .btb-toc ol { grid-template-columns: 1fr; }
+      .btb-aged, .btb-evol, .btb-risks { grid-template-columns: 1fr; }
+      .btb-ing, .btb-supply, .btb-custom { grid-template-columns: repeat(2, 1fr); }
+      .btb-loop { grid-template-columns: 1fr; }
+      .btb-stat-row { grid-template-columns: repeat(2, 1fr); }
+      .btb-terms dl { grid-template-columns: 130px 1fr; }
+      .btb-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .btb-ing, .btb-supply, .btb-custom, .btb-stat-row { grid-template-columns: 1fr; }
+      .btb-layer { grid-template-columns: 28px 1fr; }
+      .btb-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <article class="article essay-format essay-btb">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 033 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Nvidia</span>
+          <span class="tag">AI Factory</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">Blackwell</span>
+          <span class="tag">Rubin</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">HBM</span>
+          <span class="tag">CoWoS</span>
+          <span class="tag">Datacenter</span>
+          <span class="tag">Hyperscalers</span>
+          <span class="tag">GPU</span>
+          <span class="tag">ASML</span>
+          <span class="tag">Capex</span>
+        </div>
+
+        <h1 class="essay-hed">The Bubble That Became <em>Infrastructure</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Nvidia&rsquo;s 2021 overvaluation story turned into the AI factory thesis.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The 2021 Nvidia bubble thesis was right about crypto, gaming, stock-split speculation, and datacenter digestion. But it underestimated the AI factory. Nvidia did not stay a GPU company waiting for the bubble to pop. It became the operating layer of accelerated computing. In 2026, the question is not whether Nvidia is real. It is whether the AI infrastructure cycle can keep producing enough economic value to support the scale Nvidia has reached.</p>
+
+          <nav class="btb-toc" aria-label="Article contents">
+            <div class="btb-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis was not stupid</a></li>
+              <li><a href="#sec-crypto">Crypto was temporary</a></li>
+              <li><a href="#sec-gaming">Gaming normalised, Nvidia did not</a></li>
+              <li><a href="#sec-business">The business caught up to the imagination</a></li>
+              <li><a href="#sec-system">The GPU became a system</a></li>
+              <li><a href="#sec-cuda">CUDA became the operating layer</a></li>
+              <li><a href="#sec-supply">The supply chain became the product</a></li>
+              <li><a href="#sec-capex">The new bubble question is capex digestion</a></li>
+              <li><a href="#sec-conc">Customer concentration matters</a></li>
+              <li><a href="#sec-reg">Regulation is now structural</a></li>
+              <li><a href="#sec-custom">Custom silicon is the real competitive threat</a></li>
+              <li><a href="#sec-aged">The 2021 thesis aged half right</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The bubble that became infrastructure</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, SemiAnalysis called Nvidia overvalued. Not bad. Overvalued. That distinction matters.</p>
+
+          <p>The uploaded article actually praised Nvidia heavily. It said Nvidia was the backbone of the AI revolution, the semiconductor company that understood software, and one of the few companies prepared for the AI and data-centric world. But then it made the financial argument: the stock price had run ahead of the business.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The article blamed a familiar set of forces. Crypto. Gaming. COVID pull-forward. Datacenter buildout. Mellanox acquisition math. Stock-split speculation. That was the 2021 bubble thesis.</p>
+
+          <p>In 2026, the story looks different. Crypto demand faded. Ethereum mining ended. Gaming normalised. Stock splits still did not create enterprise value. But Nvidia did not return to being a normal GPU company. The opposite happened.</p>
+
+          <p class="essay-line">AI turned Nvidia into infrastructure.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The 2021 Nvidia bubble thesis was right about temporary demand and speculative market behavior, but wrong about the size of the coming AI platform shift. Nvidia&rsquo;s crypto/gaming bubble did not become the future. Its AI factory platform did. In 2026, the risk is no longer a simple stock-split bubble. The risk is whether AI infrastructure spending can generate enough real economic returns to support Nvidia&rsquo;s revenue scale, margins, customer concentration, and supply-chain commitments.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis was not stupid</h2>
+
+          <p>In July 2021, Dylan Patel published a SemiAnalysis piece that praised Nvidia&rsquo;s vision and software understanding while arguing the stock had run ahead of fundamentals. The piece walked through the 4-for-1 stock split (with shares rising roughly <span class="btb-stat">40%</span> after the split announcement), compared the 2021 setup with Nvidia&rsquo;s 2018 bubble, and laid out a set of temporary or cyclical drivers: crypto GPU mining demand, COVID gaming pull-forward, datacenter buildout and digestion, the Mellanox acquisition flattering year-over-year datacenter growth, and Tesla-style stock-split speculation behavior. The deeper conclusion was that Nvidia was a great company, but temporary growth was being extrapolated too aggressively.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>Five years on, that combination of praise and caution looks intellectually honest. The cyclical reads were correct. The platform read was incomplete.</p>
+
+          <div class="btb-thesis">
+            <div class="btb-thesis-label">2021 thesis</div>
+            <p class="btb-thesis-text">Nvidia was a great company, but the market was extrapolating temporary crypto, gaming, datacenter, and stock-split-driven momentum too aggressively.</p>
+          </div>
+
+          <figure class="btb-fig" aria-label="Bubble ingredients">
+            <div class="btb-fig-label">Diagram &middot; The 2021 bubble ingredients</div>
+            <div class="btb-ing">
+              <div class="btb-ing-card">
+                <div class="btb-ing-cat">Temporary 01</div>
+                <h3 class="btb-ing-name">Crypto GPUs</h3>
+                <div class="btb-ing-body">Ethereum proof-of-work mining demand for consumer GPUs.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="btb-ing-card">
+                <div class="btb-ing-cat">Temporary 02</div>
+                <h3 class="btb-ing-name">COVID gaming</h3>
+                <div class="btb-ing-body">Pull-forward of gaming GPU demand during lockdowns.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="btb-ing-card">
+                <div class="btb-ing-cat">Cyclical 03</div>
+                <h3 class="btb-ing-name">DC buildout</h3>
+                <div class="btb-ing-body">Datacenter buildout phase ahead of digestion.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="btb-ing-card">
+                <div class="btb-ing-cat">Speculative 04</div>
+                <h3 class="btb-ing-name">Stock split</h3>
+                <div class="btb-ing-body">4-for-1 split adding ~40% post-announcement momentum.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original visual of the four bubble ingredients identified by the 2021 SemiAnalysis piece.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-crypto">II. Crypto was temporary</h2>
+
+          <p>The Ethereum Foundation describes The Merge as completing on September 15, 2022, moving the network from proof-of-work to proof-of-stake.<sup><a href="#fn4">4</a></sup> That single event removed the most important GPU-mining demand source. Not all crypto disappeared, but the GPU-mining tailwind that had inflated 2021 expectations did fade.</p>
+
+          <p class="essay-line">Crypto was not the future of Nvidia demand. It was noise around the transition to something much bigger.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-gaming">III. Gaming normalised, but Nvidia did not</h2>
+
+          <p>The 2021 piece worried about gaming digestion after COVID, and that worry was directionally correct: gaming growth above the COVID line was not sustainable.<sup><a href="#fn1">1</a></sup> But the right way to read the company in 2026 is mix. Gaming remained important, but the centre of gravity moved to Data Center.<sup><a href="#fn2">2</a></sup></p>
+
+          <p class="essay-line">Gaming did not have to collapse for the 2021 thesis to age badly. Data Center simply became much larger.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-business">IV. The business caught up to the imagination</h2>
+
+          <p>Nvidia&rsquo;s FY2026 results page reports full-year revenue of about <span class="btb-stat">$215.9B</span>, Q4 FY2026 revenue of about <span class="btb-stat">$68.1B</span>, Q4 Data Center revenue of about <span class="btb-stat">$62.3B</span>, and full-year Data Center revenue of about <span class="btb-stat">$193.7B</span>.<sup><a href="#fn2">2</a></sup> In 2021, Nvidia&rsquo;s valuation looked detached from fundamentals. By 2026, the revenue base had changed completely.</p>
+
+          <figure class="btb-fig" aria-label="Nvidia FY2026 stat row">
+            <div class="btb-fig-label">Card &middot; Nvidia FY2026 results, simplified</div>
+            <div class="btb-stat-row">
+              <div class="btb-stat-card"><div class="btb-stat-num">~$215.9B</div><div class="btb-stat-label">FY2026 revenue<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="btb-stat-card"><div class="btb-stat-num">~$193.7B</div><div class="btb-stat-label">FY2026 Data Center revenue<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="btb-stat-card"><div class="btb-stat-num">~$68.1B</div><div class="btb-stat-label">Q4 FY2026 revenue<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="btb-stat-card"><div class="btb-stat-num">~$62.3B</div><div class="btb-stat-label">Q4 FY2026 Data Center revenue<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+            <div class="btb-fig-cap">Figures as reported by Nvidia in its FY2026 results page. Treated as company disclosures; this essay is not investment advice.</div>
+          </figure>
+
+          <p class="essay-line">Nvidia did not become cheap. The business became enormous.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-system">V. The GPU became a system</h2>
+
+          <p>Nvidia&rsquo;s FY2026 Form 10-K describes the company as a data-center-scale AI infrastructure platform. The filing details a technology stack that pairs CUDA with hundreds of domain-specific software libraries, frameworks, algorithms, SDKs, and APIs, and frames Blackwell as data-center-scale infrastructure spanning GPUs, CPUs, DPUs, interconnects, switch chips, systems, and networking adapters &mdash; with hundreds of thousands of GPUs interconnected to function as a single giant computer. The filing also positions Rubin for production shipments in the second half of FY2027 and frames the next generation around agentic AI, reasoning, and long-context workflows.<sup><a href="#fn3">3</a></sup></p>
+
+          <figure class="btb-fig" aria-label="GPU company vs AI factory company">
+            <div class="btb-fig-label">Diagram &middot; 2021 GPU company vs 2026 AI factory company</div>
+            <div class="btb-evol">
+              <div class="btb-evol-col btb-evol-col--past">
+                <div class="btb-evol-eyebrow">2021 framing</div>
+                <h3 class="btb-evol-title">GPU company</h3>
+                <div class="btb-evol-layers">
+                  <div class="btb-evol-layer">GPU silicon</div>
+                  <div class="btb-evol-layer">Board / module</div>
+                  <div class="btb-evol-layer">Server</div>
+                  <div class="btb-evol-layer">Customer integrates</div>
+                </div>
+              </div>
+              <div class="btb-evol-col btb-evol-col--now">
+                <div class="btb-evol-eyebrow">2026 framing</div>
+                <h3 class="btb-evol-title">AI factory company</h3>
+                <div class="btb-evol-layers">
+                  <div class="btb-evol-layer">GPU + CPU + DPU silicon</div>
+                  <div class="btb-evol-layer">NVLink + InfiniBand / Spectrum-X</div>
+                  <div class="btb-evol-layer">Rack-scale systems</div>
+                  <div class="btb-evol-layer">CUDA + libraries + SDKs</div>
+                  <div class="btb-evol-layer">Cloud + enterprise + sovereign</div>
+                  <div class="btb-evol-layer">Inference + serving software</div>
+                  <div class="btb-evol-layer">AI factory architecture</div>
+                </div>
+              </div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original split. The product surface area widened from a chip to a factory architecture.<sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <p class="essay-line">Nvidia&rsquo;s moat is not the GPU alone. It is the software-defined system around the GPU.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-cuda">VI. CUDA became the operating layer</h2>
+
+          <p>CUDA is not only syntax. It is developer habit, libraries, kernels, training scripts, inference tooling, profiling, debugging, cloud images, ML frameworks, hiring market, Stack Overflow answers, research defaults, enterprise support, and benchmark recipes. Nvidia&rsquo;s 10-K cites CUDA and hundreds of software libraries, frameworks, algorithms, SDKs, and APIs as part of the platform.<sup><a href="#fn3">3</a></sup></p>
+
+          <figure class="btb-fig" aria-label="Nvidia full-stack AI factory">
+            <div class="btb-fig-label">Diagram &middot; Nvidia full-stack AI factory, simplified</div>
+            <div class="btb-stack">
+              <div class="btb-layer btb-layer--silicon">
+                <div class="btb-layer-num">01</div>
+                <div class="btb-layer-name">Silicon <span>GPU, CPU, DPU, NVLink switch, NIC</span></div>
+                <div class="btb-layer-tag">Hardware</div>
+              </div>
+              <div class="btb-layer btb-layer--system">
+                <div class="btb-layer-num">02</div>
+                <div class="btb-layer-name">Systems <span>Blackwell rack, networking, cooling</span></div>
+                <div class="btb-layer-tag">System</div>
+              </div>
+              <div class="btb-layer btb-layer--sw">
+                <div class="btb-layer-num">03</div>
+                <div class="btb-layer-name">Software <span>CUDA + hundreds of libraries / SDKs / APIs<sup><a href="#fn3">3</a></sup></span></div>
+                <div class="btb-layer-tag">Software</div>
+              </div>
+              <div class="btb-layer btb-layer--app">
+                <div class="btb-layer-num">04</div>
+                <div class="btb-layer-name">Workloads <span>training, inference, agentic AI, reasoning, physical AI<sup><a href="#fn3">3</a></sup></span></div>
+                <div class="btb-layer-tag">Workloads</div>
+              </div>
+              <div class="btb-layer btb-layer--cust">
+                <div class="btb-layer-num">05</div>
+                <div class="btb-layer-name">Customers <span>cloud, enterprise, sovereign AI</span></div>
+                <div class="btb-layer-tag">Demand</div>
+              </div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original visual based on Nvidia&rsquo;s public framing in its FY2026 10-K. Not an Nvidia chart.<sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <p class="essay-line">A competitor can build a chip. Nvidia sells the default path.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-supply">VII. The supply chain became the product</h2>
+
+          <p>Nvidia&rsquo;s FY2026 10-K describes a supply chain that spans foundries such as TSMC and Samsung, memory partners including SK hynix, Micron, and Samsung, advanced packaging such as CoWoS, and contract manufacturers including Hon Hai, Wistron, and Fabrinet for assembly, testing, packaging, and final products.<sup><a href="#fn3">3</a></sup> ASML&rsquo;s 2025 Annual Report frames AI as requiring leading-edge high-performance processors and a significant increase in DRAM relative to traditional compute architectures.<sup><a href="#fn5">5</a></sup> TSMC&rsquo;s 2025 Annual Report and 2026 symposium materials describe robust AI demand and ongoing CoWoS expansion for compute-and-memory integration.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></p>
+
+          <figure class="btb-fig" aria-label="Nvidia supply-chain stack">
+            <div class="btb-fig-label">Diagram &middot; The supply chain behind every Nvidia sale</div>
+            <div class="btb-supply">
+              <div class="btb-supply-card"><div class="btb-supply-cat">Wafers</div><div class="btb-supply-name">TSMC / Samsung</div><div class="btb-supply-body">advanced logic node<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="btb-supply-card"><div class="btb-supply-cat">Memory</div><div class="btb-supply-name">SK hynix / Micron</div><div class="btb-supply-body">HBM stacks<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="btb-supply-card"><div class="btb-supply-cat">Packaging</div><div class="btb-supply-name">CoWoS</div><div class="btb-supply-body">compute + HBM integration<sup><a href="#fn7">7</a></sup></div></div>
+              <div class="btb-supply-card"><div class="btb-supply-cat">Networking</div><div class="btb-supply-name">NVLink / InfiniBand</div><div class="btb-supply-body">scale-up + scale-out</div></div>
+              <div class="btb-supply-card"><div class="btb-supply-cat">Systems</div><div class="btb-supply-name">ODMs</div><div class="btb-supply-body">rack assembly + test<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="btb-supply-card"><div class="btb-supply-cat">Site</div><div class="btb-supply-name">Power + DC</div><div class="btb-supply-body">cooling, energy, capacity</div></div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original map of the physical stack pulled by every AI accelerator sale. Not exhaustive; not an Nvidia or supplier chart.</div>
+          </figure>
+
+          <p class="essay-line">AI demand became semiconductor demand. Semiconductor demand became Nvidia revenue.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-capex">VIII. The new bubble question is capex digestion</h2>
+
+          <p>The 2021 bubble question was whether Nvidia was inflated by crypto, gaming, COVID, and a stock split. The 2026 bubble question is whether AI factories are being built faster than AI economics can justify. Nvidia&rsquo;s own 10-K is explicit about the demand-forecasting risk: if Nvidia underestimates demand and suppliers cannot increase production, it may lose revenue and market share; if Nvidia overestimates demand or customers cancel, defer, or buy competitors, Nvidia may face excess inventory, purchase commitments, pricing pressure, and margin pressure.<sup><a href="#fn3">3</a></sup></p>
+
+          <div class="btb-caution" role="note" aria-label="Capex digestion caution">
+            <div class="btb-caution-label">Reading the cycle</div>
+            <h3 class="btb-caution-title">The digestion risk did not disappear. It scaled.</h3>
+            <p>Hyperscaler capex commentary across Alphabet, Meta, Microsoft, and Amazon points to large multi-year AI infrastructure spend through 2026 and beyond.<sup><a href="#fn8">8</a></sup><sup><a href="#fn9">9</a></sup><sup><a href="#fn10">10</a></sup> Each of those investments has to produce enough AI revenue or cost savings to justify itself. The new bubble question is not whether AI is fake; it is whether the build pace matches the monetisation pace.</p>
+          </div>
+
+          <figure class="btb-fig" aria-label="AI capex digestion loop">
+            <div class="btb-fig-label">Diagram &middot; The AI capex digestion loop</div>
+            <div class="btb-loop">
+              <div class="btb-loop-step btb-loop-step--a"><div class="btb-loop-num">01</div><div class="btb-loop-name">Capex</div><div class="btb-loop-sub">hyperscaler spend</div></div>
+              <div class="btb-loop-step btb-loop-step--b"><div class="btb-loop-num">02</div><div class="btb-loop-name">Buildout</div><div class="btb-loop-sub">Nvidia + ODM + DC</div></div>
+              <div class="btb-loop-step btb-loop-step--c"><div class="btb-loop-num">03</div><div class="btb-loop-name">Utilisation</div><div class="btb-loop-sub">training + inference</div></div>
+              <div class="btb-loop-step btb-loop-step--d"><div class="btb-loop-num">04</div><div class="btb-loop-name">Revenue</div><div class="btb-loop-sub">AI products + APIs</div></div>
+              <div class="btb-loop-step btb-loop-step--e"><div class="btb-loop-num">05</div><div class="btb-loop-name">Next capex</div><div class="btb-loop-sub">expand or pause</div></div>
+            </div>
+            <div class="btb-loop-back">&larr; the loop closes; pace must match monetisation</div>
+            <div class="btb-fig-cap">A simplified, original 5-step loop. The thesis is not that the loop is broken; it is that each step has to keep working for the next capex cycle to repeat.</div>
+          </figure>
+
+          <p class="essay-line">The new bubble question is not whether AI is fake. It is whether AI infrastructure is being built faster than AI revenue can justify.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-conc">IX. Customer concentration matters</h2>
+
+          <p>Nvidia&rsquo;s FY2026 10-K reports that one direct customer represented <span class="btb-stat">22%</span> of total revenue and another represented <span class="btb-stat">14%</span>, both primarily attributable to Compute &amp; Networking. The filing also notes that one AI research and deployment company is estimated to have contributed meaningful revenue through cloud services purchased from Nvidia customers.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>This is not automatically bearish. Large infrastructure markets often begin concentrated. But it means demand depends heavily on a small number of massive buyers.</p>
+
+          <p class="essay-line">Nvidia&rsquo;s growth is massive, but the buyers are massive too.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-reg">X. Regulation is now structural</h2>
+
+          <p>Nvidia&rsquo;s FY2026 10-K discusses export-control risks, geopolitical risk around China, Taiwan, and Korea, regulatory inquiries and competition-law scrutiny, and the risk that some customers may build or use their own solutions.<sup><a href="#fn3">3</a></sup> Nvidia is no longer just a chip company; it is strategic infrastructure.</p>
+
+          <figure class="btb-fig" aria-label="Structural risks">
+            <div class="btb-fig-label">Diagram &middot; The structural risk surface</div>
+            <div class="btb-risks">
+              <div class="btb-risk-card">
+                <div class="btb-risk-label">Export controls</div>
+                <h3 class="btb-risk-title">Reduced accessible markets</h3>
+                <div class="btb-risk-body">Restrictions on advanced GPU exports to specific countries and end users reduce the addressable customer base and complicate product roadmaps.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="btb-risk-card">
+                <div class="btb-risk-label">Competition / antitrust</div>
+                <h3 class="btb-risk-title">Bundling and allocation scrutiny</h3>
+                <div class="btb-risk-body">Regulators may scrutinise bundling, supply allocation, and customer arrangements as Nvidia&rsquo;s share of accelerated compute grows.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="btb-risk-card">
+                <div class="btb-risk-label">Geopolitics</div>
+                <h3 class="btb-risk-title">Taiwan, Korea, China concentration</h3>
+                <div class="btb-risk-body">Supply concentration in Taiwan and Korea exposes Nvidia to geopolitical and trade-policy shocks.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="btb-risk-card">
+                <div class="btb-risk-label">Customer in-house silicon</div>
+                <h3 class="btb-risk-title">Customers may build their own</h3>
+                <div class="btb-risk-body">Hyperscalers and some enterprises have the capability to build or use their own AI silicon.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original visual of the structural risks Nvidia&rsquo;s own filings highlight. Risk dimensions, not predictions.</div>
+          </figure>
+
+          <p class="essay-line">Nvidia became too important to be treated like a normal chip stock.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-custom">XI. Custom silicon is the real competitive threat</h2>
+
+          <p>Nvidia&rsquo;s 10-K notes that some customers have internal development capabilities and may build or use their own solutions.<sup><a href="#fn3">3</a></sup> The visible examples are well known. The largest Nvidia customers are also the most capable potential competitors.</p>
+
+          <figure class="btb-fig" aria-label="Custom silicon threat map">
+            <div class="btb-fig-label">Diagram &middot; Customer custom silicon, simplified</div>
+            <div class="btb-custom">
+              <div class="btb-custom-card"><div class="btb-custom-cat">Hyperscaler</div><div class="btb-custom-name">Google TPU</div><div class="btb-custom-body">internal AI accelerator family</div></div>
+              <div class="btb-custom-card"><div class="btb-custom-cat">Hyperscaler</div><div class="btb-custom-name">AWS Trainium / Inferentia</div><div class="btb-custom-body">AWS-designed AI silicon</div></div>
+              <div class="btb-custom-card"><div class="btb-custom-cat">Hyperscaler</div><div class="btb-custom-name">Microsoft Maia</div><div class="btb-custom-body">Microsoft custom AI chip</div></div>
+              <div class="btb-custom-card"><div class="btb-custom-cat">Application</div><div class="btb-custom-name">Meta MTIA</div><div class="btb-custom-body">Meta custom AI silicon family</div></div>
+              <div class="btb-custom-card"><div class="btb-custom-cat">ASIC partner</div><div class="btb-custom-name">Broadcom</div><div class="btb-custom-body">custom AI ASICs for hyperscalers</div></div>
+              <div class="btb-custom-card"><div class="btb-custom-cat">Ecosystem</div><div class="btb-custom-name">NVLink Fusion</div><div class="btb-custom-body">heterogeneous integration around NVLink</div></div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original map of the custom-silicon surface around Nvidia&rsquo;s largest customers. Not exhaustive; not a market-share claim.</div>
+          </figure>
+
+          <p class="essay-line">The largest customers are also the most capable future competitors.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-aged">XII. The 2021 thesis aged half right</h2>
+
+          <p>A clean way to read the 2021 thesis is to score it on what aged right versus what aged wrong.</p>
+
+          <figure class="btb-fig" aria-label="Aged right vs aged wrong">
+            <div class="btb-fig-label">Diagram &middot; The 2021 thesis &mdash; what aged right vs what aged wrong</div>
+            <div class="btb-aged">
+              <div class="btb-aged-col btb-aged-col--right">
+                <div class="btb-aged-eyebrow">Aged right</div>
+                <h3 class="btb-aged-title">Temporary forces faded</h3>
+                <ul>
+                  <li><strong>Crypto.</strong> Ethereum&rsquo;s 2022 Merge ended the GPU-mining tailwind.<sup><a href="#fn4">4</a></sup></li>
+                  <li><strong>Stock split.</strong> A split does not create enterprise value.<sup><a href="#fn1">1</a></sup></li>
+                  <li><strong>Gaming.</strong> Growth above the COVID line was not sustainable.<sup><a href="#fn1">1</a></sup></li>
+                  <li><strong>Digestion.</strong> Datacenter cycles still have digestion phases.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>Extrapolation.</strong> Temporary growth should not be extrapolated forever.</li>
+                </ul>
+              </div>
+              <div class="btb-aged-col btb-aged-col--wrong">
+                <div class="btb-aged-eyebrow">Aged wrong</div>
+                <h3 class="btb-aged-title">Platform shift was larger</h3>
+                <ul>
+                  <li><strong>Software moat.</strong> CUDA + libraries compounded into the operating layer.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>Networking.</strong> Mellanox / NVLink / Spectrum-X became core product.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>Data Center.</strong> The segment became the company.<sup><a href="#fn2">2</a></sup></li>
+                  <li><strong>System scope.</strong> Nvidia moved from GPU vendor to AI infrastructure company.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>AI capex.</strong> Industrial-scale, multi-year hyperscaler buildouts.<sup><a href="#fn8">8</a></sup><sup><a href="#fn9">9</a></sup></li>
+                </ul>
+              </div>
+            </div>
+            <div class="btb-fig-cap">A simplified, original split. The article was right about the bubble ingredients. It was incomplete about the platform outcome.</div>
+          </figure>
+
+          <p class="essay-line">The article was right about the bubble ingredients. It was wrong about the platform outcome.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XIII. What could break the thesis?</h2>
+
+          <p>The strongest bear case is not that Nvidia is fake. It is that AI capex may be cyclically overbuilt.</p>
+
+          <div class="btb-counter" aria-label="Bear case">
+            <div class="btb-counter-label">Bear case &middot; what could break the thesis</div>
+            <ol>
+              <li><strong>Overbuild.</strong> AI infrastructure buyers overbuild relative to monetisation.</li>
+              <li><strong>Capex slowdown.</strong> Hyperscalers slow buildouts after a digestion period.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Slow absorption.</strong> AI revenue does not absorb infrastructure investment fast enough.</li>
+              <li><strong>Inference margin compression.</strong> Inference unit economics tighten as competition rises.</li>
+              <li><strong>Custom silicon share.</strong> Hyperscaler and enterprise ASICs reduce Nvidia dependence.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>AMD credibility.</strong> A stronger AMD MI roadmap absorbs some of the alternative slot.</li>
+              <li><strong>Export controls.</strong> Restrictions reduce accessible markets.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Regulatory pressure.</strong> Scrutiny of bundling, allocation, or customer agreements.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Supply bottlenecks.</strong> HBM, CoWoS, substrates, power, and rack-scale deployment cap growth.<sup><a href="#fn7">7</a></sup></li>
+              <li><strong>Product transitions.</strong> Blackwell-to-Rubin transition creates inventory or margin risk.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Concentration.</strong> A pause by major buyers shows up quickly in revenue.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Power and capacity.</strong> Energy and data-center capacity constrain growth.</li>
+              <li><strong>Supplier scale.</strong> Nvidia&rsquo;s own suppliers cannot scale fast enough.</li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XIV. What could break the bear case?</h2>
+
+          <p>The strongest bull case is that Nvidia is not selling one chip cycle. It is selling the operating layer of accelerated computing.</p>
+
+          <div class="btb-counter btb-counter--bull" aria-label="Bull case">
+            <div class="btb-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>AI is the new workload.</strong> Models and agents become embedded across software.</li>
+              <li><strong>Inference scale.</strong> Inference demand may exceed training demand by a large margin.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Agentic AI.</strong> Multi-step reasoning and tool use raise token consumption.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Physical AI.</strong> Robotics and embodied AI add a new demand axis.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Enterprise AI.</strong> Enterprise adoption is still early.</li>
+              <li><strong>CUDA moat.</strong> The software moat keeps compounding.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Cadence.</strong> Blackwell / Rubin keep performance ahead of competitors.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>System lock-in.</strong> Rack-scale systems and networking raise switching costs.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Mixed buyers.</strong> Hyperscalers can buy Nvidia and build custom silicon.</li>
+              <li><strong>Long-life infra.</strong> AI factories may become long-life infrastructure like cloud regions.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">Nvidia is not selling one chip cycle. It is selling the operating layer of accelerated computing.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XV. What to watch</h2>
+
+          <div class="btb-watch" aria-label="What to watch">
+            <div class="btb-watch-label">What to watch</div>
+            <ul>
+              <li>Data Center revenue growth.<sup><a href="#fn2">2</a></sup></li>
+              <li>Gross margin trend.</li>
+              <li>Blackwell Ultra ramp.<sup><a href="#fn3">3</a></sup></li>
+              <li>Rubin shipment timing.<sup><a href="#fn3">3</a></sup></li>
+              <li>NVLink Fusion adoption.</li>
+              <li>HBM supply trajectory.<sup><a href="#fn5">5</a></sup></li>
+              <li>CoWoS capacity expansion.<sup><a href="#fn7">7</a></sup></li>
+              <li>Networking revenue mix.</li>
+              <li>Customer concentration.<sup><a href="#fn3">3</a></sup></li>
+              <li>Hyperscaler capex commentary.<sup><a href="#fn8">8</a></sup><sup><a href="#fn9">9</a></sup></li>
+              <li>AI revenue at hyperscalers.</li>
+              <li>Inference monetisation evidence.</li>
+              <li>Cloud GPU utilisation.</li>
+              <li>Power and DC bottlenecks.</li>
+              <li>Export-control updates.<sup><a href="#fn3">3</a></sup></li>
+              <li>Regulatory investigations.<sup><a href="#fn3">3</a></sup></li>
+              <li>Custom silicon adoption.</li>
+              <li>AMD MI-series traction.</li>
+              <li>Inventory and purchase commitments.<sup><a href="#fn3">3</a></sup></li>
+              <li>Product-transition risks.</li>
+              <li>AI factory ROI evidence.</li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="btb-terms" aria-label="Glossary">
+            <div class="btb-terms-label">Glossary</div>
+            <dl>
+              <dt>GPU</dt><dd>Graphics processing unit, now widely used for parallel AI computation.</dd>
+              <dt>CUDA</dt><dd>Nvidia&rsquo;s programming platform for GPU computing.</dd>
+              <dt>Data Center revenue</dt><dd>Nvidia segment covering accelerated compute, networking, AI solutions, and related software.</dd>
+              <dt>AI factory</dt><dd>Data-center infrastructure optimised to produce AI training and inference outputs.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory used near AI accelerators.</dd>
+              <dt>CoWoS</dt><dd>TSMC advanced packaging used to integrate compute and HBM.</dd>
+              <dt>NVLink</dt><dd>Nvidia high-speed interconnect.</dd>
+              <dt>DPU</dt><dd>Data processing unit for networking, storage, and infrastructure offload.</dd>
+              <dt>Inference</dt><dd>Running trained models to generate outputs.</dd>
+              <dt>Training</dt><dd>Process of creating or updating model weights.</dd>
+              <dt>Capex</dt><dd>Capital expenditure used to build infrastructure.</dd>
+              <dt>Datacenter digestion</dt><dd>Period where customers absorb already-purchased infrastructure before buying more.</dd>
+              <dt>Customer concentration</dt><dd>Revenue dependence on a small number of large buyers.</dd>
+              <dt>Export controls</dt><dd>Government restrictions on shipping advanced chips to certain countries or end users.</dd>
+              <dt>Custom silicon</dt><dd>Chips designed by cloud companies or customers for their own workloads.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XVI. The bubble that became infrastructure</h2>
+
+          <p>The 2021 Nvidia bubble thesis was right about crypto, gaming, stock-split speculation, and datacenter digestion.</p>
+
+          <p>But it underestimated the AI factory.</p>
+
+          <p>Nvidia did not stay a GPU company waiting for the bubble to pop. It became the operating layer of accelerated computing. The chip became a system. The system became a platform. The platform became infrastructure.</p>
+
+          <div class="essay-pull">In 2026, the question is not whether Nvidia is real. It is whether the AI infrastructure cycle can keep producing enough economic value to support the scale Nvidia has reached.</div>
+
+          <p>Reasonable critics in 2021 looked at speculative behaviour and called it speculative behaviour. That was correct. They underestimated the size of the platform shift that arrived under it. AI absorbed the speculative energy and turned it into industrial-scale demand.</p>
+
+          <p>Reasonable critics in 2026 should look at AI capex and ask the right question now. Not whether AI works. Whether the buildout pace matches monetisation.</p>
+
+          <p>That is the bubble that became infrastructure.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Jul 2021). <em>Nvidia&rsquo;s 2021 Bubble, Eerily Similar To Other Bubbles That Came Before.</em> SemiAnalysis. Historical anchor for the 2021 bubble framing, including praise for Nvidia&rsquo;s vision and software understanding, the overvaluation argument, the 4-for-1 stock split and ~40% post-announcement run, the 2018 comparison, datacenter buildout / digestion, Mellanox acquisition math, crypto GPU mining, Ethereum proof-of-stake expectation, COVID gaming pull-forward, Tesla stock-split comparison, and the deeper point that temporary growth was being extrapolated too aggressively. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> NVIDIA (2026). <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026" target="_blank" rel="noopener">NVIDIA announces financial results for fourth quarter and fiscal 2026</a>. FY2026 revenue, Q4 FY2026 revenue, full-year Data Center revenue, and Q4 Data Center revenue framing used in this essay. Reported as company disclosures.</p>
+
+            <p id="fn3"><sup>3</sup> NVIDIA (2026). <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm" target="_blank" rel="noopener">Form 10-K, fiscal year 2026</a>. Data-center-scale AI infrastructure framing, CUDA + hundreds of software libraries and frameworks, Blackwell as a full system (GPU, CPU, DPU, interconnects, switches, networking), hundreds of thousands of GPUs interconnected as a single computer, Rubin production timing in H2 FY2027 with agentic AI / reasoning / long-context positioning, supply-chain disclosures (TSMC, Samsung, SK hynix, Micron, CoWoS, Hon Hai, Wistron, Fabrinet), demand-forecasting risk, customer concentration (22% and 14% direct customers), export controls, geopolitics, regulatory inquiries, and customer in-house silicon language.</p>
+
+            <p id="fn4"><sup>4</sup> Ethereum Foundation. <a href="https://ethereum.org/en/roadmap/merge/" target="_blank" rel="noopener">The Merge</a>. Completed September 15, 2022; transition from proof-of-work to proof-of-stake.</p>
+
+            <p id="fn5"><sup>5</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf" target="_blank" rel="noopener">2025 Annual Report, strategic report section</a>. AI requires leading-edge high-performance processors and a significant increase in DRAM relative to traditional compute architectures.</p>
+
+            <p id="fn6"><sup>6</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">2025 Annual Report</a>. Robust AI-related demand and the role of advanced logic and packaging for AI/HPC.</p>
+
+            <p id="fn7"><sup>7</sup> TSMC (2026). <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 North America Technology Symposium</a>. CoWoS expansion for compute-and-memory integration, advanced packaging roadmap, AI/HPC packaging direction. Specific reticle-scaling and HBM-stack claims used here only at the level the cited material supports.</p>
+
+            <p id="fn8"><sup>8</sup> Alphabet (2026). <a href="https://abc.xyz/investor/" target="_blank" rel="noopener">Alphabet investor relations</a>. Q1 2026 capex and technical-infrastructure / AI spending commentary used as context for hyperscaler AI capex digestion risk.</p>
+
+            <p id="fn9"><sup>9</sup> Meta (2026). <a href="https://investor.atmeta.com/investor-news/" target="_blank" rel="noopener">Meta investor relations</a>. 2026 capex guidance and AI infrastructure / data-centre spending commentary used as context for hyperscaler AI capex digestion risk.</p>
+
+            <p id="fn10"><sup>10</sup> Microsoft / Amazon (2026). <a href="https://www.microsoft.com/en-us/Investor/" target="_blank" rel="noopener">Microsoft IR</a> and <a href="https://ir.aboutamazon.com/" target="_blank" rel="noopener">Amazon IR</a>. Cloud AI capex commentary and AI infrastructure demand framing used at the level the cited investor materials support.</p>
+
+            <p id="fn11"><sup>11</sup> NVIDIA. Public GTC 2026 / Rubin / Blackwell Ultra materials are referenced in this essay at the level Nvidia&rsquo;s own SEC filing already discloses. Treated as Nvidia statements rather than independent verification.</p>
+          </div>
+
+          <div class="btb-fr">
+            <div class="btb-fr-label">Further reading</div>
+            <ul>
+              <li><a href="nvidia-earnings-quality-test.html" class="essay-link">Nvidia&rsquo;s Earnings Quality Test</a>. AI capex, customer concentration, and the durability of Nvidia&rsquo;s revenue.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="inference-efficiency-war.html" class="essay-link">The Inference Efficiency War</a>. Qualcomm AI200 / AI250 and cost-per-token inference infrastructure.</li>
+              <li><a href="networked-ai-bet.html" class="essay-link">The Networked AI Bet</a>. Tenstorrent&rsquo;s open, Ethernet-native attack on the AI compute stack.</li>
+              <li><a href="wafer-scale-latency-bet.html" class="essay-link">The Wafer-Scale Latency Bet</a>. Cerebras and the case for removing chip boundaries.</li>
+              <li><a href="ai-chip-software-wall.html" class="essay-link">The AI Chip Software Wall</a>. Why Graphcore&rsquo;s IPU shows great silicon is not enough.</li>
+              <li><a href="density-illusion.html" class="essay-link">The Density Illusion</a>. Why Moore&rsquo;s Law became a system problem.</li>
+              <li><a href="ai-memory-tax.html" class="essay-link">The AI Memory Tax</a>. AI servers repricing DRAM, NAND, and consumer electronics.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 033. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=37"></script>
+</body>
+</html>
