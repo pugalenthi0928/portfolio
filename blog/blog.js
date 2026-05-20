@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'foundry-trust-test':             'infrastructure',
   'android-flagship-breakout':      'infrastructure',
   'bubble-that-became-infrastructure': 'infrastructure',
   'ai-chip-software-wall':          'infrastructure',
