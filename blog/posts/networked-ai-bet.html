@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Networked AI Bet | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of Tenstorrent's open, Ethernet-native attack on Nvidia, from Wormhole's mesh architecture to Blackhole, Galaxy, RISC-V IP, and sovereign AI.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/networked-ai-bet.html">
+  <meta property="og:title" content="The Networked AI Bet | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of Tenstorrent's open, Ethernet-native attack on Nvidia, from Wormhole's mesh architecture to Blackhole, Galaxy, RISC-V IP, and sovereign AI.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/networked-ai-bet.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Tenstorrent">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="AI Hardware">
+  <meta property="article:tag" content="Blackhole">
+  <meta property="article:tag" content="Galaxy">
+  <meta property="article:tag" content="Wormhole">
+  <meta property="article:tag" content="RISC-V">
+  <meta property="article:tag" content="AI Accelerators">
+  <meta property="article:tag" content="Ethernet">
+  <meta property="article:tag" content="CUDA">
+  <meta property="article:tag" content="TT-Metalium">
+  <meta property="article:tag" content="TT-Forge">
+  <meta property="article:tag" content="TT-NN">
+  <meta property="article:tag" content="Sovereign AI">
+  <meta property="article:tag" content="Cost Per Token">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Networked AI Bet | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of Tenstorrent's open, Ethernet-native attack on Nvidia, from Wormhole's mesh architecture to Blackhole, Galaxy, RISC-V IP, and sovereign AI.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Networked AI Bet",
+    "description": "An original 2026 analysis of Tenstorrent's open, Ethernet-native attack on Nvidia, from Wormhole's mesh architecture to Blackhole, Galaxy, RISC-V IP, and sovereign AI.",
+    "url": "https://pugalenthimagendran.com/blog/posts/networked-ai-bet.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/networked-ai-bet.html",
+    "keywords": "Tenstorrent, Nvidia, AI Hardware, Blackhole, Galaxy, Wormhole, RISC-V, AI Accelerators, Ethernet, CUDA, TT-Metalium, TT-Forge, TT-NN, Sovereign AI, Cost Per Token"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay-format styles (inline, matching post convention) */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       NETWORKED AI BET POST, scoped under .essay-nab
+       ============================================ */
+    .essay-nab {
+      --nab-accent: #F0784A;
+      --nab-accent-soft: rgba(240,120,74,0.10);
+      --nab-accent-faint: rgba(240,120,74,0.04);
+      --nab-bd: rgba(255,255,255,0.08);
+      --nab-bd-soft: rgba(255,255,255,0.05);
+      --nab-cool: #6CBFE0;
+      --nab-cool-soft: rgba(108,191,224,0.10);
+      --nab-purple: #B794F4;
+      --nab-purple-soft: rgba(183,148,244,0.10);
+      --nab-green: #5DCAA5;
+      --nab-green-soft: rgba(93,202,165,0.10);
+      --nab-amber: #E8B468;
+      --nab-amber-soft: rgba(232,180,104,0.10);
+      --nab-red: #E07A8B;
+      --nab-red-soft: rgba(224,122,139,0.10);
+    }
+
+    /* TOC */
+    .nab-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .nab-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .nab-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .nab-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .nab-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--nab-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .nab-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .nab-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .nab-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--nab-bd); background: linear-gradient(180deg, var(--nab-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .nab-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--nab-accent); margin-bottom: 14px; }
+    .nab-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--nab-bd-soft); line-height: 1.6; }
+
+    /* 2021 thesis callout */
+    .nab-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--nab-accent); background: linear-gradient(180deg, var(--nab-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .nab-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--nab-accent); margin-bottom: 10px; }
+    .nab-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Hierarchy vs mesh split */
+    .nab-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .nab-split-col { padding: 20px 20px 18px; border-radius: 10px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-split-col--hier { background: linear-gradient(180deg, var(--nab-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .nab-split-col--hier .nab-split-eyebrow { color: var(--nab-cool); }
+    .nab-split-col--mesh { background: linear-gradient(180deg, var(--nab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--nab-accent); }
+    .nab-split-col--mesh .nab-split-eyebrow { color: var(--nab-accent); }
+    .nab-split-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .nab-split-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .nab-split-stack { display: flex; flex-direction: column; gap: 4px; }
+    .nab-split-tier { padding: 8px 12px; border-radius: 6px; border: 0.5px solid var(--nab-bd-soft); font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--color-text-primary); background: rgba(255,255,255,0.02); letter-spacing: -0.005em; }
+    .nab-split-tier span { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-right: 6px; }
+    .nab-split-col--mesh .nab-split-tier { background: rgba(240,120,74,0.04); border-color: rgba(240,120,74,0.20); }
+
+    /* Wormhole-Blackhole-Galaxy timeline */
+    .nab-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .nab-tl { padding: 16px 14px 14px; border-radius: 10px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-tl-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nab-accent); margin-bottom: 6px; }
+    .nab-tl-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .nab-tl-body { font-family: 'Source Serif 4', serif; font-size: 0.86rem; line-height: 1.5; color: var(--color-text-secondary); }
+    .nab-tl--w { background: linear-gradient(180deg, var(--nab-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .nab-tl--bh { background: linear-gradient(180deg, var(--nab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--nab-accent); }
+    .nab-tl--g { background: linear-gradient(180deg, var(--nab-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .nab-tl--c { background: linear-gradient(180deg, var(--nab-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* Stat row */
+    .nab-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .nab-stat-card { padding: 13px 12px; border-radius: 8px; border: 1px solid var(--nab-bd); background: var(--bg-alt); text-align: center; }
+    .nab-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--nab-accent); line-height: 1; }
+    .nab-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.3; }
+    .nab-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--nab-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--nab-accent-faint); }
+
+    /* Galaxy system stack */
+    .nab-stack { display: flex; flex-direction: column; gap: 4px; }
+    .nab-layer { display: grid; grid-template-columns: 32px 1fr 150px; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-layer-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--nab-accent); letter-spacing: 0.08em; }
+    .nab-layer-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .nab-layer-name span { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; color: var(--color-text-secondary); margin-left: 6px; }
+    .nab-layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-transform: uppercase; text-align: right; }
+    .nab-layer--compute { background: linear-gradient(90deg, var(--nab-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--nab-accent); }
+    .nab-layer--memory { background: linear-gradient(90deg, var(--nab-cool-soft), transparent 60%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .nab-layer--net { background: linear-gradient(90deg, var(--nab-purple-soft), transparent 60%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .nab-layer--sw { background: linear-gradient(90deg, var(--nab-amber-soft), transparent 60%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .nab-layer--prod { background: linear-gradient(90deg, var(--nab-green-soft), transparent 60%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* Benchmark caution card */
+    .nab-caution { margin: 1.5rem 0 2rem; padding: 18px 22px; border-radius: 10px; border: 1px solid var(--nab-red); background: linear-gradient(180deg, var(--nab-red-soft) 0%, transparent 80%), var(--bg-alt); }
+    .nab-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--nab-red); margin-bottom: 10px; }
+    .nab-caution-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .nab-caution p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.65; color: var(--color-text-primary); margin: 0; }
+
+    /* Software stack pyramid */
+    .nab-sw { display: flex; flex-direction: column; gap: 6px; margin: 0.5rem 0 0; }
+    .nab-sw-row { padding: 14px 18px; border-radius: 8px; border: 1px solid var(--nab-bd); background: var(--bg-alt); display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; }
+    .nab-sw-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .nab-sw-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .nab-sw-row--forge { background: linear-gradient(90deg, var(--nab-amber-soft), transparent 60%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .nab-sw-row--nn { background: linear-gradient(90deg, var(--nab-cool-soft), transparent 60%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .nab-sw-row--metal { background: linear-gradient(90deg, var(--nab-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--nab-accent); }
+    .nab-sw-row--llk { background: linear-gradient(90deg, var(--nab-purple-soft), transparent 60%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+
+    /* CUDA moat vs Tenstorrent counterpunch */
+    .nab-moat { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .nab-moat-col { padding: 20px 20px 18px; border-radius: 10px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-moat-col--n { background: linear-gradient(180deg, var(--nab-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .nab-moat-col--n .nab-moat-eyebrow { color: var(--nab-green); }
+    .nab-moat-col--t { background: linear-gradient(180deg, var(--nab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--nab-accent); }
+    .nab-moat-col--t .nab-moat-eyebrow { color: var(--nab-accent); }
+    .nab-moat-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .nab-moat-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .nab-moat-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .nab-moat-col li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .nab-moat-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .nab-moat-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* IP business diagram */
+    .nab-ip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .nab-ip-card { padding: 14px 14px 12px; border-radius: 8px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-ip-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--nab-accent); margin-bottom: 6px; }
+    .nab-ip-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .nab-ip-body { font-family: 'Source Serif 4', serif; font-size: 0.85rem; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* Sovereign AI framework (4 axes) */
+    .nab-sov { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .nab-sov-card { padding: 14px 16px 12px; border-radius: 8px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-sov-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.10em; color: var(--nab-accent); margin-bottom: 4px; }
+    .nab-sov-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.005em; }
+    .nab-sov-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* Execution risk box */
+    .nab-exec { margin: 1.5rem 0 2rem; padding: 18px 22px; border-radius: 10px; border: 1px solid var(--nab-amber); background: linear-gradient(180deg, var(--nab-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .nab-exec-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--nab-amber); margin-bottom: 10px; }
+    .nab-exec-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .nab-exec p { font-family: 'Source Serif 4', serif; font-size: 0.94rem; line-height: 1.65; color: var(--color-text-primary); margin: 0 0 4px; }
+
+    /* Nvidia vs Tenstorrent matrix */
+    .nab-matrix { margin: 1rem 0 0; border-radius: 10px; border: 1px solid var(--nab-bd); overflow: hidden; background: var(--bg-alt); }
+    .nab-matrix-head { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; }
+    .nab-matrix-head > div { padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); border-bottom: 0.5px solid var(--nab-bd-soft); }
+    .nab-matrix-head > div + div { border-left: 0.5px solid var(--nab-bd-soft); }
+    .nab-matrix-head > div:nth-child(2) { color: var(--nab-green); }
+    .nab-matrix-head > div:nth-child(3) { color: var(--nab-accent); }
+    .nab-matrix-row { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 0; border-top: 0.5px solid var(--nab-bd-soft); }
+    .nab-matrix-row:first-of-type { border-top: none; }
+    .nab-matrix-row > div { padding: 12px 16px; font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .nab-matrix-row > div + div { border-left: 0.5px solid var(--nab-bd-soft); }
+    .nab-matrix-row > div:first-child { font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-primary); font-weight: 500; letter-spacing: -0.005em; }
+    .nab-matrix-row > div:nth-child(2) { background: rgba(93,202,165,0.06); }
+    .nab-matrix-row > div:nth-child(3) { background: rgba(240,120,74,0.06); }
+
+    /* Glossary */
+    .nab-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .nab-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .nab-terms dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .nab-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--nab-accent); padding-top: 2px; }
+    .nab-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counterargument */
+    .nab-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .nab-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .nab-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--nab-bd-soft); }
+    .nab-counter li:last-child { border-bottom: none; }
+    .nab-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--nab-accent); }
+    .nab-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .nab-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--nab-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .nab-counter--bull li::before { color: var(--nab-green); }
+
+    /* Watch checklist */
+    .nab-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--nab-bd); background: var(--bg-alt); }
+    .nab-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .nab-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .nab-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--nab-bd-soft); }
+    .nab-watch li:last-child, .nab-watch li:nth-last-child(2) { border-bottom: none; }
+    .nab-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--nab-accent); background: transparent; }
+
+    /* Further reading */
+    .nab-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .nab-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .nab-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .nab-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .nab-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .nab-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .nab-toc ol { grid-template-columns: 1fr; }
+      .nab-split, .nab-moat { grid-template-columns: 1fr; }
+      .nab-timeline { grid-template-columns: repeat(2, 1fr); }
+      .nab-stat-row { grid-template-columns: repeat(2, 1fr); }
+      .nab-ip { grid-template-columns: 1fr; }
+      .nab-sov { grid-template-columns: 1fr; }
+      .nab-matrix-head, .nab-matrix-row { grid-template-columns: 1fr; }
+      .nab-matrix-head > div + div, .nab-matrix-row > div + div { border-left: none; border-top: 0.5px solid var(--nab-bd-soft); }
+      .nab-terms dl { grid-template-columns: 130px 1fr; }
+      .nab-watch ul { grid-template-columns: 1fr; }
+      .nab-sw-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .nab-stat-row, .nab-timeline { grid-template-columns: 1fr; }
+      .nab-layer { grid-template-columns: 28px 1fr; }
+      .nab-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-nab">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 027 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Tenstorrent</span>
+          <span class="tag">Nvidia</span>
+          <span class="tag">AI Hardware</span>
+          <span class="tag">Blackhole</span>
+          <span class="tag">Galaxy</span>
+          <span class="tag">Wormhole</span>
+          <span class="tag">RISC-V</span>
+          <span class="tag">Ethernet</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">TT-Metalium</span>
+          <span class="tag">TT-Forge</span>
+          <span class="tag">Sovereign AI</span>
+          <span class="tag">Cost Per Token</span>
+        </div>
+
+        <h1 class="essay-hed">The Networked <em>AI Bet</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Tenstorrent is trying to beat Nvidia with openness, Ethernet, and cost-per-token, not bigger GPUs.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">Tenstorrent&rsquo;s 2021 Wormhole idea was not really about one chip. It was about making scale-out AI look like one programmable mesh. In 2026, that idea has become the Networked AI bet: open software, RISC-V IP, Ethernet-native scaling, and switch-light AI systems.</p>
+
+          <nav class="nab-toc" aria-label="Article contents">
+            <div class="nab-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis</a></li>
+              <li><a href="#sec-net">The network is the architecture</a></li>
+              <li><a href="#sec-2026">Why this matters more in 2026</a></li>
+              <li><a href="#sec-bh">Blackhole is the first real test</a></li>
+              <li><a href="#sec-galaxy">Galaxy is Wormhole turned into a system</a></li>
+              <li><a href="#sec-bench">Benchmark claims show direction, not verdict</a></li>
+              <li><a href="#sec-sw">Open software is the anti-CUDA argument</a></li>
+              <li><a href="#sec-ip">The IP business may matter as much</a></li>
+              <li><a href="#sec-sov">Sovereign AI makes the story stronger</a></li>
+              <li><a href="#sec-exec">The execution risk is real</a></li>
+              <li><a href="#sec-nvidia">Where Nvidia still wins</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The Networked AI bet</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, Tenstorrent Wormhole looked like one of the more interesting AI-chip ideas outside Nvidia. Not because it had the biggest die. Not because it used the most advanced node. Not because it copied the GPU.</p>
+
+          <p>The idea was different.</p>
+
+          <p>Tenstorrent wanted to make AI compute look like a mesh.</p>
+
+          <p>The uploaded SemiAnalysis article described Wormhole as a scale-out architecture built around Tensix cores, packetized mini-tensors, an internal network-on-chip, GDDR6 memory, and 16 ports of 100Gb Ethernet.<sup><a href="#fn1">1</a></sup> The real claim was that Tenstorrent could extend the chip&rsquo;s internal fabric across chips, servers, and racks so software could see one large mesh of cores instead of a painful hierarchy of GPUs, NICs, switches, and manually partitioned models.</p>
+
+          <p>That was the 2021 bet.</p>
+
+          <p class="essay-line">In 2026, the same idea has a clearer name: Networked AI.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The correct thesis is not &ldquo;Tenstorrent will kill Nvidia.&rdquo; The correct thesis is that Tenstorrent is one of the more interesting attacks on Nvidia because it is not trying to copy Nvidia. It is attacking the system differently: open software, RISC-V IP, Ethernet-native scale-out, switch-light fabrics, and cost-efficient AI serving.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis</h2>
+
+          <p>In June 2021, Dylan Patel published a SemiAnalysis piece arguing that Wormhole was not interesting for its FLOPS. It was interesting for its scale-out architecture. The chip integrated compute, memory, network-on-chip, and 16&times;100GbE links into one die, and Tensix cores carried not only compute but also routing and packet-management logic. Data moved as packetized mini-tensors. Nebula and Galaxy were the early system-level expressions of this idea, and the goal was to make communication across cores, chips, servers, and racks look uniform to software.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The 2021 essay was excited but explicitly skeptical about whether the compiler could really place and route work efficiently across the mesh without congestion. That skepticism aged well. The point still holds five years later.</p>
+
+          <div class="nab-thesis">
+            <div class="nab-thesis-label">2021 thesis</div>
+            <p class="nab-thesis-text">Wormhole was not just an AI chip. It was a bet that scale-out AI could be made easier by turning chips, servers, and racks into one programmable mesh of Tensix cores.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-net">II. The network is the architecture</h2>
+
+          <p>Most AI systems are hierarchical. Inside the chip, data moves one way. Across accelerators, it moves another way. Across servers, it moves another way. Across racks, it crosses expensive networking. The software has to understand all of that.</p>
+
+          <p>Tenstorrent&rsquo;s idea is to flatten the hierarchy. The SemiAnalysis 2021 description was that mini-tensor packets move through the mesh, cores include router and packet-manager logic, and sending data between cores on the same chip should look similar to sending data across chips when the network-on-chip extends over Ethernet. The compiler then maps work across that mesh.<sup><a href="#fn1">1</a></sup></p>
+
+          <figure class="nab-fig" aria-label="Diagram: traditional hierarchy vs Tenstorrent-style mesh">
+            <div class="nab-fig-label">Diagram &middot; Traditional hierarchy vs Tenstorrent-style mesh</div>
+            <div class="nab-split">
+              <div class="nab-split-col nab-split-col--hier">
+                <div class="nab-split-eyebrow">Traditional</div>
+                <h3 class="nab-split-title">Hierarchy</h3>
+                <div class="nab-split-stack">
+                  <div class="nab-split-tier"><span>01</span>GPU cores</div>
+                  <div class="nab-split-tier"><span>02</span>NVLink / PCIe inside server</div>
+                  <div class="nab-split-tier"><span>03</span>NIC + switch fabric</div>
+                  <div class="nab-split-tier"><span>04</span>Server &amp; rack boundaries</div>
+                  <div class="nab-split-tier"><span>05</span>Cluster / pod / DC</div>
+                </div>
+              </div>
+              <div class="nab-split-col nab-split-col--mesh">
+                <div class="nab-split-eyebrow">Tenstorrent-style</div>
+                <h3 class="nab-split-title">Mesh</h3>
+                <div class="nab-split-stack">
+                  <div class="nab-split-tier"><span>01</span>Tensix mesh inside chip</div>
+                  <div class="nab-split-tier"><span>02</span>Chip mesh over Ethernet</div>
+                  <div class="nab-split-tier"><span>03</span>Server mesh</div>
+                  <div class="nab-split-tier"><span>04</span>Rack mesh</div>
+                  <div class="nab-split-tier"><span>05</span>One programmable substrate</div>
+                </div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">A simplified, original visual; not a Tenstorrent or Nvidia chart. Levels generalised from the 2021 SemiAnalysis description.<sup><a href="#fn1">1</a></sup></div>
+          </figure>
+
+          <p class="essay-line">The network was not an accessory. The network was the architecture.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2026">III. Why this matters more in 2026</h2>
+
+          <p>AI changed after 2021. The market is no longer only about training bigger models. It is about serving them.</p>
+
+          <p>Production AI cares about tokens per dollar, power per token, memory per user, latency, time to first token, video-generation throughput, model bring-up speed, model churn, deployment control, private AI, sovereign AI, and avoiding vendor lock-in. ASML&rsquo;s 2025 Annual Report describes AI as requiring leading-edge processors and a significant increase in DRAM relative to traditional compute. TSMC describes AI demand as the dominant driver of advanced-node and advanced-packaging usage.<sup><a href="#fn13">13</a></sup><sup><a href="#fn14">14</a></sup></p>
+
+          <p>That demand is enormous, and it is starting to feel concentrated.</p>
+
+          <p class="essay-line">AI infrastructure is becoming too expensive, too closed, and too dependent on one vendor. That is Tenstorrent&rsquo;s opening.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bh">IV. Blackhole is the first real test</h2>
+
+          <p>Many AI-chip startups never escape slides. Tenstorrent has shipped. In April 2025, the company announced its Blackhole developer products at Tenstorrent Dev Day, including the Blackhole p100 card starting at <span class="nab-stat">$999</span>, the p150 card starting at <span class="nab-stat">$1,399</span>, and a TT-QuietBox workstation with four Blackhole processors starting at <span class="nab-stat">$11,999</span>. Tenstorrent describes Blackhole as a second-generation Tensix architecture built on a 6nm-class process with a faster NoC, higher memory density, integrated RISC-V cores, and an open-source software stack.<sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="nab-fig" aria-label="Wormhole to Blackhole to Galaxy timeline">
+            <div class="nab-fig-label">Diagram &middot; Wormhole &rarr; Blackhole &rarr; Galaxy</div>
+            <div class="nab-timeline">
+              <div class="nab-tl nab-tl--w">
+                <div class="nab-tl-year">2021</div>
+                <h3 class="nab-tl-name">Wormhole</h3>
+                <div class="nab-tl-body">Tensix cores, NoC, GDDR6, 16&times;100GbE, mini-tensor mesh.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="nab-tl nab-tl--bh">
+                <div class="nab-tl-year">2025</div>
+                <h3 class="nab-tl-name">Blackhole dev kit</h3>
+                <div class="nab-tl-body">p100 from $999, p150 from $1,399, TT-QuietBox from $11,999.<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="nab-tl nab-tl--g">
+                <div class="nab-tl-year">2025&ndash;26</div>
+                <h3 class="nab-tl-name">Galaxy Blackhole</h3>
+                <div class="nab-tl-body">32 Blackhole ASICs, 23 PFLOPS FP8, 1TB GDDR6, 56&times;800GbE.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="nab-tl nab-tl--c">
+                <div class="nab-tl-year">2026</div>
+                <h3 class="nab-tl-name">Networked AI</h3>
+                <div class="nab-tl-body">Open software, RISC-V IP, sovereign AI partnerships, custom silicon.</div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">Tenstorrent&rsquo;s rough product arc from the 2021 Wormhole concept to 2026&rsquo;s Networked AI positioning. Years and prices per cited Tenstorrent announcements.<sup><a href="#fn1">1</a></sup><sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <p class="essay-line">The first job of an AI-chip startup is not beating Nvidia. The first job is shipping.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-galaxy">V. Galaxy is Wormhole turned into a system</h2>
+
+          <p>The clearest 2026 expression of the Networked AI idea is Galaxy. Tenstorrent describes Galaxy Blackhole as a system with 32 Blackhole ASICs, <span class="nab-stat">23 PFLOPS</span> Block FP8 compute, <span class="nab-stat">6.2GB</span> of SRAM at 2.9PB/s, <span class="nab-stat">1TB</span> of GDDR6 at 16TB/s, 10&times;400GbE links per ASIC, and up to 56&times;800GbE QSFP-DD scale-out ports. The company lists Galaxy Blackhole at <span class="nab-stat">$110,000</span> and a four-Galaxy supercluster starting around <span class="nab-stat">$440,000</span>.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>That product is what Wormhole was always pointing at: compute, memory, and networking integrated as one fabric, not assembled out of separate proprietary parts. Tenstorrent&rsquo;s TT-Deploy framing describes Galaxy as production hardware engineered for AI inference at scale, with Ethernet-native interconnect designed to keep switching simple.<sup><a href="#fn4">4</a></sup></p>
+
+          <figure class="nab-fig" aria-label="Galaxy system stack">
+            <div class="nab-fig-label">Diagram &middot; Galaxy system stack</div>
+            <div class="nab-stack">
+              <div class="nab-layer nab-layer--compute">
+                <div class="nab-layer-num">01</div>
+                <div class="nab-layer-name">Blackhole ASICs <span>32 per Galaxy</span></div>
+                <div class="nab-layer-tag">Compute</div>
+              </div>
+              <div class="nab-layer nab-layer--memory">
+                <div class="nab-layer-num">02</div>
+                <div class="nab-layer-name">SRAM <span>6.2GB on-die at 2.9PB/s</span></div>
+                <div class="nab-layer-tag">Memory</div>
+              </div>
+              <div class="nab-layer nab-layer--memory">
+                <div class="nab-layer-num">03</div>
+                <div class="nab-layer-name">GDDR6 <span>1TB at 16TB/s</span></div>
+                <div class="nab-layer-tag">Memory</div>
+              </div>
+              <div class="nab-layer nab-layer--net">
+                <div class="nab-layer-num">04</div>
+                <div class="nab-layer-name">Ethernet fabric <span>10&times;400GbE per ASIC &middot; up to 56&times;800GbE QSFP-DD</span></div>
+                <div class="nab-layer-tag">Network</div>
+              </div>
+              <div class="nab-layer nab-layer--sw">
+                <div class="nab-layer-num">05</div>
+                <div class="nab-layer-name">Open software <span>TT-Metalium &middot; TT-NN &middot; TT-Forge</span></div>
+                <div class="nab-layer-tag">Software</div>
+              </div>
+              <div class="nab-layer nab-layer--prod">
+                <div class="nab-layer-num">06</div>
+                <div class="nab-layer-name">Production AI serving <span>inference, video gen, private &amp; sovereign AI</span></div>
+                <div class="nab-layer-tag">Workload</div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">Galaxy specs and pricing as published by Tenstorrent. The diagram is original; not a Tenstorrent visual.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup><sup><a href="#fn6">6</a></sup></div>
+          </figure>
+
+          <p class="essay-line">Tenstorrent is not trying to win by building the biggest GPU. It is trying to build a cheaper, open, Ethernet-native AI fabric.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bench">VI. The benchmark claims show direction, not verdict</h2>
+
+          <p>Tenstorrent&rsquo;s performance announcement says Galaxy can reach <span class="nab-stat">350+ tokens/sec/user</span> on DeepSeek-R1-0528 671B at 100K context with sub-4-second time-to-first-token, plus a roughly <span class="nab-stat">10&times;</span> video-generation speedup with Prodia, including 720p 81-frame video generated in about 2.4 seconds.<sup><a href="#fn5">5</a></sup></p>
+
+          <div class="nab-caution" role="note" aria-label="Benchmark caution">
+            <div class="nab-caution-label">Caution</div>
+            <h3 class="nab-caution-title">These are Tenstorrent claims, not independent proof.</h3>
+            <p>Treat every number above as a vendor benchmark. Independent reproduction with comparable models, contexts, batch sizes, networking, and software releases is what would turn these into infrastructure-grade evidence. Until then, they show the workloads Tenstorrent wants to compete on, not the workloads it has demonstrably won.</p>
+          </div>
+
+          <p>The strategic point is not the exact benchmark number. It is where Tenstorrent wants to compete: production inference, video generation, latency-sensitive serving, and cost per token, not necessarily the hardest training workloads.</p>
+
+          <p class="essay-line">The proof will be independent benchmarks, customer deployments, uptime, model coverage, and real cost per token.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sw">VII. Open software is the anti-CUDA argument</h2>
+
+          <p>Tenstorrent&rsquo;s software docs describe a layered open-source stack. TT-Metalium is the low-level programming model and SDK for Tensix hardware. TT-NN is a Python/C++ neural-network operator library built on top of Metalium. TT-Forge is an MLIR-based compiler stack with frontends including TT-Torch, TT-XLA, and TT-Forge-ONNX, plus a shared TT-MLIR backend that lowers into Metalium.<sup><a href="#fn7">7</a></sup><sup><a href="#fn8">8</a></sup><sup><a href="#fn9">9</a></sup></p>
+
+          <figure class="nab-fig" aria-label="Tenstorrent open software stack">
+            <div class="nab-fig-label">Diagram &middot; Tenstorrent open software stack</div>
+            <div class="nab-sw">
+              <div class="nab-sw-row nab-sw-row--forge">
+                <div class="nab-sw-name">TT-Forge</div>
+                <div class="nab-sw-body">MLIR-based compiler with TT-Torch, TT-XLA, and TT-Forge-ONNX frontends.<sup><a href="#fn9">9</a></sup></div>
+              </div>
+              <div class="nab-sw-row nab-sw-row--nn">
+                <div class="nab-sw-name">TT-NN</div>
+                <div class="nab-sw-body">Python and C++ neural-network operator library.<sup><a href="#fn7">7</a></sup></div>
+              </div>
+              <div class="nab-sw-row nab-sw-row--metal">
+                <div class="nab-sw-name">TT-Metalium</div>
+                <div class="nab-sw-body">Low-level SDK and programming model for Tensix hardware.<sup><a href="#fn8">8</a></sup></div>
+              </div>
+              <div class="nab-sw-row nab-sw-row--llk">
+                <div class="nab-sw-name">TT-LLK / kernels</div>
+                <div class="nab-sw-body">Low-level kernels and hardware abstractions exposed under Metalium.<sup><a href="#fn8">8</a></sup></div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">A simplified, original visual based on Tenstorrent&rsquo;s public software-stack documentation.<sup><a href="#fn7">7</a></sup></div>
+          </figure>
+
+          <p>Nvidia&rsquo;s moat is CUDA. But CUDA is not just syntax. CUDA is libraries, debugging, profiling, cloud support, enterprise trust, documentation, production experience, and a decade of ecosystem memory.</p>
+
+          <div class="nab-moat">
+            <div class="nab-moat-col nab-moat-col--n">
+              <div class="nab-moat-eyebrow">Nvidia / CUDA moat</div>
+              <h3 class="nab-moat-title">What you actually get with CUDA</h3>
+              <ul>
+                <li><strong>Libraries</strong> &middot; cuDNN, cuBLAS, NCCL, TensorRT, Triton ecosystem.</li>
+                <li><strong>Tooling</strong> &middot; Nsight, profilers, debuggers, observability.</li>
+                <li><strong>Cloud</strong> &middot; first-class availability on every major cloud.</li>
+                <li><strong>Enterprise</strong> &middot; trusted procurement and support paths.</li>
+                <li><strong>Ecosystem memory</strong> &middot; a decade of production battle-testing.</li>
+              </ul>
+            </div>
+            <div class="nab-moat-col nab-moat-col--t">
+              <div class="nab-moat-eyebrow">Tenstorrent counterpunch</div>
+              <h3 class="nab-moat-title">What the open stack offers instead</h3>
+              <ul>
+                <li><strong>Open source</strong> &middot; readable, inspectable, modifiable stack.</li>
+                <li><strong>Architecture simplicity</strong> &middot; mesh + Ethernet, fewer hidden layers.</li>
+                <li><strong>Lower friction</strong> &middot; affordable dev kits, public docs, public repos.</li>
+                <li><strong>Less lock-in</strong> &middot; portable across deployments and partners.</li>
+                <li><strong>Custom silicon path</strong> &middot; IP licensing for those who want their own chip.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="essay-line">Nvidia&rsquo;s moat is CUDA. Tenstorrent&rsquo;s counterargument is open software plus architecture-level simplicity.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ip">VIII. The IP business may matter as much as the boxes</h2>
+
+          <p>Tenstorrent&rsquo;s December 2024 Series D announcement says the company raised over <span class="nab-stat">US$693M</span> at a <span class="nab-stat">US$2B</span> pre-money valuation, with strategic investors including Samsung Securities, AFW Partners, LG Technology Ventures, Hyundai Motor Group, Fidelity, Baillie Gifford, and Bezos Expeditions. The same materials describe Tenstorrent&rsquo;s product line as both AI computers and licensable AI/RISC-V IP.<sup><a href="#fn10">10</a></sup></p>
+
+          <p>EE Times has reported separately that Tenstorrent is productising its RISC-V CPU and AI cores as licensable IP, that LG and Hyundai are IP licensees, and that the majority of bookings to date came from IP deals rather than systems sales.<sup><a href="#fn11">11</a></sup></p>
+
+          <figure class="nab-fig" aria-label="Tenstorrent IP business surface">
+            <div class="nab-fig-label">Diagram &middot; Tenstorrent IP business surface</div>
+            <div class="nab-ip">
+              <div class="nab-ip-card">
+                <div class="nab-ip-cat">CPU IP</div>
+                <h3 class="nab-ip-name">RISC-V cores</h3>
+                <div class="nab-ip-body">Licensable RISC-V CPU IP for custom SoCs.<sup><a href="#fn11">11</a></sup></div>
+              </div>
+              <div class="nab-ip-card">
+                <div class="nab-ip-cat">AI IP</div>
+                <h3 class="nab-ip-name">Tensix cores</h3>
+                <div class="nab-ip-body">AI compute and mesh-fabric IP for partner designs.<sup><a href="#fn11">11</a></sup></div>
+              </div>
+              <div class="nab-ip-card">
+                <div class="nab-ip-cat">Customers</div>
+                <h3 class="nab-ip-name">LG, Hyundai, partners</h3>
+                <div class="nab-ip-body">Public IP licensees in mobility and consumer SoCs.<sup><a href="#fn11">11</a></sup></div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">A simplified, original IP-business framing based on Tenstorrent&rsquo;s public Series D positioning and EE Times reporting.<sup><a href="#fn10">10</a></sup><sup><a href="#fn11">11</a></sup></div>
+          </figure>
+
+          <p class="essay-line">Tenstorrent is not only competing with Nvidia boxes. It is also competing for the future of custom AI silicon.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sov">IX. Sovereign AI makes the story stronger</h2>
+
+          <p>Reuters reported in November 2024 that Japan partnered with Tenstorrent on a <span class="nab-stat">$50M</span> program to train up to <span class="nab-stat">200</span> Japanese chip designers over five years, connected to the country&rsquo;s Rapidus ecosystem and broader semiconductor revival.<sup><a href="#fn12">12</a></sup></p>
+
+          <p>That program is small in dollar terms and large in symbolic terms. Countries are increasingly explicit about wanting control over AI infrastructure: local chip-design skills, custom silicon, supply-chain optionality, open architectures, fewer black boxes, alternatives to Nvidia dependency, and domestic capability.</p>
+
+          <figure class="nab-fig" aria-label="Sovereign AI framework">
+            <div class="nab-fig-label">Diagram &middot; What sovereign AI buyers actually want</div>
+            <div class="nab-sov">
+              <div class="nab-sov-card">
+                <div class="nab-sov-num">01</div>
+                <div class="nab-sov-name">Local skills</div>
+                <div class="nab-sov-body">Chip-design talent and tooling inside the country, not only via foreign vendors.</div>
+              </div>
+              <div class="nab-sov-card">
+                <div class="nab-sov-num">02</div>
+                <div class="nab-sov-name">Custom silicon</div>
+                <div class="nab-sov-body">IP licensing and reference designs that allow domestic SoCs to exist.</div>
+              </div>
+              <div class="nab-sov-card">
+                <div class="nab-sov-num">03</div>
+                <div class="nab-sov-name">Open stack</div>
+                <div class="nab-sov-body">Inspectable software so the AI runtime is not a black box.</div>
+              </div>
+              <div class="nab-sov-card">
+                <div class="nab-sov-num">04</div>
+                <div class="nab-sov-name">Supply-chain control</div>
+                <div class="nab-sov-body">Multiple foundries, multiple memory suppliers, fewer single points of failure.</div>
+              </div>
+            </div>
+            <div class="nab-fig-cap">A simplified, original framing of the sovereign AI demand pattern that Tenstorrent&rsquo;s open + RISC-V + IP-licensing strategy speaks to.</div>
+          </figure>
+
+          <p class="essay-line">Sovereign AI is not only about models. It is about who controls the chips, tools, and skills underneath the models.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-exec">X. The execution risk is real</h2>
+
+          <p>None of this matters if the boring product realities do not hold. The clearest example sits in Tenstorrent&rsquo;s own firmware release notes. Starting January 2026, Blackhole p150 cards ship with <span class="nab-stat">120</span> Tensix cores instead of the original 140, and firmware v19.5.0 changes existing cards to expose 120 cores to unify the developer interface. Tenstorrent says typical workloads see only a 1&ndash;2% performance difference, but developers using grid-size-dependent code may need to update their applications.<sup><a href="#fn15">15</a></sup></p>
+
+          <div class="nab-exec">
+            <div class="nab-exec-label">Execution risk</div>
+            <h3 class="nab-exec-title">The boring product realities of AI hardware.</h3>
+            <p>Yield. Firmware. Driver compatibility. Application updates. Documentation freshness. Thermal reliability. Procurement confidence. Long-term roadmap trust. Support quality. These are the layers that decide whether a smart architecture turns into a deployable platform. They do not appear in benchmark slides.</p>
+          </div>
+
+          <p class="essay-line">Open, developer-friendly hardware still has to survive boring product realities.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-nvidia">XI. Where Nvidia still wins</h2>
+
+          <p>Be fair to Nvidia. The advantages are real and they are not only chips. Nvidia owns CUDA maturity, developer trust, training dominance, inference maturity, the NVLink / InfiniBand / Spectrum-X stack, cloud availability, enterprise procurement trust, model compatibility, ecosystem tooling, support, performance on the hardest workloads, and a decade of software optimisation depth. ASML and TSMC both describe AI demand as the dominant pull on advanced logic, memory, and packaging, and that pull lands most heavily on Nvidia silicon today.<sup><a href="#fn13">13</a></sup><sup><a href="#fn14">14</a></sup></p>
+
+          <div class="nab-matrix" aria-label="Nvidia vs Tenstorrent positioning matrix">
+            <div class="nab-matrix-head">
+              <div>Dimension</div>
+              <div>Nvidia today</div>
+              <div>Tenstorrent today</div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Software</div>
+              <div>CUDA, mature libraries, tooling, observability.</div>
+              <div>Open TT-Metalium / TT-NN / TT-Forge, immature relative to CUDA.<sup><a href="#fn7">7</a></sup></div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Training</div>
+              <div>Default for frontier model training at scale.</div>
+              <div>Limited public training deployments; not the focus.</div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Inference</div>
+              <div>Strong, with Triton and Dynamo ecosystem.</div>
+              <div>Targeted at production inference and video generation.<sup><a href="#fn5">5</a></sup></div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Networking</div>
+              <div>NVLink, InfiniBand, Spectrum-X.</div>
+              <div>Ethernet-native, switch-light scale-out by design.<sup><a href="#fn3">3</a></sup></div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Business model</div>
+              <div>Systems, software, services.</div>
+              <div>Systems + open software + RISC-V/AI IP licensing.<sup><a href="#fn11">11</a></sup></div>
+            </div>
+            <div class="nab-matrix-row">
+              <div>Strategic fit</div>
+              <div>Default AI operating environment.</div>
+              <div>Cost-per-token, openness, sovereign AI, custom silicon.</div>
+            </div>
+          </div>
+
+          <p class="essay-line">Tenstorrent may have a smart architecture, but Nvidia has the most proven AI infrastructure machine in the world.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XII. What could break the thesis?</h2>
+
+          <p>The strongest bear case is that Nvidia is not just a chip company. It is the default AI operating environment.</p>
+
+          <div class="nab-counter" aria-label="Bear case">
+            <div class="nab-counter-label">Bear case &middot; what could break Tenstorrent</div>
+            <ol>
+              <li><strong>CUDA stays too strong.</strong> A decade of libraries, tooling, and developer habit does not unwind quickly.</li>
+              <li><strong>Software immaturity.</strong> TT-Metalium, TT-NN, and TT-Forge need to keep up with frontier model churn.<sup><a href="#fn7">7</a></sup></li>
+              <li><strong>Benchmark non-replication.</strong> Company tokens/sec and TTFT figures need independent reproduction.<sup><a href="#fn5">5</a></sup></li>
+              <li><strong>Model coverage lag.</strong> New open and closed models appear faster than ports.</li>
+              <li><strong>Safety preference.</strong> Customers may pay more for Nvidia simply because it is safer to defend internally.</li>
+              <li><strong>Networking gap.</strong> Ethernet-native scale-out may not match NVLink/IB at the hardest training scale.</li>
+              <li><strong>Hyperscaler in-house.</strong> Cloud vendors increasingly prefer their own silicon.</li>
+              <li><strong>AMD wakes up.</strong> A stronger ROCm and MI roadmap could absorb the &ldquo;Nvidia alternative&rdquo; slot.</li>
+              <li><strong>Reliability.</strong> Support quality and uptime are where many startups die.</li>
+              <li><strong>Yield and revisions.</strong> p150 120-core firmware adjustments are minor but symbolic of the risk.<sup><a href="#fn15">15</a></sup></li>
+              <li><strong>Porting friction.</strong> Open source does not erase the real cost of moving production workloads.</li>
+              <li><strong>Mindshare.</strong> Developer attention is concentrated, and concentration compounds.</li>
+              <li><strong>IP company outcome.</strong> Tenstorrent may end up valued more as an IP business than a systems company.<sup><a href="#fn11">11</a></sup></li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XIII. What could break the bear case?</h2>
+
+          <p>The strongest bull case is that AI is becoming too large, too expensive, and too politically important for one closed stack to satisfy every customer.</p>
+
+          <div class="nab-counter nab-counter--bull" aria-label="Bull case">
+            <div class="nab-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>Workloads keep changing.</strong> Inference, agentic systems, and video generation reward flexibility over peak training throughput.</li>
+              <li><strong>Cost per token wins.</strong> As AI scales, every unit of inference cost compounds.</li>
+              <li><strong>Customers want alternatives.</strong> Procurement teams do not like single-vendor risk.</li>
+              <li><strong>Sovereign AI grows.</strong> National buyers want control they cannot get from a single foreign vendor.<sup><a href="#fn12">12</a></sup></li>
+              <li><strong>Open software compounds.</strong> Inspectable stacks are more valuable as agents and regulations mature.</li>
+              <li><strong>RISC-V adoption rises.</strong> The base of open IP grows across CPUs, NPUs, and SoCs.<sup><a href="#fn11">11</a></sup></li>
+              <li><strong>AI coding tools reduce porting friction.</strong> Model porting becomes cheaper to attempt.</li>
+              <li><strong>Ethernet-native systems integrate well.</strong> Most data centers already speak Ethernet.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Niche wins are enough.</strong> Inference, video, private AI, and custom silicon are large markets.</li>
+              <li><strong>IP business is high-leverage.</strong> A licensing engine pays even if systems do not displace Nvidia.<sup><a href="#fn11">11</a></sup></li>
+            </ol>
+          </div>
+
+          <p class="essay-line">AI is becoming too large, too expensive, and too politically important for one closed stack to satisfy every customer.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XIV. What to watch</h2>
+
+          <p>If the Networked AI bet is real, certain signals should keep showing up across customer announcements, benchmarks, and roadmap notes. If it is fragile, the cracks will appear in the same places first.</p>
+
+          <div class="nab-watch" aria-label="What to watch">
+            <div class="nab-watch-label">What to watch</div>
+            <ul>
+              <li>Independent Galaxy benchmarks.</li>
+              <li>Real customer deployments at scale.</li>
+              <li>DeepSeek, Llama, Qwen, and open-model coverage.</li>
+              <li>Cost per token vs Nvidia and AMD.</li>
+              <li>Time-to-first-token under real load.</li>
+              <li>Video-generation throughput in production.</li>
+              <li>Uptime and reliability across long runs.</li>
+              <li>Firmware stability and release cadence.</li>
+              <li>Blackhole p150 120-core transition impact.<sup><a href="#fn15">15</a></sup></li>
+              <li>TT-Metalium, TT-NN, TT-Forge maturity.</li>
+              <li>vLLM and serving-stack support.</li>
+              <li>Cloud availability of Tenstorrent systems.</li>
+              <li>Developer community growth.</li>
+              <li>IP licensing revenue trajectory.<sup><a href="#fn11">11</a></sup></li>
+              <li>LG, Hyundai, and automotive traction.</li>
+              <li>Sovereign AI partnerships beyond Japan.<sup><a href="#fn12">12</a></sup></li>
+              <li>Rapidus and broader RISC-V design ecosystem progress.</li>
+              <li>Samsung Foundry and TSMC manufacturing roadmap.</li>
+              <li>Nvidia&rsquo;s software and pricing response.</li>
+              <li>AMD&rsquo;s software progress.</li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="nab-terms" aria-label="Glossary">
+            <div class="nab-terms-label">Glossary</div>
+            <dl>
+              <dt>Tensix core</dt><dd>Tenstorrent&rsquo;s AI compute core combining compute, SRAM, routing, and packet-management logic.</dd>
+              <dt>Mini-tensor</dt><dd>A smaller packetised tensor unit used inside Tenstorrent&rsquo;s mesh architecture.</dd>
+              <dt>NoC</dt><dd>Network-on-chip; a communication fabric inside a chip.</dd>
+              <dt>Ethernet scale-out</dt><dd>Using Ethernet links to connect many accelerators or systems together.</dd>
+              <dt>SRAM</dt><dd>Fast memory placed close to compute on the die.</dd>
+              <dt>GDDR6</dt><dd>Graphics memory used by some AI accelerators for bandwidth.</dd>
+              <dt>FP8 / Block FP8</dt><dd>Low-precision numerical formats used for AI compute throughput.</dd>
+              <dt>CUDA</dt><dd>Nvidia&rsquo;s software platform for GPU computing and AI development.</dd>
+              <dt>RISC-V</dt><dd>An open instruction-set architecture used for CPUs and custom silicon.</dd>
+              <dt>IP licensing</dt><dd>Selling reusable CPU or AI core designs to other chip designers.</dd>
+              <dt>TT-Metalium</dt><dd>Tenstorrent&rsquo;s low-level programming model and SDK.</dd>
+              <dt>TT-NN</dt><dd>Tenstorrent&rsquo;s neural-network operator library.</dd>
+              <dt>TT-Forge</dt><dd>Tenstorrent&rsquo;s MLIR-based compiler stack.</dd>
+              <dt>Sovereign AI</dt><dd>Nationally controlled AI infrastructure, skills, and supply chains.</dd>
+              <dt>Cost per token</dt><dd>The cost of producing AI model outputs.</dd>
+              <dt>Time to first token</dt><dd>The latency before a model starts generating output.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XV. The Networked AI bet</h2>
+
+          <p>Tenstorrent&rsquo;s 2021 Wormhole idea was not really about one chip. It was about making scale-out AI look like one programmable mesh. In 2026, that idea has become the Networked AI bet: open software, RISC-V IP, Ethernet-native scaling, and switch-light AI systems.</p>
+
+          <p>Nvidia still owns the default AI stack. That is not changing overnight. CUDA, libraries, networking, cloud availability, developer trust, and a decade of production battle-testing are not numbers you replace with a slide.</p>
+
+          <div class="essay-pull">The bet is not that Tenstorrent kills Nvidia. The bet is that AI infrastructure becomes too large, too diverse, and too politically important for one stack to own everything.</div>
+
+          <p>If customers keep wanting lower cost, more openness, more deployment control, and alternatives to a single closed ecosystem, Tenstorrent becomes worth watching. If sovereign AI buyers keep wanting local capability and inspectable stacks, the IP side of the business may matter as much as the box side. If open-source AI hardware can hold up under boring product realities, including yield, firmware, and support, then the Networked AI bet stops being a story about one company and becomes a story about how AI compute gets organised in the next decade.</p>
+
+          <p>The proof is still ahead. Independent benchmarks. Real deployments. Reliability. Roadmap discipline. Software maturity. Customer growth.</p>
+
+          <p>But the direction is clear. AI hardware is no longer only about who builds the biggest chip. It is about who builds the most useful network.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Jun 2021). <em>Tenstorrent Wormhole Analysis &mdash; A Scale Out Architecture for Machine Learning That Could Put Nvidia On Their Back Foot.</em> SemiAnalysis. Historical anchor for the 2021 Wormhole thesis, including Tensix cores, mini-tensor packets, network-on-chip, GDDR6 memory, 16&times;100GbE links, Nebula and Galaxy topology, and the uniform-mesh software model. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Tenstorrent (Apr 2025). <a href="https://tenstorrent.com/en/newsroom/tenstorrent-launches-blackhole-developer-products-at-tenstorrent-dev-day" target="_blank" rel="noopener">Tenstorrent launches Blackhole developer products at Tenstorrent Dev Day</a>. Blackhole p100 from $999, p150 from $1,399, TT-QuietBox from $11,999, plus framing of the 6nm-class node, NoC, memory, RISC-V cores, and open software stack.</p>
+
+            <p id="fn3"><sup>3</sup> Tenstorrent. <a href="https://tenstorrent.com/hardware/galaxy" target="_blank" rel="noopener">Galaxy</a>. Galaxy Blackhole with 32 Blackhole ASICs, 23 PFLOPS Block FP8, 6.2GB SRAM at 2.9PB/s, 1TB GDDR6 at 16TB/s, 10&times;400GbE per ASIC, up to 56&times;800GbE QSFP-DD scale-out ports, with pricing of $110,000 for one Galaxy Blackhole and from $440,000 for the four-Galaxy supercluster.</p>
+
+            <p id="fn4"><sup>4</sup> Tenstorrent. <a href="https://tenstorrent.com/newsroom/tt-deploy" target="_blank" rel="noopener">TT-Deploy</a>. Galaxy production framing, integrated compute / SRAM / DRAM / networking story, and Tenstorrent&rsquo;s positioning around AI inference at scale.</p>
+
+            <p id="fn5"><sup>5</sup> Tenstorrent. <a href="https://tenstorrent.com/newsroom/tenstorrent-enables-ai-at-scale-with-industry-leading-performance" target="_blank" rel="noopener">Tenstorrent enables AI at scale with industry-leading performance</a>. Company claims of 350+ tokens/sec/user on DeepSeek-R1-0528 671B, 100K context, sub-4-second time-to-first-token, and a roughly 10&times; Prodia video-generation speedup with 720p 81-frame video in about 2.4 seconds. Treated in this essay as vendor benchmarks, not independent results.</p>
+
+            <p id="fn6"><sup>6</sup> Tenstorrent. <a href="https://docs.tenstorrent.com/getting-started/tt-software-stack.html" target="_blank" rel="noopener">Tenstorrent software stack overview</a>. TT-Metalium, TT-NN, and TT-Forge described as the main stack components.</p>
+
+            <p id="fn7"><sup>7</sup> Tenstorrent. <a href="https://docs.tenstorrent.com/getting-started/tt-software-stack.html" target="_blank" rel="noopener">Software stack getting-started docs</a>. Layered model with TT-Metalium at the bottom, TT-NN as the neural-network library, and TT-Forge as the compiler-level entry point.</p>
+
+            <p id="fn8"><sup>8</sup> Tenstorrent. <a href="https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/get_started/get_started.html" target="_blank" rel="noopener">TT-Metalium documentation</a>. Low-level programming model and SDK for Tensix hardware.</p>
+
+            <p id="fn9"><sup>9</sup> Tenstorrent. <a href="https://docs.tenstorrent.com/forge/index.html" target="_blank" rel="noopener">TT-Forge documentation</a>. MLIR-based compiler stack with TT-Torch, TT-XLA, and TT-Forge-ONNX frontends.</p>
+
+            <p id="fn10"><sup>10</sup> Tenstorrent (Dec 2024). <a href="https://tenstorrent.com/newsroom/tenstorrent-closes-693m-of-series-d-funding-led-by-samsung-securities-and-afw-partners" target="_blank" rel="noopener">Tenstorrent closes $693M Series D</a>. Over US$693M raised at a US$2B pre-money valuation, with strategic investors including Samsung Securities, AFW Partners, LG Technology Ventures, Hyundai Motor Group, Fidelity, Baillie Gifford, and Bezos Expeditions, plus AI and RISC-V IP licensing framing.</p>
+
+            <p id="fn11"><sup>11</sup> Brown, S. <a href="https://www.eetimes.com/tenstorrent-productizes-risc-v-cpu-and-ai-ip/" target="_blank" rel="noopener">Tenstorrent productises RISC-V CPU and AI IP</a>. EE Times. IP-business framing including LG and Hyundai licensees and the reported share of bookings coming from IP deals.</p>
+
+            <p id="fn12"><sup>12</sup> Mukherjee, S. and Mukherjee, S. (Nov 2024). <a href="https://www.reuters.com/technology/japan-taps-us-chip-startup-tenstorrent-help-train-new-wave-engineers-2024-11-05/" target="_blank" rel="noopener">Japan taps US chip startup Tenstorrent to help train new wave of engineers</a>. Reuters. $50M program, up to 200 Japanese chip designers, five-year horizon, Rapidus and RISC-V context.</p>
+
+            <p id="fn13"><sup>13</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf" target="_blank" rel="noopener">2025 Annual Report, strategic report section</a>. AI requires leading-edge high-performance processors and a significant increase in DRAM relative to traditional compute architectures.</p>
+
+            <p id="fn14"><sup>14</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">2025 Annual Report</a>. Robust AI-related demand, advanced packaging and 3D stacking investment, and the role of advanced logic and packaging for AI/HPC.</p>
+
+            <p id="fn15"><sup>15</sup> Tenstorrent. <a href="https://github.com/tenstorrent/tt-zephyr-platforms/blob/main/doc/release/release-notes-19.5.md" target="_blank" rel="noopener">tt-zephyr-platforms release notes 19.5</a>. Starting January 2026, Blackhole p150 cards ship with 120 Tensix cores instead of 140. Firmware v19.5.0 exposes 120 cores on existing cards for a unified interface, with typical workloads seeing a 1&ndash;2% performance difference and possible application updates for grid-size-dependent code.</p>
+          </div>
+
+          <div class="nab-fr">
+            <div class="nab-fr-label">Further reading</div>
+            <ul>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Companion essay on why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="inference-efficiency-war.html" class="essay-link">The Inference Efficiency War</a>. Qualcomm AI200/AI250 and cost-per-token inference infrastructure.</li>
+              <li><a href="other-leading-edge.html" class="essay-link">The Other Leading Edge</a>. GlobalFoundries and the specialty foundry layer of AI infrastructure.</li>
+              <li><a href="when-ai-runs-out-of-copper.html" class="essay-link">When AI Runs Out of Copper</a>. Optical I/O, co-packaged optics, and the race to replace copper with light.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="ai-memory-tax.html" class="essay-link">The AI Memory Tax</a>. AI servers repricing DRAM, NAND, and consumer electronics.</li>
+              <li><a href="density-illusion.html" class="essay-link">The Density Illusion</a>. Why Moore&rsquo;s Law became a system problem.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="nvidia-earnings-quality-test.html" class="essay-link">Nvidia&rsquo;s Earnings Quality Test</a>. AI capex, customer concentration, and durability of revenue.</li>
+              <li><a href="mediatek-fragmented-compute-war.html" class="essay-link">MediaTek and the Fragmented Compute War</a>. A neutral fabless platform in a bifurcated compute world.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 027. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=31"></script>
+</body>
+</html>
