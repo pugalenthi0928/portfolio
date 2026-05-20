@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'nvidia-earnings-quality-test':   'infrastructure',
   'ai-memory-tax':                  'infrastructure',
   'boring-back-end-boom':           'infrastructure',
   'density-illusion':               'infrastructure',
