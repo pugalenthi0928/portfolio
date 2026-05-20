@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'package-became-the-computer':    'infrastructure',
   'back-end-bottleneck':            'infrastructure',
   'wafer-scale-training-bet':       'infrastructure',
   'semiconductor-substitution-ladder': 'infrastructure',
