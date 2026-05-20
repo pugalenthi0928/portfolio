@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'gaa-credibility-test':           'infrastructure',
   'ai-native-network':              'infrastructure',
   'networked-ai-bet':               'infrastructure',
   'foundry-toll-road':              'infrastructure',
