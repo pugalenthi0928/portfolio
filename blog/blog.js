@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'foundry-toll-road':              'infrastructure',
   'clinic-on-wrist-reality-check':  'infrastructure',
   'other-leading-edge':             'infrastructure',
   'inference-efficiency-war':       'infrastructure',
