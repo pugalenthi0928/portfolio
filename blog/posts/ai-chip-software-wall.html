@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AI Chip Software Wall | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of Graphcore, Nvidia's CUDA moat, MLPerf, AI chip software ecosystems, and why specialized silicon alone was not enough to beat Nvidia.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/ai-chip-software-wall.html">
+  <meta property="og:title" content="The AI Chip Software Wall | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of Graphcore, Nvidia's CUDA moat, MLPerf, AI chip software ecosystems, and why specialized silicon alone was not enough to beat Nvidia.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/ai-chip-software-wall.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Graphcore">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="CUDA">
+  <meta property="article:tag" content="AI Hardware">
+  <meta property="article:tag" content="IPU">
+  <meta property="article:tag" content="MLPerf">
+  <meta property="article:tag" content="SoftBank">
+  <meta property="article:tag" content="Arm">
+  <meta property="article:tag" content="Ampere">
+  <meta property="article:tag" content="AI Accelerators">
+  <meta property="article:tag" content="Semiconductor Startups">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Machine Learning Training">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The AI Chip Software Wall | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of Graphcore, Nvidia's CUDA moat, MLPerf, AI chip software ecosystems, and why specialized silicon alone was not enough to beat Nvidia.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The AI Chip Software Wall",
+    "description": "An original 2026 analysis of Graphcore, Nvidia's CUDA moat, MLPerf, AI chip software ecosystems, and why specialized silicon alone was not enough to beat Nvidia.",
+    "url": "https://pugalenthimagendran.com/blog/posts/ai-chip-software-wall.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/ai-chip-software-wall.html",
+    "keywords": "Graphcore, Nvidia, CUDA, AI Hardware, IPU, MLPerf, SoftBank, Arm, Ampere, AI Accelerators, Semiconductor Startups, AI Infrastructure, Machine Learning Training"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay-format styles (inline, matching post convention) */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       AI CHIP SOFTWARE WALL POST, scoped under .essay-csw
+       ============================================ */
+    .essay-csw {
+      --csw-accent: #F0784A;
+      --csw-accent-soft: rgba(240,120,74,0.10);
+      --csw-accent-faint: rgba(240,120,74,0.04);
+      --csw-bd: rgba(255,255,255,0.08);
+      --csw-bd-soft: rgba(255,255,255,0.05);
+      --csw-cool: #6CBFE0;
+      --csw-cool-soft: rgba(108,191,224,0.10);
+      --csw-purple: #B794F4;
+      --csw-purple-soft: rgba(183,148,244,0.10);
+      --csw-green: #5DCAA5;
+      --csw-green-soft: rgba(93,202,165,0.10);
+      --csw-amber: #E8B468;
+      --csw-amber-soft: rgba(232,180,104,0.10);
+      --csw-red: #E07A8B;
+      --csw-red-soft: rgba(224,122,139,0.10);
+    }
+
+    /* TOC */
+    .csw-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .csw-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .csw-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .csw-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .csw-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--csw-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .csw-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .csw-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .csw-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--csw-bd); background: linear-gradient(180deg, var(--csw-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .csw-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--csw-accent); margin-bottom: 14px; }
+    .csw-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--csw-bd-soft); line-height: 1.6; }
+
+    /* 2021 thesis callout */
+    .csw-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--csw-accent); background: linear-gradient(180deg, var(--csw-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .csw-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--csw-accent); margin-bottom: 10px; }
+    .csw-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* MLPerf 8-benchmark grid */
+    .csw-bench { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .csw-bench-cell { padding: 12px 10px; border-radius: 6px; border: 1px solid var(--csw-bd); background: var(--bg-alt); text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.04em; color: var(--color-text-tertiary); }
+    .csw-bench-cell--gc { background: rgba(240,120,74,0.10); border-color: rgba(240,120,74,0.40); color: var(--csw-accent); }
+    .csw-bench-cell--gc::after { content: '\2713'; display: inline-block; margin-left: 4px; }
+    .csw-bench-cell--miss { background: rgba(224,122,139,0.06); border-color: rgba(224,122,139,0.30); color: var(--csw-red); opacity: 0.85; }
+    .csw-bench-cell--miss::after { content: '\2715'; display: inline-block; margin-left: 4px; }
+    .csw-bench-key { display: flex; gap: 16px; margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); }
+    .csw-bench-key span { display: inline-flex; align-items: center; gap: 6px; }
+    .csw-bench-key i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+    .csw-bench-key i.gc { background: rgba(240,120,74,0.40); border: 1px solid var(--csw-accent); }
+    .csw-bench-key i.miss { background: rgba(224,122,139,0.15); border: 1px solid var(--csw-red); }
+
+    /* Chip vs platform stack */
+    .csw-stack-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .csw-stack-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-stack-col--gc { background: linear-gradient(180deg, var(--csw-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .csw-stack-col--gc .csw-stack-eyebrow { color: var(--csw-purple); }
+    .csw-stack-col--nv { background: linear-gradient(180deg, var(--csw-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .csw-stack-col--nv .csw-stack-eyebrow { color: var(--csw-green); }
+    .csw-stack-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .csw-stack-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .csw-stack-layers { display: flex; flex-direction: column; gap: 3px; }
+    .csw-stack-layer { padding: 7px 12px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--color-text-primary); background: rgba(255,255,255,0.03); border: 0.5px solid var(--csw-bd-soft); letter-spacing: -0.005em; }
+    .csw-stack-col--gc .csw-stack-layer { background: rgba(183,148,244,0.06); border-color: rgba(183,148,244,0.20); }
+    .csw-stack-col--nv .csw-stack-layer { background: rgba(93,202,165,0.06); border-color: rgba(93,202,165,0.20); }
+
+    /* Model churn timeline */
+    .csw-churn { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .csw-churn-card { padding: 12px 8px 10px; border-radius: 8px; border: 1px solid var(--csw-bd); background: var(--bg-alt); text-align: center; }
+    .csw-churn-year { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--csw-accent); margin-bottom: 4px; }
+    .csw-churn-name { font-family: 'Playfair Display', serif; font-size: 0.92rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.2; }
+    .csw-churn-body { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+    .csw-churn-card--a { background: linear-gradient(180deg, var(--csw-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .csw-churn-card--b { background: linear-gradient(180deg, var(--csw-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .csw-churn-card--c { background: linear-gradient(180deg, var(--csw-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .csw-churn-card--d { background: linear-gradient(180deg, var(--csw-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .csw-churn-card--e { background: linear-gradient(180deg, var(--csw-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--csw-accent); }
+    .csw-churn-card--f { background: linear-gradient(180deg, var(--csw-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+
+    /* CUDA moat */
+    .csw-moat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .csw-moat-cell { padding: 12px 10px 10px; border-radius: 8px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-moat-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--csw-green); margin-bottom: 4px; }
+    .csw-moat-name { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .csw-moat-body { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Full-stack checklist */
+    .csw-check { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; margin: 1rem 0 0; padding: 18px 22px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-check-row { display: grid; grid-template-columns: 36px 1fr; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--csw-bd-soft); }
+    .csw-check-row:nth-last-child(1), .csw-check-row:nth-last-child(2) { border-bottom: none; }
+    .csw-check-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--csw-accent); letter-spacing: 0.06em; }
+    .csw-check-name { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--color-text-primary); letter-spacing: -0.005em; }
+
+    /* Graphcore timeline */
+    .csw-timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .csw-tl { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-tl-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--csw-accent); margin-bottom: 6px; }
+    .csw-tl-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.25; }
+    .csw-tl-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+    .csw-tl--a { background: linear-gradient(180deg, var(--csw-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .csw-tl--b { background: linear-gradient(180deg, var(--csw-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .csw-tl--c { background: linear-gradient(180deg, var(--csw-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .csw-tl--d { background: linear-gradient(180deg, var(--csw-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .csw-tl--e { background: linear-gradient(180deg, var(--csw-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* SoftBank stack */
+    .csw-sb { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .csw-sb-card { padding: 16px 14px 14px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-sb-card--arm { background: linear-gradient(180deg, var(--csw-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .csw-sb-card--arm .csw-sb-cat { color: var(--csw-cool); }
+    .csw-sb-card--amp { background: linear-gradient(180deg, var(--csw-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .csw-sb-card--amp .csw-sb-cat { color: var(--csw-amber); }
+    .csw-sb-card--gc { background: linear-gradient(180deg, var(--csw-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--csw-accent); }
+    .csw-sb-card--gc .csw-sb-cat { color: var(--csw-accent); }
+    .csw-sb-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .csw-sb-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .csw-sb-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* Stat row */
+    .csw-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .csw-stat-card { padding: 13px 12px; border-radius: 8px; border: 1px solid var(--csw-bd); background: var(--bg-alt); text-align: center; }
+    .csw-stat-num { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--csw-accent); line-height: 1.1; }
+    .csw-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .csw-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--csw-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--csw-accent-faint); }
+
+    /* Caution */
+    .csw-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--csw-amber); background: linear-gradient(180deg, var(--csw-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .csw-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--csw-amber); margin-bottom: 8px; }
+    .csw-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .csw-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .csw-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .csw-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .csw-terms dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .csw-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--csw-accent); padding-top: 2px; }
+    .csw-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .csw-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .csw-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .csw-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--csw-bd-soft); }
+    .csw-counter li:last-child { border-bottom: none; }
+    .csw-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--csw-accent); }
+    .csw-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .csw-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--csw-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .csw-counter--bull li::before { color: var(--csw-green); }
+
+    .csw-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--csw-bd); background: var(--bg-alt); }
+    .csw-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .csw-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .csw-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--csw-bd-soft); }
+    .csw-watch li:last-child, .csw-watch li:nth-last-child(2) { border-bottom: none; }
+    .csw-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--csw-accent); background: transparent; }
+
+    /* Further reading */
+    .csw-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .csw-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .csw-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .csw-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .csw-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .csw-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .csw-toc ol { grid-template-columns: 1fr; }
+      .csw-bench, .csw-moat { grid-template-columns: repeat(2, 1fr); }
+      .csw-stack-pair { grid-template-columns: 1fr; }
+      .csw-churn { grid-template-columns: repeat(2, 1fr); }
+      .csw-timeline { grid-template-columns: repeat(2, 1fr); }
+      .csw-sb { grid-template-columns: 1fr; }
+      .csw-check { grid-template-columns: 1fr; }
+      .csw-stat-row { grid-template-columns: 1fr; }
+      .csw-terms dl { grid-template-columns: 130px 1fr; }
+      .csw-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .csw-bench, .csw-moat, .csw-churn, .csw-timeline { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-csw">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 032 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Graphcore</span>
+          <span class="tag">Nvidia</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">IPU</span>
+          <span class="tag">MLPerf</span>
+          <span class="tag">SoftBank</span>
+          <span class="tag">Arm</span>
+          <span class="tag">Ampere</span>
+          <span class="tag">AI Accelerators</span>
+          <span class="tag">Semiconductor Startups</span>
+          <span class="tag">ML Training</span>
+        </div>
+
+        <h1 class="essay-hed">The AI Chip <em>Software Wall</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Graphcore&rsquo;s IPU shows that great silicon is not enough to beat Nvidia.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">Graphcore&rsquo;s IPU was not a stupid idea. But AI hardware is not only silicon. It is software, kernels, frameworks, benchmarks, cloud access, developer trust, customer support, and capital. Graphcore failed as an independent Nvidia challenger because it could not turn specialized silicon into a broad AI platform fast enough. Under SoftBank, it gets a second life as part of a larger AI compute ecosystem.</p>
+
+          <nav class="csw-toc" aria-label="Article contents">
+            <div class="csw-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis</a></li>
+              <li><a href="#sec-platform">The platform was the problem</a></li>
+              <li><a href="#sec-bench">The benchmark problem was a software problem</a></li>
+              <li><a href="#sec-nvidia">Nvidia&rsquo;s advantage was breadth</a></li>
+              <li><a href="#sec-catchup">Graphcore improved, but the market moved faster</a></li>
+              <li><a href="#sec-mlperf">MLPerf moved from BERT to Llama and Flux</a></li>
+              <li><a href="#sec-capital">The business outcome exposed the capital problem</a></li>
+              <li><a href="#sec-softbank">Graphcore&rsquo;s second life is SoftBank</a></li>
+              <li><a href="#sec-india">The India campus is a rebuild signal</a></li>
+              <li><a href="#sec-cuda">Why CUDA was the wall</a></li>
+              <li><a href="#sec-checklist">The full-stack AI hardware checklist</a></li>
+              <li><a href="#sec-still">What Graphcore still has</a></li>
+              <li><a href="#sec-bear">What could break the new thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The AI chip software wall</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, Graphcore wanted to be the Nvidia alternative. The architecture was different. The branding was strong. The ambition was huge. The story was clean: GPUs were built for graphics first, but Graphcore&rsquo;s IPU was built for machine intelligence from the ground up.</p>
+
+          <p>Then came MLPerf.</p>
+
+          <p>The uploaded SemiAnalysis article argued that Graphcore&rsquo;s first major MLPerf showing exposed the problem. Graphcore submitted selectively, used different software stacks for different models, and marketed price/performance comparisons that looked much weaker once adjusted for silicon count, memory capacity, system configuration, and software maturity.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The point was not only that Graphcore was slower on a few benchmarks. The point was that Graphcore looked incomplete as a platform.</p>
+
+          <p class="essay-line">That is the real lesson. In AI hardware, the chip is only the beginning.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>Graphcore is the cleanest case study in the AI chip software wall. The IPU was architecturally interesting, but Nvidia&rsquo;s advantage was not only GPU silicon. It was the full platform: CUDA, libraries, kernels, networking, cloud availability, developer trust, support, and capital. Graphcore failed as an independent Nvidia challenger because it could not turn specialized silicon into a broad AI platform fast enough. Under SoftBank, the company gets a second life, but as part of a larger AI compute ecosystem, not as a standalone GPU replacement.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis</h2>
+
+          <p>In July 2021, Dylan Patel published a SemiAnalysis piece on Graphcore&rsquo;s MLPerf v1.0 submission. The piece noted that Graphcore submitted only four closed-division results, one per system, covering only ResNet-50 and BERT, with TensorFlow SDK used for ResNet-50 and PopART used for BERT. The argument was that the selective submission and split software stacks suggested benchmark cherry-picking and heavy hand tuning. The piece also walked through the IPU-POD16 vs DGX A100 marketing comparison, flagging that the IPU-POD16 used 16 IPUs against 8 A100s, had less memory capacity, was slower, leaned on the higher-priced 80GB A100 configuration, and chose DGX instead of lower-cost third-party A100 systems for the cost comparison. The deeper conclusion was that specialised AI silicon is not enough without a broad software platform.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="csw-thesis">
+            <div class="csw-thesis-label">2021 thesis</div>
+            <p class="csw-thesis-text">Graphcore&rsquo;s MLPerf problem was not just benchmark speed. It was benchmark breadth, software maturity, scaling, and platform trust.</p>
+          </div>
+
+          <figure class="csw-fig" aria-label="MLPerf v1.0 narrow submission visual">
+            <div class="csw-fig-label">Diagram &middot; MLPerf v1.0 training &mdash; Graphcore submission coverage</div>
+            <div class="csw-bench" aria-label="Eight MLPerf benchmarks; Graphcore submitted two">
+              <div class="csw-bench-cell csw-bench-cell--gc">ResNet-50</div>
+              <div class="csw-bench-cell csw-bench-cell--gc">BERT</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">SSD</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">Mask R-CNN</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">DLRM</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">RNN-T</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">3D U-Net</div>
+              <div class="csw-bench-cell csw-bench-cell--miss">MiniGo</div>
+            </div>
+            <div class="csw-bench-key">
+              <span><i class="gc"></i> Graphcore submitted</span>
+              <span><i class="miss"></i> Not submitted</span>
+            </div>
+            <div class="csw-fig-cap">Eight closed-division training benchmarks. A simplified, original visual based on the 2021 SemiAnalysis description of Graphcore&rsquo;s coverage.<sup><a href="#fn1">1</a></sup></div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-platform">II. The IPU was interesting. The platform was the problem.</h2>
+
+          <p>Graphcore&rsquo;s IPU was not a dumb idea. The architectural argument made sense. AI workloads involve graphs, parallelism, irregular memory access, and rapid change. A processor designed around graph execution and fine-grained parallelism could theoretically be valuable.</p>
+
+          <p>But AI customers do not buy architectural beauty. They buy working systems. They need PyTorch, TensorFlow, compilers, optimised kernels, runtime support, distributed training, debugging tools, profiling tools, cloud availability, documentation, support engineers, stable roadmaps, and predictable performance.</p>
+
+          <figure class="csw-fig" aria-label="Chip vs platform stack">
+            <div class="csw-fig-label">Diagram &middot; Graphcore stack vs Nvidia stack</div>
+            <div class="csw-stack-pair">
+              <div class="csw-stack-col csw-stack-col--gc">
+                <div class="csw-stack-eyebrow">Graphcore 2021</div>
+                <h3 class="csw-stack-title">A chip plus an SDK</h3>
+                <div class="csw-stack-layers">
+                  <div class="csw-stack-layer">IPU silicon</div>
+                  <div class="csw-stack-layer">Poplar / PopART / SDK</div>
+                  <div class="csw-stack-layer">Selected model kernels</div>
+                  <div class="csw-stack-layer">Cherry-picked benchmarks</div>
+                </div>
+              </div>
+              <div class="csw-stack-col csw-stack-col--nv">
+                <div class="csw-stack-eyebrow">Nvidia 2021</div>
+                <h3 class="csw-stack-title">An operating environment</h3>
+                <div class="csw-stack-layers">
+                  <div class="csw-stack-layer">GPU silicon</div>
+                  <div class="csw-stack-layer">CUDA</div>
+                  <div class="csw-stack-layer">cuDNN / NCCL / TensorRT</div>
+                  <div class="csw-stack-layer">DGX + networking</div>
+                  <div class="csw-stack-layer">Cloud availability</div>
+                  <div class="csw-stack-layer">Developer ecosystem</div>
+                  <div class="csw-stack-layer">Broad model coverage</div>
+                </div>
+              </div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original split. Not a Graphcore or Nvidia chart.</div>
+          </figure>
+
+          <p class="essay-line">Graphcore had an accelerator. Nvidia had an operating environment.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bench">III. The benchmark problem was really a software problem</h2>
+
+          <p>The 2021 SemiAnalysis piece interpreted Graphcore&rsquo;s narrow submission and the split between TensorFlow SDK and PopART as evidence of heavy hand tuning and fragmented software, not as a one-off MLPerf strategy. The benchmark story weakened further when the comparison framing changed.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>A platform cannot rely on heroic engineering for every model. The models keep changing &mdash; ResNet, BERT, GPT-style transformers, diffusion, mixture-of-experts, long context, multimodal models, agents. A platform has to absorb all of them without rewriting kernels by hand for each one.</p>
+
+          <p class="essay-line">The enemy was not one benchmark. The enemy was model churn.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-nvidia">IV. Nvidia&rsquo;s advantage was breadth</h2>
+
+          <p>Nvidia&rsquo;s MLPerf v1.0 write-up emphasised broad benchmark coverage and software-level optimisations across the stack, including CUDA Graphs, SHARP, fused attention, distributed LAMB, optimised collectives, DALI, and communication / computation overlap.<sup><a href="#fn2">2</a></sup></p>
+
+          <p>Those advantages do not show up in one benchmark. They show up across every benchmark, year after year, as new models arrive.</p>
+
+          <p class="essay-line">A chip wins one workload. A platform absorbs new workloads.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-catchup">V. Graphcore improved, but the market moved faster</h2>
+
+          <p>Graphcore&rsquo;s own 2022 communications reported MLPerf improvements: Bow Pod16 claimed roughly <span class="csw-stat">31%</span> faster on ResNet-50 versus the Nvidia DGX-A100 640GB and roughly <span class="csw-stat">37%</span> BERT improvement vs the previous MLPerf round, with Baidu&rsquo;s PaddlePaddle submission cited alongside.<sup><a href="#fn5">5</a></sup></p>
+
+          <div class="csw-caution" role="note" aria-label="Vendor benchmark caution">
+            <div class="csw-caution-label">Reading the claims</div>
+            <h3 class="csw-caution-title">These are Graphcore claims, not independent comparisons.</h3>
+            <p>Graphcore&rsquo;s 2022 improvement figures are useful direction-of-travel signals. They depend on the system configuration, software stack, and comparison set chosen by Graphcore. They are not universal performance evidence and they do not address the broader ecosystem and capital concerns that decided commercial outcomes.<sup><a href="#fn5">5</a></sup></p>
+          </div>
+
+          <p>Graphcore was catching up to old benchmarks while the market was moving to new models. Benchmark improvement did not solve ecosystem weakness, and the workload mix kept shifting.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-mlperf">VI. MLPerf moved from BERT to Llama and Flux</h2>
+
+          <p>MLCommons&rsquo; Training v5.1 results refresh emphasised newer generative-AI workloads, with Llama 3.1 8B replacing BERT and Flux.1 replacing Stable Diffusion v2, alongside broad system and organisation diversity.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup> Graphcore is not listed among the submitting organisations in the v5.1 result announcement.</p>
+
+          <figure class="csw-fig" aria-label="Model churn timeline">
+            <div class="csw-fig-label">Diagram &middot; The model churn benchmarks track</div>
+            <div class="csw-churn">
+              <div class="csw-churn-card csw-churn-card--a">
+                <div class="csw-churn-year">2015&ndash;19</div>
+                <h3 class="csw-churn-name">ResNet</h3>
+                <div class="csw-churn-body">image classification</div>
+              </div>
+              <div class="csw-churn-card csw-churn-card--b">
+                <div class="csw-churn-year">2018&ndash;21</div>
+                <h3 class="csw-churn-name">BERT</h3>
+                <div class="csw-churn-body">transformers, NLP</div>
+              </div>
+              <div class="csw-churn-card csw-churn-card--c">
+                <div class="csw-churn-year">2020&ndash;22</div>
+                <h3 class="csw-churn-name">GPT-style</h3>
+                <div class="csw-churn-body">large language models</div>
+              </div>
+              <div class="csw-churn-card csw-churn-card--d">
+                <div class="csw-churn-year">2022&ndash;24</div>
+                <h3 class="csw-churn-name">Diffusion</h3>
+                <div class="csw-churn-body">image / video gen</div>
+              </div>
+              <div class="csw-churn-card csw-churn-card--e">
+                <div class="csw-churn-year">2024&ndash;26</div>
+                <h3 class="csw-churn-name">Llama + Flux</h3>
+                <div class="csw-churn-body">open LLMs, text-to-image<sup><a href="#fn4">4</a></sup></div>
+              </div>
+              <div class="csw-churn-card csw-churn-card--f">
+                <div class="csw-churn-year">2025+</div>
+                <h3 class="csw-churn-name">Multimodal + agents</h3>
+                <div class="csw-churn-body">tool use, reasoning</div>
+              </div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original timeline of AI workloads and the benchmarks that track them. Years are approximate.</div>
+          </figure>
+
+          <p class="essay-line">The strongest AI hardware companies keep showing up as the benchmark changes. Weak platforms disappear from the scoreboard.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-capital">VII. The business outcome exposed the capital problem</h2>
+
+          <p>In July 2024, Reuters reported that SoftBank acquired Graphcore for undisclosed terms, noting that Graphcore had struggled to secure the investment needed to compete, that the company had been valued at <span class="csw-stat">$2.77B</span> at the end of 2020, and that it had cut headcount by about a fifth and closed operations in Norway, Japan, and South Korea.<sup><a href="#fn6">6</a></sup></p>
+
+          <p>AI hardware is expensive. You need silicon teams, compiler teams, kernel teams, systems teams, networking teams, customer engineers, cloud partnerships, manufacturing access, developer relations, and multiple chip generations. Sustained capital is not optional.</p>
+
+          <p class="essay-line">AI hardware startups do not only need product-market fit. They need capital-market fit.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-softbank">VIII. Graphcore&rsquo;s second life is SoftBank</h2>
+
+          <p>Graphcore framed its July 2024 SoftBank announcement around becoming a wholly owned subsidiary, continuing to operate under the Graphcore name, and being backed for next-generation AI compute.<sup><a href="#fn7">7</a></sup> SoftBank&rsquo;s AI Computing segment page describes the segment as built around Arm, Ampere, and Graphcore, with Ampere positioned as energy-efficient Arm CPUs for AI-driven workloads and Graphcore as a team with experience in AI-specialised chips.<sup><a href="#fn8">8</a></sup></p>
+
+          <figure class="csw-fig" aria-label="SoftBank AI compute stack">
+            <div class="csw-fig-label">Diagram &middot; SoftBank AI Computing segment, simplified</div>
+            <div class="csw-sb">
+              <div class="csw-sb-card csw-sb-card--arm">
+                <div class="csw-sb-cat">Architecture &amp; IP</div>
+                <h3 class="csw-sb-name">Arm</h3>
+                <div class="csw-sb-body">CPU IP, mobile and data-center ecosystem, standards influence.<sup><a href="#fn8">8</a></sup></div>
+              </div>
+              <div class="csw-sb-card csw-sb-card--amp">
+                <div class="csw-sb-cat">CPUs</div>
+                <h3 class="csw-sb-name">Ampere</h3>
+                <div class="csw-sb-body">Energy-efficient Arm CPUs for AI-driven data-center workloads.<sup><a href="#fn8">8</a></sup></div>
+              </div>
+              <div class="csw-sb-card csw-sb-card--gc">
+                <div class="csw-sb-cat">AI accelerators</div>
+                <h3 class="csw-sb-name">Graphcore</h3>
+                <div class="csw-sb-body">AI-specialised chip team, compiler talent, systems experience.<sup><a href="#fn8">8</a></sup></div>
+              </div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original framing of the SoftBank AI Computing segment based on SoftBank&rsquo;s own segment page. Not an official org chart.</div>
+          </figure>
+
+          <p class="essay-line">Graphcore&rsquo;s second chance is not to be Britain&rsquo;s Nvidia. It is to become a useful silicon layer inside SoftBank&rsquo;s AI compute strategy.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-india">IX. The India campus is a rebuild signal</h2>
+
+          <p>Graphcore announced a new AI Engineering Campus in Bengaluru, with an investment of up to <span class="csw-stat">&pound;1B</span> over the next decade and the creation of <span class="csw-stat">500</span> new semiconductor jobs, framing the campus around SoftBank&rsquo;s artificial super intelligence platform ambitions. The first roles cover silicon logical design, physical design, verification, characterisation, and bring-up.<sup><a href="#fn9">9</a></sup></p>
+
+          <figure class="csw-fig" aria-label="Graphcore timeline">
+            <div class="csw-fig-label">Diagram &middot; Graphcore arc &mdash; IPU hype to SoftBank rebuild</div>
+            <div class="csw-timeline">
+              <div class="csw-tl csw-tl--a">
+                <div class="csw-tl-year">2016&ndash;20</div>
+                <h3 class="csw-tl-name">IPU hype</h3>
+                <div class="csw-tl-body">Strong branding, big rounds, &ldquo;built for AI&rdquo; story.</div>
+              </div>
+              <div class="csw-tl csw-tl--b">
+                <div class="csw-tl-year">2021</div>
+                <h3 class="csw-tl-name">MLPerf criticism</h3>
+                <div class="csw-tl-body">Narrow submission; software fragmentation flagged.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="csw-tl csw-tl--c">
+                <div class="csw-tl-year">2022&ndash;23</div>
+                <h3 class="csw-tl-name">Improvements</h3>
+                <div class="csw-tl-body">Bow Pod16 / BERT gains; market shifts to generative AI.<sup><a href="#fn5">5</a></sup></div>
+              </div>
+              <div class="csw-tl csw-tl--d">
+                <div class="csw-tl-year">2024</div>
+                <h3 class="csw-tl-name">SoftBank deal</h3>
+                <div class="csw-tl-body">Wholly owned subsidiary; capital-market fit reset.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></div>
+              </div>
+              <div class="csw-tl csw-tl--e">
+                <div class="csw-tl-year">2025+</div>
+                <h3 class="csw-tl-name">India + UK rebuild</h3>
+                <div class="csw-tl-body">Bengaluru campus, &pound;1B / 500 jobs framing.<sup><a href="#fn9">9</a></sup></div>
+              </div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original timeline. Dates are approximate; key milestones per the cited sources.</div>
+          </figure>
+
+          <p class="essay-line">Graphcore&rsquo;s second chance is not a benchmark result. It is a capitalisation and ecosystem reset.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-cuda">X. Why CUDA was the wall</h2>
+
+          <p>CUDA is Nvidia&rsquo;s programming platform for GPU computing. But CUDA is not only syntax. CUDA is a mental model, libraries, kernels, documentation, debugging tools, profiling tools, university teaching, StackOverflow answers, cloud instances, benchmark recipes, enterprise deployments, a hiring market, and years of trust.</p>
+
+          <figure class="csw-fig" aria-label="CUDA moat">
+            <div class="csw-fig-label">Diagram &middot; What CUDA actually includes</div>
+            <div class="csw-moat">
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Libraries</div><div class="csw-moat-name">cuDNN / cuBLAS / NCCL</div><div class="csw-moat-body">Optimised primitives and collectives.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Tooling</div><div class="csw-moat-name">Nsight + profilers</div><div class="csw-moat-body">Debug, profile, optimise at scale.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Cloud</div><div class="csw-moat-name">Ubiquitous instances</div><div class="csw-moat-body">First-class availability on every major cloud.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Trust</div><div class="csw-moat-name">Enterprise + procurement</div><div class="csw-moat-body">Default safe choice for IT and risk teams.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Knowledge</div><div class="csw-moat-name">Docs + Q&amp;A + courses</div><div class="csw-moat-body">A decade of materials, examples, and answers.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Hiring</div><div class="csw-moat-name">CUDA-fluent talent</div><div class="csw-moat-body">Large engineering pool, easier to staff.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Models</div><div class="csw-moat-name">Model coverage</div><div class="csw-moat-body">Frontier and open models run on day one.</div></div>
+              <div class="csw-moat-cell"><div class="csw-moat-cat">Benchmarks</div><div class="csw-moat-name">Recipe culture</div><div class="csw-moat-body">Shared MLPerf recipes and tuning playbooks.<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original map of what CUDA actually delivers beyond syntax. Each tile is a separate switching cost for a challenger.</div>
+          </figure>
+
+          <p class="essay-line">The hardest thing for an AI chip startup is not proving that its chip is clever. It is convincing developers to leave the default path.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-checklist">XI. The full-stack AI hardware checklist</h2>
+
+          <p>The cleanest way to read the Graphcore story is to apply a simple checklist to any AI hardware challenger. Beating Nvidia in a serious workload needs all of the following, not just the first one or two items.</p>
+
+          <figure class="csw-fig" aria-label="Full-stack AI hardware checklist">
+            <div class="csw-fig-label">Card &middot; The full-stack AI hardware checklist</div>
+            <div class="csw-check">
+              <div class="csw-check-row"><div class="csw-check-num">01</div><div class="csw-check-name">Competitive silicon</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">02</div><div class="csw-check-name">Stable compiler</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">03</div><div class="csw-check-name">Kernel library coverage</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">04</div><div class="csw-check-name">PyTorch integration</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">05</div><div class="csw-check-name">Distributed training</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">06</div><div class="csw-check-name">Inference serving stack</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">07</div><div class="csw-check-name">Debug + profiling tools</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">08</div><div class="csw-check-name">Benchmark breadth</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">09</div><div class="csw-check-name">Cloud availability</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">10</div><div class="csw-check-name">Customer support</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">11</div><div class="csw-check-name">Developer community</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">12</div><div class="csw-check-name">Multiple HW generations</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">13</div><div class="csw-check-name">Capital to keep going</div></div>
+              <div class="csw-check-row"><div class="csw-check-num">14</div><div class="csw-check-name">Clear workload wedge</div></div>
+            </div>
+            <div class="csw-fig-cap">A simplified, original framework. Graphcore had interesting silicon and SDK pieces; the weak rows were breadth, model coverage, cloud, capital, and a clear sustained wedge.</div>
+          </figure>
+
+          <p class="essay-line">A chip can be designed in a few years. A platform compounds over a decade.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-still">XII. What Graphcore still has</h2>
+
+          <p>Being fair to Graphcore matters. The company still has AI chip architecture experience, compiler and runtime experience, systems-architecture knowledge, engineering talent, accumulated IPU learnings, SoftBank capital, and potential Arm / Ampere ecosystem fit. The UK base and the new Indian campus add engineering capacity that does not exist at most challengers today.<sup><a href="#fn9">9</a></sup></p>
+
+          <p class="essay-line">The IPU may not have beaten Nvidia, but the people, tools, and lessons may still be valuable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XIII. What could break the new thesis?</h2>
+
+          <p>The strongest bear case is that Graphcore may have been acquired because its talent was valuable, not because the IPU platform was commercially viable.</p>
+
+          <div class="csw-counter" aria-label="Bear case">
+            <div class="csw-counter-label">Bear case &middot; what could break the new thesis</div>
+            <ol>
+              <li><strong>Heavy investment, weak product.</strong> SoftBank may invest substantially without producing a competitive product.</li>
+              <li><strong>Legacy software.</strong> Graphcore&rsquo;s old software burden may persist into the next generation.</li>
+              <li><strong>CUDA compounds.</strong> Nvidia&rsquo;s CUDA moat may keep widening, year after year.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Crowded competitors.</strong> AMD, Google TPU, AWS Trainium, Microsoft Maia, Groq, Cerebras, and Tenstorrent are all chasing non-Nvidia workloads.</li>
+              <li><strong>Sprawl.</strong> SoftBank&rsquo;s AI strategy may become too broad to execute well.</li>
+              <li><strong>Integration friction.</strong> Arm, Ampere, and Graphcore may not integrate cleanly.</li>
+              <li><strong>Talent over product.</strong> Graphcore may end up as talent infrastructure, not product infrastructure.</li>
+              <li><strong>Niche architecture.</strong> IPU-style architectures may remain too specialised.</li>
+              <li><strong>Default GPU pull.</strong> Developers may keep preferring CUDA and widely available cloud GPUs.</li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XIV. What could break the bear case?</h2>
+
+          <p>The bull case is structural: AI compute is too large for one vendor to serve everything, and sovereign and enterprise AI buyers want alternatives.</p>
+
+          <div class="csw-counter csw-counter--bull" aria-label="Bull case">
+            <div class="csw-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>Market size.</strong> AI compute is too large for a single vendor to satisfy.</li>
+              <li><strong>Sovereign AI.</strong> National buyers want alternatives to a single foreign vendor.</li>
+              <li><strong>Capital.</strong> SoftBank has the balance sheet to fund a multi-year rebuild.<sup><a href="#fn6">6</a></sup></li>
+              <li><strong>Arm reach.</strong> Arm gives ecosystem reach into mobile, automotive, and data centre.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Ampere CPU.</strong> Energy-efficient Arm CPUs for AI-adjacent workloads.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Compiler talent.</strong> Graphcore&rsquo;s compiler and accelerator experience is real.</li>
+              <li><strong>Custom AI infra.</strong> Custom AI infrastructure may want specialised silicon.</li>
+              <li><strong>Vertical stack.</strong> A coordinated Arm + Ampere + Graphcore stack could matter.</li>
+              <li><strong>Lessons.</strong> IPU-era lessons can shape the next architecture.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">Graphcore does not need to replace Nvidia to matter. It needs to become useful inside a larger AI compute strategy.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XV. What to watch</h2>
+
+          <div class="csw-watch" aria-label="What to watch">
+            <div class="csw-watch-label">What to watch</div>
+            <ul>
+              <li>Graphcore&rsquo;s next announced product.</li>
+              <li>Whether the IPU remains central or is replaced.</li>
+              <li>SoftBank AI Computing segment updates.<sup><a href="#fn8">8</a></sup></li>
+              <li>Arm / Ampere / Graphcore integration evidence.</li>
+              <li>Bengaluru hiring progress.<sup><a href="#fn9">9</a></sup></li>
+              <li>UK headcount growth.</li>
+              <li>Compiler and runtime announcements.</li>
+              <li>PyTorch coverage milestones.</li>
+              <li>MLPerf re-entry, if it happens.<sup><a href="#fn3">3</a></sup></li>
+              <li>Inference benchmarks beyond MLPerf.</li>
+              <li>Cloud availability of Graphcore systems.</li>
+              <li>Customer announcements with named workloads.</li>
+              <li>Sovereign AI partnerships and pilots.</li>
+              <li>SoftBank data-center strategy and disclosures.</li>
+              <li>Whether Graphcore becomes product or talent infrastructure.</li>
+              <li>How clearly the Arm+Ampere+Graphcore story is told to customers.</li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="csw-terms" aria-label="Glossary">
+            <div class="csw-terms-label">Glossary</div>
+            <dl>
+              <dt>IPU</dt><dd>Intelligence Processing Unit, Graphcore&rsquo;s AI accelerator.</dd>
+              <dt>MLPerf</dt><dd>Benchmark suite for measuring machine-learning training and inference performance.</dd>
+              <dt>ResNet-50</dt><dd>Classic image-classification model.</dd>
+              <dt>BERT</dt><dd>Transformer model used for NLP benchmarks.</dd>
+              <dt>Llama</dt><dd>Modern large-language-model family used in newer benchmark rounds.</dd>
+              <dt>Flux.1</dt><dd>Modern text-to-image model used in newer benchmark rounds.</dd>
+              <dt>CUDA</dt><dd>Nvidia&rsquo;s GPU programming platform.</dd>
+              <dt>cuDNN</dt><dd>Nvidia deep-learning library.</dd>
+              <dt>NCCL</dt><dd>Nvidia communication library for multi-GPU systems.</dd>
+              <dt>Kernel</dt><dd>Optimised low-level operation used by AI frameworks.</dd>
+              <dt>Compiler</dt><dd>Software that maps model operations onto hardware.</dd>
+              <dt>Runtime</dt><dd>Software layer that executes compiled work on hardware.</dd>
+              <dt>Distributed training</dt><dd>Training a model across multiple chips or systems.</dd>
+              <dt>Model churn</dt><dd>Rapid change in AI model architectures and workload requirements.</dd>
+              <dt>Capital-market fit</dt><dd>Ability to raise enough capital to survive multiple hardware generations.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XVI. The AI chip software wall</h2>
+
+          <p>Graphcore&rsquo;s lesson is not that custom AI chips are impossible.</p>
+
+          <p>The lesson is that AI hardware is a full-stack war.</p>
+
+          <p>The IPU was interesting silicon. But Nvidia had the platform: CUDA, libraries, kernels, cloud availability, developer trust, support, and capital. Graphcore failed as an independent Nvidia challenger because it could not turn specialised hardware into a broad software ecosystem fast enough.</p>
+
+          <div class="essay-pull">In 2026, its second life is inside SoftBank. The question is no longer whether Graphcore replaces GPUs. The question is whether it becomes a useful silicon layer in a much larger AI compute strategy.</div>
+
+          <p>Hardware startups often hear that they only need product-market fit. The Graphcore story is a counter-example. They also need software-market fit, model-market fit, cloud-market fit, support-market fit, and capital-market fit. The chip is the start. The platform is the verdict.</p>
+
+          <p>That is the AI chip software wall.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Jul 2021). <em>Graphcore Looks Like A Complete Failure In Machine Learning Training Performance.</em> SemiAnalysis. Historical anchor for the MLPerf v1.0 criticism, including the narrow Graphcore submission (four closed-division results, one per system, only ResNet-50 and BERT), the use of TensorFlow SDK for ResNet-50 and PopART for BERT, the IPU-POD16 vs DGX A100 comparison (16 IPUs vs 8 A100s, memory and time gaps, 80GB A100 pricing, DGX vs third-party systems), and the deeper argument that specialised AI silicon is not enough without a broad software platform. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> NVIDIA Developer (2021). <a href="https://developer.nvidia.com/blog/mlperf-v1-0-training-benchmarks-insights-into-a-record-setting-performance/" target="_blank" rel="noopener">MLPerf v1.0 Training Benchmarks: Insights Into A Record-Setting Performance</a>. Broad benchmark coverage and software optimisations including CUDA Graphs, SHARP, fused attention, distributed LAMB, optimised collectives, DALI, and communication / computation overlap.</p>
+
+            <p id="fn3"><sup>3</sup> MLCommons (Nov 2025). <a href="https://mlcommons.org/2025/11/training-v5-1-results/" target="_blank" rel="noopener">MLPerf Training v5.1 results</a>. Newer generative-AI workloads, broader system and organisation diversity. Used as the basis for noting that Graphcore is not listed among the submitting organisations in v5.1.</p>
+
+            <p id="fn4"><sup>4</sup> MLCommons. <a href="https://mlcommons.org/category/mlperf-training/" target="_blank" rel="noopener">MLPerf Training benchmark archive</a>. Benchmark evolution including the replacement of BERT with Llama 3.1 8B and Stable Diffusion v2 with Flux.1, plus newer LLM and reasoning workloads.</p>
+
+            <p id="fn5"><sup>5</sup> Graphcore (2022). <a href="https://www.graphcore.ai/posts/baidu-results-underscore-big-mlperf-gains-for-graphcore" target="_blank" rel="noopener">Baidu results underscore big MLPerf gains for Graphcore</a>. Graphcore&rsquo;s own framing of Bow Pod16 ResNet-50 improvements (~31% vs Nvidia DGX-A100 640GB), BERT improvement (~37%) versus the previous MLPerf round, and the Baidu PaddlePaddle submission context. Treated here as Graphcore claims, not independent benchmarks.</p>
+
+            <p id="fn6"><sup>6</sup> Reuters (Jul 2024). <a href="https://www.reuters.com/technology/artificial-intelligence/japans-softbank-acquires-british-ai-chipmaker-graphcore-2024-07-11/" target="_blank" rel="noopener">Japan&rsquo;s SoftBank acquires British AI chipmaker Graphcore</a>. SoftBank&rsquo;s acquisition with undisclosed terms, Graphcore&rsquo;s difficulty securing the investment needed to compete, ~$2.77B valuation context at end of 2020, headcount cut of about a fifth, and closure of operations in Norway, Japan, and South Korea.</p>
+
+            <p id="fn7"><sup>7</sup> Graphcore (Jul 2024). <a href="https://www.graphcore.ai/posts/graphcore-joins-softbank-group-to-build-next-generation-of-ai-compute" target="_blank" rel="noopener">Graphcore joins SoftBank Group to build next generation of AI compute</a>. Graphcore becoming a wholly owned subsidiary of SoftBank, continuing under the Graphcore name, with the next-generation AI compute framing.</p>
+
+            <p id="fn8"><sup>8</sup> SoftBank. <a href="https://group.softbank/en/segments/aicomputing" target="_blank" rel="noopener">SoftBank AI Computing segment</a>. The Arm / Ampere / Graphcore positioning, Ampere as energy-efficient Arm CPUs for AI-driven data-center workloads, and Graphcore as a team with experience in AI-specialised chips.</p>
+
+            <p id="fn9"><sup>9</sup> Graphcore. <a href="https://www.graphcore.ai/posts/graphcore-to-invest-1bn-in-india-creating-500-semiconductor-jobs" target="_blank" rel="noopener">Graphcore to invest &pound;1B in India, creating 500 semiconductor jobs</a>. Up to &pound;1B investment over the next decade, 500 new semiconductor jobs at the Bengaluru AI Engineering Campus, with first roles spanning silicon logical design, physical design, verification, characterisation, and bring-up.</p>
+          </div>
+
+          <div class="csw-fr">
+            <div class="csw-fr-label">Further reading</div>
+            <ul>
+              <li><a href="networked-ai-bet.html" class="essay-link">The Networked AI Bet</a>. Tenstorrent&rsquo;s open, Ethernet-native attack on the AI compute stack.</li>
+              <li><a href="wafer-scale-latency-bet.html" class="essay-link">The Wafer-Scale Latency Bet</a>. Cerebras and the case for removing chip boundaries.</li>
+              <li><a href="inference-efficiency-war.html" class="essay-link">The Inference Efficiency War</a>. Qualcomm AI200 / AI250 and cost-per-token inference infrastructure.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="nvidia-earnings-quality-test.html" class="essay-link">Nvidia&rsquo;s Earnings Quality Test</a>. AI capex, customer concentration, and the durability of revenue.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="gaa-credibility-test.html" class="essay-link">The GAA Credibility Test</a>. Samsung Foundry&rsquo;s 2nm comeback as a trust test, not a transistor story.</li>
+              <li><a href="other-leading-edge.html" class="essay-link">The Other Leading Edge</a>. GlobalFoundries and the specialty foundry layer of AI infrastructure.</li>
+              <li><a href="when-ai-runs-out-of-copper.html" class="essay-link">When AI Runs Out of Copper</a>. Optical I/O, co-packaged optics, and the race to replace copper with light.</li>
+              <li><a href="fab-that-outlived-3d-xpoint.html" class="essay-link">The Fab That Outlived 3D XPoint</a>. Why Texas Instruments turned a failed memory fab into a 300mm analog asset.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 032. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=36"></script>
+</body>
+</html>
