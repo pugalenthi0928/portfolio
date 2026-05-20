@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'back-end-bottleneck':            'infrastructure',
   'wafer-scale-training-bet':       'infrastructure',
   'semiconductor-substitution-ladder': 'infrastructure',
   'power-efficiency-layer':         'infrastructure',
