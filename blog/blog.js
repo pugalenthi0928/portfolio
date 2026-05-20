@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'inference-efficiency-war':       'infrastructure',
   'when-ai-runs-out-of-copper':     'infrastructure',
   'custom-silicon-flywheel':        'infrastructure',
   'nvidia-earnings-quality-test':   'infrastructure',
