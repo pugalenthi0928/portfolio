@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'architecture-gatekeeper':        'infrastructure',
   'custom-ai-hardware-trap':        'infrastructure',
   'package-became-the-computer':    'infrastructure',
   'back-end-bottleneck':            'infrastructure',

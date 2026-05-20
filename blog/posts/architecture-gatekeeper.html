@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Architecture Gatekeeper | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of Arm China, semiconductor IP distribution, the Arm China IPLA, China market access, architecture control, local IP ambitions, RISC-V pressure, and why Arm's China problem became a gatekeeper problem.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/architecture-gatekeeper.html">
+  <meta property="og:title" content="The Architecture Gatekeeper | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of Arm China, semiconductor IP distribution, the Arm China IPLA, China market access, architecture control, local IP ambitions, RISC-V pressure, and why Arm's China problem became a gatekeeper problem.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/architecture-gatekeeper.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Arm China">
+  <meta property="article:tag" content="Arm">
+  <meta property="article:tag" content="Semiconductor IP">
+  <meta property="article:tag" content="Architecture">
+  <meta property="article:tag" content="China Semiconductors">
+  <meta property="article:tag" content="IP Licensing">
+  <meta property="article:tag" content="SoftBank">
+  <meta property="article:tag" content="RISC-V">
+  <meta property="article:tag" content="Export Controls">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Neoverse">
+  <meta property="article:tag" content="Edge AI">
+  <meta property="article:tag" content="Cloud AI">
+  <meta property="article:tag" content="Zhouyi NPU">
+  <meta property="article:tag" content="Shanhai SPU">
+  <meta property="article:tag" content="Semiconductor Sovereignty">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Architecture Gatekeeper | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of Arm China, semiconductor IP distribution, the Arm China IPLA, China market access, architecture control, local IP ambitions, RISC-V pressure, and why Arm's China problem became a gatekeeper problem.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Architecture Gatekeeper",
+    "description": "An original 2026 analysis of Arm China, semiconductor IP distribution, the Arm China IPLA, China market access, architecture control, local IP ambitions, RISC-V pressure, and why Arm's China problem became a gatekeeper problem.",
+    "url": "https://pugalenthimagendran.com/blog/posts/architecture-gatekeeper.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/architecture-gatekeeper.html",
+    "keywords": "Arm China, Arm, Semiconductor IP, Architecture, China Semiconductors, IP Licensing, SoftBank, RISC-V, Export Controls, AI Infrastructure, Neoverse, Edge AI, Cloud AI, Zhouyi NPU, Shanhai SPU, Semiconductor Sovereignty"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    /* ============================================
+       ARCHITECTURE GATEKEEPER, scoped under .essay-arch
+       ============================================ */
+    .essay-arch {
+      --ar-accent: #F0784A;
+      --ar-accent-soft: rgba(240,120,74,0.10);
+      --ar-accent-faint: rgba(240,120,74,0.04);
+      --ar-bd: rgba(255,255,255,0.08);
+      --ar-bd-soft: rgba(255,255,255,0.05);
+      --ar-cool: #6CBFE0;
+      --ar-cool-soft: rgba(108,191,224,0.10);
+      --ar-purple: #B794F4;
+      --ar-purple-soft: rgba(183,148,244,0.10);
+      --ar-green: #5DCAA5;
+      --ar-green-soft: rgba(93,202,165,0.10);
+      --ar-amber: #E8B468;
+      --ar-amber-soft: rgba(232,180,104,0.10);
+      --ar-red: #E07A8B;
+      --ar-red-soft: rgba(224,122,139,0.10);
+    }
+
+    .arch-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .arch-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .arch-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .arch-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .arch-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ar-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .arch-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .arch-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    .arch-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-bd); background: linear-gradient(180deg, var(--ar-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .arch-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ar-accent); margin-bottom: 14px; }
+    .arch-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--ar-bd-soft); line-height: 1.6; }
+
+    .arch-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--ar-accent); background: linear-gradient(180deg, var(--ar-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .arch-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-accent); margin-bottom: 10px; }
+    .arch-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* JV timeline (5-card horizontal) */
+    .arch-jv { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .arch-jv-card { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--ar-bd); background: var(--bg-alt); }
+    .arch-jv-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ar-accent); margin-bottom: 6px; }
+    .arch-jv-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.25; }
+    .arch-jv-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+    .arch-jv-card--a { background: linear-gradient(180deg, var(--ar-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .arch-jv-card--b { background: linear-gradient(180deg, var(--ar-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .arch-jv-card--c { background: linear-gradient(180deg, var(--ar-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .arch-jv-card--d { background: linear-gradient(180deg, var(--ar-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .arch-jv-card--e { background: linear-gradient(180deg, var(--ar-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ar-accent); }
+
+    /* IP vs distribution split */
+    .arch-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .arch-split-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--ar-bd); background: var(--bg-alt); }
+    .arch-split-col--ip { background: linear-gradient(180deg, var(--ar-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .arch-split-col--ip .arch-split-eye { color: var(--ar-cool); }
+    .arch-split-col--ch { background: linear-gradient(180deg, var(--ar-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ar-accent); }
+    .arch-split-col--ch .arch-split-eye { color: var(--ar-accent); }
+    .arch-split-eye { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .arch-split-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .arch-split-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .arch-split-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .arch-split-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+
+    /* Gatekeeper flow */
+    .arch-gate { padding: 22px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-bd); background: var(--bg-alt); margin: 1rem 0 0; }
+    .arch-gate-flow { display: grid; grid-template-columns: 1fr 32px 1fr 32px 1fr; gap: 8px; align-items: center; margin-bottom: 14px; }
+    .arch-gate-box { padding: 14px 12px; border-radius: 10px; border: 1px solid var(--ar-bd); background: rgba(255,255,255,0.03); text-align: center; }
+    .arch-gate-box--src { border-color: rgba(108,191,224,0.40); background: linear-gradient(180deg, var(--ar-cool-soft) 0%, transparent 70%), var(--bg-alt); }
+    .arch-gate-box--gate { border-color: var(--ar-accent); background: linear-gradient(180deg, var(--ar-accent-soft) 0%, transparent 70%), var(--bg-alt); }
+    .arch-gate-box--dst { border-color: rgba(93,202,165,0.40); background: linear-gradient(180deg, var(--ar-green-soft) 0%, transparent 70%), var(--bg-alt); }
+    .arch-gate-arr { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--color-text-tertiary); text-align: center; letter-spacing: 0.1em; }
+    .arch-gate-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .arch-gate-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.04em; line-height: 1.4; }
+    .arch-gate-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding-top: 12px; border-top: 0.5px solid var(--ar-bd-soft); }
+    .arch-gate-point { padding: 8px 10px; border-radius: 6px; background: rgba(240,120,74,0.06); border: 0.5px solid rgba(240,120,74,0.25); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-secondary); letter-spacing: 0.04em; text-align: center; }
+
+    /* Ownership stack */
+    .arch-own { padding: 22px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-bd); background: var(--bg-alt); margin: 1rem 0 0; }
+    .arch-own-row { display: grid; grid-template-columns: 140px 1fr 90px; gap: 14px; align-items: center; padding: 10px 0; border-top: 0.5px solid var(--ar-bd-soft); }
+    .arch-own-row:first-child { border-top: none; }
+    .arch-own-label { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .arch-own-label-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.04em; margin-top: 2px; }
+    .arch-own-bar { height: 14px; border-radius: 7px; background: rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+    .arch-own-bar-fill { height: 100%; border-radius: 7px; background: linear-gradient(90deg, var(--ar-accent), rgba(240,120,74,0.55)); }
+    .arch-own-bar-fill--blue { background: linear-gradient(90deg, var(--ar-cool), rgba(108,191,224,0.55)); }
+    .arch-own-bar-fill--gray { background: linear-gradient(90deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); }
+    .arch-own-val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); text-align: right; letter-spacing: 0.04em; }
+
+    /* IPLA multi-decade timeline */
+    .arch-ipla { padding: 22px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-accent); background: linear-gradient(180deg, var(--ar-accent-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .arch-ipla-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-accent); margin-bottom: 14px; }
+    .arch-ipla-track { position: relative; height: 70px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 0.5px solid var(--ar-bd-soft); padding: 12px 16px; }
+    .arch-ipla-bar { position: relative; height: 14px; border-radius: 7px; background: linear-gradient(90deg, var(--ar-accent) 0%, rgba(240,120,74,0.60) 60%, rgba(240,120,74,0.20) 100%); }
+    .arch-ipla-tick { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.30); }
+    .arch-ipla-tick-label { position: absolute; top: 100%; margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.04em; white-space: nowrap; transform: translateX(-50%); }
+    .arch-ipla-foot { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); padding-top: 12px; border-top: 0.5px solid var(--ar-bd-soft); margin: 14px 0 0; font-style: italic; }
+
+    /* Revenue exposure card */
+    .arch-rev { padding: 22px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-bd); background: var(--bg-alt); margin: 1rem 0 0; }
+    .arch-rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .arch-rev-cell { padding: 14px 12px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 0.5px solid var(--ar-bd-soft); text-align: center; }
+    .arch-rev-fy { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--ar-accent); margin-bottom: 4px; }
+    .arch-rev-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); line-height: 1.1; }
+    .arch-rev-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.04em; margin-top: 4px; line-height: 1.4; }
+    .arch-rev-foot { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--color-text-tertiary); padding-top: 12px; border-top: 0.5px solid var(--ar-bd-soft); margin: 12px 0 0; line-height: 1.5; }
+
+    /* Control points / risk surface (7-cell) */
+    .arch-risk { padding: 20px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-amber); background: linear-gradient(180deg, var(--ar-amber-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .arch-risk-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-amber); margin-bottom: 12px; }
+    .arch-risk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .arch-risk-cell { padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 0.5px solid var(--ar-bd-soft); text-align: center; }
+    .arch-risk-name { font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.005em; line-height: 1.2; }
+    .arch-risk-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--color-text-tertiary); letter-spacing: 0.04em; line-height: 1.4; }
+
+    /* Local IP roadmap (4-card) */
+    .arch-local { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .arch-local-card { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--ar-bd); background: var(--bg-alt); }
+    .arch-local-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--ar-accent); margin-bottom: 6px; }
+    .arch-local-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.2; }
+    .arch-local-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* Export controls visual */
+    .arch-ec { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 20px 22px; border-radius: 12px; border: 1px solid var(--ar-red); background: linear-gradient(180deg, var(--ar-red-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .arch-ec-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-red); margin-bottom: 8px; }
+    .arch-ec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .arch-ec-cell { padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 0.5px solid var(--ar-bd-soft); text-align: center; }
+    .arch-ec-name { font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+    .arch-ec-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .arch-ec-cell--gated { border-color: var(--ar-red); background: linear-gradient(180deg, var(--ar-red-soft) 0%, transparent 70%), var(--bg-alt); }
+    .arch-ec-cell--gated .arch-ec-name { color: var(--ar-red); }
+
+    /* RISC-V option box */
+    .arch-rv { padding: 22px 22px 18px; border-radius: 12px; border: 1px dashed rgba(183,148,244,0.50); background: linear-gradient(180deg, var(--ar-purple-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .arch-rv-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-purple); margin-bottom: 10px; }
+    .arch-rv-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .arch-rv p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.65; color: var(--color-text-secondary); margin: 0 0 6px; }
+
+    /* Arm growth card */
+    .arch-grow { padding: 20px 22px 18px; border-radius: 12px; border: 1px solid var(--ar-green); background: linear-gradient(180deg, var(--ar-green-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .arch-grow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-green); margin-bottom: 12px; }
+    .arch-grow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .arch-grow-cell { padding: 12px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 0.5px solid var(--ar-bd-soft); text-align: center; }
+    .arch-grow-name { font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+    .arch-grow-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .arch-grow-foot { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); padding-top: 10px; border-top: 0.5px solid var(--ar-bd-soft); margin: 12px 0 0; font-style: italic; }
+
+    /* Caution */
+    .arch-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--ar-amber); background: linear-gradient(180deg, var(--ar-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .arch-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ar-amber); margin-bottom: 8px; }
+    .arch-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .arch-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .arch-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .arch-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .arch-terms dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .arch-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--ar-accent); padding-top: 2px; }
+    .arch-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Bear / bull counters */
+    .arch-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--ar-bd); background: var(--bg-alt); }
+    .arch-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .arch-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .arch-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--ar-bd-soft); }
+    .arch-counter li:last-child { border-bottom: none; }
+    .arch-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--ar-accent); }
+    .arch-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .arch-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--ar-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .arch-counter--bull li::before { color: var(--ar-green); }
+
+    /* Watch checklist */
+    .arch-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--ar-bd); background: var(--bg-alt); }
+    .arch-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .arch-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .arch-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--ar-bd-soft); }
+    .arch-watch li:last-child, .arch-watch li:nth-last-child(2) { border-bottom: none; }
+    .arch-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--ar-accent); background: transparent; }
+
+    /* Further reading */
+    .arch-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .arch-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .arch-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .arch-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .arch-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .arch-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .arch-toc ol { grid-template-columns: 1fr; }
+      .arch-jv, .arch-local, .arch-grow-grid { grid-template-columns: repeat(2, 1fr); }
+      .arch-split { grid-template-columns: 1fr; }
+      .arch-gate-flow { grid-template-columns: 1fr; gap: 6px; }
+      .arch-gate-arr { display: none; }
+      .arch-gate-points, .arch-rev-grid, .arch-risk-grid, .arch-ec-grid { grid-template-columns: repeat(2, 1fr); }
+      .arch-own-row { grid-template-columns: 110px 1fr 70px; gap: 10px; }
+      .arch-terms dl { grid-template-columns: 130px 1fr; }
+      .arch-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .arch-jv, .arch-local, .arch-rev-grid, .arch-risk-grid, .arch-ec-grid, .arch-grow-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <article class="article essay-format essay-arch">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 042 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Arm China</span>
+          <span class="tag">Arm</span>
+          <span class="tag">Semiconductor IP</span>
+          <span class="tag">Architecture</span>
+          <span class="tag">China Semiconductors</span>
+          <span class="tag">IP Licensing</span>
+          <span class="tag">SoftBank</span>
+          <span class="tag">RISC-V</span>
+          <span class="tag">Export Controls</span>
+          <span class="tag">Neoverse</span>
+          <span class="tag">Edge AI</span>
+          <span class="tag">Cloud AI</span>
+          <span class="tag">Zhouyi NPU</span>
+          <span class="tag">Semiconductor Sovereignty</span>
+        </div>
+
+        <h1 class="essay-hed">The Architecture <em>Gatekeeper</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Arm China shows the hidden risk of losing control over semiconductor IP distribution.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The Arm China story is not just about a rogue CEO. It is about control over the architecture channel. Arm owns one of the most important computing ecosystems in the world, but its access to China runs through an independent entity it does not directly control. In 2021, that looked like a dramatic corporate heist. In 2026, it looks like something more durable: the architecture gatekeeper problem.</p>
+
+          <nav class="arch-toc" aria-label="Article contents">
+            <div class="arch-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis was about distribution</a></li>
+              <li><a href="#sec-control">In IP, distribution is a control surface</a></li>
+              <li><a href="#sec-drama">The governance drama changed, the structure remained</a></li>
+              <li><a href="#sec-gate">Arm China is still the China gatekeeper</a></li>
+              <li><a href="#sec-ctrl">Arm does not directly control Arm China</a></li>
+              <li><a href="#sec-rev">The relationship is financially meaningful</a></li>
+              <li><a href="#sec-ipla">The agreement lasts for decades</a></li>
+              <li><a href="#sec-risk">The risk is no longer just legal, it is strategic</a></li>
+              <li><a href="#sec-local">Arm China&rsquo;s local IP push matters more in the AI era</a></li>
+              <li><a href="#sec-ec">Why export controls make the channel more strategic</a></li>
+              <li><a href="#sec-rv">RISC-V is the long-term architecture pressure</a></li>
+              <li><a href="#sec-grow">Arm is stronger now, which makes the gatekeeper problem bigger</a></li>
+              <li><a href="#sec-thesis">The actual 2026 thesis</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The architecture gatekeeper</a></li>
+              <li><a href="#sec-glossary">Glossary</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, the Arm China story looked like corporate chaos.</p>
+
+          <p>A fired CEO who would not leave. A company chop that mattered more than the board vote. Security guards blocking access. A joint venture declaring its own path. A Chinese distributor presenting itself like an independent IP company.</p>
+
+          <p>The uploaded SemiAnalysis article called it the semiconductor heist of the century.<sup><a href="#fn1">1</a></sup> The wording was dramatic, but the underlying point was sharp. Arm had not necessarily lost its core IP. It had lost practical control over the entity that controlled access to China.</p>
+
+          <p>That distinction matters. Because in semiconductor IP, the product is not only the core design. It is also the licensing channel. And in China, that channel is Arm China.</p>
+
+          <p class="essay-line">The real asset was not only Arm&rsquo;s IP. It was the right to stand between Arm and the Chinese customer.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">1. The 2021 thesis was about the distribution layer</h2>
+
+          <p>The uploaded SemiAnalysis piece was not a complaint about an isolated personnel dispute.<sup><a href="#fn1">1</a></sup> It was an argument about how power had quietly shifted from Arm Limited to the entity that controlled Arm&rsquo;s China channel.</p>
+
+          <p>The article&rsquo;s public skeleton is well known. SoftBank had acquired Arm in 2016. In 2018, Arm sold a 51% stake in its China joint venture to a consortium of Chinese investors for USD&nbsp;775&nbsp;million.<sup><a href="#fn1">1</a></sup> The joint venture, Arm China, received exclusive rights to distribute Arm IP in the People&rsquo;s Republic of China.<sup><a href="#fn1">1</a></sup> Allen Wu, the executive running it, resisted removal after the board voted to oust him. The company seal &mdash; the chop &mdash; gave him operational authority that the board vote alone could not override. Security at Arm China&rsquo;s offices reportedly blocked Arm representatives. Arm China began presenting itself as an independently operated Chinese-owned company.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="arch-jv">
+            <div class="arch-jv-card arch-jv-card--a">
+              <div class="arch-jv-year">2016</div>
+              <h3 class="arch-jv-name">SoftBank buys Arm</h3>
+              <div class="arch-jv-body">Arm becomes a SoftBank-owned IP company.<sup><a href="#fn1">1</a></sup></div>
+            </div>
+            <div class="arch-jv-card arch-jv-card--b">
+              <div class="arch-jv-year">2018</div>
+              <h3 class="arch-jv-name">Arm China JV</h3>
+              <div class="arch-jv-body">51% sold to a Chinese consortium for ~USD 775M; exclusive China distribution rights.<sup><a href="#fn1">1</a></sup></div>
+            </div>
+            <div class="arch-jv-card arch-jv-card--c">
+              <div class="arch-jv-year">2020&ndash;21</div>
+              <h3 class="arch-jv-name">Control shock</h3>
+              <div class="arch-jv-body">Board vote, chop dispute, independent branding, in-house IP push.<sup><a href="#fn1">1</a></sup></div>
+            </div>
+            <div class="arch-jv-card arch-jv-card--d">
+              <div class="arch-jv-year">2022</div>
+              <h3 class="arch-jv-name">Co-CEO change</h3>
+              <div class="arch-jv-body">Reuters reports Arm China appoints new co-CEOs, Wu replaced.<sup><a href="#fn3">3</a></sup></div>
+            </div>
+            <div class="arch-jv-card arch-jv-card--e">
+              <div class="arch-jv-year">2026</div>
+              <h3 class="arch-jv-name">IPLA structure</h3>
+              <div class="arch-jv-body">Arm China remains independent; IPLA runs to 2048; primary access point to the PRC.<sup><a href="#fn2">2</a></sup></div>
+            </div>
+          </div>
+
+          <p>The uploaded article reported that Arm China had claimed more than 20&nbsp;billion cumulative shipments, more than 90 partners, and 29 partners in mass production using the IP, with a 400+ person China-based R&amp;D team.<sup><a href="#fn1">1</a></sup> Arm China had also announced or rebranded a local XPU IP family, including NPU, SPU, ISP, and VPU blocks. The deeper claim of the article was not that Arm&rsquo;s files had been stolen. It was that Arm China had become independent enough to set its own direction inside the channel that mattered most.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="arch-thesis">
+            <div class="arch-thesis-label">2021 thesis &nbsp;&middot;&nbsp; framed in this essay</div>
+            <p class="arch-thesis-text">Arm China did not need to own Arm to become powerful. It only needed to control the China access point.</p>
+          </div>
+
+          <h2 id="sec-control">2. In IP, distribution is a control surface</h2>
+
+          <p>It is easy to think of semiconductor IP as a file you license. It is not. It is a long bundle of contracts, support, and trust. When the licensing channel is concentrated in one entity, that entity becomes a control surface, whether the technology owner intends it to or not.</p>
+
+          <div class="arch-split">
+            <div class="arch-split-col arch-split-col--ip">
+              <div class="arch-split-eye">What the IP owner brings</div>
+              <h4 class="arch-split-title">The core asset</h4>
+              <ul>
+                <li>Architecture license</li>
+                <li>CPU and GPU core IP</li>
+                <li>Implementation, verification, support</li>
+                <li>Ecosystem compatibility</li>
+                <li>Global product roadmap</li>
+                <li>Brand and reference designs</li>
+              </ul>
+            </div>
+            <div class="arch-split-col arch-split-col--ch">
+              <div class="arch-split-eye">What the channel actually controls</div>
+              <h4 class="arch-split-title">The distribution layer</h4>
+              <ul>
+                <li>Customer access and onboarding</li>
+                <li>Contract terms and pricing</li>
+                <li>Sublicensing decisions</li>
+                <li>Local engineering support</li>
+                <li>Customer data and demand signals</li>
+                <li>Compliance posture and roadmap framing</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>In IP, the channel can become a control surface. A distributor that controls customer access, contract terms, support, and pricing &mdash; and that does so under local law &mdash; can become powerful even without owning the underlying technology. That is the lens through which the Arm China story is best read.</p>
+
+          <p class="essay-line">In IP, distribution is a control surface. In China, that control surface is Arm China.</p>
+
+          <h2 id="sec-drama">3. The governance drama changed, but the structure remained</h2>
+
+          <p>The acute phase of the Arm China governance dispute was visible because Reuters and others covered it in detail. By 2022, Reuters reported that Arm China&rsquo;s board had appointed two new co-CEOs and that Arm had said the leadership change complied with Chinese law.<sup><a href="#fn3">3</a></sup> Reuters noted Wu had previously refused to step down after a 2020 board vote and that the dispute had complicated Arm&rsquo;s ability to audit the unit&rsquo;s financials.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>The leadership change matters, but it is not the whole story. The deeper structure &mdash; the bundle of contracts and equity that made Arm China the gatekeeper in the first place &mdash; was untouched by a change of CEOs. The reading that survives is simpler. The rogue-CEO drama was the symptom. The gatekeeper structure was the underlying condition.</p>
+
+          <p class="essay-line">The rogue-CEO drama was the symptom. The gatekeeper structure was the disease.</p>
+
+          <h2 id="sec-gate">4. Arm China is still the China gatekeeper</h2>
+
+          <p>The cleanest evidence for the 2026 reading sits inside Arm&rsquo;s own filings. Arm&rsquo;s FY2025 Form 20-F describes Arm China as Arm&rsquo;s primary access point to the PRC market for the foreseeable future, with substantially all PRC-related revenue earned through the Intellectual Property License Agreement (IPLA) with Arm China.<sup><a href="#fn2">2</a></sup> The 20-F describes Arm China as having certain exclusive rights to sublicense Arm standard IP offerings to PRC customers.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="arch-gate">
+            <div class="arch-gate-flow">
+              <div class="arch-gate-box arch-gate-box--src">
+                <div class="arch-gate-name">Arm Limited</div>
+                <div class="arch-gate-sub">Architecture license<br>CPU, GPU, NPU IP<br>Global roadmap</div>
+              </div>
+              <div class="arch-gate-arr">&rarr;</div>
+              <div class="arch-gate-box arch-gate-box--gate">
+                <div class="arch-gate-name">Arm China</div>
+                <div class="arch-gate-sub">IPLA sublicensing<br>Primary PRC access point<br>Local engineering support</div>
+              </div>
+              <div class="arch-gate-arr">&rarr;</div>
+              <div class="arch-gate-box arch-gate-box--dst">
+                <div class="arch-gate-name">PRC customers</div>
+                <div class="arch-gate-sub">Chip designers<br>OEMs and platforms<br>Automotive, mobile, edge, infra</div>
+              </div>
+            </div>
+            <div class="arch-gate-points">
+              <div class="arch-gate-point">Pricing</div>
+              <div class="arch-gate-point">Sublicensing</div>
+              <div class="arch-gate-point">Support</div>
+              <div class="arch-gate-point">Customer data</div>
+              <div class="arch-gate-point">Compliance</div>
+              <div class="arch-gate-point">Local roadmap</div>
+            </div>
+          </div>
+
+          <p>The structure is the point. Arm owns the architecture and the IP. Arm China owns the doorway into the market that uses it most heavily. Whatever the 2021 narrative looked like, the 2026 structure makes the gatekeeper concept literal rather than rhetorical.<sup><a href="#fn2">2</a></sup></p>
+
+          <p class="essay-line">Arm owns the architecture. Arm China owns the doorway.</p>
+
+          <h2 id="sec-ctrl">5. Arm does not directly control Arm China</h2>
+
+          <p>The next layer of the 20-F disclosure is the part that makes the gatekeeper framing structural rather than dramatic. Arm states that neither Arm nor SoftBank controls Arm China&rsquo;s operations.<sup><a href="#fn2">2</a></sup> Arm transferred its remaining equity interest in Arm China to a SoftBank subsidiary in March 2022.<sup><a href="#fn2">2</a></sup> Arm now holds a 10% non-voting interest in Acetone Limited, which represents an approximately 4.8% indirect ownership interest in Arm China, with no direct management rights.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="arch-own">
+            <div class="arch-own-row">
+              <div>
+                <div class="arch-own-label">Arm indirect ownership in Arm China</div>
+                <div class="arch-own-label-sub">10% non-voting in Acetone Limited<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-own-bar"><div class="arch-own-bar-fill" style="width: 4.8%;"></div></div>
+              <div class="arch-own-val">~4.8%</div>
+            </div>
+            <div class="arch-own-row">
+              <div>
+                <div class="arch-own-label">Direct management rights</div>
+                <div class="arch-own-label-sub">Per Arm&rsquo;s FY2025 20-F disclosure<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-own-bar"><div class="arch-own-bar-fill arch-own-bar-fill--gray" style="width: 2%;"></div></div>
+              <div class="arch-own-val">None</div>
+            </div>
+            <div class="arch-own-row">
+              <div>
+                <div class="arch-own-label">Practical China access via Arm China</div>
+                <div class="arch-own-label-sub">IPLA-based, substantially all PRC revenue<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-own-bar"><div class="arch-own-bar-fill arch-own-bar-fill--blue" style="width: 100%;"></div></div>
+              <div class="arch-own-val">~100%</div>
+            </div>
+          </div>
+
+          <p>The asymmetry is the point. The economic stake Arm holds in Arm China is small. The operational dependency on Arm China for access to the PRC market is large. The 2021 governance fight calmed down. The structural problem &mdash; Arm depending on a China gatekeeper it does not control &mdash; did not.<sup><a href="#fn2">2</a></sup></p>
+
+          <p class="essay-line">The governance fight calmed down. The structural dependency did not.</p>
+
+          <h2 id="sec-rev">6. The relationship is financially meaningful</h2>
+
+          <p>Arm&rsquo;s own filings quantify the size of the dependency. The FY2025 20-F discloses that revenues attributable to Arm China were approximately 17% of total revenue in FY2025, approximately 21% in FY2024, and approximately 24% in FY2023.<sup><a href="#fn2">2</a></sup> PRC revenues overall, including revenues earned indirectly through Arm China, accounted for approximately 19%, 22%, and 25% of Arm&rsquo;s total revenue in FY2025, FY2024, and FY2023 respectively.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="arch-rev">
+            <div class="arch-rev-grid">
+              <div class="arch-rev-cell">
+                <div class="arch-rev-fy">FY2023</div>
+                <div class="arch-rev-num">~24%</div>
+                <div class="arch-rev-sub">Revenue via Arm China<sup><a href="#fn2">2</a></sup><br>PRC overall ~25%</div>
+              </div>
+              <div class="arch-rev-cell">
+                <div class="arch-rev-fy">FY2024</div>
+                <div class="arch-rev-num">~21%</div>
+                <div class="arch-rev-sub">Revenue via Arm China<sup><a href="#fn2">2</a></sup><br>PRC overall ~22%</div>
+              </div>
+              <div class="arch-rev-cell">
+                <div class="arch-rev-fy">FY2025</div>
+                <div class="arch-rev-num">~17%</div>
+                <div class="arch-rev-sub">Revenue via Arm China<sup><a href="#fn2">2</a></sup><br>PRC overall ~19%</div>
+              </div>
+            </div>
+            <p class="arch-rev-foot">Share of total Arm revenue attributable to Arm China has declined as a percentage, but the absolute exposure remains material.<sup><a href="#fn2">2</a></sup></p>
+          </div>
+
+          <p>The percentage is moving in a direction that looks comforting in isolation. The absolute exposure is still meaningful, and concentration in a single channel matters more than its share of the overall mix suggests. A 17% revenue line that flows through one gatekeeper is not the same risk as a 17% revenue line spread across thousands of customers.</p>
+
+          <p class="essay-line">Arm China is smaller as a percentage than before, but still too important to ignore.</p>
+
+          <h2 id="sec-ipla">7. The agreement lasts for decades</h2>
+
+          <p>The most underappreciated detail in Arm&rsquo;s 20-F is the duration of the licensing relationship. Arm discloses that the IPLA with Arm China has an initial term running through April&nbsp;23,&nbsp;2048, with automatic 10-year renewals thereafter.<sup><a href="#fn2">2</a></sup> Within that structure, Arm China can sublicense Arm&rsquo;s standard IP offerings to PRC customers, and there are no material restrictions on the prices Arm China may set for sublicenses.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="arch-ipla">
+            <div class="arch-ipla-label">IPLA timeline &nbsp;&middot;&nbsp; Arm &harr; Arm China</div>
+            <div class="arch-ipla-track">
+              <div class="arch-ipla-bar"></div>
+              <div class="arch-ipla-tick" style="left: 0%;"><span class="arch-ipla-tick-label">2018 IPLA</span></div>
+              <div class="arch-ipla-tick" style="left: 30%;"><span class="arch-ipla-tick-label">2026 (today)</span></div>
+              <div class="arch-ipla-tick" style="left: 100%;"><span class="arch-ipla-tick-label">2048 base term + auto 10-year renewals</span></div>
+            </div>
+            <p class="arch-ipla-foot">Per Arm&rsquo;s FY2025 20-F, the IPLA term runs through April 23, 2048, with automatic consecutive 10-year renewals and no material restrictions on Arm China&rsquo;s sublicense pricing.<sup><a href="#fn2">2</a></sup></p>
+          </div>
+
+          <p>That is a multi-decade structure. It is not a reseller agreement that can be re-papered next quarter. The 2021 dispute happened in the early years of an arrangement that, by Arm&rsquo;s own filings, is intended to extend well into the second half of the century.</p>
+
+          <p class="essay-line">The China gatekeeper problem is embedded into the licensing model.</p>
+
+          <h2 id="sec-risk">8. The risk is no longer just legal, it is strategic</h2>
+
+          <p>Arm describes a specific bundle of operational risks tied to the Arm China relationship.<sup><a href="#fn2">2</a></sup> Arm depends on financial information provided by Arm China and has had past issues obtaining timely and accurate information. Arm has experienced late payments from Arm China. Arm is limited in its ability to monitor how Arm China protects Arm IP and customer data. Arm&rsquo;s contractual protections are, in practice, only as strong as visibility and enforcement allow.<sup><a href="#fn2">2</a></sup></p>
+
+          <p>The modern version of the 2021 concern is not simply &ldquo;Has someone stolen the files?&rdquo; It is a list of operational questions where the answers are harder to verify than in a normal arms-length supplier relationship.</p>
+
+          <div class="arch-risk">
+            <div class="arch-risk-label">The 2026 control surface &nbsp;&middot;&nbsp; what visibility actually means</div>
+            <div class="arch-risk-grid">
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Customer access</div>
+                <div class="arch-risk-sub">Who books which customer first</div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Local pricing</div>
+                <div class="arch-risk-sub">Sublicense price discretion<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Customer relationships</div>
+                <div class="arch-risk-sub">PRC firms&rsquo; direct contact path</div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Support and roadmap</div>
+                <div class="arch-risk-sub">How Arm IP is framed locally</div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Financial reporting</div>
+                <div class="arch-risk-sub">Audit visibility, payment timing<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">IP protection</div>
+                <div class="arch-risk-sub">How licensed IP is handled in PRC<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Demand signal</div>
+                <div class="arch-risk-sub">Who sees PRC demand first</div>
+              </div>
+              <div class="arch-risk-cell">
+                <div class="arch-risk-name">Local alternatives</div>
+                <div class="arch-risk-sub">Who benefits if RISC-V grows</div>
+              </div>
+            </div>
+          </div>
+
+          <p>None of these are unique to Arm. Any IP business with a concentrated regional distributor faces a version of the same surface. The point is that the language used in 2021 to describe the dispute can now be replaced with the language used in 2026 by Arm itself: a multi-decade IPLA, no direct management rights, limited visibility, primary PRC access point.<sup><a href="#fn2">2</a></sup> The shape did not change. It became the official record.</p>
+
+          <p class="essay-line">Arm can own the architecture and still lack full visibility into the China channel.</p>
+
+          <h2 id="sec-local">9. Arm China&rsquo;s local IP push matters more in the AI era</h2>
+
+          <p>The uploaded 2021 article also reported that Arm China was developing its own IP under the XPU banner, with NPU, SPU, ISP, and VPU blocks, and that it positioned this as an in-house IP roadmap rather than a pure Arm-Limited reseller story.<sup><a href="#fn1">1</a></sup> Arm China has continued to discuss self-developed product families publicly. Naming and scope should be treated with caution, but the broad direction Arm China itself describes has been consistent.<sup><a href="#fn6">6</a></sup></p>
+
+          <div class="arch-local">
+            <div class="arch-local-card">
+              <div class="arch-local-cat">Per Arm China<sup><a href="#fn6">6</a></sup></div>
+              <h3 class="arch-local-name">Zhouyi NPU</h3>
+              <div class="arch-local-body">Neural processing IP positioned for edge and embedded AI workloads.</div>
+            </div>
+            <div class="arch-local-card">
+              <div class="arch-local-cat">Per Arm China<sup><a href="#fn6">6</a></sup></div>
+              <h3 class="arch-local-name">Shanhai SPU</h3>
+              <div class="arch-local-body">Security processing IP positioned for trust and confidential-compute use cases.</div>
+            </div>
+            <div class="arch-local-card">
+              <div class="arch-local-cat">Per Arm China<sup><a href="#fn6">6</a></sup></div>
+              <h3 class="arch-local-name">Xingchen CPU</h3>
+              <div class="arch-local-body">Locally developed CPU IP positioned for PRC-focused product roadmaps.</div>
+            </div>
+            <div class="arch-local-card">
+              <div class="arch-local-cat">Per Arm China<sup><a href="#fn6">6</a></sup></div>
+              <h3 class="arch-local-name">Linglong multimedia</h3>
+              <div class="arch-local-body">Multimedia / image-pipeline IP positioned for camera, vision, and codec workloads.</div>
+            </div>
+          </div>
+
+          <div class="arch-caution">
+            <div class="arch-caution-label">Caution</div>
+            <h3 class="arch-caution-title">Treat product naming and scope as Arm China&rsquo;s own framing.</h3>
+            <p>The four families above are described as Arm China&rsquo;s self-developed IP based on its own materials.<sup><a href="#fn6">6</a></sup> Independent benchmarking and adoption data are limited. This essay treats them as Arm China&rsquo;s positioning rather than independently verified market position.</p>
+          </div>
+
+          <p>The strategic point is simple. The distributor did not remain only a distributor. It became an IP platform. In the AI era, a gatekeeper that also publishes its own NPU and CPU IP is not just a channel risk. It is an architectural risk, because every additional local design weakens the case that the channel is purely a conduit for Arm Limited.</p>
+
+          <p class="essay-line">The local distributor is trying to own more of the local architecture stack.</p>
+
+          <h2 id="sec-ec">10. Why export controls make the channel more strategic</h2>
+
+          <p>The geopolitical layer makes the gatekeeper question heavier. Arm&rsquo;s 20-F describes that U.S. and U.K. export-control regimes can require licenses for certain high-end processors going to PRC customers, that Arm&rsquo;s Neoverse V-series processors meet or exceed performance thresholds under those regimes, and that Arm has addressed some demand with other CPU cores that do not exceed those thresholds.<sup><a href="#fn2">2</a></sup></p>
+
+          <div class="arch-ec">
+            <div class="arch-ec-label">Architecture access under export controls (illustrative)</div>
+            <div class="arch-ec-grid">
+              <div class="arch-ec-cell"><div class="arch-ec-name">Mainstream CPU cores</div><div class="arch-ec-sub">Generally available to PRC customers</div></div>
+              <div class="arch-ec-cell"><div class="arch-ec-name">Mid-tier infra cores</div><div class="arch-ec-sub">Used to address demand under thresholds<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="arch-ec-cell arch-ec-cell--gated"><div class="arch-ec-name">Neoverse V-series</div><div class="arch-ec-sub">Meets or exceeds thresholds; licensing risk<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+          </div>
+
+          <p>The China channel is no longer just commercial. It is geopolitical. As more high-end compute becomes restricted, the value of the entity that controls the licensing path into China &mdash; both for what it can deliver and for what it has to refuse &mdash; increases.</p>
+
+          <p class="essay-line">The more restricted advanced compute becomes, the more strategic the China licensing channel becomes.</p>
+
+          <h2 id="sec-rv">11. RISC-V is the long-term architecture pressure</h2>
+
+          <div class="arch-rv">
+            <div class="arch-rv-label">Sovereignty option, not Arm replacement</div>
+            <h3 class="arch-rv-title">RISC-V as the long-term pressure</h3>
+            <p>RISC-V is an open instruction set architecture maintained by RISC-V International.<sup><a href="#fn8">8</a></sup> For PRC chip designers, it offers something Arm cannot: an architecture path that is not directly tied to a single foreign IP licensor and that comes without per-core architecture license fees.</p>
+            <p>That does not mean RISC-V replaces Arm in the short term. Arm&rsquo;s ecosystem, software maturity, verification flows, customer maturity, and existing investments are deep. RISC-V&rsquo;s software and tooling are still catching up for many high-end workloads.</p>
+            <p>The honest framing: RISC-V is a sovereignty option that grows in the background. It does not need to win to matter. It changes the negotiating position of every PRC customer that uses Arm IP today.</p>
+          </div>
+
+          <p class="essay-line">RISC-V is not an immediate Arm replacement. It is a sovereignty option.</p>
+
+          <h2 id="sec-grow">12. Arm is stronger now, which makes the gatekeeper problem bigger</h2>
+
+          <p>The strange feature of the 2026 Arm China story is that it gets more important precisely because Arm Limited&rsquo;s position is stronger. Arm&rsquo;s public materials describe a multi-segment ecosystem: smartphones, Edge AI, Physical AI for robotics and automotive, and Cloud AI through Neoverse and the data-centre roadmap.<sup><a href="#fn4">4</a></sup> The narrative is no longer simply &ldquo;phones run on Arm.&rdquo;</p>
+
+          <div class="arch-grow">
+            <div class="arch-grow-label">Arm&rsquo;s 2026 product surface (per Arm framing)</div>
+            <div class="arch-grow-grid">
+              <div class="arch-grow-cell"><div class="arch-grow-name">Smartphones</div><div class="arch-grow-sub">Mature foundation<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="arch-grow-cell"><div class="arch-grow-name">Edge AI</div><div class="arch-grow-sub">On-device inference<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="arch-grow-cell"><div class="arch-grow-name">Physical AI</div><div class="arch-grow-sub">Auto, robotics, embedded<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="arch-grow-cell"><div class="arch-grow-name">Cloud AI</div><div class="arch-grow-sub">Neoverse, data-centre roadmap<sup><a href="#fn4">4</a></sup></div></div>
+            </div>
+            <p class="arch-grow-foot">When Arm&rsquo;s product surface was mostly mobile, Arm China was a China-sales issue. When Arm&rsquo;s product surface includes edge, automotive, embedded, and cloud, Arm China becomes an architecture-control issue.<sup><a href="#fn4">4</a></sup></p>
+          </div>
+
+          <p>When Arm was mostly a smartphone-IP story, Arm China was a sales-line problem. In the AI era, with Arm IP touching cloud, edge, automotive, embedded systems, and infrastructure, the same channel becomes more consequential. The same gatekeeper now stands between Arm and a much bigger surface of Chinese demand.</p>
+
+          <p class="essay-line">Arm&rsquo;s success makes Arm China&rsquo;s gatekeeper role more valuable.</p>
+
+          <h2 id="sec-thesis">13. The actual 2026 thesis</h2>
+
+          <p>The correct claim here is not &ldquo;Arm China stole Arm.&rdquo; That language is too crude and was not the substance of even the 2021 article, which was careful to separate the question of confirmed IP theft from the question of practical control.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The correct claim is more structural. Arm China revealed a deeper semiconductor IP risk: losing control over distribution can become almost as serious as losing control over technology. The 2021 article was right to focus on the governance shock, the company chop, the independent branding, and Arm China&rsquo;s own IP ambitions. The 2026 update is even more structural. Arm&rsquo;s own filings show that Arm China remains independent, that Arm does not control it, that the IPLA runs deep into the future, and that Arm still depends on Arm China for access to the PRC market.<sup><a href="#fn2">2</a></sup> The heist framing aged into a gatekeeper problem.</p>
+
+          <p class="essay-pull">&ldquo;Arm China is not Arm&rsquo;s death sentence. It is Arm&rsquo;s China-control tax.&rdquo;</p>
+
+          <h2 id="sec-bear">14. What could break the thesis</h2>
+
+          <p>The thesis here is that the Arm China gatekeeper structure is durable and that the AI era makes it more important. There are honest reasons that reading could be wrong, or could become wrong on a timescale that matters.</p>
+
+          <div class="arch-counter">
+            <div class="arch-counter-label">Bear case &nbsp;&middot;&nbsp; reasons the gatekeeper problem could harden further</div>
+            <ol>
+              <li><strong>Independence drift.</strong> Arm China becomes more strategically independent over time.<sup><a href="#fn1">1</a></sup></li>
+              <li><strong>Self-sufficiency push.</strong> China&rsquo;s sovereignty agenda encourages domestic IP adoption inside the channel Arm depends on.</li>
+              <li><strong>Export-control friction.</strong> U.S. and U.K. controls reduce Arm&rsquo;s access to high-end PRC customers via Arm China.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Limited visibility.</strong> Audit, payment, IP, and customer-data visibility remain weaker than in normal supplier relationships.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Local-priority drift.</strong> Arm China prioritises local products or local policy goals over Arm&rsquo;s global product roadmap.</li>
+              <li><strong>Local IP maturity.</strong> Arm China&rsquo;s self-developed NPU, SPU, CPU, and multimedia IP become stronger and reduce reliance on Arm Limited.<sup><a href="#fn6">6</a></sup></li>
+              <li><strong>RISC-V optionality.</strong> RISC-V becomes more attractive to Chinese chipmakers, especially in cost-sensitive or sovereignty-sensitive segments.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Enforcement gap.</strong> Arm has limited direct ability to enforce operational behavior inside the entity that holds the IPLA.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Concentration risk.</strong> Even a smaller percentage exposure carries concentration risk because it flows through one gatekeeper.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">Arm can remain globally dominant and still pay a China-control tax.</p>
+
+          <h2 id="sec-bull">15. What could break the bear case</h2>
+
+          <p>There are equally honest reasons the bear case here could be too dark, and the gatekeeper structure could remain manageable for years.</p>
+
+          <div class="arch-counter arch-counter--bull">
+            <div class="arch-counter-label">Bull case &nbsp;&middot;&nbsp; reasons the gatekeeper structure stays workable</div>
+            <ol>
+              <li><strong>Ecosystem stickiness.</strong> Arm&rsquo;s ecosystem is extremely hard to replace across software, tools, and customer mature designs.</li>
+              <li><strong>Compatibility pull.</strong> Chinese chipmakers still benefit from Arm compatibility for global software, OS, and developer reach.</li>
+              <li><strong>Tooling depth.</strong> Arm&rsquo;s verification flows, support, and roadmap alignment are years ahead of most alternatives.</li>
+              <li><strong>Standard IP demand.</strong> Arm China still needs Arm&rsquo;s standard IP offerings to serve large parts of its PRC customer base.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Declining mix.</strong> PRC and Arm China revenues have declined as a share of Arm&rsquo;s total revenue from FY2023 to FY2025.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Global growth.</strong> Arm&rsquo;s global AI, cloud, automotive, edge, and embedded businesses are growing, diversifying the revenue base.<sup><a href="#fn4">4</a></sup></li>
+              <li><strong>RISC-V maturity gap.</strong> RISC-V faces real ecosystem maturity challenges in high-end and complex workloads.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Reduced drama.</strong> The Allen Wu chapter being closed enough by 2022 reduces the acute governance risk.<sup><a href="#fn3">3</a></sup></li>
+            </ol>
+          </div>
+
+          <h2 id="sec-watch">16. What to watch</h2>
+
+          <p>The honest position is that the gatekeeper structure is durable but the outcome over the next few years is open. These are the signals worth tracking.</p>
+
+          <div class="arch-watch">
+            <div class="arch-watch-label">Signals to track &nbsp;&middot;&nbsp; Arm China, IPLA, local IP, export controls, RISC-V</div>
+            <ul>
+              <li>Arm China revenue as a percentage of Arm total revenue<sup><a href="#fn2">2</a></sup></li>
+              <li>PRC revenue share, including indirect via Arm China<sup><a href="#fn2">2</a></sup></li>
+              <li>Arm China payment timing and reporting cadence<sup><a href="#fn2">2</a></sup></li>
+              <li>Arm China audit and financial reporting visibility<sup><a href="#fn2">2</a></sup></li>
+              <li>Arm China local IP roadmap and traction<sup><a href="#fn6">6</a></sup></li>
+              <li>Zhouyi NPU adoption with PRC chip designers<sup><a href="#fn6">6</a></sup></li>
+              <li>Shanhai SPU adoption in security workloads<sup><a href="#fn6">6</a></sup></li>
+              <li>Xingchen CPU adoption against Arm standard cores<sup><a href="#fn6">6</a></sup></li>
+              <li>Arm China developer ecosystem activity</li>
+              <li>Arm Neoverse licensing restrictions into China<sup><a href="#fn2">2</a></sup></li>
+              <li>U.S. and U.K. export-control updates relevant to processors<sup><a href="#fn9">9</a></sup></li>
+              <li>Chinese RISC-V adoption rate at platform players<sup><a href="#fn8">8</a></sup></li>
+              <li>Hyperscaler and automotive architecture choices in PRC</li>
+              <li>Arm data-centre royalty growth<sup><a href="#fn4">4</a></sup></li>
+              <li>Arm licensing growth outside China<sup><a href="#fn4">4</a></sup></li>
+              <li>Whether Arm can reduce dependency on Arm China over time</li>
+              <li>Whether PRC customers shift toward local IP alternatives<sup><a href="#fn6">6</a></sup></li>
+              <li>Whether Arm China stays aligned with Arm&rsquo;s global strategy</li>
+            </ul>
+          </div>
+
+          <h2 id="sec-final">17. The architecture gatekeeper</h2>
+
+          <p>The Arm China story is not just about a rogue CEO.</p>
+
+          <p>It is about control over the architecture channel. Arm owns one of the most important computing ecosystems in the world. But its access to China runs through an independent entity it does not directly control.<sup><a href="#fn2">2</a></sup> In 2021, that looked like a dramatic corporate heist.<sup><a href="#fn1">1</a></sup> In 2026, it looks like something more durable: the architecture gatekeeper problem.</p>
+
+          <p>If there is a lesson for the rest of the semiconductor IP world, it is this. The technology is hard. The licence channel is also hard. When the channel is concentrated, governed locally, and extends to 2048, the channel becomes its own form of architecture &mdash; one that does not always sit on the same side of the table as the IP owner.<sup><a href="#fn2">2</a></sup></p>
+
+          <h2 id="sec-glossary">18. Glossary</h2>
+
+          <div class="arch-terms">
+            <div class="arch-terms-label">Quick definitions used in this essay</div>
+            <dl>
+              <dt>Semiconductor IP</dt><dd>Reusable chip design blocks licensed to chip companies.</dd>
+              <dt>ISA</dt><dd>Instruction set architecture; the interface between software and hardware.</dd>
+              <dt>CPU core</dt><dd>Processor design block used inside chips.</dd>
+              <dt>NPU</dt><dd>Neural processing unit for AI workloads.</dd>
+              <dt>SPU</dt><dd>Security processing unit.</dd>
+              <dt>ISP</dt><dd>Image signal processor.</dd>
+              <dt>VPU</dt><dd>Video processing unit.</dd>
+              <dt>JV</dt><dd>Joint venture; a jointly owned operating entity.</dd>
+              <dt>Company chop</dt><dd>Official company stamp in China that can authorise corporate actions.</dd>
+              <dt>Sublicense</dt><dd>License granted by one licensee to another customer.</dd>
+              <dt>IPLA</dt><dd>Intellectual Property License Agreement; in this essay, the Arm &harr; Arm China contract.</dd>
+              <dt>PRC</dt><dd>People&rsquo;s Republic of China.</dd>
+              <dt>RISC-V</dt><dd>Open instruction set architecture maintained by RISC-V International.</dd>
+              <dt>Neoverse</dt><dd>Arm&rsquo;s infrastructure / server CPU IP family.</dd>
+              <dt>Export controls</dt><dd>Laws restricting transfer of certain technologies to specific countries or entities.</dd>
+              <dt>Gatekeeper</dt><dd>Entity controlling access between a technology owner and a market or customer base.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <div class="essay-closer">
+            <p>This piece is original 2026 analysis. It uses the uploaded 2021 SemiAnalysis article only as a cited historical anchor for the 2021 critique, framed in this essay&rsquo;s own words. Specific financial and structural disclosures are sourced from Arm&rsquo;s FY2025 Form 20-F and FY2026 results. Reuters and RISC-V International are used as supporting references. No SemiAnalysis text, charts, or images are reproduced. No third-party logos are used. This is not investment advice. No Arm, SoftBank, Nvidia, or other security is being recommended.</p>
+          </div>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Uploaded SemiAnalysis PDF, Dylan Patel (SemiAnalysis), August 2021. <em>The Semiconductor Heist Of The Century &nbsp;|&nbsp; Arm China Has Gone Completely Rogue, Operating As An Independent Company With Inhouse IP/R&amp;D</em>. Used in this essay only as a historical anchor for the 2021 thesis, framed in the essay&rsquo;s own words. The piece reported the SoftBank acquisition of Arm in 2016, the 2018 sale of a 51% stake in Arm China to a Chinese consortium for ~USD 775M, Arm China&rsquo;s exclusive PRC distribution rights, the Allen Wu removal dispute, the role of the company chop, the security blocking of Arm representatives, Arm China&rsquo;s independent branding, claims of &gt;20B cumulative shipments, &gt;90 partners, 29 in mass production, a 400+ person R&amp;D team, and the XPU/NPU/SPU/ISP/VPU local IP roadmap. The article was careful to distinguish loss of control over Arm China from confirmed theft of Arm&rsquo;s underlying IP. Not reproduced.</p>
+            <p id="fn2"><sup>2</sup> Arm Holdings plc, <a href="https://www.sec.gov/Archives/edgar/data/1973239/000197323925000016/arm-20250331.htm" target="_blank" rel="noopener">Form 20-F for fiscal year ended 31 March 2025</a>, U.S. Securities and Exchange Commission filing. Used for: the IPLA being the channel for substantially all PRC-related revenue; Arm China being Arm&rsquo;s primary access point to the PRC market for the foreseeable future; certain exclusive rights to sublicense Arm standard IP offerings to PRC customers; that neither Arm nor SoftBank controls Arm China&rsquo;s operations; the March 2022 transfer of Arm&rsquo;s remaining equity interest in Arm China to a SoftBank subsidiary; Arm&rsquo;s 10% non-voting interest in Acetone Limited, representing ~4.8% indirect ownership of Arm China; Arm China revenue at ~17% / 21% / 24% of total revenue in FY2025 / FY2024 / FY2023; PRC overall revenue at ~19% / 22% / 25%; the IPLA initial term running through 23 April 2048 with automatic 10-year renewals and no material restrictions on Arm China&rsquo;s sublicense pricing; audit, payment, IP-protection, and customer-data visibility risks; and the U.S. / U.K. export-control framing including Neoverse V-series threshold disclosure. Numbers quoted in the essay are described as Arm&rsquo;s own filing disclosures.</p>
+            <p id="fn3"><sup>3</sup> Reuters, 2022. Public reporting on Arm China appointing two new co-CEOs to replace Allen Wu, Arm&rsquo;s statement that the leadership change complied with Chinese law, prior context of Wu&rsquo;s refusal to step down after the 2020 board vote, and the resulting impact on Arm&rsquo;s ability to audit the unit&rsquo;s financials. Used in this essay only to mark the close of the acute 2020&ndash;21 governance phase; framing in the essay treats this as the symptom phase ending, not the structural problem ending.</p>
+            <p id="fn4"><sup>4</sup> Arm Holdings plc, FY2026 results commentary. Used for Arm&rsquo;s public product framing across smartphones, Edge AI, Physical AI, and Cloud AI, including the Neoverse data-centre roadmap. Where specific figures are referenced in this essay, they are described as Arm&rsquo;s own framing rather than independent benchmarks. The essay does not quote precise revenue figures from FY2026 results.</p>
+            <p id="fn5"><sup>5</sup> Arm Holdings plc IPO / F-1 era disclosures. Used as background context for the original China risk disclosure language and Arm China structure; the essay relies on the FY2025 20-F (fn2) for current quantitative claims.</p>
+            <p id="fn6"><sup>6</sup> Arm China (&#23433;&#35851;&#31185;&#25216;) official materials. Used as the source for product-family naming and positioning of Zhouyi NPU, Shanhai SPU, Xingchen CPU, and Linglong multimedia IP. Treated in this essay as Arm China&rsquo;s own positioning rather than independently verified market data, with an explicit caution card to that effect.</p>
+            <p id="fn7"><sup>7</sup> Arm China developer ecosystem references. Used for general framing of Arm China&rsquo;s self-published developer tooling around the Zhouyi software stack (model zoo, drivers, parsers, optimisers, framework integrations) without naming specific repositories unless verified. The essay describes ecosystem activity at a general level, not at a per-repository level.</p>
+            <p id="fn8"><sup>8</sup> RISC-V International. Used for general RISC-V framing as an open instruction set architecture and as a sovereignty option for PRC chip designers. The essay does not claim near-term replacement of Arm by RISC-V; it treats RISC-V as a long-term pressure that changes the negotiating position of PRC customers using Arm IP.</p>
+            <p id="fn9"><sup>9</sup> U.S. and U.K. export-control framework, summarised via Arm&rsquo;s FY2025 20-F (fn2) and the broader public framework documents from the U.S. Bureau of Industry and Security and equivalent U.K. bodies. Used for the framing of advanced-processor licensing restrictions on PRC customers, including Neoverse V-series threshold context.</p>
+          </div>
+
+          <div class="arch-fr">
+            <div class="arch-fr-label">Further reading on this site</div>
+            <ul>
+              <li><a href="./nvidia-ai-factory-arm.html">Nvidia Didn&rsquo;t Buy Arm. It Built the AI Factory Anyway.</a> &nbsp;&middot;&nbsp; on Arm&rsquo;s positioning after the failed Nvidia acquisition and the rise of the AI factory.</li>
+              <li><a href="./semiconductor-substitution-ladder.html">The Semiconductor Substitution Ladder</a> &nbsp;&middot;&nbsp; on where China&rsquo;s domestic tools and IP can substitute and where they still cannot.</li>
+              <li><a href="./foundry-toll-road.html">The Foundry Toll Road</a> &nbsp;&middot;&nbsp; on TSMC&rsquo;s pricing power as the manufacturing gatekeeper of the AI era.</li>
+              <li><a href="./foundry-trust-test.html">The Foundry Trust Test</a> &nbsp;&middot;&nbsp; on Intel Foundry, committed external wafer volume, and the trust gap with hyperscalers.</li>
+              <li><a href="./custom-ai-hardware-trap.html">The Custom AI Hardware Trap</a> &nbsp;&middot;&nbsp; on Tesla Dojo as a case study in system-level discipline for custom AI hardware.</li>
+              <li><a href="../../accelerated-computing-atlas/">Accelerated Computing Atlas</a> &nbsp;&middot;&nbsp; interactive atlas of the Nvidia accelerated-computing ecosystem.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="article-nav" aria-label="Article navigation"></nav>
+
+  <script src="../../script.js?v=10"></script>
+  <script src="../blog.js?v=46"></script>
+</body>
+</html>
