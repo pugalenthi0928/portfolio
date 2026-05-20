@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Power Efficiency Layer | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of Power Integrations, PowiGaN, EVs, grid modernization, renewable energy, industrial power, and 800 VDC AI data-center power infrastructure.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/power-efficiency-layer.html">
+  <meta property="og:title" content="The Power Efficiency Layer | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of Power Integrations, PowiGaN, EVs, grid modernization, renewable energy, industrial power, and 800 VDC AI data-center power infrastructure.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/power-efficiency-layer.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Power Integrations">
+  <meta property="article:tag" content="PowiGaN">
+  <meta property="article:tag" content="GaN">
+  <meta property="article:tag" content="Power Semiconductors">
+  <meta property="article:tag" content="AI Data Centers">
+  <meta property="article:tag" content="800 VDC">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="EVs">
+  <meta property="article:tag" content="Grid Modernization">
+  <meta property="article:tag" content="Renewable Energy">
+  <meta property="article:tag" content="Battery Storage">
+  <meta property="article:tag" content="Gate Drivers">
+  <meta property="article:tag" content="SiC">
+  <meta property="article:tag" content="IGBT">
+  <meta property="article:tag" content="Industrial Power">
+  <meta property="article:tag" content="Electrification">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Power Efficiency Layer | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of Power Integrations, PowiGaN, EVs, grid modernization, renewable energy, industrial power, and 800 VDC AI data-center power infrastructure.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Power Efficiency Layer",
+    "description": "An original 2026 analysis of Power Integrations, PowiGaN, EVs, grid modernization, renewable energy, industrial power, and 800 VDC AI data-center power infrastructure.",
+    "url": "https://pugalenthimagendran.com/blog/posts/power-efficiency-layer.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/power-efficiency-layer.html",
+    "keywords": "Power Integrations, PowiGaN, GaN, Power Semiconductors, AI Data Centers, 800 VDC, Nvidia, EVs, Grid Modernization, Renewable Energy, Battery Storage, Gate Drivers, SiC, IGBT, Industrial Power, Electrification"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       POWER EFFICIENCY LAYER POST, scoped under .essay-pel
+       ============================================ */
+    .essay-pel {
+      --pel-accent: #F0784A;
+      --pel-accent-soft: rgba(240,120,74,0.10);
+      --pel-accent-faint: rgba(240,120,74,0.04);
+      --pel-bd: rgba(255,255,255,0.08);
+      --pel-bd-soft: rgba(255,255,255,0.05);
+      --pel-cool: #6CBFE0;
+      --pel-cool-soft: rgba(108,191,224,0.10);
+      --pel-purple: #B794F4;
+      --pel-purple-soft: rgba(183,148,244,0.10);
+      --pel-green: #5DCAA5;
+      --pel-green-soft: rgba(93,202,165,0.10);
+      --pel-amber: #E8B468;
+      --pel-amber-soft: rgba(232,180,104,0.10);
+      --pel-red: #E07A8B;
+      --pel-red-soft: rgba(224,122,139,0.10);
+    }
+
+    .pel-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .pel-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .pel-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .pel-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .pel-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--pel-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .pel-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .pel-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    .pel-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--pel-bd); background: linear-gradient(180deg, var(--pel-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .pel-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pel-accent); margin-bottom: 14px; }
+    .pel-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--pel-bd-soft); line-height: 1.6; }
+
+    .pel-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--pel-accent); background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .pel-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pel-accent); margin-bottom: 10px; }
+    .pel-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Frame shift split: ESG vs power infrastructure */
+    .pel-frame { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .pel-frame-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-frame-col--old { background: linear-gradient(180deg, var(--pel-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-frame-col--old .pel-frame-eyebrow { color: var(--pel-cool); }
+    .pel-frame-col--new { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-frame-col--new .pel-frame-eyebrow { color: var(--pel-accent); }
+    .pel-frame-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .pel-frame-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .pel-frame-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .pel-frame-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .pel-frame-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .pel-frame-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Hidden power layer flow */
+    .pel-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; align-items: stretch; margin: 1rem 0 0; }
+    .pel-flow-step { padding: 14px 10px; border-radius: 8px; border: 1px solid var(--pel-bd); background: var(--bg-alt); text-align: center; }
+    .pel-flow-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--pel-accent); margin-bottom: 4px; }
+    .pel-flow-name { font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 2px; letter-spacing: -0.005em; }
+    .pel-flow-sub { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .pel-flow-step--in { background: linear-gradient(180deg, var(--pel-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-flow-step--conv { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-flow-step--iso { background: linear-gradient(180deg, var(--pel-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .pel-flow-step--reg { background: linear-gradient(180deg, var(--pel-amber-soft) 0%, transparent 70%), var(--pel-amber-soft), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .pel-flow-step--load { background: linear-gradient(180deg, var(--pel-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* GaN evolution timeline */
+    .pel-evo { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .pel-evo-card { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-evo-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pel-accent); margin-bottom: 4px; }
+    .pel-evo-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; line-height: 1.2; }
+    .pel-evo-body { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+    .pel-evo-card--a { background: linear-gradient(180deg, var(--pel-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-evo-card--b { background: linear-gradient(180deg, var(--pel-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .pel-evo-card--c { background: linear-gradient(180deg, var(--pel-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .pel-evo-card--d { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-evo-card--e { background: linear-gradient(180deg, var(--pel-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* PowiGaN ladder */
+    .pel-ladder { display: flex; flex-direction: column; gap: 6px; max-width: 480px; margin: 1rem auto 0; }
+    .pel-rung { display: grid; grid-template-columns: 80px 1fr 140px; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-rung-v { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--pel-accent); }
+    .pel-rung-name { font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .pel-rung-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; text-align: right; }
+    .pel-rung--1 { background: linear-gradient(90deg, var(--pel-cool-soft), transparent 60%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-rung--2 { background: linear-gradient(90deg, var(--pel-purple-soft), transparent 60%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .pel-rung--3 { background: linear-gradient(90deg, var(--pel-amber-soft), transparent 60%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .pel-rung--4 { background: linear-gradient(90deg, var(--pel-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--pel-accent); }
+
+    /* 800 VDC architecture explainer */
+    .pel-vdc { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; gap: 10px; margin: 1rem 0 0; }
+    .pel-vdc-card { padding: 18px 16px 14px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); text-align: center; }
+    .pel-vdc-card--old { background: linear-gradient(180deg, var(--pel-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-vdc-card--new { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-vdc-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .pel-vdc-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--pel-accent); line-height: 1; margin-bottom: 6px; }
+    .pel-vdc-card--old .pel-vdc-num { color: var(--pel-cool); }
+    .pel-vdc-card--new .pel-vdc-num { color: var(--pel-accent); }
+    .pel-vdc-label { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.4; }
+    .pel-vdc-arrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-tertiary); text-align: center; letter-spacing: 0.1em; }
+
+    /* Charger vs AI factory efficiency compare */
+    .pel-eff { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .pel-eff-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-eff-col--small { background: linear-gradient(180deg, var(--pel-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .pel-eff-col--small .pel-eff-eyebrow { color: var(--pel-cool); }
+    .pel-eff-col--big { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-eff-col--big .pel-eff-eyebrow { color: var(--pel-accent); }
+    .pel-eff-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+    .pel-eff-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .pel-eff-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* Stat row */
+    .pel-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .pel-stat-card { padding: 13px 10px; border-radius: 8px; border: 1px solid var(--pel-bd); background: var(--bg-alt); text-align: center; }
+    .pel-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--pel-accent); line-height: 1.1; }
+    .pel-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .pel-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--pel-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--pel-accent-faint); }
+
+    /* EV / grid / renewables application map */
+    .pel-app { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .pel-app-card { padding: 12px 12px 10px; border-radius: 8px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-app-cat { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--pel-accent); margin-bottom: 4px; }
+    .pel-app-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .pel-app-body { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Gate driver explainer */
+    .pel-gate { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; gap: 10px; margin: 1rem 0 0; }
+    .pel-gate-card { padding: 16px 14px 14px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); text-align: center; }
+    .pel-gate-card--driver { background: linear-gradient(180deg, var(--pel-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--pel-accent); }
+    .pel-gate-card--module { background: linear-gradient(180deg, var(--pel-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .pel-gate-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .pel-gate-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .pel-gate-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.5; color: var(--color-text-secondary); }
+    .pel-gate-arrow { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--pel-accent); text-align: center; }
+
+    /* Competitive matrix */
+    .pel-matrix { margin: 1rem 0 0; border-radius: 10px; border: 1px solid var(--pel-bd); overflow: hidden; background: var(--bg-alt); }
+    .pel-matrix-head, .pel-matrix-row { display: grid; grid-template-columns: 180px 1fr; gap: 0; }
+    .pel-matrix-head > div { padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); border-bottom: 0.5px solid var(--pel-bd-soft); }
+    .pel-matrix-head > div + div { border-left: 0.5px solid var(--pel-bd-soft); color: var(--pel-accent); }
+    .pel-matrix-row { border-top: 0.5px solid var(--pel-bd-soft); }
+    .pel-matrix-row:first-of-type { border-top: none; }
+    .pel-matrix-row > div { padding: 12px 16px; font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .pel-matrix-row > div + div { border-left: 0.5px solid var(--pel-bd-soft); }
+    .pel-matrix-row > div:first-child { font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-primary); font-weight: 500; letter-spacing: -0.005em; }
+
+    /* Caution */
+    .pel-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--pel-amber); background: linear-gradient(180deg, var(--pel-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .pel-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--pel-amber); margin-bottom: 8px; }
+    .pel-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .pel-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .pel-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .pel-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .pel-terms dl { margin: 0; display: grid; grid-template-columns: 160px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .pel-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--pel-accent); padding-top: 2px; }
+    .pel-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .pel-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .pel-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .pel-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--pel-bd-soft); }
+    .pel-counter li:last-child { border-bottom: none; }
+    .pel-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--pel-accent); }
+    .pel-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .pel-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--pel-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .pel-counter--bull li::before { color: var(--pel-green); }
+
+    .pel-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--pel-bd); background: var(--bg-alt); }
+    .pel-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .pel-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .pel-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--pel-bd-soft); }
+    .pel-watch li:last-child, .pel-watch li:nth-last-child(2) { border-bottom: none; }
+    .pel-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--pel-accent); background: transparent; }
+
+    /* Further reading */
+    .pel-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .pel-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .pel-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .pel-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .pel-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .pel-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .pel-toc ol { grid-template-columns: 1fr; }
+      .pel-frame, .pel-eff { grid-template-columns: 1fr; }
+      .pel-flow, .pel-evo { grid-template-columns: repeat(2, 1fr); }
+      .pel-app { grid-template-columns: repeat(2, 1fr); }
+      .pel-vdc, .pel-gate { grid-template-columns: 1fr; gap: 6px; }
+      .pel-vdc-arrow, .pel-gate-arrow { padding: 4px 0; }
+      .pel-stat-row { grid-template-columns: repeat(2, 1fr); }
+      .pel-matrix-head, .pel-matrix-row { grid-template-columns: 1fr; }
+      .pel-matrix-head > div + div, .pel-matrix-row > div + div { border-left: none; border-top: 0.5px solid var(--pel-bd-soft); }
+      .pel-terms dl { grid-template-columns: 130px 1fr; }
+      .pel-watch ul { grid-template-columns: 1fr; }
+      .pel-rung { grid-template-columns: 60px 1fr; }
+      .pel-rung-tag { display: none; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .pel-flow, .pel-evo, .pel-app, .pel-stat-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <article class="article essay-format essay-pel">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 036 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Power Integrations</span>
+          <span class="tag">PowiGaN</span>
+          <span class="tag">GaN</span>
+          <span class="tag">AI Data Centers</span>
+          <span class="tag">800 VDC</span>
+          <span class="tag">Nvidia</span>
+          <span class="tag">EVs</span>
+          <span class="tag">Renewables</span>
+          <span class="tag">Battery Storage</span>
+          <span class="tag">Gate Drivers</span>
+          <span class="tag">SiC</span>
+          <span class="tag">IGBT</span>
+          <span class="tag">Industrial Power</span>
+        </div>
+
+        <h1 class="essay-hed">The Power <em>Efficiency Layer</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why Power Integrations sits at the quiet intersection of GaN, EVs, grids, and AI data-center power.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">Power Integrations was once easy to describe as an ESG semiconductor story. That is now too small. EVs, renewables, grids, appliances, industrial automation, battery storage, and AI factories all need denser, more efficient, more reliable power conversion. Power Integrations does not sell the headline chip. It sells the hidden layer that makes electricity usable.</p>
+
+          <nav class="pel-toc" aria-label="Article contents">
+            <div class="pel-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis was about integration</a></li>
+              <li><a href="#sec-hidden">Power conversion is the hidden layer</a></li>
+              <li><a href="#sec-integration">Integration is the product</a></li>
+              <li><a href="#sec-gan">GaN moved from chargers into infrastructure</a></li>
+              <li><a href="#sec-ai">AI data centers made power conversion strategic</a></li>
+              <li><a href="#sec-power">The power problem is real</a></li>
+              <li><a href="#sec-industrial">Industrial is carrying more of the story</a></li>
+              <li><a href="#sec-ev">EVs, renewables, and grids still matter</a></li>
+              <li><a href="#sec-gate">Gate drivers are the SiC / IGBT wedge</a></li>
+              <li><a href="#sec-esg">Why this is not just ESG anymore</a></li>
+              <li><a href="#sec-comp">Competitive landscape</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The power efficiency layer</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, Power Integrations looked like an ESG semiconductor story. Efficient chargers. GaN power supplies. Electric vehicles. Renewable energy. High-voltage gate drivers. Power-efficiency regulation. That was the old frame.</p>
+
+          <p>The uploaded SemiAnalysis article argued that Power Integrations was one of the cleaner semiconductor exposures to electrification and energy efficiency. The company did not make GPUs or CPUs or memory. It made the chips and systems that help electricity move through products with less waste, fewer components, and higher reliability.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>In 2026, that story is bigger. Power efficiency is no longer just an ESG label. It is infrastructure. The world is building EVs, solar farms, battery storage, HVDC grids, efficient appliances, industrial automation, and AI factories. Every one of those systems has the same hidden problem: electricity has to be converted, isolated, switched, protected, and delivered efficiently.</p>
+
+          <p class="essay-line">That is the Power Integrations story.</p>
+
+          <figure class="pel-fig" aria-label="ESG story vs power infrastructure story">
+            <div class="pel-fig-label">Diagram &middot; ESG story vs power infrastructure story</div>
+            <div class="pel-frame">
+              <div class="pel-frame-col pel-frame-col--old">
+                <div class="pel-frame-eyebrow">2021 framing</div>
+                <h3 class="pel-frame-title">ESG semiconductor exposure</h3>
+                <ul>
+                  <li><strong>Lens</strong> &middot; green-energy compliance / regulation.<sup><a href="#fn1">1</a></sup></li>
+                  <li><strong>Use cases</strong> &middot; chargers, appliances, efficiency rules.</li>
+                  <li><strong>Risk</strong> &middot; ESG label without infrastructure substance.</li>
+                </ul>
+              </div>
+              <div class="pel-frame-col pel-frame-col--new">
+                <div class="pel-frame-eyebrow">2026 framing</div>
+                <h3 class="pel-frame-title">Power infrastructure layer</h3>
+                <ul>
+                  <li><strong>Lens</strong> &middot; power conversion as a hard constraint.<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup></li>
+                  <li><strong>Use cases</strong> &middot; EVs, grids, storage, AI factories, industrial drives.<sup><a href="#fn2">2</a></sup><sup><a href="#fn4">4</a></sup></li>
+                  <li><strong>Stakes</strong> &middot; rack density, range, copper, reliability, decarbonisation.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original split. The lens shifts from compliance to infrastructure.</div>
+          </figure>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>Power Integrations is a power-efficiency layer for electrification. The 2021 thesis was right that GaN, SiC gate drivers, EVs, renewables, chargers, and efficiency regulation made the company strategically interesting. The 2026 update is bigger: AI data centers have made power conversion part of the compute-scaling problem. Power Integrations now sits at the intersection of high-voltage GaN, industrial power, EV content, grid modernisation, battery storage, and 800 VDC AI-factory architecture.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis was about integration</h2>
+
+          <p>In August 2021, Dylan Patel published a SemiAnalysis piece framing Power Integrations as a semiconductor exposure to EVs, green energy, and power-efficiency regulation. The deeper insight was integration: where competitors often required customers to combine many separate resistors, capacitors, transformers, connectors, ICs, and MOSFETs, Power Integrations offered integrated power-conversion solutions that reduce BOM complexity, design time, engineering burden, and reliability risk. The piece connected the company to GaN chargers, high-voltage gate drivers for IGBT and SiC modules, offshore wind, railways, EV charging, solar, UPS, medical, welding, and industrial motors, with EV content as a particularly large market.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="pel-thesis">
+            <div class="pel-thesis-label">2021 thesis</div>
+            <p class="pel-thesis-text">Power Integrations was not only a green semiconductor exposure. It was an integration story: fewer components, less power loss, simpler power design, and exposure to electrification.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-hidden">II. Power conversion is the hidden layer</h2>
+
+          <p>Almost every electronic system needs power conversion. Electricity has to be stepped up, stepped down, rectified, isolated, switched, protected, regulated, and delivered with minimal heat and loss. Power conversion is invisible when it works. It becomes expensive when it fails.</p>
+
+          <figure class="pel-fig" aria-label="The hidden power layer">
+            <div class="pel-fig-label">Diagram &middot; The hidden power layer</div>
+            <div class="pel-flow">
+              <div class="pel-flow-step pel-flow-step--in"><div class="pel-flow-num">01</div><div class="pel-flow-name">Source</div><div class="pel-flow-sub">grid / battery / solar</div></div>
+              <div class="pel-flow-step pel-flow-step--conv"><div class="pel-flow-num">02</div><div class="pel-flow-name">Conversion</div><div class="pel-flow-sub">AC&hairsp;&harr;&hairsp;DC, DC&hairsp;&harr;&hairsp;DC</div></div>
+              <div class="pel-flow-step pel-flow-step--iso"><div class="pel-flow-num">03</div><div class="pel-flow-name">Isolation</div><div class="pel-flow-sub">safety, reliability</div></div>
+              <div class="pel-flow-step pel-flow-step--reg"><div class="pel-flow-num">04</div><div class="pel-flow-name">Regulation</div><div class="pel-flow-sub">voltage / current shape</div></div>
+              <div class="pel-flow-step pel-flow-step--load"><div class="pel-flow-num">05</div><div class="pel-flow-name">Load</div><div class="pel-flow-sub">phone, EV, GPU, motor</div></div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original five-stage flow. Power Integrations sells into the conversion, isolation, and regulation layers.</div>
+          </figure>
+
+          <p class="essay-line">Power Integrations does not sell the headline chip. It sells the hidden layer that makes the headline chip usable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-integration">III. Integration is the product</h2>
+
+          <p>The 2021 SemiAnalysis piece argued that customers building power conversion otherwise need many separate resistors, capacitors, transformers, connectors, ICs, and MOSFETs across a custom PCB, while Power Integrations consolidates that surface with system / application know-how, high-voltage semiconductor technology, power-package innovation, and integrated process technology.<sup><a href="#fn1">1</a></sup> Power Integrations&rsquo; current investor materials carry the same framing into 2026 with examples such as SCALE-EV reducing component count materially and InnoSwitch-style integration as the company&rsquo;s product DNA.<sup><a href="#fn2">2</a></sup></p>
+
+          <p class="essay-line">The more complex power systems become, the more valuable integration becomes.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-gan">IV. GaN moved from chargers into infrastructure</h2>
+
+          <p>The 2021 piece spent meaningful space on GaN chargers, smaller laptop and phone adapters, higher efficiency, and improved power density.<sup><a href="#fn1">1</a></sup> Power Integrations&rsquo; 2026 investor materials extend the same technology into much higher-voltage territory, with a PowiGaN roadmap that the company frames at <span class="pel-stat">750V</span>, <span class="pel-stat">900V</span>, <span class="pel-stat">1250V</span>, and <span class="pel-stat">1700V</span>, with 1250V and 1700V positioned for next-generation 800 VDC power architectures.<sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="pel-fig" aria-label="GaN evolution timeline">
+            <div class="pel-fig-label">Diagram &middot; GaN evolution: charger to AI factory</div>
+            <div class="pel-evo">
+              <div class="pel-evo-card pel-evo-card--a"><div class="pel-evo-cat">2018&ndash;21</div><h3 class="pel-evo-name">Phone charger</h3><div class="pel-evo-body">smaller adapters, USB-C PD<sup><a href="#fn1">1</a></sup></div></div>
+              <div class="pel-evo-card pel-evo-card--b"><div class="pel-evo-cat">2021&ndash;23</div><h3 class="pel-evo-name">Laptop adapter</h3><div class="pel-evo-body">denser USB-C laptop bricks<sup><a href="#fn1">1</a></sup></div></div>
+              <div class="pel-evo-card pel-evo-card--c"><div class="pel-evo-cat">2023&ndash;25</div><h3 class="pel-evo-name">Industrial aux</h3><div class="pel-evo-body">factory auxiliary power, appliances<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="pel-evo-card pel-evo-card--d"><div class="pel-evo-cat">2025&ndash;27</div><h3 class="pel-evo-name">EV / grid support</h3><div class="pel-evo-body">renewable, BMS, charging support<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="pel-evo-card pel-evo-card--e"><div class="pel-evo-cat">2026+</div><h3 class="pel-evo-name">800 VDC AI factory</h3><div class="pel-evo-body">1250V / 1700V PowiGaN<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original arc. Years are approximate based on company materials and industry coverage.</div>
+          </figure>
+
+          <figure class="pel-fig" aria-label="PowiGaN voltage ladder">
+            <div class="pel-fig-label">Diagram &middot; PowiGaN voltage ladder</div>
+            <div class="pel-ladder">
+              <div class="pel-rung pel-rung--1"><div class="pel-rung-v">750V</div><div class="pel-rung-name">High-voltage power supplies</div><div class="pel-rung-tag">established</div></div>
+              <div class="pel-rung pel-rung--2"><div class="pel-rung-v">900V</div><div class="pel-rung-name">Wider industrial reach</div><div class="pel-rung-tag">established</div></div>
+              <div class="pel-rung pel-rung--3"><div class="pel-rung-v">1250V</div><div class="pel-rung-name">Next-gen AI / DC architecture</div><div class="pel-rung-tag">2026+<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="pel-rung pel-rung--4"><div class="pel-rung-v">1700V</div><div class="pel-rung-name">800 VDC AI factory rails</div><div class="pel-rung-tag">2026+<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original ladder. Voltage levels per Power Integrations 2026 investor framing.<sup><a href="#fn2">2</a></sup></div>
+          </figure>
+
+          <p class="essay-line">GaN started as a form-factor story. It is becoming a power-density story.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">V. AI data centers made power conversion strategic</h2>
+
+          <p>Nvidia&rsquo;s developer-blog framing of an 800 VDC AI factory architecture is the clearest 2026 signal. Current AI-factory racks rely on 54 VDC distribution. As racks exceed 200kW, legacy power distribution hits physical limits. Nvidia exhibited an 800V sidecar at GTC 2025 powering 576 Rubin Ultra GPUs in a Kyber rack, arguing 800 VDC reduces copper / cable bulk, conversion stages, and energy losses, with high voltage distributed to compute nodes and stepped down near the GPU.<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup></p>
+
+          <p>Power Integrations&rsquo; 2026 investor materials describe the company as part of the Nvidia ecosystem of partners and position 1250V and 1700V PowiGaN as building blocks for next-generation 800 VDC AI data-center architecture.<sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="pel-fig" aria-label="800 VDC architecture explainer">
+            <div class="pel-fig-label">Diagram &middot; 54 VDC vs 800 VDC AI factory distribution</div>
+            <div class="pel-vdc">
+              <div class="pel-vdc-card pel-vdc-card--old">
+                <div class="pel-vdc-cat">Today</div>
+                <div class="pel-vdc-num">54 VDC</div>
+                <div class="pel-vdc-label">rack distribution; physical limits beyond ~200kW racks<sup><a href="#fn5">5</a></sup></div>
+              </div>
+              <div class="pel-vdc-arrow">&rarr;</div>
+              <div class="pel-vdc-card pel-vdc-card--new">
+                <div class="pel-vdc-cat">Direction</div>
+                <div class="pel-vdc-num">800 VDC</div>
+                <div class="pel-vdc-label">step-down near GPU; less copper; fewer conversion stages<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup></div>
+              </div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original split based on Nvidia&rsquo;s public 800 VDC architecture framing.<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup></div>
+          </figure>
+
+          <div class="pel-caution" role="note" aria-label="800 VDC adoption caution">
+            <div class="pel-caution-label">Reading the architecture</div>
+            <h3 class="pel-caution-title">Ecosystem partner status is not committed revenue.</h3>
+            <p>Being part of the Nvidia 800 VDC ecosystem does not guarantee Power Integrations revenue. Adoption depends on architecture maturity, supplier qualification cycles, and the pace at which hyperscalers actually deploy 800 VDC racks. Treat this as a direction-of-travel signal, not a revenue forecast.<sup><a href="#fn2">2</a></sup></p>
+          </div>
+
+          <p class="essay-line">AI factories turned power efficiency from a sustainability issue into a compute-scaling issue.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-power">VI. The power problem is real</h2>
+
+          <p>The IEA&rsquo;s <em>Energy and AI</em> work describes data-center electricity demand growing meaningfully through 2030, with accelerated-server electricity consumption rising quickly because of AI adoption.<sup><a href="#fn9">9</a></sup> AI infrastructure is not just GPUs, HBM, CoWoS, and networking. It is power distribution, power conversion, cooling, copper, transformers, substations, grid connection, battery storage, and facility design.</p>
+
+          <figure class="pel-fig" aria-label="Charger-scale vs AI-factory-scale efficiency compare">
+            <div class="pel-fig-label">Diagram &middot; Charger vs AI factory &mdash; what efficiency saves</div>
+            <div class="pel-eff">
+              <div class="pel-eff-col pel-eff-col--small">
+                <div class="pel-eff-eyebrow">Charger scale</div>
+                <h3 class="pel-eff-name">Saves space</h3>
+                <p class="pel-eff-body">A few percentage points of efficiency improve form factor, thermal feel, and time to full charge in a consumer adapter.</p>
+              </div>
+              <div class="pel-eff-col pel-eff-col--big">
+                <div class="pel-eff-eyebrow">AI factory scale</div>
+                <h3 class="pel-eff-name">Saves infrastructure</h3>
+                <p class="pel-eff-body">A few percentage points of efficiency change copper, transformers, substations, cooling, and rack density &mdash; not just the inside of one box.<sup><a href="#fn9">9</a></sup></p>
+              </div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original split. Efficiency stops being a feature and becomes a constraint.</div>
+          </figure>
+
+          <p class="essay-line">At charger scale, efficiency saves space. At AI-factory scale, efficiency saves infrastructure.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-industrial">VII. Industrial is carrying more of the story</h2>
+
+          <p>Power Integrations&rsquo; FY2025 results describe full-year revenue of about <span class="pel-stat">$443.5M</span> (+6% YoY), cash flow from operations of about <span class="pel-stat">$111.5M</span>, an Industrial category growing roughly <span class="pel-stat">15%</span> for the year, and PowiGaN revenue growing more than <span class="pel-stat">40%</span>.<sup><a href="#fn3">3</a></sup> The Q1 2026 release reports revenue of about <span class="pel-stat">$108.3M</span> (+5% QoQ, +3% YoY) with Industrial up roughly <span class="pel-stat">23%</span> YoY, driven by renewable energy, battery storage, home automation, and automotive, and CEO commentary linking EV and AI data-center demand to grid pressure and growth in renewables, battery storage, and DC transmission.<sup><a href="#fn4">4</a></sup></p>
+
+          <figure class="pel-fig" aria-label="Power Integrations 2025 / Q1 2026 stat row">
+            <div class="pel-fig-label">Card &middot; Power Integrations 2025 / Q1 2026, simplified</div>
+            <div class="pel-stat-row">
+              <div class="pel-stat-card"><div class="pel-stat-num">~$443.5M</div><div class="pel-stat-label">FY2025 revenue, +6% YoY<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="pel-stat-card"><div class="pel-stat-num">+15%</div><div class="pel-stat-label">Industrial category 2025<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="pel-stat-card"><div class="pel-stat-num">&gt;40%</div><div class="pel-stat-label">PowiGaN revenue 2025<sup><a href="#fn3">3</a></sup></div></div>
+              <div class="pel-stat-card"><div class="pel-stat-num">+23%</div><div class="pel-stat-label">Industrial YoY in Q1 2026<sup><a href="#fn4">4</a></sup></div></div>
+            </div>
+            <div class="pel-fig-cap">Figures as reported by Power Integrations. Treated as company disclosures, not as a basis for valuation calls.</div>
+          </figure>
+
+          <p class="essay-line">The old consumer-adapter story is becoming an industrial and high-voltage power story.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ev">VIII. EVs, renewables, and grids still matter</h2>
+
+          <p>The 2021 SemiAnalysis piece discussed gate drivers for IGBT and SiC modules across wind, solar, railways, EV charging, UPS, medical, welding, motor drives, and DC fast charging, plus EV content across traction inverter, emergency power, BMS, onboard chargers, 12V standby supplies, steering, A/C compressors, cabin heaters, contactors, and ECUs.<sup><a href="#fn1">1</a></sup> Power Integrations&rsquo; 2026 framing of high-power gate drivers spans roughly 100kW to gigawatt-scale applications across industrial motors, solar, wind, EVs, and HVDC transmission.<sup><a href="#fn2">2</a></sup></p>
+
+          <p>The IEA&rsquo;s <em>Global EV Outlook 2025</em> reports global EV sales exceeded 17 million in 2024, representing more than 20% of new car sales,<sup><a href="#fn10">10</a></sup> and the IEA&rsquo;s broader renewables work points to continued strong renewable capacity growth through 2030.<sup><a href="#fn11">11</a></sup></p>
+
+          <figure class="pel-fig" aria-label="EV / grid / renewables application map">
+            <div class="pel-fig-label">Diagram &middot; Where the hidden power layer shows up</div>
+            <div class="pel-app">
+              <div class="pel-app-card"><div class="pel-app-cat">EV</div><h3 class="pel-app-name">Traction + BMS</h3><div class="pel-app-body">inverter gate drivers, onboard charger, 12V aux<sup><a href="#fn1">1</a></sup></div></div>
+              <div class="pel-app-card"><div class="pel-app-cat">Solar / Wind</div><h3 class="pel-app-name">Renewables</h3><div class="pel-app-body">inverters, gate drivers, grid-tie<sup><a href="#fn2">2</a></sup></div></div>
+              <div class="pel-app-card"><div class="pel-app-cat">Storage</div><h3 class="pel-app-name">Battery storage</h3><div class="pel-app-body">BMS, PCS gate drivers, isolation<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="pel-app-card"><div class="pel-app-cat">Grid</div><h3 class="pel-app-name">HVDC + drives</h3><div class="pel-app-body">industrial motors, HVDC transmission<sup><a href="#fn2">2</a></sup></div></div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original map. Not exhaustive; each tile represents a category Power Integrations sells into.</div>
+          </figure>
+
+          <p class="essay-line">Wherever electricity becomes cleaner, denser, higher-voltage, or more distributed, the power-conversion layer becomes more important.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-gate">IX. Gate drivers are the SiC / IGBT wedge</h2>
+
+          <p>An IGBT or SiC module switches high power. A gate driver controls that switch safely and reliably, handling isolation, protection, timing, noise, and failure modes. The 2021 SemiAnalysis piece argued that SiC modules still need drivers, so Power Integrations can benefit from the SiC revolution without directly manufacturing SiC devices.<sup><a href="#fn1">1</a></sup></p>
+
+          <figure class="pel-fig" aria-label="Gate driver wedge">
+            <div class="pel-fig-label">Diagram &middot; Gate driver as the SiC / IGBT wedge</div>
+            <div class="pel-gate">
+              <div class="pel-gate-card pel-gate-card--driver">
+                <div class="pel-gate-cat">Driver</div>
+                <h3 class="pel-gate-name">Power Integrations IC</h3>
+                <p class="pel-gate-body">controls and isolates the high-power switch; provides protection, timing, fault handling.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="pel-gate-arrow">&rarr;</div>
+              <div class="pel-gate-card pel-gate-card--module">
+                <div class="pel-gate-cat">Module</div>
+                <h3 class="pel-gate-name">SiC / IGBT switch</h3>
+                <p class="pel-gate-body">handles the actual high-voltage / high-current switching in inverters, drives, and HVDC.</p>
+              </div>
+            </div>
+            <div class="pel-fig-cap">A simplified, original split. Power Integrations does not need to own the SiC transistor to benefit from SiC adoption.</div>
+          </figure>
+
+          <p class="essay-line">Power Integrations does not need to own the SiC transistor to benefit from SiC adoption. It can own part of the control layer around it.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-esg">X. Why this is not just ESG anymore</h2>
+
+          <p>The 2021 ESG framing was understandable: Power Integrations improved efficiency and supported electrification.<sup><a href="#fn1">1</a></sup> But ESG language is now too vague. The better frame is infrastructure. Power efficiency matters for cost, thermal design, grid load, copper, rack density, reliability, battery range, charging speed, system size, regulation, and decarbonisation.</p>
+
+          <p class="essay-line">ESG is a label. Power efficiency is a constraint.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-comp">XI. Competitive landscape</h2>
+
+          <p>Power semiconductors are competitive. GaN can commoditise in lower-power markets, Chinese GaN suppliers can pressure price, SiC may remain preferred in some high-power traction applications, and large analog / power companies have scale and customer access.</p>
+
+          <div class="pel-matrix" aria-label="Competitive landscape">
+            <div class="pel-matrix-head">
+              <div>Player</div>
+              <div>Where they show up</div>
+            </div>
+            <div class="pel-matrix-row"><div>Power Integrations</div><div>Integrated high-voltage AC-DC, gate drivers, PowiGaN, industrial and AI 800 VDC focus.<sup><a href="#fn2">2</a></sup></div></div>
+            <div class="pel-matrix-row"><div>Infineon</div><div>Broad power semi portfolio, gate drivers, IGBT, SiC; large industrial / auto.</div></div>
+            <div class="pel-matrix-row"><div>Navitas</div><div>GaN and SiC focus, including AI data-center power.</div></div>
+            <div class="pel-matrix-row"><div>Innoscience</div><div>Large-volume GaN supplier with strong China presence.</div></div>
+            <div class="pel-matrix-row"><div>Texas Instruments</div><div>Broad analog and power; deep customer relationships.</div></div>
+            <div class="pel-matrix-row"><div>Onsemi / STMicro / ROHM</div><div>SiC modules and devices, gate drivers, industrial / EV exposure.</div></div>
+            <div class="pel-matrix-row"><div>Wolfspeed</div><div>SiC substrates and devices; high-power module ecosystem.</div></div>
+            <div class="pel-matrix-row"><div>Monolithic Power Systems / Renesas</div><div>Adjacent power-management portfolios, integration depth.</div></div>
+          </div>
+
+          <p class="essay-line">The power layer is attractive because it is important. It is dangerous because everyone knows it is important.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XII. What could break the thesis?</h2>
+
+          <p>Power Integrations has the right technology narrative, but the biggest 2026 opportunity may take longer to become revenue than the story suggests.</p>
+
+          <div class="pel-counter" aria-label="Bear case">
+            <div class="pel-counter-label">Bear case &middot; what could break the thesis</div>
+            <ol>
+              <li><strong>Small base.</strong> 2025 revenue was about $443.5M; the infrastructure story dwarfs the company.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Slow AI conversion.</strong> AI data-center power opportunity may take years to become meaningful revenue.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>800 VDC adoption pace.</strong> Standards and architecture adoption may be slower than the narrative.<sup><a href="#fn5">5</a></sup><sup><a href="#fn6">6</a></sup></li>
+              <li><strong>Ecosystem partner &ne; revenue.</strong> Nvidia ecosystem partner status does not guarantee committed orders.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Consumer commoditisation.</strong> Chargers can commoditise as GaN suppliers proliferate.</li>
+              <li><strong>China GaN pressure.</strong> Chinese suppliers can pressure pricing in lower-voltage GaN.</li>
+              <li><strong>SiC preference.</strong> SiC may remain preferred in some high-power applications.</li>
+              <li><strong>Industrial cyclicality.</strong> Industrial demand is cyclical.</li>
+              <li><strong>Regional EV slowdowns.</strong> EV growth can slow by region.</li>
+              <li><strong>Qualification cycles.</strong> Power qualification cycles are long and conservative.</li>
+              <li><strong>Scale competitors.</strong> Infineon, TI, Onsemi, STMicro have scale advantages.</li>
+              <li><strong>GaN reliability burden.</strong> Higher-voltage GaN must keep proving itself in field conditions.</li>
+              <li><strong>Margin pressure.</strong> Inventory cycles, R&amp;D, pricing, and competition can compress margins.</li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XIII. What could break the bear case?</h2>
+
+          <p>AI, EVs, grids, storage, and industrial electrification all need the same thing: denser, more efficient, more reliable power conversion.</p>
+
+          <div class="pel-counter pel-counter--bull" aria-label="Bull case">
+            <div class="pel-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>AI power density.</strong> AI data centers need denser power conversion at the rack.<sup><a href="#fn5">5</a></sup></li>
+              <li><strong>800 VDC pull.</strong> Higher-voltage rails create demand for higher-voltage GaN.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Electrification breadth.</strong> EVs, grids, storage, renewables all need high-voltage control.<sup><a href="#fn10">10</a></sup><sup><a href="#fn11">11</a></sup></li>
+              <li><strong>PowiGaN trajectory.</strong> Roadmap has already moved into higher-voltage territory.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Industrial growth.</strong> Industrial revenue is already growing.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup></li>
+              <li><strong>Integration value.</strong> Reduces customer engineering burden and BOM complexity.<sup><a href="#fn1">1</a></sup></li>
+              <li><strong>Gate-driver wedge.</strong> Benefits from SiC / IGBT adoption without owning the switch.<sup><a href="#fn1">1</a></sup></li>
+              <li><strong>Constraint &ne; label.</strong> Power efficiency is now a hard infrastructure constraint, not a marketing claim.<sup><a href="#fn9">9</a></sup></li>
+              <li><strong>Pure-play focus.</strong> Pure focus on high-voltage power conversion as a strategic moat.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">AI, EVs, grids, storage, and industrial electrification all need the same thing: denser, more efficient, more reliable power conversion.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XIV. What to watch</h2>
+
+          <div class="pel-watch" aria-label="What to watch">
+            <div class="pel-watch-label">What to watch</div>
+            <ul>
+              <li>1250V PowiGaN adoption.<sup><a href="#fn2">2</a></sup></li>
+              <li>1700V PowiGaN adoption.<sup><a href="#fn2">2</a></sup></li>
+              <li>800 VDC AI data-center rollouts.<sup><a href="#fn5">5</a></sup></li>
+              <li>Nvidia ecosystem follow-through.<sup><a href="#fn2">2</a></sup></li>
+              <li>AI data-center product revenue contribution.</li>
+              <li>Industrial revenue growth trend.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup></li>
+              <li>PowiGaN revenue growth.<sup><a href="#fn3">3</a></sup></li>
+              <li>High-power gate-driver revenue.<sup><a href="#fn2">2</a></sup></li>
+              <li>Renewables / battery-storage demand.<sup><a href="#fn4">4</a></sup></li>
+              <li>EV / automotive design wins.<sup><a href="#fn1">1</a></sup></li>
+              <li>Home-automation / appliance efficiency demand.<sup><a href="#fn4">4</a></sup></li>
+              <li>Gross margin trend.</li>
+              <li>R&amp;D spending.</li>
+              <li>Chinese GaN competition.</li>
+              <li>SiC versus GaN boundary.</li>
+              <li>Component-count reduction claims.</li>
+              <li>Customer qualification cycles.</li>
+              <li>Regulatory efficiency standards.</li>
+              <li>Grid modernisation and HVDC demand.</li>
+              <li>Capital allocation and inventory cycles.<sup><a href="#fn3">3</a></sup></li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="pel-terms" aria-label="Glossary">
+            <div class="pel-terms-label">Glossary</div>
+            <dl>
+              <dt>Power conversion</dt><dd>Changing electricity from one voltage / current / form to another.</dd>
+              <dt>AC-DC conversion</dt><dd>Converting alternating current from the grid to direct current used by electronics.</dd>
+              <dt>DC-DC conversion</dt><dd>Converting one DC voltage to another.</dd>
+              <dt>GaN</dt><dd>Gallium nitride, a wide-bandgap semiconductor used for efficient high-speed power switching.</dd>
+              <dt>PowiGaN</dt><dd>Power Integrations&rsquo; proprietary GaN technology.</dd>
+              <dt>SiC</dt><dd>Silicon carbide, a wide-bandgap semiconductor often used in high-power systems.</dd>
+              <dt>IGBT</dt><dd>Insulated-gate bipolar transistor, a high-power switching device.</dd>
+              <dt>Gate driver</dt><dd>Circuit that controls power switches such as IGBTs and SiC MOSFETs.</dd>
+              <dt>Isolation</dt><dd>Electrical separation between sections for safety and reliability.</dd>
+              <dt>BOM</dt><dd>Bill of materials &mdash; the list of components in a product.</dd>
+              <dt>800 VDC</dt><dd>High-voltage DC distribution architecture being explored for next-generation AI data centers.</dd>
+              <dt>AI factory</dt><dd>Large data-center infrastructure optimised for AI training and inference.</dd>
+              <dt>HVDC</dt><dd>High-voltage direct current, used in power transmission and some large-scale systems.</dd>
+              <dt>Power density</dt><dd>Amount of power handled per unit of space.</dd>
+              <dt>Efficiency</dt><dd>Percentage of input power converted into useful output rather than wasted as heat.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XV. The power efficiency layer</h2>
+
+          <p>Power Integrations was once easy to describe as an ESG semiconductor story. That is now too small.</p>
+
+          <p>The better 2026 frame is power infrastructure. EVs, renewables, grids, appliances, industrial automation, battery storage, and AI factories all need denser, more efficient, more reliable power conversion.</p>
+
+          <div class="essay-pull">Power Integrations does not sell the headline chip. It sells the hidden layer that makes electricity usable. In an AI and electrification cycle constrained by power, that hidden layer matters more than it used to.</div>
+
+          <p>None of this is a stock call. None of it is a guarantee that 800 VDC AI factories arrive on the timeline the narrative wants. The bear case is real: small revenue base, slow conversion of architecture stories into shipments, Chinese GaN pricing pressure, scale competitors, and the discipline of industrial qualification cycles. But the bull case is also real: AI, EVs, grids, storage, renewables, and industrial drives all need the same hidden layer at higher voltages and higher densities than the consumer-charger era required.</p>
+
+          <p>Power Integrations is one of the cleaner pure-play exposures to that hidden layer.</p>
+
+          <p>That is the power efficiency layer.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Aug 2021). <em>Power Integrations, $POWI, A Premier ESG Play Semiconductor Exposure To Electric Vehicles, Green Energy, And Power Efficiency Regulations.</em> SemiAnalysis. Historical anchor for the integration framing, GaN charger examples, gate drivers for IGBT and SiC modules, applications across wind, solar, railways, EV charging, UPS, medical, welding, motors, EV content surface, and the wide power range. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Power Integrations (Feb 2026). <a href="https://s27.q4cdn.com/802031818/files/doc_presentations/2026/Feb/09/POWI-Investor-Presentation-Feb-2026.pdf" target="_blank" rel="noopener">February 2026 Investor Presentation</a>. PowiGaN roadmap (750V / 900V / 1250V / 1700V) and 1250V/1700V positioning for next-generation 800 VDC architecture; Nvidia ecosystem-partner framing; integration / component-count reduction claims; high-power gate-driver range; industrial and AI data-center positioning.</p>
+
+            <p id="fn3"><sup>3</sup> Power Integrations (Feb 2026). <a href="https://investors.power.com/news/news-details/2026/Power-Integrations-Reports-Fourth-Quarter-and-Full-Year-Financial-Results/default.aspx" target="_blank" rel="noopener">FY2025 fourth-quarter and full-year results</a>. Full-year 2025 revenue ~$443.5M (+6% YoY); cash flow from operations ~$111.5M; Industrial category +~15%; PowiGaN revenue +&gt;40%; AI data centers, electrification, and grid modernisation commentary.</p>
+
+            <p id="fn4"><sup>4</sup> Power Integrations (Apr 2026). <a href="https://investors.power.com/news/news-details/2026/Power-Integrations-Reports-First-Quarter-Financial-Results/default.aspx" target="_blank" rel="noopener">Q1 2026 results</a>. Q1 revenue ~$108.3M, +5% QoQ, +3% YoY; Industrial revenue +~23% YoY driven by renewable energy, battery storage, home automation, and automotive; CEO commentary on EVs and AI data centers driving renewables, battery storage, and DC transmission.</p>
+
+            <p id="fn5"><sup>5</sup> NVIDIA Developer. <a href="https://developer.nvidia.com/blog/nvidia-800-v-hvdc-architecture-will-power-the-next-generation-of-ai-factories/" target="_blank" rel="noopener">NVIDIA 800 V HVDC architecture for next-generation AI factories</a>. 54 VDC distribution limits; racks exceeding 200kW; 800V sidecar at GTC 2025; 576 Rubin Ultra GPUs in a Kyber rack; copper and conversion-stage framing.</p>
+
+            <p id="fn6"><sup>6</sup> NVIDIA Developer. <a href="https://developer.nvidia.com/blog/building-the-800-vdc-ecosystem-for-efficient-scalable-ai-factories/" target="_blank" rel="noopener">Building the 800 VDC ecosystem for efficient, scalable AI factories</a>. High-voltage distribution to compute nodes, step-down near GPU, phased 800 VDC ecosystem transition.</p>
+
+            <p id="fn7"><sup>7</sup> Power Integrations. <a href="https://www.power.com/" target="_blank" rel="noopener">Power.com</a> &mdash; product portfolio and AI data-center materials. Used for technical framing of 1250V / 1700V PowiGaN in 800 VDC AI data-center contexts and integration examples.</p>
+
+            <p id="fn8"><sup>8</sup> Reuters and other credible trade press referenced only at the level the cited Power Integrations and Nvidia materials already disclose. Specific Reuters-attributed collaboration claims are stated only where verified by primary sources.</p>
+
+            <p id="fn9"><sup>9</sup> IEA. <a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" target="_blank" rel="noopener">Energy and AI &mdash; Energy demand from AI</a>. Data-center electricity demand projections, accelerated-server electricity demand framing, broader power-bottleneck context.</p>
+
+            <p id="fn10"><sup>10</sup> IEA. <a href="https://www.iea.org/reports/global-ev-outlook-2025" target="_blank" rel="noopener">Global EV Outlook 2025</a>. Global EV sales exceeded 17 million in 2024; EV share of new car sales above 20%; regional EV demand context.</p>
+
+            <p id="fn11"><sup>11</sup> IEA. <a href="https://www.iea.org/energy-system/renewables" target="_blank" rel="noopener">Renewables</a>. Renewable capacity growth, solar PV expansion, and electrification context.</p>
+          </div>
+
+          <div class="pel-fr">
+            <div class="pel-fr-label">Further reading</div>
+            <ul>
+              <li><a href="when-ai-runs-out-of-copper.html" class="essay-link">When AI Runs Out of Copper</a>. Optical I/O, co-packaged optics, and the race to replace copper with light.</li>
+              <li><a href="ai-memory-tax.html" class="essay-link">The AI Memory Tax</a>. AI servers repricing DRAM, NAND, and consumer electronics.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="other-leading-edge.html" class="essay-link">The Other Leading Edge</a>. GlobalFoundries and the specialty foundry layer of AI infrastructure.</li>
+              <li><a href="boring-back-end-boom.html" class="essay-link">The Boring Back-End Boom</a>. Mature nodes, wirebonding, and packaging becoming strategic again.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="bubble-that-became-infrastructure.html" class="essay-link">The Bubble That Became Infrastructure</a>. Why Nvidia&rsquo;s 2021 overvaluation story turned into the AI factory thesis.</li>
+              <li><a href="inference-efficiency-war.html" class="essay-link">The Inference Efficiency War</a>. Qualcomm AI200 / AI250 and cost-per-token inference infrastructure.</li>
+              <li><a href="ai-native-network.html" class="essay-link">The AI-Native Network</a>. Qualcomm&rsquo;s 5G infrastructure push as the early map of an AI-native network.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 036. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=40"></script>
+</body>
+</html>
