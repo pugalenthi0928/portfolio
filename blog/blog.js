@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'semiconductor-substitution-ladder': 'infrastructure',
   'power-efficiency-layer':         'infrastructure',
   'foundry-trust-test':             'infrastructure',
   'android-flagship-breakout':      'infrastructure',

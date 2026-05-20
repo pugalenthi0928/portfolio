@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Semiconductor Substitution Ladder | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of China's semiconductor equipment and materials localization push, why cleaning, etch, deposition, CMP, and mature-node tools are progressing, and why lithography, photoresist, metrology, and process integration remain the hardest walls.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/semiconductor-substitution-ladder.html">
+  <meta property="og:title" content="The Semiconductor Substitution Ladder | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of China's semiconductor equipment and materials localization push, why cleaning, etch, deposition, CMP, and mature-node tools are progressing, and why lithography, photoresist, metrology, and process integration remain the hardest walls.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/semiconductor-substitution-ladder.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="China Semiconductors">
+  <meta property="article:tag" content="Semiconductor Equipment">
+  <meta property="article:tag" content="Lithography">
+  <meta property="article:tag" content="Photoresist">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="KLA">
+  <meta property="article:tag" content="SEMI">
+  <meta property="article:tag" content="Export Controls">
+  <meta property="article:tag" content="Domestic Equipment">
+  <meta property="article:tag" content="Semiconductor Materials">
+  <meta property="article:tag" content="CMP">
+  <meta property="article:tag" content="Etch">
+  <meta property="article:tag" content="Deposition">
+  <meta property="article:tag" content="Metrology">
+  <meta property="article:tag" content="SMIC">
+  <meta property="article:tag" content="Naura">
+  <meta property="article:tag" content="AMEC">
+  <meta property="article:tag" content="ACM Research">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Semiconductor Substitution Ladder | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of China's semiconductor equipment and materials localization push, why cleaning, etch, deposition, CMP, and mature-node tools are progressing, and why lithography, photoresist, metrology, and process integration remain the hardest walls.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Semiconductor Substitution Ladder",
+    "description": "An original 2026 analysis of China's semiconductor equipment and materials localization push, why cleaning, etch, deposition, CMP, and mature-node tools are progressing, and why lithography, photoresist, metrology, and process integration remain the hardest walls.",
+    "url": "https://pugalenthimagendran.com/blog/posts/semiconductor-substitution-ladder.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/semiconductor-substitution-ladder.html",
+    "keywords": "China Semiconductors, Semiconductor Equipment, Lithography, Photoresist, ASML, TSMC, KLA, SEMI, Export Controls, Domestic Equipment, Semiconductor Materials, CMP, Etch, Deposition, Metrology, SMIC, Naura, AMEC, ACM Research"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       SEMICONDUCTOR SUBSTITUTION LADDER, scoped under .essay-ssl
+       ============================================ */
+    .essay-ssl {
+      --ssl-accent: #F0784A;
+      --ssl-accent-soft: rgba(240,120,74,0.10);
+      --ssl-accent-faint: rgba(240,120,74,0.04);
+      --ssl-bd: rgba(255,255,255,0.08);
+      --ssl-bd-soft: rgba(255,255,255,0.05);
+      --ssl-cool: #6CBFE0;
+      --ssl-cool-soft: rgba(108,191,224,0.10);
+      --ssl-purple: #B794F4;
+      --ssl-purple-soft: rgba(183,148,244,0.10);
+      --ssl-green: #5DCAA5;
+      --ssl-green-soft: rgba(93,202,165,0.10);
+      --ssl-amber: #E8B468;
+      --ssl-amber-soft: rgba(232,180,104,0.10);
+      --ssl-red: #E07A8B;
+      --ssl-red-soft: rgba(224,122,139,0.10);
+    }
+
+    .ssl-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .ssl-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .ssl-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .ssl-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .ssl-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ssl-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .ssl-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .ssl-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    .ssl-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--ssl-bd); background: linear-gradient(180deg, var(--ssl-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .ssl-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ssl-accent); margin-bottom: 14px; }
+    .ssl-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--ssl-bd-soft); line-height: 1.6; }
+
+    .ssl-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--ssl-accent); background: linear-gradient(180deg, var(--ssl-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .ssl-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ssl-accent); margin-bottom: 10px; }
+    .ssl-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Hype vs validation split */
+    .ssl-hype { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .ssl-hype-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-hype-col--hype { background: linear-gradient(180deg, var(--ssl-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .ssl-hype-col--hype .ssl-hype-eyebrow { color: var(--ssl-red); }
+    .ssl-hype-col--val { background: linear-gradient(180deg, var(--ssl-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .ssl-hype-col--val .ssl-hype-eyebrow { color: var(--ssl-green); }
+    .ssl-hype-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .ssl-hype-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .ssl-hype-body { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.6; color: var(--color-text-secondary); }
+    .ssl-hype-body strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Forcing function flow */
+    .ssl-force { display: grid; grid-template-columns: 1fr 50px 1fr 50px 1fr; align-items: center; gap: 6px; margin: 1rem 0 0; }
+    .ssl-force-step { padding: 14px 12px; border-radius: 8px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); text-align: center; }
+    .ssl-force-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--ssl-accent); margin-bottom: 4px; }
+    .ssl-force-name { font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.005em; }
+    .ssl-force-body { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); line-height: 1.4; }
+    .ssl-force-arrow { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--ssl-accent); text-align: center; }
+    .ssl-force-step--a { background: linear-gradient(180deg, var(--ssl-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .ssl-force-step--b { background: linear-gradient(180deg, var(--ssl-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .ssl-force-step--c { background: linear-gradient(180deg, var(--ssl-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ssl-accent); }
+
+    /* The ladder */
+    .ssl-ladder { display: flex; flex-direction: column; gap: 4px; margin: 1rem 0 0; }
+    .ssl-zone { padding: 14px 16px 12px; border-radius: 8px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-zone-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .ssl-zone-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); }
+    .ssl-zone-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0; }
+    .ssl-zone--low { background: linear-gradient(180deg, var(--ssl-green-soft) 0%, transparent 80%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .ssl-zone--low .ssl-zone-label { color: var(--ssl-green); }
+    .ssl-zone--mid { background: linear-gradient(180deg, var(--ssl-amber-soft) 0%, transparent 80%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .ssl-zone--mid .ssl-zone-label { color: var(--ssl-amber); }
+    .ssl-zone--top { background: linear-gradient(180deg, var(--ssl-red-soft) 0%, transparent 80%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .ssl-zone--top .ssl-zone-label { color: var(--ssl-red); }
+    .ssl-zone-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .ssl-rung { padding: 6px 10px; border-radius: 4px; border: 0.5px solid var(--ssl-bd-soft); font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--color-text-primary); background: rgba(255,255,255,0.02); letter-spacing: -0.005em; }
+    .ssl-rung span { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--color-text-tertiary); margin-right: 4px; }
+    .ssl-zone--low .ssl-rung { background: rgba(93,202,165,0.06); border-color: rgba(93,202,165,0.20); }
+    .ssl-zone--mid .ssl-rung { background: rgba(232,180,104,0.06); border-color: rgba(232,180,104,0.20); }
+    .ssl-zone--top .ssl-rung { background: rgba(224,122,139,0.06); border-color: rgba(224,122,139,0.20); }
+
+    /* Domestic progress vs foreign dependence split */
+    .ssl-deps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .ssl-dep-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-dep-col--dom { background: linear-gradient(180deg, var(--ssl-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ssl-accent); }
+    .ssl-dep-col--dom .ssl-dep-eyebrow { color: var(--ssl-accent); }
+    .ssl-dep-col--foreign { background: linear-gradient(180deg, var(--ssl-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .ssl-dep-col--foreign .ssl-dep-eyebrow { color: var(--ssl-cool); }
+    .ssl-dep-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .ssl-dep-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .ssl-dep-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .ssl-dep-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .ssl-dep-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .ssl-dep-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Wall cards: lithography / metrology / materials */
+    .ssl-walls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .ssl-wall { padding: 16px 14px 14px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-wall--litho { background: linear-gradient(180deg, var(--ssl-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .ssl-wall--litho .ssl-wall-cat { color: var(--ssl-red); }
+    .ssl-wall--metro { background: linear-gradient(180deg, var(--ssl-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .ssl-wall--metro .ssl-wall-cat { color: var(--ssl-purple); }
+    .ssl-wall--mat { background: linear-gradient(180deg, var(--ssl-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .ssl-wall--mat .ssl-wall-cat { color: var(--ssl-amber); }
+    .ssl-wall-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .ssl-wall-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .ssl-wall-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* Photoresist explainer */
+    .ssl-resist { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .ssl-resist-col { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-resist-col--sounds { background: linear-gradient(180deg, var(--ssl-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .ssl-resist-col--sounds .ssl-resist-eyebrow { color: var(--ssl-cool); }
+    .ssl-resist-col--is { background: linear-gradient(180deg, var(--ssl-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .ssl-resist-col--is .ssl-resist-eyebrow { color: var(--ssl-red); }
+    .ssl-resist-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+    .ssl-resist-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .ssl-resist-body { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+
+    /* TSMC moving frontier */
+    .ssl-frontier { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .ssl-front-card { padding: 12px 10px 10px; border-radius: 8px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); text-align: center; }
+    .ssl-front-cat { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--ssl-accent); margin-bottom: 4px; }
+    .ssl-front-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .ssl-front-body { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.02em; color: var(--color-text-tertiary); line-height: 1.4; }
+    .ssl-front-card--a { background: linear-gradient(180deg, var(--ssl-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .ssl-front-card--b { background: linear-gradient(180deg, var(--ssl-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .ssl-front-card--c { background: linear-gradient(180deg, var(--ssl-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.40); }
+    .ssl-front-card--d { background: linear-gradient(180deg, var(--ssl-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ssl-accent); }
+    .ssl-front-card--e { background: linear-gradient(180deg, var(--ssl-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* Stat row */
+    .ssl-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .ssl-stat-card { padding: 14px 12px; border-radius: 8px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); text-align: center; }
+    .ssl-stat-num { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--ssl-accent); line-height: 1.1; }
+    .ssl-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .ssl-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--ssl-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--ssl-accent-faint); }
+
+    /* Caution */
+    .ssl-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--ssl-amber); background: linear-gradient(180deg, var(--ssl-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .ssl-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ssl-amber); margin-bottom: 8px; }
+    .ssl-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .ssl-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .ssl-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .ssl-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .ssl-terms dl { margin: 0; display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .ssl-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--ssl-accent); padding-top: 2px; }
+    .ssl-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .ssl-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .ssl-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .ssl-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--ssl-bd-soft); }
+    .ssl-counter li:last-child { border-bottom: none; }
+    .ssl-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--ssl-accent); }
+    .ssl-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .ssl-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--ssl-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .ssl-counter--bull li::before { color: var(--ssl-green); }
+
+    .ssl-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--ssl-bd); background: var(--bg-alt); }
+    .ssl-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .ssl-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .ssl-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--ssl-bd-soft); }
+    .ssl-watch li:last-child, .ssl-watch li:nth-last-child(2) { border-bottom: none; }
+    .ssl-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--ssl-accent); background: transparent; }
+
+    /* Further reading */
+    .ssl-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .ssl-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .ssl-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .ssl-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .ssl-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .ssl-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .ssl-toc ol { grid-template-columns: 1fr; }
+      .ssl-hype, .ssl-deps, .ssl-resist { grid-template-columns: 1fr; }
+      .ssl-walls { grid-template-columns: 1fr; }
+      .ssl-zone-grid { grid-template-columns: repeat(2, 1fr); }
+      .ssl-frontier { grid-template-columns: repeat(2, 1fr); }
+      .ssl-force { grid-template-columns: 1fr; gap: 8px; }
+      .ssl-force-arrow { padding: 4px 0; }
+      .ssl-stat-row { grid-template-columns: 1fr; }
+      .ssl-terms dl { grid-template-columns: 130px 1fr; }
+      .ssl-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .ssl-zone-grid, .ssl-frontier { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <article class="article essay-format essay-ssl">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 037 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">China Semiconductors</span>
+          <span class="tag">Semiconductor Equipment</span>
+          <span class="tag">Lithography</span>
+          <span class="tag">Photoresist</span>
+          <span class="tag">ASML</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">KLA</span>
+          <span class="tag">SEMI</span>
+          <span class="tag">Export Controls</span>
+          <span class="tag">CMP</span>
+          <span class="tag">Etch</span>
+          <span class="tag">Deposition</span>
+          <span class="tag">Metrology</span>
+          <span class="tag">SMIC</span>
+        </div>
+
+        <h1 class="essay-hed">The Semiconductor <em>Substitution Ladder</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why China&rsquo;s chip-tool push is real in cleaning, etch, deposition, CMP, and mature nodes, but still hits the lithography and materials trust wall.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">The 2021 fear that China would instantly replace the global semiconductor tool and chemical stack was overblown. But the opposite view is now wrong too. China is no longer only talking about localization. It is forcing substitution, building domestic champions, and climbing the lower and middle rungs of the equipment ladder. The hard question in 2026 is not whether China can make some tools. It can. The hard question is whether it can earn fab trust in the top rungs: lithography, photoresist, metrology, materials purity, and advanced-node process integration.</p>
+
+          <nav class="ssl-toc" aria-label="Article contents">
+            <div class="ssl-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis was about hype vs validation</a></li>
+              <li><a href="#sec-ec">Export controls turned localization into survival</a></li>
+              <li><a href="#sec-50">The 50% domestic-equipment push</a></li>
+              <li><a href="#sec-base">The spending base is enormous</a></li>
+              <li><a href="#sec-rungs">The easy rungs are not the hard rungs</a></li>
+              <li><a href="#sec-zones">Domestic tools are now real in selected zones</a></li>
+              <li><a href="#sec-foreign">Foreign tools are still everywhere</a></li>
+              <li><a href="#sec-litho">Lithography remains the wall</a></li>
+              <li><a href="#sec-metro">Metrology and inspection are the quiet wall</a></li>
+              <li><a href="#sec-mat">Materials are the trust wall</a></li>
+              <li><a href="#sec-resist">Why photoresist is so hard</a></li>
+              <li><a href="#sec-ai">The AI boom makes the target harder</a></li>
+              <li><a href="#sec-tsmc">TSMC shows the trust benchmark</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The semiconductor substitution ladder</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, the fear was simple. China was pouring money into semiconductors. Subsidies. Tax breaks. Cheap loans. Industrial policy. Made in China 2025. Local equipment champions. Domestic chemical suppliers. The worry was that China would subsidise its way into the semiconductor equipment and materials supply chain and crush foreign incumbents.</p>
+
+          <p>The uploaded SemiAnalysis article pushed back hard. It argued that many Chinese equipment and chemical companies were being valued far ahead of real technical adoption. Some categories had promise. Others were mostly hype. Lithography was nowhere close. Photoresist was far harder than analysts understood.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The article&rsquo;s warning was clear: company statements and market research were not enough. Real validation had to come from engineers, fabs, yield, and production use.</p>
+
+          <p class="essay-line">In 2026, that warning still matters. But the story has changed. China did not replace the whole semiconductor supply chain. It did, however, start climbing the substitution ladder.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>China is climbing the semiconductor substitution ladder. The 2021 article was right that many Chinese equipment and chemical claims were overhyped, especially in lithography and advanced materials. But export controls, subsidies, and forced domestic procurement have turned some categories into real local markets. China is making progress in cleaning, CMP, etch, deposition, mature-node tools, packaging equipment, and selected materials. The hard wall remains advanced lithography, high-end inspection / metrology, EUV / ArF photoresist, process integration, and trusted yield at advanced nodes.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis was about hype vs validation</h2>
+
+          <p>In August 2021, Dylan Patel published a SemiAnalysis piece arguing that investors were confusing ambition with adoption. China had many domestic equipment and chemical companies, but their public claims were often ahead of production reality. SMEE lithography was heavily hyped but far behind advanced lithography. ACM Research looked more credible because wafer cleaning has lower barriers. CMP was one of the more usable domestic categories. Photoresist was much harder than the analyst narrative suggested, with contamination and qualification mattering more than simple chemical production. The piece cited TSMC&rsquo;s photoresist-related yield loss in 2019 as a warning about materials risk, and used a public dispute between an SMIC photoresist expert and a Chinese analyst as a cautionary tale about trusting analyst hype over technical experts.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="ssl-thesis">
+            <div class="ssl-thesis-label">2021 thesis</div>
+            <p class="ssl-thesis-text">In semiconductors, company claims do not validate a tool. Fab yield validates the tool.</p>
+          </div>
+
+          <figure class="ssl-fig" aria-label="Hype vs validation split">
+            <div class="ssl-fig-label">Diagram &middot; Hype vs fab validation</div>
+            <div class="ssl-hype">
+              <div class="ssl-hype-col ssl-hype-col--hype">
+                <div class="ssl-hype-eyebrow">Hype</div>
+                <h3 class="ssl-hype-title">Market narrative</h3>
+                <p class="ssl-hype-body">Press releases, analyst forecasts, and stock multiples reflect <strong>ambition</strong>. A logo on a slide is not a qualified tool.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="ssl-hype-col ssl-hype-col--val">
+                <div class="ssl-hype-eyebrow">Validation</div>
+                <h3 class="ssl-hype-title">Fab yield</h3>
+                <p class="ssl-hype-body">A tool is real when it sits in production lines, holds uptime, supports yield, and does not destroy the wafer stack. That is the only validation that matters.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original split. The 2021 piece&rsquo;s warning still travels in 2026.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ec">II. Export controls turned localization into survival</h2>
+
+          <p>BIS&rsquo;s December 2024 update strengthened export controls to restrict China&rsquo;s ability to produce advanced semiconductors, expanding controls on semiconductor manufacturing equipment, software tools, HBM, and the Entity List.<sup><a href="#fn2">2</a></sup> Before restrictions, Chinese fabs could often buy the best foreign tool. After restrictions, domestic tools became strategically valuable even when they were not best-in-class.</p>
+
+          <p class="essay-line">Localisation became less about cost and more about survival.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-50">III. The 50% domestic-equipment push is the forcing function</h2>
+
+          <p>Reuters reported in late 2025 that China introduced an unofficial requirement for chipmakers to use at least 50% domestically made equipment when adding new capacity, with flexibility in categories where domestic alternatives are unavailable.<sup><a href="#fn3">3</a></sup> China is not waiting for domestic tools to become perfect. It is creating production opportunities, feedback loops, and installed base.</p>
+
+          <figure class="ssl-fig" aria-label="Forcing function flow">
+            <div class="ssl-fig-label">Diagram &middot; Export controls &rarr; forced substitution &rarr; learning cycles</div>
+            <div class="ssl-force">
+              <div class="ssl-force-step ssl-force-step--a">
+                <div class="ssl-force-cat">Layer 01</div>
+                <div class="ssl-force-name">Export controls</div>
+                <div class="ssl-force-body">advanced tools restricted<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="ssl-force-arrow">&rarr;</div>
+              <div class="ssl-force-step ssl-force-step--b">
+                <div class="ssl-force-cat">Layer 02</div>
+                <div class="ssl-force-name">Forced procurement</div>
+                <div class="ssl-force-body">~50% domestic mandate<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="ssl-force-arrow">&rarr;</div>
+              <div class="ssl-force-step ssl-force-step--c">
+                <div class="ssl-force-cat">Layer 03</div>
+                <div class="ssl-force-name">Learning cycles</div>
+                <div class="ssl-force-body">production yield improves</div>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original visual. The three layers compound: a domestic tool improves faster when fabs are forced to debug it in production.</div>
+          </figure>
+
+          <p class="essay-line">China is manufacturing adoption, not just technology. A domestic tool improves faster when fabs are forced to debug it in production.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-base">IV. The spending base is enormous</h2>
+
+          <p>SEMI reports that worldwide semiconductor manufacturing equipment sales reached <span class="ssl-stat">$135.1B</span> in 2025, up about <span class="ssl-stat">15%</span> year-over-year, driven by advanced logic, memory, and AI-related capacity expansion.<sup><a href="#fn4">4</a></sup> SEMI also projects China to spend roughly <span class="ssl-stat">$94B</span> on 300mm fab equipment from 2026 to 2028, the largest regional share over that window.<sup><a href="#fn5">5</a></sup></p>
+
+          <figure class="ssl-fig" aria-label="Equipment spending stat row">
+            <div class="ssl-fig-label">Card &middot; The spending base, simplified</div>
+            <div class="ssl-stat-row">
+              <div class="ssl-stat-card"><div class="ssl-stat-num">~$135.1B</div><div class="ssl-stat-label">Global semi equipment sales 2025<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="ssl-stat-card"><div class="ssl-stat-num">+15%</div><div class="ssl-stat-label">YoY equipment sales growth 2025<sup><a href="#fn4">4</a></sup></div></div>
+              <div class="ssl-stat-card"><div class="ssl-stat-num">~$94B</div><div class="ssl-stat-label">China 300mm equipment spend 2026&ndash;28<sup><a href="#fn5">5</a></sup></div></div>
+            </div>
+            <div class="ssl-fig-cap">Figures as reported by SEMI. Treated as industry data, not as a basis for valuation calls.</div>
+          </figure>
+
+          <p class="essay-line">Even imperfect domestic tools get better when they are forced into a large production market.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-rungs">V. The easy rungs are not the hard rungs</h2>
+
+          <p>The biggest mistake in the China-tool debate is treating &ldquo;semiconductor equipment&rdquo; as one category. It is not. Cleaning is not EUV. CMP is not lithography. Mature-node deposition is not high-NA patterning. A usable tool at 55nm does not imply readiness at 5nm. A demo is not production. A test chip is not yield.</p>
+
+          <figure class="ssl-fig" aria-label="The substitution ladder">
+            <div class="ssl-fig-label">Diagram &middot; The substitution ladder</div>
+            <div class="ssl-ladder">
+              <div class="ssl-zone ssl-zone--low">
+                <div class="ssl-zone-head"><span class="ssl-zone-label">Lower rungs</span><h3 class="ssl-zone-title">Easier to substitute</h3></div>
+                <div class="ssl-zone-grid">
+                  <div class="ssl-rung"><span>01</span>Cleaning</div>
+                  <div class="ssl-rung"><span>02</span>Wet processing</div>
+                  <div class="ssl-rung"><span>03</span>CMP</div>
+                  <div class="ssl-rung"><span>04</span>Furnace / thermal</div>
+                  <div class="ssl-rung"><span>05</span>Selected deposition</div>
+                  <div class="ssl-rung"><span>06</span>Selected etch</div>
+                  <div class="ssl-rung"><span>07</span>Mature-node tools</div>
+                  <div class="ssl-rung"><span>08</span>Packaging equipment</div>
+                </div>
+              </div>
+              <div class="ssl-zone ssl-zone--mid">
+                <div class="ssl-zone-head"><span class="ssl-zone-label">Middle rungs</span><h3 class="ssl-zone-title">Possible with time and pressure</h3></div>
+                <div class="ssl-zone-grid">
+                  <div class="ssl-rung"><span>09</span>Selected metrology</div>
+                  <div class="ssl-rung"><span>10</span>Advanced etch / dep integration</div>
+                  <div class="ssl-rung"><span>11</span>Materials qualification</div>
+                  <div class="ssl-rung"><span>12</span>Tool reliability / uptime</div>
+                  <div class="ssl-rung"><span>13</span>Service network maturity</div>
+                  <div class="ssl-rung"><span>14</span>Process recipes</div>
+                </div>
+              </div>
+              <div class="ssl-zone ssl-zone--top">
+                <div class="ssl-zone-head"><span class="ssl-zone-label">Top rungs</span><h3 class="ssl-zone-title">Trust-bound and hard</h3></div>
+                <div class="ssl-zone-grid">
+                  <div class="ssl-rung"><span>15</span>High-end overlay</div>
+                  <div class="ssl-rung"><span>16</span>Defect inspection</div>
+                  <div class="ssl-rung"><span>17</span>Advanced DUV lithography</div>
+                  <div class="ssl-rung"><span>18</span>EUV lithography</div>
+                  <div class="ssl-rung"><span>19</span>EUV / ArF photoresist</div>
+                  <div class="ssl-rung"><span>20</span>Mask infrastructure</div>
+                  <div class="ssl-rung"><span>21</span>Ultra-pure chemicals</div>
+                  <div class="ssl-rung"><span>22</span>Advanced-node process integration</div>
+                </div>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original ladder. China is climbing rung by rung, not vertically conquering categories.</div>
+          </figure>
+
+          <p class="essay-line">China does not localize the stack. It localizes categories, one painful rung at a time.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-zones">VI. Domestic tools are now real in selected zones</h2>
+
+          <p>Domestic equipment suppliers including Naura, AMEC, ACM Research, Piotech, Hwatsing, Sizone, Kingsemi, and Anji Microelectronics have grown as fabs increase local sourcing, particularly in cleaning, CMP, deposition, etch, furnace, and mature-node tools.<sup><a href="#fn1">1</a></sup><sup><a href="#fn3">3</a></sup> Domestic toolmakers are not replacing ASML. They are becoming real in selected categories where substitution is technically possible and politically demanded.</p>
+
+          <p class="essay-line">China does not need to win every tool category to reduce foreign leverage. It only needs to win enough categories to make the supply chain less chokeable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-foreign">VII. Foreign tools are still everywhere</h2>
+
+          <p>Two things are true at once. China is localising. China is still dependent. KLA disclosed China revenue exposure of roughly <span class="ssl-stat">33%</span> in its fiscal 2025 filings; ASML reported 2025 net sales of about <span class="ssl-stat">&euro;32.7B</span> with material China exposure.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup> Both data points reflect the same reality: even after years of localisation pressure, Chinese fabs continue to absorb foreign precision in process control and lithography.</p>
+
+          <p class="essay-line">China is localising faster, but it is still deeply dependent on foreign precision.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-litho">VIII. Lithography remains the wall</h2>
+
+          <p>The 2021 piece was very skeptical of SMEE, arguing that lithography claims were far from production reality.<sup><a href="#fn1">1</a></sup> Lithography is not just a scanner. It is optics, light source, wafer stage, masks, pellicles, photoresist, overlay, metrology, contamination control, service, process recipes, and decades of fab-supplier co-development. ASML&rsquo;s scale, R&amp;D, and EUV / High-NA roadmap give a sense of why this is hard to clone with any single national effort.<sup><a href="#fn7">7</a></sup></p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-metro">IX. Metrology and inspection are the quiet wall</h2>
+
+          <p>Even if you can process a wafer, you need to inspect it, measure it, and control defects. Metrology and inspection matter because fabs need to know where defects are, whether overlay is within tolerance, whether film thickness is right, whether process drift is happening, whether yield is collapsing, and whether a new material is contaminating the line. KLA&rsquo;s process-control leadership is part of why China&rsquo;s ~33% revenue share for KLA still travels alongside the localisation narrative.<sup><a href="#fn6">6</a></sup></p>
+
+          <figure class="ssl-fig" aria-label="Three walls">
+            <div class="ssl-fig-label">Diagram &middot; The three walls China is still climbing</div>
+            <div class="ssl-walls">
+              <div class="ssl-wall ssl-wall--litho">
+                <div class="ssl-wall-cat">Lithography</div>
+                <h3 class="ssl-wall-name">Hard wall</h3>
+                <p class="ssl-wall-body">Scanners, light sources, optics, masks, overlay, metrology, recipes, and decades of co-development.<sup><a href="#fn7">7</a></sup></p>
+              </div>
+              <div class="ssl-wall ssl-wall--metro">
+                <div class="ssl-wall-cat">Metrology + inspection</div>
+                <h3 class="ssl-wall-name">Quiet wall</h3>
+                <p class="ssl-wall-body">You cannot improve what you cannot measure. Atomic-scale measurement is its own moat.<sup><a href="#fn6">6</a></sup></p>
+              </div>
+              <div class="ssl-wall ssl-wall--mat">
+                <div class="ssl-wall-cat">Materials</div>
+                <h3 class="ssl-wall-name">Trust wall</h3>
+                <p class="ssl-wall-body">Photoresist, ultra-pure chemicals, and slurries qualified in production over years.<sup><a href="#fn1">1</a></sup><sup><a href="#fn8">8</a></sup></p>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original framing. Each wall is qualitatively different and asks different things of a domestic ecosystem.</div>
+          </figure>
+
+          <p class="essay-line">You cannot improve what you cannot measure, and advanced semiconductor manufacturing is measurement at atomic scale.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-mat">X. Materials are the trust wall</h2>
+
+          <p>The 2021 piece explained that photoresist sounds simple but is not, walked through CMP slurry, and cited TSMC&rsquo;s photoresist-related yield loss in 2019 as a cautionary tale.<sup><a href="#fn1">1</a></sup> SEMI&rsquo;s 2025 materials report shows the global semiconductor materials market reaching roughly <span class="ssl-stat">$73.2B</span>, with growth across wafer fab materials, packaging materials, and lithography-related materials.<sup><a href="#fn8">8</a></sup> Materials localisation is not just &ldquo;can you make the chemical?&rdquo; It is &ldquo;can a fab trust it inside a billion-dollar yield stack?&rdquo;</p>
+
+          <p class="essay-line">A semiconductor material is not qualified when it works in a lab. It is qualified when it does not destroy yield for years.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-resist">XI. Why photoresist is so hard</h2>
+
+          <p>Photoresist is the light-sensitive material used in lithography. It must be chemically consistent, ultra-pure, compatible with the lithography tool and process recipe, stable across batches, predictable under exposure, easy to develop / remove, low-defect, and trusted over many production runs.</p>
+
+          <figure class="ssl-fig" aria-label="Photoresist explainer">
+            <div class="ssl-fig-label">Diagram &middot; Photoresist &mdash; sounds simple, is not</div>
+            <div class="ssl-resist">
+              <div class="ssl-resist-col ssl-resist-col--sounds">
+                <div class="ssl-resist-eyebrow">Sounds like</div>
+                <h3 class="ssl-resist-title">A chemical</h3>
+                <p class="ssl-resist-body">A light-sensitive polymer applied to a wafer. Easy story to tell to non-specialists.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="ssl-resist-col ssl-resist-col--is">
+                <div class="ssl-resist-eyebrow">Actually is</div>
+                <h3 class="ssl-resist-title">A yield contract</h3>
+                <p class="ssl-resist-body">Ultra-pure, batch-consistent, tool-matched, process-matched, defect-controlled, and qualified across years of production. A tiny contamination can destroy yield.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original split. The same word covers two very different difficulty levels.</div>
+          </figure>
+
+          <p class="essay-line">Photoresist is not a chemical commodity. It is a yield contract.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">XII. The AI boom makes the target harder</h2>
+
+          <p>TSMC&rsquo;s 2026 North America Technology Symposium describes a leading-edge roadmap that includes N2, N2P, A16, A14, A13, and A12 with Super Power Rail backside power, plus CoWoS expansion (5.5-reticle today, 14-reticle by 2028), SoIC 3D stacking, and COUPE co-packaged optics.<sup><a href="#fn9">9</a></sup> The manufacturing frontier is no longer only smaller transistors. It is full AI system integration &mdash; lithography, materials purity, inspection, overlay, packaging, HBM integration, substrates, photonics, thermal management, and yield across multi-die systems.</p>
+
+          <figure class="ssl-fig" aria-label="TSMC moving frontier">
+            <div class="ssl-fig-label">Diagram &middot; The frontier is moving</div>
+            <div class="ssl-frontier">
+              <div class="ssl-front-card ssl-front-card--a"><div class="ssl-front-cat">2025</div><h3 class="ssl-front-name">N2 HVM</h3><div class="ssl-front-body">leading-edge logic<sup><a href="#fn9">9</a></sup></div></div>
+              <div class="ssl-front-card ssl-front-card--b"><div class="ssl-front-cat">2026</div><h3 class="ssl-front-name">N2P + A16</h3><div class="ssl-front-body">H2 volume production<sup><a href="#fn9">9</a></sup></div></div>
+              <div class="ssl-front-card ssl-front-card--c"><div class="ssl-front-cat">2028</div><h3 class="ssl-front-name">N2U + 14R CoWoS</h3><div class="ssl-front-body">~10 dies + 20 HBM<sup><a href="#fn9">9</a></sup></div></div>
+              <div class="ssl-front-card ssl-front-card--d"><div class="ssl-front-cat">2029</div><h3 class="ssl-front-name">A13 + A12</h3><div class="ssl-front-body">SPR backside power<sup><a href="#fn9">9</a></sup></div></div>
+              <div class="ssl-front-card ssl-front-card--e"><div class="ssl-front-cat">Cross-cut</div><h3 class="ssl-front-name">SoIC + COUPE</h3><div class="ssl-front-body">3D stacking, optical I/O<sup><a href="#fn9">9</a></sup></div></div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original visual of TSMC&rsquo;s public roadmap framing. The frontier is not static; it widens as China climbs.</div>
+          </figure>
+
+          <p class="essay-line">China is climbing the ladder, but the ladder itself keeps moving upward.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-tsmc">XIII. TSMC shows the trust benchmark</h2>
+
+          <p>TSMC&rsquo;s 2025 Annual Report frames the company at the scale of roughly 12,682 products manufactured for ~534 customers using ~305 distinct process technologies, with advanced technologies at 7nm and below at ~74% of wafer revenue and 3nm at ~24%.<sup><a href="#fn10">10</a></sup> Foreign foundry trust at this scale is not only nodes. It is customer trust, process integration, yield learning, supplier ecosystem, materials qualification, tool co-optimisation, packaging, customer enablement, and roadmap reliability &mdash; the same kind of trust ladder that China&rsquo;s tool and materials ecosystem is being asked to build from a lower base.</p>
+
+          <figure class="ssl-fig" aria-label="Domestic progress vs foreign dependence">
+            <div class="ssl-fig-label">Diagram &middot; Two truths at once</div>
+            <div class="ssl-deps">
+              <div class="ssl-dep-col ssl-dep-col--dom">
+                <div class="ssl-dep-eyebrow">Domestic progress</div>
+                <h3 class="ssl-dep-title">Where local tools are real</h3>
+                <ul>
+                  <li><strong>Cleaning + wet processing</strong> &middot; ACM Research and peers credible in selected fabs.<sup><a href="#fn1">1</a></sup></li>
+                  <li><strong>CMP</strong> &middot; domestic tools and slurries entering production.</li>
+                  <li><strong>Selected etch / deposition</strong> &middot; Naura, AMEC, Piotech tool deployment.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>Furnace / thermal</strong> &middot; viable substitution paths.</li>
+                  <li><strong>Mature-node tools</strong> &middot; large protected market drives learning.<sup><a href="#fn5">5</a></sup></li>
+                  <li><strong>Packaging equipment</strong> &middot; advanced-package and back-end opportunities.</li>
+                </ul>
+              </div>
+              <div class="ssl-dep-col ssl-dep-col--foreign">
+                <div class="ssl-dep-eyebrow">Foreign precision</div>
+                <h3 class="ssl-dep-title">Where dependence stays</h3>
+                <ul>
+                  <li><strong>EUV / advanced DUV</strong> &middot; concentrated in foreign incumbents.<sup><a href="#fn7">7</a></sup></li>
+                  <li><strong>High-end metrology / inspection</strong> &middot; KLA-class process control.<sup><a href="#fn6">6</a></sup></li>
+                  <li><strong>Mask infrastructure</strong> &middot; mature ecosystem outside China.</li>
+                  <li><strong>EUV / ArF photoresist</strong> &middot; Japanese / Korean / European incumbents.<sup><a href="#fn8">8</a></sup></li>
+                  <li><strong>Ultra-pure chemicals</strong> &middot; trust depth measured in years.<sup><a href="#fn1">1</a></sup></li>
+                  <li><strong>Advanced-node integration</strong> &middot; ecosystem-level co-design, not single tool.<sup><a href="#fn10">10</a></sup></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ssl-fig-cap">A simplified, original split. Localisation and dependence both compound; neither replaces the other in 2026.</div>
+          </figure>
+
+          <p class="essay-line">The top of the ladder is not a single tool. It is a trusted manufacturing ecosystem.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XIV. What could break the thesis?</h2>
+
+          <p>China can make more tools and still fail to become advanced-node independent.</p>
+
+          <div class="ssl-counter" aria-label="Bear case">
+            <div class="ssl-counter-label">Bear case &middot; what could keep China stuck at the lower rungs</div>
+            <ol>
+              <li><strong>Mature-node ceiling.</strong> Domestic tools may work at mature nodes but struggle at advanced nodes.</li>
+              <li><strong>Policy-driven qualification.</strong> Fabs may qualify local tools because of policy pressure, not because they are best-in-class.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Crowded low rungs.</strong> Too many domestic suppliers may crowd lower-barrier categories.</li>
+              <li><strong>Lithography lag.</strong> Lithography may remain years behind the global frontier.<sup><a href="#fn7">7</a></sup></li>
+              <li><strong>Materials trust gap.</strong> Materials may remain dependent on Japanese, Korean, European, and American know-how.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Integration problem.</strong> Advanced process integration may remain the hardest problem to localise.<sup><a href="#fn10">10</a></sup></li>
+              <li><strong>Hidden yield gaps.</strong> Yield gaps may be hidden by subsidies or policy pressure.</li>
+              <li><strong>Service maturity.</strong> Tool uptime and service may lag incumbents for years.</li>
+              <li><strong>Uneconomic localisation.</strong> Real progress may not translate into competitive cost or returns.</li>
+              <li><strong>Moving frontier.</strong> N2P / A16 / A14 / A13 / CoWoS / SoIC / COUPE keep raising the bar.<sup><a href="#fn9">9</a></sup></li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XV. What could break the bear case?</h2>
+
+          <p>China does not need perfect self-sufficiency to weaken foreign leverage. But it does need trusted lithography, materials, metrology, and process integration to become truly advanced-node independent.</p>
+
+          <div class="ssl-counter ssl-counter--bull" aria-label="Bull case">
+            <div class="ssl-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>Forced learning.</strong> Forced procurement may accelerate learning faster than foreign analysts expect.<sup><a href="#fn3">3</a></sup></li>
+              <li><strong>Mature-node scale.</strong> Mature-node demand is large enough to create durable domestic champions.<sup><a href="#fn5">5</a></sup></li>
+              <li><strong>Captive demand.</strong> Export controls unintentionally guarantee customers for local suppliers.<sup><a href="#fn2">2</a></sup></li>
+              <li><strong>Sovereignty tolerance.</strong> Chinese fabs may accept lower efficiency to gain sovereignty.</li>
+              <li><strong>Good-enough threshold.</strong> Domestic tools may become &ldquo;good enough&rdquo; across more categories.</li>
+              <li><strong>Iterative engineering.</strong> Brute-force engineering and iteration can close gaps over time.</li>
+              <li><strong>Packaging value.</strong> Packaging and mature-node capacity can still be strategically valuable.<sup><a href="#fn9">9</a></sup></li>
+              <li><strong>Leverage erosion.</strong> Even partial substitution weakens foreign leverage on China.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">China does not need perfect self-sufficiency to weaken foreign leverage. But it does need trusted lithography, materials, metrology, and process integration to become truly advanced-node independent.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XVI. What to watch</h2>
+
+          <div class="ssl-watch" aria-label="What to watch">
+            <div class="ssl-watch-label">What to watch</div>
+            <ul>
+              <li>Domestic equipment share in new Chinese fabs.<sup><a href="#fn3">3</a></sup></li>
+              <li>Naura etch / deposition adoption.</li>
+              <li>AMEC etch and MOCVD progress.</li>
+              <li>ACM Research cleaning adoption.<sup><a href="#fn1">1</a></sup></li>
+              <li>Piotech deposition progress.</li>
+              <li>Hwatsing / CMP progress.</li>
+              <li>SMEE lithography claims vs production reality.<sup><a href="#fn1">1</a></sup></li>
+              <li>SMIC advanced-node yield.</li>
+              <li>CXMT / YMTC domestic tool adoption.</li>
+              <li>Domestic metrology and inspection progress.<sup><a href="#fn6">6</a></sup></li>
+              <li>Local photoresist qualification.<sup><a href="#fn1">1</a></sup></li>
+              <li>CMP slurry qualification.</li>
+              <li>Wet chemicals purity.</li>
+              <li>Tool uptime evidence.</li>
+              <li>Service network maturity.</li>
+              <li>Export-control updates.<sup><a href="#fn2">2</a></sup></li>
+              <li>ASML China service restrictions.<sup><a href="#fn7">7</a></sup></li>
+              <li>KLA / Lam / Applied / TEL China exposure.<sup><a href="#fn6">6</a></sup></li>
+              <li>TSMC advanced packaging roadmap.<sup><a href="#fn9">9</a></sup></li>
+              <li>Whether any domestic tool becomes credible at leading-edge nodes.</li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="ssl-terms" aria-label="Glossary">
+            <div class="ssl-terms-label">Glossary</div>
+            <dl>
+              <dt>Semiconductor equipment</dt><dd>Tools used to manufacture chips.</dd>
+              <dt>Cleaning</dt><dd>Removing particles and residues from wafers.</dd>
+              <dt>CMP</dt><dd>Chemical mechanical planarization &mdash; polishing wafers flat using slurry and mechanical action.</dd>
+              <dt>Etch</dt><dd>Removing material from selected parts of the wafer.</dd>
+              <dt>Deposition</dt><dd>Adding thin films of material onto a wafer.</dd>
+              <dt>Lithography</dt><dd>Using light and masks to pattern features on wafers.</dd>
+              <dt>DUV</dt><dd>Deep ultraviolet lithography.</dd>
+              <dt>EUV</dt><dd>Extreme ultraviolet lithography.</dd>
+              <dt>Photoresist</dt><dd>Light-sensitive material used in lithography patterning.</dd>
+              <dt>CMP slurry</dt><dd>Abrasive chemical mixture used in CMP.</dd>
+              <dt>Metrology</dt><dd>Measurement of wafer features and process parameters.</dd>
+              <dt>Inspection</dt><dd>Finding defects on wafers or masks.</dd>
+              <dt>Overlay</dt><dd>Alignment accuracy between patterned layers.</dd>
+              <dt>Yield</dt><dd>Percentage of chips that work correctly.</dd>
+              <dt>PDK</dt><dd>Process design kit used by chip designers.</dd>
+              <dt>CoWoS</dt><dd>Advanced packaging technology used for AI/HPC chips.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory.</dd>
+              <dt>SoIC</dt><dd>3D chip stacking technology.</dd>
+              <dt>Forced substitution</dt><dd>Policy-driven replacement of foreign suppliers with domestic alternatives.</dd>
+              <dt>Fab trust</dt><dd>Confidence that a tool or material will not damage yield, uptime, or process stability.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XVII. The semiconductor substitution ladder</h2>
+
+          <p>The 2021 fear that China would instantly replace the global semiconductor tool and chemical stack was overblown. But the opposite view is now wrong too.</p>
+
+          <p>China is no longer only talking about localisation. It is forcing substitution, building domestic champions, and climbing the lower and middle rungs of the equipment ladder.</p>
+
+          <div class="essay-pull">The hard question in 2026 is not whether China can make some tools. It can. The hard question is whether it can earn fab trust in the top rungs: lithography, photoresist, metrology, materials purity, and advanced-node process integration.</div>
+
+          <p>That is where the real bottleneck remains. Trust is built one production run at a time. It is hard to subsidise into existence. And the frontier is not standing still &mdash; TSMC&rsquo;s roadmap from N2 through A12 with backside power, plus CoWoS at 14 reticles and COUPE optical I/O, raises the bar every generation. The lower and middle rungs of the ladder will keep filling out. The top rungs will keep moving up.</p>
+
+          <p>The right model is not &ldquo;China wins&rdquo; or &ldquo;China loses.&rdquo; The right model is a ladder, with real progress at the bottom and real walls at the top, and an honest reading of which rung each tool, material, and fab actually stands on.</p>
+
+          <p>That is the semiconductor substitution ladder.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Aug 2021). <em>Fears for Chinese Semiconductor Capital Equipment and Chemical Supply Chain Are Overblown | Cautionary Tale On Trusting Industry Analysts.</em> SemiAnalysis. Historical anchor for the 2021 framing &mdash; SMEE lithography skepticism, ACM Research cleaning credibility, CMP, photoresist difficulty, TSMC&rsquo;s 2019 photoresist-related yield loss, the SMIC photoresist expert vs analyst dispute, and the warning that fab yield validates a tool, not company hype. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> U.S. Bureau of Industry and Security (Dec 2024). <a href="https://www.bis.gov/press-release/commerce-strengthens-export-controls-restrict-chinas-capability-produce-advanced-semiconductors-military" target="_blank" rel="noopener">Commerce strengthens export controls to restrict China&rsquo;s capability to produce advanced semiconductors</a>. Expanded controls on semiconductor manufacturing equipment, software tools, HBM, and Entity List additions, with AI / military rationale.</p>
+
+            <p id="fn3"><sup>3</sup> Reuters (Dec 2025). <a href="https://www.reuters.com/world/china/china-mandates-50-domestic-equipment-rule-chipmakers-sources-say-2025-12-30/" target="_blank" rel="noopener">China mandates 50% domestic equipment rule for chipmakers</a>. Unofficial requirement for chipmakers to use at least 50% domestic equipment when adding new capacity, with flexibility where domestic alternatives are weak; reporting on Naura and AMEC tool deployment.</p>
+
+            <p id="fn4"><sup>4</sup> SEMI. <a href="https://www.semi.org/en/SEMI-Reports-Global-Semiconductor-Equipment-Billings-Reached-135-Billion-in-2025" target="_blank" rel="noopener">SEMI reports global semiconductor equipment billings reached $135 billion in 2025</a>. Global semiconductor manufacturing equipment sales ~$135.1B in 2025; ~15% YoY growth; advanced logic, memory, and AI-related capacity context.</p>
+
+            <p id="fn5"><sup>5</sup> SEMI. <a href="https://www.semi.org/en/semi-press-release/semi-reports-global-300mm-fab-equipment-spending-expected-to-total-374-billion-dollars-over-next-three-years" target="_blank" rel="noopener">SEMI reports global 300mm fab equipment spending</a>. China projected to spend roughly $94B on 300mm fab equipment from 2026 to 2028, the largest regional share; national self-sufficiency policy context.</p>
+
+            <p id="fn6"><sup>6</sup> KLA Corporation. <a href="https://ir.kla.com/sec-filings/all-sec-filings" target="_blank" rel="noopener">KLA SEC filings</a>. Fiscal 2025 disclosures including China revenue share around ~33%; process-control, inspection, and metrology product framing; export-control risk language.</p>
+
+            <p id="fn7"><sup>7</sup> ASML. <a href="https://www.asml.com/investors/annual-report" target="_blank" rel="noopener">ASML 2025 Annual Report</a>. 2025 net sales ~&euro;32.7B; EUV / DUV / High-NA framing; R&amp;D scale; export-control context.</p>
+
+            <p id="fn8"><sup>8</sup> SEMI. <a href="https://www.semi.org/en/semi-press-release/global-semiconductor-materials-market-revenue-reaches-record-73.2-billion-dollars-in-2025-semi-reports" target="_blank" rel="noopener">Global semiconductor materials market reaches record $73.2B in 2025</a>. Wafer fab materials and packaging materials split; lithography-related materials growth; China materials market context.</p>
+
+            <p id="fn9"><sup>9</sup> TSMC (2026). <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 North America Technology Symposium</a>. N2 / N2P / A16 / N2U / A13 / A12 with Super Power Rail backside power; CoWoS expansion (5.5-reticle today, 14-reticle by 2028, ~10 dies + 20 HBM at 14R); SoIC and COUPE positioning.</p>
+
+            <p id="fn10"><sup>10</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">2025 Annual Report</a>. ~12,682 products manufactured for ~534 customers using ~305 distinct process technologies; advanced technologies at 7nm and below at ~74% of wafer revenue; 3nm at ~24%; trust-benchmark framing used in this essay.</p>
+
+            <p id="fn11"><sup>11</sup> Public corporate filings and credible trade-press reporting on Naura, AMEC, ACM Research, Piotech, Hwatsing, Kingsemi, Sizone, Anji Microelectronics, SMIC, CXMT, and YMTC are referenced in this essay only at the level the cited SemiAnalysis and Reuters materials already disclose. Specific revenue, tool-deployment, and yield claims are made only where verified by primary sources.</p>
+          </div>
+
+          <div class="ssl-fr">
+            <div class="ssl-fr-label">Further reading</div>
+            <ul>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="foundry-trust-test.html" class="essay-link">The Foundry Trust Test</a>. Why Intel&rsquo;s comeback depends on external customer commitment.</li>
+              <li><a href="gaa-credibility-test.html" class="essay-link">The GAA Credibility Test</a>. Samsung Foundry&rsquo;s 2nm comeback as a trust test, not a transistor story.</li>
+              <li><a href="other-leading-edge.html" class="essay-link">The Other Leading Edge</a>. GlobalFoundries and the specialty foundry layer of AI infrastructure.</li>
+              <li><a href="dry-resist-war.html" class="essay-link">The Dry Resist War</a>. Patterning as a strategic process technology for AI-era chipmaking.</li>
+              <li><a href="boring-back-end-boom.html" class="essay-link">The Boring Back-End Boom</a>. Mature nodes, wirebonding, and packaging becoming strategic again.</li>
+              <li><a href="density-illusion.html" class="essay-link">The Density Illusion</a>. Why Moore&rsquo;s Law became a system problem.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="fab-that-outlived-3d-xpoint.html" class="essay-link">The Fab That Outlived 3D XPoint</a>. Texas Instruments turning a failed memory fab into 300mm analog.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="power-efficiency-layer.html" class="essay-link">The Power Efficiency Layer</a>. Why Power Integrations sits at the quiet intersection of GaN, EVs, grids, and AI data-center power.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 037. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=41"></script>
+</body>
+</html>
