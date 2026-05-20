@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Fab That Outlived 3D XPoint | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of how Micron's failed 3D XPoint memory fab in Lehi became Texas Instruments' 300mm analog and embedded semiconductor supply-chain weapon.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/fab-that-outlived-3d-xpoint.html">
+  <meta property="og:title" content="The Fab That Outlived 3D XPoint | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of how Micron's failed 3D XPoint memory fab in Lehi became Texas Instruments' 300mm analog and embedded semiconductor supply-chain weapon.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/fab-that-outlived-3d-xpoint.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Micron">
+  <meta property="article:tag" content="Texas Instruments">
+  <meta property="article:tag" content="3D XPoint">
+  <meta property="article:tag" content="Optane">
+  <meta property="article:tag" content="Lehi">
+  <meta property="article:tag" content="LFAB1">
+  <meta property="article:tag" content="300mm Analog">
+  <meta property="article:tag" content="Foundational Semiconductors">
+  <meta property="article:tag" content="Analog Chips">
+  <meta property="article:tag" content="Embedded Processing">
+  <meta property="article:tag" content="CXL">
+  <meta property="article:tag" content="Memory">
+  <meta property="article:tag" content="Semiconductor Manufacturing">
+  <meta property="article:tag" content="CHIPS Act">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Fab That Outlived 3D XPoint | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of how Micron's failed 3D XPoint memory fab in Lehi became Texas Instruments' 300mm analog and embedded semiconductor supply-chain weapon.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Fab That Outlived 3D XPoint",
+    "description": "An original 2026 analysis of how Micron's failed 3D XPoint memory fab in Lehi became Texas Instruments' 300mm analog and embedded semiconductor supply-chain weapon.",
+    "url": "https://pugalenthimagendran.com/blog/posts/fab-that-outlived-3d-xpoint.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/fab-that-outlived-3d-xpoint.html",
+    "keywords": "Micron, Texas Instruments, 3D XPoint, Optane, Lehi, LFAB1, 300mm Analog, Foundational Semiconductors, Analog Chips, Embedded Processing, CXL, Memory, Semiconductor Manufacturing, CHIPS Act, AI Infrastructure"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay-format styles (inline, matching post convention) */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       FAB / 3D XPoint POST, scoped under .essay-fab
+       ============================================ */
+    .essay-fab {
+      --fab-accent: #F0784A;
+      --fab-accent-soft: rgba(240,120,74,0.10);
+      --fab-accent-faint: rgba(240,120,74,0.04);
+      --fab-bd: rgba(255,255,255,0.08);
+      --fab-bd-soft: rgba(255,255,255,0.05);
+      --fab-cool: #6CBFE0;
+      --fab-cool-soft: rgba(108,191,224,0.10);
+      --fab-purple: #B794F4;
+      --fab-purple-soft: rgba(183,148,244,0.10);
+      --fab-green: #5DCAA5;
+      --fab-green-soft: rgba(93,202,165,0.10);
+      --fab-amber: #E8B468;
+      --fab-amber-soft: rgba(232,180,104,0.10);
+      --fab-red: #E07A8B;
+      --fab-red-soft: rgba(224,122,139,0.10);
+    }
+
+    /* TOC */
+    .fab-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .fab-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .fab-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .fab-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .fab-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fab-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .fab-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .fab-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .fab-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--fab-bd); background: linear-gradient(180deg, var(--fab-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .fab-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fab-accent); margin-bottom: 14px; }
+    .fab-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--fab-bd-soft); line-height: 1.6; }
+
+    /* 2021 thesis callout */
+    .fab-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--fab-accent); background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .fab-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fab-accent); margin-bottom: 10px; }
+    .fab-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Dream vs reality split */
+    .fab-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .fab-split-col { padding: 20px 20px 18px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-split-col--dream { background: linear-gradient(180deg, var(--fab-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .fab-split-col--dream .fab-split-eyebrow { color: var(--fab-purple); }
+    .fab-split-col--reality { background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--fab-accent); }
+    .fab-split-col--reality .fab-split-eyebrow { color: var(--fab-accent); }
+    .fab-split-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .fab-split-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; }
+    .fab-split-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .fab-split-col li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .fab-split-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .fab-split-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Deal explainer */
+    .fab-deal { display: grid; grid-template-columns: 1fr 50px 1fr; align-items: center; gap: 10px; margin: 1rem 0 0; }
+    .fab-deal-card { padding: 18px 16px 14px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); text-align: center; }
+    .fab-deal-card--m { background: linear-gradient(180deg, var(--fab-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .fab-deal-card--t { background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--fab-accent); }
+    .fab-deal-side { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 6px; }
+    .fab-deal-num { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 700; color: var(--fab-accent); line-height: 1; margin-bottom: 6px; }
+    .fab-deal-card--m .fab-deal-num { color: var(--fab-purple); }
+    .fab-deal-card--t .fab-deal-num { color: var(--fab-accent); }
+    .fab-deal-label { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.4; }
+    .fab-deal-vs { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-tertiary); text-align: center; letter-spacing: 0.1em; }
+    .fab-deal-gap { margin-top: 14px; padding: 12px 16px; border-radius: 8px; border: 0.5px dashed var(--color-border-tertiary); font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .fab-deal-gap strong { color: var(--color-text-primary); }
+
+    /* Tech vs manufacturing thesis */
+    .fab-thes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .fab-thes-col { padding: 20px 20px 18px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-thes-col--tech { background: linear-gradient(180deg, var(--fab-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .fab-thes-col--tech .fab-thes-eyebrow { color: var(--fab-cool); }
+    .fab-thes-col--mfg { background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--fab-accent); }
+    .fab-thes-col--mfg .fab-thes-eyebrow { color: var(--fab-accent); }
+    .fab-thes-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .fab-thes-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .fab-thes-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .fab-thes-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .fab-thes-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .fab-thes-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Memory hierarchy */
+    .fab-hier { display: grid; grid-template-columns: 1fr; gap: 6px; max-width: 380px; margin: 1rem auto 0; padding: 16px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-hier-row { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 10px 12px; border-radius: 6px; align-items: center; }
+    .fab-hier-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--color-text-primary); }
+    .fab-hier-name span { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.06em; display: block; margin-top: 2px; font-weight: 400; }
+    .fab-hier-bar { height: 22px; border-radius: 4px; }
+    .fab-hier-row--dram { background: rgba(108,191,224,0.08); border: 0.5px solid rgba(108,191,224,0.30); }
+    .fab-hier-row--dram .fab-hier-bar { background: linear-gradient(90deg, var(--fab-cool), #9DD7E9); }
+    .fab-hier-row--xp { background: rgba(183,148,244,0.08); border: 0.5px solid rgba(183,148,244,0.30); }
+    .fab-hier-row--xp .fab-hier-bar { background: linear-gradient(90deg, var(--fab-purple), #D1B7F8); }
+    .fab-hier-row--nand { background: rgba(93,202,165,0.08); border: 0.5px solid rgba(93,202,165,0.30); }
+    .fab-hier-row--nand .fab-hier-bar { background: linear-gradient(90deg, var(--fab-green), #9CDCBF); }
+    .fab-hier-gap { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); text-align: center; letter-spacing: 0.06em; padding: 4px 0; }
+    .fab-hier-gap span { color: var(--fab-purple); }
+
+    /* XPoint failure stack */
+    .fab-fail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .fab-fail-card { padding: 14px 12px 12px; border-radius: 8px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-fail-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--fab-red); margin-bottom: 4px; }
+    .fab-fail-name { font-family: 'Inter', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.005em; }
+    .fab-fail-body { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.04em; color: var(--color-text-tertiary); line-height: 1.4; }
+
+    /* Lehi timeline */
+    .fab-timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 1rem 0 0; }
+    .fab-tl { padding: 14px 12px 12px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-tl-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fab-accent); margin-bottom: 6px; }
+    .fab-tl-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.25; }
+    .fab-tl-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+    .fab-tl--a { background: linear-gradient(180deg, var(--fab-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .fab-tl--b { background: linear-gradient(180deg, var(--fab-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.40); }
+    .fab-tl--c { background: linear-gradient(180deg, var(--fab-red-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(224,122,139,0.40); }
+    .fab-tl--d { background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--fab-accent); }
+    .fab-tl--e { background: linear-gradient(180deg, var(--fab-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+
+    /* Wafer cost compare */
+    .fab-wafer { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .fab-wafer-card { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); text-align: center; }
+    .fab-wafer-card--200 { background: linear-gradient(180deg, var(--fab-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .fab-wafer-card--300 { background: linear-gradient(180deg, var(--fab-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--fab-accent); }
+    .fab-wafer-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .fab-wafer-card--200 .fab-wafer-cat { color: var(--fab-cool); }
+    .fab-wafer-card--300 .fab-wafer-cat { color: var(--fab-accent); }
+    .fab-wafer-disc { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 12px; background: rgba(255,255,255,0.02); border: 1.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-tertiary); letter-spacing: 0.06em; }
+    .fab-wafer-card--200 .fab-wafer-disc { width: 80px; height: 80px; border-color: rgba(108,191,224,0.50); color: var(--fab-cool); }
+    .fab-wafer-card--300 .fab-wafer-disc { width: 110px; height: 110px; border-color: var(--fab-accent); color: var(--fab-accent); }
+    .fab-wafer-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .fab-wafer-body { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.5; color: var(--color-text-secondary); }
+    .fab-wafer-tag { display: inline-block; margin-top: 8px; padding: 3px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--fab-accent); background: var(--fab-accent-faint); }
+
+    /* Foundational AI chip map */
+    .fab-chip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 1rem 0 0; }
+    .fab-chip-card { padding: 12px 12px 10px; border-radius: 8px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-chip-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fab-accent); margin-bottom: 6px; }
+    .fab-chip-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+    .fab-chip-body { font-family: 'Source Serif 4', serif; font-size: 0.82rem; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* Stat row */
+    .fab-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .fab-stat-card { padding: 14px 12px; border-radius: 8px; border: 1px solid var(--fab-bd); background: var(--bg-alt); text-align: center; }
+    .fab-stat-num { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--fab-accent); line-height: 1.1; }
+    .fab-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.35; }
+    .fab-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--fab-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--fab-accent-faint); }
+
+    /* Caution */
+    .fab-caution { margin: 1.5rem 0 2rem; padding: 16px 22px; border-radius: 10px; border: 1px solid var(--fab-amber); background: linear-gradient(180deg, var(--fab-amber-soft) 0%, transparent 80%), var(--bg-alt); }
+    .fab-caution-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fab-amber); margin-bottom: 8px; }
+    .fab-caution-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; }
+    .fab-caution p { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+
+    /* Glossary */
+    .fab-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .fab-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .fab-terms dl { margin: 0; display: grid; grid-template-columns: 180px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .fab-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--fab-accent); padding-top: 2px; }
+    .fab-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counter / watch */
+    .fab-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .fab-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .fab-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--fab-bd-soft); }
+    .fab-counter li:last-child { border-bottom: none; }
+    .fab-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--fab-accent); }
+    .fab-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+    .fab-counter--bull { border-color: rgba(93,202,165,0.30); background: linear-gradient(180deg, var(--fab-green-soft) 0%, transparent 90%), var(--bg-alt); }
+    .fab-counter--bull li::before { color: var(--fab-green); }
+
+    .fab-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--fab-bd); background: var(--bg-alt); }
+    .fab-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .fab-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .fab-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--fab-bd-soft); }
+    .fab-watch li:last-child, .fab-watch li:nth-last-child(2) { border-bottom: none; }
+    .fab-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--fab-accent); background: transparent; }
+
+    /* Further reading */
+    .fab-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .fab-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .fab-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .fab-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .fab-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .fab-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .fab-toc ol { grid-template-columns: 1fr; }
+      .fab-split, .fab-thes, .fab-wafer { grid-template-columns: 1fr; }
+      .fab-deal { grid-template-columns: 1fr; gap: 8px; }
+      .fab-deal-vs { padding: 8px 0; }
+      .fab-fail, .fab-chip { grid-template-columns: repeat(2, 1fr); }
+      .fab-timeline { grid-template-columns: repeat(2, 1fr); }
+      .fab-stat-row { grid-template-columns: 1fr; }
+      .fab-terms dl { grid-template-columns: 130px 1fr; }
+      .fab-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .fab-fail, .fab-chip, .fab-timeline { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-fab">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 031 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Texas Instruments</span>
+          <span class="tag">Micron</span>
+          <span class="tag">3D XPoint</span>
+          <span class="tag">Optane</span>
+          <span class="tag">Lehi</span>
+          <span class="tag">LFAB1</span>
+          <span class="tag">300mm Analog</span>
+          <span class="tag">Foundational Semis</span>
+          <span class="tag">CXL</span>
+          <span class="tag">CHIPS Act</span>
+          <span class="tag">Memory</span>
+          <span class="tag">Manufacturing</span>
+        </div>
+
+        <h1 class="essay-hed">The Fab That Outlived <em>3D XPoint</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">How Micron&rsquo;s failed memory experiment became Texas Instruments&rsquo; 300mm analog supply-chain weapon.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">3D XPoint was the dream: a new memory tier between DRAM and NAND. Lehi was the asset. The dream failed because the ecosystem and economics never lined up. The asset survived because TI could turn it into something more boring and more durable: low-cost 300mm capacity for analog and embedded chips.</p>
+
+          <nav class="fab-toc" aria-label="Article contents">
+            <div class="fab-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis</a></li>
+              <li><a href="#sec-xpoint">3D XPoint was the wrong kind of hard</a></li>
+              <li><a href="#sec-optane">Intel ending Optane closed the loop</a></li>
+              <li><a href="#sec-ti">TI bought the boring part on purpose</a></li>
+              <li><a href="#sec-analog">Why analog and embedded are different</a></li>
+              <li><a href="#sec-lfab1">Lehi became LFAB1</a></li>
+              <li><a href="#sec-300mm">The 300mm cost advantage</a></li>
+              <li><a href="#sec-ai">Foundational chips matter more, not less</a></li>
+              <li><a href="#sec-us">From failed fab to U.S. supply-chain asset</a></li>
+              <li><a href="#sec-cxl">Why CXL replaced the dream better than XPoint did</a></li>
+              <li><a href="#sec-lessons">Two semiconductor lessons</a></li>
+              <li><a href="#sec-bear">What could break the thesis</a></li>
+              <li><a href="#sec-bull">What could break the bear case</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The fab that outlived 3D XPoint</a></li>
+            </ol>
+          </nav>
+
+          <p>In 2021, Micron sold a fab. But the deeper story was not the transaction. It was the death of one semiconductor dream and the second life of a manufacturing asset.</p>
+
+          <p>The uploaded SemiAnalysis article covered Micron&rsquo;s sale of the Lehi, Utah fab to Texas Instruments. Micron said the deal was worth <span class="fab-stat">$1.5B</span>. TI said the cash purchase price was <span class="fab-stat">$900M</span>. The difference came from tools and other assets Micron retained.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>At the time, Lehi was associated with 3D XPoint, the non-volatile memory technology created through the Intel/Micron partnership. It was supposed to become a new layer between DRAM and NAND. Faster than NAND. Denser than DRAM. Persistent. Enterprise-grade. Potentially architecture-changing. But by 2021, Micron had moved on.<sup><a href="#fn2">2</a></sup></p>
+
+          <p class="essay-line">The memory technology failed. The fab did not.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>Micron&rsquo;s Lehi fab shows the difference between a technology thesis and a manufacturing thesis. 3D XPoint needed an ecosystem that never arrived. TI needed 300mm capacity for analog and embedded products with long lives, broad demand, and cost advantages. In 2026, the fab&rsquo;s second life looks more durable than its first.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis</h2>
+
+          <p>In July 2021, Dylan Patel published a SemiAnalysis piece on Micron&rsquo;s sale of Lehi to Texas Instruments. The piece walked through the deal mechanics, the IMFT joint venture history with Intel, the fab&rsquo;s use for 3D XPoint and some NAND operations, the underutilisation pressure on Micron, and TI&rsquo;s plan to refit the site for 65nm and 45nm analog and embedded processing, with TI not receiving 3D XPoint IP or licensing rights and expecting underutilisation costs through conversion before first revenue around early 2023.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>Five years on, the structural argument has held up. The 3D XPoint story is over. The Lehi story is just starting.</p>
+
+          <div class="fab-thesis">
+            <div class="fab-thesis-label">2021 thesis</div>
+            <p class="fab-thesis-text">Micron was exiting a stranded 3D XPoint manufacturing asset. TI was buying 300mm capacity that could be refit for analog and embedded chips with long product lives and better economics.</p>
+          </div>
+
+          <figure class="fab-fig" aria-label="Deal explainer">
+            <div class="fab-fig-label">Diagram &middot; The $1.5B vs $900M gap</div>
+            <div class="fab-deal">
+              <div class="fab-deal-card fab-deal-card--m">
+                <div class="fab-deal-side">Micron framing</div>
+                <div class="fab-deal-num">$1.5B</div>
+                <div class="fab-deal-label">total transaction value</div>
+              </div>
+              <div class="fab-deal-vs">vs</div>
+              <div class="fab-deal-card fab-deal-card--t">
+                <div class="fab-deal-side">TI framing</div>
+                <div class="fab-deal-num">$900M</div>
+                <div class="fab-deal-label">cash acquisition price</div>
+              </div>
+            </div>
+            <div class="fab-deal-gap"><strong>The $600M difference</strong> sits in tools and other assets Micron retained, not in disagreement. The same transaction can look different on each balance sheet.<sup><a href="#fn1">1</a></sup></div>
+            <div class="fab-fig-cap">A simplified, original visual. Numbers as reported by Micron and TI in 2021 announcements.<sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup></div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-xpoint">II. 3D XPoint was the wrong kind of hard</h2>
+
+          <p>3D XPoint was technically interesting, but semiconductors do not win because they are interesting. They win when the whole stack lines up: manufacturing scale, cost curve, customer demand, platform support, software adoption, system architecture, procurement confidence, replacement cycle, ecosystem incentives.</p>
+
+          <p>3D XPoint was a non-volatile memory technology that aimed to sit between DRAM and NAND &mdash; faster than NAND, persistent, and meant to create a new memory/storage tier.</p>
+
+          <figure class="fab-fig" aria-label="Memory hierarchy">
+            <div class="fab-fig-label">Diagram &middot; The memory tier 3D XPoint tried to occupy</div>
+            <div class="fab-hier" aria-label="Memory hierarchy">
+              <div class="fab-hier-row fab-hier-row--dram">
+                <div class="fab-hier-name">DRAM<span>volatile, fast</span></div>
+                <div class="fab-hier-bar"></div>
+              </div>
+              <div class="fab-hier-gap">&darr; &nbsp; <span>3D XPoint tier</span> &nbsp; &darr;</div>
+              <div class="fab-hier-row fab-hier-row--xp">
+                <div class="fab-hier-name">3D XPoint<span>non-volatile, intermediate</span></div>
+                <div class="fab-hier-bar" style="width: 70%;"></div>
+              </div>
+              <div class="fab-hier-gap">&darr;</div>
+              <div class="fab-hier-row fab-hier-row--nand">
+                <div class="fab-hier-name">NAND<span>non-volatile, dense</span></div>
+                <div class="fab-hier-bar" style="width: 50%;"></div>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A schematic, original visual. Bar widths are illustrative, not measured. 3D XPoint was positioned between DRAM and NAND.</div>
+          </figure>
+
+          <p>But the position was hard. It was not cheap enough to displace NAND broadly. It was not simple enough to displace DRAM. It needed system-level adoption, platform support, and software changes that did not arrive at sufficient scale.</p>
+
+          <p>In 2021, Micron said it would cease 3D XPoint development immediately and redirect resources toward CXL-enabled memory products, citing insufficient market validation to justify the investment needed for commercialisation at scale.<sup><a href="#fn2">2</a></sup></p>
+
+          <figure class="fab-fig" aria-label="Why 3D XPoint failed">
+            <div class="fab-fig-label">Diagram &middot; What 3D XPoint needed that never lined up</div>
+            <div class="fab-fail">
+              <div class="fab-fail-card">
+                <div class="fab-fail-num">01</div>
+                <div class="fab-fail-name">Ecosystem</div>
+                <div class="fab-fail-body">Platform vendors needed to adopt a new tier.</div>
+              </div>
+              <div class="fab-fail-card">
+                <div class="fab-fail-num">02</div>
+                <div class="fab-fail-name">Software</div>
+                <div class="fab-fail-body">OS and applications had to use persistent memory natively.</div>
+              </div>
+              <div class="fab-fail-card">
+                <div class="fab-fail-num">03</div>
+                <div class="fab-fail-name">Cost</div>
+                <div class="fab-fail-body">Per-bit cost had to fall on a believable curve.</div>
+              </div>
+              <div class="fab-fail-card">
+                <div class="fab-fail-num">04</div>
+                <div class="fab-fail-name">Demand</div>
+                <div class="fab-fail-body">Customers had to redesign systems around a new tier.</div>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A simplified, original framing. Each layer is necessary; missing one is enough.</div>
+          </figure>
+
+          <p class="essay-line">A new memory tier is not just a chip. It is a platform transition.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-optane">III. Intel ending Optane closed the loop</h2>
+
+          <p>The other half of the 3D XPoint story was Intel&rsquo;s Optane product family. Intel later said it would cease future development of Optane products, describing Optane as having become impractical to deliver at necessary scale as a single-source supplier.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>That confirms the broader problem. 3D XPoint did not fail because the idea was boring. It failed because the ecosystem and economics were not strong enough.</p>
+
+          <p class="essay-line">3D XPoint needed the industry to change around it. The industry did not move fast enough.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ti">IV. TI bought the boring part on purpose</h2>
+
+          <p>The 2021 SemiAnalysis piece was clear that TI did not receive 3D XPoint IP or licensing rights, planned to use the fab for 65nm and 45nm analog and embedded processing, offered Micron Lehi employees the opportunity to become TI employees, and expected underutilisation costs during conversion.<sup><a href="#fn1">1</a></sup> TI&rsquo;s own announcement framed Lehi as its fourth 300mm wafer fab and an extension of its 300mm manufacturing capacity at a <span class="fab-stat">$900M</span> cash price.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>TI was not buying failed memory technology. TI was buying a manufacturing asset that fit its analog and embedded playbook.</p>
+
+          <figure class="fab-fig" aria-label="Dream vs reality split">
+            <div class="fab-fig-label">Diagram &middot; 3D XPoint dream vs TI analog reality</div>
+            <div class="fab-split">
+              <div class="fab-split-col fab-split-col--dream">
+                <div class="fab-split-eyebrow">Micron 2021</div>
+                <h3 class="fab-split-title">The dream</h3>
+                <ul>
+                  <li><strong>Goal</strong> &middot; create a new memory tier between DRAM and NAND.</li>
+                  <li><strong>Needs</strong> &middot; ecosystem, software, platform adoption.</li>
+                  <li><strong>Reality</strong> &middot; insufficient market validation.<sup><a href="#fn2">2</a></sup></li>
+                  <li><strong>Result</strong> &middot; cease development; sell the fab.</li>
+                </ul>
+              </div>
+              <div class="fab-split-col fab-split-col--reality">
+                <div class="fab-split-eyebrow">TI 2021&ndash;2026</div>
+                <h3 class="fab-split-title">The reality</h3>
+                <ul>
+                  <li><strong>Goal</strong> &middot; expand 300mm analog and embedded capacity.<sup><a href="#fn3">3</a></sup></li>
+                  <li><strong>Needs</strong> &middot; existing demand, low unit cost.</li>
+                  <li><strong>Reality</strong> &middot; long-life industrial / auto / data-center analog.</li>
+                  <li><strong>Result</strong> &middot; refit to 45nm and 65nm; build LFAB2 next to it.<sup><a href="#fn5">5</a></sup></li>
+                </ul>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A simplified, original split. Same building. Very different business model.</div>
+          </figure>
+
+          <p class="essay-line">Micron sold a failed memory asset. TI bought a future analog cost advantage.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-analog">V. Why analog and embedded are different</h2>
+
+          <p>Analog and embedded chips do not chase Moore&rsquo;s Law the same way CPUs and GPUs do. They live in cars, factories, data centres, medical devices, industrial robots, power systems, communications equipment, consumer electronics, and defence and aerospace systems. They often need long product lives, reliability, supply continuity, cost discipline, process maturity, manufacturing control, and qualification stability.</p>
+
+          <p class="essay-line">In analog, boring is not a weakness. Boring is the business model.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-lfab1">VI. Lehi became LFAB1</h2>
+
+          <p>In the years after the deal, Lehi became LFAB1. TI&rsquo;s CHIPS Act funding fact sheet describes LFAB1 as producing analog and embedded processing chips on 45nm and 65nm process technologies, with 28nm technology in development. LFAB2 is being built next to LFAB1 on the same Lehi site.<sup><a href="#fn5">5</a></sup></p>
+
+          <figure class="fab-fig" aria-label="Lehi timeline">
+            <div class="fab-fig-label">Diagram &middot; Lehi timeline &mdash; IMFT &rarr; LFAB1</div>
+            <div class="fab-timeline">
+              <div class="fab-tl fab-tl--a">
+                <div class="fab-tl-year">2006&ndash;19</div>
+                <h3 class="fab-tl-name">IMFT JV</h3>
+                <div class="fab-tl-body">Intel/Micron joint venture; some NAND and 3D XPoint operations.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="fab-tl fab-tl--b">
+                <div class="fab-tl-year">2015&ndash;21</div>
+                <h3 class="fab-tl-name">3D XPoint</h3>
+                <div class="fab-tl-body">Memory tier between DRAM and NAND; ecosystem never arrives.<sup><a href="#fn1">1</a></sup></div>
+              </div>
+              <div class="fab-tl fab-tl--c">
+                <div class="fab-tl-year">2021</div>
+                <h3 class="fab-tl-name">Micron exits</h3>
+                <div class="fab-tl-body">Cease 3D XPoint development; pivot to CXL memory products.<sup><a href="#fn2">2</a></sup></div>
+              </div>
+              <div class="fab-tl fab-tl--d">
+                <div class="fab-tl-year">2021</div>
+                <h3 class="fab-tl-name">TI acquires</h3>
+                <div class="fab-tl-body">$900M cash; Lehi becomes TI&rsquo;s 4th 300mm fab.<sup><a href="#fn3">3</a></sup></div>
+              </div>
+              <div class="fab-tl fab-tl--e">
+                <div class="fab-tl-year">2023&ndash;26</div>
+                <h3 class="fab-tl-name">LFAB1 + LFAB2</h3>
+                <div class="fab-tl-body">45nm/65nm analog; 28nm development; LFAB2 under construction.<sup><a href="#fn5">5</a></sup></div>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A simplified, original timeline. Years are approximate; precise milestones per the cited sources.</div>
+          </figure>
+
+          <p class="essay-line">The same fab that could not justify a new memory ecosystem became part of TI&rsquo;s 300mm analog machine.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-300mm">VII. The 300mm cost advantage</h2>
+
+          <p>TI&rsquo;s annual report describes the structural cost story plainly. TI says an unpackaged chip built on a 300mm wafer costs about <span class="fab-stat">40%</span> less than one built on a 200mm wafer, with internal manufacturing, process technology, and packaging helping lower costs and increase supply-chain control.<sup><a href="#fn6">6</a></sup></p>
+
+          <p>A 300mm wafer has more surface area than a 200mm wafer. More chips can be produced per wafer. For mature analog and embedded products with long lives, that cost structure can matter for decades.</p>
+
+          <figure class="fab-fig" aria-label="200mm vs 300mm wafer cost compare">
+            <div class="fab-fig-label">Diagram &middot; 200mm vs 300mm wafer cost compare</div>
+            <div class="fab-wafer">
+              <div class="fab-wafer-card fab-wafer-card--200">
+                <div class="fab-wafer-cat">Older size</div>
+                <div class="fab-wafer-disc">200mm</div>
+                <h3 class="fab-wafer-name">200mm wafer</h3>
+                <p class="fab-wafer-body">Smaller surface area. Fewer die per wafer. Higher unit cost for the same product.</p>
+              </div>
+              <div class="fab-wafer-card fab-wafer-card--300">
+                <div class="fab-wafer-cat">Larger size</div>
+                <div class="fab-wafer-disc">300mm</div>
+                <h3 class="fab-wafer-name">300mm wafer</h3>
+                <p class="fab-wafer-body">More die per wafer. Lower unit cost for analog and embedded products with long lives.</p>
+                <span class="fab-wafer-tag">~40% lower unit cost &middot; TI claim<sup><a href="#fn6">6</a></sup></span>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A schematic, original visual. Disc sizes are illustrative, not literal wafer geometry. The 40% cost figure is TI&rsquo;s framing.<sup><a href="#fn6">6</a></sup></div>
+          </figure>
+
+          <p class="essay-line">TI is not using 300mm to chase the bleeding edge. TI is using 300mm to make foundational chips cheaper, more available, and more controllable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">VIII. The AI-era twist: foundational chips matter more, not less</h2>
+
+          <p>When people talk about AI infrastructure, they usually talk about GPUs, HBM, CoWoS, networking, power, and cooling. But every AI factory also needs foundational semiconductors: power management, voltage regulation, current sensing, isolation, precision data converters, timing, embedded controllers, thermal management, motor control, battery management, data-center power delivery, and networking support chips.</p>
+
+          <figure class="fab-fig" aria-label="Foundational chips around AI accelerators">
+            <div class="fab-fig-label">Diagram &middot; The foundational layer around AI accelerators</div>
+            <div class="fab-chip">
+              <div class="fab-chip-card">
+                <div class="fab-chip-cat">Power</div>
+                <h3 class="fab-chip-name">PMICs &amp; VRMs</h3>
+                <div class="fab-chip-body">Power delivery for GPUs, switches, servers.</div>
+              </div>
+              <div class="fab-chip-card">
+                <div class="fab-chip-cat">Sensing</div>
+                <h3 class="fab-chip-name">Converters</h3>
+                <div class="fab-chip-body">ADC / DAC, current sense, temperature.</div>
+              </div>
+              <div class="fab-chip-card">
+                <div class="fab-chip-cat">Timing</div>
+                <h3 class="fab-chip-name">Clocks &amp; isolation</h3>
+                <div class="fab-chip-body">Synchronisation and signal-path discipline.</div>
+              </div>
+              <div class="fab-chip-card">
+                <div class="fab-chip-cat">Control</div>
+                <h3 class="fab-chip-name">MCUs</h3>
+                <div class="fab-chip-body">Embedded processing for thermal, power, BMS.</div>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A simplified, original framing of the analog and embedded layer that lives around every AI accelerator. These are the chips TI&rsquo;s 300mm fabs are built for.</div>
+          </figure>
+
+          <p>TI&rsquo;s 2026 Capital Management materials describe industrial, automotive, and data-centre markets as the long-term growth engine for the company&rsquo;s analog and embedded portfolio.<sup><a href="#fn7">7</a></sup> AI accelerators sit on top of a much larger electrical system, and the analog and embedded chips inside that system are exactly what 300mm fabs like Lehi are designed to produce at scale.</p>
+
+          <p class="essay-line">The AI factory is not only an accelerator rack. It is an electrical system. TI sells into the electrical system.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-us">IX. From failed memory fab to U.S. supply-chain asset</h2>
+
+          <p>TI announced plans to invest more than <span class="fab-stat">$60B</span> across seven U.S. semiconductor fabs in Texas and Utah, framing the investment around foundational semiconductors and U.S.-made chip supply.<sup><a href="#fn8">8</a></sup> TI&rsquo;s Lehi manufacturing page describes Lehi as the home of LFAB1 and LFAB2, expected at full production to make tens of millions of analog and embedded chips per day.<sup><a href="#fn9">9</a></sup></p>
+
+          <figure class="fab-fig" aria-label="TI U.S. manufacturing stat row">
+            <div class="fab-fig-label">Card &middot; TI U.S. manufacturing footprint, simplified</div>
+            <div class="fab-stat-row">
+              <div class="fab-stat-card"><div class="fab-stat-num">$60B+</div><div class="fab-stat-label">U.S. manufacturing investment plan<sup><a href="#fn8">8</a></sup></div></div>
+              <div class="fab-stat-card"><div class="fab-stat-num">7</div><div class="fab-stat-label">U.S. fabs in Texas + Utah<sup><a href="#fn8">8</a></sup></div></div>
+              <div class="fab-stat-card"><div class="fab-stat-num">LFAB1 + 2</div><div class="fab-stat-label">Lehi 300mm site<sup><a href="#fn9">9</a></sup></div></div>
+            </div>
+            <div class="fab-fig-cap">Figures as reported by TI in its public announcements. Treated as company framing, not independently audited capacity.</div>
+          </figure>
+
+          <p class="essay-line">The fab did not become more valuable because it became more advanced. It became more valuable because it became more useful.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-cxl">X. Why CXL replaced the dream better than XPoint did</h2>
+
+          <p>Micron&rsquo;s 2021 portfolio update redirected resources toward CXL-enabled memory products.<sup><a href="#fn2">2</a></sup> CXL expands and pools memory using a standards-based interconnect. Instead of forcing the world to adopt a new memory tier with a new device-economics problem, CXL fits into the data-center architecture more naturally.</p>
+
+          <div class="fab-caution" role="note" aria-label="CXL framing caution">
+            <div class="fab-caution-label">Framing</div>
+            <h3 class="fab-caution-title">CXL is not a one-to-one replacement for 3D XPoint.</h3>
+            <p>CXL did not solve everything 3D XPoint was trying to solve, and it is still maturing. The point is that Micron&rsquo;s pivot showed the industry&rsquo;s preferred direction: memory expansion through platform standards rather than a proprietary stranded media layer.</p>
+          </div>
+
+          <p class="essay-line">3D XPoint tried to create a new tier. CXL tried to make memory expansion fit the platform.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-lessons">XI. The two semiconductor lessons</h2>
+
+          <p>Strip away the specifics and Lehi tells a simple story about two ways to win in semiconductors.</p>
+
+          <figure class="fab-fig" aria-label="Tech vs manufacturing thesis">
+            <div class="fab-fig-label">Diagram &middot; Technology thesis vs manufacturing thesis</div>
+            <div class="fab-thes">
+              <div class="fab-thes-col fab-thes-col--tech">
+                <div class="fab-thes-eyebrow">Technology thesis</div>
+                <h3 class="fab-thes-title">3D XPoint</h3>
+                <ul>
+                  <li><strong>New device</strong> &middot; new physics, new performance tier.</li>
+                  <li><strong>New ecosystem</strong> &middot; platforms, software, customers.</li>
+                  <li><strong>High risk</strong> &middot; fails if the platform does not move.</li>
+                  <li><strong>Outcome</strong> &middot; cease development.<sup><a href="#fn2">2</a></sup></li>
+                </ul>
+              </div>
+              <div class="fab-thes-col fab-thes-col--mfg">
+                <div class="fab-thes-eyebrow">Manufacturing thesis</div>
+                <h3 class="fab-thes-title">TI 300mm analog</h3>
+                <ul>
+                  <li><strong>Existing demand</strong> &middot; analog and embedded products.</li>
+                  <li><strong>Proven cost curve</strong> &middot; 300mm vs 200mm advantage.<sup><a href="#fn6">6</a></sup></li>
+                  <li><strong>Long lives</strong> &middot; decade-plus product cycles.</li>
+                  <li><strong>Outcome</strong> &middot; LFAB1 + LFAB2 + $60B U.S. plan.<sup><a href="#fn8">8</a></sup></li>
+                </ul>
+              </div>
+            </div>
+            <div class="fab-fig-cap">A simplified, original framing. Both theses can be right. Lehi shows what happens when one path fails and the other one inherits the asset.</div>
+          </figure>
+
+          <p class="essay-line">The memory was more exciting. The fab was more durable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bear">XII. What could break the thesis?</h2>
+
+          <p>TI may be right about 300mm long-term and still suffer if it builds capacity faster than demand arrives.</p>
+
+          <div class="fab-counter" aria-label="Bear case">
+            <div class="fab-counter-label">Bear case &middot; what could break the thesis</div>
+            <ol>
+              <li><strong>Capital intensity.</strong> The 300mm buildout is enormous on TI&rsquo;s balance sheet.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>Cyclicality.</strong> Analog demand is cyclical across industrial and auto.</li>
+              <li><strong>Inventory.</strong> Customers overordered during shortages and then burned inventory.</li>
+              <li><strong>Underutilisation.</strong> Underabsorbed capacity pressures gross margin.<sup><a href="#fn6">6</a></sup></li>
+              <li><strong>China competition.</strong> Lower-end analog faces real pricing pressure.</li>
+              <li><strong>Industrial recovery.</strong> Industrial cycles can be slow to turn.</li>
+              <li><strong>Automotive demand.</strong> EV and ICE mix shifts can be choppy.</li>
+              <li><strong>Data-center mix.</strong> Not every analog socket becomes high-margin forever.</li>
+              <li><strong>Overbuild.</strong> Capacity ahead of demand pressures returns.</li>
+              <li><strong>Capex scrutiny.</strong> Investors may pressure TI on capex and free cash flow.</li>
+            </ol>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-bull">XIII. What could break the bear case?</h2>
+
+          <p>If electronics keep spreading through the physical world, low-cost internal 300mm analog capacity becomes a structural advantage.</p>
+
+          <div class="fab-counter fab-counter--bull" aria-label="Bull case">
+            <div class="fab-counter-label">Bull case &middot; what could break the bear</div>
+            <ol>
+              <li><strong>Vehicle content.</strong> Electronics content per car keeps increasing.</li>
+              <li><strong>Factories and robots.</strong> Industrial automation needs more sensing and control.</li>
+              <li><strong>AI data centers.</strong> Power management and protection scale with accelerator capex.</li>
+              <li><strong>Medical and energy.</strong> Reliable analog is required at the device level.</li>
+              <li><strong>U.S. manufacturing.</strong> Domestic, dependable supply gains strategic value.<sup><a href="#fn8">8</a></sup></li>
+              <li><strong>300mm structural cost.</strong> The 200mm vs 300mm gap is durable.<sup><a href="#fn6">6</a></sup></li>
+              <li><strong>Long lives.</strong> Mature 300mm capacity stays valuable for decades.</li>
+              <li><strong>Internal control.</strong> Owned manufacturing lowers exposure to external pricing.</li>
+            </ol>
+          </div>
+
+          <p class="essay-line">If electronics keep spreading through the physical world, low-cost internal 300mm analog capacity becomes a structural advantage.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XIV. What to watch</h2>
+
+          <div class="fab-watch" aria-label="What to watch">
+            <div class="fab-watch-label">What to watch</div>
+            <ul>
+              <li>LFAB1 production ramp.</li>
+              <li>LFAB2 construction and ramp.<sup><a href="#fn5">5</a></sup></li>
+              <li>TI 300mm utilisation.</li>
+              <li>28nm development at Lehi.<sup><a href="#fn5">5</a></sup></li>
+              <li>TI capex trajectory.</li>
+              <li>Free cash flow recovery.</li>
+              <li>Industrial demand recovery.</li>
+              <li>Automotive demand mix.</li>
+              <li>Data-center power exposure.</li>
+              <li>Analog pricing pressure.</li>
+              <li>China analog competition.</li>
+              <li>Internal manufacturing percentage.</li>
+              <li>Customer inventory digestion.</li>
+              <li>U.S. CHIPS Act support and disbursement.<sup><a href="#fn5">5</a></sup></li>
+              <li>Sherman and Richardson fab ramps.</li>
+              <li>300mm cost advantage in gross margin.<sup><a href="#fn6">6</a></sup></li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Glossary</h2>
+
+          <p>A short reference for the vocabulary used above. Definitions are simplified.</p>
+
+          <div class="fab-terms" aria-label="Glossary">
+            <div class="fab-terms-label">Glossary</div>
+            <dl>
+              <dt>3D XPoint</dt><dd>Non-volatile memory technology created by Intel and Micron.</dd>
+              <dt>Optane</dt><dd>Intel&rsquo;s product family based on 3D XPoint.</dd>
+              <dt>NAND</dt><dd>Non-volatile flash storage used in SSDs.</dd>
+              <dt>DRAM</dt><dd>Volatile memory used as main system memory.</dd>
+              <dt>CXL</dt><dd>Compute Express Link &mdash; a standard for connecting processors, memory, and accelerators.</dd>
+              <dt>Fab</dt><dd>Semiconductor fabrication facility.</dd>
+              <dt>300mm wafer</dt><dd>Larger wafer size that produces more chips per wafer.</dd>
+              <dt>200mm wafer</dt><dd>Older smaller wafer size.</dd>
+              <dt>Analog chip</dt><dd>Chip that processes real-world continuous signals such as voltage, current, sound, light, or temperature.</dd>
+              <dt>Embedded processing</dt><dd>Microcontrollers and processors used inside products and systems.</dd>
+              <dt>Foundational semiconductors</dt><dd>Mature but critical chips used broadly across electronics.</dd>
+              <dt>Underutilisation</dt><dd>When a fab is not running enough volume to absorb its fixed costs.</dd>
+              <dt>LFAB1</dt><dd>TI&rsquo;s Lehi fab acquired from Micron.</dd>
+              <dt>LFAB2</dt><dd>TI&rsquo;s second Lehi fab under construction.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XV. The fab that outlived 3D XPoint</h2>
+
+          <p>3D XPoint was the dream. A new memory tier between DRAM and NAND.</p>
+
+          <p>Lehi was the asset.</p>
+
+          <p>The dream failed because the ecosystem and economics never lined up. The asset survived because TI could turn it into something more boring and more durable: low-cost 300mm capacity for analog and embedded chips.</p>
+
+          <div class="essay-pull">Micron needed a new memory market. TI needed manufacturing capacity for markets that already existed. That is why the fab outlived 3D XPoint.</div>
+
+          <p>The lesson is not that Micron made a bad sale or that TI got lucky. The lesson is that semiconductors have two ways to win. A technology thesis can change the architecture of computing when the ecosystem moves with it. A manufacturing thesis can quietly compound for decades when the cost curve and the demand are real. The same building can host both stories on different timelines.</p>
+
+          <p>The 3D XPoint chapter is over. The Lehi chapter has just started.</p>
+
+          <p>And as AI infrastructure scales, the boring chips that surround every accelerator &mdash; the power, sensing, timing, and control silicon that lives in industrial systems, automotive platforms, and data-centre power delivery &mdash; matter more, not less. That is the world LFAB1 is built for.</p>
+
+          <p>That is why the fab outlived 3D XPoint.</p>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Jul 2021). <em>Micron Sells 3D X-Point Lehi, Utah Fab to Texas Instruments For $1.5B.</em> SemiAnalysis. Historical anchor for the deal framing, including the $1.5B Micron headline value, $900M TI cash price, $600M tools/assets retained by Micron, IMFT joint venture history, 3D XPoint and NAND operations at the fab, Intel&rsquo;s 3D XPoint supply relationship, TI not receiving 3D XPoint IP or licensing, plans to refit the fab for 65nm and 45nm analog and embedded processing, expected underutilisation costs during conversion, and first revenue expected in early 2023. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Micron Technology (2021). <a href="https://investors.micron.com/news-releases/news-release-details/micron-updates-data-center-portfolio-strategy-address-growing" target="_blank" rel="noopener">Micron updates data center portfolio strategy</a>. Cessation of 3D XPoint development, sale of the Lehi fab, redirection toward CXL-enabled memory products, and insufficient market validation framing.</p>
+
+            <p id="fn3"><sup>3</sup> Texas Instruments (2021). <a href="https://investor.ti.com/news-releases/news-release-details/ti-acquire-micron-300-mm-semiconductor-factory-extending-tis" target="_blank" rel="noopener">TI to acquire Micron 300mm semiconductor factory</a>. $900M cash acquisition price, Lehi as TI&rsquo;s fourth 300mm wafer fab, and extension of TI&rsquo;s 300mm manufacturing capacity.</p>
+
+            <p id="fn4"><sup>4</sup> Intel. <a href="https://www.intel.com/content/www/us/en/support/articles/000091826/memory-and-storage.html" target="_blank" rel="noopener">Intel Optane business update</a>. Intel statement on ceasing future development of Optane products, with single-source-supplier scale challenges framing.</p>
+
+            <p id="fn5"><sup>5</sup> Texas Instruments. <a href="https://filecache.mediaroom.com/mr5mr_texasinstruments/178452/download/US-CHIPS-Act-funding-for-TI-fact-sheet.pdf" target="_blank" rel="noopener">CHIPS Act funding for TI fact sheet</a>. LFAB1 producing analog and embedded processing chips on 45nm and 65nm process technologies, 28nm in development, LFAB2 connected to LFAB1, and U.S. CHIPS Act manufacturing context.</p>
+
+            <p id="fn6"><sup>6</sup> Texas Instruments. <a href="https://investor.ti.com/static-files/fc9d9346-cf77-40db-902a-e9961e9c5736" target="_blank" rel="noopener">TI 2025 Annual Report</a>. 300mm vs 200mm unpackaged-chip cost roughly 40% lower, internal manufacturing and process technology framing, and supply-chain control positioning.</p>
+
+            <p id="fn7"><sup>7</sup> Texas Instruments. <a href="https://investor.ti.com/static-files/8c327c57-cd94-439d-a276-ef7cffcdc438" target="_blank" rel="noopener">TI 2026 Capital Management presentation</a>. Industrial, automotive, and data-centre growth framing, revenue mix context, and capex / free cash flow positioning.</p>
+
+            <p id="fn8"><sup>8</sup> Texas Instruments. <a href="https://www.ti.com/about-ti/newsroom/news-releases/2025/texas-instruments-plans-to-invest-more-than--60-billion-to-manufacture-billions-of-foundational-semiconductors-in-the-us.html" target="_blank" rel="noopener">TI plans to invest more than $60B in U.S. manufacturing</a>. More than $60B planned investment across seven U.S. semiconductor fabs in Texas and Utah, framed around foundational semiconductors.</p>
+
+            <p id="fn9"><sup>9</sup> Texas Instruments. <a href="https://www.ti.com/about-ti/company/ti-at-a-glance/manufacturing/lehi.html" target="_blank" rel="noopener">TI Lehi manufacturing page</a>. LFAB1 and LFAB2 site details, at-full-production output framed in tens of millions of analog and embedded processing chips per day.</p>
+          </div>
+
+          <div class="fab-fr">
+            <div class="fab-fr-label">Further reading</div>
+            <ul>
+              <li><a href="boring-back-end-boom.html" class="essay-link">The Boring Back-End Boom</a>. Mature nodes, wirebonding, and packaging becoming strategic again.</li>
+              <li><a href="other-leading-edge.html" class="essay-link">The Other Leading Edge</a>. GlobalFoundries and the specialty foundry layer of AI infrastructure.</li>
+              <li><a href="foundry-toll-road.html" class="essay-link">The Foundry Toll Road</a>. Why TSMC&rsquo;s pricing power got stronger in the AI era.</li>
+              <li><a href="gaa-credibility-test.html" class="essay-link">The GAA Credibility Test</a>. Samsung Foundry&rsquo;s 2nm comeback as a trust test, not a transistor story.</li>
+              <li><a href="ai-memory-tax.html" class="essay-link">The AI Memory Tax</a>. AI servers repricing DRAM, NAND, and consumer electronics.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new centre of computing.</li>
+              <li><a href="density-illusion.html" class="essay-link">The Density Illusion</a>. Why Moore&rsquo;s Law became a system problem.</li>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Hyperscalers turning their biggest workloads into chips.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="nvidia-earnings-quality-test.html" class="essay-link">Nvidia&rsquo;s Earnings Quality Test</a>. AI capex, customer concentration, and durability of revenue.</li>
+              <li><a href="wafer-scale-latency-bet.html" class="essay-link">The Wafer-Scale Latency Bet</a>. Cerebras and the case for removing chip boundaries.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 031. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=35"></script>
+</body>
+</html>

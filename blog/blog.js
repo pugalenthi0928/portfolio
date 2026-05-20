@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'fab-that-outlived-3d-xpoint':    'infrastructure',
   'wafer-scale-latency-bet':        'infrastructure',
   'gaa-credibility-test':           'infrastructure',
   'ai-native-network':              'infrastructure',
