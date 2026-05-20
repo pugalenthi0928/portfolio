@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When AI Runs Out of Copper | Pugalenthi Magendran</title>
+  <meta name="description" content="An original 2026 analysis of why AI factories are running into copper I/O limits, and why optical I/O, co-packaged optics, silicon photonics, Intel, Nvidia, Broadcom, and TSMC matter.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/when-ai-runs-out-of-copper.html">
+  <meta property="og:title" content="When AI Runs Out of Copper | Pugalenthi Magendran">
+  <meta property="og:description" content="An original 2026 analysis of why AI factories are running into copper I/O limits, and why optical I/O, co-packaged optics, silicon photonics, Intel, Nvidia, Broadcom, and TSMC matter.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/when-ai-runs-out-of-copper.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-20">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Silicon Photonics">
+  <meta property="article:tag" content="Optical I/O">
+  <meta property="article:tag" content="Co-Packaged Optics">
+  <meta property="article:tag" content="Intel">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="Broadcom">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="COUPE">
+  <meta property="article:tag" content="Data Centers">
+  <meta property="article:tag" content="Networking">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Factories">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When AI Runs Out of Copper | Pugalenthi Magendran">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="An original 2026 analysis of why AI factories are running into copper I/O limits, and why optical I/O, co-packaged optics, silicon photonics, Intel, Nvidia, Broadcom, and TSMC matter.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "When AI Runs Out of Copper",
+    "description": "An original 2026 analysis of why AI factories are running into copper I/O limits, and why optical I/O, co-packaged optics, silicon photonics, Intel, Nvidia, Broadcom, and TSMC matter.",
+    "url": "https://pugalenthimagendran.com/blog/posts/when-ai-runs-out-of-copper.html",
+    "datePublished": "2026-05-20",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/when-ai-runs-out-of-copper.html",
+    "keywords": "AI Infrastructure, Silicon Photonics, Optical I/O, Co-Packaged Optics, Intel, Nvidia, Broadcom, TSMC, COUPE, Data Centers, Networking, Semiconductors, AI Factories"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay-format styles (inline, matching post convention) */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-key { background: var(--color-background-secondary); border-left: 3px solid var(--color-text-primary); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 1.1rem 1.4rem; margin: 2rem 0 2.5rem; }
+    .essay-key-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .essay-key p { font-family: 'Source Serif 4', serif; font-size: 1.02rem; line-height: 1.7; color: var(--color-text-primary); margin: 0; font-weight: 400; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-ornament { color: var(--color-border-secondary); text-align: left; margin: 2.75rem 0; font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 0.5em; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-sig { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; font-style: italic; color: var(--color-text-secondary); margin-top: 1.75rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+    .essay-body a.essay-link { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); transition: border-color 180ms ease; }
+    .essay-body a.essay-link:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* ============================================
+       OPTICAL I/O POST, scoped under .essay-opt
+       ============================================ */
+    .essay-opt {
+      --opt-accent: #F0784A;
+      --opt-accent-soft: rgba(240,120,74,0.10);
+      --opt-accent-faint: rgba(240,120,74,0.04);
+      --opt-bd: rgba(255,255,255,0.08);
+      --opt-bd-soft: rgba(255,255,255,0.05);
+      --opt-cool: #6CBFE0;
+      --opt-cool-soft: rgba(108,191,224,0.10);
+      --opt-purple: #B794F4;
+      --opt-purple-soft: rgba(183,148,244,0.10);
+      --opt-green: #5DCAA5;
+      --opt-green-soft: rgba(93,202,165,0.10);
+      --opt-amber: #E8B468;
+      --opt-amber-soft: rgba(232,180,104,0.10);
+    }
+
+    /* TOC */
+    .opt-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .opt-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .opt-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .opt-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .opt-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--opt-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .opt-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .opt-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* Generic figure */
+    .opt-fig { margin: 2.5rem 0 2.75rem; padding: 24px 22px 18px; border-radius: 12px; border: 1px solid var(--opt-bd); background: linear-gradient(180deg, var(--opt-accent-faint) 0%, transparent 60%), var(--bg-alt); }
+    .opt-fig-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--opt-accent); margin-bottom: 14px; }
+    .opt-fig-cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 14px; padding-top: 10px; border-top: 0.5px solid var(--opt-bd-soft); line-height: 1.6; }
+
+    /* 2021 thesis callout */
+    .opt-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--opt-accent); background: linear-gradient(180deg, var(--opt-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .opt-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--opt-accent); margin-bottom: 10px; }
+    .opt-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Data movement map (8-tile grid) */
+    .opt-move { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .opt-move-tile { padding: 12px 14px; border-radius: 8px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-move-cat { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--opt-accent); margin-bottom: 4px; }
+    .opt-move-body { font-family: 'Source Serif 4', serif; font-size: 0.85rem; line-height: 1.4; color: var(--color-text-secondary); }
+
+    /* Copper pressure cascade (descending list with arrows) */
+    .opt-cascade { display: flex; flex-direction: column; gap: 6px; }
+    .opt-cascade-step {
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--opt-bd);
+      background: var(--bg-alt);
+      position: relative;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .opt-cascade-step::after {
+      content: '\2193';
+      position: absolute;
+      bottom: -16px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px; color: var(--opt-accent);
+      line-height: 1;
+    }
+    .opt-cascade-step:last-child::after { display: none; }
+    .opt-cascade-step--end { background: linear-gradient(180deg, var(--opt-accent-soft), transparent 70%), var(--bg-alt); border-color: var(--opt-accent); }
+
+    /* Two-column comparison (copper vs optical, Intel-only vs ecosystem) */
+    .opt-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 2rem 0 2.5rem; }
+    .opt-compare-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-compare-col--cool { background: linear-gradient(180deg, var(--opt-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .opt-compare-col--cool .opt-compare-eyebrow { color: var(--opt-cool); }
+    .opt-compare-col--accent { background: linear-gradient(180deg, var(--opt-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--opt-accent); }
+    .opt-compare-col--accent .opt-compare-eyebrow { color: var(--opt-accent); }
+    .opt-compare-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .opt-compare-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 10px; }
+    .opt-compare-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .opt-compare-col li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .opt-compare-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .opt-compare-col li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    /* Stat row */
+    .opt-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 1.25rem 0 0; }
+    .opt-stat-card { padding: 12px 14px; border-radius: 8px; border: 1px solid var(--opt-bd); background: var(--bg-alt); text-align: center; }
+    .opt-stat-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--opt-accent); line-height: 1; }
+    .opt-stat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-top: 6px; line-height: 1.3; }
+
+    /* Interconnect stack (7 layers) */
+    .opt-stack { display: flex; flex-direction: column; gap: 4px; }
+    .opt-layer { display: grid; grid-template-columns: 32px 1fr 130px; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-layer-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--opt-accent); letter-spacing: 0.08em; }
+    .opt-layer-name { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.005em; }
+    .opt-layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-transform: uppercase; text-align: right; }
+    .opt-layer--copper { background: linear-gradient(90deg, var(--opt-amber-soft), transparent 60%), var(--bg-alt); }
+    .opt-layer--mixed { background: linear-gradient(90deg, var(--opt-cool-soft), transparent 60%), var(--bg-alt); }
+    .opt-layer--optical { background: linear-gradient(90deg, var(--opt-accent-soft), transparent 60%), var(--bg-alt); border-color: var(--opt-accent); }
+
+    /* Positioning map (3 players) */
+    .opt-position { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .opt-pos-card { padding: 18px 18px 16px; border-radius: 10px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-pos-card--intel { background: linear-gradient(180deg, var(--opt-cool-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(108,191,224,0.40); }
+    .opt-pos-card--intel .opt-pos-eyebrow { color: var(--opt-cool); }
+    .opt-pos-card--tsmc { background: linear-gradient(180deg, var(--opt-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--opt-accent); }
+    .opt-pos-card--tsmc .opt-pos-eyebrow { color: var(--opt-accent); }
+    .opt-pos-card--nvidia { background: linear-gradient(180deg, var(--opt-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.40); }
+    .opt-pos-card--nvidia .opt-pos-eyebrow { color: var(--opt-green); }
+    .opt-pos-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+    .opt-pos-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 8px; }
+    .opt-pos-card p { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.55; color: var(--color-text-secondary); margin: 0; }
+
+    /* Glossary */
+    .opt-terms { margin: 2rem 0 2.5rem; padding: 20px 22px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .opt-terms-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .opt-terms dl { margin: 0; display: grid; grid-template-columns: 145px 1fr; gap: 6px 16px; font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; }
+    .opt-terms dt { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--opt-accent); padding-top: 2px; }
+    .opt-terms dd { margin: 0; color: var(--color-text-secondary); }
+
+    /* Counterargument list */
+    .opt-counter { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .opt-counter ol { list-style: none; padding: 0; margin: 0; counter-reset: risk; }
+    .opt-counter li { counter-increment: risk; font-family: 'Source Serif 4', serif; font-size: 0.97rem; line-height: 1.7; color: var(--color-text-primary); padding: 10px 0 10px 38px; position: relative; border-bottom: 0.5px solid var(--opt-bd-soft); }
+    .opt-counter li:last-child { border-bottom: none; }
+    .opt-counter li::before { content: counter(risk, decimal-leading-zero); position: absolute; left: 0; top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; color: var(--opt-accent); }
+    .opt-counter li strong { font-weight: 500; color: var(--color-text-primary); }
+
+    /* Watch checklist */
+    .opt-watch { margin: 1.5rem 0 2rem; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--opt-bd); background: var(--bg-alt); }
+    .opt-watch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .opt-watch ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; }
+    .opt-watch li { font-family: 'Source Serif 4', serif; font-size: 0.93rem; line-height: 1.5; color: var(--color-text-secondary); padding: 6px 0 6px 22px; position: relative; border-bottom: 0.5px solid var(--opt-bd-soft); }
+    .opt-watch li:last-child, .opt-watch li:nth-last-child(2) { border-bottom: none; }
+    .opt-watch li::before { content: ''; position: absolute; left: 0; top: 11px; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--opt-accent); background: transparent; }
+
+    .opt-stat { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--opt-accent); letter-spacing: 0.04em; padding: 2px 6px; border-radius: 3px; background: var(--opt-accent-faint); }
+
+    /* Further reading */
+    .opt-fr { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .opt-fr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 14px; }
+    .opt-fr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .opt-fr li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; line-height: 1.55; color: var(--color-text-secondary); }
+    .opt-fr li a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .opt-fr li a:hover { border-bottom-color: var(--color-text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .opt-toc ol { grid-template-columns: 1fr; }
+      .opt-move { grid-template-columns: repeat(2, 1fr); }
+      .opt-compare { grid-template-columns: 1fr; }
+      .opt-stat-row { grid-template-columns: repeat(2, 1fr); }
+      .opt-position { grid-template-columns: 1fr; }
+      .opt-terms dl { grid-template-columns: 110px 1fr; }
+      .opt-watch ul { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-read-time { width: 100%; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .essay-pull { font-size: 1.1rem; }
+      .essay-stamps { display: block; margin: 8px 0 0; }
+      .opt-move { grid-template-columns: 1fr; }
+      .opt-stat-row { grid-template-columns: 1fr; }
+      .opt-layer { grid-template-columns: 28px 1fr; }
+      .opt-layer-tag { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Projects</a>
+        <a href="../../#about">About</a>
+        <a href="../../#experience">Experience</a>
+        <a href="../">Blog</a>
+        <a href="../../ai-atlas/">AI Atlas</a>
+        <a href="../../ai-map/">AI Map</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../projects/">Projects</a>
+    <a href="../../#about">About</a>
+    <a href="../../#experience">Experience</a>
+    <a href="../">Blog</a>
+    <a href="../../ai-atlas/">AI Atlas</a>
+    <a href="../../ai-map/">AI Map</a>
+    <a href="../../#contact">Contact</a>
+  </div>
+
+  <!-- ========== ARTICLE ========== -->
+  <article class="article essay-format essay-opt">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <!-- ====== ESSAY CONTENT ====== -->
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 022 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Silicon Photonics</span>
+          <span class="tag">Optical I/O</span>
+          <span class="tag">Co-Packaged Optics</span>
+          <span class="tag">Intel</span>
+          <span class="tag">Nvidia</span>
+          <span class="tag">Broadcom</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">COUPE</span>
+          <span class="tag">Data Centers</span>
+          <span class="tag">Networking</span>
+          <span class="tag">AI Factories</span>
+        </div>
+
+        <h1 class="essay-hed">When AI Runs Out of <em>Copper</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">Why optical I/O and co-packaged photonics are becoming the next AI infrastructure bottleneck.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">12 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <p class="essay-lede">AI scaling is usually described through GPUs, HBM, and data centers. But the next bottleneck may be data movement. As AI factories scale across racks, clusters, and campuses, copper interconnect starts to hit power, reach, and density limits. The race to replace copper with light has begun.</p>
+
+          <nav class="opt-toc" aria-label="Article contents">
+            <div class="opt-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">The 2021 thesis</a></li>
+              <li><a href="#sec-movement">AI is a data-movement problem</a></li>
+              <li><a href="#sec-copper">Why copper starts to break</a></li>
+              <li><a href="#sec-intel">Intel saw the problem early</a></li>
+              <li><a href="#sec-only-intel">Why &ldquo;only Intel&rdquo; is weaker now</a></li>
+              <li><a href="#sec-nvidia">Nvidia made photonics mainstream</a></li>
+              <li><a href="#sec-broadcom">Broadcom delivered CPO switches</a></li>
+              <li><a href="#sec-tsmc">TSMC wants the ecosystem layer</a></li>
+              <li><a href="#sec-ayar">Ayar Labs and Alchip show the TSMC path</a></li>
+              <li><a href="#sec-strategic">Optical I/O, not pluggables</a></li>
+              <li><a href="#sec-stack">The new AI interconnect stack</a></li>
+              <li><a href="#sec-intel-foundry">Why this matters for Intel Foundry</a></li>
+              <li><a href="#sec-risks">What could break the thesis</a></li>
+              <li><a href="#sec-watch">What to watch</a></li>
+              <li><a href="#sec-final">The optical I/O war</a></li>
+            </ol>
+          </nav>
+
+          <p>The AI conversation is usually about compute. How many GPUs. How much HBM. How many tokens. How many megawatts. How many data centers. Compute without movement is useless. Every AI system is also a data-movement machine. Model weights move. Activations move. Gradients move. KV cache moves. Training data moves. Inference requests move. GPUs exchange intermediate results across links, switches, racks, and sometimes entire campuses.</p>
+
+          <p>At small scale, copper is good enough. At AI factory scale, copper starts to become the bottleneck. Copper links lose signal. They burn power. They need retimers. They get bulky. They struggle with reach. They make every extra rack more expensive to connect.</p>
+
+          <p>In 2021, Intel&rsquo;s silicon photonics thesis looked like a strange foundry angle. Intel was struggling in leading-edge logic, but the uploaded SemiAnalysis piece argued that Intel had a hidden wedge: co-packaged silicon photonics. If future data centers ran into copper I/O limits, Intel&rsquo;s photonics and packaging experience could become strategically valuable.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>That idea has aged well. The market changed. In 2026, this is no longer only an Intel story. Nvidia has announced co-packaged optics switches for AI factories. Broadcom has delivered CPO Ethernet switches. TSMC is building COUPE as a neutral photonics integration platform. Ayar Labs and Alchip are pushing optical I/O directly toward AI accelerators.</p>
+
+          <p class="essay-line">The AI factory is starting to run out of copper.</p>
+
+          <div class="essay-key">
+            <div class="essay-key-label">Key idea</div>
+            <p>The correct claim is not that Intel wins foundry because it has photonics. The correct claim is that AI systems are running into a data-movement wall, and optical I/O is becoming a strategic layer of the AI factory. Intel saw this early and still has real photonics credibility, but the 2026 race is ecosystem-wide.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">I. The 2021 thesis</h2>
+
+          <p>In June 2021, Dylan Patel published a SemiAnalysis piece arguing that Intel&rsquo;s IDM 2.0 foundry pitch was hard. TSMC was the trusted neutral foundry. Intel had process delays and customer-conflict issues at leading-edge logic. The stronger wedge was silicon photonics. Intel had years of high-volume photonics manufacturing experience and the packaging credibility to back it up. If data movement kept growing faster than compute, and copper electrical signaling hit its scaling limits, Intel&rsquo;s photonics could become a Trojan horse into future data-center silicon.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>I revisited that piece because the bottleneck argument turned out to be exactly right. The Intel-exclusive framing did not.</p>
+
+          <div class="opt-thesis">
+            <div class="opt-thesis-label">2021 thesis</div>
+            <p class="opt-thesis-text">Intel may struggle to win foundry customers on logic alone. But if the data center hits copper I/O limits, Intel&rsquo;s silicon photonics and packaging capabilities could become a Trojan horse into future AI and data-center silicon.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-movement">II. AI is a data-movement problem</h2>
+
+          <p>The reason copper matters is mechanical. AI workloads are dominated by moving data, not only by computing on it.</p>
+
+          <figure class="opt-fig" aria-label="Diagram: AI data-movement surface">
+            <div class="opt-fig-label">Diagram 01 &middot; AI data-movement surface</div>
+            <div class="opt-move">
+              <div class="opt-move-tile"><div class="opt-move-cat">Weights</div><div class="opt-move-body">Loaded onto accelerators each iteration.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Activations</div><div class="opt-move-body">Streamed between layers and devices.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Gradients</div><div class="opt-move-body">Synchronised across GPUs during training.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Optimizer state</div><div class="opt-move-body">Distributed across the cluster.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">KV cache</div><div class="opt-move-body">Grows with context window during inference.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Embeddings</div><div class="opt-move-body">Retrieved from vector stores at inference.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Rack &amp; cluster</div><div class="opt-move-body">East-west traffic between accelerators.</div></div>
+              <div class="opt-move-tile"><div class="opt-move-cat">Campus</div><div class="opt-move-body">Long-reach links across buildings.</div></div>
+            </div>
+            <div class="opt-fig-cap">ASML&rsquo;s 2025 strategic report frames AI as requiring leading-edge logic and significantly more DRAM than traditional compute. Every one of these data paths is part of the same problem.<sup><a href="#fn11">11</a></sup></div>
+          </figure>
+
+          <p class="essay-line">The AI factory is only as fast as its slowest data path.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-copper">III. Why copper starts to break</h2>
+
+          <p>Copper is excellent for short distances. It is cheap, mature, reliable, and everywhere. It gets harder as bandwidth and distance rise. Signal attenuation grows. Crosstalk grows. Cables get bulky. Reach shrinks. Retimers consume more power. Routing congestion compounds.</p>
+
+          <figure class="opt-fig" aria-label="Diagram: copper pressure cascade">
+            <div class="opt-fig-label">Diagram 02 &middot; The copper pressure cascade</div>
+            <div class="opt-cascade">
+              <div class="opt-cascade-step">More accelerators per AI factory</div>
+              <div class="opt-cascade-step">More aggregate bandwidth required</div>
+              <div class="opt-cascade-step">More copper cables and retimers</div>
+              <div class="opt-cascade-step">More electrical signaling power and heat</div>
+              <div class="opt-cascade-step">More routing congestion and shorter reach</div>
+              <div class="opt-cascade-step opt-cascade-step--end">Copper hits power, reach, and density limits</div>
+            </div>
+            <div class="opt-fig-cap">Copper does not disappear overnight. The highest-bandwidth links move optical first.</div>
+          </figure>
+
+          <p class="essay-line">Copper remains the default until the cost of keeping it becomes higher than the cost of replacing it.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-intel">IV. Intel saw the problem early</h2>
+
+          <p>Intel demonstrated an Optical Compute Interconnect (OCI) chiplet co-packaged with an Intel CPU at OFC 2024. Intel says the first implementation supports up to <span class="opt-stat">4 Tbps</span> bidirectional transfer using 64 channels of 32 Gbps in each direction, runs over up to <span class="opt-stat">100 m</span> of fiber, and consumes about <span class="opt-stat">5 pJ/bit</span> compared with about <span class="opt-stat">15 pJ/bit</span> for pluggable optical transceiver modules. Intel positions the technology for AI infrastructure, HPC, CPU/GPU cluster connectivity, coherent memory expansion, and resource disaggregation.<sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup></p>
+
+          <figure class="opt-fig" aria-label="Card: Intel OCI chiplet headline numbers">
+            <div class="opt-fig-label">Card &middot; Intel OCI chiplet at a glance</div>
+            <div class="opt-stat-row">
+              <div class="opt-stat-card"><div class="opt-stat-num">4 Tbps</div><div class="opt-stat-label">Bidirectional transfer per chiplet</div></div>
+              <div class="opt-stat-card"><div class="opt-stat-num">64 &times; 32 Gbps</div><div class="opt-stat-label">Channels per direction</div></div>
+              <div class="opt-stat-card"><div class="opt-stat-num">100 m</div><div class="opt-stat-label">Fiber reach</div></div>
+              <div class="opt-stat-card"><div class="opt-stat-num">5 pJ/bit</div><div class="opt-stat-label">Energy per bit vs ~15 pJ/bit for pluggables</div></div>
+            </div>
+            <div class="opt-fig-cap">Intel says OCI targets AI/HPC clusters, CPU-GPU connectivity, coherent memory expansion, and resource disaggregation.<sup><a href="#fn2">2</a></sup></div>
+          </figure>
+
+          <p class="essay-line">Intel may not win the whole foundry war with photonics, but it does have a real technology asset.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-only-intel">V. Why the &ldquo;only Intel&rdquo; thesis is weaker now</h2>
+
+          <p>The 2021 piece&rsquo;s Intel-specific framing needs updating. By 2026 the photonics ecosystem is wide. Nvidia has photonics switch products. Broadcom has shipped CPO. TSMC has built COUPE as an integration platform. Ayar Labs and Alchip are building optical I/O around TSMC packaging. Jabil took over Intel&rsquo;s pluggable transceiver product line so Intel could refocus on the strategic layer.</p>
+
+          <div class="opt-compare">
+            <div class="opt-compare-col opt-compare-col--cool">
+              <div class="opt-compare-eyebrow">2021 framing</div>
+              <h3 class="opt-compare-title">Intel-as-photonics-Trojan-horse</h3>
+              <ul>
+                <li><strong>Implicit assumption</strong> &middot; Intel was the only credible high-volume silicon photonics player.</li>
+                <li><strong>TSMC silent</strong> &middot; not seen as a photonics integration platform.</li>
+                <li><strong>Nvidia silent</strong> &middot; networking framed mostly as InfiniBand / Ethernet over copper or pluggables.</li>
+                <li><strong>Broadcom silent</strong> &middot; CPO at switches not yet a public product line.</li>
+              </ul>
+            </div>
+            <div class="opt-compare-col opt-compare-col--accent">
+              <div class="opt-compare-eyebrow">2026 reality</div>
+              <h3 class="opt-compare-title">Ecosystem-wide race</h3>
+              <ul>
+                <li><strong>Intel</strong> &middot; OCI chiplet at 5 pJ/bit, real but no longer alone.<sup><a href="#fn2">2</a></sup></li>
+                <li><strong>Nvidia</strong> &middot; Spectrum-X and Quantum-X Photonics CPO switches.<sup><a href="#fn4">4</a></sup></li>
+                <li><strong>Broadcom</strong> &middot; Bailly 51.2 Tbps CPO Ethernet switch shipping.<sup><a href="#fn5">5</a></sup></li>
+                <li><strong>TSMC</strong> &middot; COUPE photonic engine on substrate, production targets in 2026.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></li>
+                <li><strong>Ayar Labs + Alchip</strong> &middot; optical I/O for AI accelerators on the TSMC stack.<sup><a href="#fn9">9</a></sup></li>
+                <li><strong>Jabil</strong> &middot; absorbed Intel pluggable transceivers, letting Intel refocus.<sup><a href="#fn10">10</a></sup></li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="essay-line">Intel&rsquo;s edge is experience. TSMC&rsquo;s edge is ecosystem gravity. Nvidia&rsquo;s edge is the AI factory platform.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-nvidia">VI. Nvidia made photonics mainstream</h2>
+
+          <p>Nvidia announced Spectrum-X Photonics and Quantum-X Photonics as co-packaged optics networking switches designed to scale AI factories to millions of GPUs. Nvidia claims 3.5x power efficiency, 63x signal integrity, 10x network resiliency, and 1.3x faster deployment compared with traditional approaches, with Spectrum-X Photonics configurations reaching 100 Tbps and 400 Tbps total bandwidth and Quantum-X Photonics providing 144 ports of 800 Gb/s InfiniBand, with Quantum-X arriving later in 2025 and Spectrum-X Ethernet switches in 2026.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>When Nvidia puts photonics into the AI factory roadmap, photonics stops being an exotic Intel story and becomes mainstream AI infrastructure.</p>
+
+          <p class="essay-line">Intel identified the optical I/O bottleneck early. Nvidia turned it into an AI factory product category.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-broadcom">VII. Broadcom shows CPO is real networking infrastructure</h2>
+
+          <p>Broadcom delivered Bailly, described as the industry&rsquo;s first <span class="opt-stat">51.2 Tbps</span> co-packaged optics Ethernet switch platform. It integrates eight silicon-photonics-based <span class="opt-stat">6.4 Tbps</span> optical engines around Broadcom&rsquo;s Tomahawk 5 switch chip and targets large-scale AI clusters.<sup><a href="#fn5">5</a></sup></p>
+
+          <p>Networking switches are the natural first home for CPO because they are I/O-heavy and sit at the centre of AI clusters. Power and density pain show up there first.</p>
+
+          <p class="essay-line">CPO comes to switches first because switches are where copper pain becomes impossible to ignore.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-tsmc">VIII. TSMC wants the ecosystem layer</h2>
+
+          <p>TSMC is building Compact Universal Photonic Engine, COUPE, as an integration platform for the rest of the ecosystem. TSMC frames COUPE around SoIC-X chip stacking that places an electrical die on top of a photonic die, lowering impedance at the die-to-die interface and improving energy efficiency. TSMC&rsquo;s 2026 North America Technology Symposium says true co-packaged optics using COUPE on substrate begins production in 2026, with claims of <span class="opt-stat">2x</span> power efficiency and <span class="opt-stat">10x</span> latency reduction versus a pluggable version on the circuit board.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup><sup><a href="#fn8">8</a></sup></p>
+
+          <p class="essay-line">If TSMC becomes the neutral optical I/O integration platform, Intel&rsquo;s photonics advantage becomes less of a Trojan horse and more of one option in a broader ecosystem.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ayar">IX. Ayar Labs and Alchip show the TSMC path</h2>
+
+          <p>Ayar Labs and Alchip jointly unveiled a co-packaged optics solution for AI data-center scale-up built on TSMC&rsquo;s COUPE, SoIC, and advanced process technologies. The two companies claim more than <span class="opt-stat">100 Tbps</span> of scale-up bandwidth per accelerator and more than <span class="opt-stat">256</span> optical scale-up ports per device, aimed at multi-rack AI scale-up where copper reach starts to fail.<sup><a href="#fn9">9</a></sup></p>
+
+          <p>The interesting part is not the laser. The interesting part is the integration recipe: optical engines, electrical die, advanced packaging, and customer-specific silicon, all stitched together on a shared foundry stack.</p>
+
+          <p class="essay-line">The winner will not simply be whoever makes the best photonic device. The winner will be whoever makes photonics easy to integrate into real AI systems.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-strategic">X. The strategic market is optical I/O, not pluggable modules</h2>
+
+          <p>The Jabil deal sharpened the picture. Jabil took over Intel&rsquo;s silicon-photonics-based pluggable optical transceiver product lines, with Intel framing the move as a refocus toward silicon photonics components for existing markets and emerging applications.<sup><a href="#fn10">10</a></sup></p>
+
+          <p>The implication is straightforward. Pluggables sit at the edge of the board, are increasingly commoditised, and serve a different market dynamic than the layer Intel cares about. CPO moves optics closer to the ASIC. Optical I/O moves the strategic question into the package itself. That is the part of the stack Intel and the rest of the photonics ecosystem are now competing on.</p>
+
+          <p class="essay-line">The question is not whether Intel can sell more pluggable modules. The question is whether Intel can help future CPUs, GPUs, switches, and AI accelerators move data optically at package scale.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-stack">XI. The new AI interconnect stack</h2>
+
+          <p>Optical I/O does not arrive at every layer at once. The economics make sense at the high-bandwidth, high-distance edges first, then push inward over time.</p>
+
+          <figure class="opt-fig" aria-label="Diagram: the new AI interconnect stack">
+            <div class="opt-fig-label">Diagram 03 &middot; The new AI interconnect stack</div>
+            <div class="opt-stack">
+              <div class="opt-layer opt-layer--copper">
+                <div class="opt-layer-num">07</div>
+                <div class="opt-layer-name">Campus / metro fabric</div>
+                <div class="opt-layer-tag">Optical now</div>
+              </div>
+              <div class="opt-layer opt-layer--optical">
+                <div class="opt-layer-num">06</div>
+                <div class="opt-layer-name">Cluster-level network &amp; switches</div>
+                <div class="opt-layer-tag">CPO frontier</div>
+              </div>
+              <div class="opt-layer opt-layer--mixed">
+                <div class="opt-layer-num">05</div>
+                <div class="opt-layer-name">Rack-to-rack links</div>
+                <div class="opt-layer-tag">Hybrid</div>
+              </div>
+              <div class="opt-layer opt-layer--mixed">
+                <div class="opt-layer-num">04</div>
+                <div class="opt-layer-name">Accelerator scale-up (optical I/O)</div>
+                <div class="opt-layer-tag">Emerging</div>
+              </div>
+              <div class="opt-layer opt-layer--copper">
+                <div class="opt-layer-num">03</div>
+                <div class="opt-layer-name">Board-level links</div>
+                <div class="opt-layer-tag">Copper today</div>
+              </div>
+              <div class="opt-layer opt-layer--copper">
+                <div class="opt-layer-num">02</div>
+                <div class="opt-layer-name">Package-level links &amp; HBM</div>
+                <div class="opt-layer-tag">Copper / TSV</div>
+              </div>
+              <div class="opt-layer opt-layer--copper">
+                <div class="opt-layer-num">01</div>
+                <div class="opt-layer-name">On-chip interconnect</div>
+                <div class="opt-layer-tag">Copper</div>
+              </div>
+            </div>
+            <div class="opt-fig-cap">Copper still dominates inside the package. Optics is winning at switches and long-reach scale-up. The middle layers are the contested ground.</div>
+          </figure>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-intel-foundry">XII. Why this matters for Intel Foundry</h2>
+
+          <p>This is not a simple Intel bull case. Intel still has customer-trust issues, process execution risk, cost-structure pressure, and the structural problem of competing with potential foundry customers. TSMC&rsquo;s neutrality remains a real advantage.</p>
+
+          <p>The photonics opportunity is still real. Intel&rsquo;s OCI chiplet is a credible technology. Intel&rsquo;s packaging experience is a credible asset. Intel&rsquo;s U.S. and Western supply-chain positioning matters for some customers. Semi-custom integration around optical I/O is a plausible wedge. None of that guarantees commercial wins.</p>
+
+          <figure class="opt-fig" aria-label="Diagram: photonics positioning map">
+            <div class="opt-fig-label">Diagram 04 &middot; Photonics positioning map</div>
+            <div class="opt-position">
+              <div class="opt-pos-card opt-pos-card--intel">
+                <div class="opt-pos-eyebrow">Intel</div>
+                <h3 class="opt-pos-name">Experience</h3>
+                <p>Deep silicon photonics history, high-volume manufacturing, OCI chiplet credibility, U.S. supply-chain position. Still has to convert technology into foundry wins.<sup><a href="#fn2">2</a></sup><sup><a href="#fn3">3</a></sup></p>
+              </div>
+              <div class="opt-pos-card opt-pos-card--tsmc">
+                <div class="opt-pos-eyebrow">TSMC</div>
+                <h3 class="opt-pos-name">Ecosystem gravity</h3>
+                <p>COUPE, SoIC, and CoWoS form a neutral foundry stack the rest of the photonics ecosystem can build on. Production targets in 2026.<sup><a href="#fn6">6</a></sup><sup><a href="#fn7">7</a></sup></p>
+              </div>
+              <div class="opt-pos-card opt-pos-card--nvidia">
+                <div class="opt-pos-eyebrow">Nvidia</div>
+                <h3 class="opt-pos-name">AI factory platform</h3>
+                <p>Spectrum-X / Quantum-X Photonics CPO switches integrated into the rack-scale AI factory narrative.<sup><a href="#fn4">4</a></sup></p>
+              </div>
+            </div>
+            <div class="opt-fig-cap">Three players, three edges. None of them wins this alone.</div>
+          </figure>
+
+          <p class="essay-line">Photonics gives Intel a door. It does not guarantee customers walk through it.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-glossary">Quick terms</h2>
+
+          <div class="opt-terms" role="complementary" aria-label="Glossary">
+            <div class="opt-terms-label">Glossary</div>
+            <dl>
+              <dt>Optical I/O</dt><dd>Using light to move data into and out of chips or packages.</dd>
+              <dt>Silicon photonics</dt><dd>Photonic components built using silicon manufacturing.</dd>
+              <dt>CPO</dt><dd>Co-packaged optics: optical engines placed close to the switch or compute ASIC.</dd>
+              <dt>Pluggable optics</dt><dd>Optical modules plugged into the front panel of a switch or server.</dd>
+              <dt>OCI</dt><dd>Optical Compute Interconnect, Intel&rsquo;s package-level optical I/O.</dd>
+              <dt>PIC</dt><dd>Photonic integrated circuit.</dd>
+              <dt>EIC</dt><dd>Electronic integrated circuit.</dd>
+              <dt>COUPE</dt><dd>TSMC&rsquo;s Compact Universal Photonic Engine.</dd>
+              <dt>SoIC</dt><dd>TSMC&rsquo;s 3D chip-stacking technology.</dd>
+              <dt>CoWoS</dt><dd>TSMC&rsquo;s advanced packaging for logic and HBM integration.</dd>
+              <dt>pJ/bit</dt><dd>Picojoules per bit, a measure of energy used to move data.</dd>
+              <dt>Retimer</dt><dd>Chip used to clean and resend high-speed electrical signals.</dd>
+              <dt>Scale-up</dt><dd>Tightly connecting accelerators so they behave like a larger system.</dd>
+              <dt>Scale-out</dt><dd>Connecting many systems across a network.</dd>
+              <dt>HBM</dt><dd>High-bandwidth memory.</dd>
+              <dt>AI factory</dt><dd>Data-center system optimised for AI training and inference.</dd>
+            </dl>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">XIII. What could break the thesis</h2>
+
+          <p>A serious piece needs counterarguments. The optical I/O thesis has plausible failure modes.</p>
+
+          <div class="opt-counter" aria-label="Counterarguments">
+            <div class="opt-counter-label">Risks &amp; counterarguments</div>
+            <ol>
+              <li><strong>Copper extension.</strong> Linear pluggable optics, smarter retimers, and better PCB materials may keep copper viable longer than expected.</li>
+              <li><strong>CPO serviceability.</strong> Replacing a co-packaged optical engine is harder than swapping a pluggable. Operational risk slows adoption.</li>
+              <li><strong>Thermal stress.</strong> Hot ASIC neighbours degrade laser reliability and detector performance.</li>
+              <li><strong>Optical alignment yield.</strong> Sub-micron alignment tolerance compounds packaging cost.</li>
+              <li><strong>Laser reliability.</strong> Mean time to failure for in-package lasers must improve to match data-center standards.</li>
+              <li><strong>Standards fragmentation.</strong> UCIe, OIF, and Ethernet roadmaps may diverge in ways that slow ecosystem investment.</li>
+              <li><strong>Nvidia vertical integration.</strong> If Nvidia keeps photonics largely in-house, the merchant photonics opportunity narrows.</li>
+              <li><strong>TSMC gravity.</strong> A neutral COUPE platform could capture more of the integration market than Intel.</li>
+              <li><strong>Intel execution.</strong> Strong technology does not equal commercial wins. Intel still has to land foundry customers.</li>
+              <li><strong>Switch-only adoption.</strong> Broadcom may dominate switch CPO before optical I/O reaches processors at scale.</li>
+              <li><strong>Software offload.</strong> Better compression, scheduling, and network architecture could reduce bandwidth pressure.</li>
+            </ol>
+          </div>
+
+          <p>Optical I/O is likely real. Intel&rsquo;s exclusive Trojan horse is less certain.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-watch">XIV. What to watch</h2>
+
+          <p>Working checklist, not a prediction. Some of these signals will move first.</p>
+
+          <div class="opt-watch" aria-label="What-to-watch checklist">
+            <div class="opt-watch-label">What to watch</div>
+            <ul>
+              <li>Nvidia Spectrum-X / Quantum-X Photonics deployment milestones.</li>
+              <li>Broadcom Bailly CPO switch adoption beyond pilots.</li>
+              <li>TSMC COUPE on-substrate production ramp.</li>
+              <li>Ayar Labs and Alchip customer traction.</li>
+              <li>Intel OCI customer announcements outside its own CPUs.</li>
+              <li>CPO reliability and serviceability data from large operators.</li>
+              <li>Power per bit versus pluggable modules across generations.</li>
+              <li>Switch bandwidth roadmaps at 51.2 Tbps and 102.4 Tbps.</li>
+              <li>1.6T and 3.2T optical module adoption.</li>
+              <li>AI cluster size growth and scale-up architectures.</li>
+              <li>Accelerator-level optical I/O roadmaps.</li>
+              <li>HBM bandwidth versus network bandwidth gap.</li>
+              <li>Data-center power constraints and grid signals.</li>
+              <li>Standards: UCIe, OIF, Ethernet, InfiniBand-related developments.</li>
+            </ul>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-final">XV. The optical I/O war</h2>
+
+          <p>The next AI bottleneck may not be arithmetic. It may be movement.</p>
+
+          <p>GPUs can keep getting faster. HBM can keep getting denser. Data centers can keep getting larger. But if data cannot move efficiently across packages, racks, and AI factories, the system stalls.</p>
+
+          <p>Intel saw the optical I/O problem early. Nvidia made it mainstream. Broadcom shipped it into switches. TSMC is building the ecosystem. Ayar Labs and Alchip are pushing optical I/O toward accelerators.</p>
+
+          <div class="essay-pull">The AI factory is starting to run out of copper. The race to replace it with light has begun.</div>
+
+          <hr class="essay-hr">
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Patel, D. (Jun 2021). <em>Intel&rsquo;s Trojan Horse into the Foundry Business | Co-packaged Silicon Photonics is Intel&rsquo;s Path Forward for IDM 2.0.</em> SemiAnalysis. Historical anchor for the Intel-photonics-Trojan-horse thesis, including the IDM 2.0 framing and the copper-I/O bottleneck argument. Used as inspiration only. No content, structure, or charts reproduced.</p>
+
+            <p id="fn2"><sup>2</sup> Intel (Jun 2024). <a href="https://newsroom.intel.com/artificial-intelligence/intel-unveils-first-integrated-optical-io-chiplet" target="_blank" rel="noopener">Intel unveils first integrated optical I/O chiplet</a>. OCI chiplet co-packaged with an Intel CPU, 4 Tbps bidirectional, 64 channels of 32 Gbps per direction, up to 100 m fiber, ~5 pJ/bit versus ~15 pJ/bit for pluggables, targeting AI infrastructure, HPC, CPU-GPU connectivity, coherent memory expansion, and resource disaggregation.</p>
+
+            <p id="fn3"><sup>3</sup> Intel. <a href="https://www.intel.com/content/www/us/en/products/details/network-io/silicon-photonics.html" target="_blank" rel="noopener">Silicon Photonics</a>. Intel silicon photonics platform context including high-volume photonics manufacturing and OCI roadmap framing.</p>
+
+            <p id="fn4"><sup>4</sup> Nvidia (2025). <a href="https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Spectrum-X-Photonics-Co-Packaged-Optics-Networking-Switches-to-Scale-AI-Factories-to-Millions-of-GPUs/default.aspx" target="_blank" rel="noopener">Nvidia announces Spectrum-X Photonics co-packaged optics networking switches</a>. Spectrum-X and Quantum-X Photonics CPO switches designed to scale AI factories to millions of GPUs, with claims of 3.5x power efficiency, 63x signal integrity, 10x network resiliency, and 1.3x faster deployment versus traditional approaches, including 100 Tbps and 400 Tbps configurations and 144 ports of 800 Gb/s InfiniBand.</p>
+
+            <p id="fn5"><sup>5</sup> Broadcom. <a href="https://investors.broadcom.com/news-releases/news-release-details/broadcom-delivers-industrys-first-512-tbps-co-packaged-optics" target="_blank" rel="noopener">Broadcom delivers industry&rsquo;s first 51.2 Tbps co-packaged optics</a>. Bailly platform integrating eight silicon-photonics-based 6.4 Tbps optical engines around Broadcom&rsquo;s Tomahawk 5 switch chip, targeting large-scale AI clusters.</p>
+
+            <p id="fn6"><sup>6</sup> TSMC. <a href="https://pr.tsmc.com/english/news/3136" target="_blank" rel="noopener">2024 North America Technology Symposium briefing</a>. COUPE framed as Compact Universal Photonic Engine using SoIC-X stacking of an electrical die on top of a photonic die, motivated by explosive AI data-transmission growth.</p>
+
+            <p id="fn7"><sup>7</sup> TSMC. <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 North America Technology Symposium briefing</a>. Co-packaged optics using COUPE on substrate beginning production in 2026, with claims of 2x power efficiency and 10x latency reduction versus pluggable versions on the circuit board.</p>
+
+            <p id="fn8"><sup>8</sup> TSMC Research. <a href="https://research.tsmc.com/page/on-chip-interconnect/14.html" target="_blank" rel="noopener">On-chip interconnect / COUPE research</a>. Technical framing of EIC/PIC integration and photonic engine packaging.</p>
+
+            <p id="fn9"><sup>9</sup> Ayar Labs &amp; Alchip. <a href="https://ayarlabs.com/news/alchip-and-ayar-labs-unveil-co-packaged-optics-for-ai-datacenter-scale-up/" target="_blank" rel="noopener">Alchip and Ayar Labs unveil co-packaged optics for AI data-center scale-up</a>. Joint solution claiming more than 100 Tbps of scale-up bandwidth per accelerator and more than 256 optical scale-up ports per device, built on TSMC&rsquo;s COUPE, SoIC, and advanced process technologies, aimed at multi-rack AI scale-up.</p>
+
+            <p id="fn10"><sup>10</sup> Jabil. <a href="https://investors.jabil.com/news/news-details/2023/Jabil-Invests-in-the-Future-of-AI-with-Intel-Silicon-Photonics-Transceiver-Deal/default.aspx" target="_blank" rel="noopener">Jabil invests in the future of AI with Intel silicon photonics transceiver deal</a>. Jabil absorbing Intel&rsquo;s silicon-photonics-based pluggable transceiver product lines, with Intel refocusing on silicon photonics components for existing markets and emerging applications.</p>
+
+            <p id="fn11"><sup>11</sup> ASML (2025). <a href="https://ourbrand.asml.com/m/8ab959d4926657b/original/asml-2025-annual-report-strategic-report-section.pdf" target="_blank" rel="noopener">2025 Annual Report, strategic report section</a>. AI requires leading-edge, high-performance processor chips and a significant increase in DRAM compared with traditional compute architectures, with advanced Logic and AI-related DRAM as structural drivers.</p>
+
+            <p id="fn12"><sup>12</sup> TSMC. <a href="https://investor.tsmc.com/english/annual-reports" target="_blank" rel="noopener">2025 Annual Report</a>. Robust AI-related demand, mild non-AI recovery, advanced-node and packaging investment as structural drivers.</p>
+          </div>
+
+          <div class="opt-fr">
+            <div class="opt-fr-label">Further reading</div>
+            <ul>
+              <li><a href="custom-silicon-flywheel.html" class="essay-link">The Custom Silicon Flywheel</a>. Companion essay on hyperscaler custom silicon and the domain-specific cloud.</li>
+              <li><a href="nvidia-earnings-quality-test.html" class="essay-link">Nvidia&rsquo;s Earnings Quality Test</a>. AI capex, customer concentration, and the durability of Nvidia&rsquo;s revenue.</li>
+              <li><a href="ai-memory-tax.html" class="essay-link">The AI Memory Tax</a>. AI servers repricing DRAM and NAND, and the split semiconductor cycle.</li>
+              <li><a href="ai-memory-wall.html" class="essay-link">The AI Memory Wall</a>. DRAM, HBM, packaging, and semicap as the new center of computing.</li>
+              <li><a href="boring-back-end-boom.html" class="essay-link">The Boring Back-End Boom</a>. Mature nodes, wirebonding, and packaging becoming strategic again.</li>
+              <li><a href="density-illusion.html" class="essay-link">The Density Illusion</a>. Why Moore&rsquo;s Law became a system problem.</li>
+              <li><a href="nvidia-ai-factory-arm.html" class="essay-link">Nvidia Built the AI Factory Anyway</a>. Vertical system integration as the new moat.</li>
+              <li><a href="modem-to-antenna-war.html" class="essay-link">The Modem-to-Antenna War</a>. Apple unbundling Qualcomm&rsquo;s modem-RF stack.</li>
+              <li><a href="mediatek-fragmented-compute-war.html" class="essay-link">MediaTek and the Fragmented Compute War</a>. A neutral fabless platform in a bifurcated compute world.</li>
+              <li><a href="dry-resist-war.html" class="essay-link">The Dry Resist War</a>. Patterning as a strategic process technology for AI-era chipmaking.</li>
+              <li><a href="../../ai-field-manual/" class="essay-link">The AI Field Manual</a>. Reference layer for the AI stack: hardware, memory, models, agents, safety, economics.</li>
+            </ul>
+          </div>
+
+          <div class="essay-ornament">* &nbsp; * &nbsp; *</div>
+
+          <p class="essay-closer">This is Essay No. 022. The topics: intelligence, AI, systems, knowledge, and the questions underneath the questions everyone else is asking. If you read this far and disagreed with any part of it, write to me. I read everything.</p>
+
+          <div class="essay-sig">Pugalenthi Magendran</div>
+
+        </div><!-- .essay-body -->
+
+      </div><!-- .essay-page -->
+      <!-- ====== END ESSAY CONTENT ====== -->
+
+      <!-- Prev / Next (auto-populated by blog.js) -->
+      <nav class="article-nav"></nav>
+
+    </div>
+  </article>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=13"></script>
+  <script src="../blog.js?v=26"></script>
+</body>
+</html>
