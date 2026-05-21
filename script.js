@@ -59,10 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 14. Neural Network Particle Canvas ---
   initParticleCanvas();
 
-  // --- 15. Stat Counter Animation ---
-  initStatCounters();
-
-  // --- 16. Marquee Scroll Velocity Boost ---
+  // --- 15. Marquee Scroll Velocity Boost ---
   initMarqueeBoost();
 
   // --- 17. Section Arrival Glow ---
@@ -1338,49 +1335,7 @@ function initParticleCanvas() {
 }
 
 // ============================================
-// 15. Stat Counter Animation
-// ============================================
-function initStatCounters() {
-  const stats = document.querySelectorAll('.highlight-card-stat[data-target]');
-  if (!stats.length) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function animateCounter(el, target, suffix) {
-    if (prefersReducedMotion) {
-      el.textContent = target + suffix;
-      return;
-    }
-    const duration = 1500;
-    const start = performance.now();
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(eased * target);
-      el.textContent = current + suffix;
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.dataset.target, 10);
-        const suffix = el.dataset.suffix || '';
-        animateCounter(el, target, suffix);
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  stats.forEach(stat => observer.observe(stat));
-}
-
-// ============================================
-// 16. Marquee Scroll Velocity Boost
+// 15. Marquee Scroll Velocity Boost
 // ============================================
 function initMarqueeBoost() {
   const marquees = document.querySelectorAll('.marquee');

@@ -41,18 +41,25 @@
     },
   };
 
-  /* ---- Animated Counters ---- */
+  /* ---- Animated Counters ----
+     Numbers are rendered statically in HTML so they never flash 0.
+     This function adds a subtle count-up from 80% -> 100% for polish on first reveal.
+     If prefers-reduced-motion, we skip the animation entirely (number is already correct). */
   function animateCounters() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const counters = $$('[data-count]');
     counters.forEach((el) => {
       const target = parseInt(el.dataset.count, 10);
-      const duration = 1600;
-      const start = performance.now();
+      if (!Number.isFinite(target)) return;
+      const startValue = Math.round(target * 0.8);
+      const duration = 900;
+      const startTime = performance.now();
       function step(now) {
-        const elapsed = now - start;
+        const elapsed = now - startTime;
         const ratio = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - ratio, 4); // ease-out quartic
-        el.textContent = Math.round(target * eased);
+        const current = Math.round(startValue + (target - startValue) * eased);
+        el.textContent = current;
         if (ratio < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
