@@ -40,8 +40,117 @@
     ]
   }
   </script>
+  <style>
+    /* ============================================
+       HOMEPAGE  ·  proof anchors + compressed about
+       Scoped under body.home so it doesn't leak.
+       ============================================ */
+    body.home .hero-proofs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 28px 0 28px;
+      max-width: 920px;
+    }
+    body.home .hero-proof {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 20px 22px 18px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease, background 240ms ease;
+      overflow: hidden;
+    }
+    body.home .hero-proof::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px; height: 100%;
+      background: var(--accent);
+      transform: scaleY(0.4);
+      transform-origin: top center;
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body.home .hero-proof:nth-child(2)::before { background: var(--accent-secondary, #5DCAA5); }
+    body.home .hero-proof:nth-child(3)::before { background: #B794F4; }
+    body.home .hero-proof:hover {
+      transform: translateY(-2px);
+      border-color: var(--text-tertiary);
+      background: rgba(255, 255, 255, 0.045);
+    }
+    body.home .hero-proof:hover::before { transform: scaleY(1); }
+    body.home .hero-proof-stat {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    body.home .hero-proof-suffix {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    body.home .hero-proof-label {
+      margin-top: auto;
+      padding-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    body.home .hero-proof-arrow {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 18px; height: 18px;
+      color: var(--text-tertiary);
+      transition: transform 240ms ease, color 240ms ease;
+    }
+    body.home .hero-proof:hover .hero-proof-arrow {
+      transform: translate(3px, -3px);
+      color: var(--accent);
+    }
+    /* Compressed about — 3 paragraphs, no tools grid */
+    body.home #about .about-text {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 0 1.1rem;
+    }
+    body.home #about .about-text strong { color: var(--text); font-weight: 500; }
+    body.home #about .section-sub-italic {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      font-size: 1.02rem;
+      margin: -8px 0 28px;
+    }
+    /* Mobile */
+    @media (max-width: 768px) {
+      body.home .hero-proofs {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 22px 0;
+      }
+      body.home .hero-proof { padding: 16px 18px 14px; }
+      body.home .hero-proof-arrow { top: 14px; right: 14px; }
+    }
+  </style>
 </head>
-<body>
+<body class="home">
 
   <!-- Skip link — first focusable element (WCAG 2.4.1) -->
   <a class="skip-link" href="#main">Skip to content</a>
@@ -103,32 +212,46 @@
     <canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas>
     <div class="container">
       <div class="hero-eyebrow">
-        <span class="line-wrap"><span class="line-inner">AI engineer &nbsp;&middot;&nbsp; Perplexity AI &nbsp;&middot;&nbsp; Melbourne</span></span>
+        <span class="line-wrap"><span class="line-inner">AI engineer &nbsp;&middot;&nbsp; Perplexity AI Fellow &nbsp;&middot;&nbsp; Melbourne</span></span>
       </div>
       <h1 class="hero-heading">
         <span class="line-wrap"><span class="line-inner hero-name">Pugalenthi Magendran</span></span>
       </h1>
       <p class="hero-subtitle">
-        <span class="line-wrap"><span class="line-inner">I build AI / ML systems and publish source-backed</span></span>
-        <span class="line-wrap"><span class="line-inner">analysis on the <em>AI stack</em> &mdash; chips, packaging,</span></span>
-        <span class="line-wrap"><span class="line-inner">agents, and the edge.</span></span>
+        <span class="line-wrap"><span class="line-inner">I train, evaluate, and ship foundation-model systems.</span></span>
+        <span class="line-wrap"><span class="line-inner">Master&rsquo;s research at Monash, applied AI at Perplexity, and <em>a live business on the side</em>.</span></span>
       </p>
 
-      <div class="hero-chips hero-reveal-item">
-        <span class="hero-chip">Master of AI &middot; Monash</span>
-        <span class="hero-chip">Fellow @ Perplexity AI</span>
-        <span class="hero-chip">45 essays</span>
-        <span class="hero-chip">6 atlases</span>
+      <!-- Proof anchors — 3 measurable results, each linking to evidence -->
+      <div class="hero-chips hero-proofs hero-reveal-item">
+        <a href="projects/retinal-disease-classifier/" class="hero-proof">
+          <span class="hero-proof-stat">0.921</span>
+          <span class="hero-proof-suffix">AUROC &middot; zero-shot</span>
+          <span class="hero-proof-label">FLAIR thesis &middot; Monash</span>
+          <svg class="hero-proof-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="https://pugalenthi0928.github.io/training-data-factory/" target="_blank" rel="noopener" class="hero-proof">
+          <span class="hero-proof-stat">+16.8%</span>
+          <span class="hero-proof-suffix">ROUGE-1 &middot; 184 tests</span>
+          <span class="hero-proof-label">Forge &middot; LoRA + LLM-as-judge</span>
+          <svg class="hero-proof-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
+        <a href="https://gatecrown.com/" target="_blank" rel="noopener" class="hero-proof">
+          <span class="hero-proof-stat">5-day</span>
+          <span class="hero-proof-suffix">turnaround &middot; real customers</span>
+          <span class="hero-proof-label">GateCrown &middot; AML/CTF compliance</span>
+          <svg class="hero-proof-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </a>
       </div>
 
       <div class="hero-cta hero-reveal-item">
-        <a href="blog/" class="btn btn-primary">
-          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-          Read essays
+        <a href="projects/retinal-disease-classifier/" class="btn btn-primary">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Read the thesis
         </a>
         <a href="projects/" class="btn btn-secondary">
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          See projects
+          See all work
         </a>
       </div>
 
@@ -226,10 +349,11 @@
     </div>
   </section>
 
-  <!-- ========== ABOUT  (moved up from later position) ========== -->
+  <!-- ========== ABOUT  (compressed — 3 paragraphs, drops tools grid) ========== -->
   <section class="section section-alt" id="about">
     <div class="container">
       <h2 class="section-heading" data-animate="fade-up">About</h2>
+      <p class="section-sub-italic" data-animate="fade-up">Short version. Long version is in the resume.</p>
 
       <div class="about-layout">
         <div class="about-photo" data-animate="clip-up" data-parallax="0.06">
@@ -237,34 +361,19 @@
         </div>
         <div class="about-bio" data-animate="fade-up">
           <p class="about-text">
-            I&rsquo;m an AI / Machine Learning engineer with a <strong>Master of Artificial Intelligence</strong> from Monash University. I work across foundation models, LLM systems, and computer vision &mdash; from retinal disease classifiers to text-to-SQL fine-tuning, and lately to long-form analysis of the AI stack.
+            I&rsquo;m an AI / ML engineer with a <strong>Master of Artificial Intelligence</strong> from Monash University. My research focus was foundation models for medical imaging &mdash; the Master&rsquo;s thesis above compares four vision-language and self-supervised encoders against three retinal-disease benchmarks, with linear-probe transfer at 5&ndash;20% label budgets.
           </p>
           <p class="about-text">
-            Currently a <strong>Business Fellow at Perplexity AI</strong>, where I prototype LLM agent workflows and dig into AI product strategy. Based in Melbourne, building from idea to working tool.
+            Currently a <strong>Fellow at Perplexity AI</strong>, where I prototype LLM agent workflows and dig into AI product strategy. Alongside that I ship engineering projects (Forge, an auth microservice) and run <strong>GateCrown</strong>, a small AML/CTF compliance business serving Australian real-estate agencies. I also write a serial publication of source-backed essays on the AI stack &mdash; 45 so far, roughly two a week.
+          </p>
+          <p class="about-text">
+            Based in Melbourne. Open to AI / ML engineering and research roles at frontier labs, applied-AI teams, and well-funded startups. Also open to technical-cofounder conversations.
           </p>
           <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn-resume" data-animate="fade-up">
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
             Download resume
           </a>
         </div>
-      </div>
-
-      <h3 class="subsection-heading" data-animate="fade-up">Tools &amp; technologies</h3>
-      <div class="skills-grid" data-animate="fade-up">
-        <span class="tag">Python</span>
-        <span class="tag">PyTorch</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">LLMs</span>
-        <span class="tag">LoRA</span>
-        <span class="tag">RAG</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">scikit-learn</span>
-        <span class="tag">Streamlit</span>
-        <span class="tag">Docker</span>
-        <span class="tag">SQL</span>
-        <span class="tag">Git</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Azure</span>
       </div>
     </div>
   </section>
