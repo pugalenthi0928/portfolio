@@ -147,8 +147,11 @@ function initHeroReveal() {
       { el: '.hero-heading .line-wrap:nth-child(2) .line-inner', delay: 420 },
       { el: '.hero-subtitle .line-wrap:nth-child(1) .line-inner', delay: 620 },
       { el: '.hero-subtitle .line-wrap:nth-child(2) .line-inner', delay: 750 },
-      { el: '.hero-cta', delay: 950 },
-      { el: '.hero-scroll-indicator', delay: 1100 },
+      { el: '.hero-subtitle .line-wrap:nth-child(3) .line-inner', delay: 880 },
+      { el: '.hero-chips', delay: 1000 },
+      { el: '.hero-cta', delay: 1120 },
+      { el: '.hero-meta', delay: 1240 },
+      { el: '.hero-scroll-indicator', delay: 1360 },
     ];
 
     sequence.forEach(({ el, delay }) => {
