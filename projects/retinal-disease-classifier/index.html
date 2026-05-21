@@ -60,6 +60,86 @@
   .dataset-cards{grid-template-columns:1fr}
   .finding-cards{grid-template-columns:1fr}
 }
+
+/* Thesis CTA — prominent download/read button in hero + end of page */
+.thesis-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+/* Higher specificity (a.thesis-cta) to win over .content a { color: var(--accent) } */
+a.thesis-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--accent);
+  transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+}
+a.thesis-cta:hover {
+  transform: translateY(-1px);
+  background: var(--accent-hover, #F59070);
+  box-shadow: 0 8px 28px rgba(240, 120, 74, 0.28);
+  text-decoration: none;
+  color: #fff;
+}
+a.thesis-cta svg { flex-shrink: 0; }
+a.thesis-cta .thesis-cta-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+a.thesis-cta--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(240, 120, 74, 0.45);
+}
+a.thesis-cta--ghost:hover {
+  background: rgba(240, 120, 74, 0.08);
+  color: var(--accent);
+  box-shadow: none;
+}
+a.thesis-cta--ghost .thesis-cta-meta { color: var(--text-tertiary); }
+
+/* End-of-page thesis block */
+.thesis-block {
+  margin: 48px 0 24px;
+  padding: 32px;
+  border-radius: 14px;
+  background: var(--pd-surface-1, var(--bg-alt));
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.thesis-block h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+}
+.thesis-block p {
+  color: var(--pd-text-muted, var(--text-secondary));
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media(max-width:540px){
+  .thesis-cta { padding: 12px 18px; font-size: 13px; width: 100%; justify-content: center; }
+  .thesis-block { padding: 24px 18px; }
+}
 </style>
 </head>
 <body class="page-project-detail" data-mode="simple">
@@ -163,6 +243,32 @@
       <div class="hero-stat"><div class="num">3</div><div class="label">Benchmarks</div></div>
       <div class="hero-stat"><div class="num"><span class="accent">0.921</span></div><div class="label">Best AUROC</div></div>
       <div class="hero-stat"><div class="num">5-Fold</div><div class="label">Cross-Validation</div></div>
+    </div>
+
+    <div class="thesis-cta-row">
+      <a class="thesis-cta" href="Pugalenthi-Magendran-FLAIR-Thesis.pdf" target="_blank" rel="noopener" aria-label="Read the full thesis as PDF (78 pages)">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="9" y1="13" x2="15" y2="13"></line>
+          <line x1="9" y1="17" x2="15" y2="17"></line>
+        </svg>
+        <span>
+          Read the full thesis
+          <span class="thesis-cta-meta" style="display:block;margin-top:2px;">PDF &middot; 78 pages &middot; 2.2&nbsp;MB</span>
+        </span>
+      </a>
+      <a class="thesis-cta thesis-cta--ghost" href="Pugalenthi-Magendran-FLAIR-Thesis.pdf" download aria-label="Download the thesis PDF">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>
+          Download
+          <span class="thesis-cta-meta" style="display:block;margin-top:2px;">Save the PDF</span>
+        </span>
+      </a>
     </div>
   </div>
 
@@ -892,7 +998,37 @@
 
     <div class="callout info" style="margin-top:24px">
       <div class="callout-title">About the Author</div>
-      This research was conducted by <strong>Pugalenthi Magendran</strong> as part of the Master of Artificial Intelligence program at Monash University, supervised by <strong>Dr Yasmeen George</strong>. The full thesis is available upon request.
+      This research was conducted by <strong>Pugalenthi Magendran</strong> as part of the Master of Artificial Intelligence program at Monash University, supervised by <strong>Dr Yasmeen George</strong>.
+    </div>
+
+    <div class="thesis-block">
+      <h3>Read the full thesis</h3>
+      <p><em>From Prompts to Probes: Zero-Shot and Few-Shot Transfer of Foundation Models for Retinal Fundus Classification.</em> FIT5128 final thesis, Monash University Faculty of Information Technology &middot; ~7,900 words &middot; literature review, methodology, results, discussion, references, and appendices.</p>
+      <div class="thesis-cta-row">
+        <a class="thesis-cta" href="Pugalenthi-Magendran-FLAIR-Thesis.pdf" target="_blank" rel="noopener" aria-label="Read the full thesis as PDF in a new tab">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="9" y1="13" x2="15" y2="13"></line>
+            <line x1="9" y1="17" x2="15" y2="17"></line>
+          </svg>
+          <span>
+            Read the thesis (PDF)
+            <span class="thesis-cta-meta" style="display:block;margin-top:2px;">78 pages &middot; 2.2&nbsp;MB &middot; opens in new tab</span>
+          </span>
+        </a>
+        <a class="thesis-cta thesis-cta--ghost" href="Pugalenthi-Magendran-FLAIR-Thesis.pdf" download aria-label="Download the thesis PDF">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>
+            Download
+            <span class="thesis-cta-meta" style="display:block;margin-top:2px;">Save the PDF</span>
+          </span>
+        </a>
+      </div>
     </div>
   </section>
 
