@@ -170,6 +170,7 @@ const BLOG_TOPIC_LABELS = {
 };
 
 const BLOG_POST_TOPIC = {
+  'dead-zone-layer':                'infrastructure',
   'vehicle-compute-backbone':       'infrastructure',
   'open-isa-talent-bet':            'infrastructure',
   'architecture-gatekeeper':        'infrastructure',
