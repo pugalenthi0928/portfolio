@@ -3,65 +3,430 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects | Pugalenthi Magendran</title>
-  <meta name="description" content="AI/ML projects across foundation models, computer vision, LLM fine-tuning, and applied AI tools.">
+  <title>Work | Pugalenthi Magendran</title>
+  <meta name="description" content="Five projects across ML research, applied AI, production engineering, and product. Plus a peer-supervised Master's thesis, six lab experiments, and forty-five essays on the AI stack.">
   <link rel="canonical" href="https://pugalenthimagendran.com/projects/">
-  <meta property="og:title" content="Projects | Pugalenthi Magendran">
-  <meta property="og:description" content="AI/ML projects across foundation models, computer vision, LLM fine-tuning, and applied AI tools.">
+  <meta property="og:title" content="Work | Pugalenthi Magendran">
+  <meta property="og:description" content="Five projects across ML research, applied AI, production engineering, and product. Plus a peer-supervised Master's thesis, six lab experiments, and forty-five essays on the AI stack.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pugalenthimagendran.com/projects/">
   <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Projects | Pugalenthi Magendran">
+  <meta name="twitter:title" content="Work | Pugalenthi Magendran">
   <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
-  <meta name="twitter:description" content="AI/ML projects across foundation models, computer vision, LLM fine-tuning, and applied AI tools.">
+  <meta name="twitter:description" content="Five projects across ML research, applied AI, production engineering, and product.">
   <meta name="view-transition" content="same-origin">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css?v=22">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=25">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Projects | Pugalenthi Magendran",
-    "description": "AI/ML projects across foundation models, computer vision, LLM fine-tuning, and applied AI tools.",
+    "name": "Work | Pugalenthi Magendran",
+    "description": "Projects across ML research, applied AI, production engineering, and product.",
     "url": "https://pugalenthimagendran.com/projects/",
-    "author": {
-      "@type": "Person",
-      "name": "Pugalenthi Magendran",
-      "url": "https://pugalenthimagendran.com"
-    }
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" }
   }
   </script>
+  <style>
+    /* ============================================
+       PROJECTS PAGE  ·  Editorial layout
+       Scoped under body.projects-page so it doesn't leak.
+       ============================================ */
+    .projects-page main { padding-top: 0; }
+
+    /* Hero */
+    .projects-hero {
+      padding: 120px 0 56px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .projects-hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 22px;
+    }
+    .projects-hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 0 0 24px;
+    }
+    .projects-hero-title .accent { color: var(--accent); }
+    .projects-hero-deck {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.18rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 0 30px;
+      border-left: 2px solid var(--border);
+      padding-left: 1.25rem;
+    }
+    .projects-hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+    }
+    .projects-hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 0.5px solid var(--border);
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .projects-hero-chip strong { color: var(--text); font-weight: 600; }
+    .projects-hero-chip::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .projects-hero-chip:nth-child(2)::before { background: var(--accent-secondary); }
+    .projects-hero-chip:nth-child(3)::before { background: #B794F4; }
+    .projects-hero-chip:nth-child(4)::before { background: #5DCAA5; }
+    .projects-hero-chip:nth-child(5)::before { background: #E8B468; }
+
+    /* Filter bar (reuse existing pattern, slight refinement) */
+    .projects-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 28px 0 8px;
+      margin-bottom: 8px;
+    }
+    .projects-filter-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      background: transparent;
+      border: 0.5px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+    .projects-filter-btn:hover { color: var(--text); border-color: var(--text-tertiary); }
+    .projects-filter-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(240, 120, 74, 0.06);
+    }
+
+    /* Project group (Research / Systems / Product) */
+    .projects-group { margin: 64px 0 0; }
+    .projects-group-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 0.5px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .projects-group-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: var(--text-tertiary);
+    }
+    .projects-group-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      color: var(--text);
+      margin: 0;
+    }
+    .projects-group-sub {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.95rem;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-left: auto;
+    }
+
+    /* Project cards (extends .project-compact-card from style.css) */
+    .projects-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+    .project-compact-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-alt);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 220ms var(--ease), transform 220ms var(--ease);
+    }
+    .project-compact-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-compact-thumbnail {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .project-compact-thumbnail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 600ms var(--ease);
+    }
+    .project-compact-card:hover .project-compact-thumbnail-img { transform: scale(1.04); }
+    .project-compact-content {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .project-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      align-items: center;
+    }
+    .project-card-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    .project-card-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      border: 0.5px solid rgba(240, 120, 74, 0.30);
+      background: rgba(240, 120, 74, 0.06);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+    .project-compact-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .project-compact-tags .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      border: 0.5px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-tertiary);
+      background: transparent;
+    }
+    .project-compact-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 4px 0 0;
+      line-height: 1.2;
+    }
+    .project-compact-desc {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .project-compact-card .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 200ms var(--ease);
+    }
+    .project-compact-card .project-link:hover { gap: 12px; }
+    .project-compact-card .project-link svg { flex-shrink: 0; }
+
+    /* More work band */
+    .more-work-band {
+      margin: 96px 0 40px;
+      padding: 48px 0 36px;
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .more-work-head { margin-bottom: 30px; }
+    .more-work-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .more-work-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+    .more-work-sub {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      max-width: 620px;
+      margin: 0;
+    }
+    .more-work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .more-work-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px 24px 22px;
+      background: var(--bg-alt);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 220ms var(--ease), transform 220ms var(--ease);
+      overflow: hidden;
+    }
+    .more-work-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--mw-accent, var(--accent));
+      opacity: 0.7;
+      transition: opacity 220ms ease, width 220ms ease;
+    }
+    .more-work-card:hover {
+      border-color: var(--mw-accent, var(--accent));
+      transform: translateY(-2px);
+    }
+    .more-work-card:hover::before { width: 4px; opacity: 1; }
+    .more-work-card--labs    { --mw-accent: #B794F4; }
+    .more-work-card--writing { --mw-accent: #F0784A; }
+    .more-work-card--atlases { --mw-accent: #5DCAA5; }
+    .more-work-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mw-accent, var(--accent));
+    }
+    .more-work-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 2px 0 4px;
+      color: var(--text);
+      letter-spacing: -0.005em;
+    }
+    .more-work-card-desc {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.93rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin: 0;
+    }
+    .more-work-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+    }
+    .more-work-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mw-accent, var(--accent));
+      transition: gap 200ms var(--ease);
+    }
+    .more-work-card:hover .more-work-card-cta { gap: 12px; }
+
+    @media (max-width: 880px) {
+      .projects-hero { padding: 100px 0 48px; }
+      .projects-group-sub { margin-left: 0; flex-basis: 100%; }
+      .projects-group-head { flex-wrap: wrap; }
+      .more-work-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+      .projects-hero { padding: 90px 0 40px; }
+      .projects-hero-deck { font-size: 1.05rem; }
+      .projects-group { margin: 48px 0 0; }
+      .more-work-band { margin: 64px 0 32px; padding: 36px 0 28px; }
+    }
+  </style>
 </head>
-<body>
+<body class="projects-page">
 
-
-  <!-- Skip link -->
   <a class="skip-link" href="#main">Skip to content</a>
-  <!-- Custom Cursor -->
+
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
-
-  <!-- Grain Overlay -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- Mouse Glow -->
-  <div class="mouse-glow" aria-hidden="true"></div>
-
-  <!-- Back to Top -->
   <button class="back-to-top" aria-label="Back to top">
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
   </button>
 
-  <!-- ========== NAV ========== -->
   <nav class="nav" id="nav" aria-label="Primary">
     <div class="nav-inner">
       <a href="../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
       <div class="nav-links">
-        <a href="../projects/" class="active">Work</a>
+        <a href="./" class="active">Work</a>
         <a href="../blog/">Writing</a>
         <a href="../atlases/">Atlases</a>
         <a href="../#about">About</a>
@@ -74,141 +439,251 @@
     </div>
   </nav>
 
-  <!-- Mobile Nav Overlay -->
   <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
-    <a href="../projects/">Work</a>
+    <a href="./">Work</a>
     <a href="../blog/">Writing</a>
     <a href="../atlases/">Atlases</a>
     <a href="../#about">About</a>
     <a href="../#contact">Contact</a>
   </nav>
 
-  <main>
-  <!-- ========== PROJECTS HERO ========== -->
-  <section class="projects-hero">
-    <div class="container">
-      <h1 class="projects-hero-title">Projects</h1>
-      <p class="projects-hero-subtitle">Everything I've built, from research to real tools.</p>
-    </div>
-  </section>
+  <main id="main">
 
-  <!-- ========== PROJECTS GRID ========== -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container container-wide">
-      <!-- Filter Bar -->
-      <div class="projects-filter-bar" id="projects-filter-bar">
-        <button class="projects-filter-btn active" data-filter="all">All</button>
+    <!-- ========== HERO ========== -->
+    <section class="projects-hero">
+      <div class="container container-wide">
+        <div class="projects-hero-eyebrow">Work &nbsp;&middot;&nbsp; Research &nbsp;&middot;&nbsp; Systems &nbsp;&middot;&nbsp; Product</div>
+        <h1 class="projects-hero-title">Work<span class="accent">.</span></h1>
+        <p class="projects-hero-deck">Five projects across ML research, applied AI, production engineering, and product. Plus a peer-supervised Master&rsquo;s thesis, six lab experiments, and forty-five essays on the AI stack.</p>
+        <div class="projects-hero-chips">
+          <span class="projects-hero-chip"><strong>5</strong> projects</span>
+          <span class="projects-hero-chip"><strong>Master&rsquo;s thesis</strong> &middot; Monash</span>
+          <span class="projects-hero-chip"><strong>6</strong> lab experiments</span>
+          <span class="projects-hero-chip"><strong>45</strong> essays</span>
+          <span class="projects-hero-chip"><strong>9</strong> atlases</span>
+        </div>
       </div>
+    </section>
 
-      <div class="projects-compact-grid" id="projects-grid">
+    <!-- ========== FILTER + GROUPS ========== -->
+    <section style="padding: 0 0 16px;">
+      <div class="container container-wide">
 
-        <!--
-          ======= PROJECT CARD TEMPLATE =======
-          Copy the <article> block below to add a new project.
-          Replace: IMAGE_FILE, ALT_TEXT, TAG(s), TITLE, DESCRIPTION, PROJECT_URL
-          Add data-tags="tag1,tag2" for filtering.
-        -->
+        <!-- Filter bar (auto-populated from card data-tags) -->
+        <div class="projects-filter-bar" id="projects-filter-bar">
+          <button class="projects-filter-btn active" data-filter="all">All</button>
+        </div>
 
-        <article class="project-compact-card" data-animate="clip-up" data-tags="Python,MLX,LLM-as-Judge">
-          <div class="project-compact-thumbnail">
-            <img src="../forgecover.png" alt="Forge - Training data engine" class="project-compact-thumbnail-img" loading="lazy">
+        <!-- ====== GROUP 01 · RESEARCH ====== -->
+        <div class="projects-group" data-group="research">
+          <div class="projects-group-head">
+            <span class="projects-group-num">01</span>
+            <h2 class="projects-group-title">Research</h2>
+            <span class="projects-group-sub">Where the artefact is a paper, an experiment, or a model.</span>
           </div>
-          <div class="project-compact-content">
-            <div class="project-compact-tags">
-              <span class="tag">Python</span>
-              <span class="tag">MLX</span>
-              <span class="tag">LLM-as-Judge</span>
-            </div>
-            <h3 class="project-compact-title">Forge</h3>
-            <p class="project-compact-desc">Generates training data from documents, scores examples with LLM-as-judge evaluation, detects benchmark contamination, fine-tunes locally with LoRA on Apple Silicon, and runs paired bootstrap significance tests. 184 tests, +16.8% ROUGE-1 gain.</p>
-            <a href="https://pugalenthi0928.github.io/training-data-factory/" target="_blank" rel="noopener" class="project-link">
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+
+          <div class="projects-compact-grid">
+
+            <article class="project-compact-card" data-animate="clip-up" data-tags="PyTorch,FLAIR,Computer Vision">
+              <div class="project-compact-thumbnail">
+                <img src="../retinal_disease_classifier.jpg" alt="Retinal Disease Classifier — FLAIR vision-language model for diabetic retinopathy and glaucoma detection" class="project-compact-thumbnail-img" loading="lazy">
+              </div>
+              <div class="project-compact-content">
+                <div class="project-card-meta">
+                  <span class="project-card-badge">Master&rsquo;s thesis &middot; Deep-dive &middot; 78-page PDF</span>
+                  <span class="project-card-stat">0.921 AUROC zero-shot</span>
+                </div>
+                <div class="project-compact-tags">
+                  <span class="tag">PyTorch</span>
+                  <span class="tag">FLAIR</span>
+                  <span class="tag">Computer Vision</span>
+                </div>
+                <h3 class="project-compact-title">Retinal Disease Classifier</h3>
+                <p class="project-compact-desc">Peer-supervised Monash Master&rsquo;s thesis comparing FLAIR, OpenCLIP, BiomedCLIP, and RETFound for diabetic retinopathy and glaucoma. Zero-shot and few-shot linear probing across three benchmarks, all on a laptop.</p>
+                <a href="retinal-disease-classifier/" class="project-link">
+                  View project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="project-compact-card" data-animate="clip-up" data-tags="LLaMA,LoRA,PyTorch">
+              <div class="project-compact-thumbnail">
+                <img src="../texttosqllora.jpg" alt="Text-to-SQL with LoRA fine-tuning on a LLaMA-style model" class="project-compact-thumbnail-img" loading="lazy">
+              </div>
+              <div class="project-compact-content">
+                <div class="project-card-meta">
+                  <span class="project-card-badge">GitHub</span>
+                  <span class="project-card-stat">LoRA fine-tune</span>
+                </div>
+                <div class="project-compact-tags">
+                  <span class="tag">LLaMA</span>
+                  <span class="tag">LoRA</span>
+                  <span class="tag">PyTorch</span>
+                </div>
+                <h3 class="project-compact-title">Text-to-SQL with LoRA</h3>
+                <p class="project-compact-desc">Fine-tuned a LLaMA-style model on natural-language / SQL pairs with LoRA, then benchmarked query correctness and execution success against the base model. Small adapters, real gains.</p>
+                <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
+                  View project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- ====== GROUP 02 · SYSTEMS ====== -->
+        <div class="projects-group" data-group="systems">
+          <div class="projects-group-head">
+            <span class="projects-group-num">02</span>
+            <h2 class="projects-group-title">Systems</h2>
+            <span class="projects-group-sub">Production engineering &mdash; code that runs, tests that prove it.</span>
+          </div>
+
+          <div class="projects-compact-grid">
+
+            <article class="project-compact-card" data-animate="clip-up" data-tags="Python,MLX,LLM-as-Judge">
+              <div class="project-compact-thumbnail">
+                <img src="../forgecover.png" alt="Forge — training data engine with LLM-as-judge evaluation and LoRA fine-tuning on Apple Silicon" class="project-compact-thumbnail-img" loading="lazy">
+              </div>
+              <div class="project-compact-content">
+                <div class="project-card-meta">
+                  <span class="project-card-badge">GitHub &middot; Live demo</span>
+                  <span class="project-card-stat">184 tests &middot; +16.8% ROUGE-1</span>
+                </div>
+                <div class="project-compact-tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">MLX</span>
+                  <span class="tag">LLM-as-Judge</span>
+                </div>
+                <h3 class="project-compact-title">Forge</h3>
+                <p class="project-compact-desc">Generates training data from documents, scores examples with LLM-as-judge evaluation, detects benchmark contamination, fine-tunes locally with LoRA on Apple Silicon, and runs paired bootstrap significance tests.</p>
+                <a href="https://pugalenthi0928.github.io/training-data-factory/" target="_blank" rel="noopener" class="project-link">
+                  View project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </article>
+
+            <article class="project-compact-card" data-animate="clip-up" data-tags="Node.js,TypeScript,PostgreSQL">
+              <div class="project-compact-thumbnail">
+                <img src="../auth-microservice.jpg" alt="Auth Microservice — JWT RS256, TOTP MFA, OAuth, refresh token rotation, Redis rate limiting" class="project-compact-thumbnail-img" loading="lazy">
+              </div>
+              <div class="project-compact-content">
+                <div class="project-card-meta">
+                  <span class="project-card-badge">Deep-dive &middot; GitHub</span>
+                  <span class="project-card-stat">136 tests</span>
+                </div>
+                <div class="project-compact-tags">
+                  <span class="tag">Node.js</span>
+                  <span class="tag">TypeScript</span>
+                  <span class="tag">PostgreSQL</span>
+                </div>
+                <h3 class="project-compact-title">Auth Microservice</h3>
+                <p class="project-compact-desc">Full auth service from scratch: JWT RS256, TOTP-based MFA, OAuth (Google / GitHub), refresh token rotation with theft detection, Redis rate limiting. Read the deep-dive in simple or technical mode.</p>
+                <a href="auth-microservice/" class="project-link">
+                  View project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- ====== GROUP 03 · PRODUCT ====== -->
+        <div class="projects-group" data-group="product">
+          <div class="projects-group-head">
+            <span class="projects-group-num">03</span>
+            <h2 class="projects-group-title">Product</h2>
+            <span class="projects-group-sub">A thing I sell, to real customers, today.</span>
+          </div>
+
+          <div class="projects-compact-grid">
+
+            <article class="project-compact-card" data-animate="clip-up" data-tags="AML/CTF,Vanilla JS,Product">
+              <div class="project-compact-thumbnail">
+                <img src="../gatecrown.jpg" alt="GateCrown — AML/CTF compliance documentation service for Australian real-estate agencies" class="project-compact-thumbnail-img" loading="lazy">
+              </div>
+              <div class="project-compact-content">
+                <div class="project-card-meta">
+                  <span class="project-card-badge">Live business &middot; Real customers</span>
+                  <span class="project-card-stat">5-day turnaround</span>
+                </div>
+                <div class="project-compact-tags">
+                  <span class="tag">AML/CTF</span>
+                  <span class="tag">Vanilla JS</span>
+                  <span class="tag">Product</span>
+                </div>
+                <h3 class="project-compact-title">GateCrown</h3>
+                <p class="project-compact-desc">Compliance documentation service for Australian real-estate agencies facing new AUSTRAC AML/CTF obligations. Customised programs delivered in five business days, pricing tiers from single-office assessment through to multi-office rollout.</p>
+                <a href="https://gatecrown.com/" target="_blank" rel="noopener" class="project-link">
+                  View project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- ====== MORE WORK BAND ====== -->
+        <div class="more-work-band">
+          <div class="more-work-head">
+            <div class="more-work-eyebrow">More work</div>
+            <h2 class="more-work-title">The artefacts that sit behind these projects.</h2>
+            <p class="more-work-sub">Five projects above. Around them: a workshop of experiments, a serial publication of source-backed essays, and a set of interactive atlases of the AI field.</p>
+          </div>
+          <div class="more-work-grid">
+
+            <a href="../labs/" class="more-work-card more-work-card--labs">
+              <div class="more-work-card-label">Build</div>
+              <h3 class="more-work-card-title">Labs</h3>
+              <p class="more-work-card-desc">Active experiments and prototypes across AI agents, retrieval, software trust, computer vision, and founder tools.</p>
+              <div class="more-work-card-meta">
+                <span>6 active</span>
+                <span>updated weekly</span>
+              </div>
+              <span class="more-work-card-cta">
+                Open Labs
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </span>
             </a>
-          </div>
-        </article>
 
-        <article class="project-compact-card" data-animate="clip-up" data-tags="PyTorch,FLAIR,Computer Vision">
-          <div class="project-compact-thumbnail">
-            <img src="../retinal_disease_classifier.jpg" alt="Retinal Disease Classifier" class="project-compact-thumbnail-img" loading="lazy">
-          </div>
-          <div class="project-compact-content">
-            <div class="project-compact-tags">
-              <span class="tag">PyTorch</span>
-              <span class="tag">FLAIR</span>
-              <span class="tag">Computer Vision</span>
-            </div>
-            <h3 class="project-compact-title">Retinal Disease Classifier</h3>
-            <p class="project-compact-desc">Ran zero-shot and linear-probe experiments with FLAIR for diabetic retinopathy and glaucoma detection. Hit 0.92 AUROC with only 5-20% labels.</p>
-            <a href="retinal-disease-classifier/" class="project-link">
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <a href="../blog/" class="more-work-card more-work-card--writing">
+              <div class="more-work-card-label">Think</div>
+              <h3 class="more-work-card-title">Writing</h3>
+              <p class="more-work-card-desc">45 source-backed essays on what&rsquo;s actually being built underneath the AI economy &mdash; chips, packaging, agents, edge inference.</p>
+              <div class="more-work-card-meta">
+                <span>45 essays</span>
+                <span>5 themes</span>
+              </div>
+              <span class="more-work-card-cta">
+                Read essays
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </span>
             </a>
-          </div>
-        </article>
 
-        <article class="project-compact-card" data-animate="clip-up" data-tags="AML/CTF,Vanilla JS,Product">
-          <div class="project-compact-thumbnail">
-            <img src="../gatecrown.jpg" alt="GateCrown - AML/CTF compliance for real estate agencies" class="project-compact-thumbnail-img" loading="lazy">
-          </div>
-          <div class="project-compact-content">
-            <div class="project-compact-tags">
-              <span class="tag">AML/CTF</span>
-              <span class="tag">Vanilla JS</span>
-              <span class="tag">Product</span>
-            </div>
-            <h3 class="project-compact-title">GateCrown</h3>
-            <p class="project-compact-desc">Built a compliance documentation service for Australian real estate agencies facing new AUSTRAC AML/CTF obligations. Customised programs delivered in 5 business days, with pricing tiers from assessment to multi-office.</p>
-            <a href="https://gatecrown.com/" target="_blank" rel="noopener" class="project-link">
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            <a href="../atlases/" class="more-work-card more-work-card--atlases">
+              <div class="more-work-card-label">Map</div>
+              <h3 class="more-work-card-title">Atlases</h3>
+              <p class="more-work-card-desc">Nine interactive maps of the AI field &mdash; foundations, papers, manufacture, application, biology, terminology, and two learning systems.</p>
+              <div class="more-work-card-meta">
+                <span>9 atlases</span>
+                <span>source-backed</span>
+              </div>
+              <span class="more-work-card-cta">
+                Open atlases
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </span>
             </a>
-          </div>
-        </article>
 
-        <article class="project-compact-card" data-animate="clip-up" data-tags="Node.js,TypeScript,PostgreSQL">
-          <div class="project-compact-thumbnail">
-            <img src="../auth-microservice.jpg" alt="Auth Microservice" class="project-compact-thumbnail-img" loading="lazy">
           </div>
-          <div class="project-compact-content">
-            <div class="project-compact-tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">PostgreSQL</span>
-            </div>
-            <h3 class="project-compact-title">Auth Microservice</h3>
-            <p class="project-compact-desc">Full auth service from scratch: JWT RS256, TOTP-based MFA, OAuth (Google/GitHub), refresh token rotation with theft detection, Redis rate limiting. 136 tests.</p>
-            <a href="auth-microservice/" class="project-link">
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="project-compact-card" data-animate="clip-up" data-tags="LLaMA,LoRA,PyTorch">
-          <div class="project-compact-thumbnail">
-            <img src="../texttosqllora.jpg" alt="Text-to-SQL with LoRA" class="project-compact-thumbnail-img" loading="lazy">
-          </div>
-          <div class="project-compact-content">
-            <div class="project-compact-tags">
-              <span class="tag">LLaMA</span>
-              <span class="tag">LoRA</span>
-              <span class="tag">PyTorch</span>
-            </div>
-            <h3 class="project-compact-title">Text-to-SQL with LoRA</h3>
-            <p class="project-compact-desc">Fine-tuned a LLaMA-style model on natural-language/SQL pairs with LoRA, then benchmarked query correctness and execution success against the base model.</p>
-            <a href="https://github.com/pugalenthi0928" target="_blank" rel="noopener" class="project-link">
-              View Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Add more projects here by copying the template above -->
+        </div>
 
       </div>
-    </div>
-  </section>
+    </section>
   </main>
 
   <!-- ========== FOOTER ========== -->
@@ -217,37 +692,40 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="../" class="footer-logo">P.</a>
-          <p class="footer-tagline">Building intelligent systems.</p>
+          <p class="footer-tagline">AI engineer at Perplexity AI &middot; Melbourne</p>
         </div>
-        <nav class="footer-nav">
-          <a href="./">Projects</a>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="./">Work</a>
+          <a href="../blog/">Writing</a>
+          <a href="../atlases/">Atlases</a>
           <a href="../#about">About</a>
           <a href="../#experience">Experience</a>
-          <a href="../blog/">Blog</a>
-          <a href="../ai-atlas/">AI Atlas</a>
-          <a href="../ai-map/">AI Map</a>
+          <a href="../reading-room/">Reading Room</a>
           <a href="../#contact">Contact</a>
+          <a href="../blog/feed.xml">RSS</a>
         </nav>
       </div>
       <div class="footer-bottom">
         <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
-        <span class="footer-credit">Built with <span>vanilla HTML, CSS & JS</span></span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
       </div>
     </div>
   </footer>
 
-  <script src="../script.js?v=10"></script>
+  <script src="../script.js?v=15"></script>
   <script>
+  // Filter bar — works across grouped layout. Hides whole groups when no cards match.
   (function () {
     const bar = document.getElementById('projects-filter-bar');
-    const cards = document.querySelectorAll('.project-compact-card');
+    const cards = Array.from(document.querySelectorAll('.project-compact-card'));
+    const groups = Array.from(document.querySelectorAll('.projects-group'));
     if (!bar || !cards.length) return;
 
-    // Collect unique tags
+    // Collect unique tags across all cards
     const tagSet = new Set();
-    cards.forEach(c => (c.dataset.tags || '').split(',').forEach(t => { if (t) tagSet.add(t); }));
+    cards.forEach(c => (c.dataset.tags || '').split(',').forEach(t => { if (t) tagSet.add(t.trim()); }));
 
-    // Create tag buttons
+    // Create tag buttons in alphabetical order
     [...tagSet].sort().forEach(tag => {
       const btn = document.createElement('button');
       btn.className = 'projects-filter-btn';
@@ -263,10 +741,18 @@
       bar.querySelectorAll('.projects-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
+
       cards.forEach(card => {
         if (filter === 'all') { card.style.display = ''; return; }
-        const tags = (card.dataset.tags || '').split(',');
+        const tags = (card.dataset.tags || '').split(',').map(t => t.trim());
         card.style.display = tags.includes(filter) ? '' : 'none';
+      });
+
+      // Hide groups whose cards are all filtered out
+      groups.forEach(group => {
+        const visible = Array.from(group.querySelectorAll('.project-compact-card'))
+          .some(c => c.style.display !== 'none');
+        group.style.display = visible ? '' : 'none';
       });
     });
   })();
