@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlases | Pugalenthi Magendran</title>
+  <meta name="description" content="Source-backed maps of the AI field. Six interactive atlases, two learning systems, one field manual — foundations, papers, manufacture, application, biology, and every important AI term explained from first principles.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/atlases/">
+  <meta property="og:title" content="Atlases | Pugalenthi Magendran">
+  <meta property="og:description" content="Source-backed maps of the AI field. Six interactive atlases plus a learning system and a living field manual.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pugalenthimagendran.com/atlases/">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Atlases | Pugalenthi Magendran">
+  <meta name="twitter:description" content="Source-backed maps of the AI field.">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <meta name="view-transition" content="same-origin">
+  <link rel="stylesheet" href="../style.css?v=22">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Atlases",
+    "description": "Source-backed maps of the AI field.",
+    "url": "https://pugalenthimagendran.com/atlases/",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" }
+  }
+  </script>
+  <style>
+    .atlases-page { padding: 120px 0 80px; }
+    .atlases-hero { max-width: 740px; margin: 0 auto 64px; padding: 0 24px; text-align: center; }
+    .atlases-hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 18px; }
+    .atlases-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.1; margin-bottom: 18px; }
+    .atlases-hero-sub { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 300; line-height: 1.75; color: var(--text-secondary); }
+    .atlases-section { max-width: 1100px; margin: 0 auto 56px; padding: 0 24px; }
+    .atlases-section-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+    .atlases-section-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--text-tertiary); }
+    .atlases-section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+    .atlases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+    @media (max-width: 540px) {
+      .atlases-hero { margin-bottom: 40px; }
+      .atlases-section { margin-bottom: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <div class="nav-links">
+        <a href="../projects/">Work</a>
+        <a href="../blog/">Writing</a>
+        <a href="./" class="active">Atlases</a>
+        <a href="../#about">About</a>
+        <a href="../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../projects/">Work</a>
+    <a href="../blog/">Writing</a>
+    <a href="./">Atlases</a>
+    <a href="../#about">About</a>
+    <a href="../#contact">Contact</a>
+  </nav>
+
+  <main id="main" class="atlases-page">
+
+    <header class="atlases-hero">
+      <div class="atlases-hero-eyebrow">Atlases &middot; Maps &middot; Reference</div>
+      <h1 class="atlases-hero-title">Source-backed maps of the AI field</h1>
+      <p class="atlases-hero-sub">Eight interactive references &mdash; foundations, papers, manufacture, application, biology, terminology, and two learning systems. Designed to be audited and updated over time.</p>
+    </header>
+
+    <!-- ========== FOUNDATIONS ========== -->
+    <section class="atlases-section">
+      <div class="atlases-section-head">
+        <span class="atlases-section-num">01</span>
+        <h2 class="atlases-section-title">Foundations</h2>
+      </div>
+      <div class="atlases-grid">
+
+        <a href="../ai-map/" class="atlas-card atlas-card--map">
+          <div class="atlas-card-label">Foundations</div>
+          <h3 class="atlas-card-title">AI Map</h3>
+          <p class="atlas-card-desc">Five-layer taxonomy of AI techniques and concepts. The starting point: how the field decomposes into models, data, training, deployment, and applications.</p>
+          <div class="atlas-card-meta">
+            <span>5 layers</span>
+            <span>guided paths</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open atlas</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="../ai-atlas/" class="atlas-card atlas-card--papers">
+          <div class="atlas-card-label">Papers</div>
+          <h3 class="atlas-card-title">AI Atlas</h3>
+          <p class="atlas-card-desc">Interactive knowledge graph of the 50 most important AI / ML papers. Trace dependencies, follow guided learning paths, see how the modern stack accumulated.</p>
+          <div class="atlas-card-meta">
+            <span>50 papers</span>
+            <span>graph view</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open atlas</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ========== MANUFACTURE & APPLICATION ========== -->
+    <section class="atlases-section">
+      <div class="atlases-section-head">
+        <span class="atlases-section-num">02</span>
+        <h2 class="atlases-section-title">Manufacture &amp; application</h2>
+      </div>
+      <div class="atlases-grid">
+
+        <a href="../accelerated-computing-atlas/" class="atlas-card atlas-card--accelerated">
+          <div class="atlas-card-label">Manufacture</div>
+          <h3 class="atlas-card-title">Accelerated Computing Atlas</h3>
+          <p class="atlas-card-desc">How AI is physically built &mdash; power, chips, TSMC, HBM, NVIDIA, cloud and data centres. 148 nodes across 11 layers, 73 companies, 79 source-backed Q&amp;As.</p>
+          <div class="atlas-card-meta">
+            <span>148 nodes</span>
+            <span>79 questions</span>
+            <span>radial map</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open atlas</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="../applied-ai-atlas/" class="atlas-card atlas-card--applied">
+          <div class="atlas-card-label">Application</div>
+          <h3 class="atlas-card-title">Applied AI Atlas</h3>
+          <p class="atlas-card-desc">Where AI enters the world. 52 domains across biology, medicine, finance, law, robotics, and science &mdash; with architectures, papers, bottlenecks, and 126 elite questions.</p>
+          <div class="atlas-card-meta">
+            <span>52 domains</span>
+            <span>126 questions</span>
+            <span>38 architectures</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open atlas</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ========== BIOLOGY & REFERENCE ========== -->
+    <section class="atlases-section">
+      <div class="atlases-section-head">
+        <span class="atlases-section-num">03</span>
+        <h2 class="atlases-section-title">Biology &amp; reference</h2>
+      </div>
+      <div class="atlases-grid">
+
+        <a href="../biological-intelligence-atlas/" class="atlas-card atlas-card--bio">
+          <div class="atlas-card-label">Biology</div>
+          <h3 class="atlas-card-title">Biological Intelligence Atlas</h3>
+          <p class="atlas-card-desc">What biology teaches us about intelligence &mdash; swarms, stigmergy, slime moulds, immune systems, embodiment, basal cognition, evolutionary search. Eight deep dives, eight design patterns.</p>
+          <div class="atlas-card-meta">
+            <span>10 kinds</span>
+            <span>8 deep dives</span>
+            <span>8 patterns</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open atlas</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="../ai-field-manual/" class="atlas-card atlas-card--manual">
+          <div class="atlas-card-label">Reference</div>
+          <h3 class="atlas-card-title">The AI Field Manual</h3>
+          <p class="atlas-card-desc">Every important AI term, explained from first principles. A living reference layer organised by stack: hardware, models, inference, agents, safety, benchmarks, economics, society.</p>
+          <div class="atlas-card-meta">
+            <span>12 layers</span>
+            <span>170+ terms</span>
+            <span>3 difficulty levels</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open manual</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ========== LEARNING SYSTEMS ========== -->
+    <section class="atlases-section">
+      <div class="atlases-section-head">
+        <span class="atlases-section-num">04</span>
+        <h2 class="atlases-section-title">Learning systems</h2>
+      </div>
+      <div class="atlases-grid">
+
+        <a href="../ai-questions/" class="atlas-card atlas-card--questions">
+          <div class="atlas-card-label">Thinking</div>
+          <h3 class="atlas-card-title">AI Questions Canon</h3>
+          <p class="atlas-card-desc">A structured map of the questions that define artificial intelligence &mdash; from beginner foundations to frontier models, safety, jobs, geopolitics, and energy.</p>
+          <div class="atlas-card-meta">
+            <span>25 domains</span>
+            <span>300+ questions</span>
+            <span>flashcards &amp; quiz</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Explore</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="../ai-knowledge-bank/" class="atlas-card atlas-card--bank">
+          <div class="atlas-card-label">Mastery</div>
+          <h3 class="atlas-card-title">AI Knowledge Bank</h3>
+          <p class="atlas-card-desc">Russell &amp; Norvig structured into a living mastery system &mdash; 7 phases, 28 domains, 220+ questions, flashcards, quizzes, plus interview / founder / researcher modes.</p>
+          <div class="atlas-card-meta">
+            <span>28 domains</span>
+            <span>7 phases</span>
+            <span>3 modes</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open the bank</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ========== SPECIALIST ========== -->
+    <section class="atlases-section">
+      <div class="atlases-section-head">
+        <span class="atlases-section-num">05</span>
+        <h2 class="atlases-section-title">Specialist</h2>
+      </div>
+      <div class="atlases-grid">
+
+        <a href="../ai-consulting-money-map/" class="atlas-card atlas-card--money">
+          <div class="atlas-card-label">Money</div>
+          <h3 class="atlas-card-title">AI Consulting Money Map</h3>
+          <p class="atlas-card-desc">What AI consultants actually sell. 56 services, 80 workflow-to-offer maps, 21 buyers, 10 pricing packages, 7 retainer models, 15 risks &mdash; source-backed and brutally practical.</p>
+          <div class="atlas-card-meta">
+            <span>56 services</span>
+            <span>80 workflows</span>
+            <span>21 buyers</span>
+          </div>
+          <div class="atlas-card-cta">
+            <span>Open guide</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../" class="footer-logo">P.</a>
+          <p class="footer-tagline">AI engineer at Perplexity AI &middot; Melbourne</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="../projects/">Work</a>
+          <a href="../blog/">Writing</a>
+          <a href="./">Atlases</a>
+          <a href="../#about">About</a>
+          <a href="../#experience">Experience</a>
+          <a href="../#contact">Contact</a>
+          <a href="../blog/feed.xml">RSS</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js?v=14"></script>
+</body>
+</html>

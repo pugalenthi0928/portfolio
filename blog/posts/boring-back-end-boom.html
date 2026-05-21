@@ -57,7 +57,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../style.css?v=21">
+  <link rel="stylesheet" href="../../style.css?v=22">
   <link rel="stylesheet" href="../blog.css?v=15">
   <style>
     /* Shared essay-format scoped styles (kept inline to match convention) */
@@ -313,6 +313,9 @@
 </head>
 <body>
 
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#main">Skip to content</a>
   <!-- Custom Cursor -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
@@ -329,16 +332,14 @@
   </button>
 
   <!-- ========== NAV ========== -->
-  <nav class="nav" id="nav">
+  <nav class="nav" id="nav" aria-label="Primary">
     <div class="nav-inner">
-      <a href="../../" class="nav-logo">P.</a>
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
       <div class="nav-links">
-        <a href="../../projects/">Projects</a>
+        <a href="../../projects/">Work</a>
+        <a href="../../blog/" class="active">Writing</a>
+        <a href="../../atlases/">Atlases</a>
         <a href="../../#about">About</a>
-        <a href="../../#experience">Experience</a>
-        <a href="../">Blog</a>
-        <a href="../../ai-atlas/">AI Atlas</a>
-        <a href="../../ai-map/">AI Map</a>
         <a href="../../#contact">Contact</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -349,15 +350,13 @@
   </nav>
 
   <!-- Mobile Nav Overlay -->
-  <div class="nav-mobile" id="nav-mobile">
-    <a href="../../projects/">Projects</a>
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../../projects/">Work</a>
+    <a href="../../blog/">Writing</a>
+    <a href="../../atlases/">Atlases</a>
     <a href="../../#about">About</a>
-    <a href="../../#experience">Experience</a>
-    <a href="../">Blog</a>
-    <a href="../../ai-atlas/">AI Atlas</a>
-    <a href="../../ai-map/">AI Map</a>
     <a href="../../#contact">Contact</a>
-  </div>
+  </nav>
 
   <!-- ========== ARTICLE ========== -->
   <article class="article essay-format essay-be">
