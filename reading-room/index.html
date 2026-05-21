@@ -30,8 +30,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css?v=22">
+  <link rel="stylesheet" href="../style.css?v=24">
   <link rel="stylesheet" href="../builder-os.css?v=1">
+  <style>
+    /* Side maps cards — same pattern as shelf-card, distinct accents */
+    .shelf-card--peptides    { --shelf-accent: #7FE4C8; }
+    .shelf-card--science     { --shelf-accent: #6CBFE0; }
+    .side-maps-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 0.5px solid var(--border-light);
+    }
+  </style>
 </head>
 <body>
 
@@ -61,7 +76,7 @@
         <a href="../projects/">Work</a>
         <a href="../blog/">Writing</a>
         <a href="../atlases/">Atlases</a>
-        <a href="../#about" class="active">About</a>
+        <a href="../#about">About</a>
         <a href="../#contact">Contact</a>
       </div>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -85,10 +100,10 @@
     <!-- ========== HERO ========== -->
     <section class="bos-hero">
       <div class="container">
-        <div class="bos-hero-issue"><strong>Reading Room</strong> &nbsp;&middot;&nbsp; Curated library &nbsp;&middot;&nbsp; What compounds</div>
+        <div class="bos-hero-issue"><strong>Reading Room</strong> &nbsp;&middot;&nbsp; Library &nbsp;&middot;&nbsp; Side maps</div>
         <h1 class="bos-hero-title">Reading Room</h1>
-        <p class="bos-hero-subtitle">A curated library of books, papers, lectures, tools, and references that shape how I think about AI, software, intelligence, and company building.</p>
-        <p class="bos-hero-intro">The goal is not to collect everything. The goal is to identify the resources that compound: the ones that change how you think, build, decide, and explain.</p>
+        <p class="bos-hero-subtitle">Books, papers, and side maps I keep returning to. A library that shapes how I think about AI, software, intelligence, and a few unrelated curiosities.</p>
+        <p class="bos-hero-intro">The shelves below cover the AI / software / strategy core. The Side maps are personal research projects on things I&rsquo;ve gone deep on outside of AI &mdash; kept here so they live in one honest place rather than competing with the main work.</p>
       </div>
     </section>
 
@@ -137,6 +152,34 @@
             <h3 class="shelf-title">Writing &amp; Communication</h3>
             <p class="shelf-desc">Resources on clear thinking, explanation, persuasion, storytelling, and public intellectual work.</p>
             <div class="shelf-count">Think &middot; Explain</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SIDE MAPS ========== -->
+    <section class="bos-section">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="bos-eyebrow">Side maps</span>
+          <h2 class="bos-section-title">Personal research projects</h2>
+          <p class="bos-section-sub">Two long-form maps I built outside the AI core, kept here because they are honest about being side projects. Educational only &mdash; not medical, legal, or financial advice.</p>
+        </div>
+
+        <div class="shelf-grid">
+          <a href="../peptides/" class="shelf-card shelf-card--peptides">
+            <div class="shelf-label">Side map 01</div>
+            <h3 class="shelf-title">The Peptide World</h3>
+            <p class="shelf-desc">An educational map of peptide science, medicine, biohacking hype, safety risks, and the databases behind the field. Written with TGA and WADA caution. Personal research project &mdash; not medical advice.</p>
+            <div class="shelf-count">15 categories &middot; ~60-row table</div>
+            <div class="side-maps-note">Open guide &rarr;</div>
+          </a>
+          <a href="../scientific-process/" class="shelf-card shelf-card--science">
+            <div class="shelf-label">Side map 02</div>
+            <h3 class="shelf-title">The Scientific Process</h3>
+            <p class="shelf-desc">A practical guide to science, evidence, uncertainty, bias, and how to form better beliefs in a noisy world. Evidence ladder, bias toolkit, and a belief framework. Personal research project, not AI work.</p>
+            <div class="shelf-count">Evidence ladder &middot; Bias toolkit &middot; Belief framework</div>
+            <div class="side-maps-note">Open guide &rarr;</div>
           </a>
         </div>
       </div>
@@ -291,10 +334,10 @@
     <section class="bos-section">
       <div class="container">
         <div class="bos-cta-band">
-          <h2 class="bos-cta-title">Explore my AI Atlases for structured maps built from these ideas.</h2>
-          <p class="bos-cta-sub">The shelves explain where the ideas come from. The atlases are what I do with them.</p>
-          <a class="bos-cta-btn" href="../#atlases">
-            Open Atlases
+          <h2 class="bos-cta-title">The shelves explain where the ideas come from. The atlases are what I do with them.</h2>
+          <p class="bos-cta-sub">Source-backed maps of the AI field, built from the books and papers on this page.</p>
+          <a class="bos-cta-btn" href="../atlases/">
+            Open atlases
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
         </div>
@@ -309,16 +352,17 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="../" class="footer-logo">P.</a>
-          <p class="footer-tagline">Building intelligent systems.</p>
+          <p class="footer-tagline">AI engineer at Perplexity AI &middot; Melbourne</p>
         </div>
-        <nav class="footer-nav">
-          <a href="../projects/">Projects</a>
-          <a href="../labs/">Labs</a>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="../projects/">Work</a>
+          <a href="../blog/">Writing</a>
+          <a href="../atlases/">Atlases</a>
           <a href="../#about">About</a>
-          <a href="../blog/">Blog</a>
-          <a href="../founder-notes/">Founder Notes</a>
+          <a href="../#experience">Experience</a>
           <a href="./">Reading Room</a>
           <a href="../#contact">Contact</a>
+          <a href="../blog/feed.xml">RSS</a>
         </nav>
       </div>
       <div class="footer-bottom">
@@ -328,6 +372,6 @@
     </div>
   </footer>
 
-  <script src="../script.js?v=13"></script>
+  <script src="../script.js?v=15"></script>
 </body>
 </html>
