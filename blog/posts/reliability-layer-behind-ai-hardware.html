@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Reliability Layer Behind AI Hardware | Pugalenthi Magendran</title>
+  <meta name="description" content="As AI processors, silicon photonics, silicon carbide devices, and advanced packages become more expensive, burn-in and reliability screening become critical infrastructure.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/reliability-layer-behind-ai-hardware.html">
+  <meta property="og:title" content="The Reliability Layer Behind AI Hardware">
+  <meta property="og:description" content="A technical essay on Aehr, wafer-level burn-in, package-level burn-in, silicon photonics, SiC, AI ASICs, CoWoS, and why expensive chips need to fail early.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/reliability-layer-behind-ai-hardware.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Burn-In">
+  <meta property="article:tag" content="Silicon Photonics">
+  <meta property="article:tag" content="Silicon Carbide">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="Aehr">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="AI ASICs">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Wolfspeed">
+  <meta property="article:tag" content="STMicroelectronics">
+  <meta property="article:tag" content="HBM">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Reliability Layer Behind AI Hardware">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="As AI processors, silicon photonics, silicon carbide devices, and advanced packages become more expensive, burn-in and reliability screening become critical infrastructure.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Reliability Layer Behind AI Hardware",
+    "description": "As AI processors, silicon photonics, silicon carbide devices, and advanced packages become more expensive, burn-in and reliability screening become critical infrastructure.",
+    "url": "https://pugalenthimagendran.com/blog/posts/reliability-layer-behind-ai-hardware.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/reliability-layer-behind-ai-hardware.html",
+    "keywords": "Semiconductors, AI Infrastructure, Burn-In, Silicon Photonics, Silicon Carbide, Advanced Packaging, Aehr, CoWoS, AI ASICs, TSMC, ASML, Wolfspeed, STMicroelectronics, HBM"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       Shared essay typography
+       ============================================ */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    /* ============================================
+       RELIABILITY LAYER  ·  scoped under .essay-ae
+       Deep-rust accent, thermal / burn-in feel.
+       ============================================ */
+    .essay-ae {
+      --ae-accent: #A8634A;
+      --ae-accent-soft: rgba(168,99,74,0.10);
+      --ae-accent-faint: rgba(168,99,74,0.04);
+      --ae-bd: rgba(255,255,255,0.08);
+      --ae-bd-soft: rgba(255,255,255,0.05);
+      --ae-cool: #6CBFE0;
+      --ae-cool-soft: rgba(108,191,224,0.10);
+      --ae-purple: #B794F4;
+      --ae-purple-soft: rgba(183,148,244,0.10);
+      --ae-green: #5DCAA5;
+      --ae-green-soft: rgba(93,202,165,0.10);
+      --ae-amber: #E8B468;
+      --ae-amber-soft: rgba(232,180,104,0.10);
+      --ae-red: #E07A8B;
+      --ae-red-soft: rgba(224,122,139,0.10);
+    }
+    .essay-ae .essay-stamp { color: var(--ae-accent); border-color: rgba(168,99,74,0.34); background: rgba(168,99,74,0.06); }
+    .essay-ae .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+
+    /* ---- Thesis callout ---- */
+    .ae-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--ae-accent); background: linear-gradient(180deg, var(--ae-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .ae-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 10px; }
+    .ae-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* ---- TOC ---- */
+    .ae-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .ae-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .ae-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .ae-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .ae-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ae-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .ae-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .ae-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* ---- Source notes box ---- */
+    .ae-source { margin: 1rem 0 0; padding: 18px 22px; border-left: 2px solid var(--ae-amber); background: linear-gradient(90deg, var(--ae-amber-soft) 0%, transparent 80%), var(--bg-alt); border-radius: 4px; }
+    .ae-source-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ae-amber); margin-bottom: 10px; }
+    .ae-source ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .ae-source li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-secondary); padding: 3px 0 3px 14px; position: relative; }
+    .ae-source li::before { content: ''; position: absolute; left: 0; top: 12px; width: 4px; height: 4px; border-radius: 50%; background: var(--ae-amber); }
+
+    /* ---- Burn-In Flow diagram (horizontal) ---- */
+    .ae-flow { padding: 24px 22px 20px; border: 1px solid var(--ae-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .ae-flow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 16px; }
+    .ae-flow-steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; align-items: stretch; }
+    .ae-flow-step { padding: 12px 12px 12px; border-radius: 8px; border: 0.5px solid var(--ae-bd-soft); background: rgba(255,255,255,0.025); position: relative; }
+    .ae-flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 6px solid var(--ae-accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; opacity: 0.5; }
+    .ae-flow-step:last-child::after { display: none; }
+    .ae-flow-step--burn { background: linear-gradient(180deg, var(--ae-accent-soft) 0%, transparent 70%), rgba(255,255,255,0.025); border-color: var(--ae-accent); }
+    .ae-flow-step-num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: var(--ae-accent); }
+    .ae-flow-step-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); margin-top: 4px; letter-spacing: 0.04em; font-weight: 500; }
+    .ae-flow-step-desc { font-family: 'Source Serif 4', serif; font-size: 0.83rem; color: var(--color-text-secondary); line-height: 1.5; margin-top: 6px; }
+    .ae-flow-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--ae-bd-soft); margin: 14px 0 0; line-height: 1.55; }
+
+    /* ---- Failure Cost Ladder ---- */
+    .ae-cost { padding: 24px 22px 22px; border: 1px solid var(--ae-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .ae-cost-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 16px; }
+    .ae-cost-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .ae-cost-row { padding: 12px 14px; border-radius: 7px; border: 0.5px solid var(--ae-bd-soft); background: rgba(255,255,255,0.025); display: grid; grid-template-columns: 130px 1fr 130px; gap: 14px; align-items: baseline; }
+    .ae-cost-row--low  { background: linear-gradient(90deg, var(--ae-green-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(93,202,165,0.34); }
+    .ae-cost-row--mid  { background: linear-gradient(90deg, var(--ae-amber-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(232,180,104,0.34); }
+    .ae-cost-row--high { background: linear-gradient(90deg, var(--ae-accent-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: var(--ae-accent); }
+    .ae-cost-row--cata { background: linear-gradient(90deg, var(--ae-red-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(224,122,139,0.34); }
+    .ae-cost-tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); text-transform: uppercase; font-weight: 500; }
+    .ae-cost-desc { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+    .ae-cost-level { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; text-align: right; }
+    .ae-cost-row--low  .ae-cost-level { color: var(--ae-green); }
+    .ae-cost-row--mid  .ae-cost-level { color: var(--ae-amber); }
+    .ae-cost-row--high .ae-cost-level { color: var(--ae-accent); }
+    .ae-cost-row--cata .ae-cost-level { color: var(--ae-red); }
+    .ae-cost-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--ae-bd-soft); margin: 16px 0 0; line-height: 1.55; }
+
+    /* ---- Where Aehr Fits (6 cards) ---- */
+    .ae-fits { padding: 24px 22px 22px; border: 1px solid var(--ae-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .ae-fits-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 14px; }
+    .ae-fits-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .ae-fits-card { padding: 12px 14px 14px; border: 0.5px solid var(--ae-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); position: relative; overflow: hidden; }
+    .ae-fits-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--ae-accent); opacity: 0.5; }
+    .ae-fits-card--sic::before    { background: var(--ae-amber); }
+    .ae-fits-card--photo::before  { background: var(--ae-cool); }
+    .ae-fits-card--asic::before   { background: var(--ae-accent); }
+    .ae-fits-card--pkg::before    { background: var(--ae-purple); }
+    .ae-fits-card--mem::before    { background: var(--ae-green); }
+    .ae-fits-card--io::before     { background: var(--ae-red); opacity: 0.7; }
+    .ae-fits-card-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); text-transform: uppercase; font-weight: 500; }
+    .ae-fits-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; }
+    .ae-fits-card--sic   .ae-fits-card-tag { color: var(--ae-amber); }
+    .ae-fits-card--photo .ae-fits-card-tag { color: var(--ae-cool); }
+    .ae-fits-card--asic  .ae-fits-card-tag { color: var(--ae-accent); }
+    .ae-fits-card--pkg   .ae-fits-card-tag { color: var(--ae-purple); }
+    .ae-fits-card--mem   .ae-fits-card-tag { color: var(--ae-green); }
+    .ae-fits-card--io    .ae-fits-card-tag { color: var(--ae-red); }
+    .ae-fits-card-desc { font-family: 'Source Serif 4', serif; font-size: 0.86rem; color: var(--color-text-secondary); line-height: 1.55; margin-top: 8px; }
+    .ae-fits-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--ae-bd-soft); margin: 14px 0 0; line-height: 1.55; }
+
+    /* ---- 2021 Thesis vs 2026 Reality ---- */
+    .ae-comp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .ae-comp-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--ae-bd); background: var(--bg-alt); }
+    .ae-comp-col--old { background: linear-gradient(180deg, var(--ae-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.34); }
+    .ae-comp-col--old .ae-comp-eye { color: var(--ae-amber); }
+    .ae-comp-col--new { background: linear-gradient(180deg, var(--ae-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: var(--ae-accent); }
+    .ae-comp-col--new .ae-comp-eye { color: var(--ae-accent); }
+    .ae-comp-eye { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .ae-comp-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; letter-spacing: -0.01em; line-height: 1.25; }
+    .ae-comp-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .ae-comp-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .ae-comp-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+
+    /* ---- Timeline ---- */
+    .ae-time { padding: 24px 22px 20px; border: 1px solid var(--ae-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .ae-time-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 18px; }
+    .ae-time-rail { position: relative; height: 4px; background: rgba(255,255,255,0.04); border-radius: 2px; margin: 12px 6px 36px; }
+    .ae-time-rail::before { content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: linear-gradient(90deg, var(--ae-amber) 0%, var(--ae-accent) 40%, var(--ae-red) 70%, var(--ae-purple) 100%); border-radius: 2px; opacity: 0.55; }
+    .ae-time-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 13px; height: 13px; border-radius: 50%; background: var(--ae-accent); border: 2px solid var(--bg-alt); box-shadow: 0 0 10px rgba(168,99,74,0.45); }
+    .ae-time-step { position: absolute; top: 18px; transform: translateX(-50%); text-align: center; min-width: 80px; }
+    .ae-time-step-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); font-weight: 500; }
+    .ae-time-step-year { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--ae-accent); letter-spacing: 0.1em; margin-top: 2px; }
+    .ae-time-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 60px; }
+    .ae-time-card { padding: 12px 13px 12px; border: 0.5px solid var(--ae-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); }
+    .ae-time-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--ae-accent); text-transform: uppercase; margin-bottom: 6px; }
+    .ae-time-card-name { font-family: 'Playfair Display', serif; font-size: 0.94rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.25; letter-spacing: -0.01em; }
+    .ae-time-card-note { font-family: 'Source Serif 4', serif; font-size: 0.83rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
+
+    /* ---- Wafer vs Package comparison ---- */
+    .ae-wp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .ae-wp-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--ae-bd); background: var(--bg-alt); }
+    .ae-wp-col--wafer { background: linear-gradient(180deg, var(--ae-green-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(93,202,165,0.34); }
+    .ae-wp-col--wafer .ae-wp-eye { color: var(--ae-green); }
+    .ae-wp-col--pkg { background: linear-gradient(180deg, var(--ae-purple-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(183,148,244,0.34); }
+    .ae-wp-col--pkg .ae-wp-eye { color: var(--ae-purple); }
+    .ae-wp-eye { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .ae-wp-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; letter-spacing: -0.01em; line-height: 1.25; }
+    .ae-wp-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .ae-wp-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .ae-wp-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+
+    /* ---- Evidence Ledger ---- */
+    .ae-ev { margin: 1rem 0 0; padding: 22px 22px 18px; border: 1px solid var(--ae-bd); border-radius: 12px; background: var(--bg-alt); overflow-x: auto; }
+    .ae-ev-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-accent); margin-bottom: 14px; }
+    .ae-ev table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; color: var(--color-text-primary); }
+    .ae-ev th, .ae-ev td { padding: 9px 12px; text-align: left; border-bottom: 0.5px solid var(--ae-bd-soft); vertical-align: top; }
+    .ae-ev th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ae-accent); font-weight: 500; border-bottom: 1px solid var(--ae-bd); white-space: nowrap; }
+    .ae-ev td.ae-ev-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); letter-spacing: 0.02em; white-space: nowrap; }
+    .ae-ev td.ae-ev-why { color: var(--color-text-secondary); }
+
+    /* ---- Risks grid ---- */
+    .ae-risk { padding: 22px 22px 18px; border: 1px solid rgba(224,122,139,0.34); border-radius: 12px; background: linear-gradient(180deg, var(--ae-red-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .ae-risk-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ae-red); margin-bottom: 14px; }
+    .ae-risk ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+    .ae-risk li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); padding: 4px 0 4px 14px; position: relative; }
+    .ae-risk li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--ae-red); }
+
+    /* ---- Read next ---- */
+    .ae-rn { margin: 2.5rem 0 0; padding: 18px 22px 20px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .ae-rn-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .ae-rn ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .ae-rn li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.55; }
+    .ae-rn a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .ae-rn a:hover { color: var(--ae-accent); border-bottom-color: var(--ae-accent); }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 1024px) {
+      .ae-flow-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ae-flow-step::after { display: none; }
+      .ae-fits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ae-time-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 880px) {
+      .ae-cost-row { grid-template-columns: 120px 1fr; }
+      .ae-cost-level { grid-column: 1 / -1; text-align: left; padding-top: 2px; }
+      .ae-time-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .ae-toc ol { grid-template-columns: 1fr; }
+      .ae-comp { grid-template-columns: 1fr; }
+      .ae-wp { grid-template-columns: 1fr; }
+      .ae-risk ul { grid-template-columns: 1fr; }
+      .ae-cost-row { grid-template-columns: 1fr; gap: 4px; }
+      .ae-flow-steps { grid-template-columns: 1fr; }
+      .ae-fits-grid { grid-template-columns: 1fr; }
+      .ae-time-rail, .ae-time-step { display: none; }
+      .ae-time-cards { grid-template-columns: 1fr; margin-top: 12px; }
+    }
+    @media (max-width: 480px) {
+      .essay-page { padding: 0 0 1rem; }
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .ae-ev table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Work</a>
+        <a href="../../blog/" class="active">Writing</a>
+        <a href="../../atlases/">Atlases</a>
+        <a href="../../#about">About</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../../projects/">Work</a>
+    <a href="../../blog/">Writing</a>
+    <a href="../../atlases/">Atlases</a>
+    <a href="../../#about">About</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+
+  <article class="article essay-format essay-ae">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 051 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">Semiconductors</span>
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Burn-In</span>
+          <span class="tag">Silicon Photonics</span>
+          <span class="tag">Silicon Carbide</span>
+          <span class="tag">Advanced Packaging</span>
+          <span class="tag">Aehr</span>
+          <span class="tag">CoWoS</span>
+          <span class="tag">AI ASICs</span>
+          <span class="tag">HBM</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">ASML</span>
+          <span class="tag">Wolfspeed</span>
+          <span class="tag">STMicroelectronics</span>
+        </div>
+
+        <h1 class="essay-hed">The Reliability Layer Behind AI <em>Hardware</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">As AI chips, silicon photonics, SiC power devices, and advanced packages become more expensive, the question is no longer just &ldquo;does the chip work?&rdquo; It is &ldquo;will it survive under stress before we package it into something even more expensive?&rdquo;</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">14 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <aside class="ae-thesis" aria-label="Thesis">
+            <div class="ae-thesis-label">The thesis</div>
+            <p class="ae-thesis-text">Aehr is no longer just a silicon-carbide test story. It is a reliability-screening story for the new era of expensive semiconductors. The more expensive the package becomes, the more valuable it is to kill weak dies early.</p>
+          </aside>
+
+          <p class="essay-lede">Semiconductor manufacturing has always had a hidden enemy: early failure. A device can pass basic electrical tests on the wafer prober and still fail after heat, voltage, current, vibration, or time exposes a defect. Burn-in exists to force those weak devices to fail before they reach the customer. In the past, this sounded like a niche test problem most readers could safely ignore. In 2026, it is becoming infrastructure, because chips are becoming too expensive to fail late.</p>
+
+          <nav class="ae-toc" aria-label="Article contents">
+            <div class="ae-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-burnin">What burn-in actually means</a></li>
+              <li><a href="#sec-2021">The 2021 Aehr thesis</a></li>
+              <li><a href="#sec-wafer">Why wafer-level burn-in matters</a></li>
+              <li><a href="#sec-2026">What changed by 2026</a></li>
+              <li><a href="#sec-asic">The AI ASIC signal</a></li>
+              <li><a href="#sec-pkg">Advanced packaging makes reliability more valuable</a></li>
+              <li><a href="#sec-photo">Silicon photonics is the second major pillar</a></li>
+              <li><a href="#sec-sic">Silicon carbide, still important but more complicated</a></li>
+              <li><a href="#sec-wp">Wafer-level vs package-level burn-in</a></li>
+              <li><a href="#sec-macro">ASML macro context</a></li>
+              <li><a href="#sec-timeline">The timeline</a></li>
+              <li><a href="#sec-risks">The risks</a></li>
+              <li><a href="#sec-evidence">Evidence ledger</a></li>
+              <li><a href="#sec-verdict">Final verdict</a></li>
+            </ol>
+          </nav>
+
+          <p class="essay-line">The more expensive the package becomes, the more valuable it is to kill weak dies early.</p>
+
+          <p>This essay is about that shift. Aehr Test Systems is the case study; the real subject is bigger. As AI processors, silicon photonics, silicon carbide devices, and advanced packages grow more expensive and more integrated, reliability screening moves from a back-end testing detail to an economic necessity. The reliability layer becomes a tax on hardware quality. Whoever sits inside that layer gets paid every time someone wants to be sure expensive silicon will survive.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-burnin">1. What burn-in actually means</h2>
+
+          <p>Burn-in is the deliberate stressing of a semiconductor device under controlled conditions. The goal is to expose early-life failures before shipment. Devices are subjected to elevated temperature, voltage, current, or all three for a sustained period, on the theory that the weak ones will fail in the test chamber rather than in the field.</p>
+
+          <p>The reliability framework underneath this is the classic bathtub curve. New devices show a high initial failure rate, which falls quickly into a long stable useful-life period, and then rises again at end-of-life wear-out. Burn-in tries to consume the first part of the curve inside the factory. Pass a device through enough stress and the survivors are statistically more likely to behave themselves in the field.</p>
+
+          <p>Burn-in becomes especially valuable when field failure is expensive or dangerous. A silicon-carbide power device that fails inside an EV traction inverter is not just an RMA. A silicon-photonics laser that drifts after deployment is not a refund line item; it is a network event. An AI accelerator inside a USD 30,000-plus package that goes bad after integration is a multi-thousand-dollar problem that ripples through racks, schedules, and customer commitments. The cost of late failure is the part of this story that has changed in the AI era.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">2. The 2021 Aehr thesis</h2>
+
+          <p>The starting point for this essay is an uploaded 2021 SemiAnalysis piece on Aehr Test Systems. It is a useful historical anchor, not a final verdict, and the specific framing is worth restating in its own words before grading it.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="ae-source" aria-label="Notes from the uploaded 2021 SemiAnalysis article">
+            <div class="ae-source-label">Notes from the uploaded 2021 piece</div>
+            <ul>
+              <li>The article framed Aehr as a wafer-level burn-in company for silicon carbide and silicon photonics.</li>
+              <li>SiC devices are expensive to fabricate and package; field failure in EVs, chargers, and energy infrastructure can be catastrophic.</li>
+              <li>SiC devices can work at normal temperatures yet fail under extreme conditions; failures are linked to fragile crystalline structure, doping defects, and trench failures.</li>
+              <li>The article emphasised infant mortality and the bathtub curve.</li>
+              <li>It argued that module-level burn-in is expensive because one bad die can waste many good dies in a multi-die module.</li>
+              <li>Aehr&rsquo;s key idea was to move burn-in earlier, to wafer level.</li>
+              <li>FOX-XP was described as testing up to 18 wafers at a time, operating in an extreme-temperature environment, dissipating over 18 kW.</li>
+              <li>WaferPak contactors act like specialised wafer carriers and contactors and were described as consumable / recurring-revenue parts.</li>
+              <li>Silicon photonics was identified as the second leg, because lasers need early-life stabilisation before final packaging.</li>
+              <li>400G, 800G, and future co-packaged photonics were named as drivers.</li>
+            </ul>
+          </div>
+
+          <p>The 2021 thesis was not only about test equipment. It was about moving failure discovery earlier in the manufacturing flow. Read carefully, the argument was a unit-economics argument: when the value of a packaged module is high relative to the value of a single die, screening before assembly is worth more than screening after assembly. No SemiAnalysis text, charts, screenshots, or images are reproduced here. The original piece is treated only as cited historical framing.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-wafer">3. Why wafer-level burn-in matters</h2>
+
+          <p>Packaged-part burn-in happens after the die has been encapsulated, lead-bonded, sometimes module-assembled, and otherwise made expensive. Wafer-level burn-in happens before any of that. If a weak die fails before packaging, the manufacturer avoids wasting packaging cost on a die that was never going to be usable. If a weak die survives wafer test only to fail after being placed into a module, an advanced package, or a multi-die assembly, the cost is dramatically higher.</p>
+
+          <p>The structural problem this solves becomes more acute as multi-die packages grow. A single bad die placed into a package with many good dies does not merely reduce yield by one die. It can degrade the whole assembly, depending on architecture and recovery options. In multi-die advanced packages, one bad die can ruin the economics of many good dies.</p>
+
+          <div class="ae-cost" role="img" aria-label="Failure cost ladder showing the rising cost of finding a defective device at later stages.">
+            <div class="ae-cost-label">Failure cost ladder &middot; where it hurts when you find a bad die</div>
+            <ul class="ae-cost-list">
+              <li class="ae-cost-row ae-cost-row--low">
+                <span class="ae-cost-tag">Wafer level</span>
+                <span class="ae-cost-desc">Defective die found before packaging. Lose the die. Keep the wafer-level burn-in test cost. Recoverable.</span>
+                <span class="ae-cost-level">Lowest cost</span>
+              </li>
+              <li class="ae-cost-row ae-cost-row--mid">
+                <span class="ae-cost-tag">After packaging</span>
+                <span class="ae-cost-desc">Defective device found after encapsulation, bonding, and packaging. Packaging cost and time are lost.</span>
+                <span class="ae-cost-level">Higher cost</span>
+              </li>
+              <li class="ae-cost-row ae-cost-row--high">
+                <span class="ae-cost-tag">In AI package</span>
+                <span class="ae-cost-desc">Defective die placed into a CoWoS-class advanced package. Risk of degrading many good dies and HBM stacks around it.</span>
+                <span class="ae-cost-level">Very high</span>
+              </li>
+              <li class="ae-cost-row ae-cost-row--cata">
+                <span class="ae-cost-tag">Field / data centre</span>
+                <span class="ae-cost-desc">Failure inside an EV, charger, optical transceiver, or training cluster. Operational, financial, and sometimes safety consequences.</span>
+                <span class="ae-cost-level">Catastrophic</span>
+              </li>
+            </ul>
+            <p class="ae-cost-foot">The further down this ladder a defect survives, the more expensive it becomes to find.</p>
+          </div>
+
+          <p>The cleanest way to think about this is that wafer-level burn-in is an option on packaging cost. The buyer of the option pays a per-die screening fee at the wafer stage in exchange for the right not to spend packaging cost on dies that would have failed anyway. The fee is fixed and visible. The avoided cost is variable and grows with the value of what would otherwise have been packaged. As the value of the package grows, the option becomes more valuable.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2026">4. What changed by 2026</h2>
+
+          <p>The 2021 thesis was built around SiC and silicon photonics. The 2026 thesis is broader. Aehr&rsquo;s product line and customer base now point at multiple application categories: SiC power devices, silicon photonics for data-centre optical transceivers, AI ASICs at the package level, advanced packages, memory and flash reliability flows, and the general class of high-value chips where late failure has become uneconomical.</p>
+
+          <div class="ae-fits" role="img" aria-label="Where Aehr fits across reliability-screening applications.">
+            <div class="ae-fits-label">Where Aehr fits &middot; reliability screening across categories</div>
+            <div class="ae-fits-grid">
+              <div class="ae-fits-card ae-fits-card--sic">
+                <div class="ae-fits-card-name">SiC power devices</div>
+                <div class="ae-fits-card-tag">Wafer-level burn-in</div>
+                <p class="ae-fits-card-desc">EVs, chargers, solar inverters, energy infrastructure. Harsh operating conditions and high field-failure cost.</p>
+              </div>
+              <div class="ae-fits-card ae-fits-card--photo">
+                <div class="ae-fits-card-name">Silicon photonics</div>
+                <div class="ae-fits-card-tag">Wafer-level burn-in</div>
+                <p class="ae-fits-card-desc">400G / 800G / co-packaged optics. Lasers stabilise during early life; burn-in catches drift and infant failure.</p>
+              </div>
+              <div class="ae-fits-card ae-fits-card--asic">
+                <div class="ae-fits-card-name">AI ASICs</div>
+                <div class="ae-fits-card-tag">Package-level burn-in</div>
+                <p class="ae-fits-card-desc">Custom hyperscaler AI processors. Sonoma platform after the Incal acquisition.</p>
+              </div>
+              <div class="ae-fits-card ae-fits-card--pkg">
+                <div class="ae-fits-card-name">Advanced packages</div>
+                <div class="ae-fits-card-tag">Cross-flow</div>
+                <p class="ae-fits-card-desc">CoWoS-class assemblies with HBM, compute dies, transceiver chiplets. Reliability matters across the whole package.</p>
+              </div>
+              <div class="ae-fits-card ae-fits-card--mem">
+                <div class="ae-fits-card-name">Memory &amp; flash</div>
+                <div class="ae-fits-card-tag">Adjacent</div>
+                <p class="ae-fits-card-desc">Selected reliability flows. Adjacency rather than core franchise today.</p>
+              </div>
+              <div class="ae-fits-card ae-fits-card--io">
+                <div class="ae-fits-card-name">Future optical I/O</div>
+                <div class="ae-fits-card-tag">Long-dated</div>
+                <p class="ae-fits-card-desc">Co-packaged optics, on-package optical interconnects. Production growth lives downstream.</p>
+              </div>
+            </div>
+            <p class="ae-fits-foot">Each tile represents a different reliability problem with different test physics. Treat the list as a portfolio, not a single product line.</p>
+          </div>
+
+          <div class="ae-comp">
+            <div class="ae-comp-col ae-comp-col--old" aria-label="2021 thesis">
+              <div class="ae-comp-eye">2021 thesis</div>
+              <h3 class="ae-comp-title">Wafer-level burn-in for SiC and photonics</h3>
+              <ul>
+                <li>FOX-XP testing up to 18 wafers in parallel.</li>
+                <li>WaferPak contactors as consumable recurring revenue.</li>
+                <li>SiC bathtub curve and module-level cost the central argument.</li>
+                <li>400G and 800G silicon photonics as the second pillar.</li>
+                <li>Mostly a SiC story for EVs and energy infrastructure.</li>
+              </ul>
+            </div>
+            <div class="ae-comp-col ae-comp-col--new" aria-label="2026 reality">
+              <div class="ae-comp-eye">2026 reality</div>
+              <h3 class="ae-comp-title">Reliability screening across expensive silicon</h3>
+              <ul>
+                <li>SiC remains, but messier post EV demand cycle and Wolfspeed restructuring.<sup><a href="#fn8">8</a></sup><sup><a href="#fn9">9</a></sup></li>
+                <li>Silicon photonics customer win for hyperscale data-centre optical interconnect.<sup><a href="#fn4">4</a></sup></li>
+                <li>Record USD 41M package-level burn-in order for custom AI ASICs from a lead hyperscaler.<sup><a href="#fn3">3</a></sup></li>
+                <li>Wafer-level <em>and</em> package-level burn-in (Sonoma) coverage.<sup><a href="#fn3">3</a></sup></li>
+                <li>Interest in wafer-level burn-in for devices going into CoWoS packages with HBM, AI processors, and photonic or electrical transceiver chipsets.<sup><a href="#fn2">2</a></sup></li>
+              </ul>
+            </div>
+          </div>
+
+          <p>The simplest way to summarise the shift is that Aehr is not just a SiC testing company in 2026. It is trying to be a reliability-screening supplier for high-value semiconductors where late failure is unacceptable. Whether it succeeds is a different question, addressed below in the risks section.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-asic">5. The AI ASIC signal</h2>
+
+          <p>The clearest sign that the opportunity has broadened past SiC is the AI ASIC order Aehr disclosed in early 2026. A record USD 41 million follow-on production order from its lead hyperscale customer for package-level burn-in of custom AI processor ASICs.<sup><a href="#fn3">3</a></sup> The order included Sonoma high-power package-level test and burn-in systems, burn-in modules, and sockets. Aehr framed it as the largest order in company history and tied it to high-volume production burn-in for AI ASICs used in data-centre training and inference.</p>
+
+          <p>Read this carefully. It is a company announcement, not an independent measurement, and a single order from one hyperscaler is not the same as a durable market position. The reason it matters is the category. Hyperscaler-class custom AI ASICs are the chips where late failure is most expensive: large packages, long qualification cycles, scarce wafer and packaging slots, and customers whose cost per failed accelerator includes both the silicon and the cluster time it would have served. If burn-in is going to matter anywhere in AI infrastructure, this is one of the places it matters.</p>
+
+          <p>The same Aehr quarterly print added the texture. Q3 FY2026 revenue of USD 10.3 million, bookings of USD 37.2 million, a book-to-bill of more than 3.5x, and backlog of USD 38.7 million expanding to USD 50.9 million when later bookings are included. Aehr&rsquo;s own remarks pointed at interest in wafer-level burn-in for devices going into CoWoS packages with HBM, AI processors, and photonic or electrical transceiver chipsets.<sup><a href="#fn2">2</a></sup> The orders are bigger than the revenue, which is the shape of a company trying to scale into a new category while still small.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-pkg">6. Advanced packaging makes reliability more valuable</h2>
+
+          <p>The macro reason the AI ASIC signal matters is the trajectory of advanced packaging. TSMC&rsquo;s 2026 Technology Symposium framing is the cleanest single-source view. TSMC said it is in production with 5.5-reticle-size CoWoS and planning 14-reticle-size CoWoS by 2028, with an expectation that the 14-reticle version integrates approximately ten large compute dies and twenty HBM stacks. TSMC also said its co-packaged optics substrate solution starts production in 2026, with claimed power and latency improvements versus pluggable board-level optics.<sup><a href="#fn5">5</a></sup></p>
+
+          <p>Treat the numbers as company claims, not independent benchmarks. The direction is what matters. The future AI package is not one big chip. It is a system of compute dies, memory stacks, photonic or electrical interconnects, substrates, power delivery, and thermal constraints. The more components inside the package, the more expensive late failure becomes.</p>
+
+          <p class="essay-pull">A bad die is not just a bad die anymore. It can destroy the value of an entire package.</p>
+
+          <p>In that world, the value of catching infant mortality before packaging is no longer a back-end optimisation. It is a structural input to package economics. Wafer-level burn-in is one of the few tools that operates upstream of the cost stack, not downstream of it.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-photo">7. Silicon photonics is the second major pillar</h2>
+
+          <p>Silicon photonics is the part of the 2021 thesis that aged most cleanly. AI data centres need faster, lower-power, lower-latency interconnects. Copper struggles as bandwidth and distance increase. Optical links become more important as AI clusters scale.</p>
+
+          <p>The 2021 article explained the reliability angle in plain terms: silicon-photonics lasers can shift during early life, and burn-in helps stabilise lasers, identify failures, and calibrate systems before final packaging. It connected the opportunity to 400G, 800G, and future co-packaged photonics.<sup><a href="#fn1">1</a></sup> The 2026 evidence supports the framing. In March 2026, Aehr announced an initial order from a major new silicon photonics customer in the data-centre optical transceiver market, developing transceivers for hyperscale AI and cloud data centres. The order included FOX-XP wafer-level burn-in, FOX-NP systems, WaferPak Auto Aligner, and WaferPak contactors. Aehr said the high-power FOX-XP configuration can test nine wafers in parallel and deliver up to 3,500 watts per wafer.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>The broader market context is consistent. Reuters reported that STMicroelectronics is launching a data-centre photonics chip developed with AWS, and cited a LightCounting market estimate that the relevant market was about USD 7 billion in 2024 with the potential to reach USD 24 billion by 2030.<sup><a href="#fn7">7</a></sup> Treat those numbers as third-party research-firm estimates, not contracts. The shape is the part to keep. AI data centres are making optics strategic. Optical devices need reliability screening. That keeps the photonics pillar of the 2021 thesis alive on its own terms.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sic">8. Silicon carbide, still important but more complicated</h2>
+
+          <p>The 2021 piece anchored on silicon carbide. The 2026 update on SiC is more textured. SiC remains important for EVs, chargers, energy infrastructure, solar inverters, and power electronics. SiC devices face harsh operating environments and serious reliability requirements that map directly onto burn-in. None of that has changed. What changed is the cycle around SiC capacity and end demand.</p>
+
+          <p>EV demand softness made SiC cyclical and messy in ways the 2021 article did not anticipate. Wolfspeed, one of the most visible SiC names, filed for Chapter 11 restructuring in 2025 and aimed to reduce debt materially.<sup><a href="#fn8">8</a></sup> Yole still sees long-term SiC device growth toward 2030 but has described a temporary slowdown from EV-market softness.<sup><a href="#fn9">9</a></sup> Read together, the message is that the SiC growth story is intact in shape but bumpier than the 2021 view assumed.</p>
+
+          <p>This is precisely why the updated Aehr thesis should not rest only on SiC. SiC validates the burn-in problem and gave the company its commercial track record. AI ASICs and silicon photonics broaden the addressable opportunity. The company that depends on one cyclical end-market is more fragile than the company that sells reliability screening into three uncorrelated end-markets at the same time.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-wp">9. Wafer-level vs package-level burn-in</h2>
+
+          <p>The technical distinction the spec asked for is worth making cleanly. Wafer-level burn-in screens devices before packaging. Package-level burn-in screens fully packaged devices or modules. They are not substitutes. They solve different problems at different cost levels in the manufacturing flow.</p>
+
+          <div class="ae-wp">
+            <div class="ae-wp-col ae-wp-col--wafer" aria-label="Wafer-level burn-in">
+              <div class="ae-wp-eye">Wafer-level burn-in</div>
+              <h3 class="ae-wp-title">Screen before packaging</h3>
+              <ul>
+                <li>Stress applied to dies still on the wafer or in a wafer-carrier.</li>
+                <li>Saves packaging cost when weak dies can be eliminated early.</li>
+                <li>Especially valuable for multi-die packages and high-value SiC, photonics, and AI dies.</li>
+                <li>Aehr&rsquo;s FOX-XP, FOX-NP, WaferPak contactors, and WaferPak Auto Aligner sit here.<sup><a href="#fn1">1</a></sup><sup><a href="#fn4">4</a></sup></li>
+              </ul>
+            </div>
+            <div class="ae-wp-col ae-wp-col--pkg" aria-label="Package-level burn-in">
+              <div class="ae-wp-eye">Package-level burn-in</div>
+              <h3 class="ae-wp-title">Screen after packaging</h3>
+              <ul>
+                <li>Stress applied to fully packaged devices or modules.</li>
+                <li>Necessary when the final package has different stresses or qualification requirements.</li>
+                <li>Important for AI ASICs where customers require packaged-part qualification.</li>
+                <li>Aehr&rsquo;s Sonoma platform (from the Incal Technology acquisition) sits here.<sup><a href="#fn3">3</a></sup></li>
+              </ul>
+            </div>
+          </div>
+
+          <p>Aehr&rsquo;s 2026 position covers both. FOX systems for wafer-level. Sonoma for high-power package-level. WaferPak as the consumable contactor layer underneath the wafer flow. The integration of Incal Technology, which brought the Sonoma capability, is what makes the AI ASIC story credible at all. Without package-level burn-in, the company would not have been the credible counter-party for the USD 41 million order.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-macro">10. ASML macro context</h2>
+
+          <p>The macro reason any of this scales sits with ASML. ASML&rsquo;s 2026 framing has three pieces that matter here. AI is driving stronger semiconductor capacity plans. AI demand for compute density and high-bandwidth memory is growing faster than the overall semiconductor market. AI pushes the industry toward more capacity, more integration, more memory, and more advanced systems.<sup><a href="#fn6">6</a></sup></p>
+
+          <p>As hardware becomes more complex and more expensive, the unit value of reliability rises with it. ASML and TSMC describe an industry that is building bigger, more integrated, more expensive systems. Aehr sits in the less glamorous reliability layer that tries to prevent expensive failures inside those systems. The macro shift does not guarantee Aehr wins. It does make the category Aehr operates in matter more than it did five years ago.</p>
+
+          <p class="essay-line">In cheap chips, burn-in is a cost. In expensive AI hardware, burn-in becomes insurance.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-timeline">11. The timeline</h2>
+
+          <p>It is useful to mark the inflection points.</p>
+
+          <div class="ae-time" role="img" aria-label="Aehr and reliability-screening timeline from 2021 to 2028.">
+            <div class="ae-time-label">Aehr timeline &middot; 2021 SiC thesis to 2028 advanced packages</div>
+            <div class="ae-time-rail">
+              <span class="ae-time-dot" style="left: 5%;"></span>
+              <span class="ae-time-step" style="left: 5%;"><div class="ae-time-step-name">SemiAnalysis</div><div class="ae-time-step-year">2021</div></span>
+              <span class="ae-time-dot" style="left: 28%;"></span>
+              <span class="ae-time-step" style="left: 28%;"><div class="ae-time-step-name">SiC ramps</div><div class="ae-time-step-year">2023-24</div></span>
+              <span class="ae-time-dot" style="left: 51%;"></span>
+              <span class="ae-time-step" style="left: 51%;"><div class="ae-time-step-name">Wolfspeed</div><div class="ae-time-step-year">2025</div></span>
+              <span class="ae-time-dot" style="left: 74%;"></span>
+              <span class="ae-time-step" style="left: 74%;"><div class="ae-time-step-name">AI &amp; photonics</div><div class="ae-time-step-year">2026</div></span>
+              <span class="ae-time-dot" style="left: 95%;"></span>
+              <span class="ae-time-step" style="left: 95%;"><div class="ae-time-step-name">CoWoS scale-up</div><div class="ae-time-step-year">2028</div></span>
+            </div>
+            <div class="ae-time-cards">
+              <div class="ae-time-card">
+                <div class="ae-time-card-tag">2021</div>
+                <h4 class="ae-time-card-name">SemiAnalysis warning</h4>
+                <p class="ae-time-card-note">2021 piece highlights Aehr&rsquo;s wafer-level burn-in thesis for SiC and silicon photonics.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="ae-time-card">
+                <div class="ae-time-card-tag">2023-24</div>
+                <h4 class="ae-time-card-name">SiC ramp meets EV softness</h4>
+                <p class="ae-time-card-note">SiC capacity scales while EV demand becomes more uneven. Cycle becomes messier than the 2021 view.<sup><a href="#fn9">9</a></sup></p>
+              </div>
+              <div class="ae-time-card">
+                <div class="ae-time-card-tag">2025</div>
+                <h4 class="ae-time-card-name">Wolfspeed restructuring</h4>
+                <p class="ae-time-card-note">Wolfspeed files for Chapter 11 to cut debt. Reminder that SiC end-market cycles are real.<sup><a href="#fn8">8</a></sup></p>
+              </div>
+              <div class="ae-time-card">
+                <div class="ae-time-card-tag">2026</div>
+                <h4 class="ae-time-card-name">AI ASICs + photonics</h4>
+                <p class="ae-time-card-note">Aehr wins a major silicon-photonics customer and a record USD 41M package-level burn-in order from its lead hyperscale AI customer.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup></p>
+              </div>
+              <div class="ae-time-card">
+                <div class="ae-time-card-tag">2028</div>
+                <h4 class="ae-time-card-name">14-reticle CoWoS</h4>
+                <p class="ae-time-card-note">TSMC plans 14-reticle CoWoS with ~10 large compute dies and 20 HBM stacks. Late failure cost rises further.<sup><a href="#fn5">5</a></sup></p>
+              </div>
+            </div>
+          </div>
+
+          <p class="essay-pull">In cheap chips, burn-in is a cost. In expensive AI hardware, burn-in becomes insurance.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">12. The risks</h2>
+
+          <p>None of the above implies Aehr is destined to dominate reliability screening, or that the reliability layer is automatically a free lunch as packages get more expensive. A serious thesis carries a serious risk list.</p>
+
+          <div class="ae-risk" aria-label="Risks">
+            <div class="ae-risk-label">Risks the thesis has to live with</div>
+            <ul>
+              <li>Aehr is still a small company; revenue is lumpy and bookings do not always convert smoothly.</li>
+              <li>Customer concentration is high. The FY2025 10-K describes the five largest customers accounting for 77% of revenue, with two customers at 39% and 15%.<sup><a href="#fn10">10</a></sup></li>
+              <li>A single large delayed order can move quarterly revenue materially.</li>
+              <li>SiC demand has been affected by EV softness; the cycle is real.<sup><a href="#fn9">9</a></sup></li>
+              <li>Strong bookings do not automatically convert into smooth revenue or margin recognition.</li>
+              <li>Competing test and burn-in approaches may emerge from other vendors.</li>
+              <li>Customers may choose internal tools, alternative vendors, or different qualification flows.</li>
+              <li>AI ASIC demand can be lumpy because hyperscaler programs are large and concentrated.</li>
+              <li>The technology has to prove itself across more customers, not just one or two.</li>
+              <li>Macro semiconductor cycles can pull capex down for any test-equipment supplier.</li>
+            </ul>
+          </div>
+
+          <p>The point is not that Aehr is guaranteed to dominate. The point is that the reliability problem is becoming more valuable as semiconductor packages become more expensive, and Aehr is one of the few public companies sitting inside that change.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-evidence">13. Evidence ledger</h2>
+
+          <p>Because this essay sits between an uploaded 2021 thesis and a 2026 reading, the load-bearing evidence is gathered here, paired with source and a one-line note on why it matters.</p>
+
+          <div class="ae-ev" role="region" aria-label="Evidence ledger">
+            <div class="ae-ev-label">Evidence ledger &middot; claim &middot; source &middot; why it matters</div>
+            <table>
+              <thead>
+                <tr><th>Claim</th><th>Source</th><th>Why it matters</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Aehr framed as wafer-level burn-in for SiC and silicon photonics. FOX-XP up to 18 wafers, &gt;18 kW dissipation. WaferPak as recurring consumable. Module-level burn-in described as expensive.</td><td class="ae-ev-src">SemiAnalysis (2021, uploaded)<sup><a href="#fn1">1</a></sup></td><td class="ae-ev-why">Historical anchor restated in this essay&rsquo;s own words. Not gospel; not reproduced.</td></tr>
+                <tr><td>Q3 FY2026 revenue USD 10.3M; bookings USD 37.2M; book-to-bill &gt;3.5x; backlog USD 38.7M expanding to USD 50.9M with later bookings; interest in wafer-level burn-in for CoWoS packages with HBM, AI processors, photonic and electrical transceiver chipsets.</td><td class="ae-ev-src">Aehr IR (Apr 2026)<sup><a href="#fn2">2</a></sup></td><td class="ae-ev-why">Order pipeline is bigger than current revenue. The shape of a company scaling into a new category.</td></tr>
+                <tr><td>Record USD 41M follow-on production order from lead hyperscale customer for package-level burn-in of custom AI processor ASICs. Sonoma high-power package-level test and burn-in systems plus burn-in modules and sockets. Largest order in company history.</td><td class="ae-ev-src">Aehr IR (2026)<sup><a href="#fn3">3</a></sup></td><td class="ae-ev-why">Clearest sign that the opportunity moved beyond SiC into hyperscale AI hardware.</td></tr>
+                <tr><td>Major new silicon photonics customer in data-centre optical transceiver market. FOX-XP wafer-level burn-in, FOX-NP systems, WaferPak Auto Aligner, WaferPak contactors. High-power FOX-XP can test nine wafers in parallel up to ~3,500 watts per wafer.</td><td class="ae-ev-src">Aehr IR (Mar 2026)<sup><a href="#fn4">4</a></sup></td><td class="ae-ev-why">Keeps the 2021 photonics pillar alive in a real hyperscale data-centre context.</td></tr>
+                <tr><td>TSMC expanding CoWoS; 5.5-reticle today; 14-reticle planned by 2028 with ~10 compute dies and 20 HBM stacks; co-packaged optics substrate production starts 2026 with claimed power and latency advantages over pluggable board optics.</td><td class="ae-ev-src">TSMC 2026 Symposium<sup><a href="#fn5">5</a></sup></td><td class="ae-ev-why">Confirms the package is becoming bigger and more memory-hungry; raises the value of avoiding late failure.</td></tr>
+                <tr><td>AI drives stronger capacity plans; AI demand for compute density and high-bandwidth memory growing faster than overall semiconductor sales; AI pushes the industry to more integration and advanced systems.</td><td class="ae-ev-src">ASML Q4 FY2025<sup><a href="#fn6">6</a></sup></td><td class="ae-ev-why">Macro reason expensive hardware keeps getting more expensive, and reliability screening therefore matters more.</td></tr>
+                <tr><td>STMicroelectronics launching data-centre photonics chip developed with AWS; relevant market estimate of ~USD 7B in 2024 with potential to reach ~USD 24B by 2030 (LightCounting via Reuters).</td><td class="ae-ev-src">Reuters / LightCounting<sup><a href="#fn7">7</a></sup></td><td class="ae-ev-why">Independent confirmation that data-centre photonics is becoming a real strategic category.</td></tr>
+                <tr><td>Wolfspeed files for Chapter 11 in 2025 to cut debt; SiC capacity and EV demand cycle become messy.</td><td class="ae-ev-src">Reuters (2025)<sup><a href="#fn8">8</a></sup></td><td class="ae-ev-why">Evidence that the SiC pillar of the 2021 thesis is real but cyclical. The thesis should not rest only on SiC.</td></tr>
+                <tr><td>Yole: long-term SiC device growth toward 2030 intact; near-term slowdown from EV-market softness.</td><td class="ae-ev-src">Yole (2025)<sup><a href="#fn9">9</a></sup></td><td class="ae-ev-why">Balances Wolfspeed by reminding readers SiC end-demand is delayed, not destroyed.</td></tr>
+                <tr><td>Five largest Aehr customers accounted for 77% of FY2025 revenue; two customers at 39% and 15%.</td><td class="ae-ev-src">Aehr 10-K (FY2025)<sup><a href="#fn10">10</a></sup></td><td class="ae-ev-why">Material customer-concentration risk. The thesis has to live with this.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-verdict">14. Final verdict</h2>
+
+          <p>The 2021 thesis was right that wafer-level burn-in mattered for silicon carbide and silicon photonics. It correctly identified module-level economics as the reason early screening would become more valuable. What it could not yet say, because the world had not caught up to AI hardware yet, was that the same logic would extend to hyperscale AI ASICs and to a future of multi-die packages with ten compute dies and twenty HBM stacks per substrate.</p>
+
+          <p>The 2026 thesis is bigger and more honest. As AI hardware becomes more expensive, more optical, more power-dense, and more integrated, reliability screening moves from a back-end testing detail to an economic necessity. Aehr is a small company sitting inside that larger shift. The reliability layer is real. Whether Aehr is the company that consolidates it depends on execution across customer breadth, technology coverage, and competitive response. The category is the part that has been validated. The individual winner is still being decided.</p>
+
+          <p class="essay-pull">In cheap chips, burn-in is a cost. In expensive AI hardware, burn-in becomes insurance.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sources">Sources &amp; footnotes</h2>
+
+          <p>This essay treats the uploaded 2021 SemiAnalysis article as a cited historical anchor. Specific 2026 claims come from Aehr investor materials and the FY2025 10-K, TSMC 2026 Technology Symposium, ASML investor material, Reuters reporting on STMicroelectronics / AWS photonics and on Wolfspeed, and Yole Group market commentary. Performance, order, and market figures are company or research-firm claims. No third-party charts, screenshots, or logos are reproduced. This is not investment advice.</p>
+
+          <div class="essay-closer">
+            <p>Original 2026 analysis. The uploaded 2021 SemiAnalysis piece on Aehr is used only as a cited historical anchor, framed in this essay&rsquo;s own words. Aehr revenue, bookings, backlog, and order figures are company-released numbers, not independent measurement. TSMC reticle-size and HBM integration claims are company claims. ASML macro framing is company investor material. Reuters and LightCounting numbers are research-firm and reporting estimates, not contracts. Yole framing is market-research commentary. No SemiAnalysis text, charts, screenshots, or images are reproduced. No specific Aehr, Wolfspeed, STMicroelectronics, AWS, TSMC, ASML, or other security is being recommended.</p>
+          </div>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Uploaded SemiAnalysis PDF, Dylan Patel (SemiAnalysis), 2021. <em>Aehr Multi-Wafer Level Burn-in Test for Silicon Carbide and Silicon Photonics Applications</em>. Used here only as a cited historical anchor, framed in this essay&rsquo;s own words. The article: framed Aehr as a wafer-level burn-in company for SiC and silicon photonics; described SiC reliability requirements and module-level burn-in cost; described FOX-XP as testing up to 18 wafers in parallel and dissipating over 18 kW; described WaferPak contactors as consumable / recurring-revenue parts; identified silicon photonics laser stabilisation as the second pillar; and named 400G, 800G, and co-packaged photonics as future drivers. No SemiAnalysis text, charts, screenshots, or images are reproduced.</p>
+            <p id="fn2"><sup>2</sup> Aehr Test Systems. <a href="https://www.aehr.com/2026/04/aehr-test-systems-reports-over-37-million-in-quarterly-bookings-driven-by-strong-ai-and-data-center-infrastructure-demand/" target="_blank" rel="noopener">Q3 FY2026 results</a>. Used for: Q3 FY2026 revenue of USD 10.3M; bookings of USD 37.2M; book-to-bill greater than 3.5x; backlog of USD 38.7M expanding to USD 50.9M when later bookings are included; Aehr framing of interest in wafer-level burn-in for devices going into CoWoS packages with HBM, AI processors, and photonic or electrical transceiver chipsets.</p>
+            <p id="fn3"><sup>3</sup> Aehr Test Systems. <a href="https://www.aehr.com/2026/04/aehr-receives-record-41-million-production-order-from-lead-hyperscale-ai-customer-second-half-bookings-exceed-92-million/" target="_blank" rel="noopener">Record USD 41M production order from lead hyperscale AI customer</a>. Used for: record USD 41 million follow-on production order from lead hyperscale customer; package-level burn-in for custom AI processor ASICs; Sonoma high-power package-level test and burn-in systems, burn-in modules, and sockets; framing as the largest order in company history; support for high-volume production burn-in of AI ASICs used in data-centre training and inference.</p>
+            <p id="fn4"><sup>4</sup> Aehr Test Systems. <a href="https://www.aehr.com/2026/03/aehr-wins-major-new-silicon-photonics-customer-with-high-power-fox-xp-wafer-level-burn-in-system-for-hyperscale-data-center-optical-interconnect-market/" target="_blank" rel="noopener">Major new silicon photonics customer for hyperscale data-centre optical interconnect</a>. Used for: major new silicon photonics customer in the data-centre optical transceiver market; customer developing silicon-photonics-based transceivers for hyperscale AI and cloud data centres; order including FOX-XP wafer-level burn-in, FOX-NP systems, WaferPak Auto Aligner, and WaferPak contactors; high-power FOX-XP configuration framed as capable of testing nine wafers in parallel and delivering up to ~3,500 watts per wafer.</p>
+            <p id="fn5"><sup>5</sup> TSMC. <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 Technology Symposium</a>. Used for: TSMC framing of CoWoS expansion driven by AI demand; production of 5.5-reticle-size CoWoS today; plan for 14-reticle-size CoWoS by 2028 expected to integrate approximately 10 large compute dies and 20 HBM stacks; co-packaged optics substrate solution starting production in 2026 with claimed power-efficiency and latency improvements versus pluggable board-level optics. All numbers are TSMC company claims rather than independent measurement.</p>
+            <p id="fn6"><sup>6</sup> ASML. <a href="https://www.asml.com/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener">Q4 FY2025 financial results</a> and <a href="https://ourbrand.asml.com/m/e333f07a490e187a/original/2026_01_28-Presentation-ASML-Press-Conference-Q4FY2025.pdf" target="_blank" rel="noopener">Q4 FY2025 press conference presentation</a>. Used for: ASML framing that AI is driving stronger semiconductor capacity plans; AI demand for compute density and high-bandwidth memory is growing faster than overall semiconductor sales; AI pushes the industry toward more capacity, more integration, and more advanced systems.</p>
+            <p id="fn7"><sup>7</sup> Reuters (February 2025). <a href="https://www.reuters.com/technology/artificial-intelligence/stmicroelectronics-launch-data-centre-photonics-chip-developed-with-amazon-2025-02-20/" target="_blank" rel="noopener">STMicroelectronics to launch data-centre photonics chip developed with Amazon</a>. Used for: STMicroelectronics launching a data-centre photonics chip developed with AWS; Reuters citing a LightCounting market estimate of approximately USD 7 billion in 2024 with the potential to reach approximately USD 24 billion by 2030. Treated as Reuters reporting and a third-party research estimate.</p>
+            <p id="fn8"><sup>8</sup> Reuters (June 2025). <a href="https://www.reuters.com/legal/litigation/wolfspeed-files-bankruptcy-protection-cut-worsening-debt-shares-jump-2025-06-30/" target="_blank" rel="noopener">Wolfspeed files for bankruptcy protection to cut worsening debt</a>. Used for: Wolfspeed filing for Chapter 11 in 2025 with the aim of reducing debt materially. Treated as evidence that SiC demand and capacity cycles became messy, not as evidence that SiC is dead.</p>
+            <p id="fn9"><sup>9</sup> Yole Group. <a href="https://www.yolegroup.com/press-release/from-ev-to-ar-vr-sics-expanding-reach-powers-new-tech-waves/" target="_blank" rel="noopener">From EV to AR / VR: SiC&rsquo;s expanding reach powers new tech waves</a>. Used for: Yole framing of a temporary SiC slowdown driven by EV-market softness, alongside a long-term SiC device-market growth view through 2030. Treated as research-firm commentary.</p>
+            <p id="fn10"><sup>10</sup> Aehr Test Systems, Form 10-K for fiscal 2025. <a href="https://www.sec.gov/Archives/edgar/data/1040470/000165495425008553/aehr_10k.htm" target="_blank" rel="noopener">SEC filing</a>. Used for: customer concentration risk; the FY2025 10-K&rsquo;s description that the five largest customers accounted for 77% of revenue, with two customers at 39% and 15%. Treated as company-reported risk factor.</p>
+          </div>
+
+          <div class="ae-rn">
+            <div class="ae-rn-label">Read next on this site</div>
+            <ul>
+              <li><a href="./back-end-bottleneck.html">The Back-End Bottleneck</a> &nbsp;&middot;&nbsp; advanced packaging as the constraint behind every AI chip story.</li>
+              <li><a href="./boring-back-end-of-ai.html">The Boring Back-End of AI</a> &nbsp;&middot;&nbsp; Kulicke &amp; Soffa and the broader semiconductor back-end.</li>
+              <li><a href="./package-became-the-computer.html">The Package Became the Computer</a> &nbsp;&middot;&nbsp; package-scale integration as the new scaling surface.</li>
+              <li><a href="./custom-ai-hardware-trap.html">The Custom AI Hardware Trap</a> &nbsp;&middot;&nbsp; why memory, software, and packaging matter more than raw silicon.</li>
+              <li><a href="./power-efficiency-layer.html">The Power Efficiency Layer</a> &nbsp;&middot;&nbsp; power conversion and SiC adjacencies for AI factories.</li>
+              <li><a href="./foundry-trust-test.html">The Foundry Trust Test</a> &nbsp;&middot;&nbsp; leading-edge nodes and advanced packaging at Intel Foundry.</li>
+              <li><a href="../../accelerated-computing-atlas/">Accelerated Computing Atlas</a> &nbsp;&middot;&nbsp; interactive atlas of the Nvidia accelerated-computing ecosystem.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="article-nav" aria-label="Article navigation"></nav>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
