@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Memory Oligopoly Became AI's Toll Booth | Pugalenthi Magendran</title>
+  <meta name="description" content="In 2021, Micron said it would not add DRAM or NAND wafers. In 2026, AI turned memory supply discipline into a bottleneck across HBM, server DRAM, NAND, and enterprise SSDs.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/memory-oligopoly-ai-toll-booth.html">
+  <meta property="og:title" content="The Memory Oligopoly Became AI's Toll Booth">
+  <meta property="og:description" content="A technical essay on DRAM, NAND, HBM, Micron, ASML, TSMC CoWoS, and why AI changed the power structure of the memory market.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/memory-oligopoly-ai-toll-booth.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Memory">
+  <meta property="article:tag" content="DRAM">
+  <meta property="article:tag" content="NAND">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="Micron">
+  <meta property="article:tag" content="Samsung">
+  <meta property="article:tag" content="SK hynix">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="TrendForce">
+  <meta property="article:tag" content="Enterprise SSD">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Memory Oligopoly Became AI's Toll Booth">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="In 2021, Micron said it would not add DRAM or NAND wafers. In 2026, AI turned memory supply discipline into a bottleneck across HBM, server DRAM, NAND, and enterprise SSDs.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Memory Oligopoly Became AI's Toll Booth",
+    "description": "In 2021, Micron said it would not add DRAM or NAND wafers. In 2026, AI turned memory supply discipline into a bottleneck across HBM, server DRAM, NAND, and enterprise SSDs.",
+    "url": "https://pugalenthimagendran.com/blog/posts/memory-oligopoly-ai-toll-booth.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/memory-oligopoly-ai-toll-booth.html",
+    "keywords": "Semiconductors, AI Infrastructure, Memory, DRAM, NAND, HBM, Micron, Samsung, SK hynix, ASML, TSMC, CoWoS, TrendForce, Enterprise SSD"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       Shared essay typography (matches recent posts)
+       ============================================ */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    /* ============================================
+       MEMORY OLIGOPOLY  ·  scoped under .essay-mo
+       Muted purple accent, oligopoly / strategic feel.
+       ============================================ */
+    .essay-mo {
+      --mo-accent: #9C7BB5;
+      --mo-accent-soft: rgba(156,123,181,0.10);
+      --mo-accent-faint: rgba(156,123,181,0.04);
+      --mo-bd: rgba(255,255,255,0.08);
+      --mo-bd-soft: rgba(255,255,255,0.05);
+      --mo-cool: #6CBFE0;
+      --mo-cool-soft: rgba(108,191,224,0.10);
+      --mo-purple: #B794F4;
+      --mo-purple-soft: rgba(183,148,244,0.10);
+      --mo-green: #5DCAA5;
+      --mo-green-soft: rgba(93,202,165,0.10);
+      --mo-amber: #E8B468;
+      --mo-amber-soft: rgba(232,180,104,0.10);
+      --mo-red: #E07A8B;
+      --mo-red-soft: rgba(224,122,139,0.10);
+      --mo-copper: #C7A55A;
+    }
+    .essay-mo .essay-stamp { color: var(--mo-accent); border-color: rgba(156,123,181,0.34); background: rgba(156,123,181,0.06); }
+    .essay-mo .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+
+    /* ---- Thesis callout ---- */
+    .mo-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--mo-accent); background: linear-gradient(180deg, var(--mo-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .mo-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 10px; }
+    .mo-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* ---- TOC ---- */
+    .mo-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .mo-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .mo-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .mo-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .mo-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mo-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .mo-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .mo-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* ---- Source notes box ---- */
+    .mo-source { margin: 1rem 0 0; padding: 18px 22px; border-left: 2px solid var(--mo-amber); background: linear-gradient(90deg, var(--mo-amber-soft) 0%, transparent 80%), var(--bg-alt); border-radius: 4px; }
+    .mo-source-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mo-amber); margin-bottom: 10px; }
+    .mo-source ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .mo-source li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-secondary); padding: 3px 0 3px 14px; position: relative; }
+    .mo-source li::before { content: ''; position: absolute; left: 0; top: 12px; width: 4px; height: 4px; border-radius: 50%; background: var(--mo-amber); }
+
+    /* ---- Memory Hierarchy ---- */
+    .mo-hier { padding: 24px 22px 20px; border: 1px solid var(--mo-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .mo-hier-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 16px; }
+    .mo-hier-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .mo-hier-row { padding: 11px 14px; border-radius: 7px; border: 0.5px solid var(--mo-bd-soft); background: rgba(255,255,255,0.025); display: grid; grid-template-columns: 130px 1fr 130px; gap: 14px; align-items: baseline; }
+    .mo-hier-row--hbm   { background: linear-gradient(90deg, var(--mo-red-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(224,122,139,0.32); }
+    .mo-hier-row--srv   { background: linear-gradient(90deg, var(--mo-accent-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(156,123,181,0.34); }
+    .mo-hier-row--lp    { background: linear-gradient(90deg, var(--mo-purple-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(183,148,244,0.32); }
+    .mo-hier-row--ssd   { background: linear-gradient(90deg, var(--mo-cool-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(108,191,224,0.32); }
+    .mo-hier-row--nand  { background: linear-gradient(90deg, var(--mo-green-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(93,202,165,0.32); }
+    .mo-hier-row--obj   { background: linear-gradient(90deg, var(--mo-amber-soft) 0%, transparent 60%), rgba(255,255,255,0.025); border-color: rgba(232,180,104,0.32); }
+    .mo-hier-tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); text-transform: uppercase; font-weight: 500; }
+    .mo-hier-desc { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.5; color: var(--color-text-secondary); }
+    .mo-hier-role { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--color-text-tertiary); text-transform: uppercase; text-align: right; }
+    .mo-hier-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--mo-bd-soft); margin: 16px 0 0; line-height: 1.55; }
+
+    /* ---- Old Cycle vs AI Cycle comparison ---- */
+    .mo-cycle { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .mo-cycle-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--mo-bd); background: var(--bg-alt); }
+    .mo-cycle-col--old { background: linear-gradient(180deg, var(--mo-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.34); }
+    .mo-cycle-col--old .mo-cycle-eye { color: var(--mo-amber); }
+    .mo-cycle-col--new { background: linear-gradient(180deg, var(--mo-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(156,123,181,0.40); }
+    .mo-cycle-col--new .mo-cycle-eye { color: var(--mo-accent); }
+    .mo-cycle-eye { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .mo-cycle-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; letter-spacing: -0.01em; line-height: 1.25; }
+    .mo-cycle-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .mo-cycle-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .mo-cycle-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+
+    /* ---- Timeline ---- */
+    .mo-time { padding: 24px 22px 20px; border: 1px solid var(--mo-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .mo-time-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 18px; }
+    .mo-time-rail { position: relative; height: 4px; background: rgba(255,255,255,0.04); border-radius: 2px; margin: 12px 6px 36px; }
+    .mo-time-rail::before { content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: linear-gradient(90deg, var(--mo-amber) 0%, var(--mo-red) 30%, var(--mo-accent) 65%, var(--mo-green) 100%); border-radius: 2px; opacity: 0.55; }
+    .mo-time-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 13px; height: 13px; border-radius: 50%; background: var(--mo-accent); border: 2px solid var(--bg-alt); box-shadow: 0 0 10px rgba(156,123,181,0.45); }
+    .mo-time-step { position: absolute; top: 18px; transform: translateX(-50%); text-align: center; min-width: 90px; }
+    .mo-time-step-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); font-weight: 500; }
+    .mo-time-step-year { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--mo-accent); letter-spacing: 0.1em; margin-top: 2px; }
+    .mo-time-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 60px; }
+    .mo-time-card { padding: 12px 13px 12px; border: 0.5px solid var(--mo-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); }
+    .mo-time-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--mo-accent); text-transform: uppercase; margin-bottom: 6px; }
+    .mo-time-card-name { font-family: 'Playfair Display', serif; font-size: 0.94rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.25; letter-spacing: -0.01em; }
+    .mo-time-card-note { font-family: 'Source Serif 4', serif; font-size: 0.83rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
+
+    /* ---- Allocation Map ---- */
+    .mo-alloc { padding: 24px 22px 22px; border: 1px solid var(--mo-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .mo-alloc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 18px; }
+    .mo-alloc-flow { display: grid; grid-template-columns: 1fr 1.4fr 1.6fr; gap: 14px; align-items: stretch; }
+    .mo-alloc-col { padding: 14px 16px 16px; border: 0.5px solid var(--mo-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); display: flex; flex-direction: column; gap: 8px; }
+    .mo-alloc-col--src { background: linear-gradient(180deg, var(--mo-amber-soft) 0%, transparent 70%), rgba(255,255,255,0.025); border-color: rgba(232,180,104,0.32); }
+    .mo-alloc-col--mid { background: linear-gradient(180deg, var(--mo-accent-soft) 0%, transparent 70%), rgba(255,255,255,0.025); border-color: var(--mo-accent); }
+    .mo-alloc-col--out { background: linear-gradient(180deg, var(--mo-cool-soft) 0%, transparent 70%), rgba(255,255,255,0.025); border-color: rgba(108,191,224,0.32); }
+    .mo-alloc-eye { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; }
+    .mo-alloc-col--src .mo-alloc-eye { color: var(--mo-amber); }
+    .mo-alloc-col--mid .mo-alloc-eye { color: var(--mo-accent); }
+    .mo-alloc-col--out .mo-alloc-eye { color: var(--mo-cool); }
+    .mo-alloc-title { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.01em; line-height: 1.2; }
+    .mo-alloc-list { list-style: none; padding: 0; margin: 4px 0 0; display: grid; gap: 4px; }
+    .mo-alloc-list li { font-family: 'Source Serif 4', serif; font-size: 0.88rem; line-height: 1.5; color: var(--color-text-primary); padding: 3px 0 3px 14px; position: relative; }
+    .mo-alloc-list li::before { content: ''; position: absolute; left: 0; top: 11px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+    .mo-alloc-list li.mo-alloc-priority::before { background: var(--mo-accent); width: 6px; height: 6px; border-radius: 50%; top: 10px; }
+    .mo-alloc-list li.mo-alloc-squeezed { color: var(--color-text-secondary); }
+    .mo-alloc-list li.mo-alloc-squeezed::before { background: var(--mo-red); opacity: 0.7; }
+    .mo-alloc-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--mo-bd-soft); margin: 16px 0 0; line-height: 1.55; }
+    .mo-alloc-priority-key { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--mo-accent); margin-left: 6px; }
+    .mo-alloc-squeezed-key { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--mo-red); margin-left: 6px; }
+
+    /* ---- DRAM share bars ---- */
+    .mo-share { padding: 24px 22px 20px; border: 1px solid var(--mo-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .mo-share-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 16px; }
+    .mo-share-row { display: grid; grid-template-columns: 120px 1fr 70px; gap: 14px; align-items: center; padding: 7px 0; }
+    .mo-share-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .mo-share-bar { height: 14px; border-radius: 7px; background: rgba(255,255,255,0.04); overflow: hidden; }
+    .mo-share-fill { height: 100%; border-radius: 7px; }
+    .mo-share-fill--sk      { width: 33.2%; background: linear-gradient(90deg, var(--mo-purple), rgba(183,148,244,0.55)); }
+    .mo-share-fill--samsung { width: 32.6%; background: linear-gradient(90deg, var(--mo-cool), rgba(108,191,224,0.55)); }
+    .mo-share-fill--micron  { width: 25.7%; background: linear-gradient(90deg, var(--mo-accent), rgba(156,123,181,0.55)); }
+    .mo-share-fill--others  { width: 8.5%;  background: linear-gradient(90deg, var(--mo-amber), rgba(232,180,104,0.55)); }
+    .mo-share-val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; text-align: right; }
+    .mo-share-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--mo-bd-soft); margin: 14px 0 0; line-height: 1.55; }
+
+    /* ---- Evidence Ledger ---- */
+    .mo-ev { margin: 1rem 0 0; padding: 22px 22px 18px; border: 1px solid var(--mo-bd); border-radius: 12px; background: var(--bg-alt); overflow-x: auto; }
+    .mo-ev-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-accent); margin-bottom: 14px; }
+    .mo-ev table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; color: var(--color-text-primary); }
+    .mo-ev th, .mo-ev td { padding: 9px 12px; text-align: left; border-bottom: 0.5px solid var(--mo-bd-soft); vertical-align: top; }
+    .mo-ev th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mo-accent); font-weight: 500; border-bottom: 1px solid var(--mo-bd); white-space: nowrap; }
+    .mo-ev td.mo-ev-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); letter-spacing: 0.02em; white-space: nowrap; }
+    .mo-ev td.mo-ev-why { color: var(--color-text-secondary); }
+
+    /* ---- Risks grid ---- */
+    .mo-risk { padding: 22px 22px 18px; border: 1px solid rgba(224,122,139,0.34); border-radius: 12px; background: linear-gradient(180deg, var(--mo-red-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .mo-risk-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mo-red); margin-bottom: 14px; }
+    .mo-risk ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+    .mo-risk li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); padding: 4px 0 4px 14px; position: relative; }
+    .mo-risk li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--mo-red); }
+
+    /* ---- Read next ---- */
+    .mo-rn { margin: 2.5rem 0 0; padding: 18px 22px 20px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .mo-rn-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .mo-rn ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .mo-rn li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.55; }
+    .mo-rn a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .mo-rn a:hover { color: var(--mo-accent); border-bottom-color: var(--mo-accent); }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 1024px) {
+      .mo-alloc-flow { grid-template-columns: 1fr; }
+      .mo-time-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 880px) {
+      .mo-hier-row { grid-template-columns: 120px 1fr; }
+      .mo-hier-role { grid-column: 1 / -1; text-align: left; padding-top: 2px; }
+      .mo-time-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mo-share-row { grid-template-columns: 100px 1fr 60px; }
+    }
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .mo-toc ol { grid-template-columns: 1fr; }
+      .mo-cycle { grid-template-columns: 1fr; }
+      .mo-risk ul { grid-template-columns: 1fr; }
+      .mo-hier-row { grid-template-columns: 1fr; gap: 4px; }
+      .mo-time-rail, .mo-time-step { display: none; }
+      .mo-time-cards { grid-template-columns: 1fr; margin-top: 12px; }
+      .mo-share-row { grid-template-columns: 1fr; gap: 4px; }
+      .mo-share-bar { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .essay-page { padding: 0 0 1rem; }
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .mo-ev table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Work</a>
+        <a href="../../blog/" class="active">Writing</a>
+        <a href="../../atlases/">Atlases</a>
+        <a href="../../#about">About</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../../projects/">Work</a>
+    <a href="../../blog/">Writing</a>
+    <a href="../../atlases/">Atlases</a>
+    <a href="../../#about">About</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+
+  <article class="article essay-format essay-mo">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 050 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">Semiconductors</span>
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Memory</span>
+          <span class="tag">DRAM</span>
+          <span class="tag">NAND</span>
+          <span class="tag">HBM</span>
+          <span class="tag">Micron</span>
+          <span class="tag">Samsung</span>
+          <span class="tag">SK hynix</span>
+          <span class="tag">Enterprise SSD</span>
+          <span class="tag">ASML</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">CoWoS</span>
+          <span class="tag">TrendForce</span>
+        </div>
+
+        <h1 class="essay-hed">The Memory Oligopoly Became AI&rsquo;s <em>Toll Booth</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">In 2021, Micron said it would not add DRAM or NAND wafer output for the foreseeable future. In 2026, AI turned that supply discipline into one of computing&rsquo;s most important bottlenecks.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">14 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <aside class="mo-thesis" aria-label="Thesis">
+            <div class="mo-thesis-label">The thesis</div>
+            <p class="mo-thesis-text">AI did not just increase memory demand. It changed the power structure of the memory market. The companies that control DRAM, HBM, and NAND capacity now sit at one of the most important toll booths in the AI economy.</p>
+          </aside>
+
+          <p class="essay-lede">For decades, memory was treated as the boring commodity layer of computing. DRAM and NAND mattered, but the attention went to CPUs, GPUs, foundries, lithography, and leading-edge nodes. Memory was noticed mostly when prices spiked, and even then the story was treated as a cycle to be ridden, not a structure to be analysed. That view is now broken. In 2021, Micron said it would not add DRAM or NAND wafers for the foreseeable future. At the time it looked like ordinary capital discipline. In 2026, it looks like the opening chapter of the AI memory squeeze.</p>
+
+          <nav class="mo-toc" aria-label="Article contents">
+            <div class="mo-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-2021">What the 2021 warning got right</a></li>
+              <li><a href="#sec-cycle">From commodity cycle to allocation market</a></li>
+              <li><a href="#sec-mu">The 2026 proof: Micron&rsquo;s results</a></li>
+              <li><a href="#sec-hbm">This is not only HBM</a></li>
+              <li><a href="#sec-nand">NAND enters the AI story</a></li>
+              <li><a href="#sec-price">Pricing proves the squeeze</a></li>
+              <li><a href="#sec-macro">ASML and TSMC show the same macro shift</a></li>
+              <li><a href="#sec-oligopoly">Why the oligopoly matters</a></li>
+              <li><a href="#sec-china">China is the counterweight</a></li>
+              <li><a href="#sec-timeline">The timeline</a></li>
+              <li><a href="#sec-risks">Risks and limits</a></li>
+              <li><a href="#sec-evidence">Evidence ledger</a></li>
+              <li><a href="#sec-verdict">Final verdict</a></li>
+            </ol>
+          </nav>
+
+          <p class="essay-line">Memory used to be the part of the system people forgot. In the AI era, memory is where the system starts to break.</p>
+
+          <p>That single line is the spine of this essay. The old memory cycle was about oversupply. The new AI memory cycle is about allocation. Who gets HBM. Who gets server DRAM. Who gets enterprise SSDs. Who gets long-term contracts. That is the new power structure, and it is not the cycle anyone was trained to model.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">1. What the 2021 warning got right</h2>
+
+          <p>The starting point for this essay is an uploaded 2021 SemiAnalysis piece on the memory oligopoly. It is a useful historical anchor, not a final verdict, and the specific framing is worth restating in its own words before grading it.<sup><a href="#fn1">1</a></sup></p>
+
+          <div class="mo-source" aria-label="Notes from the uploaded 2021 SemiAnalysis article">
+            <div class="mo-source-label">Notes from the uploaded 2021 piece</div>
+            <ul>
+              <li>The article argued memory had consolidated into a structural oligopoly.</li>
+              <li>There were only three leading-edge DRAM producers: Samsung, SK hynix, and Micron.</li>
+              <li>NAND was also consolidating, with Intel selling its NAND business to SK hynix and Kioxia / Western Digital merger discussions already in the air.</li>
+              <li>The article&rsquo;s central quote was Micron CFO Dave Zinsner saying Micron did not see itself adding wafers in DRAM or NAND for the foreseeable future.</li>
+              <li>It argued DRAM density scaling had slowed.</li>
+              <li>Future supply growth would depend on harder technology transitions rather than simple wafer additions.</li>
+              <li>Micron explicitly framed bit growth in DRAM and NAND as coming from density improvements, not wafer expansion.</li>
+            </ul>
+          </div>
+
+          <p>Read carefully, the 2021 piece was not the claim that any particular price would hold for any particular quarter. It was a market-structure claim. A consolidated industry with three leading-edge DRAM players, an even smaller NAND group after Intel exited, and an explicit commitment from one of those players not to expand wafer output, was always going to behave differently from a fragmented commodity market the next time demand surprised on the upside. That is the part of the 2021 framing that aged well. No SemiAnalysis text, charts, screenshots, or images are reproduced here. The original piece is treated only as cited historical framing.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-cycle">2. From commodity cycle to allocation market</h2>
+
+          <p>The classic memory cycle was simple, and for decades it more or less worked. Prices rise. Suppliers add capacity. Supply arrives late. Prices crash. Capex gets cut. Weak players suffer. Strong players survive. The cycle restarts. Anyone who had spent a career around the DRAM industry could draw this diagram from memory.</p>
+
+          <p>The AI memory cycle keeps some of those moves and changes others. The number of aggressive suppliers has come down. DRAM has only three leading-edge players. NAND is consolidating around a smaller set as well. HBM consumes scarce advanced DRAM capacity and advanced packaging capacity at the same time. Cleanroom expansions take years, not quarters. New fabs are expensive and slow even before you factor in equipment delivery, qualification, and yield ramp. AI customers, unlike traditional PC and smartphone buyers, are willing to sign strategic agreements and long-term supply deals to lock in capacity.</p>
+
+          <div class="mo-cycle">
+            <div class="mo-cycle-col mo-cycle-col--old" aria-label="Old memory cycle">
+              <div class="mo-cycle-eye">Old memory cycle</div>
+              <h3 class="mo-cycle-title">Commodity, fragmented, consumer-led</h3>
+              <ul>
+                <li>Many suppliers, frequent capacity overbuilds.</li>
+                <li>Spot market dominates pricing discovery.</li>
+                <li>Cycle driven by PCs, smartphones, and consumer SSDs.</li>
+                <li>Price spikes followed by sharp crashes.</li>
+                <li>Strategic customer agreements are rare.</li>
+                <li>Bit growth from wafer additions and node shrinks.</li>
+              </ul>
+            </div>
+            <div class="mo-cycle-col mo-cycle-col--new" aria-label="AI memory cycle">
+              <div class="mo-cycle-eye">AI memory cycle</div>
+              <h3 class="mo-cycle-title">Concentrated, allocated, hyperscaler-led</h3>
+              <ul>
+                <li>Three leading-edge DRAM players, with HBM concentrated further.</li>
+                <li>Allocation logic, with long-term agreements at the top of the queue.</li>
+                <li>Cycle driven by AI training, inference, and data-centre storage.</li>
+                <li>Capacity additions take years; cleanrooms and HBM packaging lag.</li>
+                <li>Consumer segments squeezed first when supply tightens.</li>
+                <li>Bit growth relies on harder technology transitions, not new wafers.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="essay-pull">The old memory cycle was about oversupply. The new AI memory cycle is about allocation.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-mu">3. The 2026 proof: Micron&rsquo;s results</h2>
+
+          <p>If the 2021 framing was structural, the 2026 financials are the structural test. Micron&rsquo;s Q2 FY2026 print is striking on every line.<sup><a href="#fn2">2</a></sup> Revenue of USD 23.86 billion. GAAP gross margin of 74.4%. Diluted EPS of USD 12.07. Q3 FY2026 revenue guided to USD 33.5 billion with gross margin guidance around 81%. Those are not the numbers a normal commodity industry posts. They are the numbers a market where demand outruns capacity, and where the suppliers can allocate to the highest-value customers, posts when the supply line tightens.</p>
+
+          <p>Micron&rsquo;s own framing in the prepared remarks is unambiguous about what is driving this.<sup><a href="#fn3">3</a></sup> Memory has, in management&rsquo;s words, become a strategic asset for customers in the AI era. AI demand is pulling data-centre DRAM and NAND bit TAM above 50% of total industry TAM for the first time in calendar 2026, in Micron&rsquo;s framing. Both AI and traditional server demand are described as constrained by inadequate DRAM and NAND supply. These are management statements, not independent estimates. Treat them as direction, not gospel. The direction is the part to keep.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-hbm">4. This is not only HBM</h2>
+
+          <p>It is tempting to read all of this as an HBM story. HBM is the high-bandwidth memory stacked beside the GPU or accelerator. It exists because AI accelerators are useless if data cannot be fed to them fast enough to keep the math units busy. HBM is the visible memory shortage, the one Nvidia keeps name-checking on earnings calls, the one that supports the most aggressive long-term agreements anywhere in the supply chain.</p>
+
+          <p>That part is real. Micron began volume shipments of HBM4 36GB 12-high products in Q1 calendar 2026, framed as part of the qualification flow into Nvidia&rsquo;s Vera Rubin platform, and has been sampling 48GB 16-high HBM4 as the next step.<sup><a href="#fn3">3</a></sup> Those are company claims, not third-party measurements, but they describe a roadmap that is being pulled forward, not pushed back.</p>
+
+          <p>The trap is to treat HBM as the entire memory story. Micron&rsquo;s prepared remarks are explicit that LPDRAM, DDR DRAM, and SSDs are all critical across new AI inference architectures, and that AI demand is moving the whole DRAM and NAND mix toward data-centre customers.<sup><a href="#fn3">3</a></sup> HBM gets the headlines. The hidden bottleneck is the rest of the stack.</p>
+
+          <div class="mo-hier" role="img" aria-label="Memory and storage hierarchy with each layer's role.">
+            <div class="mo-hier-label">Memory &amp; storage hierarchy &middot; where each layer fits in an AI cluster</div>
+            <ul class="mo-hier-list">
+              <li class="mo-hier-row mo-hier-row--hbm">
+                <span class="mo-hier-tag">HBM</span>
+                <span class="mo-hier-desc">High-bandwidth memory stacked next to GPUs. Feeds training and large inference. Most acute shortage.</span>
+                <span class="mo-hier-role">Compute-adjacent</span>
+              </li>
+              <li class="mo-hier-row mo-hier-row--srv">
+                <span class="mo-hier-tag">Server DRAM</span>
+                <span class="mo-hier-desc">DDR5 main memory in AI and traditional servers. Holds the working set and the orchestration plane.</span>
+                <span class="mo-hier-role">Working set</span>
+              </li>
+              <li class="mo-hier-row mo-hier-row--lp">
+                <span class="mo-hier-tag">LPDRAM</span>
+                <span class="mo-hier-desc">Low-power DRAM moving into selected data-centre architectures alongside DDR.</span>
+                <span class="mo-hier-role">Power-aware DRAM</span>
+              </li>
+              <li class="mo-hier-row mo-hier-row--ssd">
+                <span class="mo-hier-tag">Enterprise SSD</span>
+                <span class="mo-hier-desc">NAND-based, in the server. Hot storage for training data, checkpoints, vector indexes, and AI-adjacent caches.</span>
+                <span class="mo-hier-role">Server-local</span>
+              </li>
+              <li class="mo-hier-row mo-hier-row--nand">
+                <span class="mo-hier-tag">NAND Flash</span>
+                <span class="mo-hier-desc">The underlying medium. TLC for performance tiers, QLC for capacity tiers. Sold by bit; governed by yield and supply.</span>
+                <span class="mo-hier-role">Medium</span>
+              </li>
+              <li class="mo-hier-row mo-hier-row--obj">
+                <span class="mo-hier-tag">Object storage</span>
+                <span class="mo-hier-desc">Large, distributed storage for training corpora, model archives, cold and warm AI data tiers.</span>
+                <span class="mo-hier-role">Distributed cold</span>
+              </li>
+            </ul>
+            <p class="mo-hier-foot">An AI cluster does not draw from one row. It draws from all six at once.</p>
+          </div>
+
+          <p class="essay-pull">HBM is the visible bottleneck. The hidden bottleneck is the whole memory stack.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-nand">5. NAND enters the AI story</h2>
+
+          <p>NAND is the part of the AI memory story that even careful readers sometimes miss. NAND is not HBM. NAND is not the memory beside the GPU. NAND is the persistent storage layer further out. For most of the previous decade, NAND was a consumer story: phones, PCs, consumer SSDs, embedded products. AI changed that.</p>
+
+          <p>Micron&rsquo;s prepared remarks describe the shift in plain terms. NAND bit demand in the data centre is accelerating because of AI use cases such as vector databases and KV-cache offload. SSDs are taking a growing share of capacity storage tiers. Data-centre NAND revenue at Micron more than doubled sequentially in the most recent quarter. NAND demand is described as significantly above available supply for the foreseeable future.<sup><a href="#fn3">3</a></sup> The capacity to fix that is years out: Micron&rsquo;s prepared remarks point to mid-calendar 2027 for initial wafer output at the first Idaho fab, and the second half of calendar 2028 for the new Singapore NAND fab. Singapore advanced packaging for HBM is expected to contribute meaningfully in calendar 2027.<sup><a href="#fn3">3</a></sup></p>
+
+          <p>The use cases are not hypothetical. Training data sits on enterprise SSDs in the same racks as the accelerators. Model checkpoints land somewhere durable and fast. Retrieval systems and vector databases stress NAND read patterns more than any classical workload ever did. KV-cache offload, where parts of the LLM attention cache spill out of DRAM into fast storage, is now a real workload in inference clusters. AI data lakes sit on top of NAND. QLC NAND, marketed as the high-capacity medium for AI storage, is in particular demand. None of this looks like a phone factory cycle.</p>
+
+          <p class="essay-pull">AI does not only need fast memory beside the GPU. It also needs an ocean of storage around the cluster.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-price">6. Pricing proves the squeeze</h2>
+
+          <p>The clearest tell that this is an allocation market, not just a noisy cycle, is what is happening to contract pricing. TrendForce&rsquo;s March 2026 forecast frames Q2 2026 conventional DRAM contract prices as rising approximately 58% to 63% quarter over quarter, and NAND Flash contract prices as rising approximately 70% to 75% quarter over quarter. DRAM suppliers are reallocating capacity toward HBM and server applications. NAND capacity is increasingly allocated to enterprise SSDs while consumer applications scale back. TrendForce flags that substantial new production capacity is unlikely until late 2027 or 2028.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>Read those numbers carefully. They are research-firm estimates, not contracts, and quarterly memory prices do not move in clean straight lines. The shape, however, is what matters. Allocation is the operative word. The highest-value AI customers get supply first. Lower-margin segments get squeezed. PCs are squeezed. Smartphones are squeezed. Consumer SSDs are squeezed. Automotive and industrial buyers are squeezed. Even weak end-consumer demand does not necessarily stop price increases when supply is being redirected to AI.</p>
+
+          <div class="mo-alloc" role="img" aria-label="Allocation map showing wafer capacity flowing through memory categories into AI server demand first.">
+            <div class="mo-alloc-label">Allocation map &middot; how the wafer queue lines up in 2026</div>
+            <div class="mo-alloc-flow">
+              <div class="mo-alloc-col mo-alloc-col--src">
+                <div class="mo-alloc-eye">Source</div>
+                <h3 class="mo-alloc-title">Wafer &amp; packaging capacity</h3>
+                <ul class="mo-alloc-list">
+                  <li>Leading-edge DRAM fabs</li>
+                  <li>HBM advanced packaging</li>
+                  <li>NAND fabs and bonded stacks</li>
+                  <li>Cleanroom + EUV constraint</li>
+                </ul>
+              </div>
+              <div class="mo-alloc-col mo-alloc-col--mid">
+                <div class="mo-alloc-eye">Allocation</div>
+                <h3 class="mo-alloc-title">Memory categories</h3>
+                <ul class="mo-alloc-list">
+                  <li class="mo-alloc-priority">HBM <span class="mo-alloc-priority-key">priority</span></li>
+                  <li class="mo-alloc-priority">Server DRAM <span class="mo-alloc-priority-key">priority</span></li>
+                  <li>LPDRAM</li>
+                  <li class="mo-alloc-priority">Enterprise SSDs <span class="mo-alloc-priority-key">priority</span></li>
+                  <li>High-capacity NAND</li>
+                </ul>
+              </div>
+              <div class="mo-alloc-col mo-alloc-col--out">
+                <div class="mo-alloc-eye">End demand</div>
+                <h3 class="mo-alloc-title">Who gets supply, who gets squeezed</h3>
+                <ul class="mo-alloc-list">
+                  <li class="mo-alloc-priority">AI training &amp; inference servers <span class="mo-alloc-priority-key">first</span></li>
+                  <li class="mo-alloc-priority">Hyperscaler enterprise SSDs <span class="mo-alloc-priority-key">first</span></li>
+                  <li class="mo-alloc-squeezed">PCs &amp; consumer SSDs <span class="mo-alloc-squeezed-key">squeezed</span></li>
+                  <li class="mo-alloc-squeezed">Smartphones <span class="mo-alloc-squeezed-key">squeezed</span></li>
+                  <li class="mo-alloc-squeezed">Automotive &amp; industrial <span class="mo-alloc-squeezed-key">squeezed</span></li>
+                </ul>
+              </div>
+            </div>
+            <p class="mo-alloc-foot">Allocation order reflects 2026 supplier behaviour as described in Micron prepared remarks and TrendForce framing.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup></p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-macro">7. ASML and TSMC show the same macro shift</h2>
+
+          <p>The memory squeeze does not sit inside the memory industry by itself. It sits inside a broader semiconductor reality that two other companies describe more frankly than most. ASML&rsquo;s 2026 AGM framing is that AI compute demand has accelerated since 2010 and outpaced Moore&rsquo;s Law, and that Moore&rsquo;s Law alone is not sufficient to meet future training compute requirements. ASML frames the answer as 2D scaling plus 3D integration, with customers stepping up medium-term capacity plans, and explicitly says that customer ramp will be aggressive to address a supply-limited market in 2026 to 2027 and possibly beyond.<sup><a href="#fn5">5</a></sup></p>
+
+          <p>TSMC&rsquo;s 2026 Technology Symposium framing is the package side of the same story. TSMC says it is expanding CoWoS because AI needs more compute and more memory in a single package, and gives a specific roadmap.<sup><a href="#fn6">6</a></sup> Five-and-a-half-reticle-size CoWoS in production today. A 14-reticle-size CoWoS planned by 2028 that is expected to integrate roughly ten large compute dies and twenty HBM stacks. Those are TSMC company claims, not independent benchmarks. The direction is what matters. The AI system of the future is not just one bigger chip. It is a memory-hungry package and cluster: more compute dies, more HBM stacks, more data movement, more storage, more power, more cooling, more packaging.</p>
+
+          <p class="essay-line">The AI system of the future is not one bigger chip. It is a memory-hungry package and cluster.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-oligopoly">8. Why the oligopoly matters</h2>
+
+          <p>Now the structural part. DRAM is concentrated. Three suppliers control the overwhelming majority of revenue, and an even smaller subset of capacity is leading-edge HBM-capable. When demand surprises to the upside, that structure changes how the market behaves. It moves the conversation from spot pricing toward allocation and long-term agreements. It puts the supplier on the other side of the table from where they sat in the consumer-era memory cycle.</p>
+
+          <p>TrendForce&rsquo;s Q3 2025 DRAM revenue share is one way to see the structure plainly. SK hynix at 33.2%. Samsung at 32.6%. Micron at 25.7%. The big three together accounting for over 91% of DRAM revenue.<sup><a href="#fn7">7</a></sup> Different sources slice this by bit, wafer, or revenue, and the numbers shift around, but the shape of the market is the part to keep.</p>
+
+          <div class="mo-share" role="img" aria-label="DRAM revenue share by supplier, Q3 2025, from TrendForce.">
+            <div class="mo-share-label">DRAM revenue share &middot; Q3 2025</div>
+            <div class="mo-share-row">
+              <span class="mo-share-name">SK hynix</span>
+              <span class="mo-share-bar"><span class="mo-share-fill mo-share-fill--sk"></span></span>
+              <span class="mo-share-val">33.2%</span>
+            </div>
+            <div class="mo-share-row">
+              <span class="mo-share-name">Samsung</span>
+              <span class="mo-share-bar"><span class="mo-share-fill mo-share-fill--samsung"></span></span>
+              <span class="mo-share-val">32.6%</span>
+            </div>
+            <div class="mo-share-row">
+              <span class="mo-share-name">Micron</span>
+              <span class="mo-share-bar"><span class="mo-share-fill mo-share-fill--micron"></span></span>
+              <span class="mo-share-val">25.7%</span>
+            </div>
+            <div class="mo-share-row">
+              <span class="mo-share-name">All others</span>
+              <span class="mo-share-bar"><span class="mo-share-fill mo-share-fill--others"></span></span>
+              <span class="mo-share-val">~8.5%</span>
+            </div>
+            <p class="mo-share-foot">Source: TrendForce, Q3 2025.<sup><a href="#fn7">7</a></sup> The big three account for over 91% of DRAM revenue. Numbers vary by source and methodology.</p>
+          </div>
+
+          <p>A fragmented commodity market behaves one way. A concentrated memory market in an AI shortage behaves another way. The 2026 results are not magic. They are what happens when supply discipline meets a demand environment the original capex plans were never sized for.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-china">9. China is the counterweight</h2>
+
+          <p>None of this implies the oligopoly is permanent. The most interesting counterweight is China. CXMT is trying to challenge the leading-edge DRAM incumbents. YMTC is pushing in NAND under sanctions. High memory prices are exactly the conditions that invite capacity, subsidies, and challengers, and China has both the strategic incentive and the willingness to absorb poor economics to reduce memory imports.</p>
+
+          <p>The honest read is that this matters more for the medium term than the next quarter. Leading-edge DRAM, HBM, NAND scale, yields, packaging, and customer qualification are hard. Reaching credible production share in DDR5, HBM, or qualifying with major hyperscalers is several rungs harder than reaching domestic share in mature DRAM nodes. The same caveat applies in NAND. The structural risk to the oligopoly thesis is real. It is also slower than the headlines suggest. A separate essay on this site discusses YMTC and the China NAND story in more detail, including the role of export controls and domestic equipment substitution.</p>
+
+          <p>The memory oligopoly is powerful in 2026 because AI exposed how hard memory capacity is to replace quickly. But high prices also invite the next wave of challengers, and the policy environment in which those challengers operate is not the same one the incumbents grew up in.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-timeline">10. The timeline</h2>
+
+          <div class="mo-time" role="img" aria-label="Memory cycle timeline 2021 through 2027-2028.">
+            <div class="mo-time-label">Memory cycle timeline &middot; 2021 to 2028</div>
+            <div class="mo-time-rail">
+              <span class="mo-time-dot" style="left: 5%;"></span>
+              <span class="mo-time-step" style="left: 5%;"><div class="mo-time-step-name">No new wafers</div><div class="mo-time-step-year">2021</div></span>
+              <span class="mo-time-dot" style="left: 28%;"></span>
+              <span class="mo-time-step" style="left: 28%;"><div class="mo-time-step-name">Downcycle</div><div class="mo-time-step-year">2022-23</div></span>
+              <span class="mo-time-dot" style="left: 50%;"></span>
+              <span class="mo-time-step" style="left: 50%;"><div class="mo-time-step-name">AI tightens</div><div class="mo-time-step-year">2024-25</div></span>
+              <span class="mo-time-dot" style="left: 72%;"></span>
+              <span class="mo-time-step" style="left: 72%;"><div class="mo-time-step-name">Squeeze</div><div class="mo-time-step-year">2026</div></span>
+              <span class="mo-time-dot" style="left: 95%;"></span>
+              <span class="mo-time-step" style="left: 95%;"><div class="mo-time-step-name">New supply</div><div class="mo-time-step-year">2027-28</div></span>
+            </div>
+            <div class="mo-time-cards">
+              <div class="mo-time-card">
+                <div class="mo-time-card-tag">2021</div>
+                <h4 class="mo-time-card-name">No new wafers</h4>
+                <p class="mo-time-card-note">Micron says it does not see itself adding wafers in DRAM or NAND for the foreseeable future.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="mo-time-card">
+                <div class="mo-time-card-tag">2022-23</div>
+                <h4 class="mo-time-card-name">Downcycle</h4>
+                <p class="mo-time-card-note">Memory inventory correction. Demand softness across PCs, smartphones, and consumer storage.</p>
+              </div>
+              <div class="mo-time-card">
+                <div class="mo-time-card-tag">2024-25</div>
+                <h4 class="mo-time-card-name">AI tightens</h4>
+                <p class="mo-time-card-note">HBM demand pulls advanced DRAM and packaging tight. Server DRAM begins to follow.</p>
+              </div>
+              <div class="mo-time-card">
+                <div class="mo-time-card-tag">2026</div>
+                <h4 class="mo-time-card-name">Squeeze</h4>
+                <p class="mo-time-card-note">DRAM and NAND contract prices spike. Data-centre bit TAM crosses 50% of industry TAM in Micron framing.<sup><a href="#fn3">3</a></sup><sup><a href="#fn4">4</a></sup></p>
+              </div>
+              <div class="mo-time-card">
+                <div class="mo-time-card-tag">2027-28</div>
+                <h4 class="mo-time-card-name">New supply</h4>
+                <p class="mo-time-card-note">Idaho and Singapore fabs and Singapore HBM packaging begin to contribute. Lead times remain long.<sup><a href="#fn3">3</a></sup></p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">11. Risks and limits</h2>
+
+          <p>None of this implies memory cycles are dead, that incumbents are invincible, or that today&rsquo;s prices will hold forever. A serious memory thesis in an AI shortage has to carry a serious risk list.</p>
+
+          <div class="mo-risk" aria-label="Risks">
+            <div class="mo-risk-label">Risks the thesis has to live with</div>
+            <ul>
+              <li>Memory is still cyclical; the structure has changed, not the physics.</li>
+              <li>AI demand can slow, shift mix, or pull forward into earlier years.</li>
+              <li>Customers can over-order during shortages and then cut sharply.</li>
+              <li>High prices invite supply: new fabs, brownfield expansions, and challengers.</li>
+              <li>Capacity additions in 2027 and 2028 could create future oversupply windows.</li>
+              <li>China can pressure NAND, then DRAM, over the medium term.</li>
+              <li>HBM packaging, yield, and qualification remain difficult and contested.</li>
+              <li>Market-share and pricing estimates vary by source and methodology.<sup><a href="#fn7">7</a></sup></li>
+              <li>Gross margins at extreme levels are not necessarily permanent.</li>
+              <li>Allocation behaviour assumes today&rsquo;s mix of customers; that mix can change.</li>
+            </ul>
+          </div>
+
+          <p>The point is not that memory cycles are dead. The point is that AI has changed this cycle&rsquo;s structure. The next downturn, when it comes, will land on a more concentrated supply base with longer customer agreements and a different mix of end demand than the last one did. That changes the shape of the cycle, not its existence.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-evidence">12. Evidence ledger</h2>
+
+          <p>Because this essay sits between an uploaded 2021 thesis and a 2026 reading, the load-bearing evidence is gathered here, paired with source and a one-line note on why it matters.</p>
+
+          <div class="mo-ev" role="region" aria-label="Evidence ledger">
+            <div class="mo-ev-label">Evidence ledger &middot; claim &middot; source &middot; why it matters</div>
+            <table>
+              <thead>
+                <tr><th>Claim</th><th>Source</th><th>Why it matters</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Memory had consolidated into an oligopoly; three leading-edge DRAM producers; Micron CFO said no new DRAM or NAND wafers for the foreseeable future; bit growth from density transitions, not wafer expansion.</td><td class="mo-ev-src">SemiAnalysis (2021, uploaded)<sup><a href="#fn1">1</a></sup></td><td class="mo-ev-why">Historical anchor restated in this essay&rsquo;s own words. Not gospel; not reproduced.</td></tr>
+                <tr><td>Q2 FY2026 revenue USD 23.86B, GAAP gross margin 74.4%, diluted EPS USD 12.07; Q3 FY2026 revenue guide USD 33.5B with gross margin guide around 81%.</td><td class="mo-ev-src">Micron IR (Q2 FY2026)<sup><a href="#fn2">2</a></sup></td><td class="mo-ev-why">Financial test of the &ldquo;structure has changed&rdquo; thesis. Numbers reflect allocation power.</td></tr>
+                <tr><td>AI demand driving DRAM and NAND data-centre bit TAM above 50% of industry TAM for the first time in calendar 2026; AI and server demand constrained by inadequate DRAM and NAND supply; HBM4 36GB 12-high volume shipments begin Q1 calendar 2026 for Vera Rubin; 48GB 16-high sampled; NAND demand significantly above supply for the foreseeable future; data-centre NAND revenue more than doubled sequentially.</td><td class="mo-ev-src">Micron prepared remarks (Q2 FY2026)<sup><a href="#fn3">3</a></sup></td><td class="mo-ev-why">Company framing of the full shape of the shortage: HBM, server DRAM, NAND, SSDs together.</td></tr>
+                <tr><td>Q2 2026 DRAM contract prices expected to rise ~58-63% QoQ; NAND Flash ~70-75% QoQ; DRAM capacity reallocated toward HBM and server; NAND capacity reallocated to enterprise SSDs; substantial new production unlikely until late 2027 or 2028.</td><td class="mo-ev-src">TrendForce (March 2026)<sup><a href="#fn4">4</a></sup></td><td class="mo-ev-why">Pricing and allocation evidence from a third-party research firm. Treated as research-firm estimate.</td></tr>
+                <tr><td>AI compute demand accelerated since 2010 and outpaced Moore&rsquo;s Law; Moore&rsquo;s Law alone not sufficient for future training compute; 2D scaling plus 3D integration; supply-limited market in 2026-27 and possibly beyond.</td><td class="mo-ev-src">ASML 2026 AGM<sup><a href="#fn5">5</a></sup></td><td class="mo-ev-why">Equipment-side framing of why the squeeze extends beyond a single quarter or product line.</td></tr>
+                <tr><td>TSMC expanding CoWoS for AI; 5.5-reticle today; 14-reticle planned by 2028; expected to integrate ~10 compute dies and 20 HBM stacks.</td><td class="mo-ev-src">TSMC 2026 Symposium<sup><a href="#fn6">6</a></sup></td><td class="mo-ev-why">Confirms the package is becoming a memory-hungry surface; HBM count per package rising.</td></tr>
+                <tr><td>SK hynix 33.2%, Samsung 32.6%, Micron 25.7% DRAM revenue share in Q3 2025; big three over 91% combined.</td><td class="mo-ev-src">TrendForce (Q3 2025)<sup><a href="#fn7">7</a></sup></td><td class="mo-ev-why">Concrete market-structure number behind the &ldquo;concentrated&rdquo; argument.</td></tr>
+                <tr><td>CXMT and YMTC are credible domestic challengers under sanctions, but qualification, scale, and yield take time.</td><td class="mo-ev-src">Industry reporting (2025-26)<sup><a href="#fn8">8</a></sup></td><td class="mo-ev-why">Balance against the oligopoly thesis. Treated as industry context, not a single primary citation.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-verdict">13. Final verdict</h2>
+
+          <p>In 2021, Micron&rsquo;s &ldquo;no new wafers&rdquo; comment looked like disciplined capex. In 2026, it looks like the opening chapter of the AI memory squeeze. AI did not just increase memory demand. It made memory strategic. It turned supply into allocation. It turned the memory oligopoly into a toll booth that sits between AI accelerators and useful work.</p>
+
+          <p>The future is not the absence of cycles. The future is a cycle whose shape, customer base, allocation logic, and supplier set are not the ones the industry was trained on. Hyperscalers signing strategic agreements. HBM consuming the leading edge. NAND pulled toward enterprise SSDs. PCs and smartphones squeezed at the margin. New fabs years out. Domestic challengers slowly closing technological gaps. None of this is permanent. All of it is structural.</p>
+
+          <p class="essay-pull">Memory used to be the part of the system people forgot. In the AI era, memory is where the system starts to break.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sources">Sources &amp; footnotes</h2>
+
+          <p>This essay treats the uploaded 2021 SemiAnalysis article as a cited historical anchor. Specific 2026 claims come from Micron investor materials, TrendForce, ASML, and TSMC. Market-share figures are estimates and vary by source. No third-party charts, screenshots, or logos are reproduced. This is not investment advice.</p>
+
+          <div class="essay-closer">
+            <p>Original 2026 analysis. The uploaded 2021 SemiAnalysis piece on Micron and the memory oligopoly is used only as a cited historical anchor, framed in this essay&rsquo;s own words. Micron revenue, gross-margin, EPS, capex, segment growth, and guidance figures are company-released numbers, not independent measurement. TrendForce pricing expectations and DRAM share figures are research-firm framing. ASML and TSMC roadmap framing is from company investor and symposium material. No SemiAnalysis text, charts, screenshots, or images are reproduced. No specific Micron, Samsung, SK hynix, Kioxia, Western Digital, SanDisk, ASML, TSMC, CXMT, YMTC, or other security is being recommended.</p>
+          </div>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Uploaded SemiAnalysis PDF, Dylan Patel (SemiAnalysis), 2021. <em>Memory Oligopoly Woes &mdash; Micron Says They Will Not Increase Wafer Output In DRAM Or NAND For The Foreseeable Future</em>. Used here only as a cited historical anchor, framed in this essay&rsquo;s own words. The article: described high memory pricing and margins; framed memory as a structural oligopoly with three leading-edge DRAM producers; noted NAND consolidation including Intel&rsquo;s NAND business going to SK hynix and Kioxia / Western Digital merger discussions; quoted Micron CFO Dave Zinsner saying Micron did not see itself adding wafers in DRAM or NAND for the foreseeable future; argued DRAM density scaling had slowed; and argued future supply growth would depend on density and node transitions rather than wafer expansion. No SemiAnalysis text, charts, screenshots, or images are reproduced.</p>
+            <p id="fn2"><sup>2</sup> Micron Technology Investor Relations. <a href="https://investors.micron.com/news-releases/news-release-details/micron-technology-inc-reports-results-second-quarter-fiscal-2026" target="_blank" rel="noopener">Micron Technology reports results for second quarter of fiscal 2026</a>. Used for: Q2 FY2026 revenue of USD 23.86 billion; GAAP gross margin of 74.4%; diluted EPS of USD 12.07; Q3 FY2026 revenue guide of USD 33.5 billion; Q3 FY2026 gross margin guide around 81%; framing of memory as a strategic asset in the AI era.</p>
+            <p id="fn3"><sup>3</sup> Micron Technology Investor Relations. <a href="https://investors.micron.com/static-files/e089f8c0-065d-47b8-9d02-bfa863cdb357" target="_blank" rel="noopener">Q2 FY2026 prepared remarks</a>. Used for: AI demand framing that data-centre DRAM and NAND bit TAM exceeds 50% of total industry TAM for the first time in calendar 2026; AI and traditional server demand constrained by inadequate DRAM and NAND supply; HBM4 36GB 12-high volume shipments beginning Q1 calendar 2026 for NVIDIA Vera Rubin; 48GB 16-high HBM4 sampled; LPDRAM, DDR DRAM, and SSDs critical across new AI inference architectures; NAND bit demand accelerated by vector databases and KV-cache offload; SSDs taking growing share of capacity storage tiers; data-centre NAND revenue more than doubled sequentially; NAND demand significantly above available supply for the foreseeable future; first Idaho fab initial wafer output expected mid-calendar 2027; new Singapore NAND fab initial wafer output expected second half of calendar 2028; Singapore advanced packaging facility for HBM expected to contribute meaningfully in calendar 2027.</p>
+            <p id="fn4"><sup>4</sup> TrendForce (March 2026). <a href="https://www.trendforce.com/presscenter/news/20260331-12995.html" target="_blank" rel="noopener">Memory contract pricing outlook for 2Q26</a>. Used for: research-firm framing that conventional DRAM contract prices are expected to rise approximately 58% to 63% quarter over quarter in Q2 2026; NAND Flash contract prices expected to rise approximately 70% to 75% QoQ; DRAM suppliers reallocating capacity toward HBM and server applications; NAND capacity increasingly allocated to enterprise SSDs while consumer applications scale back; substantial new production capacity unlikely until late 2027 or 2028.</p>
+            <p id="fn5"><sup>5</sup> ASML. <a href="https://ourbrand.asml.com/asset/d5e933d7-78d0-406c-aed7-a46626e63381/2026_-AGM-_presentation.pdf" target="_blank" rel="noopener">2026 AGM presentation</a>. Used for: ASML framing that AI compute demand has accelerated since 2010 and outpaced Moore&rsquo;s Law; that Moore&rsquo;s Law alone is not sufficient to meet future training compute requirements; that 2D scaling plus 3D integration is needed; that customers are stepping up medium-term capacity plans; and that customer ramp will be aggressive to address a supply-limited market in 2026 to 2027 and possibly beyond.</p>
+            <p id="fn6"><sup>6</sup> TSMC. <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 Technology Symposium</a>. Used for: TSMC framing of CoWoS expansion driven by AI demand for more compute and more memory in a single package; production of 5.5-reticle-size CoWoS today; plan for a 14-reticle-size CoWoS by 2028; expectation that the 14-reticle package will integrate approximately 10 large compute dies and 20 HBM stacks. All numbers are TSMC company claims rather than independent measurement.</p>
+            <p id="fn7"><sup>7</sup> TrendForce (November 2025). <a href="https://www.trendforce.com/presscenter/news/20251126-12802.html" target="_blank" rel="noopener">Q3 2025 DRAM revenue share</a>. Used for: SK hynix at 33.2% DRAM revenue share; Samsung at 32.6%; Micron at 25.7%; the big three combined accounting for over 91% of DRAM revenue. Numbers vary by source and by whether bit, wafer, or revenue is being measured.</p>
+            <p id="fn8"><sup>8</sup> Industry reporting on CXMT&rsquo;s DRAM expansion and YMTC&rsquo;s NAND ramp under sanctions, including coverage of capacity, customer qualification, and equipment substitution. Used here only for the general point that high-priced memory markets invite domestic Chinese challengers in both DRAM and NAND. Treated as industry context rather than a single primary citation. See also the related essay <a href="./chinas-nand-breakout.html">China&rsquo;s NAND Breakout Was Delayed, Not Defeated</a>.</p>
+          </div>
+
+          <div class="mo-rn">
+            <div class="mo-rn-label">Read next on this site</div>
+            <ul>
+              <li><a href="./ai-memory-wall.html">The AI Memory Wall</a> &nbsp;&middot;&nbsp; on why memory, not just compute, is the binding constraint for AI scale.</li>
+              <li><a href="./ai-memory-tax.html">The AI Memory Tax</a> &nbsp;&middot;&nbsp; on how memory economics shape the AI infrastructure bill.</li>
+              <li><a href="./memory-moat.html">The Memory Moat</a> &nbsp;&middot;&nbsp; on memory and context as a structural advantage.</li>
+              <li><a href="./back-end-bottleneck.html">The Back-End Bottleneck</a> &nbsp;&middot;&nbsp; on advanced packaging behind every AI chip story.</li>
+              <li><a href="./boring-back-end-of-ai.html">The Boring Back-End of AI</a> &nbsp;&middot;&nbsp; the back-end essay on Kulicke &amp; Soffa and bonding.</li>
+              <li><a href="./chinas-nand-breakout.html">China&rsquo;s NAND Breakout Was Delayed, Not Defeated</a> &nbsp;&middot;&nbsp; on YMTC, Xtacking, export controls, and the counterweight side of the memory oligopoly.</li>
+              <li><a href="../../accelerated-computing-atlas/">Accelerated Computing Atlas</a> &nbsp;&middot;&nbsp; interactive atlas of the Nvidia accelerated-computing ecosystem.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="article-nav" aria-label="Article navigation"></nav>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
