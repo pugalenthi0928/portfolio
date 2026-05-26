@@ -654,9 +654,9 @@
             <a href="../blog/" class="more-work-card more-work-card--writing">
               <div class="more-work-card-label">Think</div>
               <h3 class="more-work-card-title">Writing</h3>
-              <p class="more-work-card-desc">45 source-backed essays on what&rsquo;s actually being built underneath the AI economy &mdash; chips, packaging, agents, edge inference.</p>
+              <p class="more-work-card-desc"><span class="writing-count-desc">51</span> source-backed essays on what&rsquo;s actually being built underneath the AI economy &mdash; chips, packaging, agents, edge inference.</p>
               <div class="more-work-card-meta">
-                <span>45 essays</span>
+                <span><span class="writing-count-meta">51</span> essays</span>
                 <span>5 themes</span>
               </div>
               <span class="more-work-card-cta">
@@ -714,6 +714,19 @@
 
   <script src="../script.js?v=15"></script>
   <script>
+  // Keep the Writing card's essay count in sync with posts.json so it never goes stale.
+  (function syncWritingCount() {
+    fetch('../blog/posts.json?v=' + Date.now())
+      .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
+      .then(posts => {
+        const n = posts.length;
+        document.querySelectorAll('.writing-count-desc, .writing-count-meta').forEach(el => {
+          el.textContent = n;
+        });
+      })
+      .catch(() => { /* leave fallback number in place */ });
+  })();
+
   // Filter bar — works across grouped layout. Hides whole groups when no cards match.
   (function () {
     const bar = document.getElementById('projects-filter-bar');

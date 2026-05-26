@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pugalenthi Magendran | AI engineer at Perplexity AI</title>
-  <meta name="description" content="AI / Machine Learning engineer building foundation-model systems, LLM agents, and computer-vision pipelines. Master of AI (Monash). Fellow & Ambassador at Perplexity AI. 45 source-backed essays on the AI stack.">
+  <meta name="description" content="AI / Machine Learning engineer building foundation-model systems, LLM agents, and computer-vision pipelines. Master of AI (Monash). Fellow & Ambassador at Perplexity AI. 51 source-backed essays on the AI stack.">
   <link rel="canonical" href="https://pugalenthimagendran.com/">
   <meta property="og:title" content="Pugalenthi Magendran | AI engineer at Perplexity AI">
-  <meta property="og:description" content="AI engineer at Perplexity AI. 45 source-backed essays on the AI stack — chips, packaging, agents, edge. Master of AI (Monash).">
+  <meta property="og:description" content="AI engineer at Perplexity AI. 51 source-backed essays on the AI stack — chips, packaging, agents, edge. Master of AI (Monash).">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pugalenthimagendran.com/">
   <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pugalenthi Magendran | AI engineer at Perplexity AI">
-  <meta name="twitter:description" content="AI engineer at Perplexity AI. 45 source-backed essays on the AI stack. Master of AI (Monash).">
+  <meta name="twitter:description" content="AI engineer at Perplexity AI. 51 source-backed essays on the AI stack. Master of AI (Monash).">
   <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="dns-prefetch" href="https://formsubmit.co">
@@ -391,7 +391,7 @@
       </div>
 
       <a href="blog/" class="writing-see-all" data-animate="fade-up">
-        <span>Read all 45 essays</span>
+        <span>Read all <span id="writing-count">51</span> essays</span>
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
       </a>
     </div>
@@ -672,6 +672,8 @@
       fetch('blog/posts.json?v=' + Date.now())
         .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
         .then(posts => {
+          const countEl = document.getElementById('writing-count');
+          if (countEl) countEl.textContent = posts.length;
           const recent = posts.slice(0, 6);
           host.innerHTML = recent.map(p => {
             const date = new Date(p.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
