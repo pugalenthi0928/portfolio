@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Boring Back-End of AI | Pugalenthi Magendran</title>
+  <meta name="description" content="The AI boom is not only about GPUs, HBM, EUV and CoWoS. Kulicke &amp; Soffa shows why semiconductor back-end assembly, bonding, packaging and interconnects matter more than most people realize.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/boring-back-end-of-ai.html">
+  <meta property="og:title" content="The Boring Back-End of AI">
+  <meta property="og:description" content="A technical essay on Kulicke &amp; Soffa, wire bonding, memory interconnects, TCB, mini and micro LED, batteries, and the forgotten back-end layer of AI infrastructure.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/boring-back-end-of-ai.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="Kulicke & Soffa">
+  <meta property="article:tag" content="Manufacturing">
+  <meta property="article:tag" content="Wire Bonding">
+  <meta property="article:tag" content="Wedge Bonding">
+  <meta property="article:tag" content="TCB">
+  <meta property="article:tag" content="Hybrid Bonding">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="Mini LED">
+  <meta property="article:tag" content="Micro LED">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="ASML">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Boring Back-End of AI">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="The AI boom is not only about GPUs, HBM, EUV and CoWoS. Kulicke &amp; Soffa shows why semiconductor back-end assembly, bonding, packaging and interconnects matter more than most people realize.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Boring Back-End of AI",
+    "description": "The AI boom is not only about GPUs, HBM, EUV and CoWoS. Kulicke & Soffa shows why semiconductor back-end assembly, bonding, packaging and interconnects matter more than most people realize.",
+    "url": "https://pugalenthimagendran.com/blog/posts/boring-back-end-of-ai.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/boring-back-end-of-ai.html",
+    "keywords": "Semiconductors, AI Infrastructure, Advanced Packaging, Kulicke & Soffa, Manufacturing, Wire Bonding, TCB, Hybrid Bonding, HBM, CoWoS, Mini LED, Micro LED, TSMC, ASML"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       Shared essay typography
+       ============================================ */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #F0784A); border: 1px solid rgba(240,120,74,0.30); background: rgba(240,120,74,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-body h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); margin: 3rem 0 1.25rem; line-height: 1.25; letter-spacing: 0; font-style: normal; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 400; font-style: italic; line-height: 1.5; color: var(--color-text-primary); border-top: 2px solid var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 1.5rem 0; margin: 2.5rem 0; text-align: left; }
+    .essay-body p.essay-line { font-weight: 600; color: var(--color-text-primary); font-size: 1.07rem; }
+    .essay-hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 3rem 0; }
+    .essay-closer { font-family: 'Source Serif 4', serif; font-size: 0.975rem; line-height: 1.95; color: var(--color-text-secondary); font-style: italic; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 2.25rem; margin-top: 3.5rem; }
+    .essay-footnote { font-family: 'Source Serif 4', serif; font-size: 0.82rem; color: var(--color-text-tertiary); margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary); line-height: 1.7; }
+    .essay-footnote a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .essay-footnote a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-text-secondary); }
+    .essay-footnote sup { font-size: 0.7rem; vertical-align: super; }
+    .essay-body sup a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.7em; padding: 0 2px; border-bottom: none; }
+    .essay-body sup a:hover { color: var(--color-text-primary); }
+
+    /* ============================================
+       THE BORING BACK-END OF AI  ·  scoped under .essay-bb
+       Muted teal accent, industrial / back-end feel.
+       ============================================ */
+    .essay-bb {
+      --bb-accent: #6FA89E;
+      --bb-accent-soft: rgba(111,168,158,0.10);
+      --bb-accent-faint: rgba(111,168,158,0.04);
+      --bb-bd: rgba(255,255,255,0.08);
+      --bb-bd-soft: rgba(255,255,255,0.05);
+      --bb-cool: #6CBFE0;
+      --bb-cool-soft: rgba(108,191,224,0.10);
+      --bb-purple: #B794F4;
+      --bb-purple-soft: rgba(183,148,244,0.10);
+      --bb-green: #5DCAA5;
+      --bb-green-soft: rgba(93,202,165,0.10);
+      --bb-amber: #E8B468;
+      --bb-amber-soft: rgba(232,180,104,0.10);
+      --bb-red: #E07A8B;
+      --bb-red-soft: rgba(224,122,139,0.10);
+      --bb-copper: #C7A55A;
+      --bb-copper-soft: rgba(199,165,90,0.10);
+    }
+    .essay-bb .essay-stamp { color: var(--bb-accent); border-color: rgba(111,168,158,0.34); background: rgba(111,168,158,0.06); }
+    .essay-bb .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+
+    /* ---- Thesis callout ---- */
+    .bb-thesis { margin: 2rem 0 2.5rem; padding: 22px 24px; border-radius: 10px; border: 1px solid var(--bb-accent); background: linear-gradient(180deg, var(--bb-accent-soft) 0%, transparent 80%), var(--bg-alt); }
+    .bb-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-accent); margin-bottom: 10px; }
+    .bb-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* ---- TOC ---- */
+    .bb-toc { margin: 0 0 2.5rem; padding: 18px 22px 20px; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--bg-alt); }
+    .bb-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 12px; }
+    .bb-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 22px; }
+    .bb-toc li { counter-increment: toc; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; }
+    .bb-toc li::before { content: counter(toc, decimal-leading-zero) "."; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--bb-accent); margin-right: 8px; letter-spacing: 0.06em; }
+    .bb-toc a { color: var(--color-text-secondary); text-decoration: none; border-bottom: 0.5px dotted transparent; transition: color 180ms ease, border-color 180ms ease; }
+    .bb-toc a:hover { color: var(--color-text-primary); border-bottom-color: var(--color-border-tertiary); }
+
+    /* ---- Source notes box ---- */
+    .bb-source { margin: 1rem 0 0; padding: 18px 22px; border-left: 2px solid var(--bb-amber); background: linear-gradient(90deg, var(--bb-amber-soft) 0%, transparent 80%), var(--bg-alt); border-radius: 4px; }
+    .bb-source-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bb-amber); margin-bottom: 10px; }
+    .bb-source ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .bb-source li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-secondary); padding: 3px 0 3px 14px; position: relative; }
+    .bb-source li::before { content: ''; position: absolute; left: 0; top: 12px; width: 4px; height: 4px; border-radius: 50%; background: var(--bb-amber); }
+
+    /* ---- Back-End Stack horizontal flow ---- */
+    .bb-flow { padding: 24px 22px 20px; border: 1px solid var(--bb-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .bb-flow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-accent); margin-bottom: 16px; }
+    .bb-flow-steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; align-items: stretch; }
+    .bb-flow-step { padding: 12px 12px 12px; border-radius: 8px; border: 0.5px solid var(--bb-bd-soft); background: rgba(255,255,255,0.025); position: relative; }
+    .bb-flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 6px solid var(--bb-accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; opacity: 0.5; }
+    .bb-flow-step:last-child::after { display: none; }
+    .bb-flow-step-num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: var(--bb-accent); }
+    .bb-flow-step-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); margin-top: 4px; letter-spacing: 0.04em; font-weight: 500; }
+    .bb-flow-step-desc { font-family: 'Source Serif 4', serif; font-size: 0.83rem; color: var(--color-text-secondary); line-height: 1.5; margin-top: 6px; }
+    .bb-flow-step--bb { background: linear-gradient(180deg, var(--bb-accent-soft) 0%, transparent 70%), rgba(255,255,255,0.025); border-color: var(--bb-accent); }
+    .bb-flow-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--bb-bd-soft); margin: 14px 0 0; line-height: 1.55; }
+
+    /* ---- Timeline rail ---- */
+    .bb-time { padding: 24px 22px 20px; border: 1px solid var(--bb-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .bb-time-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-accent); margin-bottom: 18px; }
+    .bb-time-rail { position: relative; height: 4px; background: rgba(255,255,255,0.04); border-radius: 2px; margin: 12px 6px 36px; }
+    .bb-time-rail::before { content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: linear-gradient(90deg, var(--bb-amber) 0%, var(--bb-accent) 60%, var(--bb-purple) 100%); border-radius: 2px; opacity: 0.55; }
+    .bb-time-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 13px; height: 13px; border-radius: 50%; background: var(--bb-accent); border: 2px solid var(--bg-alt); box-shadow: 0 0 10px rgba(111,168,158,0.45); }
+    .bb-time-step { position: absolute; top: 18px; transform: translateX(-50%); text-align: center; min-width: 84px; }
+    .bb-time-step-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-text-primary); font-weight: 500; }
+    .bb-time-step-year { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--bb-accent); letter-spacing: 0.1em; margin-top: 2px; }
+    .bb-time-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 60px; }
+    .bb-time-card { padding: 12px 13px 12px; border: 0.5px solid var(--bb-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); }
+    .bb-time-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--bb-accent); text-transform: uppercase; margin-bottom: 6px; }
+    .bb-time-card-name { font-family: 'Playfair Display', serif; font-size: 0.96rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 6px; line-height: 1.25; letter-spacing: -0.01em; }
+    .bb-time-card-note { font-family: 'Source Serif 4', serif; font-size: 0.83rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
+
+    /* ---- K&S Exposure Map (7 cards) ---- */
+    .bb-map { padding: 24px 22px 20px; border: 1px solid var(--bb-bd); border-radius: 12px; background: var(--bg-alt); margin: 1rem 0 0; }
+    .bb-map-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-accent); margin-bottom: 14px; }
+    .bb-map-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .bb-map-card { padding: 12px 14px 14px; border: 0.5px solid var(--bb-bd-soft); border-radius: 8px; background: rgba(255,255,255,0.025); position: relative; overflow: hidden; }
+    .bb-map-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--bb-accent); opacity: 0.5; }
+    .bb-map-card--legacy::before { background: var(--bb-amber); }
+    .bb-map-card--power::before  { background: var(--bb-copper); }
+    .bb-map-card--aps::before    { background: var(--bb-green); }
+    .bb-map-card--led::before    { background: var(--bb-purple); }
+    .bb-map-card--vw::before     { background: var(--bb-cool); }
+    .bb-map-card--tcb::before    { background: var(--bb-accent); }
+    .bb-map-card--hb::before     { background: var(--bb-red); opacity: 0.7; }
+    .bb-map-card-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--color-text-primary); text-transform: uppercase; font-weight: 500; }
+    .bb-map-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; }
+    .bb-map-card--legacy .bb-map-card-tag { color: var(--bb-amber); }
+    .bb-map-card--power  .bb-map-card-tag { color: var(--bb-copper); }
+    .bb-map-card--aps    .bb-map-card-tag { color: var(--bb-green); }
+    .bb-map-card--led    .bb-map-card-tag { color: var(--bb-purple); }
+    .bb-map-card--vw     .bb-map-card-tag { color: var(--bb-cool); }
+    .bb-map-card--tcb    .bb-map-card-tag { color: var(--bb-accent); }
+    .bb-map-card--hb     .bb-map-card-tag { color: var(--bb-red); }
+    .bb-map-card-desc { font-family: 'Source Serif 4', serif; font-size: 0.86rem; color: var(--color-text-secondary); line-height: 1.55; margin-top: 8px; }
+    .bb-map-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); padding-top: 14px; border-top: 0.5px solid var(--bb-bd-soft); margin: 14px 0 0; line-height: 1.55; }
+
+    /* ---- Old View vs Updated View comparison ---- */
+    .bb-views { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 0; }
+    .bb-views-col { padding: 22px 22px 20px; border-radius: 10px; border: 1px solid var(--bb-bd); background: var(--bg-alt); }
+    .bb-views-col--old { background: linear-gradient(180deg, var(--bb-amber-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(232,180,104,0.34); }
+    .bb-views-col--old .bb-views-eye { color: var(--bb-amber); }
+    .bb-views-col--new { background: linear-gradient(180deg, var(--bb-accent-soft) 0%, transparent 70%), var(--bg-alt); border-color: rgba(111,168,158,0.40); }
+    .bb-views-col--new .bb-views-eye { color: var(--bb-accent); }
+    .bb-views-eye { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .bb-views-title { font-family: 'Playfair Display', serif; font-size: 1.08rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 12px; letter-spacing: -0.01em; line-height: 1.25; }
+    .bb-views-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+    .bb-views-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.55; color: var(--color-text-secondary); padding: 5px 0 5px 14px; position: relative; }
+    .bb-views-col li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 1px; background: var(--color-text-tertiary); }
+
+    /* ---- Evidence Ledger ---- */
+    .bb-ev { margin: 1rem 0 0; padding: 22px 22px 18px; border: 1px solid var(--bb-bd); border-radius: 12px; background: var(--bg-alt); overflow-x: auto; }
+    .bb-ev-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-accent); margin-bottom: 14px; }
+    .bb-ev table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; color: var(--color-text-primary); }
+    .bb-ev th, .bb-ev td { padding: 9px 12px; text-align: left; border-bottom: 0.5px solid var(--bb-bd-soft); vertical-align: top; }
+    .bb-ev th { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bb-accent); font-weight: 500; border-bottom: 1px solid var(--bb-bd); white-space: nowrap; }
+    .bb-ev td.bb-ev-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); letter-spacing: 0.02em; white-space: nowrap; }
+    .bb-ev td.bb-ev-why { color: var(--color-text-secondary); }
+
+    /* ---- Risks grid ---- */
+    .bb-risk { padding: 22px 22px 18px; border: 1px solid rgba(224,122,139,0.34); border-radius: 12px; background: linear-gradient(180deg, var(--bb-red-soft) 0%, transparent 80%), var(--bg-alt); margin: 1rem 0 0; }
+    .bb-risk-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bb-red); margin-bottom: 14px; }
+    .bb-risk ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+    .bb-risk li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; line-height: 1.6; color: var(--color-text-primary); padding: 4px 0 4px 14px; position: relative; }
+    .bb-risk li::before { content: ''; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--bb-red); }
+
+    /* ---- Read next ---- */
+    .bb-rn { margin: 2.5rem 0 0; padding: 18px 22px 20px; border-radius: 10px; border: 0.5px dashed var(--color-border-tertiary); background: var(--bg-alt); }
+    .bb-rn-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 10px; }
+    .bb-rn ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+    .bb-rn li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.55; }
+    .bb-rn a { color: var(--color-text-primary); text-decoration: none; border-bottom: 0.5px dotted var(--color-border-tertiary); }
+    .bb-rn a:hover { color: var(--bb-accent); border-bottom-color: var(--bb-accent); }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 880px) {
+      .bb-flow-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .bb-flow-step::after { display: none; }
+      .bb-map-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bb-time-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      .essay-hed { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+      .essay-deck { font-size: 1.05rem; }
+      .essay-meta { gap: 1rem; }
+      .essay-pull { font-size: 1.25rem; }
+      .bb-toc ol { grid-template-columns: 1fr; }
+      .bb-views { grid-template-columns: 1fr; }
+      .bb-risk ul { grid-template-columns: 1fr; }
+      .bb-flow-steps { grid-template-columns: 1fr; }
+      .bb-time-rail, .bb-time-step { display: none; }
+      .bb-time-cards { grid-template-columns: 1fr; margin-top: 12px; }
+    }
+    @media (max-width: 480px) {
+      .essay-page { padding: 0 0 1rem; }
+      .essay-hed { font-size: 1.7rem; }
+      .essay-meta { flex-wrap: wrap; gap: 0.75rem; }
+      .essay-body p { font-size: 0.95rem; }
+      .essay-body h2 { font-size: 1.25rem; }
+      .bb-ev table { font-size: 0.82rem; }
+      .bb-map-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Work</a>
+        <a href="../../blog/" class="active">Writing</a>
+        <a href="../../atlases/">Atlases</a>
+        <a href="../../#about">About</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../../projects/">Work</a>
+    <a href="../../blog/">Writing</a>
+    <a href="../../atlases/">Atlases</a>
+    <a href="../../#about">About</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+
+  <article class="article essay-format essay-bb">
+    <div class="container" style="max-width: 920px;">
+
+      <div class="article-back">
+        <a href="../">&larr; Back to blog</a>
+      </div>
+
+      <div class="essay-page" id="article-content">
+
+        <div class="essay-issue">Essay No. 048 &nbsp;&middot;&nbsp; AI Infrastructure &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+
+        <div class="essay-tag-row">
+          <span class="tag">Semiconductors</span>
+          <span class="tag">AI Infrastructure</span>
+          <span class="tag">Advanced Packaging</span>
+          <span class="tag">Kulicke &amp; Soffa</span>
+          <span class="tag">Manufacturing</span>
+          <span class="tag">Wire Bonding</span>
+          <span class="tag">Wedge Bonding</span>
+          <span class="tag">TCB</span>
+          <span class="tag">Hybrid Bonding</span>
+          <span class="tag">Vertical Wire</span>
+          <span class="tag">HBM</span>
+          <span class="tag">CoWoS</span>
+          <span class="tag">Mini LED</span>
+          <span class="tag">Micro LED</span>
+          <span class="tag">TSMC</span>
+          <span class="tag">ASML</span>
+        </div>
+
+        <h1 class="essay-hed">The Boring Back-End of <em>AI</em>.<span class="essay-stamps"><span class="essay-stamp">Original analysis</span><span class="essay-stamp essay-stamp--muted">Not investment advice</span></span></h1>
+
+        <div class="essay-deck">The AI boom is not only about GPUs, HBM, EUV and CoWoS. It also depends on the invisible machinery that bonds, packages and connects chips into usable systems.</div>
+
+        <div class="essay-meta">
+          <div class="essay-avatar">PM</div>
+          <div class="essay-meta-text">
+            <div class="essay-author">Pugalenthi Magendran</div>
+            <div class="essay-date">May 2026 &nbsp;&middot;&nbsp; Melbourne, Australia</div>
+          </div>
+          <div class="essay-read-time">14 min read</div>
+        </div>
+
+        <div class="essay-body">
+
+          <aside class="bb-thesis" aria-label="Thesis">
+            <div class="bb-thesis-label">The thesis</div>
+            <p class="bb-thesis-text">The front-end makes the transistor. The back-end makes it usable.</p>
+          </aside>
+
+          <p class="essay-lede">The semiconductor industry loves glamorous bottlenecks. EUV. HBM. CoWoS. Blackwell. 2nm nanosheets. High-NA. The chips that get written about are the ones with the smallest features and the largest valuations. But chips do not become useful just because transistors exist. The die has to be connected, packaged, powered, cooled, tested, and turned into a reliable product. That is the back-end. And that is where Kulicke &amp; Soffa lives.</p>
+
+          <nav class="bb-toc" aria-label="Article contents">
+            <div class="bb-toc-label">Contents</div>
+            <ol>
+              <li><a href="#sec-lazy">The lazy view of K&amp;S</a></li>
+              <li><a href="#sec-2021">What the 2021 thesis got right</a></li>
+              <li><a href="#sec-2026">What changed by 2026</a></li>
+              <li><a href="#sec-ai">Why AI makes packaging more important</a></li>
+              <li><a href="#sec-memory">The K&amp;S memory packaging update</a></li>
+              <li><a href="#sec-led">Mini and micro LED: the part that aged unevenly</a></li>
+              <li><a href="#sec-power">Battery and power electronics as secondary optionality</a></li>
+              <li><a href="#sec-mature">Mature nodes still matter</a></li>
+              <li><a href="#sec-exposure">The K&amp;S exposure map</a></li>
+              <li><a href="#sec-risks">Risks and why this is not a simple bullish story</a></li>
+              <li><a href="#sec-evidence">Evidence ledger</a></li>
+              <li><a href="#sec-verdict">Final verdict</a></li>
+            </ol>
+          </nav>
+
+          <p>K&amp;S is not Nvidia, TSMC, or ASML. That is exactly why it is interesting. It sits in the invisible layer where chips become systems. In the AI era, that layer matters more than the marketing makes obvious. The question this essay asks is not whether K&amp;S is a good stock. The question is what the company tells us about a part of the chip economy most people stop reading about after the headline.</p>
+
+          <p class="essay-line">AI is pushing the industry to scale sideways and vertically, not just shrink transistors.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-lazy">1. The lazy view of K&amp;S</h2>
+
+          <p>The shallow market view of Kulicke &amp; Soffa goes like this. K&amp;S is an old wire-bonder company. Wire bonding is old packaging. Advanced packaging is the future. Therefore wire-bonder companies are structurally dead. The trade is short the bonders and long whoever makes CoWoS look impressive.</p>
+
+          <p>It is not a stupid story. Wire bonding really is old. Advanced packaging really is the leading edge. The lazy version is just missing two things. First, wire bonding is not disappearing in a hurry. It is still the high-volume default for mature logic, analog, power semiconductors, automotive electronics, industrial chips, sensors, memory at certain tiers, LEDs, and lower-cost packages. Second, K&amp;S itself has been working for a decade to climb out of the &ldquo;wire bonders only&rdquo; box.</p>
+
+          <p>The better question is not whether wire bonding disappears. The better question is where wire bonding remains good enough, where it evolves, and where K&amp;S can climb into higher-value packaging layers.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2021">2. What the 2021 thesis got right</h2>
+
+          <p>The starting point for this essay is the uploaded 2021 SemiAnalysis piece on K&amp;S.<sup><a href="#fn1">1</a></sup> It is a useful historical anchor, not a final verdict. The piece treated K&amp;S as a misunderstood compounder hiding inside the &ldquo;old wire bonders&rdquo; framing, and made an argument that is worth restating in its own words before grading it.</p>
+
+          <div class="bb-source" aria-label="Notes from the uploaded 2021 SemiAnalysis article">
+            <div class="bb-source-label">Notes from the uploaded 2021 piece</div>
+            <ul>
+              <li>K&amp;S was historically criticised as a cyclical wire-bonder company.</li>
+              <li>Wire bonding was described as &ldquo;old&rdquo; packaging, but still a very large share of total packaging.</li>
+              <li>The article argued that trailing-edge capacity had been chronically under-invested.</li>
+              <li>It argued MCUs and trailing-edge components were among the tightest parts of the 2021 shortage and were likely to use wire bonding.</li>
+              <li>It highlighted K&amp;S expansion beyond wire bonding into mini LED, micro LED, battery manufacturing, services, consumables, and advanced packaging.</li>
+              <li>It described PIXALUX and LUMINEX as mini and micro LED placement and transfer technologies.</li>
+              <li>It described battery interconnects as an emerging adjacency.</li>
+              <li>It noted K&amp;S was trying to move into TCB and hybrid bonding, while acknowledging competition from Besi, ASM, and Applied Materials.</li>
+            </ul>
+          </div>
+
+          <p>The 2021 piece was not simply &ldquo;wire bonding is back.&rdquo; The better version was: the market was underestimating the entire back-end. That framing has aged well. The specific claim that wire-bonding tightness would persist for years was right for a while and then faded as the cycle turned. The bigger claim that K&amp;S would matter as a back-end story, not just a wire-bonder story, has lasted longer.</p>
+
+          <p>No SemiAnalysis text, charts, screenshots, or images are reproduced here. The original piece is treated only as cited historical framing.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-2026">3. What changed by 2026</h2>
+
+          <p>Five years on, the K&amp;S numbers tell a more layered story than either the bull or bear version of 2021. K&amp;S&rsquo;s own FY2025 10-K filing shows the picture of a company that is still cyclical, still exposed to ball bonding, but no longer only that.<sup><a href="#fn4">4</a></sup></p>
+
+          <p>FY2025 revenue was USD 654.1 million, down 7.4% year over year. Ball Bonding Equipment revenue fell 18.1%. Wedge Bonding Equipment grew 4.5%. Advanced Solutions revenue grew 37.6%. APS (the aftermarket products and services segment) represented 23.9% of total revenue. The story is a soft year on legacy bonders and double-digit growth in advanced and aftermarket. That is the shape of a transition, not a collapse.</p>
+
+          <p>The more recent print sharpens the point. K&amp;S Q2 FY2026 revenue came in at USD 242.6 million with gross margin of 49.3%, and the company guided Q3 FY2026 revenue at about USD 310 million plus or minus USD 20 million.<sup><a href="#fn2">2</a></sup> K&amp;S also raised FY2026 capex from about USD 12 million to about USD 22 million to expand TCB production, and said that capex supports up to roughly USD 400 million in annual TCB system sales over time. None of that is a guarantee. It is a company making a capital decision about which technology it expects to scale.</p>
+
+          <div class="bb-time" role="img" aria-label="K&amp;S timeline from the 2021 SemiAnalysis thesis to the 2026 memory roadmap.">
+            <div class="bb-time-label">K&amp;S timeline &middot; 2021 thesis to 2026 roadmap</div>
+            <div class="bb-time-rail">
+              <span class="bb-time-dot" style="left: 5%;"></span>
+              <span class="bb-time-step" style="left: 5%;"><div class="bb-time-step-name">SemiAnalysis</div><div class="bb-time-step-year">2021</div></span>
+              <span class="bb-time-dot" style="left: 28%;"></span>
+              <span class="bb-time-step" style="left: 28%;"><div class="bb-time-step-name">LUMINEX</div><div class="bb-time-step-year">2023</div></span>
+              <span class="bb-time-dot" style="left: 51%;"></span>
+              <span class="bb-time-step" style="left: 51%;"><div class="bb-time-step-name">FY2025</div><div class="bb-time-step-year">10-K</div></span>
+              <span class="bb-time-dot" style="left: 74%;"></span>
+              <span class="bb-time-step" style="left: 74%;"><div class="bb-time-step-name">Memory PR</div><div class="bb-time-step-year">Mar 2026</div></span>
+              <span class="bb-time-dot" style="left: 95%;"></span>
+              <span class="bb-time-step" style="left: 95%;"><div class="bb-time-step-name">Q2 FY26</div><div class="bb-time-step-year">May 2026</div></span>
+            </div>
+            <div class="bb-time-cards">
+              <div class="bb-time-card">
+                <div class="bb-time-card-tag">2021</div>
+                <h4 class="bb-time-card-name">SemiAnalysis thesis</h4>
+                <p class="bb-time-card-note">Argued the market was underestimating the back-end. Flagged PIXALUX, LUMINEX, batteries, TCB and hybrid bonding alongside wire bonding.<sup><a href="#fn1">1</a></sup></p>
+              </div>
+              <div class="bb-time-card">
+                <div class="bb-time-card-tag">2023</div>
+                <h4 class="bb-time-card-name">LUMINEX / TSMT</h4>
+                <p class="bb-time-card-note">K&amp;S said LUMINEX with TSMT reached 540K units per hour at 15&micro;m 3-sigma accuracy. Real mini LED placement throughput.<sup><a href="#fn7">7</a></sup></p>
+              </div>
+              <div class="bb-time-card">
+                <div class="bb-time-card-tag">FY2025</div>
+                <h4 class="bb-time-card-name">Cyclical pressure</h4>
+                <p class="bb-time-card-note">USD 654.1M revenue. Ball Bonding down 18.1%. Advanced Solutions up 37.6%. APS at 23.9% of revenue.<sup><a href="#fn4">4</a></sup></p>
+              </div>
+              <div class="bb-time-card">
+                <div class="bb-time-card-tag">Mar 2026</div>
+                <h4 class="bb-time-card-name">Memory portfolio</h4>
+                <p class="bb-time-card-note">Ball Bonding + Vertical Wire + Advanced TCB + future Hybrid Bonding. TCB expected to grow ~70% sequentially in FY2026.<sup><a href="#fn3">3</a></sup></p>
+              </div>
+              <div class="bb-time-card">
+                <div class="bb-time-card-tag">May 2026</div>
+                <h4 class="bb-time-card-name">Q2 FY26 rebound</h4>
+                <p class="bb-time-card-note">USD 242.6M revenue, 49.3% gross margin. FY2026 capex raised from ~USD 12M to ~USD 22M to expand TCB.<sup><a href="#fn2">2</a></sup></p>
+              </div>
+            </div>
+          </div>
+
+          <p>The updated 2026 thesis is not that wire bonding magically became sexy. It is that the old back-end company is trying to bridge old packaging and new packaging at the same time, while the rest of the industry catches up to how important that bridge is.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-ai">4. Why AI makes packaging more important</h2>
+
+          <p>The macro context is the part most readers already know, but it matters to spell out. AI is not only a transistor problem. AI systems need more compute, more memory, more bandwidth, more power delivery, and more thermal management than the previous generation of workloads. That pushes the industry toward chiplets, HBM, interposers, CoWoS, SoIC, advanced substrates, larger packages, and more complex bonding.</p>
+
+          <p>TSMC&rsquo;s own 2026 framing makes this concrete. TSMC said it is in production with CoWoS at about 5.5 reticles of area. It said it is planning 14-reticle-size CoWoS by 2028, capable of integrating roughly 10 large compute dies and 20 HBM stacks in one package.<sup><a href="#fn5">5</a></sup> Those are TSMC company claims, not independent benchmarks. The direction is what matters. The leading edge is no longer scaling only inside a die. It is scaling outward, on the package.</p>
+
+          <p>ASML&rsquo;s Q4 FY2025 deck adds the other half of the picture. ASML said AI compute demand has outpaced Moore&rsquo;s Law, and that Moore&rsquo;s Law alone is not sufficient to meet future training compute requirements. It said AI demand for compute density and high-bandwidth memory is growing faster than overall semiconductor sales.<sup><a href="#fn6">6</a></sup> Read together with TSMC&rsquo;s roadmap, the message is that the industry is still scaling transistors, and it is also scaling sideways and vertically.</p>
+
+          <p>That is the climate K&amp;S lives in. The more the package becomes the scaling surface, the more bonding, interconnect, and assembly matter as decisions in their own right.</p>
+
+          <div class="bb-flow" role="img" aria-label="Back-end stack: wafer fabrication, die attach, bonding, packaging, test, system integration.">
+            <div class="bb-flow-label">Back-end stack &middot; how a die becomes a system</div>
+            <div class="bb-flow-steps">
+              <div class="bb-flow-step">
+                <div class="bb-flow-step-num">STEP 01</div>
+                <div class="bb-flow-step-name">Wafer fab</div>
+                <p class="bb-flow-step-desc">Front-end manufacturing. Transistors, metal layers, lithography. Where EUV and 2nm live.</p>
+              </div>
+              <div class="bb-flow-step bb-flow-step--bb">
+                <div class="bb-flow-step-num">STEP 02</div>
+                <div class="bb-flow-step-name">Die attach</div>
+                <p class="bb-flow-step-desc">Picking a die, placing it on a substrate or carrier, fixing it in position before any electrical connection.</p>
+              </div>
+              <div class="bb-flow-step bb-flow-step--bb">
+                <div class="bb-flow-step-num">STEP 03</div>
+                <div class="bb-flow-step-name">Bonding</div>
+                <p class="bb-flow-step-desc">Wire, wedge, vertical wire, TCB, or hybrid bonding. Where the die actually connects to the rest of the world.</p>
+              </div>
+              <div class="bb-flow-step bb-flow-step--bb">
+                <div class="bb-flow-step-num">STEP 04</div>
+                <div class="bb-flow-step-name">Packaging</div>
+                <p class="bb-flow-step-desc">Substrate, encapsulation, interposer or fan-out. The structure that holds the assembly together.</p>
+              </div>
+              <div class="bb-flow-step bb-flow-step--bb">
+                <div class="bb-flow-step-num">STEP 05</div>
+                <div class="bb-flow-step-name">Test</div>
+                <p class="bb-flow-step-desc">Burn-in, functional and parametric test. Catches defects before the part ships.</p>
+              </div>
+              <div class="bb-flow-step">
+                <div class="bb-flow-step-num">STEP 06</div>
+                <div class="bb-flow-step-name">System integration</div>
+                <p class="bb-flow-step-desc">Module, board, server, or device assembly. Where the chip actually becomes a product.</p>
+              </div>
+            </div>
+            <p class="bb-flow-foot">Steps 2 to 5 are the back-end. K&amp;S sells equipment, consumables, and services into the middle of this chain.</p>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-memory">5. The K&amp;S memory packaging update</h2>
+
+          <p>In March 2026, K&amp;S formalised its memory-packaging story. The company said it is structuring its memory interconnect roadmap around Ball Bonding, Vertical Wire, Advanced TCB, and future Hybrid Bonding, and said TCB demand should grow approximately 70% sequentially in FY2026, with continued growth in logic and memory advanced packaging.<sup><a href="#fn3">3</a></sup> That is a company claim, not an external forecast. Read it as direction.</p>
+
+          <p>Each of those four technologies plays a different role. <strong>Ball bonding</strong> is the traditional high-volume interconnect method, still dominant in many legacy and mature-node packages. <strong>Wedge bonding</strong>, which K&amp;S also sells, is the heavier-current cousin used in power modules, automotive, and industrial. <strong>Vertical wire</strong> arranges wire in a more vertical, dense pattern, useful for stacked memory and higher-density interconnect than classic ball bonding can give you. <strong>TCB</strong>, thermo-compression bonding, uses heat and pressure to bond dies, and is one of the workhorse processes inside today&rsquo;s advanced packages and heterogeneous integration. <strong>Hybrid bonding</strong> goes further: direct copper-to-copper, wafer or die, no bumps. It is the bet for future high-density 3D packaging.</p>
+
+          <p>None of this means K&amp;S will dominate hybrid bonding. The honest read is that K&amp;S is trying to be present across the bonding spectrum at the moment the package becomes the scaling surface. Competition is intense. Besi, ASM Pacific, and Applied Materials all want share in TCB and hybrid bonding, and each has its own franchise to defend. The 2026 update is that K&amp;S has earned a seat at this table, not that it has won the table.</p>
+
+          <p class="essay-pull">The better question is not whether wire bonding disappears. The better question is where it remains good enough.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-led">6. Mini and micro LED: the part that aged unevenly</h2>
+
+          <p>The 2021 piece was excited about PIXALUX and LUMINEX because mini LED and micro LED manufacturing are brutal placement problems. A typical iPad Pro display in the mini LED era used over 10,000 mini LEDs. Even a tiny defect rate hurts panel yield, which means placement tools that combine throughput with sub-micron-class precision become strategic.<sup><a href="#fn1">1</a></sup></p>
+
+          <p>The technology turned out to be real. K&amp;S said in 2023 that LUMINEX with TSMT had reached 540,000 units per hour at 15&micro;m 3-sigma accuracy, and TSMT said it was working to improve yield from 99.99% to 99.999%.<sup><a href="#fn7">7</a></sup> Those are company numbers, but they describe a tool category that is no longer hypothetical.</p>
+
+          <p>The market thesis aged less cleanly. Apple shifted its iPad Pro to OLED, which weakened the &ldquo;Apple drives mini LED tablets forever&rdquo; case. The 2026 reframing is that the LED opportunity is broader than tablets. TVs, gaming monitors, automotive displays, signage, direct-emissive consumer displays, and eventually wider micro LED adoption are still on the table. Micro LED itself is attractive on paper because it offers brightness, efficiency, durability, and contrast advantages. The reason it has not won yet is manufacturing: transfer, placement, bonding, yield, repair, and cost. That is exactly the place back-end process equipment matters most.</p>
+
+          <p>The honest 2026 read is that LUMINEX is real, mini LED is a real volume opportunity in non-tablet displays, and micro LED is a longer-dated bet with serious yield problems. None of those are guaranteed to drive K&amp;S earnings on any particular timeline.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-power">7. Battery and power electronics as secondary optionality</h2>
+
+          <p>The 2021 piece also flagged battery and power applications. This is where I would temper the enthusiasm most. The stronger argument is not that K&amp;S becomes a battery company. The stronger argument is that electrification creates more places where precise, reliable interconnects matter.</p>
+
+          <p>K&amp;S&rsquo;s wedge and ribbon bonding expertise can apply to power modules, automotive sensor packages, DBC (direct bonded copper) substrates, and small cylindrical battery packs. Electrification raises demand for power semiconductor packaging and high-current interconnects. That is a real adjacency. It is not the strongest pillar of the 2026 thesis. K&amp;S&rsquo;s public reporting does not yet break out battery exposure cleanly, and treating it as a major driver without segment-level proof would be an overreach.</p>
+
+          <p>Battery is best read as optionality, not as a primary line of the argument.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-mature">8. Mature nodes still matter</h2>
+
+          <p>The other reason the back-end stays relevant is that the chip economy is not one market. Mature logic, analog, power and discrete, automotive, and industrial chips are still enormous. The OECD&rsquo;s 2025 chip landscape report says China leads in mature logic in-production capacity at about 4.23 million 8-inch-equivalent wafer starts per month, and also leads in power and discrete and in analog capacity.<sup><a href="#fn8">8</a></sup> Those are not leading-edge AI accelerators. They are MCUs, automotive ICs, power devices, sensors, and the chips that run everything else.</p>
+
+          <p>SEMI&rsquo;s 2026 outlook adds another data point. SEMI projects double-digit growth in global 300mm fab equipment spending in 2026 and 2027, driven by AI investment and regional semiconductor self-sufficiency.<sup><a href="#fn9">9</a></sup> Some of that spending sits at the leading edge. A meaningful share sits at mature and trailing-edge nodes built to anchor domestic supply chains. Both ends of the stack need back-end assembly, and the mature end is still where wire bonding does the bulk of the work.</p>
+
+          <p>The chip economy is a stack. Leading-edge AI accelerators sit at one end. Mature-node power, analog, MCU, sensor and automotive chips sit at the other. Both need back-end assembly. K&amp;S is unusually positioned to sit on both ends at once.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-exposure">9. The K&amp;S exposure map</h2>
+
+          <p>If you want to compress the company into one picture, this is roughly what it looks like in 2026. Seven exposures, each with a different posture and a different risk profile. None of them is the whole story on its own.</p>
+
+          <div class="bb-map" role="img" aria-label="K&amp;S exposure map across seven back-end areas.">
+            <div class="bb-map-label">K&amp;S exposure map &middot; seven back-end seats</div>
+            <div class="bb-map-grid">
+              <div class="bb-map-card bb-map-card--legacy"><div class="bb-map-card-name">Ball / wire bonding</div><div class="bb-map-card-tag">High volume &middot; mature</div><p class="bb-map-card-desc">The legacy core. Still dominant in mature logic, analog, sensors, automotive ICs, MCUs, and many memory tiers. Cyclical and exposed to share loss over time.</p></div>
+              <div class="bb-map-card bb-map-card--power"><div class="bb-map-card-name">Wedge &amp; power</div><div class="bb-map-card-tag">Electrification &middot; industrial</div><p class="bb-map-card-desc">Heavier-current bonding for power modules, automotive, industrial, sensors. Electrification slowly raises the addressable surface.</p></div>
+              <div class="bb-map-card bb-map-card--aps"><div class="bb-map-card-name">APS</div><div class="bb-map-card-tag">Aftermarket &middot; recurring</div><p class="bb-map-card-desc">Aftermarket products and services. Reported as 23.9% of FY2025 revenue. Less cyclical, more recurring, and underrated as a stabiliser.<sup><a href="#fn4">4</a></sup></p></div>
+              <div class="bb-map-card bb-map-card--led"><div class="bb-map-card-name">Mini / micro LED</div><div class="bb-map-card-tag">Display &middot; long-dated</div><p class="bb-map-card-desc">PIXALUX, LUMINEX, TSMT. Tablet thesis weakened, but TVs, monitors, automotive displays and eventual micro LED remain the larger story.</p></div>
+              <div class="bb-map-card bb-map-card--vw"><div class="bb-map-card-name">Vertical wire</div><div class="bb-map-card-tag">Memory density</div><p class="bb-map-card-desc">Higher-density interconnect than classic ball bonding for stacked memory. Part of the 2026 memory portfolio repositioning.<sup><a href="#fn3">3</a></sup></p></div>
+              <div class="bb-map-card bb-map-card--tcb"><div class="bb-map-card-name">TCB</div><div class="bb-map-card-tag">Advanced packaging</div><p class="bb-map-card-desc">Thermo-compression bonding for heterogeneous integration and HBM-class stacks. FY2026 capex raised to expand capacity.<sup><a href="#fn2">2</a></sup></p></div>
+              <div class="bb-map-card bb-map-card--hb"><div class="bb-map-card-name">Hybrid bonding</div><div class="bb-map-card-tag">Future 3D &middot; bet</div><p class="bb-map-card-desc">Direct copper-to-copper, no bumps. The 3D-packaging frontier. Competitive, not assured, but K&amp;S has a seat at the table.</p></div>
+              <div class="bb-map-card"><div class="bb-map-card-name">Batteries &amp; modules</div><div class="bb-map-card-tag">Optionality</div><p class="bb-map-card-desc">Power module and small cylindrical cell interconnect adjacency. Real but not yet large in the public reporting. Optionality, not a pillar.</p></div>
+            </div>
+            <p class="bb-map-foot">Read horizontally. Some seats are large and cyclical (wire bonding). Some are smaller and recurring (APS). Some are speculative (hybrid bonding, batteries). Together they describe a back-end company, not a wire-bonder company.</p>
+          </div>
+
+          <p>That eighth tile is the &ldquo;batteries&rdquo; one, kept neutral on purpose. It is in the map because the 2021 piece flagged it, not because it is a load-bearing part of the 2026 thesis.</p>
+
+          <div class="bb-views">
+            <div class="bb-views-col bb-views-col--old" aria-label="Old market view">
+              <div class="bb-views-eye">Old view</div>
+              <h3 class="bb-views-title">&ldquo;Wire bonding is old.&rdquo;</h3>
+              <ul>
+                <li>K&amp;S is a one-product cyclical bonder shop.</li>
+                <li>Advanced packaging replaces wire bonding everywhere that matters.</li>
+                <li>Mini LED is an Apple tablet trade.</li>
+                <li>Batteries are a meme adjacency.</li>
+                <li>Earnings are too cyclical to underwrite.</li>
+              </ul>
+            </div>
+            <div class="bb-views-col bb-views-col--new" aria-label="Updated 2026 view">
+              <div class="bb-views-eye">Updated view</div>
+              <h3 class="bb-views-title">&ldquo;Wire bonding remains. K&amp;S also climbs.&rdquo;</h3>
+              <ul>
+                <li>Wire bonding stays high-volume in mature logic, analog, power, automotive, sensors, and many memory tiers.</li>
+                <li>K&amp;S is pushing into vertical wire, TCB, and a credible hybrid-bonding seat.</li>
+                <li>LUMINEX and TSMT show real placement throughput beyond tablets.</li>
+                <li>APS at ~24% of revenue is a real recurring stabiliser.<sup><a href="#fn4">4</a></sup></li>
+                <li>The thesis is back-end exposure, not a single product trade.</li>
+              </ul>
+            </div>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-risks">10. Risks and why this is not a simple bullish story</h2>
+
+          <p>None of the above implies K&amp;S is risk-free, and the company itself is explicit about that in its filings.<sup><a href="#fn4">4</a></sup> A serious back-end thesis has to carry a serious risk list.</p>
+
+          <div class="bb-risk" aria-label="Risks">
+            <div class="bb-risk-label">Risks the thesis has to live with</div>
+            <ul>
+              <li>Semiconductor equipment is structurally cyclical.</li>
+              <li>Ball bonding revenue can drop sharply in down cycles, as FY2025 showed.</li>
+              <li>Traditional wire bonding can keep losing share to flip chip, wafer-level packaging, TCB, and hybrid bonding over time.</li>
+              <li>K&amp;S must execute in advanced packaging where Besi, ASM, and Applied Materials are strong incumbents.</li>
+              <li>About 53.5% of FY2025 revenue came from shipments to customers headquartered in China.<sup><a href="#fn4">4</a></sup> That is a meaningful concentration.</li>
+              <li>Export controls, trade policy, tariffs, and geopolitical fragmentation can move that demand.</li>
+              <li>Mini LED tablet expectations weakened after Apple moved iPad Pro to OLED. Display roadmaps shift faster than equipment roadmaps.</li>
+              <li>Battery exposure should not be treated as a primary driver without segment-level proof.</li>
+              <li>Memory packaging share is contested. The TCB capacity expansion is a bet, not a result.</li>
+              <li>The 70% sequential TCB growth claim is K&amp;S&rsquo;s own framing for FY2026, not an external forecast.<sup><a href="#fn3">3</a></sup></li>
+            </ul>
+          </div>
+
+          <p>The point is not that K&amp;S is risk-free. The point is that the back-end layer is strategically more important than most people realise, and a company that sits across it deserves to be analysed on more than the wire-bonder caricature.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-evidence">11. Evidence ledger</h2>
+
+          <p>Because this essay sits between the uploaded 2021 thesis and a 2026 reading, here is the load-bearing evidence in one place, paired with source and a one-line note on why it matters.</p>
+
+          <div class="bb-ev" role="region" aria-label="Evidence ledger">
+            <div class="bb-ev-label">Evidence ledger &middot; claim &middot; source &middot; why it matters</div>
+            <table>
+              <thead>
+                <tr><th>Claim</th><th>Source</th><th>Why it matters</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>K&amp;S Q2 FY2026 revenue USD 242.6M, gross margin 49.3%, Q3 guide ~USD 310M &plusmn; USD 20M.</td><td class="bb-ev-src">K&amp;S IR (May 2026)<sup><a href="#fn2">2</a></sup></td><td class="bb-ev-why">Shows the cyclical recovery shape, not a structural decline.</td></tr>
+                <tr><td>FY2026 capex raised from ~USD 12M to ~USD 22M to expand TCB; supports up to ~USD 400M annual TCB system sales over time.</td><td class="bb-ev-src">K&amp;S IR (May 2026)<sup><a href="#fn2">2</a></sup></td><td class="bb-ev-why">Capital decision tied to the advanced-packaging transition, not legacy bonders.</td></tr>
+                <tr><td>K&amp;S structures memory portfolio around Ball Bonding, Vertical Wire, Advanced TCB, and future Hybrid Bonding.</td><td class="bb-ev-src">K&amp;S IR (Mar 2026)<sup><a href="#fn3">3</a></sup></td><td class="bb-ev-why">Frames K&amp;S as bonding-spectrum, not single-product, in memory.</td></tr>
+                <tr><td>K&amp;S expects TCB to grow ~70% sequentially in FY2026; growth in logic and memory advanced packaging.</td><td class="bb-ev-src">K&amp;S IR (Mar 2026)<sup><a href="#fn3">3</a></sup></td><td class="bb-ev-why">Company claim, not external forecast. Direction over precision.</td></tr>
+                <tr><td>FY2025 revenue USD 654.1M (-7.4%). Ball Bonding -18.1%. Wedge Bonding +4.5%. Advanced Solutions +37.6%. APS 23.9% of revenue.</td><td class="bb-ev-src">K&amp;S 10-K (FY2025)<sup><a href="#fn4">4</a></sup></td><td class="bb-ev-why">Shape of a transition, not collapse. APS adds recurring stability.</td></tr>
+                <tr><td>~53.5% of FY2025 revenue from customers headquartered in China.</td><td class="bb-ev-src">K&amp;S 10-K (FY2025)<sup><a href="#fn4">4</a></sup></td><td class="bb-ev-why">Material geopolitical concentration to take seriously.</td></tr>
+                <tr><td>TSMC producing 5.5-reticle CoWoS today; planning 14-reticle CoWoS in 2028 with ~10 compute dies and ~20 HBM stacks.</td><td class="bb-ev-src">TSMC 2026 Symposium<sup><a href="#fn5">5</a></sup></td><td class="bb-ev-why">Confirms the package is the scaling surface, which lifts back-end as a layer.</td></tr>
+                <tr><td>AI compute demand has outpaced Moore&rsquo;s Law; Moore&rsquo;s Law alone not sufficient for future training compute.</td><td class="bb-ev-src">ASML Q4 FY2025<sup><a href="#fn6">6</a></sup></td><td class="bb-ev-why">Macro reason every back-end seat (bonding, packaging, memory) gets more strategic.</td></tr>
+                <tr><td>K&amp;S said LUMINEX with TSMT reached 540K units/hour at 15&micro;m 3-sigma accuracy; TSMT targeted yield from 99.99% to 99.999%.</td><td class="bb-ev-src">K&amp;S IR (2023)<sup><a href="#fn7">7</a></sup></td><td class="bb-ev-why">Real mini LED placement throughput, regardless of which device wins.</td></tr>
+                <tr><td>China leads mature logic in-production capacity at ~4.23M 8-inch-equivalent wafer starts/month; also leads power/discrete and analog.</td><td class="bb-ev-src">OECD Chip Landscape<sup><a href="#fn8">8</a></sup></td><td class="bb-ev-why">The mature end of the chip stack is huge, and wire bonding lives there.</td></tr>
+                <tr><td>SEMI expects double-digit growth in 300mm fab equipment spending in 2026 and 2027.</td><td class="bb-ev-src">SEMI (2026 outlook)<sup><a href="#fn9">9</a></sup></td><td class="bb-ev-why">Adds breadth: AI and regional self-sufficiency both feed back-end demand.</td></tr>
+                <tr><td>Uploaded 2021 SemiAnalysis piece argued the back-end was underestimated and flagged TCB, hybrid bonding, mini/micro LED, batteries.</td><td class="bb-ev-src">SemiAnalysis (2021, uploaded)<sup><a href="#fn1">1</a></sup></td><td class="bb-ev-why">Historical anchor restated in this essay&rsquo;s own words. Not gospel; not reproduced.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-verdict">12. Final verdict</h2>
+
+          <p>The 2021 thesis was right in two ways. It was right that K&amp;S was more than an old wire-bonder company. It was right that back-end assembly was becoming more important than the market was pricing in.</p>
+
+          <p>The 2026 version should be sharper. K&amp;S is a case study in the forgotten infrastructure layer beneath AI. The leading-edge story focuses on the transistor and the package. The mature-node story focuses on power, analog, automotive, and industrial chips. Both ends of that stack lean on the back-end. K&amp;S sits in the middle of it.</p>
+
+          <p>Whether the company is a good investment is not the point of this essay. The point is that the layer where chips become systems is strategically more important than the headline coverage suggests, and the company that sells equipment, consumables, and services into that layer is interesting on its own terms.</p>
+
+          <p class="essay-pull">The front-end makes the transistor. The back-end makes it usable. And in the AI era, that boring back-end is becoming harder to ignore.</p>
+
+          <hr class="essay-hr">
+
+          <h2 id="sec-sources">Sources &amp; footnotes</h2>
+
+          <p>This essay treats the uploaded 2021 SemiAnalysis article as a cited historical anchor. Specific 2026 claims come from K&amp;S investor releases and the FY2025 10-K. Macro framing is sourced from TSMC, ASML, OECD, and SEMI public material. No third-party charts, screenshots, or logos are reproduced. This is not investment advice.</p>
+
+          <div class="essay-closer">
+            <p>Original 2026 analysis. The uploaded 2021 SemiAnalysis piece on Kulicke &amp; Soffa is used only as a cited historical anchor, framed in this essay&rsquo;s own words. K&amp;S revenue, gross margin, capex, segment growth, and guidance figures are company-released numbers, not independent measurement. TSMC reticle-size claims are company claims. ASML macro framing is from ASML&rsquo;s investor material. No SemiAnalysis text, charts, screenshots, or images are reproduced. No specific Kulicke &amp; Soffa, TSMC, ASML, Besi, ASM Pacific, or Applied Materials security is being recommended.</p>
+          </div>
+
+          <div class="essay-footnote">
+            <p id="fn1"><sup>1</sup> Uploaded SemiAnalysis PDF, Dylan Patel (SemiAnalysis), 2021. <em>Kulicke &amp; Soffa Industries, $KLIC, Continued Outperformance Of Wire Bonders And Emerging Supplier in Mini-LED, Micro-LED, And Battery Manufacturing</em>. Used here only as a cited historical anchor, framed in this essay&rsquo;s own words. The article: framed K&amp;S as a misunderstood back-end company; described wire bonding as old but still high-volume; argued trailing-edge capacity had been under-invested; highlighted K&amp;S expansion into mini LED, micro LED, batteries, services, consumables, TCB and hybrid bonding; named PIXALUX and LUMINEX as the mini and micro LED placement and transfer technologies; described battery interconnects as an emerging adjacency; and acknowledged competition from Besi, ASM, and AMAT in TCB and hybrid bonding. No SemiAnalysis text, charts, screenshots, or images are reproduced.</p>
+            <p id="fn2"><sup>2</sup> Kulicke &amp; Soffa Investor Relations (May 2026). <a href="https://investor.kns.com/2026-05-06-Kulicke-Soffa-Reports-Second-Quarter-2026-Results" target="_blank" rel="noopener">Kulicke &amp; Soffa reports second quarter 2026 results</a>. Used for: Q2 FY2026 revenue of USD 242.6M; gross margin of 49.3%; Q3 FY2026 revenue guidance of approximately USD 310M plus or minus USD 20M; FY2026 capex raised from approximately USD 12M to approximately USD 22M to expand TCB production; framing that this capex supports up to approximately USD 400M of annual TCB system sales over time.</p>
+            <p id="fn3"><sup>3</sup> Kulicke &amp; Soffa Investor Relations (March 2026). <a href="https://investor.kns.com/2026-03-24-Kulicke-Soffa-Expands-Memory-Solutions-Portfolio" target="_blank" rel="noopener">Kulicke &amp; Soffa expands memory solutions portfolio</a>. Used for: K&amp;S memory interconnect roadmap framed around Ball Bonding, Vertical Wire, Advanced TCB, and future Hybrid Bonding; company expectation that TCB grows approximately 70% sequentially in FY2026; framing that TCB demand continues to grow in logic and memory advanced packaging.</p>
+            <p id="fn4"><sup>4</sup> Kulicke &amp; Soffa, Form 10-K for the fiscal year ended October 4, 2025. <a href="https://www.sec.gov/Archives/edgar/data/56978/000005697825000081/klic-20251004.htm" target="_blank" rel="noopener">SEC filing, FY2025 10-K</a>. Used for: FY2025 revenue of USD 654.1M and 7.4% year-over-year decline; Ball Bonding Equipment revenue decline of 18.1%; Wedge Bonding Equipment revenue increase of 4.5%; Advanced Solutions revenue increase of 37.6%; APS at 23.9% of FY2025 revenue; approximately 53.5% of FY2025 revenue from shipments to customers headquartered in China; company-stated risk factors around cyclicality and alternative packaging technologies reducing demand for traditional wire bonding.</p>
+            <p id="fn5"><sup>5</sup> TSMC. <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener">2026 Technology Symposium</a>. Used for: TSMC framing that it is producing 5.5-reticle-size CoWoS today and planning 14-reticle-size CoWoS by 2028, capable of integrating approximately 10 large compute dies and 20 HBM stacks. Numbers are TSMC company claims, not independent measurement.</p>
+            <p id="fn6"><sup>6</sup> ASML. <a href="https://ourbrand.asml.com/m/e333f07a490e187a/original/2026_01_28-Presentation-ASML-Press-Conference-Q4FY2025.pdf" target="_blank" rel="noopener">Q4 FY2025 press conference presentation</a>. Used for: ASML&rsquo;s framing that AI compute demand has outpaced Moore&rsquo;s Law; that Moore&rsquo;s Law alone is not sufficient to meet future training compute requirements; and that AI demand for compute density and high-bandwidth memory is growing faster than overall semiconductor sales.</p>
+            <p id="fn7"><sup>7</sup> Kulicke &amp; Soffa Investor Relations (August 2023). <a href="https://investor.kns.com/2023-08-08-Kulicke-Soffa-Collaborates-with-TSMT" target="_blank" rel="noopener">Kulicke &amp; Soffa collaborates with TSMT</a>. Used for: K&amp;S framing that LUMINEX with TSMT achieved 540,000 units per hour at 15&micro;m 3-sigma accuracy; TSMT framing that it was working on yield improvement from 99.99% to 99.999%.</p>
+            <p id="fn8"><sup>8</sup> OECD (2025). <a href="https://www.oecd.org/en/publications/the-chip-landscape_02dbd028-en/full-report/component-6.html" target="_blank" rel="noopener">The Chip Landscape, manufacturing capacity component</a>. Used for: framing that China leads mature logic in-production capacity at approximately 4.23 million 8-inch-equivalent wafer starts per month, and also leads power and discrete and analog capacity.</p>
+            <p id="fn9"><sup>9</sup> SEMI (2026). <a href="https://www.semi.org/en/semi-press-release/semi-projects-double-digit-growth-in-global-300mm-fab-equipment-spending-for-2026-and-2027" target="_blank" rel="noopener">SEMI projects double-digit growth in global 300mm fab equipment spending for 2026 and 2027</a>. Used for: SEMI framing that 300mm fab equipment spending is expected to grow strongly in 2026 and 2027, driven by AI investment and regional semiconductor self-sufficiency.</p>
+          </div>
+
+          <div class="bb-rn">
+            <div class="bb-rn-label">Read next on this site</div>
+            <ul>
+              <li><a href="./back-end-bottleneck.html">The Back-End Bottleneck</a> &nbsp;&middot;&nbsp; the K&amp;S wire-bonder cycle through an AI-packaging lens.</li>
+              <li><a href="./package-became-the-computer.html">The Package Became the Computer</a> &nbsp;&middot;&nbsp; how Tesla Dojo argued for package-scale integration as the new scaling surface.</li>
+              <li><a href="./wafer-scale-training-bet.html">The Wafer-Scale Training Bet</a> &nbsp;&middot;&nbsp; packaging, interconnect, memory, power and cooling in AI scaling.</li>
+              <li><a href="./custom-ai-hardware-trap.html">The Custom AI Hardware Trap</a> &nbsp;&middot;&nbsp; why memory, software, and packaging matter more than raw silicon.</li>
+              <li><a href="./foundry-trust-test.html">The Foundry Trust Test</a> &nbsp;&middot;&nbsp; Intel Foundry, leading-edge packaging, and committed external volume.</li>
+              <li><a href="../../accelerated-computing-atlas/">Accelerated Computing Atlas</a> &nbsp;&middot;&nbsp; interactive atlas of the Nvidia accelerated-computing ecosystem.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">Building intelligent systems.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="../../projects/">Projects</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Blog</a>
+          <a href="../../ai-atlas/">AI Atlas</a>
+          <a href="../../ai-map/">AI Map</a>
+          <a href="../../#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="article-nav" aria-label="Article navigation"></nav>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
