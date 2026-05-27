@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can Ship at AI Scale. | Pugalenthi Magendran</title>
+  <meta name="description" content="Ayar Labs saw the AI data movement bottleneck early. Nvidia, TSMC, Alchip, Wiwynn, Lightmatter, AMD, and Marvell now validate optical I/O, but CPO still has to prove production reliability at AI scale.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/ayar-labs-optical-io-cpo-ai-scale.html">
+  <meta property="og:title" content="Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can Ship at AI Scale.">
+  <meta property="og:description" content="A 2026 research memo on Ayar Labs, TeraPHY, SuperNova, UCIe optical chiplets, Alchip and Wiwynn partnerships, Nvidia CPO switches, TSMC COUPE, and the production reality of co-packaged optics at AI scale.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/ayar-labs-optical-io-cpo-ai-scale.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Ayar Labs">
+  <meta property="article:tag" content="Optical I/O">
+  <meta property="article:tag" content="Co-Packaged Optics">
+  <meta property="article:tag" content="Silicon Photonics">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="UCIe">
+  <meta property="article:tag" content="TeraPHY">
+  <meta property="article:tag" content="Data Centers">
+  <meta property="article:tag" content="SuperNova">
+  <meta property="article:tag" content="Alchip">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can Ship at AI Scale.">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Ayar Labs saw the AI data movement bottleneck early. Nvidia, TSMC, Alchip, Wiwynn, Lightmatter, AMD, and Marvell now validate optical I/O, but CPO still has to prove production reliability at AI scale.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can Ship at AI Scale.",
+    "description": "Ayar Labs saw the AI data movement bottleneck early. Nvidia, TSMC, Alchip, Wiwynn, Lightmatter, AMD, and Marvell now validate optical I/O, but CPO still has to prove production reliability at AI scale.",
+    "url": "https://pugalenthimagendran.com/blog/posts/ayar-labs-optical-io-cpo-ai-scale.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/ayar-labs-optical-io-cpo-ai-scale.html",
+    "keywords": "Ayar Labs, TeraPHY, SuperNova, UCIe, Optical I/O, Co-Packaged Optics, Silicon Photonics, Nvidia CPO, TSMC COUPE, AI Infrastructure"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #5A4A8E); border: 1px solid rgba(90,74,142,0.30); background: rgba(90,74,142,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #5A4A8E); text-decoration: none; border-bottom: 0.5px solid rgba(90,74,142,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #5A4A8E); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #5A4A8E); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #5A4A8E); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #5A4A8E); }
+
+    /* Essay 075 Ayar Labs CPO — scoped under .essay-ayr, photonic-indigo #5A4A8E */
+    body.essay-ayr {
+      --a-accent: #5A4A8E;
+      --a-accent-soft: rgba(90,74,142,0.10);
+      --a-accent-line: rgba(90,74,142,0.30);
+      --a-copper: #9C5A2E;
+      --a-copper-soft: rgba(156,90,46,0.10);
+      --a-copper-line: rgba(156,90,46,0.30);
+      --a-light: #3A8E7E;
+      --a-light-soft: rgba(58,142,126,0.10);
+      --a-light-line: rgba(58,142,126,0.30);
+      --a-warn: #B5703A;
+      --a-warn-soft: rgba(181,112,58,0.08);
+      --a-warn-line: rgba(181,112,58,0.30);
+    }
+    body.essay-ayr .essay-stamp { color: var(--a-accent); border-color: var(--a-accent-line); background: var(--a-accent-soft); }
+    body.essay-ayr .essay-pull { border-left-color: var(--a-accent); }
+    body.essay-ayr .essay-footnotes a { color: var(--a-accent); border-bottom-color: var(--a-accent-line); }
+    body.essay-ayr .essay-fn a { color: var(--a-accent); }
+    body.essay-ayr .essay-toc a:hover { color: var(--a-accent); }
+
+    /* AI data movement wall hero */
+    .ayr-wall { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(90deg, var(--a-copper-soft) 0%, transparent 50%, var(--a-light-soft) 100%); overflow: hidden; }
+    .ayr-wall::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(90,74,142,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(90,74,142,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .ayr-wall-title { position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .ayr-wall-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .ayr-wall-col { padding: 1.1rem 1.25rem; border-radius: 8px; border: 0.5px solid var(--color-border-tertiary); background: rgba(0,0,0,0.30); }
+    .ayr-wall-col.copper { border-color: var(--a-copper-line); background: rgba(156,90,46,0.14); }
+    .ayr-wall-col.optic { border-color: var(--a-light-line); background: rgba(58,142,126,0.14); }
+    .ayr-wall-head { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .ayr-wall-col.copper .ayr-wall-head { color: var(--a-copper); }
+    .ayr-wall-col.optic .ayr-wall-head { color: var(--a-light); }
+    .ayr-wall-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 0.6rem; line-height: 1.3; }
+    .ayr-wall-list { list-style: none; padding: 0; margin: 0; }
+    .ayr-wall-list li { font-family: 'Source Serif 4', serif; font-size: 0.86rem; font-weight: 300; line-height: 1.4; color: var(--color-text-primary); padding: 0.18rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .ayr-wall-list li:last-child { border-bottom: none; }
+    .ayr-wall-center { position: relative; z-index: 1; margin-top: 1rem; padding-top: 0.85rem; border-top: 0.5px solid var(--color-border-tertiary); font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.98rem; line-height: 1.4; color: var(--color-text-primary); text-align: center; }
+
+    /* Thesis */
+    .ayr-thesis { border: 0.5px solid var(--a-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--a-accent-soft); margin: 2.5rem 0; }
+    .ayr-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.85rem; }
+    .ayr-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary */
+    .ayr-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .ayr-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .ayr-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .ayr-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .ayr-execsum li:last-child { border-bottom: none; }
+    .ayr-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-accent); letter-spacing: 0.08em; }
+
+    /* PDF page reference */
+    .ayr-pdfref { margin: 1.5rem 0 2.25rem; padding: 1.1rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-left-width: 3px; border-left-color: var(--a-accent-line); border-radius: 8px; background: var(--color-background-secondary); }
+    .ayr-pdfref-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.55rem; }
+    .ayr-pdfref-list { list-style: none; padding: 0; margin: 0; }
+    .ayr-pdfref-list li { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.28rem 0 0.28rem 4.5rem; position: relative; }
+    .ayr-pdfref-list li::before { content: attr(data-page); position: absolute; left: 0; top: 0.32rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-accent); letter-spacing: 0.06em; }
+
+    /* Compute vs communication card */
+    .ayr-scale { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.65rem; margin: 1.75rem 0 2.25rem; }
+    .ayr-scale-col { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .ayr-scale-col.thesis-col { border-color: var(--a-accent-line); background: var(--a-accent-soft); }
+    .ayr-scale-h { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+    .ayr-scale-col.thesis-col .ayr-scale-h { color: var(--a-accent); }
+    .ayr-scale-t { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 400; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Architecture components grid */
+    .ayr-arch { margin: 1.5rem 0 2.25rem; padding: 1.4rem 1.6rem; border: 0.5px solid var(--a-accent-line); border-radius: 12px; background: var(--a-accent-soft); }
+    .ayr-arch-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 1rem; }
+    .ayr-arch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .ayr-arch-item { padding: 0.7rem 0.9rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; }
+    .ayr-arch-name { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: var(--a-accent); margin-bottom: 0.2rem; text-transform: uppercase; }
+    .ayr-arch-text { font-family: 'Source Serif 4', serif; font-size: 0.87rem; font-weight: 300; line-height: 1.45; color: var(--color-text-primary); }
+
+    /* Beauty/risk dual card */
+    .ayr-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 1.75rem 0 2.25rem; }
+    .ayr-dual-col { padding: 1.25rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; }
+    .ayr-dual-col.beauty { border-color: var(--a-light-line); background: var(--a-light-soft); }
+    .ayr-dual-col.risk { border-color: var(--a-warn-line); background: var(--a-warn-soft); }
+    .ayr-dual-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.65rem; }
+    .ayr-dual-col.beauty .ayr-dual-label { color: var(--a-light); }
+    .ayr-dual-col.risk .ayr-dual-label { color: var(--a-warn); }
+    .ayr-dual-list { list-style: none; padding: 0; margin: 0; }
+    .ayr-dual-list li { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.32rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .ayr-dual-list li:last-child { border-bottom: none; }
+
+    /* Stat cards */
+    .ayr-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.25rem; }
+    .ayr-stat { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .ayr-stat-k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .ayr-stat-v { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--a-accent); line-height: 1.1; margin-bottom: 0.3rem; }
+    .ayr-stat-d { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* Competition grid */
+    .ayr-comp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin: 1.5rem 0 2.25rem; }
+    .ayr-comp-card { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .ayr-comp-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--a-accent); margin-bottom: 0.3rem; text-transform: uppercase; }
+    .ayr-comp-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Must-prove checklist */
+    .ayr-check { margin: 1.5rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--a-accent-line); border-radius: 12px; background: var(--a-accent-soft); }
+    .ayr-check-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.9rem; }
+    .ayr-check-list { list-style: none; padding: 0; margin: 0; }
+    .ayr-check-list li { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 400; line-height: 1.55; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 2.4rem; position: relative; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .ayr-check-list li:last-child { border-bottom: none; }
+    .ayr-check-list li::before { content: "[ ? ]"; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--a-accent); letter-spacing: 0.04em; }
+
+    /* Switch vs accelerator table */
+    .ayr-tbl-wrap { margin: 1.5rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .ayr-tbl { width: 100%; border-collapse: collapse; min-width: 720px; }
+    .ayr-tbl th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--a-accent-line); background: var(--a-accent-soft); font-weight: 500; }
+    .ayr-tbl td { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .ayr-tbl tr:last-child td { border-bottom: none; }
+    .ayr-tbl td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--a-accent); letter-spacing: 0.04em; font-weight: 500; white-space: nowrap; }
+
+    /* Impact pills */
+    .ayr-impact { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.55rem; margin: 1.5rem 0 2.25rem; }
+    .ayr-impact-pill { padding: 0.7rem 0.9rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; background: var(--color-background-secondary); font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.4; }
+
+    /* Evidence ledger */
+    .ayr-ledger { margin: 1.5rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .ayr-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--a-accent-soft); border-bottom: 0.5px solid var(--a-accent-line); }
+    .ayr-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-accent); border-right: 0.5px solid var(--a-accent-line); }
+    .ayr-ledger-head > div:last-child { border-right: none; }
+    .ayr-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .ayr-ledger-row:last-child { border-bottom: none; }
+    .ayr-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .ayr-ledger-row > div:last-child { border-right: none; }
+    .ayr-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--a-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Risk grid */
+    .ayr-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .ayr-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .ayr-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-warn); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .ayr-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .ayr-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .ayr-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .ayr-gloss-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .ayr-gloss-row:last-child { border-bottom: none; }
+    .ayr-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--a-accent); padding: 0.85rem 1rem; background: var(--a-accent-soft); border-right: 0.5px solid var(--a-accent-line); display: flex; align-items: center; }
+    .ayr-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line box */
+    .ayr-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--a-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--a-accent-soft) 0%, transparent 100%); }
+    .ayr-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.85rem; }
+    .ayr-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .ayr-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--a-accent); }
+
+    /* Sources box */
+    .ayr-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .ayr-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .ayr-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .ayr-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .ayr-readnext { margin: 3rem 0 1rem; }
+    .ayr-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .ayr-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .ayr-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .ayr-readnext-card:hover { border-color: var(--a-accent-line); }
+    .ayr-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.4rem; }
+    .ayr-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .ayr-wall-grid { grid-template-columns: 1fr; }
+      .ayr-scale { grid-template-columns: 1fr; }
+      .ayr-arch-grid { grid-template-columns: 1fr; }
+      .ayr-dual { grid-template-columns: 1fr; }
+      .ayr-stats { grid-template-columns: 1fr; }
+      .ayr-comp { grid-template-columns: 1fr; }
+      .ayr-impact { grid-template-columns: 1fr; }
+      .ayr-readnext-grid { grid-template-columns: 1fr; }
+      .ayr-risks { grid-template-columns: 1fr; }
+      .ayr-gloss-row { grid-template-columns: 1fr; }
+      .ayr-gloss-term { border-right: none; border-bottom: 0.5px solid var(--a-accent-line); }
+      .ayr-ledger-head, .ayr-ledger-row { grid-template-columns: 1fr; }
+      .ayr-ledger-head > div, .ayr-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .ayr-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-ayr .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-ayr">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 075 &nbsp;&middot;&nbsp; AI Infrastructure / Silicon Photonics / Optical I/O</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Ayar Labs</span>
+        <span class="tag">Optical I/O</span>
+        <span class="tag">Co-Packaged Optics</span>
+        <span class="tag">Silicon Photonics</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Nvidia</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">UCIe</span>
+        <span class="tag">TeraPHY</span>
+        <span class="tag">Data Centers</span>
+      </div>
+
+      <h1 class="essay-hed">Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can <em>Ship at AI Scale</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Ayar Labs</span>
+          <span class="essay-stamp">TeraPHY</span>
+          <span class="essay-stamp">SuperNova</span>
+          <span class="essay-stamp">UCIe</span>
+          <span class="essay-stamp">Optical I/O</span>
+          <span class="essay-stamp">Co-packaged optics</span>
+          <span class="essay-stamp">Silicon photonics</span>
+          <span class="essay-stamp essay-stamp--muted">Nvidia CPO</span>
+          <span class="essay-stamp essay-stamp--muted">TSMC COUPE</span>
+          <span class="essay-stamp essay-stamp--muted">Rack-scale AI</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        AI is not limited only by how fast chips compute. It is increasingly limited by how efficiently chips talk. Ayar Labs saw the I/O wall early. The next test is manufacturing, packaging, cooling, servicing, and hyperscale deployment.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 optical I/O thesis</div>
+        </div>
+        <div class="essay-read-time">16 MIN</div>
+      </div>
+
+      <div class="ayr-wall" aria-hidden="true">
+        <div class="ayr-wall-title">AI data movement wall &nbsp;&middot;&nbsp; two architectures</div>
+        <div class="ayr-wall-grid">
+          <div class="ayr-wall-col copper">
+            <div class="ayr-wall-head">Left &nbsp;&middot;&nbsp; electrical</div>
+            <div class="ayr-wall-name">Traditional electrical I/O</div>
+            <ul class="ayr-wall-list">
+              <li>Package pins</li>
+              <li>SerDes</li>
+              <li>Copper traces and PCB</li>
+              <li>Pluggable transceivers</li>
+              <li>Switch hops</li>
+              <li>Power per bit rises with distance</li>
+              <li>Reach and bandwidth-density limits</li>
+            </ul>
+          </div>
+          <div class="ayr-wall-col optic">
+            <div class="ayr-wall-head">Right &nbsp;&middot;&nbsp; optical</div>
+            <div class="ayr-wall-name">Ayar-style optical I/O</div>
+            <ul class="ayr-wall-list">
+              <li>TeraPHY optical I/O chiplet</li>
+              <li>SuperNova remote light source</li>
+              <li>Single-mode fiber</li>
+              <li>UCIe chiplet interface</li>
+              <li>Package-to-rack reach</li>
+              <li>Lower power and higher bandwidth density</li>
+              <li>Serviceable external lasers</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ayr-wall-center">The future AI bottleneck is not only compute. It is communication.</div>
+      </div>
+
+      <div class="ayr-thesis">
+        <div class="ayr-thesis-label">Thesis</div>
+        <div class="ayr-thesis-text">
+          The 2022 article was right that Ayar Labs was attacking the real AI infrastructure bottleneck: data movement. Optical I/O was never just about replacing copper with light. It was about changing the shape of systems so compute, memory, accelerators, and switches could communicate across packages, boards, racks, and data centers with better power, reach, latency, and bandwidth density. The 2026 update is that the market has validated the category. Nvidia is productising co-packaged optics switches, TSMC is developing COUPE, Alchip and Wiwynn are working with Ayar on ASIC and rack-scale integration, and AMD, Marvell, Celestial AI, and Lightmatter are pushing optical I/O closer to compute. But Ayar still has to prove the hardest part: production.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 article got right</a></li>
+          <li><a href="#sec-wall">The I/O wall is now an AI infrastructure problem</a></li>
+          <li><a href="#sec-arch">TeraPHY plus external light was the architecture</a></li>
+          <li><a href="#sec-rings">Micro-ring modulators are the beauty and the risk</a></li>
+          <li><a href="#sec-prod">From promise to production attempt</a></li>
+          <li><a href="#sec-ucie">UCIe makes Ayar easier to integrate</a></li>
+          <li><a href="#sec-alchip">Alchip and TSMC make the story more serious</a></li>
+          <li><a href="#sec-wiwynn">Wiwynn shows the rack-scale deployment problem</a></li>
+          <li><a href="#sec-nvidia">Nvidia validates CPO, but adoption is staged</a></li>
+          <li><a href="#sec-market">The market is moving, but Ayar is not alone</a></li>
+          <li><a href="#sec-prove">What Ayar must prove</a></li>
+          <li><a href="#sec-cmp">Switch CPO vs accelerator-package optical I/O</a></li>
+          <li><a href="#sec-impact">Why this matters for AI infrastructure</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="ayr-execsum">
+          <div class="ayr-execsum-label">Executive summary</div>
+          <ul>
+            <li>In 2022, Ayar Labs was focused on the real bottleneck: data movement between chips, packages, boards, racks, and data centers.</li>
+            <li>The old article argued that electrical I/O was becoming power-hungry and pin-limited as compute scaled.</li>
+            <li>Ayar's architecture used TeraPHY optical I/O chiplets, micro-ring modulators, and external lasers to move optics closer to compute.</li>
+            <li>By 2026, the market has validated optical I/O: Nvidia is productising CPO switches, TSMC is developing COUPE, and Ayar has partnerships with Alchip and Wiwynn.</li>
+            <li>The hard question is no longer whether optics are useful. It is whether co-packaged optics can be manufactured, packaged, cooled, serviced, and deployed at AI scale.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece, <em>Ayar Labs and the Co-Packaged Optics Revolution</em>, framed Ayar as a hardware startup attacking the I/O wall.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Compute was scaling faster than package and off-chip communication. Electrical I/O was becoming increasingly expensive in power and area. Processors were spending more time waiting for data than computing. Ayar's approach was to move optical communication directly into the package, alongside CPUs, GPUs, FPGAs, ASICs, and accelerators. The article highlighted strategic investors and partners such as GlobalFoundries, Intel, HPE, Nvidia, Lockheed Martin, and Applied Materials, and walked through the GF 45CLO photonics process, Intel's earlier proof-of-concept co-packaged photonics tile work with FPGAs, HPE's HPC interconnect collaboration, and Nvidia's strategic investment.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="ayr-pdfref">
+          <div class="ayr-pdfref-label">2022 PDF page references used in this essay</div>
+          <ul class="ayr-pdfref-list">
+            <li data-page="P.03">"The case for in-package optical I/O," with package pin limits and rising off-chip I/O power.</li>
+            <li data-page="P.04">Electrical interconnect energy and bandwidth penalties as distance increases.</li>
+            <li data-page="P.06">Optical I/O redefining the CPU socket, moving toward a rack-scale socket.</li>
+            <li data-page="P.09">Monolithic in-package optical I/O concept with TeraPHY chiplets beside CPU, GPU, FPGA, or SoC.</li>
+            <li data-page="P.11">Optical I/O system architecture with TeraPHY CMOS optical I/O chips, single-mode fiber, and external light sources.</li>
+            <li data-page="P.13">Micro-ring modulators, monolithic electronics integration, scalable manufacturing, packaging, lasers, and standards.</li>
+            <li data-page="P.15">External laser strategy and why serviceability matters for co-packaged optics.</li>
+          </ul>
+        </div>
+
+        <p class="essay-pull">
+          Ayar's insight was not "make optics faster." It was "move optics close enough to compute that the system architecture changes."
+        </p>
+
+        <h2 class="essay-h2" id="sec-wall"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; The I/O wall</span>From compute problem to AI infrastructure problem</h2>
+
+        <p>
+          AI infrastructure is usually framed as a compute problem. The next bottleneck is communication. Larger AI models require more accelerators. More accelerators require more data movement. More data movement increases power, latency, heat, and system complexity. Electrical I/O is efficient over very short distances but becomes expensive as distance increases. Optical I/O can provide longer reach, high bandwidth density, and better power efficiency for scale-up and scale-out systems. The 2022 piece visualised that trade-off across pages 3, 4, and 6, including the idea that optical I/O could redefine the CPU socket into a rack-scale socket.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="ayr-scale">
+          <div class="ayr-scale-col">
+            <div class="ayr-scale-h">Compute scaling</div>
+            <div class="ayr-scale-t">More GPUs, more memory, more switches. Each generation widens the same problem.</div>
+          </div>
+          <div class="ayr-scale-col">
+            <div class="ayr-scale-h">Communication scaling</div>
+            <div class="ayr-scale-t">More links, more power per bit, more latency, more heat, more cabling.</div>
+          </div>
+          <div class="ayr-scale-col thesis-col">
+            <div class="ayr-scale-h">Optical I/O thesis</div>
+            <div class="ayr-scale-t">Move light closer to compute so data movement does not dominate the system.</div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          AI was not going to be limited only by how fast chips compute. It was going to be limited by how efficiently chips talk.
+        </p>
+
+        <h2 class="essay-h2" id="sec-arch"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; Architecture</span>TeraPHY plus external light</h2>
+
+        <p>
+          Ayar's core system is not just one photonics chip. It is an optical I/O architecture combining TeraPHY optical I/O chiplets, SuperNova remote light sources, micro-ring modulators, single-mode fiber, UCIe interfaces, and an external laser strategy.<sup class="essay-fn"><a href="#fn1">[1]</a></sup><sup class="essay-fn"><a href="#fn4">[4]</a></sup> The external laser model matters because lasers are among the more failure-prone parts of optical systems. With pluggable optics, a failed laser or transceiver can be replaced from the front panel. With co-packaged optics, a failure inside the package is much harder to service. Keeping the light source external is an explicit design choice for serviceability and reliability.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="ayr-arch">
+          <div class="ayr-arch-label">Ayar optical I/O architecture &nbsp;&middot;&nbsp; key components</div>
+          <div class="ayr-arch-grid">
+            <div class="ayr-arch-item"><div class="ayr-arch-name">TeraPHY</div><div class="ayr-arch-text">Optical I/O chiplet that lives in the package alongside compute silicon.</div></div>
+            <div class="ayr-arch-item"><div class="ayr-arch-name">SuperNova</div><div class="ayr-arch-text">Remote light source that supplies multi-wavelength laser power into the package.</div></div>
+            <div class="ayr-arch-item"><div class="ayr-arch-name">Micro-rings</div><div class="ayr-arch-text">Micro-ring modulators that encode data onto specific wavelengths.</div></div>
+            <div class="ayr-arch-item"><div class="ayr-arch-name">Single-mode fiber</div><div class="ayr-arch-text">Fiber connecting the package to other packages, racks, or systems.</div></div>
+            <div class="ayr-arch-item"><div class="ayr-arch-name">UCIe interface</div><div class="ayr-arch-text">Chiplet interconnect standard used to attach TeraPHY to host silicon.</div></div>
+            <div class="ayr-arch-item"><div class="ayr-arch-name">External lasers</div><div class="ayr-arch-text">Designed as serviceable parts that can be replaced without opening the package.</div></div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Ayar separated the light source from the optical I/O engine because CPO only works if it can be serviced like infrastructure, not treated like a lab demo.
+        </p>
+
+        <h2 class="essay-h2" id="sec-rings"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; Micro-rings</span>The beauty and the risk</h2>
+
+        <p>
+          Micro-ring modulators are the heart of the density story. They are compact, energy efficient, and well suited to packing many optical channels into a small area, which is why Ayar's bandwidth-density framing rests on them.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> They are also notoriously sensitive to manufacturing variation and temperature. Tiny dimensional differences shift wavelength behavior. Temperature drift can pull a ring off resonance. Tuning, monitoring, and control loops have to compensate at the chip level, the package level, and the system level. The trade-off is real: micro-rings enable the architecture, and they also make production reliability harder.
+        </p>
+
+        <div class="ayr-dual">
+          <div class="ayr-dual-col beauty">
+            <div class="ayr-dual-label">Why micro-rings matter</div>
+            <ul class="ayr-dual-list">
+              <li>Compact footprint per channel.</li>
+              <li>Dense WDM channel counts in small areas.</li>
+              <li>Energy-efficient modulation.</li>
+              <li>Well suited to many parallel optical lanes.</li>
+              <li>Enables high bandwidth density at the package edge.</li>
+            </ul>
+          </div>
+          <div class="ayr-dual-col risk">
+            <div class="ayr-dual-label">Why micro-rings are hard</div>
+            <ul class="ayr-dual-list">
+              <li>Wavelength sensitivity to manufacturing variation.</li>
+              <li>Process variation across wafers and packages.</li>
+              <li>Temperature drift in real systems.</li>
+              <li>Tuning and control complexity.</li>
+              <li>Test and yield burden at production volumes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Micro-rings are why Ayar's density story is exciting. They are also why production reliability matters so much.
+        </p>
+
+        <h2 class="essay-h2" id="sec-prod"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; From promise to production</span>The 2026 update</h2>
+
+        <p>
+          Ayar's funding trajectory captures the shift. The 2024 Series D raised US$155 million from investors including AMD Ventures, Intel Capital, and Nvidia, bringing total funding to US$370 million at a valuation above US$1 billion.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> In 2026, Ayar closed a US$500 million Series E to scale high-volume production and test capacity, expand global operations including a Hsinchu, Taiwan office, strengthen ecosystem partnerships, and accelerate CPO deployment.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> The shape of the company has changed. In 2022 Ayar was a promising technical bet. In 2026 Ayar is trying to become an infrastructure supplier.
+        </p>
+
+        <div class="ayr-stats">
+          <div class="ayr-stat"><div class="ayr-stat-k">Series D (2024)</div><div class="ayr-stat-v">~ US$155M</div><div class="ayr-stat-d">AMD Ventures, Intel Capital, Nvidia, and others, per Ayar Labs.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Total funding</div><div class="ayr-stat-v">~ US$370M</div><div class="ayr-stat-d">Cumulative funding after Series D, with valuation reported above US$1B.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Series E (2026)</div><div class="ayr-stat-v">~ US$500M</div><div class="ayr-stat-d">Raised to scale high-volume production and test capacity for CPO.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Taiwan office</div><div class="ayr-stat-v">Hsinchu</div><div class="ayr-stat-d">Expanding global operations into the heart of Asian advanced packaging.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          The question is no longer whether Ayar's idea is interesting. The question is whether it can become manufacturable infrastructure.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ucie"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; UCIe</span>An interoperable optical chiplet</h2>
+
+        <p>
+          Ayar announced what it describes as the world's first UCIe optical chiplet for AI scale-up architectures.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> Ayar says TeraPHY delivers 8 Tbps of bandwidth and is powered by a 16-wavelength SuperNova light source, with optical connectivity scaling from millimeters to kilometers and UCIe enabling chiplet interoperability across vendors.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> The performance numbers are Ayar claims. The strategic point is independent of those numbers. UCIe lowers the integration barrier for any AI ASIC, CPU, or accelerator team that wants to attach an optical I/O chiplet without building a private interface around it.
+        </p>
+
+        <div class="ayr-stats">
+          <div class="ayr-stat"><div class="ayr-stat-k">TeraPHY bandwidth</div><div class="ayr-stat-v">~ 8 Tbps</div><div class="ayr-stat-d">Per Ayar's UCIe optical chiplet announcement.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Light source</div><div class="ayr-stat-v">16-wave</div><div class="ayr-stat-d">SuperNova light source supplying 16 wavelengths into the chiplet.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Reach</div><div class="ayr-stat-v">mm to km</div><div class="ayr-stat-d">Ayar frames optical connectivity from millimeters to kilometers.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Integration</div><div class="ayr-stat-v">UCIe</div><div class="ayr-stat-d">Chiplet interoperability standard reduces vendor lock-in for customers.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          UCIe helps Ayar plug into chiplet systems. Optical I/O gives those systems reach beyond what copper can handle efficiently.
+        </p>
+
+        <h2 class="essay-h2" id="sec-alchip"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; Alchip + TSMC</span>Into real AI ASIC packaging</h2>
+
+        <p>
+          Ayar and Alchip announced a partnership to scale AI infrastructure with co-packaged optics, connecting Ayar's CPO technology with Alchip's advanced packaging and AI ASIC design expertise. The announcement explicitly references TSMC technologies including COUPE, TSMC-SoIC, and advanced process nodes, framing repeatable CPO integration as part of real AI ASIC packaging flows.<sup class="essay-fn"><a href="#fn5">[5]</a></sup> TSMC's COUPE research page describes the Compact Universal Photonic Engine as a silicon-photonics integration platform aimed at HPC and AI-class systems, with EIC and PIC integration as part of the platform.<sup class="essay-fn"><a href="#fn9">[9]</a></sup>
+        </p>
+
+        <p>
+          The reading is straightforward. Ayar is no longer only a GlobalFoundries Fotonix story. The Alchip partnership puts Ayar's optical I/O inside the broader TSMC advanced-packaging conversation that AI ASIC programs use today. The strategic upside is meaningful. So is the execution burden: optical chiplets now have to fit inside real packaging flows, with real customers, on real schedules.
+        </p>
+
+        <p class="essay-pull">
+          If optical I/O is going to matter for hyperscaler ASICs, it has to fit inside real packaging flows, not only lab demonstrations.
+        </p>
+
+        <h2 class="essay-h2" id="sec-wiwynn"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; Wiwynn</span>Rack-scale deployment is the real test</h2>
+
+        <p>
+          Ayar and Wiwynn announced a partnership to bring CPO into rack-scale AI systems.<sup class="essay-fn"><a href="#fn6">[6]</a></sup> The joint solution integrates Ayar's TeraPHY optical engines and SuperNova remote light sources into Wiwynn's rack architecture, targeting 1,024 AI accelerators and beyond, with Ayar saying each accelerator can deliver more than 100 Tbps of optical connectivity. The announcement specifically calls out fiber management, thermal management, liquid cooling, manufacturability, external laser pluggables, and serviceability as the hard parts of bringing CPO into deployable racks.<sup class="essay-fn"><a href="#fn6">[6]</a></sup>
+        </p>
+
+        <div class="ayr-stats">
+          <div class="ayr-stat"><div class="ayr-stat-k">Accelerators per system</div><div class="ayr-stat-v">1,024+</div><div class="ayr-stat-d">Rack-scale AI system target per Ayar and Wiwynn.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Optical connectivity per accelerator</div><div class="ayr-stat-v">100+ Tbps</div><div class="ayr-stat-d">Ayar framing of per-accelerator optical bandwidth.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Cooling</div><div class="ayr-stat-v">Liquid</div><div class="ayr-stat-d">Liquid-cooled rack architecture for compute, memory, and optics together.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Serviceability</div><div class="ayr-stat-v">Pluggable lasers</div><div class="ayr-stat-d">External laser pluggables explicitly framed for rack serviceability.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          Can optics work in a demo is no longer the question. Can optics work inside a liquid-cooled, serviceable, manufacturable hyperscale rack is the real question.
+        </p>
+
+        <h2 class="essay-h2" id="sec-nvidia"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; Nvidia CPO</span>Validated, but staged</h2>
+
+        <p>
+          Nvidia's silicon photonics page describes a co-packaged optics strategy in which CPO switches replace pluggable transceivers with silicon photonics integrated onto the same package as the switch ASIC, with claims of approximately 5x better power efficiency and approximately 10x higher network resiliency versus pluggable transceivers, positioned around Quantum-X InfiniBand Photonics and Spectrum-X Ethernet Photonics for AI factories.<sup class="essay-fn"><a href="#fn7">[7]</a></sup> Nvidia's developer blog frames the rollout as switch-first, with Quantum-X at approximately 115 Tb/s switching capacity and Spectrum-X at approximately 409.6 Tb/s switching capacity used as the entry points for CPO in AI networking.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> Public reporting around the Nvidia GTC window noted explicitly that Nvidia is using CPO first in networking chips, with wider adoption inside GPU packages described as something that may take time.<sup class="essay-fn"><a href="#fn13">[13]</a></sup>
+        </p>
+
+        <div class="ayr-stats">
+          <div class="ayr-stat"><div class="ayr-stat-k">CPO power efficiency</div><div class="ayr-stat-v">~ 5x</div><div class="ayr-stat-d">Nvidia's claim for CPO switches vs pluggable transceivers.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Network resiliency</div><div class="ayr-stat-v">~ 10x</div><div class="ayr-stat-d">Nvidia's resiliency claim for CPO vs pluggable transceivers.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Quantum-X capacity</div><div class="ayr-stat-v">~ 115 Tb/s</div><div class="ayr-stat-d">Quantum-X InfiniBand Photonics switching capacity per Nvidia.</div></div>
+          <div class="ayr-stat"><div class="ayr-stat-k">Spectrum-X capacity</div><div class="ayr-stat-v">~ 409.6 Tb/s</div><div class="ayr-stat-d">Spectrum-X Ethernet Photonics switching capacity per Nvidia.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          CPO is entering AI infrastructure through the network first. GPU-package optical I/O is the bigger prize, but also the harder reliability problem.
+        </p>
+
+        <h2 class="essay-h2" id="sec-market"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; Competition</span>The market is moving, but Ayar is not alone</h2>
+
+        <p>
+          Optical I/O is no longer a science project. Lightmatter announced Passage M1000 with a claimed 114 Tbps optical bandwidth, positioning a photonic interconnect for next-generation XPUs and switches.<sup class="essay-fn"><a href="#fn10">[10]</a></sup> AMD acquired Enosemi to expand its co-packaged optics capability for next-generation AI systems.<sup class="essay-fn"><a href="#fn11">[11]</a></sup> Marvell announced it would acquire Celestial AI, whose Photonic Fabric targets package, system, and rack-level optical I/O, with Marvell explicitly framing the move around scale-up connectivity for next-generation data centers.<sup class="essay-fn"><a href="#fn12">[12]</a></sup> Read together, those moves describe a strategic AI infrastructure category, not a niche.
+        </p>
+
+        <div class="ayr-comp">
+          <div class="ayr-comp-card"><div class="ayr-comp-name">Lightmatter</div><div class="ayr-comp-text">Passage M1000 photonic interposer, claimed 114 Tbps, for next-generation XPUs and switches.</div></div>
+          <div class="ayr-comp-card"><div class="ayr-comp-name">AMD / Enosemi</div><div class="ayr-comp-text">AMD acquired Enosemi to expand co-packaged optics for next-generation AI systems.</div></div>
+          <div class="ayr-comp-card"><div class="ayr-comp-name">Marvell / Celestial</div><div class="ayr-comp-text">Marvell to acquire Celestial AI, with Photonic Fabric across package, system, and rack-level optical I/O.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          Ayar helped make the category real. Now it has to win inside a category every serious AI infrastructure company has noticed.
+        </p>
+
+        <h2 class="essay-h2" id="sec-prove"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; Proof points</span>What Ayar must prove</h2>
+
+        <div class="ayr-check">
+          <div class="ayr-check-label">Ayar's open proof points &nbsp;&middot;&nbsp; what AI infrastructure customers will watch</div>
+          <ol class="ayr-check-list">
+            <li>High-volume manufacturability across photonic and electronic dies.</li>
+            <li>Micro-ring yield and tuning stability across temperature and process corners.</li>
+            <li>Laser reliability and serviceability across rack-scale deployments.</li>
+            <li>Fiber attach and fiber management at rack scale, not only at chip scale.</li>
+            <li>Integration with UCIe, advanced packaging flows, and TSMC-class platforms.</li>
+            <li>Liquid cooling compatibility inside dense AI racks.</li>
+            <li>Production testing at scale, including burn-in and yield screening.</li>
+            <li>Hyperscale deployment reliability across long device lifetimes.</li>
+            <li>Cost competitiveness versus pluggables, copper, and active electrical cables.</li>
+            <li>Interoperability with AI ASIC, GPU, switch, and memory architectures.</li>
+            <li>Customer adoption beyond demos, partnerships, and reference designs.</li>
+          </ol>
+        </div>
+
+        <p class="essay-pull">
+          The bottleneck has moved from physics to production.
+        </p>
+
+        <h2 class="essay-h2" id="sec-cmp"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; Switch vs accelerator</span>Two CPO problems, not one</h2>
+
+        <div class="ayr-tbl-wrap">
+          <table class="ayr-tbl">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Switch CPO</th>
+                <th>Accelerator-package optical I/O</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Near-term adoption</td>
+                <td>Already being productised by Nvidia in AI networking</td>
+                <td>Still harder and less mainstream</td>
+              </tr>
+              <tr>
+                <td>Main benefit</td>
+                <td>Lower network power, fewer pluggables, higher resiliency</td>
+                <td>Direct scale-up communication between accelerators</td>
+              </tr>
+              <tr>
+                <td>Reliability challenge</td>
+                <td>Switch package serviceability and optics lifecycle</td>
+                <td>Failure risk near very expensive accelerators</td>
+              </tr>
+              <tr>
+                <td>Thermal challenge</td>
+                <td>Switch ASIC cooling plus optics</td>
+                <td>GPU / ASIC thermal density plus optics</td>
+              </tr>
+              <tr>
+                <td>System impact</td>
+                <td>Improves AI factory networking</td>
+                <td>Could redefine the accelerator socket and rack-scale memory and compute pool</td>
+              </tr>
+              <tr>
+                <td>Ayar relevance</td>
+                <td>TeraPHY can serve optical I/O needs around switches and ASICs</td>
+                <td>Bigger prize if optical I/O moves directly beside accelerators</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="essay-h2" id="sec-impact"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; AI infrastructure impact</span>Why this matters</h2>
+
+        <p>
+          If optical I/O works at scale, it changes system architecture, not only cables. Larger scale-up domains become possible because reach is no longer copper-limited. Power per bit can drop, easing the data-center power envelope at fixed compute. Rack-to-rack communication can be tighter and more uniform. Composable memory and compute pools become more practical. AI ASIC architectures can be designed around optical I/O rather than around the SerDes pin count of a single package.
+        </p>
+
+        <div class="ayr-impact">
+          <div class="ayr-impact-pill">Larger scale-up domains</div>
+          <div class="ayr-impact-pill">Lower power per bit</div>
+          <div class="ayr-impact-pill">Better rack-to-rack communication</div>
+          <div class="ayr-impact-pill">Composable memory and compute pools</div>
+          <div class="ayr-impact-pill">Fewer electrical reach limits</div>
+          <div class="ayr-impact-pill">Lower networking overhead</div>
+          <div class="ayr-impact-pill">New AI ASIC architectures</div>
+          <div class="ayr-impact-pill">Better utilization across accelerators</div>
+        </div>
+
+        <p class="essay-pull">
+          The long-term prize is not a better cable. It is a different computer.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="ayr-ledger">
+          <div class="ayr-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Ayar identified the I/O wall early</div>
+            <div>The 2022 PDF shows package I/O limits, rising off-chip power, and the optical I/O distance and power advantage on pages 3, 4, and 6.</div>
+            <div>The core problem was data movement, not raw compute.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Ayar's architecture was TeraPHY plus external light</div>
+            <div>Pages 9, 11, 13, and 15 show TeraPHY chiplets, micro-ring modulators, the optical architecture, and the external laser rationale.</div>
+            <div>Ayar's strategy was in-package optics with serviceable light sources.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Ayar is moving toward production</div>
+            <div>Ayar raised approximately US$500M in Series E in 2026 to scale production and test capacity.</div>
+            <div>The story has moved from promising startup to commercialization attempt.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>TeraPHY became UCIe-aligned</div>
+            <div>Ayar's UCIe optical chiplet announcement cites approximately 8 Tbps and a 16-wavelength SuperNova light source.</div>
+            <div>UCIe helps integration into chiplet ecosystems.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Alchip and TSMC partnership matters</div>
+            <div>Ayar and Alchip's partnership cites TSMC COUPE, TSMC-SoIC, and advanced process technologies.</div>
+            <div>Ayar is entering advanced ASIC packaging workflows.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Wiwynn partnership matters</div>
+            <div>Ayar and Wiwynn target rack-scale AI systems, 1,024+ accelerators, and more than 100 Tbps optical connectivity per accelerator.</div>
+            <div>CPO success depends on rack deployment, not only chiplets.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Nvidia validates the category</div>
+            <div>Nvidia says CPO offers approximately 5x power efficiency and approximately 10x resiliency, with Quantum-X and Spectrum-X photonics framing.</div>
+            <div>CPO is now part of the AI factory roadmap.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Adoption is staged</div>
+            <div>Nvidia's current CPO push focuses on Quantum-X and Spectrum-X photonics switches; reporting around GTC notes that CPO inside main GPUs may take time.</div>
+            <div>Switch CPO is nearer-term than optical GPU packages.</div>
+          </div>
+          <div class="ayr-ledger-row">
+            <div>Competition is rising</div>
+            <div>Lightmatter Passage M1000, the AMD Enosemi acquisition, and the Marvell to Celestial AI acquisition all push optical I/O.</div>
+            <div>Ayar is early, but the market is now contested.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions, and they are listed here so the argument can be stress-tested.
+        </p>
+
+        <div class="ayr-risks">
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Ayar performance claims (8 Tbps TeraPHY, 16-wavelength SuperNova, 100+ Tbps per accelerator) are Ayar claims and should be tracked against independent benchmarks once products ship at scale.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Copper is not going away. Optical I/O is moving closer to compute, but copper remains the right answer for many very short reaches inside packages and racks.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Micro-ring yield, tuning, and temperature behavior remain among the hardest production problems in silicon photonics.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Laser reliability and field replacement at hyperscale duty cycles are not solved by architectural framing alone; they require manufacturing and operational maturity.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">GPU-package optical I/O is the biggest prize, but it is also where reliability requirements are most punishing because the silicon next to the optics is very expensive.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Nvidia and TSMC can shift the addressable opportunity for pure-play optical I/O providers by integrating photonics more tightly into their own platforms over time.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Competing platforms (Lightmatter, AMD-Enosemi, Marvell-Celestial) can pull customers toward different optical I/O architectures with different trade-offs.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Standards and form factors (CPO, UCIe, OIF, OCP) may evolve in ways that favor some implementations over others, changing the competitive map.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Hyperscaler capex cycles can compress or accelerate optical I/O adoption faster than vendor roadmaps assume.</div>
+          </div>
+          <div class="ayr-risk">
+            <div class="ayr-risk-num"></div>
+            <div class="ayr-risk-text">Optical I/O is not a single market. CPO switches, optical chiplets, photonic interposers, and quantum photonics have different timelines and economics.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 16 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="ayr-bottom">
+          <div class="ayr-bottom-label">Bottom line</div>
+          <p>
+            The 2022 article was right that Ayar Labs was attacking the real AI infrastructure bottleneck: data movement. Optical I/O was never just about replacing copper with light. It was about changing the shape of systems so compute, memory, accelerators, and switches could communicate across racks with better power, reach, latency, and bandwidth density.
+          </p>
+          <p>
+            The 2026 update is that the market has validated the category. Nvidia is productising CPO switches, TSMC is developing COUPE, Alchip and Wiwynn are working with Ayar on ASIC and rack-scale integration, and major players like AMD, Marvell, Celestial AI, and Lightmatter are pushing optical I/O closer to compute.
+          </p>
+          <p>
+            But Ayar still has to prove the hardest part: production. CPO has to survive manufacturing yield, micro-ring tuning, laser reliability, fiber management, liquid cooling, testing, servicing, and hyperscale deployment.
+          </p>
+          <p>
+            Ayar was early to the right bottleneck. Now it has to prove co-packaged optics can ship as real AI infrastructure.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 17 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="ayr-gloss">
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Optical I/O</div>
+            <div class="ayr-gloss-def">Input/output between chips, packages, racks, or systems carried over optical fiber, often using silicon photonics components in or near the package.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Co-packaged optics</div>
+            <div class="ayr-gloss-def">An architecture in which optical engines are placed in the same package as switch or accelerator ASICs, replacing pluggable front-panel optics.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Silicon photonics</div>
+            <div class="ayr-gloss-def">A technology that uses CMOS-style processes to manufacture optical components such as waveguides, modulators, and photodetectors on silicon wafers.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">TeraPHY</div>
+            <div class="ayr-gloss-def">Ayar Labs' optical I/O chiplet that lives in the package alongside compute silicon, providing high-bandwidth optical I/O lanes.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">SuperNova</div>
+            <div class="ayr-gloss-def">Ayar Labs' remote, multi-wavelength light source. Designed to be external and serviceable so failed lasers can be replaced without opening the package.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">UCIe</div>
+            <div class="ayr-gloss-def">Universal Chiplet Interconnect Express. An open chiplet interconnect standard that enables interoperability among chiplets from different vendors.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Micro-ring modulator</div>
+            <div class="ayr-gloss-def">A compact ring-shaped silicon photonic modulator that encodes electrical signals onto specific wavelengths. Compact and energy efficient, but sensitive to process and temperature.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Mach-Zehnder modulator</div>
+            <div class="ayr-gloss-def">An alternative modulator topology using two interfering optical paths. Larger than micro-rings, but more tolerant to manufacturing and temperature variation.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">External laser</div>
+            <div class="ayr-gloss-def">A laser source kept outside the main optical I/O package, often pluggable, so that failures can be serviced without opening the host package.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">CW-WDM</div>
+            <div class="ayr-gloss-def">Continuous-wave wavelength division multiplexing. A standardization effort for multi-wavelength laser sources used in co-packaged optics architectures.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Single-mode fiber</div>
+            <div class="ayr-gloss-def">An optical fiber type that supports a single transverse mode of light, used for long-reach and high-bandwidth optical interconnects.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Pluggable transceiver</div>
+            <div class="ayr-gloss-def">A removable optical module that plugs into the front panel of a switch or system to convert between electrical and optical signals.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">SerDes</div>
+            <div class="ayr-gloss-def">Serializer / deserializer. The electrical interface used for high-speed package-to-package and chip-to-chip communication on copper.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Power per bit</div>
+            <div class="ayr-gloss-def">A key efficiency metric for interconnects, measuring how much energy is consumed to transmit one bit of data.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Bandwidth density</div>
+            <div class="ayr-gloss-def">Bandwidth available per unit of package edge area or per unit of footprint. A key constraint as compute scales.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">CPO switch</div>
+            <div class="ayr-gloss-def">A network switch in which optical engines are co-packaged with the switch ASIC, replacing pluggable transceivers at the system boundary.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">EIC</div>
+            <div class="ayr-gloss-def">Electronic integrated circuit. The electrical chip portion of a co-packaged optical system, often containing SerDes, drivers, and TIAs.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">PIC</div>
+            <div class="ayr-gloss-def">Photonic integrated circuit. The optical chip portion of a co-packaged system, containing modulators, photodetectors, waveguides, and couplers.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">TSMC COUPE</div>
+            <div class="ayr-gloss-def">TSMC's Compact Universal Photonic Engine. A silicon-photonics integration platform aimed at HPC and AI-class systems, integrating EIC and PIC.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">TSMC-SoIC</div>
+            <div class="ayr-gloss-def">TSMC's System on Integrated Chips advanced 3D packaging platform, used to integrate logic, memory, and other dies vertically.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">Rack-scale AI</div>
+            <div class="ayr-gloss-def">AI infrastructure organized around the rack as the primary product, not the server. Examples include Nvidia GB200 NVL72 and Vera Rubin NVL72.</div>
+          </div>
+          <div class="ayr-gloss-row">
+            <div class="ayr-gloss-term">AI factory</div>
+            <div class="ayr-gloss-def">An informal term for large-scale data centers built specifically for AI training and inference, treated as integrated production systems.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 18 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="ayr-sources-box">
+          <div class="ayr-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis Ayar Labs piece is treated as historical context for the I/O wall framing, the in-package optical I/O thesis, the TeraPHY plus external-light architecture, the micro-ring modulator discussion, and the early HPE and Nvidia strategic interest. Ayar's product, bandwidth, and customer claims (8 Tbps TeraPHY, 16-wavelength SuperNova, 100+ Tbps per accelerator) are treated as Ayar's claims rather than as independently verified numbers.
+          </p>
+          <p>
+            The 2026 read is built from Ayar's Series D and Series E announcements, the UCIe optical chiplet announcement, the Alchip and Wiwynn partnership releases, Nvidia's silicon photonics page and CPO technical blog, TSMC's COUPE research page, and competitive announcements from Lightmatter, AMD (Enosemi), and Marvell (Celestial AI). Reuters coverage around Nvidia's GTC commentary is used carefully to anchor the staged-adoption argument. The structural arguments that Ayar was early to the right bottleneck, that the category is now validated but contested, and that the binding constraint is production rather than physics are independent analysis.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;Ayar Labs | Co-packaged Optics Revolution | The Most Promising Hardware Startup With Wins At HPE And Nvidia?,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for the in-package optical I/O thesis, the page 3 "case for in-package optical I/O" visual with package pin limits and rising off-chip I/O power, the page 4 distance/bandwidth/power penalty visual, the page 6 optical I/O redefining CPU socket framing, the page 9 TeraPHY chiplet visual, the page 11 optical I/O system architecture visual, the page 13 micro-ring modulator discussion, and the page 15 external laser and serviceability discussion. Strategic-investor and partner context (GlobalFoundries, Intel, HPE, Nvidia, Lockheed Martin, Applied Materials) is also drawn from this source.</li>
+            <li id="fn2">Ayar Labs, &ldquo;Ayar Labs Closes $155M Series D to Address AI Infrastructure Bottleneck,&rdquo; <a href="https://ayarlabs.com/news/ayar-labs-155m-series-d-to-address-ai-infrastructure-includes-amd-intel-capital-nvidia/" target="_blank" rel="noopener noreferrer">ayarlabs.com/&hellip;/series-d</a>. Source for the approximately US$155M Series D in 2024, the approximately US$370M total funding figure, the valuation above US$1B, the strategic investor list including AMD Ventures, Intel Capital, and Nvidia, and the broader AI data-movement framing used in this essay.</li>
+            <li id="fn3">Ayar Labs, &ldquo;Ayar Labs Closes $500M Series E, Accelerates Volume Production of Co-Packaged Optics,&rdquo; <a href="https://ayarlabs.com/news/ayar-labs-closes-500m-series-e-accelerates-volume-production-of-co-packaged-optics/" target="_blank" rel="noopener noreferrer">ayarlabs.com/&hellip;/series-e</a>. Source for the approximately US$500M Series E in 2026, the scaling of high-volume production and test capacity, the Hsinchu, Taiwan office expansion, the ecosystem partnership emphasis, and the production-ready CPO framing.</li>
+            <li id="fn4">Ayar Labs, &ldquo;Ayar Labs Unveils World's First UCIe Optical Chiplet for AI Scale-up Architectures,&rdquo; <a href="https://ayarlabs.com/news/ayar-labs-unveils-worlds-first-ucie-optical-chiplet-for-ai-scale-up-architectures/" target="_blank" rel="noopener noreferrer">ayarlabs.com/&hellip;/ucie-optical-chiplet</a>. Source for the approximately 8 Tbps TeraPHY optical I/O chiplet, the 16-wavelength SuperNova light source, UCIe interoperability, the millimeter-to-kilometer connectivity framing, and the AI scale-up architecture positioning.</li>
+            <li id="fn5">Ayar Labs, &ldquo;Ayar Labs and Alchip to Scale AI Infrastructure with Co-Packaged Optics,&rdquo; <a href="https://ayarlabs.com/news/ayar-labs-and-alchip-to-scale-ai-infrastructure-with-co-packaged-optics/" target="_blank" rel="noopener noreferrer">ayarlabs.com/&hellip;/ayar-alchip</a>. Source for the AI ASIC integration framing, Alchip's advanced packaging and ASIC expertise, the cited TSMC COUPE, TSMC-SoIC, and advanced process node context, and the repeatable CPO integration into AI infrastructure used in this essay.</li>
+            <li id="fn6">Ayar Labs, &ldquo;Ayar Labs and Wiwynn Partner to Bring Co-Packaged Optics to Rack-Scale AI Systems,&rdquo; <a href="https://ayarlabs.com/news/ayar-labs-and-wiwynn-partner-to-bring-co-packaged-optics-to-rack-scale-ai-systems/" target="_blank" rel="noopener noreferrer">ayarlabs.com/&hellip;/ayar-wiwynn</a>. Source for the rack-scale AI system framing, the 1,024 AI accelerators and beyond target, the more than 100 Tbps optical connectivity per accelerator claim, the integration of TeraPHY optical engines and SuperNova remote light sources, and the explicit fiber management, thermal management, liquid cooling, manufacturability, external laser pluggables, and serviceability emphasis.</li>
+            <li id="fn7">Nvidia, &ldquo;Silicon Photonics,&rdquo; <a href="https://www.nvidia.com/en-au/networking/products/silicon-photonics/" target="_blank" rel="noopener noreferrer">nvidia.com/&hellip;/silicon-photonics</a>. Source for Nvidia's CPO strategy framing, the approximately 5x power efficiency and approximately 10x network resiliency claims for CPO switches vs pluggable transceivers, and the Quantum-X InfiniBand Photonics and Spectrum-X Ethernet Photonics positioning used in this essay.</li>
+            <li id="fn8">Nvidia Developer Blog, &ldquo;Scaling AI Factories with Co-Packaged Optics for Better Power Efficiency,&rdquo; <a href="https://developer.nvidia.com/blog/scaling-ai-factories-with-co-packaged-optics-for-better-power-efficiency/" target="_blank" rel="noopener noreferrer">developer.nvidia.com/&hellip;/cpo-power-efficiency</a>. Source for the switch-first CPO framing, the approximately 115 Tb/s Quantum-X switching capacity, the approximately 409.6 Tb/s Spectrum-X switching capacity, and the AI factory networking framing used in this essay.</li>
+            <li id="fn9">TSMC, &ldquo;Compact Universal Photonic Engine (COUPE),&rdquo; <a href="https://research.tsmc.com/page/on-chip-interconnect/14.html" target="_blank" rel="noopener noreferrer">research.tsmc.com/&hellip;/coupe</a>. Source for TSMC's silicon-photonics integration platform framing for HPC and AI-class systems and the EIC plus PIC integration context referenced in this essay.</li>
+            <li id="fn10">Lightmatter, &ldquo;Lightmatter Unveils Passage M1000, the World's Fastest AI Interconnect,&rdquo; <a href="https://lightmatter.co/press-release/lightmatter-unveils-passage-m1000-photonic-superchip-worlds-fastest-ai-interconnect/" target="_blank" rel="noopener noreferrer">lightmatter.co/&hellip;/passage-m1000</a>. Source for the Passage M1000 framing, the claimed approximately 114 Tbps optical bandwidth, and the photonic interconnect positioning for next-generation XPUs and switches.</li>
+            <li id="fn11">Reuters, &ldquo;AMD buys Enosemi to boost co-packaged optics offerings,&rdquo; <a href="https://www.reuters.com/business/amd-buys-enosemi-boost-co-packaged-optics-offerings-2025-05-28/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/amd-enosemi-2025</a>. Source for AMD's acquisition of Enosemi and the broader signal that optical I/O is becoming strategic to AI accelerator vendors.</li>
+            <li id="fn12">Marvell, &ldquo;Marvell to Acquire Celestial AI, Accelerating Scale-Up Connectivity for Next-Generation Data Centers,&rdquo; <a href="https://investor.marvell.com/news-events/press-releases/detail/1000/marvell-to-acquire-celestial-ai-accelerating-scale-up-connectivity-for-next-generation-data-centers" target="_blank" rel="noopener noreferrer">investor.marvell.com/&hellip;/marvell-celestial-ai</a>. Source for the Celestial AI Photonic Fabric framing across package, system, and rack-level optical I/O, and the strategic rationale that copper must give way to optics within racks, systems, and packages.</li>
+            <li id="fn13">Reuters, &ldquo;Nvidia CEO says power-saving optical chip tech will need to wait for wider use,&rdquo; <a href="https://www.reuters.com/technology/nvidia-ceo-says-power-saving-optical-chip-tech-will-need-wait-wider-use-2025-03-19/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/nvidia-cpo-cautious</a>. Used carefully in this essay to support the staged-adoption argument, including the framing that Nvidia is using CPO first in networking chips and that wider adoption in mainstream GPUs may take time.</li>
+          </ol>
+        </div>
+
+        <div class="ayr-readnext">
+          <div class="ayr-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="ayr-readnext-grid">
+            <a href="globalfoundries-fotonix-silicon-photonics-ai-infrastructure.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 070</div>
+              <div class="ayr-readnext-title">GlobalFoundries Fotonix Was Early. Now Silicon Photonics Is Becoming AI Infrastructure.</div>
+            </a>
+            <a href="advanced-packaging-became-the-computer.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 061</div>
+              <div class="ayr-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="euv-materials-war-ai-chips.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 059</div>
+              <div class="ayr-readnext-title">The EUV Materials War Behind AI Chips</div>
+            </a>
+            <a href="memory-oligopoly-ai-toll-booth.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 050</div>
+              <div class="ayr-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+            <a href="nvidia-hopper-supplier-risk-ai-hardware-platforms.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 072</div>
+              <div class="ayr-readnext-title">Nvidia's Hopper Supplier Cut Was a Warning: AI Hardware Design Wins Are Not Moats</div>
+            </a>
+            <a href="reliability-layer-behind-ai-hardware.html" class="ayr-readnext-card">
+              <div class="ayr-readnext-kicker">Essay 051</div>
+              <div class="ayr-readnext-title">The Reliability Layer Behind AI Hardware</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>
