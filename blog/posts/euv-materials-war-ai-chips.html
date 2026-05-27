@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The EUV Materials War Behind AI Chips | Pugalenthi Magendran</title>
+  <meta name="description" content="ASML gets the attention, but EUV scaling also depends on photoresist, coaters, developers, dry resist, MOR, etch and defect control. The hidden battle is turning scarce EUV photons into high-yield wafers.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/euv-materials-war-ai-chips.html">
+  <meta property="og:title" content="The EUV Materials War Behind AI Chips">
+  <meta property="og:description" content="A technical essay on CAR vs MOR vs dry resist, Lam Research, Tokyo Electron, JSR/Inpria, ASML, TSMC N2, stochastic defects and the EUV materials stack behind AI chips.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/euv-materials-war-ai-chips.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="EUV">
+  <meta property="article:tag" content="Photoresist">
+  <meta property="article:tag" content="Lam Research">
+  <meta property="article:tag" content="Tokyo Electron">
+  <meta property="article:tag" content="JSR">
+  <meta property="article:tag" content="Inpria">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The EUV Materials War Behind AI Chips">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="ASML gets the attention, but EUV scaling also depends on photoresist, coaters, developers, dry resist, MOR, etch and defect control. The hidden battle is turning scarce EUV photons into high-yield wafers.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The EUV Materials War Behind AI Chips",
+    "description": "ASML gets the attention, but EUV scaling also depends on photoresist, coaters, developers, dry resist, MOR, etch and defect control. The hidden battle is turning scarce EUV photons into high-yield wafers.",
+    "url": "https://pugalenthimagendran.com/blog/posts/euv-materials-war-ai-chips.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/euv-materials-war-ai-chips.html",
+    "keywords": "Semiconductors, EUV, Photoresist, Lam Research, Tokyo Electron, JSR, Inpria, ASML, TSMC, AI Infrastructure"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay typography */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #5B9A52); border: 1px solid rgba(91,154,82,0.30); background: rgba(91,154,82,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #5B9A52); text-decoration: none; border-bottom: 0.5px solid rgba(91,154,82,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #5B9A52); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #5B9A52); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #5B9A52); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #5B9A52); }
+
+    /* Essay 059 EUV Materials War — scoped under .essay-mw, fresh green #5B9A52 */
+    body.essay-mw {
+      --mw-accent: #5B9A52;
+      --mw-accent-soft: rgba(91,154,82,0.10);
+      --mw-accent-faint: rgba(91,154,82,0.05);
+      --mw-accent-line: rgba(91,154,82,0.30);
+    }
+    body.essay-mw .essay-stamp { color: var(--mw-accent); border-color: var(--mw-accent-line); background: var(--mw-accent-soft); }
+    body.essay-mw .essay-footnotes a { color: var(--mw-accent); border-bottom-color: var(--mw-accent-line); }
+    body.essay-mw .essay-fn a { color: var(--mw-accent); }
+    body.essay-mw .essay-pull { border-left-color: var(--mw-accent); }
+    body.essay-mw .essay-toc a:hover { color: var(--mw-accent); }
+
+    body.essay-mw .mw-thesis {
+      background: linear-gradient(180deg, var(--mw-accent-soft), var(--mw-accent-faint));
+      border: 0.5px solid var(--mw-accent-line);
+      border-left: 2px solid var(--mw-accent);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-mw .mw-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mw-accent); margin-bottom: 0.75rem; }
+    body.essay-mw .mw-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.25rem; line-height: 1.5; color: var(--color-text-primary); margin: 0; }
+
+    body.essay-mw .mw-sources-box {
+      background: var(--color-background-secondary);
+      border: 0.5px dashed var(--mw-accent-line);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-mw .mw-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mw-accent); margin-bottom: 0.85rem; }
+    body.essay-mw .mw-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-mw .mw-sources-box li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.45rem; }
+
+    /* EUV Patterning Flow — 10 steps */
+    body.essay-mw .mw-flow {
+      margin: 2.5rem 0;
+      padding: 1.5rem;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-secondary);
+    }
+    body.essay-mw .mw-flow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mw-accent); margin-bottom: 1rem; }
+    body.essay-mw .mw-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+    body.essay-mw .mw-flow-step {
+      border: 0.5px solid var(--mw-accent-line);
+      border-radius: 6px;
+      padding: 0.7rem 0.8rem;
+      background: var(--mw-accent-faint);
+    }
+    body.essay-mw .mw-flow-step-num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--mw-accent); margin-bottom: 0.3rem; }
+    body.essay-mw .mw-flow-step-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.88rem; color: var(--color-text-primary); margin: 0; line-height: 1.25; }
+
+    /* CAR vs MOR vs Dry Resist — 3-column comparison */
+    body.essay-mw .mw-three {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-mw .mw-three-col {
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 1.25rem 1.4rem;
+      background: var(--color-background-secondary);
+    }
+    body.essay-mw .mw-three-col.disruptive { border-color: var(--mw-accent-line); background: var(--mw-accent-faint); }
+    body.essay-mw .mw-three-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.55rem; }
+    body.essay-mw .mw-three-col.disruptive .mw-three-label { color: var(--mw-accent); }
+    body.essay-mw .mw-three-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--color-text-primary); margin: 0 0 0.6rem; }
+    body.essay-mw .mw-three-strength { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--mw-accent); letter-spacing: 0.08em; text-transform: uppercase; margin: 0.45rem 0 0.25rem; }
+    body.essay-mw .mw-three-col ul { margin: 0; padding-left: 1.05rem; }
+    body.essay-mw .mw-three-col li { font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); margin-bottom: 0.3rem; }
+
+    /* RLS / Photon Economics — labeled key-value boxes */
+    body.essay-mw .mw-tradeoff {
+      margin: 2.5rem 0;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    body.essay-mw .mw-tradeoff-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mw-accent); padding: 1rem 1.5rem; background: var(--mw-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-mw .mw-tradeoff-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+    body.essay-mw .mw-tradeoff-item {
+      padding: 0.7rem 1.25rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      border-right: 0.5px dashed var(--color-border-tertiary);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+    body.essay-mw .mw-tradeoff-item:nth-child(even) { border-right: none; }
+    body.essay-mw .mw-tradeoff-item strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--mw-accent);
+      display: block;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+    }
+    body.essay-mw .mw-tradeoff-footer {
+      padding: 0.85rem 1.5rem;
+      background: var(--mw-accent-soft);
+      border-top: 0.5px solid var(--mw-accent-line);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+
+    /* 2021 vs 2026 comparison */
+    body.essay-mw .mw-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-mw .mw-compare-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-mw .mw-compare-col.right { border-color: var(--mw-accent-line); background: var(--mw-accent-faint); }
+    body.essay-mw .mw-compare-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.65rem; }
+    body.essay-mw .mw-compare-col.right .mw-compare-label { color: var(--mw-accent); }
+    body.essay-mw .mw-compare-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.75rem; }
+    body.essay-mw .mw-compare-col p { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Timeline */
+    body.essay-mw .mw-timeline {
+      margin: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--mw-accent-line);
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+    body.essay-mw .mw-timeline-item { padding: 0.7rem 0 1.05rem; position: relative; }
+    body.essay-mw .mw-timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem;
+      top: 1rem;
+      width: 8px;
+      height: 8px;
+      background: var(--mw-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--color-background-secondary);
+    }
+    body.essay-mw .mw-timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--mw-accent); margin-bottom: 0.35rem; }
+    body.essay-mw .mw-timeline-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--color-text-primary); margin: 0 0 0.4rem; }
+    body.essay-mw .mw-timeline-desc { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-secondary); margin: 0; }
+
+    /* Evidence Ledger */
+    body.essay-mw .mw-ledger { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-mw .mw-ledger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mw-accent); padding: 1rem 1.5rem; background: var(--mw-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-mw .mw-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-mw .mw-ledger th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-mw .mw-ledger td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-secondary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-mw .mw-ledger tr:last-child td { border-bottom: none; }
+    body.essay-mw .mw-ledger td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--mw-accent); letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Risk grid */
+    body.essay-mw .mw-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin: 2.5rem 0; }
+    body.essay-mw .mw-risk { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.15rem; background: var(--color-background-secondary); }
+    body.essay-mw .mw-risk-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--mw-accent); letter-spacing: 0.1em; margin-bottom: 0.45rem; }
+    body.essay-mw .mw-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Read-next cards */
+    body.essay-mw .mw-readnext { margin: 4rem 0 0; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    body.essay-mw .mw-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
+    body.essay-mw .mw-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    body.essay-mw .mw-readnext-card { display: block; padding: 1.15rem 1.35rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+    body.essay-mw .mw-readnext-card:hover { border-color: var(--mw-accent); transform: translateY(-2px); }
+    body.essay-mw .mw-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mw-accent); margin-bottom: 0.4rem; }
+    body.essay-mw .mw-readnext-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--color-text-primary); margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-mw .mw-flow-grid { grid-template-columns: repeat(3, 1fr); }
+      body.essay-mw .mw-three { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+    }
+    @media (max-width: 768px) {
+      body.essay-mw .mw-compare { grid-template-columns: 1fr; }
+      body.essay-mw .mw-risks { grid-template-columns: 1fr; }
+      body.essay-mw .mw-readnext-grid { grid-template-columns: 1fr; }
+      body.essay-mw .mw-tradeoff-grid { grid-template-columns: 1fr; }
+      body.essay-mw .mw-tradeoff-item { border-right: none; }
+      body.essay-mw .mw-flow-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      body.essay-mw .mw-flow-grid { grid-template-columns: 1fr; }
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-mw .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-mw">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 059 &nbsp;&middot;&nbsp; Lithography Materials &amp; Process</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">EUV</span>
+        <span class="tag">Photoresist</span>
+        <span class="tag">CAR</span>
+        <span class="tag">MOR</span>
+        <span class="tag">Dry Resist</span>
+        <span class="tag">Lam Research</span>
+        <span class="tag">Tokyo Electron</span>
+        <span class="tag">JSR</span>
+        <span class="tag">Inpria</span>
+        <span class="tag">ASML</span>
+        <span class="tag">AI Infrastructure</span>
+      </div>
+
+      <h1 class="essay-hed">
+        The EUV Materials War Behind <em>AI Chips</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Original analysis</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        ASML gets the attention, but every EUV wafer also depends on photoresist, coating, baking, developing, etching and defect control. In 2026, the fight is no longer just CAR vs MOR vs dry resist. It is about who controls the process module that turns scarce EUV photons into usable yield.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">14 min read</div>
+      </div>
+
+      <div class="mw-thesis">
+        <div class="mw-thesis-label">Thesis</div>
+        <p class="mw-thesis-text">ASML prints the pattern, but materials determine whether the pattern survives. CAR, MOR and dry resist are not just chemistry choices. They are competing answers to the same AI-era problem: how to turn scarce EUV photons into high-yield wafers.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2021">What the 2021 article got right</a></li>
+          <li><a href="#sec-matter">Why EUV materials matter</a></li>
+          <li><a href="#sec-car">CAR, the incumbent</a></li>
+          <li><a href="#sec-mor">MOR, the evolutionary challenger</a></li>
+          <li><a href="#sec-dry">Dry resist, Lam's disruptive path</a></li>
+          <li><a href="#sec-tel">TEL is defending the wet-track ecosystem</a></li>
+          <li><a href="#sec-2026">Why this became more important by 2026</a></li>
+          <li><a href="#sec-module">The process-module war</a></li>
+          <li><a href="#sec-cross">Why cross-licensing matters</a></li>
+          <li><a href="#sec-verdict-three">CAR vs MOR vs dry resist, the likely 2026 verdict</a></li>
+          <li><a href="#sec-misread">What people got wrong in 2021</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          EUV lithography is usually treated as an ASML story.
+        </p>
+
+        <p>
+          That framing is understandable. ASML builds the scanner. ASML creates the 13.5&nbsp;nm light. ASML controls one of the most complex machines in semiconductor manufacturing. But the scanner is not the whole process. A wafer does not become an advanced chip just because EUV light hits it. The wafer has to be coated with photoresist, baked, exposed, baked again, developed, etched, cleaned, inspected, and integrated into dozens of other process steps. Every one of those steps can create defects, rough edges, bridge failures, missing holes, collapsed lines, or yield loss.
+        </p>
+
+        <p>
+          The EUV materials war is about turning scarce photons into working chips. It is the hidden half of every advanced wafer the AI industry consumes.
+        </p>
+
+        <p class="essay-pull">
+          Photons are expensive.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2021">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2021 article got right
+        </h2>
+
+        <p>
+          The 2021 SemiAnalysis piece on EUV photoresist, coaters and developers is the historical anchor for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It argued that EUV had moved the semiconductor industry forward but had created new adjacent bottlenecks in masks, pellicles, deposition, etch, hard masks, and photoresist. Tokyo Electron was described as the dominant supplier of EUV photoresist coaters and developers. Japanese firms held roughly 75% of the photoresist market. JSR and Tokyo Ohka Kogyo were identified as the leaders in chemically amplified EUV photoresist. Lam Research was framed as trying to disrupt the stack with dry resist.
+        </p>
+
+        <p>
+          The article also explained the physics that make this a real battle. EUV has a throughput problem because far fewer photons hit the wafer compared with DUV at the same dose. Dose, sensitivity, roughness, resolution, and throughput are tightly linked. The lithography flow described on page 3 covers apply photoresist, prebake, align mask and expose, develop, then etch or implant. The stochastic-noise visual on page 6 shows the dominant defect modes at EUV pitches: line bridging, pinching, missing holes, and kissing defects<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <div class="mw-sources-box">
+          <div class="mw-sources-box-label">Source notes &mdash; 2021 SemiAnalysis EUV materials claims (historical)</div>
+          <ul>
+            <li>EUV created adjacent bottlenecks in masks, pellicles, deposition, etch, hard masks, and photoresist.</li>
+            <li>TEL described as dominant in EUV coaters and developers.</li>
+            <li>Japanese firms held ~75% of the photoresist market.</li>
+            <li>JSR and TOK identified as leaders in chemically amplified EUV photoresist.</li>
+            <li>Lam Research positioned as a dry-resist disruptor.</li>
+            <li>Stochastic-noise defects emphasized as the central EUV failure modes.</li>
+            <li>EUV throughput limited by photon scarcity relative to DUV.</li>
+            <li>Resolution, line-edge roughness, and sensitivity framed as a tightly coupled tradeoff.</li>
+            <li>CAR vs MOR vs dry resist framed as a multi-year battle for the same module.</li>
+          </ul>
+        </div>
+
+        <p>
+          That framing was right. The EUV materials war was already a real battle in 2021. The 2026 question is how it evolved as AI demand pushed advanced wafer needs higher and tighter.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-matter">
+          <span class="essay-h2-num">Section 02</span>
+          Why EUV materials matter
+        </h2>
+
+        <p>
+          EUV photons are hard to generate. Every EUV exposure needs enough photons to trigger a clean chemical or material response in the resist. More dose usually means better pattern fidelity, but lower scanner throughput. Less dose improves throughput, but increases stochastic defects. The resist has to balance sensitivity, resolution, line-edge roughness, defectivity, etch resistance, development behavior, cost, and high-volume manufacturability all at once.
+        </p>
+
+        <p>
+          The textbook way to summarize this is the RLS tradeoff: resolution, line-edge roughness, and sensitivity, plus the throughput and yield consequences that follow. Improving one of those terms usually puts pressure on another. The whole job of an EUV materials and process module is to find the point on the curve where the wafer is both manufacturable and economic.
+        </p>
+
+        <div class="mw-tradeoff">
+          <div class="mw-tradeoff-label">RLS tradeoff &mdash; the inputs that compete for the same budget</div>
+          <div class="mw-tradeoff-grid">
+            <div class="mw-tradeoff-item"><strong>Resolution</strong>How small a feature the resist can resolve at the printed pitch.</div>
+            <div class="mw-tradeoff-item"><strong>Line-edge roughness</strong>How smooth the line edges are; rough edges propagate into device variation.</div>
+            <div class="mw-tradeoff-item"><strong>Sensitivity</strong>How much EUV dose the resist needs to print cleanly.</div>
+            <div class="mw-tradeoff-item"><strong>Throughput</strong>Wafers per hour at the required dose; sets cost per wafer.</div>
+            <div class="mw-tradeoff-item"><strong>Yield</strong>Good dies per wafer after stochastic and integration losses.</div>
+            <div class="mw-tradeoff-item"><strong>Etch transfer</strong>How faithfully the printed pattern transfers through subsequent steps.</div>
+          </div>
+          <div class="mw-tradeoff-footer">
+            The resist has to absorb enough photons to print cleanly, but not demand so many photons that the scanner becomes uneconomic.
+          </div>
+        </div>
+
+        <p>
+          That is the core economic tradeoff. Now apply it to three different materials philosophies competing for the same module.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-car">
+          <span class="essay-h2-num">Section 03</span>
+          CAR, the incumbent
+        </h2>
+
+        <p>
+          CAR means chemically amplified resist. It is the mature wet-resist path. The wafer is coated with liquid resist using spin coating, baked, exposed to EUV light, baked again to drive the chemical amplification, and then developed with a wet developer. CAR is not perfect, but it is deeply embedded in fab process flows.
+        </p>
+
+        <p>
+          CAR's advantages are operational. It is mature, well understood, qualified in production at scale, compatible with the existing TEL track tools that fabs already own, and supported by a large supplier ecosystem with familiar failure modes. Its weaknesses are physical. Stochastic defects, line-edge roughness, sensitivity tradeoffs, line collapse at thin films, wet-development residue, and harder scaling at the tightest pitches all get worse as EUV pushes deeper into the leading edge<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          CAR survives because fabs value what already works. But EUV has exposed its limits in ways that make process changes harder to defer indefinitely.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-mor">
+          <span class="essay-h2-num">Section 04</span>
+          MOR, the evolutionary challenger
+        </h2>
+
+        <p>
+          MOR means metal oxide resist. It keeps much of the wet-resist process flow but changes the chemistry. Metal oxide materials can improve EUV absorption, which directly attacks the photon-scarcity problem and can help the RLS tradeoff. Inpria pioneered MOR and was acquired by JSR.
+        </p>
+
+        <p>
+          MOR is attractive because it can improve EUV sensitivity without forcing a fab to abandon the wet-track architecture. It still uses wet coating and development flows, so the wet-process problems do not disappear, but the path to qualification is shorter than a complete process-module change. The 2021 article also flagged that MOR can be used with TEL Clean Track tools with upgrades, and pointed to post-exposure bake and wet-development improvements from TEL and JSR. JSR and Inpria remain central to the MOR ecosystem, with JSR expanding photoresist development and production infrastructure in Japan and Korea<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.
+        </p>
+
+        <p>
+          MOR is the evolutionary path. Better EUV absorption without forcing fabs to abandon the wet-track architecture they already trust.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-dry">
+          <span class="essay-h2-num">Section 05</span>
+          Dry resist, Lam's disruptive path
+        </h2>
+
+        <p>
+          Lam's dry resist is the disruptive path. Instead of spin-coating liquid resist, Lam uses a vapor-deposited dry resist process. Instead of wet development, it uses dry development. The 2021 article showed Lam's case for fewer tradeoffs, higher resolution, wider process window, higher purity, and dry development that avoids the line collapse seen in wet flows<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          Lam's 2025 update put numbers on the lab progress. Lam said it had established 28&nbsp;nm pitch high-resolution patterning through dry photoresist technology at imec, paired with low-NA EUV and described as extendible to High-NA EUV, with dry resist enhancing EUV sensitivity and resolution per wafer pass while using less energy and roughly five to ten times less raw material than existing wet chemical resist processes<sup class="essay-fn"><a href="#fn2">[2]</a></sup>. In March 2026, IBM and Lam announced a collaboration on sub-1&nbsp;nm logic scaling that explicitly covers new materials, advanced processes, and High-NA EUV lithography techniques<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          ASML prints the pattern, but materials determine whether the pattern survives.
+        </p>
+
+        <p>
+          Lam is not just trying to sell a resist. It is trying to own more of the EUV patterning module: deposition, dry resist, dry development, etch, and pattern transfer, treated as one co-optimized flow rather than a string of best-effort steps.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-tel">
+          <span class="essay-h2-num">Section 06</span>
+          TEL is defending the wet-track ecosystem
+        </h2>
+
+        <p>
+          The wrong conclusion is "Lam disrupts, TEL dies." TEL is the incumbent in coaters and developers for a reason. Fabs value stability, throughput, installed base, process knowledge, and defect control. The wet-track ecosystem is not a single product. It is decades of process recipes, tool maturity, and qualification data, all of which matter when the cost of a yield excursion is large.
+        </p>
+
+        <p>
+          In December 2025, TEL released CLEAN TRACK LITHIUS Pro DICE, a 300&nbsp;mm wafer coater and developer described as suitable for advanced lithography including High-NA EUV and DUV processes<sup class="essay-fn"><a href="#fn4">[4]</a></sup>. In April 2026, TEL said the LITHIUS Pro DICE can reduce wafer defects and associated costs caused by flawed resist coating by 50% or more compared with previous models<sup class="essay-fn"><a href="#fn5">[5]</a></sup>. TEL's LITHIUS product line continues to emphasize extensibility to advanced processes, high throughput, footprint reduction, OEE improvement, and cost-of-ownership reduction<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.
+        </p>
+
+        <p>
+          Dry resist has to beat not just wet-resist chemistry, but decades of wet-track process maturity. That is a different and harder competition than chemistry alone.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2026">
+          <span class="essay-h2-num">Section 07</span>
+          Why this became more important by 2026
+        </h2>
+
+        <p>
+          The macro context made the materials war matter more. ASML reported strong Q4 2025 results, with Q4 net bookings of EUR 13.2B and EUV bookings of EUR 7.4B, against a year-end 2025 backlog of EUR 38.8B, with AI-related chipmaking demand driving the medium-term capacity picture<sup class="essay-fn"><a href="#fn10">[10]</a></sup>. On the customer side, TSMC's N2 started volume production in Q4 2025 using first-generation nanosheet transistors<sup class="essay-fn"><a href="#fn11">[11]</a></sup>, and TSMC's A16 added Super Power Rail backside power delivery on top of nanosheets<sup class="essay-fn"><a href="#fn12">[12]</a></sup>.
+        </p>
+
+        <p>
+          More EUV scanners help. But they do not solve dose, defectivity, or pattern transfer on their own. If resist dose is high, scanner throughput falls. If stochastic defects rise, yield falls. If development collapses features, the wafer fails. If etch transfer damages features, the printed pattern does not become a working device. Buying more EUV scanners is not enough if the pattern does not survive.
+        </p>
+
+        <p class="essay-pull">
+          Buying more EUV scanners is not enough if the pattern does not survive.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-module">
+          <span class="essay-h2-num">Section 08</span>
+          The process-module war
+        </h2>
+
+        <p>
+          The honest version of the materials war is that it is not just chemistry. It is full module optimization. Underlayer. Resist deposition. Coating or dry deposition. Post-apply bake. Exposure. Post-exposure bake. Development. Descum or residue removal. Etch. Clean. Inspection. Defect review. Every one of those steps influences yield, throughput, and cost.
+        </p>
+
+        <div class="mw-flow">
+          <div class="mw-flow-label">EUV patterning flow &mdash; ten steps where yield is won or lost</div>
+          <div class="mw-flow-grid">
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 01</div><h3 class="mw-flow-step-name">Wafer clean</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 02</div><h3 class="mw-flow-step-name">Underlayer</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 03</div><h3 class="mw-flow-step-name">Resist coat or dry deposition</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 04</div><h3 class="mw-flow-step-name">Post-apply bake</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 05</div><h3 class="mw-flow-step-name">EUV exposure</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 06</div><h3 class="mw-flow-step-name">Post-exposure bake</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 07</div><h3 class="mw-flow-step-name">Develop</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 08</div><h3 class="mw-flow-step-name">Etch</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 09</div><h3 class="mw-flow-step-name">Clean</h3></div>
+            <div class="mw-flow-step"><div class="mw-flow-step-num">Step 10</div><h3 class="mw-flow-step-name">Inspection</h3></div>
+          </div>
+        </div>
+
+        <p>
+          TEL and JSR/Inpria want to extend and improve the wet process module. Lam wants to shift the module toward dry deposition, dry development, and tighter integration with etch. ASML provides the photon source, but materials and process tools determine how efficiently those photons become yield. This is not chemistry alone. It is process control.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-cross">
+          <span class="essay-h2-num">Section 09</span>
+          Why cross-licensing matters
+        </h2>
+
+        <p>
+          The cleanest signal that the industry knows this is the recent wave of cross-licensing deals. In September 2025, Lam and JSR/Inpria entered a cross-licensing and collaboration agreement covering next-generation patterning, dry resist for EUV lithography, and advanced materials for atomic-layer etching and deposition<sup class="essay-fn"><a href="#fn8">[8]</a></sup>. In 2026, Entegris and JSR/Inpria announced a non-exclusive cross-license covering metal oxide resist patents and collaboration on future photoresist materials<sup class="essay-fn"><a href="#fn9">[9]</a></sup>.
+        </p>
+
+        <p>
+          Competitors are also collaborators because advanced patterning is too complex for one company's chemistry alone. The ecosystem is converging around co-optimized flows, not simple winner-takes-all chemistry. The cross-licenses show the truth: the industry needs combinations, not slogans.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict-three">
+          <span class="essay-h2-num">Section 10</span>
+          CAR vs MOR vs dry resist, the likely 2026 verdict
+        </h2>
+
+        <p>
+          The honest 2026 reading is that CAR, MOR, and dry resist are not competing for a single trophy. They are competing for layers. CAR remains where it is good enough and deeply qualified. MOR is the evolutionary path for wet EUV resist, especially where better absorption improves dose and defectivity without forcing a new process architecture. Dry resist is the disruptive path for the tightest, most photon-starved, and most defect-sensitive layers, especially as High-NA EUV moves closer to production.
+        </p>
+
+        <div class="mw-three">
+          <div class="mw-three-col">
+            <div class="mw-three-label">Incumbent path</div>
+            <h3 class="mw-three-title">CAR</h3>
+            <div class="mw-three-strength">Strengths</div>
+            <ul>
+              <li>Mature, qualified in production.</li>
+              <li>Large supplier ecosystem.</li>
+              <li>Familiar failure modes.</li>
+              <li>Compatible with existing wet tracks.</li>
+            </ul>
+            <div class="mw-three-strength">Weaknesses</div>
+            <ul>
+              <li>Stochastic defects and LER.</li>
+              <li>RLS tradeoff is tight at advanced pitches.</li>
+              <li>Wet-development collapse risks.</li>
+              <li>Harder scaling at tightest layers.</li>
+            </ul>
+          </div>
+          <div class="mw-three-col">
+            <div class="mw-three-label">Evolutionary path</div>
+            <h3 class="mw-three-title">MOR</h3>
+            <div class="mw-three-strength">Strengths</div>
+            <ul>
+              <li>Better EUV absorption.</li>
+              <li>Improves the RLS tradeoff.</li>
+              <li>Works with extended wet tracks.</li>
+              <li>JSR/Inpria-anchored ecosystem.</li>
+            </ul>
+            <div class="mw-three-strength">Weaknesses</div>
+            <ul>
+              <li>Still uses wet coat and develop.</li>
+              <li>Wet-process challenges remain.</li>
+              <li>Adoption requires tool upgrades.</li>
+              <li>Material handling and contamination control.</li>
+            </ul>
+          </div>
+          <div class="mw-three-col disruptive">
+            <div class="mw-three-label">Disruptive path</div>
+            <h3 class="mw-three-title">Dry resist</h3>
+            <div class="mw-three-strength">Strengths</div>
+            <ul>
+              <li>Vapor deposition, dry development.</li>
+              <li>Better collapse and process window.</li>
+              <li>Lower raw-material and energy use.</li>
+              <li>Tighter integration with etch.</li>
+            </ul>
+            <div class="mw-three-strength">Weaknesses</div>
+            <ul>
+              <li>Newer process architecture.</li>
+              <li>Higher fab integration risk.</li>
+              <li>Qualification across more layers needed.</li>
+              <li>Customer-trust runway is still being built.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>
+          The likely outcome is not one resist everywhere. It is layer-specific adoption tied to the dose, defectivity, pitch, etch transfer, and collapse risk of each layer in each customer's process.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-misread">
+          <span class="essay-h2-num">Section 11</span>
+          What people got wrong in 2021
+        </h2>
+
+        <p>
+          The weak interpretation of the 2021 article was that Lam's dry resist would simply replace wet resist. That collapses the materials story into a chemistry-only story and ignores how fabs adopt new patterning flows. The better interpretation is that Lam identified a real weakness in wet EUV patterning, and that fabs will adopt new resist flows layer by layer, based on yield, cost, integration risk, and process control.
+        </p>
+
+        <p>
+          Semiconductor fabs are conservative because bad process changes destroy yield. A better lab result is not enough. The new flow has to survive high-volume manufacturing, defect inspection, tool uptime, contamination control, and customer qualification. In lithography, the best idea does not win until it becomes the best process of record.
+        </p>
+
+        <p class="essay-pull">
+          In lithography, the best idea does not win until it becomes the best process of record.
+        </p>
+
+        <div class="mw-compare">
+          <div class="mw-compare-col">
+            <div class="mw-compare-label">2021 thesis</div>
+            <h3 class="mw-compare-title">CAR vs MOR vs dry resist battle</h3>
+            <p>EUV created a battle between CAR, MOR, and dry resist around a $5B-plus adjacent process market, framed as a multi-year shootout for the EUV patterning module.</p>
+          </div>
+          <div class="mw-compare-col right">
+            <div class="mw-compare-label">2026 reality</div>
+            <h3 class="mw-compare-title">Process-control war across the module</h3>
+            <p>The battle became a process-control war around dose, defectivity, pattern collapse, dry development, wet-track extension, High-NA readiness, and cross-licensing rather than a single chemistry winner.</p>
+          </div>
+        </div>
+
+        <div class="mw-timeline" role="list">
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2021</div>
+            <h3 class="mw-timeline-title">SemiAnalysis frames CAR vs MOR vs dry resist</h3>
+            <p class="mw-timeline-desc">Article maps the EUV materials and process-module battle around Lam, TEL, JSR, TOK, and Inpria, with stochastic defects and the RLS tradeoff at the center<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2021</div>
+            <h3 class="mw-timeline-title">JSR acquires Inpria</h3>
+            <p class="mw-timeline-desc">MOR ecosystem consolidates under JSR, with Inpria as the metal-oxide pioneer<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2025</div>
+            <h3 class="mw-timeline-title">Lam demonstrates 28&nbsp;nm pitch dry resist patterning at imec</h3>
+            <p class="mw-timeline-desc">Dry resist demonstrated at 28&nbsp;nm pitch with low-NA EUV, framed as extendible to High-NA EUV, with five to ten times less raw material than wet processes<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2025</div>
+            <h3 class="mw-timeline-title">TEL releases LITHIUS Pro DICE</h3>
+            <p class="mw-timeline-desc">300&nbsp;mm coater and developer for advanced lithography including High-NA EUV and DUV processes<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2025</div>
+            <h3 class="mw-timeline-title">Lam and JSR/Inpria cross-license</h3>
+            <p class="mw-timeline-desc">Cross-licensing and collaboration agreement covers next-generation patterning, dry resist for EUV lithography, and advanced materials for ALE and ALD<sup class="essay-fn"><a href="#fn8">[8]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2026</div>
+            <h3 class="mw-timeline-title">TEL claims 50%-plus defect-cost reduction with LITHIUS Pro DICE</h3>
+            <p class="mw-timeline-desc">TEL says LITHIUS Pro DICE can reduce wafer defects and associated costs caused by flawed resist coating by 50% or more vs previous models<sup class="essay-fn"><a href="#fn5">[5]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2026</div>
+            <h3 class="mw-timeline-title">IBM and Lam collaborate on sub-1&nbsp;nm scaling</h3>
+            <p class="mw-timeline-desc">Joint work on new materials, advanced processes, and High-NA EUV techniques, framed around sub-1&nbsp;nm logic scaling<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="mw-timeline-item" role="listitem">
+            <div class="mw-timeline-year">2026</div>
+            <h3 class="mw-timeline-title">Entegris and JSR/Inpria MOR cross-license</h3>
+            <p class="mw-timeline-desc">Non-exclusive cross-license around metal oxide resist patents and collaboration on future photoresist materials<sup class="essay-fn"><a href="#fn9">[9]</a></sup>.</p>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 12</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The argument above blends the 2021 SemiAnalysis frame, company materials, and high-level macro context. It is worth being explicit about where the case can break.
+        </p>
+
+        <div class="mw-risks">
+          <div class="mw-risk"><div class="mw-risk-num">Risk 01</div><p class="mw-risk-text">Lam's dry resist progress does not mean dry resist has won all EUV layers.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 02</div><p class="mw-risk-text">TEL's defect-reduction claims are company claims and should be treated as such.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 03</div><p class="mw-risk-text">JSR/Inpria MOR progress does not mean MOR replaces CAR everywhere.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 04</div><p class="mw-risk-text">ASML bookings prove demand for capacity, not adoption of a specific resist flow.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 05</div><p class="mw-risk-text">TSMC N2 and A16 create advanced-node pressure, but they do not publicly reveal every resist choice.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 06</div><p class="mw-risk-text">High-NA EUV adoption timing is still evolving and can shift which materials story dominates.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 07</div><p class="mw-risk-text">Each layer may require different resist and process conditions, so layer-specific adoption is the norm, not the exception.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 08</div><p class="mw-risk-text">Lab and imec demonstrations do not always translate into high-volume manufacturing on customer schedules.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 09</div><p class="mw-risk-text">Fabs may prefer incremental improvements over disruptive process changes if yield risk is lower.</p></div>
+          <div class="mw-risk"><div class="mw-risk-num">Risk 10</div><p class="mw-risk-text">This essay is industry analysis, not investment advice, and the materials race can reorder quickly with a single qualification result.</p></div>
+        </div>
+
+        <p>
+          The point is not that one material has already won. The point is that EUV scaling now depends on materials and process integration as much as scanner resolution.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 13</span>
+          Final verdict
+        </h2>
+
+        <p>
+          The 2021 article was right that EUV created a hidden battle around photoresist, coaters, developers, and etch. In 2026, that battle is more important because AI demand is pushing more advanced wafers, tighter pitches, and more expensive lithography capacity. CAR remains embedded. MOR is the evolutionary wet-resist path. Dry resist is the disruptive process-module path. TEL is defending wet tracks. Lam is trying to expand into the EUV module. JSR/Inpria sits at the center of MOR and the IP that underwrites it. ASML still supplies the photons, but the materials stack determines how many photons become working chips.
+        </p>
+
+        <p class="essay-pull">
+          ASML supplies the photons. The EUV materials stack decides how many of those photons become working chips.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 14</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="mw-ledger">
+          <div class="mw-ledger-label">Evidence ledger &mdash; load-bearing claims with sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2021)</td><td>EUV creates adjacent bottlenecks; TEL dominant in coaters and developers; ~75% photoresist share in Japan; JSR and TOK lead CAR; Lam pushes dry resist.</td><td>Sets the historical map of the EUV materials battlefield.</td></tr>
+              <tr><td>Lam Research (2025)</td><td>28 nm pitch dry resist patterning at imec; extendible to High-NA EUV; 5-10x less raw material, less energy vs wet processes.</td><td>Concrete progress data point for the dry-resist disruption case.</td></tr>
+              <tr><td>IBM and Lam (2026)</td><td>Collaboration on sub-1 nm logic scaling, including materials, processes, and High-NA EUV techniques.</td><td>Shows Lam's materials work is being designed into long-range logic scaling.</td></tr>
+              <tr><td>TEL LITHIUS Pro DICE (2025)</td><td>300 mm coater/developer for advanced litho including High-NA EUV and DUV.</td><td>TEL's product-level investment in defending the wet-track ecosystem.</td></tr>
+              <tr><td>TEL defect-control (2026)</td><td>LITHIUS Pro DICE reduces wafer defects and associated costs from flawed resist coating by 50%+ vs previous models.</td><td>TEL company claim on yield-economics improvement.</td></tr>
+              <tr><td>TEL LITHIUS product page</td><td>Extensibility to advanced processes; high throughput; lower footprint; OEE improvement.</td><td>Reinforces the wet-track ecosystem story.</td></tr>
+              <tr><td>JSR / Inpria</td><td>Inpria focused on metal oxide EUV photoresists; JSR expanded photoresist development and production in Japan and Korea.</td><td>MOR ecosystem positioning for the evolutionary path.</td></tr>
+              <tr><td>Lam and JSR/Inpria (2025)</td><td>Cross-licensing and collaboration on next-gen patterning, dry resist for EUV, and advanced ALE/ALD materials.</td><td>Evidence that competitors are co-optimizing the module.</td></tr>
+              <tr><td>Entegris and JSR/Inpria (2026)</td><td>Non-exclusive cross-license around MOR patents and collaboration on future photoresist materials.</td><td>Further cross-licensing in the MOR ecosystem.</td></tr>
+              <tr><td>ASML Q4 2025</td><td>Q4 net bookings EUR 13.2B, EUV bookings EUR 7.4B, year-end backlog EUR 38.8B; AI-driven demand.</td><td>Macro evidence that EUV capacity, and therefore EUV materials, matter more.</td></tr>
+              <tr><td>TSMC N2</td><td>N2 in volume production from Q4 2025 on first-generation nanosheets.</td><td>Defines the customer-side leading-edge pressure on EUV materials.</td></tr>
+              <tr><td>TSMC A16</td><td>Nanosheets plus Super Power Rail backside power delivery.</td><td>Shows process windows getting tighter beyond just resolution.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;Lam Research, Tokyo Electron, JSR Battle It Out In The $5B+ EUV Photoresist, Coater, and Developer Market &mdash; CAR vs MOR vs Dry Resist,&rdquo; 2021 (PDF supplied by author). Source for the EUV adjacent-bottleneck framing, TEL's coater and developer dominance, the ~75% Japanese photoresist share, the JSR and TOK CAR leadership, Lam's dry-resist positioning, the basic lithography flow on page 3, the stochastic-noise defect visual on page 6, and the page-8, 9, 10, 11, 12, 17, 19, 20, 21, and 22 visuals used in the CAR, MOR, and dry-resist sections.</li>
+          <li id="fn2">Lam Research, &ldquo;Lam Research Establishes 28&nbsp;nm Pitch in High-Resolution Patterning Through Dry Photoresist Technology,&rdquo; <a href="https://investor.lamresearch.com/2025-01-14-Lam-Research-Establishes-28nm-Pitch-in-High-Resolution-Patterning-Through-Dry-Photoresist-Technology" target="_blank" rel="noopener noreferrer">investor.lamresearch.com</a>. Source for the imec 28 nm pitch demonstration, the low-NA EUV pairing, the extendibility to High-NA EUV, the EUV sensitivity and resolution claim, and the 5x-10x lower raw-material framing.</li>
+          <li id="fn3">IBM Newsroom, &ldquo;IBM and Lam Research Announce Collaboration to Advance Sub-1&nbsp;nm Logic Scaling,&rdquo; March 2026, <a href="https://newsroom.ibm.com/2026-03-10-ibm-and-lam-research-announce-collaboration-to-advance-sub-1nm-logic-scaling" target="_blank" rel="noopener noreferrer">newsroom.ibm.com</a>. Source for the IBM-Lam collaboration on new materials, advanced processes, and High-NA EUV lithography techniques.</li>
+          <li id="fn4">Tokyo Electron, &ldquo;CLEAN TRACK LITHIUS Pro DICE Coater/Developer Release,&rdquo; December 2025, <a href="https://www.tel.com/news/product/2025/20251215_002.html" target="_blank" rel="noopener noreferrer">tel.com/news/product/2025/20251215_002.html</a>. Source for the 300 mm wafer coater/developer release and its positioning for advanced lithography including High-NA EUV and DUV processes.</li>
+          <li id="fn5">Tokyo Electron, &ldquo;LITHIUS Pro DICE Defect-Control Update,&rdquo; April 2026, <a href="https://www.tel.com/blog/all/20260428_001.html" target="_blank" rel="noopener noreferrer">tel.com/blog/all/20260428_001.html</a>. Source for the TEL company claim that LITHIUS Pro DICE can reduce wafer defects and associated costs caused by flawed resist coating by 50% or more compared with previous models.</li>
+          <li id="fn6">Tokyo Electron, &ldquo;LITHIUS Product Page,&rdquo; <a href="https://www.tel.com/product/lithius.html" target="_blank" rel="noopener noreferrer">tel.com/product/lithius.html</a>. Source for the LITHIUS extensibility, throughput, footprint, OEE, and cost-of-ownership framing used in the wet-track defense section.</li>
+          <li id="fn7">Inpria, <a href="https://www.inpria.com/" target="_blank" rel="noopener noreferrer">inpria.com</a>; JSR, &ldquo;JSR News (2024),&rdquo; <a href="https://www.jsr.co.jp/jsr_e/news/2024/20240830.html" target="_blank" rel="noopener noreferrer">jsr.co.jp/jsr_e/news/2024</a>. Sources for Inpria's metal-oxide EUV photoresist focus and JSR's expansion of photoresist development and production infrastructure across Japan and Korea, used as MOR ecosystem context.</li>
+          <li id="fn8">Lam Research and JSR/Inpria, &ldquo;Cross-Licensing, Collaboration Agreement to Advance Semiconductor Manufacturing,&rdquo; September 2025, <a href="https://investor.lamresearch.com/2025-09-15-Lam-Research-and-JSR-Corporation-Inpria-Corporation-Enter-Cross-Licensing%2C-Collaboration-Agreement-to-Advance-Semiconductor-Manufacturing" target="_blank" rel="noopener noreferrer">investor.lamresearch.com</a>. Source for the cross-licensing scope covering next-generation patterning, dry resist for EUV lithography, and advanced materials for atomic-layer etching and deposition.</li>
+          <li id="fn9">Entegris and JSR/Inpria, &ldquo;Non-Exclusive Cross-Licensing to EUV Lithography,&rdquo; May 2026, <a href="https://www.businesswire.com/news/home/20260526876476/en/Entegris-and-JSR-CorporationInpria-Corporation-Announce-Non-Exclusive-Cross-Licensing-to-EUV-Lithography" target="_blank" rel="noopener noreferrer">businesswire.com</a>. Source for the non-exclusive cross-license around metal oxide resist patents and the collaboration on future photoresist materials. Treated as reporting on the patent and collaboration arrangement.</li>
+          <li id="fn10">ASML, &ldquo;Q4 2025 Financial Results,&rdquo; <a href="https://www.asml.com/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener noreferrer">asml.com/&hellip;/q4-2025-financial-results</a>. Source for the Q4 2025 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, the year-end 2025 backlog of EUR 38.8B, and the AI-driven medium-term demand framing.</li>
+          <li id="fn11">TSMC, &ldquo;2&nbsp;nm Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm" target="_blank" rel="noopener noreferrer">tsmc.com/dedicatedFoundry/technology/logic/l_2nm</a>. Source for N2 Q4 2025 volume production and the first-generation nanosheet transistor framing.</li>
+          <li id="fn12">TSMC, &ldquo;A16 Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_A16" target="_blank" rel="noopener noreferrer">tsmc.com/dedicatedFoundry/technology/logic/l_A16</a>. Source for the A16 nanosheet plus Super Power Rail backside power-delivery framing used as advanced-node pressure context.</li>
+        </ol>
+      </div>
+
+      <div class="mw-readnext">
+        <div class="mw-readnext-label">Read next</div>
+        <div class="mw-readnext-grid">
+          <a class="mw-readnext-card" href="euv-throughput-bottleneck.html">
+            <div class="mw-readnext-kicker">Essay 055 &middot; Lithography</div>
+            <h3 class="mw-readnext-title">The EUV Throughput Bottleneck</h3>
+          </a>
+          <a class="mw-readnext-card" href="node-race-became-system-race.html">
+            <div class="mw-readnext-kicker">Essay 056 &middot; Foundries</div>
+            <h3 class="mw-readnext-title">The Node Race Became a System Race</h3>
+          </a>
+          <a class="mw-readnext-card" href="intel-bet-the-farm-foundry-proof.html">
+            <div class="mw-readnext-kicker">Essay 058 &middot; Intel</div>
+            <h3 class="mw-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</h3>
+          </a>
+          <a class="mw-readnext-card" href="dry-resist-war.html">
+            <div class="mw-readnext-kicker">Essay &middot; Dry Resist</div>
+            <h3 class="mw-readnext-title">The Dry Resist War</h3>
+          </a>
+          <a class="mw-readnext-card" href="reliability-layer-behind-ai-hardware.html">
+            <div class="mw-readnext-kicker">Essay 051 &middot; Reliability</div>
+            <h3 class="mw-readnext-title">The Reliability Layer Behind AI Hardware</h3>
+          </a>
+          <a class="mw-readnext-card" href="package-escaped-the-wafer.html">
+            <div class="mw-readnext-kicker">Essay 046 &middot; Packaging</div>
+            <h3 class="mw-readnext-title">The Package Escaped the Wafer</h3>
+          </a>
+          <a class="mw-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="mw-readnext-kicker">Atlas</div>
+            <h3 class="mw-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="mw-readnext-card" href="../">
+            <div class="mw-readnext-kicker">Index</div>
+            <h3 class="mw-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
