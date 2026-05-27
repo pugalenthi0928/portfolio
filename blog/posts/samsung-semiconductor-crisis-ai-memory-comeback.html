@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a Second Chance. | Pugalenthi Magendran</title>
+  <meta name="description" content="Samsung's 2022 semiconductor crisis was real, but AI memory changed the story. HBM4 and server memory are driving a comeback, while Foundry still has to rebuild trust against TSMC.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/samsung-semiconductor-crisis-ai-memory-comeback.html">
+  <meta property="og:title" content="Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a Second Chance.">
+  <meta property="og:description" content="A research memo on Samsung's two-speed recovery: AI-driven HBM4, SOCAMM2, DDR5, and record memory profit on one side; 2nm products, HBM4 logic dies, Tesla AI6, and the gap to TSMC on the other.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/samsung-semiconductor-crisis-ai-memory-comeback.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Samsung">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="HBM4">
+  <meta property="article:tag" content="DRAM">
+  <meta property="article:tag" content="Foundry">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Exynos">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Memory">
+  <meta property="article:tag" content="SOCAMM2">
+  <meta property="article:tag" content="Tesla AI6">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a Second Chance.">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Samsung's 2022 semiconductor crisis was real, but AI memory changed the story. HBM4 and server memory are driving a comeback, while Foundry still has to rebuild trust against TSMC.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a Second Chance.",
+    "description": "Samsung's 2022 semiconductor crisis was real, but AI memory changed the story. HBM4 and server memory are driving a comeback, while Foundry still has to rebuild trust against TSMC.",
+    "url": "https://pugalenthimagendran.com/blog/posts/samsung-semiconductor-crisis-ai-memory-comeback.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/samsung-semiconductor-crisis-ai-memory-comeback.html",
+    "keywords": "Samsung, Samsung Foundry, Samsung Memory, HBM4, SOCAMM2, Vera Rubin, Tesla AI6, TSMC, Exynos, AI Memory"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #8C6628); border: 1px solid rgba(140,102,40,0.30); background: rgba(140,102,40,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #8C6628); text-decoration: none; border-bottom: 0.5px solid rgba(140,102,40,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #8C6628); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #8C6628); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #8C6628); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #8C6628); }
+
+    /* Essay 074 Samsung comeback — scoped under .essay-sam, comeback-ochre #8C6628 */
+    body.essay-sam {
+      --s-accent: #8C6628;
+      --s-accent-soft: rgba(140,102,40,0.10);
+      --s-accent-line: rgba(140,102,40,0.30);
+      --s-mem: #3D6E4F;
+      --s-mem-soft: rgba(61,110,79,0.10);
+      --s-mem-line: rgba(61,110,79,0.30);
+      --s-fnd: #3F5A7C;
+      --s-fnd-soft: rgba(63,90,124,0.10);
+      --s-fnd-line: rgba(63,90,124,0.30);
+      --s-warn: #B5703A;
+      --s-warn-soft: rgba(181,112,58,0.08);
+      --s-warn-line: rgba(181,112,58,0.30);
+    }
+    body.essay-sam .essay-stamp { color: var(--s-accent); border-color: var(--s-accent-line); background: var(--s-accent-soft); }
+    body.essay-sam .essay-pull { border-left-color: var(--s-accent); }
+    body.essay-sam .essay-footnotes a { color: var(--s-accent); border-bottom-color: var(--s-accent-line); }
+    body.essay-sam .essay-fn a { color: var(--s-accent); }
+    body.essay-sam .essay-toc a:hover { color: var(--s-accent); }
+
+    /* Two-speed comeback hero */
+    .sam-pb { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(90deg, var(--s-mem-soft) 0%, transparent 50%, var(--s-fnd-soft) 100%); overflow: hidden; }
+    .sam-pb::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(140,102,40,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(140,102,40,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .sam-pb-title { position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .sam-pb-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .sam-pb-col { padding: 1.1rem 1.25rem; border-radius: 8px; border: 0.5px solid var(--color-border-tertiary); background: rgba(0,0,0,0.30); }
+    .sam-pb-col.mem { border-color: var(--s-mem-line); background: rgba(61,110,79,0.14); }
+    .sam-pb-col.fnd { border-color: var(--s-fnd-line); background: rgba(63,90,124,0.14); }
+    .sam-pb-head { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.45rem; }
+    .sam-pb-col.mem .sam-pb-head { color: var(--s-mem); }
+    .sam-pb-col.fnd .sam-pb-head { color: var(--s-fnd); }
+    .sam-pb-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 0.6rem; line-height: 1.3; }
+    .sam-pb-list { list-style: none; padding: 0; margin: 0; }
+    .sam-pb-list li { font-family: 'Source Serif 4', serif; font-size: 0.86rem; font-weight: 300; line-height: 1.4; color: var(--color-text-primary); padding: 0.18rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .sam-pb-list li:last-child { border-bottom: none; }
+    .sam-pb-center { position: relative; z-index: 1; margin-top: 1rem; padding-top: 0.85rem; border-top: 0.5px solid var(--color-border-tertiary); font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.98rem; line-height: 1.4; color: var(--color-text-primary); text-align: center; }
+
+    /* Thesis */
+    .sam-thesis { border: 0.5px solid var(--s-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--s-accent-soft); margin: 2.5rem 0; }
+    .sam-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 0.85rem; }
+    .sam-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary */
+    .sam-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .sam-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .sam-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .sam-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .sam-execsum li:last-child { border-bottom: none; }
+    .sam-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--s-accent); letter-spacing: 0.08em; }
+
+    /* Stat cards */
+    .sam-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.25rem; }
+    .sam-stat { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .sam-stat-k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .sam-stat-v { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--s-accent); line-height: 1.1; margin-bottom: 0.3rem; }
+    .sam-stat-d { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* Share bars (HBM market, foundry market) */
+    .sam-bar { margin: 1.5rem 0 2.25rem; padding: 1.4rem 1.6rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); }
+    .sam-bar-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .sam-bar-row { display: grid; grid-template-columns: 110px 1fr 90px; gap: 0.85rem; align-items: center; padding: 0.45rem 0; }
+    .sam-bar-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.06em; }
+    .sam-bar-track { height: 14px; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 4px; overflow: hidden; }
+    .sam-bar-fill { height: 100%; background: var(--s-accent); }
+    .sam-bar-fill.mem { background: var(--s-mem); }
+    .sam-bar-fill.fnd { background: var(--s-fnd); }
+    .sam-bar-pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--s-accent); text-align: right; letter-spacing: 0.04em; }
+    .sam-bar-pct.mem { color: var(--s-mem); }
+    .sam-bar-pct.fnd { color: var(--s-fnd); }
+    .sam-bar-note { margin-top: 0.7rem; padding-top: 0.7rem; border-top: 0.5px solid var(--color-border-tertiary); font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-style: italic; color: var(--color-text-tertiary); line-height: 1.45; }
+
+    /* Feature cards (Foundry capabilities, SAFE, etc.) */
+    .sam-feat { margin: 1.5rem 0 2.25rem; padding: 1.4rem 1.6rem; border: 0.5px solid var(--s-accent-line); border-radius: 12px; background: var(--s-accent-soft); }
+    .sam-feat-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 1rem; }
+    .sam-feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .sam-feat-item { padding: 0.7rem 0.9rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; }
+    .sam-feat-name { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; color: var(--s-accent); margin-bottom: 0.2rem; text-transform: uppercase; }
+    .sam-feat-text { font-family: 'Source Serif 4', serif; font-size: 0.87rem; font-weight: 300; line-height: 1.45; color: var(--color-text-primary); }
+
+    /* 2-speed table */
+    .sam-tbl-wrap { margin: 1.5rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .sam-tbl { width: 100%; border-collapse: collapse; min-width: 760px; }
+    .sam-tbl th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--s-accent-line); background: var(--s-accent-soft); font-weight: 500; }
+    .sam-tbl td { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .sam-tbl tr:last-child td { border-bottom: none; }
+    .sam-tbl td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--s-accent); letter-spacing: 0.04em; font-weight: 500; white-space: nowrap; }
+
+    /* Must-prove checklist */
+    .sam-check { margin: 1.5rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--s-accent-line); border-radius: 12px; background: var(--s-accent-soft); }
+    .sam-check-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 0.9rem; }
+    .sam-check-list { list-style: none; padding: 0; margin: 0; }
+    .sam-check-list li { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 400; line-height: 1.55; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 2.2rem; position: relative; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .sam-check-list li:last-child { border-bottom: none; }
+    .sam-check-list li::before { content: "[ ? ]"; position: absolute; left: 0; top: 0.6rem; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--s-accent); letter-spacing: 0.04em; }
+
+    /* PDF page reference callout */
+    .sam-pdfref { margin: 1.5rem 0 2.25rem; padding: 1.1rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-left-width: 3px; border-left-color: var(--s-accent-line); border-radius: 8px; background: var(--color-background-secondary); }
+    .sam-pdfref-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 0.55rem; }
+    .sam-pdfref-list { list-style: none; padding: 0; margin: 0; }
+    .sam-pdfref-list li { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.28rem 0 0.28rem 4.5rem; position: relative; }
+    .sam-pdfref-list li::before { content: attr(data-page); position: absolute; left: 0; top: 0.32rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--s-accent); letter-spacing: 0.06em; }
+
+    /* Evidence ledger */
+    .sam-ledger { margin: 1.5rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .sam-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--s-accent-soft); border-bottom: 0.5px solid var(--s-accent-line); }
+    .sam-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--s-accent); border-right: 0.5px solid var(--s-accent-line); }
+    .sam-ledger-head > div:last-child { border-right: none; }
+    .sam-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .sam-ledger-row:last-child { border-bottom: none; }
+    .sam-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .sam-ledger-row > div:last-child { border-right: none; }
+    .sam-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--s-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Risk grid */
+    .sam-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .sam-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .sam-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--s-warn); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .sam-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .sam-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .sam-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .sam-gloss-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .sam-gloss-row:last-child { border-bottom: none; }
+    .sam-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--s-accent); padding: 0.85rem 1rem; background: var(--s-accent-soft); border-right: 0.5px solid var(--s-accent-line); display: flex; align-items: center; }
+    .sam-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line box */
+    .sam-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--s-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--s-accent-soft) 0%, transparent 100%); }
+    .sam-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 0.85rem; }
+    .sam-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .sam-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--s-accent); }
+
+    /* Sources box */
+    .sam-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .sam-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .sam-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .sam-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .sam-readnext { margin: 3rem 0 1rem; }
+    .sam-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .sam-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .sam-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .sam-readnext-card:hover { border-color: var(--s-accent-line); }
+    .sam-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 0.4rem; }
+    .sam-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .sam-pb-grid { grid-template-columns: 1fr; }
+      .sam-stats { grid-template-columns: 1fr; }
+      .sam-feat-grid { grid-template-columns: 1fr; }
+      .sam-readnext-grid { grid-template-columns: 1fr; }
+      .sam-risks { grid-template-columns: 1fr; }
+      .sam-bar-row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .sam-bar-pct { text-align: left; }
+      .sam-gloss-row { grid-template-columns: 1fr; }
+      .sam-gloss-term { border-right: none; border-bottom: 0.5px solid var(--s-accent-line); }
+      .sam-ledger-head, .sam-ledger-row { grid-template-columns: 1fr; }
+      .sam-ledger-head > div, .sam-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .sam-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-sam .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-sam">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 074 &nbsp;&middot;&nbsp; Semiconductors / Memory / Foundry</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Samsung</span>
+        <span class="tag">Semiconductors</span>
+        <span class="tag">HBM</span>
+        <span class="tag">HBM4</span>
+        <span class="tag">DRAM</span>
+        <span class="tag">Foundry</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">Exynos</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Memory</span>
+      </div>
+
+      <h1 class="essay-hed">Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a <em>Second Chance</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Samsung Memory</span>
+          <span class="essay-stamp">HBM4</span>
+          <span class="essay-stamp">SOCAMM2</span>
+          <span class="essay-stamp">Vera Rubin</span>
+          <span class="essay-stamp">Samsung Foundry</span>
+          <span class="essay-stamp">2nm GAA</span>
+          <span class="essay-stamp">Tesla AI6</span>
+          <span class="essay-stamp essay-stamp--muted">TSMC</span>
+          <span class="essay-stamp essay-stamp--muted">Exynos</span>
+          <span class="essay-stamp essay-stamp--muted">DRAM EUV</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        Samsung is no longer a simple decline story. Memory is surging again because AI changed the cycle. Foundry has proof points, but it still has to rebuild trust against TSMC.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 Samsung semiconductor thesis</div>
+        </div>
+        <div class="essay-read-time">16 MIN</div>
+      </div>
+
+      <div class="sam-pb" aria-hidden="true">
+        <div class="sam-pb-title">Two-speed Samsung semiconductor recovery</div>
+        <div class="sam-pb-grid">
+          <div class="sam-pb-col mem">
+            <div class="sam-pb-head">Left &nbsp;&middot;&nbsp; surging</div>
+            <div class="sam-pb-name">Memory comeback</div>
+            <ul class="sam-pb-list">
+              <li>HBM</li>
+              <li>HBM4</li>
+              <li>SOCAMM2</li>
+              <li>DDR5</li>
+              <li>Enterprise SSD</li>
+              <li>AI server demand</li>
+              <li>Higher ASPs</li>
+              <li>Record memory profit</li>
+            </ul>
+          </div>
+          <div class="sam-pb-col fnd">
+            <div class="sam-pb-head">Right &nbsp;&middot;&nbsp; rebuilding</div>
+            <div class="sam-pb-name">Foundry trust rebuild</div>
+            <ul class="sam-pb-list">
+              <li>2nm products</li>
+              <li>HBM4 base dies</li>
+              <li>Tesla AI6</li>
+              <li>3nm GAA</li>
+              <li>SAFE ecosystem</li>
+              <li>2.5D / 3D packaging</li>
+              <li>TSMC share gap</li>
+              <li>Customer trust as the binding constraint</li>
+            </ul>
+          </div>
+        </div>
+        <div class="sam-pb-center">Samsung is back in memory. Foundry still has to earn belief.</div>
+      </div>
+
+      <div class="sam-thesis">
+        <div class="sam-thesis-label">Thesis</div>
+        <div class="sam-thesis-text">
+          The 2022 article was right that Samsung's semiconductor problems were bigger than one bad product. Exynos, Samsung Foundry, System LSI, and DRAM all showed symptoms of aggressive execution, customer trust issues, and process-development risk. But the 2026 update is not simple decline. Samsung's memory business has staged a major AI-driven comeback through HBM, DDR5, SOCAMM, and high-value-added server memory. Foundry has real proof points too, including 2nm products, HBM4 logic dies, profitability improvement, and Tesla. But Samsung Foundry still sits far behind TSMC. Samsung's comeback is real in memory. In foundry, it is still a trust rebuild.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 article got right</a></li>
+          <li><a href="#sec-real">The crisis was real, but not permanent</a></li>
+          <li><a href="#sec-memory">The 2026 memory comeback is real</a></li>
+          <li><a href="#sec-hbm4">HBM4 is Samsung's comeback vector</a></li>
+          <li><a href="#sec-ai-memory">Why AI memory changed the Samsung story</a></li>
+          <li><a href="#sec-foundry">Foundry is improving, but TSMC is still far ahead</a></li>
+          <li><a href="#sec-tesla">Tesla AI6 is the foundry proof point</a></li>
+          <li><a href="#sec-capabilities">Samsung Foundry has capabilities. The issue is trust.</a></li>
+          <li><a href="#sec-exynos">Exynos and System LSI still need proof</a></li>
+          <li><a href="#sec-dram">DRAM lesson: EUV is only an advantage if it ramps</a></li>
+          <li><a href="#sec-twospeed">Samsung is now a two-speed semiconductor company</a></li>
+          <li><a href="#sec-prove">What Samsung must prove now</a></li>
+          <li><a href="#sec-industry">What this means for the semiconductor industry</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="sam-execsum">
+          <div class="sam-execsum-label">Executive summary</div>
+          <ul>
+            <li>In 2022, Samsung's semiconductor issues looked broad: Exynos weakness, Samsung Foundry yield and power concerns, Qualcomm and Nvidia moving high-end products to TSMC, and DRAM execution questions.</li>
+            <li>The 2022 article argued that Samsung's aggressive top-down process culture had turned from strength into execution risk.</li>
+            <li>By 2026, the story is more balanced. Samsung's memory business has staged a major AI-driven recovery.</li>
+            <li>HBM4, SOCAMM2, DDR5, enterprise SSDs, and AI server demand have made memory the strongest comeback vector.</li>
+            <li>Samsung Foundry has improved and has important proof points, but TSMC remains far ahead in market share and customer trust.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece argued that Samsung's semiconductor issues were not isolated to one product.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Exynos 2200 had exposed power, performance, and process-execution problems. Samsung Foundry was losing trust after high-end Qualcomm and Nvidia products shifted toward TSMC. Samsung DRAM was losing some of its historical edge as Micron and SK hynix improved. The broader argument was that Samsung's aggressive process decisions, including early EUV insertion in DRAM, had created real execution risk. Some of the article's strongest cultural framing relied on media reports and industry sources rather than verifiable internal documents, so the more disciplined reading is that <em>the public evidence suggested</em> a broad execution issue, not that every cultural allegation was proven.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="sam-pdfref">
+          <div class="sam-pdfref-label">2022 PDF page references used in this essay</div>
+          <ul class="sam-pdfref-list">
+            <li data-page="P.05">Exynos 2200 underperformance and volume shortfall.</li>
+            <li data-page="P.06">Samsung 4LPE / 4LPP foundry roadmap and advanced-node execution pressure.</li>
+            <li data-page="P.12">DRAM scaling and EUV insertion window across logic, DRAM, and storage-class memory.</li>
+            <li data-page="P.14">Micron's more conservative DUV-first DRAM lithography approach vs Samsung's aggressive EUV path.</li>
+          </ul>
+        </div>
+
+        <p class="essay-pull">
+          Samsung's old strength was aggressive technology adoption. The 2022 warning was that aggression had become execution risk.
+        </p>
+
+        <h2 class="essay-h2" id="sec-real"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; Not permanent</span>The crisis was real, but not permanent</h2>
+
+        <p>
+          The 2022 piece was written when Samsung looked weak across multiple semiconductor fronts. The 2026 update should not be a simple <em>Samsung failed</em> story. Exynos had lost flagship credibility. Foundry had lost customer trust at the leading edge. DRAM leadership was being challenged. All of that was real. But Samsung still had enormous structural strengths: scale, capital, memory know-how, packaging capability, display ecosystem, mobile ecosystem, and decades of semiconductor manufacturing experience that could not be erased by one bad cycle.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Samsung did not collapse. It became a two-speed semiconductor company.
+        </p>
+
+        <h2 class="essay-h2" id="sec-memory"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; Memory comeback</span>The 2026 memory comeback is real</h2>
+
+        <p>
+          Samsung's reported results tell the comeback story. The Q4 2025 and full-year 2025 release reported record Q4 quarterly revenue and operating profit, with full-year revenue and operating profit growth driven by the DS division and memory.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> The Q1 2026 release reported a record quarterly performance again, with the DS division posting very strong revenue and operating profit, the Memory Business setting all-time quarterly records, and management citing AI demand, higher ASPs, HBM, server DDR5, enterprise SSDs, and high-value-added products as the drivers.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> The Q1 2026 earnings presentation underlines the same story across the DS results chart, the Memory section, and Foundry's HBM4 base-die supply and 2nm customer expansion commentary.<sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <div class="sam-stats">
+          <div class="sam-stat"><div class="sam-stat-k">Q4 2025</div><div class="sam-stat-v">Record</div><div class="sam-stat-d">Samsung reported record Q4 2025 quarterly revenue and operating profit, per the Q4/FY2025 release.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">FY2025</div><div class="sam-stat-v">Strong</div><div class="sam-stat-d">Full-year 2025 revenue and operating profit growth driven by DS and Memory.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">Q1 2026</div><div class="sam-stat-v">Record</div><div class="sam-stat-d">Samsung reported record Q1 2026 quarterly revenue and operating profit, with DS leading.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">Memory in Q1 2026</div><div class="sam-stat-v">All-time</div><div class="sam-stat-d">Samsung said the Memory Business set all-time quarterly revenue and profit records.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          Samsung's crisis was real. But AI memory gave Samsung a second chance.
+        </p>
+
+        <h2 class="essay-h2" id="sec-hbm4"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; HBM4</span>The comeback vector</h2>
+
+        <p>
+          Samsung's Q1 2026 release explicitly cited mass product sales of HBM4 and SOCAMM2 for Nvidia's Vera Rubin platform, with first HBM4E samples planned for Q2 2026.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> Reuters reporting around the same window described customers praising Samsung's HBM4 competitiveness while also noting that Samsung still has work to do, and cited Q3 2025 HBM market share with SK hynix leading, Samsung second, and Micron third.<sup class="essay-fn"><a href="#fn5">[5]</a></sup>
+        </p>
+
+        <div class="sam-bar">
+          <div class="sam-bar-label">HBM market share &nbsp;&middot;&nbsp; Q3 2025 per Reuters citation</div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">SK hynix</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill" style="width: 53%;"></div></div>
+            <div class="sam-bar-pct">~ 53%</div>
+          </div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">Samsung</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill mem" style="width: 35%;"></div></div>
+            <div class="sam-bar-pct mem">~ 35%</div>
+          </div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">Micron</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill" style="width: 11%; background: rgba(140,102,40,0.45);"></div></div>
+            <div class="sam-bar-pct">~ 11%</div>
+          </div>
+          <div class="sam-bar-note">Approximate Q3 2025 HBM market shares as reported by Reuters. Samsung is back in the conversation, not the unquestioned leader.</div>
+        </div>
+
+        <p class="essay-pull">
+          Samsung is back in the HBM race. It has not yet reclaimed the crown.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ai-memory"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; AI memory</span>Why AI changed the Samsung story</h2>
+
+        <p>
+          AI servers need more than GPUs. They need memory bandwidth, capacity, power efficiency, and packaging integration. HBM is central to AI accelerators. DDR5 supports the host CPUs that sit alongside those accelerators. Enterprise SSDs handle the storage layer for AI data movement and inference. SOCAMM-style memory modules point at new memory form factors built around AI systems. Samsung's scale across all of those product lines makes the company a natural beneficiary when AI shifts the bottleneck toward bandwidth and capacity rather than only compute.
+        </p>
+
+        <p class="essay-pull">
+          The AI boom did not only benefit Nvidia. It pulled Samsung's memory business back into the center of the infrastructure stack.
+        </p>
+
+        <h2 class="essay-h2" id="sec-foundry"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; Foundry gap</span>TSMC is still far ahead</h2>
+
+        <p>
+          TrendForce's Q4 2025 foundry market data tells the foundry side of the story. TSMC held approximately 70.4% foundry market share. Samsung Foundry reached approximately 7.1% share, with Samsung foundry revenue growing to nearly US$3.4 billion, supported by new 2nm products and logic dies used in Samsung's HBM4 memory. TrendForce noted that these helped Samsung return to profitability and maintain its second-place position.<sup class="essay-fn"><a href="#fn6">[6]</a></sup>
+        </p>
+
+        <div class="sam-bar">
+          <div class="sam-bar-label">Foundry market share &nbsp;&middot;&nbsp; Q4 2025 per TrendForce</div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">TSMC</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill" style="width: 70.4%;"></div></div>
+            <div class="sam-bar-pct">~ 70.4%</div>
+          </div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">Samsung</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill fnd" style="width: 7.1%;"></div></div>
+            <div class="sam-bar-pct fnd">~ 7.1%</div>
+          </div>
+          <div class="sam-bar-row">
+            <div class="sam-bar-name">Rest</div>
+            <div class="sam-bar-track"><div class="sam-bar-fill" style="width: 22.5%; background: rgba(140,102,40,0.35);"></div></div>
+            <div class="sam-bar-pct">~ 22.5%</div>
+          </div>
+          <div class="sam-bar-note">Approximate Q4 2025 foundry market shares per TrendForce. Samsung Foundry has returned to profitability, but the share gap to TSMC remains enormous.</div>
+        </div>
+
+        <p class="essay-pull">
+          Foundry is no longer only a disaster story. But it is still not a TSMC parity story.
+        </p>
+
+        <h2 class="essay-h2" id="sec-tesla"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; Tesla AI6</span>The foundry proof point</h2>
+
+        <p>
+          Reuters reported that Tesla's next-generation AI6 chip would be made at Samsung's Taylor, Texas fab under a deal reported at approximately US$16.5 billion, framed as a development that could re-energize Samsung's US foundry project after Samsung had previously struggled to retain and attract major clients for the Taylor fab.<sup class="essay-fn"><a href="#fn9">[9]</a></sup> Follow-up Reuters reporting noted that despite the deal-driven gains, foundry customer and yield challenges remained, treating Tesla as a boost rather than a full fix.<sup class="essay-fn"><a href="#fn10">[10]</a></sup>
+        </p>
+
+        <div class="sam-stats">
+          <div class="sam-stat"><div class="sam-stat-k">Tesla AI6 deal</div><div class="sam-stat-v">~ US$16.5B</div><div class="sam-stat-d">Reported supply deal between Tesla and Samsung Foundry, per Reuters.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">Fab</div><div class="sam-stat-v">Taylor, TX</div><div class="sam-stat-d">Samsung Taylor, Texas fab to manufacture the next-generation Tesla AI6 chip.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">Strategic role</div><div class="sam-stat-v">Re-energizer</div><div class="sam-stat-d">Reuters framed the deal as potentially re-energizing Samsung's US foundry project.</div></div>
+          <div class="sam-stat"><div class="sam-stat-k">Caveat</div><div class="sam-stat-v">Challenges remain</div><div class="sam-stat-d">Reuters follow-up noted that foundry customer and yield challenges have not gone away.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          The Tesla deal gives Samsung Foundry a headline win. Execution will decide whether it becomes a turning point.
+        </p>
+
+        <h2 class="essay-h2" id="sec-capabilities"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; Capabilities vs trust</span>Samsung Foundry has capabilities. The issue is trust.</h2>
+
+        <p>
+          The official Samsung Foundry overview lists 3nm GAA, EUV from 5nm, specialty technologies, RF, embedded non-volatile memory, high voltage, BCD, CMOS image sensors, and fingerprint sensors among its capability stack.<sup class="essay-fn"><a href="#fn7">[7]</a></sup> The SAFE program adds verified EDA and DM solutions, product-proven IP, cloud design environments, and ASIC design services, with a SAFE Multi-Die Integration alliance supporting 2.5D and 3D packaging through EDA, IP, DSP, OSAT, and testing ecosystem partners.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> The capability stack is real. The binding constraint is no longer can Samsung Foundry build advanced silicon at all, but can it execute consistently across yield, PPA, ecosystem confidence, and schedule.
+        </p>
+
+        <div class="sam-feat">
+          <div class="sam-feat-label">Samsung Foundry capability stack &nbsp;&middot;&nbsp; per Samsung Foundry overview and SAFE</div>
+          <div class="sam-feat-grid">
+            <div class="sam-feat-item"><div class="sam-feat-name">3nm GAA</div><div class="sam-feat-text">Gate-all-around 3nm-class process generation.</div></div>
+            <div class="sam-feat-item"><div class="sam-feat-name">EUV from 5nm</div><div class="sam-feat-text">EUV lithography across leading-edge logic from 5nm forward.</div></div>
+            <div class="sam-feat-item"><div class="sam-feat-name">Specialty tech</div><div class="sam-feat-text">RF, embedded NVM, high voltage, BCD, CIS, fingerprint sensors.</div></div>
+            <div class="sam-feat-item"><div class="sam-feat-name">SAFE ecosystem</div><div class="sam-feat-text">Verified EDA and DM, product-proven IP, cloud design environment, ASIC services.</div></div>
+            <div class="sam-feat-item"><div class="sam-feat-name">MDI alliance</div><div class="sam-feat-text">SAFE Multi-Die Integration alliance for 2.5D and 3D packaging.</div></div>
+            <div class="sam-feat-item"><div class="sam-feat-name">Internal pull</div><div class="sam-feat-text">HBM4 logic dies as an internal-but-real foundry customer.</div></div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          In foundry, a roadmap is not enough. Customers buy trust.
+        </p>
+
+        <h2 class="essay-h2" id="sec-exynos"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; System LSI</span>Exynos still has to prove flagship credibility</h2>
+
+        <p>
+          Samsung's Q1 2026 release said System LSI earnings improved with expanded flagship SoC sales, and that Samsung aims to secure further flagship SoC design wins.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> Reports about Exynos 2600 yields and roadmap have circulated in the press, but the disciplined reading is to treat those as reported and not as official Samsung confirmation. The 2022 piece's main argument about Exynos still applies: the silicon has to deliver on real-world power, thermals, modem behavior, and sustained performance, not just on launch-day benchmark slides.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Exynos does not need better node branding. It needs better real-world power, thermals, modem behavior, and sustained performance.
+        </p>
+
+        <h2 class="essay-h2" id="sec-dram"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; DRAM lesson</span>EUV is only an advantage if it ramps</h2>
+
+        <p>
+          The 2022 article criticised Samsung's aggressive EUV insertion in DRAM not because EUV is bad, but because early adoption only matters when it improves cost, yield, density, and time-to-volume.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Page 12 of the 2022 PDF visualised EUV insertion windows across DRAM and logic. Page 14 contrasted Micron's optimized lithography approach and its more conservative EUV evaluation. Samsung's 2026 memory recovery shows that the company can regain momentum. The 2022 lesson still applies as a discipline: being first to a technology is not the same as being first to economic volume.
+        </p>
+
+        <p class="essay-pull">
+          Being first to a technology is not the same as being first to economic volume.
+        </p>
+
+        <h2 class="essay-h2" id="sec-twospeed"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; Two-speed</span>Samsung is now a two-speed semiconductor company</h2>
+
+        <div class="sam-tbl-wrap">
+          <table class="sam-tbl">
+            <thead>
+              <tr>
+                <th>Business</th>
+                <th>2022 problem</th>
+                <th>2026 status</th>
+                <th>What still must be proven</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Memory</td>
+                <td>DRAM execution and EUV ramp concerns</td>
+                <td>AI memory boom, HBM4, SOCAMM2, record memory profit</td>
+                <td>Regain clear HBM leadership against SK hynix and Micron</td>
+              </tr>
+              <tr>
+                <td>Foundry</td>
+                <td>Yield, power, customer trust problems</td>
+                <td>2nm products, HBM4 logic dies, Tesla AI6, return to profitability</td>
+                <td>Close the trust gap with TSMC</td>
+              </tr>
+              <tr>
+                <td>System LSI</td>
+                <td>Exynos underperformance and mobile credibility loss</td>
+                <td>Improving SoC sales and flagship design-win ambitions</td>
+                <td>Prove real-world performance and efficiency</td>
+              </tr>
+              <tr>
+                <td>Advanced packaging</td>
+                <td>Needed for HPC and AI relevance</td>
+                <td>SAFE MDI, 2.5D / 3D ecosystem, HBM logic integration</td>
+                <td>Win major external AI packaging customers</td>
+              </tr>
+              <tr>
+                <td>Culture and execution</td>
+                <td>Alleged top-down aggressive decisions and blame shifting (reported at the time)</td>
+                <td>Still a core risk to watch across all DS businesses</td>
+                <td>Prove predictable delivery across cycles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="essay-h2" id="sec-prove"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; What must be proven</span>What Samsung must prove now</h2>
+
+        <div class="sam-check">
+          <div class="sam-check-label">Samsung's open proof points &nbsp;&middot;&nbsp; what customers and analysts will watch</div>
+          <ol class="sam-check-list">
+            <li>Can HBM4 ramp in volume with competitive yield, power, and packaging quality?</li>
+            <li>Can Samsung narrow the HBM share gap with SK hynix?</li>
+            <li>Can Foundry deliver 2nm products with predictable yield and PPA?</li>
+            <li>Can the Tesla AI6 deal become a real manufacturing success at Taylor?</li>
+            <li>Can Samsung win more external foundry customers beyond internal memory logic dies?</li>
+            <li>Can Exynos become credible again in flagship phones?</li>
+            <li>Can Samsung's SAFE and advanced packaging ecosystem compete for AI / HPC customers?</li>
+            <li>Can Samsung avoid repeating the old mistake of pushing nodes before they are economically ready?</li>
+          </ol>
+        </div>
+
+        <p class="essay-pull">
+          Samsung's recovery will not be judged by announcements. It will be judged by ramps.
+        </p>
+
+        <h2 class="essay-h2" id="sec-industry"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; Industry stakes</span>What this means for the semiconductor industry</h2>
+
+        <p>
+          Samsung matters because the world needs a second credible advanced foundry and strong memory competition. TSMC dominance creates customer and geopolitical concentration. SK hynix dominance in HBM creates supply concentration. Samsung's recovery would improve supply resilience and customer optionality across both layers. But customers will not choose Samsung out of sympathy. They need predictable execution across yield, power, schedule, packaging, and customer support.
+        </p>
+
+        <p class="essay-pull">
+          The industry wants Samsung to be strong. Customers still need Samsung to prove it.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="sam-ledger">
+          <div class="sam-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Samsung's 2022 issues were broad</div>
+            <div>The 2022 SemiAnalysis article linked Exynos, Foundry, Qualcomm and Nvidia losses, and DRAM EUV execution concerns.</div>
+            <div>The issue was not one isolated product miss.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Exynos 2200 exposed execution problems</div>
+            <div>Page 5 of the 2022 PDF discusses Exynos 2200 underperformance and volume shortfall.</div>
+            <div>Mobile SoC weakness reflected design and process execution issues.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>DRAM execution risk was real</div>
+            <div>Pages 12 and 14 discuss DRAM scaling, EUV insertion windows, and Micron's DUV-first strategy.</div>
+            <div>Early EUV only helps if it ramps economically.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Samsung memory recovered strongly</div>
+            <div>Samsung reported record Q4 2025 and Q1 2026 results, with the Memory Business setting all-time quarterly records.</div>
+            <div>AI memory changed Samsung's earnings picture.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>HBM4 is the comeback vector</div>
+            <div>Samsung says it began HBM4 and SOCAMM2 mass product sales for Nvidia Vera Rubin.</div>
+            <div>Samsung is repositioning around AI memory.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Samsung still trails SK hynix in HBM</div>
+            <div>Reuters cited Q3 2025 HBM share: SK hynix approximately 53%, Samsung approximately 35%, Micron approximately 11%.</div>
+            <div>Samsung is back in the race, not clearly leading.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Foundry is improving but far behind TSMC</div>
+            <div>TrendForce says TSMC held approximately 70.4% foundry market share and Samsung approximately 7.1% in Q4 2025.</div>
+            <div>Foundry recovery is real but still small.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Tesla is a major proof point</div>
+            <div>Reuters reported that Tesla AI6 will be made at Samsung's Taylor fab under a deal reported at approximately US$16.5B.</div>
+            <div>It helps credibility but does not fully fix trust.</div>
+          </div>
+          <div class="sam-ledger-row">
+            <div>Samsung Foundry has real capabilities</div>
+            <div>Samsung lists 3nm GAA, EUV from 5nm, SAFE ecosystem, and 2.5D / 3D packaging support across MDI alliance partners.</div>
+            <div>The capability stack exists; execution is the test.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions, and they are listed here so the argument can be stress-tested.
+        </p>
+
+        <div class="sam-risks">
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">The 2022 article relied in part on media reports and industry sources for internal-culture allegations. Cultural framing should be treated as reported context, not as confirmed internal fact.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Memory cycles are cyclical. Record-setting quarters can normalize. The structural story is the mix shift toward AI memory, not the absolute peak.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">HBM market share figures cited via Reuters are point-in-time and from third-party trackers. The actual ranking can move with each quarter.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Samsung Foundry's 7.1% share is below the level required to attract some leading-edge logic customers who need scale, depth of PDKs, and a long-running track record.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">The Tesla AI6 deal is a major commercial commitment, but its impact will only be visible once production silicon ships at scale from the Taylor fab.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Exynos commentary in the press, including unconfirmed yield reports, should be treated carefully. Press coverage is a useful signal, not a substitute for company disclosure.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">DRAM, HBM, and NAND demand can be affected by hyperscaler capex, sovereign AI buildouts, and AI workload normalisation. The AI memory tailwind is not guaranteed to extend at the current pace.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Geopolitical and trade-policy shifts (US, China, Korea) can change foundry and memory customer dynamics in ways neither Samsung nor competitors fully control.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Advanced packaging ecosystems (CoWoS-class, SAFE MDI) depend on partner OSATs, EDA vendors, and IP providers whose roadmaps interact with Samsung's plans.</div>
+          </div>
+          <div class="sam-risk">
+            <div class="sam-risk-num"></div>
+            <div class="sam-risk-text">Company statements about HBM4, HBM4E, 2nm, and future nodes are company claims. Roadmap dates and capability claims can move.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 16 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="sam-bottom">
+          <div class="sam-bottom-label">Bottom line</div>
+          <p>
+            The 2022 article was right that Samsung's semiconductor problems were bigger than one bad product. Exynos, Foundry, and DRAM all showed symptoms of aggressive execution, customer trust issues, and process-development risk.
+          </p>
+          <p>
+            But the 2026 update is not simple decline. Samsung's memory business has staged a major AI-driven comeback through HBM, DDR5, SOCAMM, and high-value-added server memory. Foundry has real proof points too: 2nm products, HBM4 logic dies, profitability improvement, and Tesla.
+          </p>
+          <p>
+            But Samsung Foundry still sits far behind TSMC. Samsung's comeback is real in memory. In foundry, it is still a trust rebuild.
+          </p>
+          <p>
+            Samsung is back in the fight. Now it has to prove the comeback can survive execution.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 17 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="sam-gloss">
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Foundry</div>
+            <div class="sam-gloss-def">A semiconductor manufacturer that makes chips designed by other companies. Samsung Foundry is the foundry-customer-facing organization inside Samsung's DS division.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">System LSI</div>
+            <div class="sam-gloss-def">Samsung's organization for system-on-chip products, including Exynos application processors, image sensors, and other system silicon.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Exynos</div>
+            <div class="sam-gloss-def">Samsung's family of mobile SoCs. Used in some Samsung phones globally and historically positioned against Qualcomm Snapdragon and MediaTek silicon.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">DRAM</div>
+            <div class="sam-gloss-def">Dynamic random-access memory. The high-density, high-bandwidth memory used as main memory in CPUs and as building blocks of HBM stacks.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">HBM</div>
+            <div class="sam-gloss-def">High Bandwidth Memory. Stacked DRAM connected to logic dies via TSVs and microbumps, packaged onto AI accelerators for very high bandwidth.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">HBM4</div>
+            <div class="sam-gloss-def">The fourth generation of HBM, with significantly higher bandwidth and capacity per stack, targeted at next-generation AI accelerators.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">SOCAMM</div>
+            <div class="sam-gloss-def">A class of memory modules positioned for AI servers, providing high-capacity DDR-class memory in form factors compatible with modern server platforms.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">DDR5</div>
+            <div class="sam-gloss-def">The fifth generation of DDR memory. Used widely as main memory in CPUs and AI servers, with higher bandwidth and capacity than DDR4.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Enterprise SSD</div>
+            <div class="sam-gloss-def">High-endurance, high-performance solid-state drives sold into data center and enterprise customers, typically using high-density NAND flash.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">EUV</div>
+            <div class="sam-gloss-def">Extreme ultraviolet lithography. The 13.5 nm-wavelength patterning technology used in leading-edge logic and DRAM, supplied by ASML.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">DUV</div>
+            <div class="sam-gloss-def">Deep ultraviolet lithography. The older 193 nm-wavelength lithography. Often used with immersion and multi-patterning before EUV insertion at a node.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">GAA</div>
+            <div class="sam-gloss-def">Gate-all-around transistor architecture, in which the gate wraps the channel on all sides. The next mainstream architecture after FinFET at advanced nodes.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">2nm</div>
+            <div class="sam-gloss-def">A class of leading-edge logic process generations using GAA transistors. Samsung Foundry, TSMC, and others each have 2nm-class roadmaps with different specifics.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Parametric yield</div>
+            <div class="sam-gloss-def">The proportion of chips that fall within specified performance parameters (frequency, power, leakage) after manufacturing.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Catastrophic yield</div>
+            <div class="sam-gloss-def">The proportion of chips that work at all after manufacturing, before separating out parametric grading.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">PPA</div>
+            <div class="sam-gloss-def">Performance, power, and area. The three-axis metric used to compare process nodes and chip designs at a high level.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">SAFE ecosystem</div>
+            <div class="sam-gloss-def">Samsung Advanced Foundry Ecosystem. Samsung Foundry's partner program covering EDA, IP, design services, packaging, and testing.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">2.5D packaging</div>
+            <div class="sam-gloss-def">A class of advanced packaging in which multiple dies sit side-by-side on an interposer (silicon or organic) inside one package, like CoWoS.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">3D packaging</div>
+            <div class="sam-gloss-def">Advanced packaging in which dies are stacked vertically and connected through TSVs, hybrid bonding, or microbumps. HBM is one example.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">HBM base die</div>
+            <div class="sam-gloss-def">The logic die at the bottom of an HBM stack that interfaces between the DRAM dies and the host accelerator. Increasingly designed using foundry logic processes.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">AI memory</div>
+            <div class="sam-gloss-def">An informal term for the set of memory products (HBM, DDR5, SOCAMM, enterprise SSDs) that AI training and inference at scale depend on.</div>
+          </div>
+          <div class="sam-gloss-row">
+            <div class="sam-gloss-term">Customer trust</div>
+            <div class="sam-gloss-def">In foundry, the perception by customers that yield, schedule, support, and PDK quality will be delivered consistently across multiple node ramps.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 18 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="sam-sources-box">
+          <div class="sam-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis piece is treated as historical context for the multi-pronged Samsung execution concerns of that period. Where the original used phrases that relied on media reports or industry sources, this essay uses careful framing such as <em>reported at the time</em>, <em>the public evidence suggested</em>, and <em>commercial outcomes supported the broader concern</em>. The unverified internal-culture allegations are not restated as proven fact.
+          </p>
+          <p>
+            The 2026 read is built from Samsung's own Q4 / FY2025 release, Samsung's Q1 2026 release, Samsung's Q1 2026 earnings presentation, Reuters on HBM4 progress and market share, TrendForce on Q4 2025 foundry market data, Samsung Foundry's official overview and SAFE program pages, and Reuters on the Tesla-Samsung Taylor deal and the follow-up caveats. Company claims about HBM4, HBM4E, 2nm, packaging, and roadmap are treated as company claims, not as endorsed forecasts.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;Samsung Electronics Cultural Issues Are Causing Disasters In Samsung Foundry, LSI, And Even DRAM Memory!,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for the broader execution-risk argument, Exynos 2200 underperformance on page 5, the 4LPE / 4LPP foundry roadmap discussion on page 6, the DRAM scaling and EUV insertion window visual on page 12, and the Micron DUV-first lithography comparison on page 14. Unverified internal-culture allegations from the source are described here as reported framing rather than confirmed fact.</li>
+            <li id="fn2">Samsung Electronics, &ldquo;Samsung Electronics Announces Fourth Quarter and FY 2025 Results,&rdquo; <a href="https://news.samsung.com/global/samsung-electronics-announces-fourth-quarter-and-fy-2025-results" target="_blank" rel="noopener noreferrer">news.samsung.com/&hellip;/q4-fy2025-results</a>. Source for record Q4 2025 revenue and operating profit, full-year 2025 revenue and operating profit growth, DS division improvement, and Memory segment performance driven by HBM, server DDR5, enterprise SSD demand, and AI-driven mix improvement.</li>
+            <li id="fn3">Samsung Electronics, &ldquo;Samsung Electronics Announces First Quarter 2026 Results,&rdquo; <a href="https://news.samsung.com/global/samsung-electronics-announces-first-quarter-2026-results" target="_blank" rel="noopener noreferrer">news.samsung.com/&hellip;/q1-2026-results</a>. Source for record Q1 2026 quarterly revenue and operating profit, DS division revenue and operating profit, all-time high memory revenue and profit, AI demand framing, mass product sales of HBM4 and SOCAMM2 for Nvidia's Vera Rubin platform, planned HBM4E samples in Q2 2026, System LSI earnings improvement, and Foundry 2nm and HBM4 base-die commentary.</li>
+            <li id="fn4">Samsung Electronics, &ldquo;Q1 2026 Earnings Conference Presentation,&rdquo; <a href="https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2026_1Q_conference_eng.pdf" target="_blank" rel="noopener noreferrer">images.samsung.com/&hellip;/2026_1Q_conference_eng.pdf</a>. Source for the DS results chart, the System LSI earnings improvement framing, Foundry's HBM4 base-die supply, foundry design-win momentum, and 2nm customer expansion commentary used in this essay.</li>
+            <li id="fn5">Reuters, &ldquo;Samsung Electronics highlights progress on HBM4 chip supply,&rdquo; <a href="https://www.reuters.com/world/asia-pacific/samsung-electronics-highlights-progress-hbm4-chip-supply-2026-01-02/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/samsung-hbm4-progress</a>. Source for the customer praise around Samsung's HBM4 competitiveness, the <em>still has work to do</em> caveat, the Q3 2025 HBM market share citation (SK hynix approximately 53%, Samsung approximately 35%, Micron approximately 11%), and the broader Samsung foundry <em>leap forward</em> framing after major customer deals.</li>
+            <li id="fn6">TrendForce, &ldquo;Q4 2025 Foundry Market,&rdquo; <a href="https://www.trendforce.com/presscenter/news/20260312-12965.html" target="_blank" rel="noopener noreferrer">trendforce.com/&hellip;/q4-2025-foundry-market</a>. Source for the approximately 70.4% TSMC foundry market share, the approximately 7.1% Samsung Foundry share, the nearly US$3.4B Samsung foundry revenue, the return-to-profitability framing, and the role of new 2nm products and HBM4 logic-die foundry revenue in Samsung's quarter.</li>
+            <li id="fn7">Samsung Foundry, &ldquo;Foundry Overview,&rdquo; <a href="https://semiconductor.samsung.com/foundry/" target="_blank" rel="noopener noreferrer">semiconductor.samsung.com/foundry/</a>. Source for Samsung Foundry's official capability claims including 3nm GAA, EUV from 5nm, specialty technologies (RF, eNVM, high voltage, BCD, CIS, fingerprint sensors), and the broader foundry positioning used in this essay.</li>
+            <li id="fn8">Samsung Foundry, &ldquo;SAFE Program,&rdquo; <a href="https://semiconductor.samsung.com/foundry/safe/" target="_blank" rel="noopener noreferrer">semiconductor.samsung.com/foundry/safe/</a>. Source for the SAFE ecosystem framing including verified EDA and DM solutions, product-proven IP, cloud design environments, ASIC design services, and the SAFE Multi-Die Integration alliance covering 2.5D and 3D packaging through EDA, IP, DSP, OSAT, and testing partners.</li>
+            <li id="fn9">Reuters, &ldquo;Tesla-Samsung $16.5 billion supply deal may spur chipmaker's US contract business,&rdquo; <a href="https://www.reuters.com/business/tesla-samsung-165-billion-supply-deal-may-spur-chipmakers-us-contract-business-2025-07-28/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/tesla-samsung-165B-supply-deal</a>. Source for the Tesla AI6 chip being made at Samsung's Taylor, Texas fab under a deal reported at approximately US$16.5 billion, the framing as a potential re-energizing of Samsung's US foundry project, and the context that Samsung had previously struggled to retain and attract major clients for the Taylor fab.</li>
+            <li id="fn10">Reuters, &ldquo;Samsung Electronics shares extend gains after Tesla deal; challenges remain,&rdquo; <a href="https://www.reuters.com/business/autos-transportation/samsung-electronics-shares-extend-gains-after-tesla-deal-challenges-remain-2025-07-29/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/samsung-tesla-deal-challenges-remain</a>. Source for the follow-up framing that despite the Tesla deal-driven gains, foundry customer and yield challenges remained, treating the announcement as a boost rather than a full fix.</li>
+          </ol>
+        </div>
+
+        <div class="sam-readnext">
+          <div class="sam-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="sam-readnext-grid">
+            <a href="memory-oligopoly-ai-toll-booth.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 050</div>
+              <div class="sam-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+            <a href="intel-bet-the-farm-foundry-proof.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 058</div>
+              <div class="sam-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</div>
+            </a>
+            <a href="advanced-packaging-became-the-computer.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 061</div>
+              <div class="sam-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="node-race-became-system-race.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 056</div>
+              <div class="sam-readnext-title">The Node Race Became a System Race</div>
+            </a>
+            <a href="euv-throughput-bottleneck.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 055</div>
+              <div class="sam-readnext-title">The EUV Throughput Bottleneck</div>
+            </a>
+            <a href="reliability-layer-behind-ai-hardware.html" class="sam-readnext-card">
+              <div class="sam-readnext-kicker">Essay 051</div>
+              <div class="sam-readnext-title">The Reliability Layer Behind AI Hardware</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>
