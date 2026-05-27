@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>China's Silicon Carbide Bet: From Subsidy Boom to Overcapacity War | Pugalenthi Magendran</title>
+  <meta name="description" content="China built serious silicon carbide capacity, but SiC is not won by capex alone. The hard test is yield, reliability, automotive qualification, 8-inch manufacturing, and profitability through overcapacity.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/china-silicon-carbide-overcapacity-war.html">
+  <meta property="og:title" content="China's Silicon Carbide Bet: From Subsidy Boom to Overcapacity War">
+  <meta property="og:description" content="A technical essay on Hunan Sanan, STMicroelectronics, Wolfspeed, SiC power devices, EV demand, 8-inch wafers, and China's overcapacity war in power semiconductors.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/china-silicon-carbide-overcapacity-war.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="China">
+  <meta property="article:tag" content="Silicon Carbide">
+  <meta property="article:tag" content="SiC">
+  <meta property="article:tag" content="EVs">
+  <meta property="article:tag" content="Power Electronics">
+  <meta property="article:tag" content="Sanan">
+  <meta property="article:tag" content="Wolfspeed">
+  <meta property="article:tag" content="STMicroelectronics">
+  <meta property="article:tag" content="Manufacturing">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="China's Silicon Carbide Bet: From Subsidy Boom to Overcapacity War">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="China built serious silicon carbide capacity, but SiC is not won by capex alone. The hard test is yield, reliability, automotive qualification, 8-inch manufacturing, and profitability through overcapacity.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "China's Silicon Carbide Bet: From Subsidy Boom to Overcapacity War",
+    "description": "China built serious silicon carbide capacity, but SiC is not won by capex alone. The hard test is yield, reliability, automotive qualification, 8-inch manufacturing, and profitability through overcapacity.",
+    "url": "https://pugalenthimagendran.com/blog/posts/china-silicon-carbide-overcapacity-war.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/china-silicon-carbide-overcapacity-war.html",
+    "keywords": "Semiconductors, China, Silicon Carbide, SiC, EVs, Power Electronics, Sanan, Wolfspeed, STMicroelectronics, Manufacturing"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* ============================================
+       Shared essay typography
+       ============================================ */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #6B8E5F); border: 1px solid rgba(107,142,95,0.30); background: rgba(107,142,95,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #6B8E5F); text-decoration: none; border-bottom: 0.5px solid rgba(107,142,95,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #6B8E5F); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #6B8E5F); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #6B8E5F); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #6B8E5F); }
+
+    /* ============================================
+       Essay 053 — China SiC overcapacity, scoped under .essay-sic
+       Sage olive-green accent, evokes SiC boule color.
+       ============================================ */
+    body.essay-sic {
+      --sic-accent: #6B8E5F;
+      --sic-accent-soft: rgba(107,142,95,0.10);
+      --sic-accent-faint: rgba(107,142,95,0.05);
+      --sic-accent-line: rgba(107,142,95,0.30);
+    }
+    body.essay-sic .essay-stamp { color: var(--sic-accent); border-color: var(--sic-accent-line); background: var(--sic-accent-soft); }
+    body.essay-sic .essay-footnotes a { color: var(--sic-accent); border-bottom-color: var(--sic-accent-line); }
+    body.essay-sic .essay-fn a { color: var(--sic-accent); }
+    body.essay-sic .essay-pull { border-left-color: var(--sic-accent); }
+    body.essay-sic .essay-toc a:hover { color: var(--sic-accent); }
+
+    body.essay-sic .sic-thesis {
+      background: linear-gradient(180deg, var(--sic-accent-soft), var(--sic-accent-faint));
+      border: 0.5px solid var(--sic-accent-line);
+      border-left: 2px solid var(--sic-accent);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-sic .sic-thesis-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      margin-bottom: 0.75rem;
+    }
+    body.essay-sic .sic-thesis-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    body.essay-sic .sic-sources-box {
+      background: var(--color-background-secondary);
+      border: 0.5px dashed var(--sic-accent-line);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-sic .sic-sources-box-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      margin-bottom: 0.85rem;
+    }
+    body.essay-sic .sic-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-sic .sic-sources-box li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      margin-bottom: 0.45rem;
+    }
+
+    /* SiC Manufacturing Chain — 8 stage flow */
+    body.essay-sic .sic-chain {
+      margin: 2.5rem 0;
+      padding: 1.5rem;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-secondary);
+    }
+    body.essay-sic .sic-chain-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      margin-bottom: 1rem;
+    }
+    body.essay-sic .sic-chain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+    body.essay-sic .sic-chain-step {
+      border: 0.5px solid var(--sic-accent-line);
+      border-radius: 6px;
+      padding: 0.8rem 0.85rem;
+      background: var(--sic-accent-faint);
+      position: relative;
+    }
+    body.essay-sic .sic-chain-step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      color: var(--sic-accent);
+      margin-bottom: 0.35rem;
+    }
+    body.essay-sic .sic-chain-step-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--color-text-primary);
+      margin: 0 0 0.3rem;
+      line-height: 1.25;
+    }
+    body.essay-sic .sic-chain-step-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    /* Capacity vs Qualified Output — funnel */
+    body.essay-sic .sic-funnel {
+      margin: 2.5rem 0;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    body.essay-sic .sic-funnel-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      padding: 1rem 1.5rem;
+      background: var(--sic-accent-faint);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    body.essay-sic .sic-funnel-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      align-items: baseline;
+    }
+    body.essay-sic .sic-funnel-row:last-child { border-bottom: none; }
+    body.essay-sic .sic-funnel-stage {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--sic-accent);
+      text-transform: uppercase;
+    }
+    body.essay-sic .sic-funnel-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+    body.essay-sic .sic-funnel-text strong { font-weight: 500; }
+
+    /* 2021 vs 2026 two-column comparison */
+    body.essay-sic .sic-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-sic .sic-compare-col {
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 1.25rem 1.5rem;
+      background: var(--color-background-secondary);
+    }
+    body.essay-sic .sic-compare-col.right {
+      border-color: var(--sic-accent-line);
+      background: var(--sic-accent-faint);
+    }
+    body.essay-sic .sic-compare-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.65rem;
+    }
+    body.essay-sic .sic-compare-col.right .sic-compare-label { color: var(--sic-accent); }
+    body.essay-sic .sic-compare-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-text-primary);
+      margin: 0 0 0.75rem;
+    }
+    body.essay-sic .sic-compare-col p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* Timeline — 7 stops */
+    body.essay-sic .sic-timeline {
+      margin: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-left: 1px solid var(--sic-accent-line);
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+    body.essay-sic .sic-timeline-item { padding: 0.75rem 0 1.1rem; position: relative; }
+    body.essay-sic .sic-timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem;
+      top: 1.1rem;
+      width: 8px;
+      height: 8px;
+      background: var(--sic-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--color-background-secondary);
+    }
+    body.essay-sic .sic-timeline-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--sic-accent);
+      margin-bottom: 0.35rem;
+    }
+    body.essay-sic .sic-timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--color-text-primary);
+      margin: 0 0 0.4rem;
+    }
+    body.essay-sic .sic-timeline-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    /* Evidence Ledger table */
+    body.essay-sic .sic-ledger {
+      margin: 2.5rem 0;
+      overflow-x: auto;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+    }
+    body.essay-sic .sic-ledger-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      padding: 1rem 1.5rem;
+      background: var(--sic-accent-faint);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    body.essay-sic .sic-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-sic .sic-ledger th {
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      padding: 0.85rem 1rem;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      font-weight: 500;
+    }
+    body.essay-sic .sic-ledger td {
+      padding: 0.85rem 1rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      color: var(--color-text-secondary);
+      font-weight: 300;
+      line-height: 1.55;
+      vertical-align: top;
+    }
+    body.essay-sic .sic-ledger tr:last-child td { border-bottom: none; }
+    body.essay-sic .sic-ledger td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--sic-accent);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* Risk grid */
+    body.essay-sic .sic-risks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-sic .sic-risk {
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 1rem 1.15rem;
+      background: var(--color-background-secondary);
+    }
+    body.essay-sic .sic-risk-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--sic-accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.45rem;
+    }
+    body.essay-sic .sic-risk-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* Checklist — what determines whether China wins */
+    body.essay-sic .sic-check {
+      margin: 2.5rem 0;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    body.essay-sic .sic-check-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      padding: 1rem 1.5rem;
+      background: var(--sic-accent-faint);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+    body.essay-sic .sic-check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+    body.essay-sic .sic-check-item {
+      padding: 0.7rem 1.25rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      border-right: 0.5px dashed var(--color-border-tertiary);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+    body.essay-sic .sic-check-item:nth-child(even) { border-right: none; }
+    body.essay-sic .sic-check-item strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--sic-accent);
+      display: block;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+    }
+
+    /* Read-next cards */
+    body.essay-sic .sic-readnext {
+      margin: 4rem 0 0;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--color-border-tertiary);
+    }
+    body.essay-sic .sic-readnext-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 1.25rem;
+    }
+    body.essay-sic .sic-readnext-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+    body.essay-sic .sic-readnext-card {
+      display: block;
+      padding: 1.15rem 1.35rem;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      text-decoration: none;
+      transition: border-color 180ms ease, transform 180ms ease;
+    }
+    body.essay-sic .sic-readnext-card:hover {
+      border-color: var(--sic-accent);
+      transform: translateY(-2px);
+    }
+    body.essay-sic .sic-readnext-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sic-accent);
+      margin-bottom: 0.4rem;
+    }
+    body.essay-sic .sic-readnext-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-sic .sic-chain-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+      body.essay-sic .sic-funnel-row { grid-template-columns: 1fr; gap: 0.35rem; }
+    }
+    @media (max-width: 768px) {
+      body.essay-sic .sic-compare { grid-template-columns: 1fr; }
+      body.essay-sic .sic-risks { grid-template-columns: 1fr; }
+      body.essay-sic .sic-readnext-grid { grid-template-columns: 1fr; }
+      body.essay-sic .sic-check-grid { grid-template-columns: 1fr; }
+      body.essay-sic .sic-check-item { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      body.essay-sic .sic-chain-grid { grid-template-columns: 1fr; }
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-sic .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-sic">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 053 &nbsp;&middot;&nbsp; Power Semiconductors &amp; Industrial Strategy</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">China</span>
+        <span class="tag">Silicon Carbide</span>
+        <span class="tag">SiC</span>
+        <span class="tag">EVs</span>
+        <span class="tag">Power Electronics</span>
+        <span class="tag">Sanan</span>
+        <span class="tag">Wolfspeed</span>
+        <span class="tag">STMicroelectronics</span>
+        <span class="tag">Manufacturing</span>
+        <span class="tag">8-Inch SiC</span>
+        <span class="tag">Overcapacity</span>
+      </div>
+
+      <h1 class="essay-hed">
+        China's Silicon Carbide Bet: From Subsidy Boom to <em>Overcapacity War</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Original analysis</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        In 2021, Hunan Sanan's giant SiC fab looked like a suspiciously expensive capacity story. In 2026, the harder question is whether China can turn massive SiC capacity into reliable, automotive-qualified, profitable devices.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">14 min read</div>
+      </div>
+
+      <div class="sic-thesis">
+        <div class="sic-thesis-label">Thesis</div>
+        <p class="sic-thesis-text">China's SiC story is no longer about whether it can build fabs. It is about whether those fabs can survive the economics of yield, reliability, qualification, and overcapacity.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2021">What the 2021 Sanan thesis got right</a></li>
+          <li><a href="#sec-real">Sanan became real capacity</a></li>
+          <li><a href="#sec-capex">Why SiC is not won by capex alone</a></li>
+          <li><a href="#sec-8inch">The 8-inch transition changes the benchmark</a></li>
+          <li><a href="#sec-china">Why global players still need China</a></li>
+          <li><a href="#sec-overcap">The overcapacity war</a></li>
+          <li><a href="#sec-wolfspeed">Wolfspeed proves how hard SiC economics are</a></li>
+          <li><a href="#sec-strategy">What China is trying to do</a></li>
+          <li><a href="#sec-win">What determines whether China wins</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          Silicon carbide sounds simple until the manufacturing starts.
+        </p>
+
+        <p>
+          SiC power devices are attractive because they handle higher voltage, higher temperature, and better efficiency than traditional silicon power devices. That makes them valuable for electric vehicles, fast chargers, solar inverters, industrial power, energy infrastructure, and over time, data-center power. But SiC manufacturing is brutally difficult. It is not just a matter of building cleanroom space. It requires crystal growth, slicing, polishing, epitaxy, implantation, device fabrication, packaging, burn-in, and qualification, each of which carries its own defect modes and its own yield curve.
+        </p>
+
+        <p>
+          The question in 2026 is not whether China can build SiC fabs. It clearly can. The question is whether those fabs can produce reliable, qualified, profitable devices through an overcapacity war.
+        </p>
+
+        <p class="essay-pull">
+          SiC is not won by capex alone.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2021">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2021 Sanan thesis got right
+        </h2>
+
+        <p>
+          The 2021 SemiAnalysis piece on Hunan Sanan's SiC project is the historical base for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It was published into a broader skepticism wave around China's state-backed semiconductor investments, including failed projects like HSMC. Against that backdrop, the Hunan Sanan announcement looked unusually ambitious.
+        </p>
+
+        <p>
+          The project was framed as a fully integrated SiC wafer fab covering boule growth, slicing, polishing, epitaxy, device manufacturing, packaging, and testing. The capital tag was described as $2.5B for phase 1 and phase 2 combined, with a target of 30,000 6-inch SiC wafers per month. SemiAnalysis questioned whether building phase 1 in under a year could represent real high-volume production or simply cleanroom construction. It compared the cost and output claims against Wolfspeed's Mohawk Valley project and argued that the math did not line up cleanly<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          The critique was not that China cannot build buildings. The critique was that SiC is a process-yield and qualification problem, not just a construction project. The article emphasized the long chain of hard steps where yield is decided.
+        </p>
+
+        <div class="sic-sources-box">
+          <div class="sic-sources-box-label">Source notes &mdash; 2021 SemiAnalysis Sanan claims (historical)</div>
+          <ul>
+            <li>Hunan Sanan framed as a vertically integrated SiC fab from boule and slicing through devices, packaging, and test.</li>
+            <li>Phase 1 and 2 described at a roughly $2.5B capital tag.</li>
+            <li>Claimed output: 30,000 6-inch SiC wafers per month.</li>
+            <li>SemiAnalysis questioned whether the timeline matched high-volume production rather than cleanroom build.</li>
+            <li>Comparison to Wolfspeed Mohawk Valley made the cost-per-wafer claim look unusual.</li>
+            <li>The analysis emphasized that SiC is a yield, qualification, and reliability problem, not just a construction project.</li>
+          </ul>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-real">
+          <span class="essay-h2-num">Section 02</span>
+          Sanan became real capacity
+        </h2>
+
+        <p>
+          The 2026 update has to be balanced. Hunan Sanan's own 2021 announcement described the project as a roughly RMB 16B investment across about 667,000 square meters, building a complete SiC compound semiconductor supply chain and targeting 30,000 6-inch SiC wafers per month<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          That means the project was not imaginary. China did build serious SiC infrastructure. The original skepticism should not be twisted into a claim that the fab never existed. The better question is whether the realized output, yield, and qualification economics matched the ambition. Capacity that exists on paper is not the same as devices that pass automotive qualification at scale.
+        </p>
+
+        <p>
+          The most useful way to read the 2021 to 2026 arc is therefore: the construction story succeeded. The economics story is still open.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-capex">
+          <span class="essay-h2-num">Section 03</span>
+          Why SiC is not won by capex alone
+        </h2>
+
+        <p>
+          The SiC manufacturing chain is unforgiving. Each stage has its own defect physics, and a problem early in the chain compounds downstream. The cleanroom and the tools are the visible part. The yield, defects, and customer qualification are the hard part.
+        </p>
+
+        <div class="sic-chain">
+          <div class="sic-chain-label">SiC manufacturing chain &mdash; eight stages, each with its own yield curve</div>
+          <div class="sic-chain-grid">
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 01</div>
+              <h3 class="sic-chain-step-name">Boule growth</h3>
+              <p class="sic-chain-step-desc">High-quality SiC crystal growth is slow, defect-sensitive, and limited by reactor throughput.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 02</div>
+              <h3 class="sic-chain-step-name">Slicing</h3>
+              <p class="sic-chain-step-desc">SiC is hard and brittle. Wire-saw kerf loss and wafer bow matter, especially at 200 mm.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 03</div>
+              <h3 class="sic-chain-step-name">Polishing &amp; cleaning</h3>
+              <p class="sic-chain-step-desc">Surface preparation drives epitaxy quality. Sub-surface damage is a defect source.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 04</div>
+              <h3 class="sic-chain-step-name">Epitaxy</h3>
+              <p class="sic-chain-step-desc">Device-quality epi layers require tight thickness, doping, and defect-density control.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 05</div>
+              <h3 class="sic-chain-step-name">Implant &amp; activation</h3>
+              <p class="sic-chain-step-desc">SiC needs high-temperature activation anneals that few process tools handle well.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 06</div>
+              <h3 class="sic-chain-step-name">Device fabrication</h3>
+              <p class="sic-chain-step-desc">MOSFET and diode behavior depends on gate dielectric quality, channel mobility, and uniformity.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 07</div>
+              <h3 class="sic-chain-step-name">Packaging</h3>
+              <p class="sic-chain-step-desc">High voltage and temperature demand reliable die attach, wire bonds, and module construction.</p>
+            </div>
+            <div class="sic-chain-step">
+              <div class="sic-chain-step-num">Step 08</div>
+              <h3 class="sic-chain-step-name">Burn-in &amp; qualification</h3>
+              <p class="sic-chain-step-desc">Automotive and industrial customers require long reliability and stress qualification cycles before adoption.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          The cleanroom is the visible part. Yield, defects, and customer qualification are the hard part.
+        </p>
+
+        <p>
+          The implication for the Sanan story is direct. A capacity announcement of 30,000 6-inch wafer starts per month is a starting point, not an outcome. The supply chain only matters when those wafer starts become qualified devices in customer modules.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-8inch">
+          <span class="essay-h2-num">Section 04</span>
+          The 8-inch transition changes the benchmark
+        </h2>
+
+        <p>
+          In 2021, most of the SiC discussion centered on 6-inch wafers. By 2026, 200 mm or 8-inch SiC has become the benchmark for serious cost reduction. Bigger wafers reduce cost per die when yield and equipment maturity are good. They also make crystal quality, wafer bow, epitaxy uniformity, defect density, and tool readiness harder. The transition is not a free area shrink. It is a process re-engineering exercise.
+        </p>
+
+        <p>
+          The STMicroelectronics and Sanan joint venture in Chongqing is the clearest example of how the transition is being staged in China. ST announced the JV with Sanan for 200 mm SiC device manufacturing, with production targeted for Q4 2025 and full buildout anticipated in 2028<sup class="essay-fn"><a href="#fn3">[3]</a></sup>. Sanan's own JV disclosures confirm that the JV adopts ST's silicon carbide manufacturing process technology, with planned capacity of about 10,000 8-inch SiC wafers per week once the facility ramps to full output. Sanan separately planned an 8-inch SiC substrate factory at an investment of roughly RMB 7B<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.
+        </p>
+
+        <p>
+          The ST-Sanan JV matters for two reasons. First, it validates a serious China-local SiC manufacturing footprint for the EV and industrial markets. Second, it implies that even China's most capable SiC group still benefits from external process know-how to make the 200 mm transition stick. Capacity and process technology are different problems.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-china">
+          <span class="essay-h2-num">Section 05</span>
+          Why global players still need China
+        </h2>
+
+        <p>
+          Global SiC suppliers cannot simply walk away from China. China is the largest EV market and the fastest-moving EV supply chain in the world. Local automakers prefer local supply for speed of iteration, cost, and domestic security. If foreign chipmakers cede China share, local players gain a protected base from which to compete globally later.
+        </p>
+
+        <p>
+          ST's CEO made this point explicit in late 2024 around the broader Hua Hong partnership, arguing that chipmakers need China and need local manufacturing in China, because China is one of the most innovative and dynamic EV markets<sup class="essay-fn"><a href="#fn5">[5]</a></sup>. The same logic carries over to the ST-Sanan SiC JV. China is not just a manufacturing location. It is the demand center, the cost-pressure center, and the future competitive training ground for SiC.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-overcap">
+          <span class="essay-h2-num">Section 06</span>
+          The overcapacity war
+        </h2>
+
+        <p>
+          From 2019 through 2024, EV growth expectations drove an unusually large SiC investment cycle. New substrate lines, new epi lines, and new device fabs were announced across the US, Europe, Japan, Korea, and China. Then EV growth softened, inventories built up, utilization fell, pricing pressure increased, and customers delayed orders. Capacity that looked strategic in 2022 began to look excessive in 2025.
+        </p>
+
+        <p>
+          Yole's December 2025 update, summarized by Semiconductor Today, described upstream SiC utilization at roughly 50% and device-line utilization around 70%, with the downturn expected to persist into 2027 to 2028. The same source still pointed to a long-term recovery, with the device market expected to approach nearly $10B by 2030<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.
+        </p>
+
+        <p>
+          The bearish reading of these numbers is that China overbuilt SiC into a downturn and that domestic suppliers will spend years working off inventory and underutilized capacity. The bullish reading is that China is using overcapacity to force the cost curve down, which is exactly what its industrial policy does in solar, batteries, and other strategic verticals. Both can be true at once. Cost compression often comes through pain.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-wolfspeed">
+          <span class="essay-h2-num">Section 07</span>
+          Wolfspeed proves how hard SiC economics are
+        </h2>
+
+        <p>
+          Wolfspeed is the cleanest Western reference point for how hard SiC economics can be. Wolfspeed opened Mohawk Valley as the world's largest 200 mm SiC fab, framed explicitly around automotive and industrial demand, and was one of the most experienced SiC operators in the world<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.
+        </p>
+
+        <p>
+          Reuters reported in mid-2025 that Wolfspeed filed for Chapter 11 bankruptcy protection amid heavy debt and weaker EV and industrial demand. The restructuring aimed to reduce debt by roughly 70%, on the order of $4.6B, and cut annual cash interest expense by about 60%<sup class="essay-fn"><a href="#fn8">[8]</a></sup>. The point is not that SiC is dead. The point is that even a long-running SiC leader with a flagship 200 mm fab can be squeezed by the combination of debt, EV softness, and pricing pressure from the broader overcapacity wave.
+        </p>
+
+        <p>
+          That fact reframes the China question. If a Western incumbent with deep SiC IP and one of the most advanced fabs in the world has to restructure to survive, then Sanan and the broader Chinese SiC complex are operating in a market where the economics are punishing for everyone. Survival, in that environment, is itself a meaningful test.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-strategy">
+          <span class="essay-h2-num">Section 08</span>
+          What China is trying to do
+        </h2>
+
+        <p>
+          China's industrial logic in SiC is recognizable. Build large domestic capacity. Reduce dependence on foreign power semiconductor suppliers. Serve domestic EV and industrial customers locally. Use subsidies and local demand to survive weak profitability. Push toward 8-inch manufacturing. Force cost pressure on global competitors. Build learning curves through volume, and let weaker domestic firms fail, so that the survivors emerge with better capability.
+        </p>
+
+        <p class="essay-pull">
+          China's SiC buildout may be financially messy and strategically rational at the same time.
+        </p>
+
+        <p>
+          That sentence does most of the work in this essay. It is the only way to hold two facts together. SiC overcapacity in China today is real, and many domestic players will not survive in their current form. The longer-term strategic position can still improve, because the survivors will inherit a deeper supply chain, lower cost structure, larger volumes, and tighter coupling to the world's largest EV market.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-win">
+          <span class="essay-h2-num">Section 09</span>
+          What determines whether China wins
+        </h2>
+
+        <p>
+          The factors that decide the next several years are not visible from a capex announcement. They are buried in the device sheet, the qualification report, and the customer module.
+        </p>
+
+        <div class="sic-check">
+          <div class="sic-check-label">The checklist &mdash; what actually decides whether China wins SiC</div>
+          <div class="sic-check-grid">
+            <div class="sic-check-item"><strong>Substrate defects</strong>Boule and wafer-level micropipes, threading dislocations, and basal-plane defects.</div>
+            <div class="sic-check-item"><strong>Epitaxy quality</strong>Thickness uniformity, doping control, defect density across 200 mm wafers.</div>
+            <div class="sic-check-item"><strong>MOSFET performance</strong>Channel mobility, threshold-voltage stability, switching losses across temperature.</div>
+            <div class="sic-check-item"><strong>Reliability</strong>HV stress, temperature cycling, body-diode robustness, lifetime under EV duty cycles.</div>
+            <div class="sic-check-item"><strong>Automotive qualification</strong>AEC-Q101 and OEM-specific stress flows, often multi-year.</div>
+            <div class="sic-check-item"><strong>Module packaging</strong>Die-attach, wire-bond, sintered or pressure-contact module assembly.</div>
+            <div class="sic-check-item"><strong>Customer trust</strong>Tier-1 and OEM willingness to design-in second sources is slow to change.</div>
+            <div class="sic-check-item"><strong>8-inch yield</strong>Realized good-die per wafer at 200 mm, not nameplate wafer starts.</div>
+            <div class="sic-check-item"><strong>Cost per usable die</strong>Cost after yield loss, not headline cost per wafer.</div>
+            <div class="sic-check-item"><strong>Domestic tools</strong>Ability of Chinese equipment suppliers to support SiC-specific steps over time.</div>
+            <div class="sic-check-item"><strong>Pricing survival</strong>Whether SiC suppliers can hold margin through an industry-wide downturn.</div>
+            <div class="sic-check-item"><strong>Export acceptance</strong>Whether non-China automotive and industrial customers will adopt Chinese SiC at scale.</div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Capacity is the entry ticket. Qualification is the real gate.
+        </p>
+
+        <p>
+          The capacity story is essentially already settled. China has built it. The qualification story is what the next several years will resolve.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 10</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The analysis above relies on a mix of company disclosures, market-research estimates, and independent reporting, each with its own confidence level. It is worth being explicit about where the argument can break.
+        </p>
+
+        <div class="sic-risks">
+          <div class="sic-risk"><div class="sic-risk-num">Risk 01</div><p class="sic-risk-text">Sanan's reported capacity does not automatically mean full utilization or stable production at quality.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 02</div><p class="sic-risk-text">Wafer capacity is not the same as qualified device shipments to tier-1 customers.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 03</div><p class="sic-risk-text">6-inch and 8-inch wafer numbers are not directly comparable without explicit area conversion and yield assumptions.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 04</div><p class="sic-risk-text">Company announcements describe targets, ramp plans, and aspirations. They are not independent proof of stable production.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 05</div><p class="sic-risk-text">SiC market forecasts move with EV adoption, inverter topology choices, customer inventory, and silicon IGBT competition.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 06</div><p class="sic-risk-text">Overcapacity can destroy profitability even where the underlying technology is improving.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 07</div><p class="sic-risk-text">Domestic Chinese demand can support local producers, but global automotive qualification is harder and slower.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 08</div><p class="sic-risk-text">ST-Sanan validates China-local manufacturing but also suggests Chinese process capability still benefits from global partners.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 09</div><p class="sic-risk-text">Wolfspeed's restructuring is evidence of market stress and capital-structure failure, not proof that SiC technology is dead.</p></div>
+          <div class="sic-risk"><div class="sic-risk-num">Risk 10</div><p class="sic-risk-text">Do not claim China has won SiC until reliability, yield, and qualification evidence is stronger and independently verified.</p></div>
+        </div>
+
+        <p>
+          The point is not that China's SiC effort failed. The point is that the hard part starts after the capacity announcement.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 11</span>
+          Final verdict
+        </h2>
+
+        <p>
+          In 2021, Hunan Sanan's numbers looked strange because the project claimed enormous vertical integration at a capital cost and output level that raised questions about realism. In 2026, the situation is clearer but more complex. China built real SiC capacity. Global players are localizing SiC in China. 8-inch SiC is becoming the benchmark. The market is in an overcapacity downturn. Wolfspeed's restructuring shows how brutal SiC economics can be even for incumbents.
+        </p>
+
+        <div class="sic-compare">
+          <div class="sic-compare-col">
+            <div class="sic-compare-label">2021 thesis</div>
+            <h3 class="sic-compare-title">Capacity skepticism</h3>
+            <p>Sanan's cost-per-wafer and output claims looked suspicious. Vertical integration across boule, epi, devices, and packaging in such a short timeline raised doubts about realism. The critique was that SiC is won by yield and qualification, not by buildings.</p>
+          </div>
+          <div class="sic-compare-col right">
+            <div class="sic-compare-label">2026 reality</div>
+            <h3 class="sic-compare-title">Capacity built, economics open</h3>
+            <p>China built real SiC capacity and attracted a ST-Sanan 200 mm JV in Chongqing. But overcapacity, EV softness, the 8-inch transition, reliability, automotive qualification, and profitability are now the hard tests, not construction.</p>
+          </div>
+        </div>
+
+        <div class="sic-timeline" role="list">
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2021</div>
+            <h3 class="sic-timeline-title">Hunan Sanan announces vertically integrated SiC project</h3>
+            <p class="sic-timeline-desc">Roughly RMB 16B investment, 667,000 m², target 30,000 6-inch SiC wafers per month, complete SiC supply chain<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2022</div>
+            <h3 class="sic-timeline-title">Wolfspeed opens Mohawk Valley</h3>
+            <p class="sic-timeline-desc">Framed as the world's largest 200 mm SiC fab, oriented toward automotive and industrial demand<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2023</div>
+            <h3 class="sic-timeline-title">ST and Sanan announce 200 mm SiC JV in Chongqing</h3>
+            <p class="sic-timeline-desc">JV uses ST's SiC process technology; production targeted Q4 2025, full buildout 2028<sup class="essay-fn"><a href="#fn3">[3]</a></sup><sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2025</div>
+            <h3 class="sic-timeline-title">Wolfspeed files Chapter 11</h3>
+            <p class="sic-timeline-desc">Reuters reports debt restructuring aiming to cut debt by roughly 70% and annual interest expense by about 60%<sup class="essay-fn"><a href="#fn8">[8]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2025-2026</div>
+            <h3 class="sic-timeline-title">SiC utilization falls, overcapacity pressure appears</h3>
+            <p class="sic-timeline-desc">Yole/Semiconductor Today: upstream utilization around 50%, device lines around 70%, downturn expected to persist into 2027-2028<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2028</div>
+            <h3 class="sic-timeline-title">ST-Sanan JV planned full buildout</h3>
+            <p class="sic-timeline-desc">Roughly 10,000 8-inch SiC wafers per week at full capacity, per Sanan disclosures<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="sic-timeline-item" role="listitem">
+            <div class="sic-timeline-year">2030</div>
+            <h3 class="sic-timeline-title">Long-term SiC device market recovery</h3>
+            <p class="sic-timeline-desc">Yole expects SiC device market to approach nearly $10B by 2030 even after the downturn<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.</p>
+          </div>
+        </div>
+
+        <p>
+          Sanan and the broader Chinese SiC ecosystem now face the real test: yield, qualification, reliability, cost, and profitability. The construction phase is over. The economics phase has started.
+        </p>
+
+        <p class="essay-pull">
+          China can build the SiC capacity. The harder test is whether it can turn that capacity into reliable, qualified, profitable power devices through an overcapacity war.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 12</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="sic-ledger">
+          <div class="sic-ledger-label">Evidence ledger &mdash; load-bearing claims with their sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2021)</td><td>Hunan Sanan SiC project framed as vertically integrated at a $2.5B capex tag with 30,000 6-inch wafers/month target.</td><td>Sets the original skepticism about capacity vs realism.</td></tr>
+              <tr><td>Sanan Semiconductor (2021)</td><td>Roughly RMB 16B investment, 667,000 m², full SiC supply chain, 30,000 6-inch wafers/month.</td><td>Confirms the project is real and the targets are official company claims.</td></tr>
+              <tr><td>STMicroelectronics (2023)</td><td>200 mm SiC device JV with Sanan in Chongqing, production Q4 2025, full buildout 2028.</td><td>Validates a serious China-local SiC manufacturing footprint.</td></tr>
+              <tr><td>Sanan Semiconductor JV note</td><td>JV uses ST's SiC process technology; about 10,000 8-inch wafers/week at full capacity; separate Sanan 8-inch substrate factory ~RMB 7B.</td><td>Process know-how still benefits from a global partner, even at scale.</td></tr>
+              <tr><td>Reuters (2024)</td><td>ST CEO argues chipmakers need China and local manufacturing in China for EVs.</td><td>Explains why global SiC players still localize in China despite tensions.</td></tr>
+              <tr><td>Yole / Semiconductor Today (Dec 2025)</td><td>Upstream SiC utilization ~50%, device-line ~70%, downturn expected to 2027-2028, device market approaching ~$10B by 2030.</td><td>Documents the overcapacity cycle and the long-run recovery profile.</td></tr>
+              <tr><td>Wolfspeed (Mohawk Valley)</td><td>200 mm SiC fab opened for automotive and industrial demand.</td><td>Western benchmark for advanced SiC manufacturing.</td></tr>
+              <tr><td>Reuters (June 2025)</td><td>Wolfspeed Chapter 11, debt cut ~70% (~$4.6B), annual interest expense down ~60%.</td><td>Shows how brutal SiC economics are, even for incumbents.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;China Has Built The World's Most Expensive Silicon Carbide Fab, But Numbers Don't Add Up,&rdquo; 2021 (PDF supplied by author). Source for the historical critique of Sanan's cost-output claims, the vertical-integration framing, and the emphasis on SiC yield and qualification as the real test.</li>
+          <li id="fn2">Hunan Sanan Semiconductor official launch announcement (2021), <a href="https://www.sanan-semiconductor.com/en/news-34" target="_blank" rel="noopener noreferrer">sanan-semiconductor.com/en/news-34</a>. Source for the RMB 16B investment, 667,000 m² site, full SiC supply chain framing, and the 30,000 6-inch wafers per month claim.</li>
+          <li id="fn3">STMicroelectronics newsroom, &ldquo;STMicroelectronics and Sanan Optoelectronics to establish new 8-inch SiC device manufacturing joint venture in Chongqing, China,&rdquo; <a href="https://newsroom.st.com/media-center/press-item.html/c3186.html" target="_blank" rel="noopener noreferrer">newsroom.st.com</a>. Source for the JV announcement, Q4 2025 production target, and 2028 full buildout schedule.</li>
+          <li id="fn4">Hunan Sanan Semiconductor JV detail page, <a href="https://www.sanan-semiconductor.com/en/news-38" target="_blank" rel="noopener noreferrer">sanan-semiconductor.com/en/news-38</a>. Source for the use of ST's SiC process technology in the JV, the 10,000 8-inch wafers per week capacity at full ramp, and Sanan's separate ~RMB 7B 8-inch SiC substrate factory.</li>
+          <li id="fn5">Reuters, &ldquo;STMicro partners with Hua Hong, chipmakers need China, says CEO,&rdquo; 20 November 2024, <a href="https://www.reuters.com/technology/stmicro-partners-with-hua-hong-chipmakers-need-china-says-ceo-2024-11-20/" target="_blank" rel="noopener noreferrer">reuters.com</a>. Source for the argument that chipmakers need local manufacturing in China.</li>
+          <li id="fn6">Semiconductor Today, &ldquo;Yole forecasts continued SiC overcapacity into 2027-2028 with long-term device-market recovery toward nearly $10B by 2030,&rdquo; December 2025, <a href="https://www.semiconductor-today.com/news_items/2025/dec/yole-181225.shtml" target="_blank" rel="noopener noreferrer">semiconductor-today.com</a>. Source for the ~50% upstream and ~70% device-line utilization figures, the downturn duration, and the long-term market estimate.</li>
+          <li id="fn7">Wolfspeed, &ldquo;Wolfspeed Opens the World's Largest 200 mm Silicon Carbide Fab,&rdquo; <a href="https://www.wolfspeed.com/company/news-events/news/wolfspeed-opens-the-worlds-largest-200mm-silicon-carbide-fab-enabling-highly-anticipated-device-production/" target="_blank" rel="noopener noreferrer">wolfspeed.com</a>. Source for Mohawk Valley framing as the Western benchmark for advanced SiC manufacturing.</li>
+          <li id="fn8">Reuters, &ldquo;Wolfspeed files for bankruptcy protection to cut worsening debt; shares jump,&rdquo; 30 June 2025, <a href="https://www.reuters.com/legal/litigation/wolfspeed-files-bankruptcy-protection-cut-worsening-debt-shares-jump-2025-06-30/" target="_blank" rel="noopener noreferrer">reuters.com</a>. Source for the Chapter 11 filing, the ~70% debt reduction, and the ~60% drop in annual cash interest expense.</li>
+        </ol>
+      </div>
+
+      <div class="sic-readnext">
+        <div class="sic-readnext-label">Read next</div>
+        <div class="sic-readnext-grid">
+          <a class="sic-readnext-card" href="reliability-layer-behind-ai-hardware.html">
+            <div class="sic-readnext-kicker">Essay 051 &middot; Reliability</div>
+            <h3 class="sic-readnext-title">The Reliability Layer Behind AI Hardware</h3>
+          </a>
+          <a class="sic-readnext-card" href="chinas-nand-breakout.html">
+            <div class="sic-readnext-kicker">Essay 049 &middot; China &amp; Memory</div>
+            <h3 class="sic-readnext-title">China's NAND Breakout Was Delayed, Not Defeated</h3>
+          </a>
+          <a class="sic-readnext-card" href="memory-oligopoly-ai-toll-booth.html">
+            <div class="sic-readnext-kicker">Essay 050 &middot; Memory</div>
+            <h3 class="sic-readnext-title">The Memory Oligopoly Became AI's Toll Booth</h3>
+          </a>
+          <a class="sic-readnext-card" href="boring-back-end-of-ai.html">
+            <div class="sic-readnext-kicker">Essay 048 &middot; Back-End</div>
+            <h3 class="sic-readnext-title">The Boring Back-End of AI</h3>
+          </a>
+          <a class="sic-readnext-card" href="vehicle-compute-backbone.html">
+            <div class="sic-readnext-kicker">Essay &middot; Automotive Silicon</div>
+            <h3 class="sic-readnext-title">The Vehicle Compute Backbone</h3>
+          </a>
+          <a class="sic-readnext-card" href="semiconductor-substitution-ladder.html">
+            <div class="sic-readnext-kicker">Essay &middot; Localization</div>
+            <h3 class="sic-readnext-title">The Semiconductor Substitution Ladder</h3>
+          </a>
+          <a class="sic-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="sic-readnext-kicker">Atlas</div>
+            <h3 class="sic-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="sic-readnext-card" href="../">
+            <div class="sic-readnext-kicker">Index</div>
+            <h3 class="sic-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
