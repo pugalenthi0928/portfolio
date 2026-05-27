@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The EUV Throughput Bottleneck | Pugalenthi Magendran</title>
+  <meta name="description" content="EUV source power was a bottleneck in 2021. By 2026, ASML improved throughput, High-NA readiness, and source power, but AI chip scaling still depends on more photons, uptime, and lower cost per wafer.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/euv-throughput-bottleneck.html">
+  <meta property="og:title" content="The EUV Throughput Bottleneck">
+  <meta property="og:description" content="A technical essay on ASML, EUV light-source power, High-NA lithography, Lyncean's alternative source idea, TSMC, and why AI chips need more EUV throughput.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/euv-throughput-bottleneck.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="EUV">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Lithography">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="High-NA">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Moore's Law">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The EUV Throughput Bottleneck">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="EUV source power was a bottleneck in 2021. By 2026, ASML improved throughput, High-NA readiness, and source power, but AI chip scaling still depends on more photons, uptime, and lower cost per wafer.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The EUV Throughput Bottleneck",
+    "description": "EUV source power was a bottleneck in 2021. By 2026, ASML improved throughput, High-NA readiness, and source power, but AI chip scaling still depends on more photons, uptime, and lower cost per wafer.",
+    "url": "https://pugalenthimagendran.com/blog/posts/euv-throughput-bottleneck.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/euv-throughput-bottleneck.html",
+    "keywords": "Semiconductors, EUV, ASML, Lithography, AI Infrastructure, High-NA, TSMC, Moore's Law"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    /* Shared essay typography */
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #B85C8E); border: 1px solid rgba(184,92,142,0.30); background: rgba(184,92,142,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #B85C8E); text-decoration: none; border-bottom: 0.5px solid rgba(184,92,142,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #B85C8E); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #B85C8E); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #B85C8E); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #B85C8E); }
+
+    /* Essay 055 EUV — scoped under .essay-euv, deep magenta-rose accent (plasma light) */
+    body.essay-euv {
+      --euv-accent: #B85C8E;
+      --euv-accent-soft: rgba(184,92,142,0.10);
+      --euv-accent-faint: rgba(184,92,142,0.05);
+      --euv-accent-line: rgba(184,92,142,0.30);
+    }
+    body.essay-euv .essay-stamp { color: var(--euv-accent); border-color: var(--euv-accent-line); background: var(--euv-accent-soft); }
+    body.essay-euv .essay-footnotes a { color: var(--euv-accent); border-bottom-color: var(--euv-accent-line); }
+    body.essay-euv .essay-fn a { color: var(--euv-accent); }
+    body.essay-euv .essay-pull { border-left-color: var(--euv-accent); }
+    body.essay-euv .essay-toc a:hover { color: var(--euv-accent); }
+
+    body.essay-euv .euv-thesis {
+      background: linear-gradient(180deg, var(--euv-accent-soft), var(--euv-accent-faint));
+      border: 0.5px solid var(--euv-accent-line);
+      border-left: 2px solid var(--euv-accent);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-euv .euv-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--euv-accent); margin-bottom: 0.75rem; }
+    body.essay-euv .euv-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.25rem; line-height: 1.5; color: var(--color-text-primary); margin: 0; }
+
+    body.essay-euv .euv-sources-box {
+      background: var(--color-background-secondary);
+      border: 0.5px dashed var(--euv-accent-line);
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-euv .euv-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); margin-bottom: 0.85rem; }
+    body.essay-euv .euv-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-euv .euv-sources-box li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.45rem; }
+
+    /* EUV Source Flow — 6-step horizontal sequence */
+    body.essay-euv .euv-flow {
+      margin: 2.5rem 0;
+      padding: 1.5rem;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      background: var(--color-background-secondary);
+    }
+    body.essay-euv .euv-flow-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); margin-bottom: 1rem; }
+    body.essay-euv .euv-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+    body.essay-euv .euv-flow-step {
+      border: 0.5px solid var(--euv-accent-line);
+      border-radius: 6px;
+      padding: 0.8rem 0.9rem;
+      background: var(--euv-accent-faint);
+    }
+    body.essay-euv .euv-flow-step-num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--euv-accent); margin-bottom: 0.35rem; }
+    body.essay-euv .euv-flow-step-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--color-text-primary); margin: 0 0 0.3rem; line-height: 1.25; }
+    body.essay-euv .euv-flow-step-desc { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; line-height: 1.5; color: var(--color-text-secondary); margin: 0; }
+
+    /* Throughput Equation — 8 factors as inputs to wafers per hour */
+    body.essay-euv .euv-eq {
+      margin: 2.5rem 0;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    body.essay-euv .euv-eq-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); padding: 1rem 1.5rem; background: var(--euv-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-euv .euv-eq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+    body.essay-euv .euv-eq-item {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      border-right: 0.5px dashed var(--color-border-tertiary);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+    body.essay-euv .euv-eq-item:nth-child(even) { border-right: none; }
+    body.essay-euv .euv-eq-item strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--euv-accent);
+      display: block;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+    }
+    body.essay-euv .euv-eq-output {
+      padding: 0.9rem 1.5rem;
+      background: var(--euv-accent-soft);
+      border-top: 0.5px solid var(--euv-accent-line);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+    body.essay-euv .euv-eq-output strong { color: var(--euv-accent); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; }
+
+    /* 2021 vs 2026 comparison */
+    body.essay-euv .euv-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    body.essay-euv .euv-compare-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-euv .euv-compare-col.right { border-color: var(--euv-accent-line); background: var(--euv-accent-faint); }
+    body.essay-euv .euv-compare-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.65rem; }
+    body.essay-euv .euv-compare-col.right .euv-compare-label { color: var(--euv-accent); }
+    body.essay-euv .euv-compare-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.75rem; }
+    body.essay-euv .euv-compare-col p { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Timeline — 6 stops */
+    body.essay-euv .euv-timeline {
+      margin: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--euv-accent-line);
+      padding-left: 1.5rem;
+      margin-left: 0.5rem;
+    }
+    body.essay-euv .euv-timeline-item { padding: 0.7rem 0 1.05rem; position: relative; }
+    body.essay-euv .euv-timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.85rem;
+      top: 1rem;
+      width: 8px;
+      height: 8px;
+      background: var(--euv-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--color-background-secondary);
+    }
+    body.essay-euv .euv-timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--euv-accent); margin-bottom: 0.35rem; }
+    body.essay-euv .euv-timeline-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--color-text-primary); margin: 0 0 0.4rem; }
+    body.essay-euv .euv-timeline-desc { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-secondary); margin: 0; }
+
+    /* AI Manufacturing Pressure Map */
+    body.essay-euv .euv-pressure {
+      margin: 2.5rem 0;
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    body.essay-euv .euv-pressure-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); padding: 1rem 1.5rem; background: var(--euv-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-euv .euv-pressure-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 0.5px dashed var(--color-border-tertiary);
+      align-items: baseline;
+    }
+    body.essay-euv .euv-pressure-row:last-child { border-bottom: none; }
+    body.essay-euv .euv-pressure-node {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--euv-accent);
+      text-transform: uppercase;
+    }
+    body.essay-euv .euv-pressure-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.93rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--color-text-primary);
+    }
+
+    /* Evidence Ledger */
+    body.essay-euv .euv-ledger { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-euv .euv-ledger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); padding: 1rem 1.5rem; background: var(--euv-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-euv .euv-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-euv .euv-ledger th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-euv .euv-ledger td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-secondary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-euv .euv-ledger tr:last-child td { border-bottom: none; }
+    body.essay-euv .euv-ledger td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--euv-accent); letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Risk grid */
+    body.essay-euv .euv-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin: 2.5rem 0; }
+    body.essay-euv .euv-risk { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.15rem; background: var(--color-background-secondary); }
+    body.essay-euv .euv-risk-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--euv-accent); letter-spacing: 0.1em; margin-bottom: 0.45rem; }
+    body.essay-euv .euv-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Read-next cards */
+    body.essay-euv .euv-readnext { margin: 4rem 0 0; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    body.essay-euv .euv-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
+    body.essay-euv .euv-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    body.essay-euv .euv-readnext-card { display: block; padding: 1.15rem 1.35rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+    body.essay-euv .euv-readnext-card:hover { border-color: var(--euv-accent); transform: translateY(-2px); }
+    body.essay-euv .euv-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--euv-accent); margin-bottom: 0.4rem; }
+    body.essay-euv .euv-readnext-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--color-text-primary); margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-euv .euv-flow-grid { grid-template-columns: repeat(2, 1fr); }
+      body.essay-euv .euv-pressure-row { grid-template-columns: 140px 1fr; gap: 0.6rem; padding: 0.85rem 1rem; }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+      body.essay-euv .euv-pressure-row { grid-template-columns: 1fr; gap: 0.3rem; }
+    }
+    @media (max-width: 768px) {
+      body.essay-euv .euv-compare { grid-template-columns: 1fr; }
+      body.essay-euv .euv-risks { grid-template-columns: 1fr; }
+      body.essay-euv .euv-readnext-grid { grid-template-columns: 1fr; }
+      body.essay-euv .euv-eq-grid { grid-template-columns: 1fr; }
+      body.essay-euv .euv-eq-item { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      body.essay-euv .euv-flow-grid { grid-template-columns: 1fr; }
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-euv .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-euv">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 055 &nbsp;&middot;&nbsp; Lithography &amp; AI Manufacturing</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">EUV</span>
+        <span class="tag">ASML</span>
+        <span class="tag">Lithography</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">High-NA</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">Moore's Law</span>
+        <span class="tag">Wafers per Hour</span>
+        <span class="tag">Source Power</span>
+        <span class="tag">Tin Droplets</span>
+        <span class="tag">Lyncean</span>
+      </div>
+
+      <h1 class="essay-hed">
+        The EUV Throughput <em>Bottleneck</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Original analysis</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        In 2021, EUV light-source power looked like a limiter for leading-edge manufacturing. In 2026, ASML has improved throughput dramatically, but the deeper problem remains: AI chips need more EUV exposure, more photons, more uptime, and lower cost per wafer.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">14 min read</div>
+      </div>
+
+      <div class="euv-thesis">
+        <div class="euv-thesis-label">Thesis</div>
+        <p class="euv-thesis-text">EUV is no longer just about resolution. In the AI era, EUV is about throughput, uptime, photons, and cost per wafer.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2021">What the 2021 article got right</a></li>
+          <li><a href="#sec-source">How ASML actually makes EUV light</a></li>
+          <li><a href="#sec-photons">Why photons determine capacity</a></li>
+          <li><a href="#sec-lyncean">Lyncean was the interesting wrong answer</a></li>
+          <li><a href="#sec-asml">ASML improved the existing machine</a></li>
+          <li><a href="#sec-1000w">The 1,000W update</a></li>
+          <li><a href="#sec-highna">Why High-NA makes throughput harder</a></li>
+          <li><a href="#sec-ai">Why AI makes this urgent</a></li>
+          <li><a href="#sec-economic">EUV as an economic bottleneck</a></li>
+          <li><a href="#sec-misread">What people got wrong in 2021</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          EUV lithography is one of the strangest machines humanity has ever industrialized.
+        </p>
+
+        <p>
+          A system the size of a bus fires powerful lasers at microscopic molten tin droplets, creates plasma, collects a tiny fraction of the emitted 13.5&nbsp;nm light, reflects it through ultra-precise mirrors, and prints patterns on wafers at nanometer scale. The whole choreography repeats roughly fifty thousand times per second when the tool is producing wafers<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          The old question was: can EUV print the pattern. That is a resolved question. The new question is: can EUV print enough patterns, cheaply enough, reliably enough, at AI scale.
+        </p>
+
+        <p class="essay-pull">
+          Photons are expensive.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2021">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2021 article got right
+        </h2>
+
+        <p>
+          The 2021 SemiAnalysis piece on ASML and Lyncean is the historical anchor for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It framed EUV light-source power as a constraining factor for leading-edge wafer manufacturing, explained the tin-droplet-plus-CO2-laser mechanism that ASML's existing scanners use, and warned that this approach would not scale forever, especially once High-NA EUV started consuming even more photons per wafer pass.
+        </p>
+
+        <p>
+          The article carried a few concrete claims. TSMC's N3 family was estimated to need roughly 20 to 25 EUV exposures per wafer. A fab equipped with a small number of EUV machines would face hard monthly wafer ceilings if source power and uptime did not improve. And it introduced Lyncean's accelerator-style compact synchrotron concept as a potential alternative source architecture, with a system footprint of roughly 5&nbsp;m by 12&nbsp;m and demonstrated source levels in the 2&nbsp;kW range, while also cautioning that collection issues meant this was unlikely to replace ASML's existing method any time soon<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <div class="euv-sources-box">
+          <div class="euv-sources-box-label">Source notes &mdash; 2021 SemiAnalysis EUV throughput claims (historical)</div>
+          <ul>
+            <li>EUV source power identified as a constraining factor at the leading edge.</li>
+            <li>Current architecture: CO2 lasers hit liquid tin droplets to emit EUV.</li>
+            <li>TSMC N3 estimated at about 20 to 25 EUV exposures per wafer.</li>
+            <li>Source power and uptime described as limiting monthly wafer capacity.</li>
+            <li>Lyncean compact synchrotron presented as an interesting alternative source.</li>
+            <li>Lyncean system described as roughly 5&nbsp;m by 12&nbsp;m.</li>
+            <li>Claimed 2&nbsp;kW EUV demonstrations on the Lyncean architecture.</li>
+            <li>Article cautioned that collection issues meant this was unlikely to replace ASML's method soon.</li>
+          </ul>
+        </div>
+
+        <p>
+          Read carefully, that piece was right about the bottleneck and cautious about the replacement architecture. That caution aged well.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-source">
+          <span class="essay-h2-num">Section 02</span>
+          How ASML actually makes EUV light
+        </h2>
+
+        <p>
+          The actual ASML process is more elegant than it sounds. EUV uses a 13.5&nbsp;nm wavelength. ASML generates it by ejecting molten tin droplets, hitting each droplet first with a shaping pre-pulse that flattens or distorts it, then hitting it with a stronger main pulse that vaporizes it into plasma. The plasma emits EUV light. Specialized mirrors collect and guide the light into the scanner's optics. The sequence repeats around fifty thousand times per second according to ASML's own explainer<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          That is the easy version. The hard version is that EUV light is absorbed by ordinary air, so the whole system operates inside vacuum chambers. Conventional refractive lenses do not work at 13.5&nbsp;nm, so the system has to use reflective optics with multilayer coatings tuned to that wavelength. Only a small fraction of the photons generated at the source actually reaches the wafer surface. Source power, collector lifetime, optics quality, resist sensitivity, uptime, and contamination all feed into how productive a scanner can be in production.
+        </p>
+
+        <div class="euv-flow">
+          <div class="euv-flow-label">EUV source flow &mdash; six steps from droplet to wafer</div>
+          <div class="euv-flow-grid">
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 01</div>
+              <h3 class="euv-flow-step-name">Molten tin droplet</h3>
+              <p class="euv-flow-step-desc">Microscopic tin droplets ejected into the source chamber at high rate inside a vacuum.</p>
+            </div>
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 02</div>
+              <h3 class="euv-flow-step-name">Pre-pulse laser</h3>
+              <p class="euv-flow-step-desc">A shaping CO2 laser pulse reshapes or flattens each droplet to optimize the main hit.</p>
+            </div>
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 03</div>
+              <h3 class="euv-flow-step-name">Plasma pulse</h3>
+              <p class="euv-flow-step-desc">A stronger main pulse vaporizes the droplet, generating high-temperature plasma.</p>
+            </div>
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 04</div>
+              <h3 class="euv-flow-step-name">13.5&nbsp;nm EUV photons</h3>
+              <p class="euv-flow-step-desc">The plasma emits EUV light at 13.5&nbsp;nm in many directions, only some of which is useful.</p>
+            </div>
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 05</div>
+              <h3 class="euv-flow-step-name">Collector mirrors</h3>
+              <p class="euv-flow-step-desc">A collector mirror gathers a fraction of the emitted EUV light and routes it into the scanner.</p>
+            </div>
+            <div class="euv-flow-step">
+              <div class="euv-flow-step-num">Step 06</div>
+              <h3 class="euv-flow-step-name">Wafer exposure</h3>
+              <p class="euv-flow-step-desc">Reflective optics project the patterned EUV light through the mask onto the wafer's resist layer.</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-photons">
+          <span class="essay-h2-num">Section 03</span>
+          Why photons determine capacity
+        </h2>
+
+        <p>
+          Every EUV exposure has to deliver enough photons into the resist to print a clean image. If photon flux is low, the scanner has to expose longer to reach the required dose. Longer exposure means lower wafers per hour. Lower wafers per hour means higher cost per wafer. Higher cost per wafer means more expensive leading-edge chips, on top of an already expensive process.
+        </p>
+
+        <p>
+          That is why source power is not a physics curiosity. It is an economics input. A scanner that costs north of $250 million only earns its place in a fab if it processes enough wafers reliably to amortize that cost. Productivity improvements that come from better source power, faster stages, higher uptime, or better resist sensitivity can be as commercially important as new tool shipments.
+        </p>
+
+        <p class="essay-pull">
+          Photon supply becomes wafer supply.
+        </p>
+
+        <div class="euv-eq">
+          <div class="euv-eq-label">Throughput equation &mdash; the inputs that decide wafers per hour</div>
+          <div class="euv-eq-grid">
+            <div class="euv-eq-item"><strong>Source power</strong>Watts at intermediate focus available to the scanner.</div>
+            <div class="euv-eq-item"><strong>Resist sensitivity</strong>How much EUV dose the resist needs to print cleanly.</div>
+            <div class="euv-eq-item"><strong>Exposure dose</strong>Total energy per exposure; trades against linewidth roughness and yield.</div>
+            <div class="euv-eq-item"><strong>Uptime</strong>Available production hours after maintenance, swaps, and qualification.</div>
+            <div class="euv-eq-item"><strong>Overlay</strong>Pattern-to-pattern alignment fidelity that determines yield-loss tolerance.</div>
+            <div class="euv-eq-item"><strong>Scanner speed</strong>Stage acceleration, swap, wafer handling, and synchronization.</div>
+          </div>
+          <div class="euv-eq-output">
+            <strong>Output:</strong> wafers per hour, and through it, cost per wafer at the leading edge.
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-lyncean">
+          <span class="essay-h2-num">Section 04</span>
+          Lyncean was the interesting wrong answer
+        </h2>
+
+        <p>
+          The 2021 article introduced Lyncean because it offered a genuinely different source architecture. Instead of laser-produced plasma from tin droplets, Lyncean's concept used an accelerator-style compact synchrotron. Electrons are accelerated, circulated, and wiggled with magnets so that they emit photons in the EUV range. The article described the system at roughly 5&nbsp;m by 12&nbsp;m, with claimed demonstrations at 2&nbsp;kW source power, and argued that the architecture could in principle scale much further<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          The challenge was never only generating EUV photons. The challenge was collecting and delivering useful EUV power into a lithography scanner, with the uptime, integration, serviceability, contamination control, and economics that a high-volume production tool requires. By 2026, the industry had not pivoted to Lyncean as the high-volume EUV solution. Lyncean was useful because it made the bottleneck obvious. It was not the route the industry ultimately took, which is a different claim from saying it failed.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-asml">
+          <span class="essay-h2-num">Section 05</span>
+          ASML improved the existing machine
+        </h2>
+
+        <p>
+          The clearest evidence for the productivity story is on ASML's own slides. ASML's 2026 AGM material says EUV capacity has grown more than 30%, and that the TWINSCAN NXE:3800E achieved a record throughput of 230 wafers per hour for high-volume manufacturing<sup class="essay-fn"><a href="#fn3">[3]</a></sup>. The Q4 FY2025 press conference deck adds that ASML had shipped eight High-NA systems by the end of 2025, with six already in operation, and that the first second-generation High-NA system, TWINSCAN EXE:5200B, was running at a customer site and meeting full specs<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.
+        </p>
+
+        <p>
+          ASML also flagged that High-NA EUV is being matured for high-volume manufacturing requirements by the end of 2026, with customer insertion expected in the 2027 to 2028 window<sup class="essay-fn"><a href="#fn4">[4]</a></sup>. The solution to the 2021 bottleneck did not come from replacing ASML. It came from ASML making the existing tin-droplet architecture more productive year after year.
+        </p>
+
+        <p class="essay-pull">
+          The solution was not replacing ASML. It was ASML making the existing architecture more productive.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-1000w">
+          <span class="essay-h2-num">Section 06</span>
+          The 1,000W update
+        </h2>
+
+        <p>
+          The most striking number in the 2026 cycle came from a Reuters report on ASML's source-power roadmap. ASML demonstrated a path from roughly 600&nbsp;W to 1,000&nbsp;W of EUV source power, with a target of around 330 wafers per hour by the end of the decade, still based on tin droplets. The improvements involve a higher droplet rate and a refined laser-pulse sequence, rather than a fundamentally new light-source architecture<sup class="essay-fn"><a href="#fn5">[5]</a></sup>.
+        </p>
+
+        <p>
+          That is not a small improvement. Moving from roughly 220 to around 330 wafers per hour is a major productivity shift. It does not, in itself, increase yield per wafer. It increases the number of wafers a given scanner can process in a given time. In a capacity-constrained AI market, that distinction is the difference between extending a fab and building one.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-highna">
+          <span class="essay-h2-num">Section 07</span>
+          Why High-NA makes throughput harder
+        </h2>
+
+        <p>
+          High-NA EUV is often described as the next obvious step, but the engineering reality is more complicated. NA stands for numerical aperture. Higher NA improves resolution, and High-NA EUV can in some layers reduce the number of multi-patterning steps needed at the most aggressive features. That is the resolution win.
+        </p>
+
+        <p>
+          The cost is everywhere else. High-NA systems are more expensive, harder to integrate, and bring new constraints around field size, mask design, resist behavior, overlay, stitching, process integration, and tool productivity. ASML's Q4 FY2025 framing says High-NA is being matured for high-volume manufacturing requirements by the end of 2026, with customer insertion expected in 2027 to 2028, which is the right framing for a tool family that is still earning its way into mainstream production<sup class="essay-fn"><a href="#fn4">[4]</a></sup>. Reuters has reported on early indications of High-NA readiness in the same window<sup class="essay-fn"><a href="#fn6">[6]</a></sup>. High-NA helps with resolution. The industry still has to win the productivity and integration battle on top of it.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-ai">
+          <span class="essay-h2-num">Section 08</span>
+          Why AI makes this urgent
+        </h2>
+
+        <p>
+          AI chips are large, they use advanced logic nodes, and advanced logic nodes require EUV. AI accelerators also drive demand for more HBM, more advanced packaging, and more leading-edge capacity at the same time. Every wafers-per-hour improvement on every EUV scanner in the world feeds directly into how much AI silicon the industry can make.
+        </p>
+
+        <p>
+          TSMC's process roadmap puts numbers around the pressure. The 3&nbsp;nm family extends across N3, N3E, N3P and other variants<sup class="essay-fn"><a href="#fn7">[7]</a></sup>. N2 entered volume production in Q4 2025 using first-generation nanosheet transistor technology<sup class="essay-fn"><a href="#fn8">[8]</a></sup>. On the packaging side, TSMC's 2026 Technology Symposium described 5.5-reticle CoWoS in production and 14-reticle CoWoS planned by 2028, with the larger version expected to integrate around 10 large compute dies and 20 HBM stacks in a single package<sup class="essay-fn"><a href="#fn9">[9]</a></sup>. That packaging line is not itself an EUV throughput claim, but it is the demand signal that decides how much EUV the industry actually needs.
+        </p>
+
+        <div class="euv-pressure">
+          <div class="euv-pressure-label">AI manufacturing pressure map &mdash; what compounds on top of EUV</div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">Advanced logic wafers</div><div class="euv-pressure-text">Leading-edge nodes N3 family and N2 require EUV exposures across multiple layers.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">EUV exposures</div><div class="euv-pressure-text">Each wafer can take roughly 20 to 25 EUV passes at N3, with more layers as nodes shrink.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">HBM</div><div class="euv-pressure-text">DRAM stacks pair with every AI accelerator, multiplying wafer demand on adjacent processes.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">CoWoS &amp; packaging</div><div class="euv-pressure-text">Larger reticles, more dies per package, more HBM stacks per package by 2028.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">Large AI packages</div><div class="euv-pressure-text">Each AI scale-up node consumes more leading-edge wafer area than a generation earlier.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">Data-center demand</div><div class="euv-pressure-text">Hyperscaler capex and inference build-out keep adding pressure on top of training cycles.</div></div>
+          <div class="euv-pressure-row"><div class="euv-pressure-node">Capacity constraints</div><div class="euv-pressure-text">Every wafers-per-hour gain on EUV tools is multiplied across the installed base.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          AI does not only need more chips. It needs more EUV-exposed wafers.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-economic">
+          <span class="essay-h2-num">Section 09</span>
+          EUV as an economic bottleneck
+        </h2>
+
+        <p>
+          The economics of leading-edge lithography are unforgiving. EUV scanners are extraordinarily expensive. Mask sets are expensive. Resist, pellicles, optics, uptime, source modules, and field service all cost real money. Throughput drives cost per wafer because fixed tool costs are spread across whatever output the tool can produce. Higher throughput on the same installed base improves the unit economics of every leading-edge wafer the industry ships.
+        </p>
+
+        <p>
+          This is why productivity improvements at the source can be as strategically important as new scanner shipments. A fleet that already exists, processing 30% more wafers per hour, is in many ways equivalent to extending the fleet, with much less capital and a much shorter lead time. At the leading edge, lithography is not just a process step. It is a capacity gate.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-misread">
+          <span class="essay-h2-num">Section 10</span>
+          What people got wrong in 2021
+        </h2>
+
+        <p>
+          The weak interpretation of the 2021 article was something like this: ASML's EUV method is hitting a wall, so a new source architecture will replace it. That reading collapsed two different claims, one about the bottleneck and one about the replacement candidate, into a single prediction.
+        </p>
+
+        <p>
+          The better interpretation is that EUV source power was a real bottleneck, but the incumbent architecture had more room to improve than outsiders expected. ASML and its supply chain kept pushing source power, collector performance, uptime, scanner productivity, stage speed, overlay, serviceability, and High-NA readiness, all on the same tin-droplet base. The bottleneck did not vanish. It became a productivity roadmap.
+        </p>
+
+        <div class="euv-compare">
+          <div class="euv-compare-col">
+            <div class="euv-compare-label">2021 thesis</div>
+            <h3 class="euv-compare-title">Source power as wall</h3>
+            <p>EUV source power was a structural bottleneck, and alternative architectures like Lyncean's compact synchrotron were interesting because they could in principle scale source power by an order of magnitude.</p>
+          </div>
+          <div class="euv-compare-col right">
+            <div class="euv-compare-label">2026 reality</div>
+            <h3 class="euv-compare-title">Productivity roadmap inside ASML</h3>
+            <p>ASML extended the tin-droplet architecture. NXE:3800E reached 230 wafers per hour. High-NA tools shipped and ran at customer sites. The source-power path now points at 1,000&nbsp;W and roughly 330 wafers per hour by decade-end.</p>
+          </div>
+        </div>
+
+        <div class="euv-timeline" role="list">
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2021</div>
+            <h3 class="euv-timeline-title">SemiAnalysis flags EUV source power and Lyncean alternative</h3>
+            <p class="euv-timeline-desc">Article frames EUV source power as a bottleneck and introduces Lyncean's accelerator-style architecture as a long-shot alternative<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2023-2025</div>
+            <h3 class="euv-timeline-title">ASML improves low-NA EUV productivity</h3>
+            <p class="euv-timeline-desc">Steady gains in source power, uptime, and scanner productivity across the installed base<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2025</div>
+            <h3 class="euv-timeline-title">High-NA systems shipped and in operation</h3>
+            <p class="euv-timeline-desc">Eight High-NA systems shipped by end-2025, six in operation; first EXE:5200B running at a customer site meeting specs<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2026</div>
+            <h3 class="euv-timeline-title">NXE:3800E reaches 230 wafers per hour</h3>
+            <p class="euv-timeline-desc">Record throughput for high-volume manufacturing on the low-NA tool, with EUV capacity up more than 30% per ASML<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2026</div>
+            <h3 class="euv-timeline-title">High-NA maturation toward HVM</h3>
+            <p class="euv-timeline-desc">ASML targets High-NA HVM requirements by end-2026 with customer insertion expected in 2027-2028<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="euv-timeline-item" role="listitem">
+            <div class="euv-timeline-year">2030 target</div>
+            <h3 class="euv-timeline-title">1,000&nbsp;W source power, ~330 wafers per hour</h3>
+            <p class="euv-timeline-desc">ASML demonstrates a path from roughly 600&nbsp;W to 1,000&nbsp;W EUV source power, with around 330 wafers per hour as the productivity target, still on tin droplets<sup class="essay-fn"><a href="#fn5">[5]</a></sup>.</p>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 11</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The argument above relies on a mix of company materials, Reuters reporting, and TSMC roadmap statements. It is worth being explicit about where the case can break.
+        </p>
+
+        <div class="euv-risks">
+          <div class="euv-risk"><div class="euv-risk-num">Risk 01</div><p class="euv-risk-text">ASML roadmap claims are company claims, not guaranteed production outcomes.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 02</div><p class="euv-risk-text">Reuters source-power reporting describes a demonstrated path and a target, not universal installed production.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 03</div><p class="euv-risk-text">High-NA customer insertion timing depends on process integration, mask, and resist readiness at the customer.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 04</div><p class="euv-risk-text">Higher source power can create new challenges around collector lifetime, debris, resist heating, and maintenance.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 05</div><p class="euv-risk-text">Wafers per hour is not the only metric. Uptime, overlay, yield, and defectivity matter alongside it.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 06</div><p class="euv-risk-text">AI demand can soften or reshape. Throughput targets matter less if the demand curve flattens.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 07</div><p class="euv-risk-text">EUV throughput and advanced-packaging capacity are linked through AI demand, but they are not the same bottleneck.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 08</div><p class="euv-risk-text">Higher wafers per hour does not directly imply more good dies per wafer; yield is a separate variable.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 09</div><p class="euv-risk-text">Lyncean did not become the high-volume EUV answer by 2026. That is not the same as saying the architecture failed.</p></div>
+          <div class="euv-risk"><div class="euv-risk-num">Risk 10</div><p class="euv-risk-text">Cost per wafer depends on resist, masks, pellicles, optics service, and uptime in addition to source power.</p></div>
+        </div>
+
+        <p>
+          The point is not that ASML solved EUV forever. The point is that EUV has become a productivity race.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 12</span>
+          Final verdict
+        </h2>
+
+        <p>
+          The 2021 article was right that EUV source power was a structural bottleneck. It was wrong only if it is read as predicting that an outside source architecture would become the high-volume answer in the near term. By 2026, ASML had extended the existing tin-droplet architecture. NXE:3800E reached 230 wafers per hour. High-NA tools shipped and ran at customer sites. ASML demonstrated a path to 1,000&nbsp;W source power and around 330 wafers per hour by the end of the decade. The bottleneck did not disappear. It became the productivity race inside leading-edge manufacturing.
+        </p>
+
+        <p class="essay-pull">
+          The bottleneck did not vanish. It became a productivity roadmap.
+        </p>
+
+        <p>
+          AI does not only need more chips. It needs more EUV-exposed wafers, more uptime per scanner, more photons per second, and lower cost per wafer at the leading edge. That is the test for the rest of the decade.
+        </p>
+
+        <p class="essay-pull">
+          EUV is no longer just about resolution. In the AI era, EUV is about throughput, uptime, photons, and cost per wafer.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 13</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="euv-ledger">
+          <div class="euv-ledger-label">Evidence ledger &mdash; load-bearing claims with sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2021)</td><td>EUV source power as bottleneck; Lyncean compact synchrotron as alternative; ~5 m x 12 m system, 2 kW demonstrations; N3 ~20-25 EUV exposures per wafer.</td><td>Anchors the historical critique and the alternative-architecture frame.</td></tr>
+              <tr><td>ASML explainer</td><td>EUV at 13.5&nbsp;nm; tin droplets, pre-pulse and main pulse; ~50,000 pulses per second.</td><td>Technical baseline for the existing source architecture.</td></tr>
+              <tr><td>ASML 2026 AGM</td><td>EUV capacity up &gt;30%; NXE:3800E achieved 230 wafers/hour for HVM.</td><td>Concrete productivity number on the installed low-NA tool.</td></tr>
+              <tr><td>ASML Q4 FY2025</td><td>Eight High-NA systems shipped by end-2025; six in operation; EXE:5200B meeting full specs; HVM maturation by end-2026; customer insertion in 2027-2028.</td><td>Status of High-NA in the field, not just on roadmap slides.</td></tr>
+              <tr><td>Reuters (Feb 2026)</td><td>Path from ~600&nbsp;W to 1,000&nbsp;W source power; target ~330 wafers/hour by decade-end; still tin droplets.</td><td>The headline number on the productivity race for the rest of the decade.</td></tr>
+              <tr><td>Reuters (Feb 2026)</td><td>Next-gen EUV tool readiness for mass production reported as a key shift for AI chip manufacturing.</td><td>Independent reporting on High-NA mass-production readiness.</td></tr>
+              <tr><td>TSMC</td><td>3&nbsp;nm family: N3, N3E, N3P.</td><td>Defines the process layer where EUV demand compounds.</td></tr>
+              <tr><td>TSMC</td><td>N2 in volume production from Q4 2025, first-generation nanosheet transistors.</td><td>Adds another EUV-heavy node into the demand curve.</td></tr>
+              <tr><td>TSMC 2026 Symposium</td><td>5.5-reticle CoWoS today; 14-reticle CoWoS by 2028 with ~10 compute dies and 20 HBM stacks.</td><td>Packaging-side demand signal that compounds on top of EUV throughput.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;ASML's EUV Tools Have A Throughput Problem, But Lyncean Has The Answer By Scaling EUV Light Source Power An Order Of Magnitude,&rdquo; 2021 (PDF supplied by author). Source for the EUV throughput thesis, the tin-droplet source mechanism, the N3 estimate of about 20 to 25 EUV exposures per wafer, the Lyncean compact-synchrotron concept with a roughly 5&nbsp;m by 12&nbsp;m footprint and 2&nbsp;kW demonstrations, and the caution that Lyncean was unlikely to replace ASML's method in the near term because of collection issues.</li>
+          <li id="fn2">ASML, &ldquo;Light and lasers,&rdquo; <a href="https://www.asml.com/technology/lithography-principles/light-and-lasers" target="_blank" rel="noopener noreferrer">asml.com/technology/lithography-principles/light-and-lasers</a>. Source for the 13.5&nbsp;nm EUV wavelength, the tin droplet architecture, the pre-pulse and main pulse sequence, and the roughly 50,000 pulses per second figure.</li>
+          <li id="fn3">ASML, 2026 AGM Presentation, <a href="https://ourbrand.asml.com/asset/d5e933d7-78d0-406c-aed7-a46626e63381/2026_-AGM-_presentation.pdf" target="_blank" rel="noopener noreferrer">ourbrand.asml.com/&hellip;/2026_-AGM-_presentation.pdf</a>. Source for the &gt;30% EUV capacity growth statement and the TWINSCAN NXE:3800E 230 wafers per hour record throughput for high-volume manufacturing.</li>
+          <li id="fn4">ASML, Q4 FY2025 Press Conference Presentation, <a href="https://ourbrand.asml.com/m/e333f07a490e187a/original/2026_01_28-Presentation-ASML-Press-Conference-Q4FY2025.pdf" target="_blank" rel="noopener noreferrer">ourbrand.asml.com/&hellip;/Q4FY2025</a>. Source for the NXE:3800E 230 wafers per hour figure, eight High-NA systems shipped by end-2025 with six in operation, the EXE:5200B operating at a customer site, and the High-NA HVM-readiness target by end-2026 with customer insertion in 2027 to 2028.</li>
+          <li id="fn5">Reuters, &ldquo;ASML unveils EUV light-source advance that could yield 50% more chips by 2030,&rdquo; 23 February 2026, <a href="https://www.reuters.com/world/china/asml-unveils-euv-light-source-advance-that-could-yield-50-more-chips-by-2030-2026-02-23/" target="_blank" rel="noopener noreferrer">reuters.com</a>. Source for the demonstrated path from roughly 600&nbsp;W to 1,000&nbsp;W EUV source power, the ~330 wafers per hour target by decade-end, and the description of improvements in droplet rate and laser-pulse sequence on the existing tin-droplet architecture.</li>
+          <li id="fn6">Reuters, &ldquo;ASML says next-gen EUV tools ready to mass produce chips, marking key shift for AI chip,&rdquo; 26 February 2026, <a href="https://www.reuters.com/business/asml-says-next-gen-euv-tools-ready-mass-produce-chips-marking-key-shift-ai-chip-2026-02-26/" target="_blank" rel="noopener noreferrer">reuters.com</a>. Source for independent reporting on High-NA mass-production readiness and its relevance to AI chip manufacturing, treated here as reporting rather than as proof of universal adoption.</li>
+          <li id="fn7">TSMC, &ldquo;3&nbsp;nm Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_3nm" target="_blank" rel="noopener noreferrer">tsmc.com/dedicatedFoundry/technology/logic/l_3nm</a>. Source for N3, N3E, and N3P family context.</li>
+          <li id="fn8">TSMC, &ldquo;2&nbsp;nm Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm" target="_blank" rel="noopener noreferrer">tsmc.com/dedicatedFoundry/technology/logic/l_2nm</a>. Source for N2 Q4 2025 volume production and the first-generation nanosheet transistor framing.</li>
+          <li id="fn9">TSMC, &ldquo;TSMC 2026 Technology Symposium,&rdquo; <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener noreferrer">pr.tsmc.com/english/news/3302</a>. Source for 5.5-reticle CoWoS in production and the 14-reticle CoWoS plan with ~10 compute dies and 20 HBM stacks by 2028. Used as AI manufacturing pressure context, not as a direct EUV throughput claim.</li>
+        </ol>
+      </div>
+
+      <div class="euv-readnext">
+        <div class="euv-readnext-label">Read next</div>
+        <div class="euv-readnext-grid">
+          <a class="euv-readnext-card" href="globalfoundries-second-life.html">
+            <div class="euv-readnext-kicker">Essay 054 &middot; Foundries</div>
+            <h3 class="euv-readnext-title">The Foundry That Quit Moore's Law Found a Second Life</h3>
+          </a>
+          <a class="euv-readnext-card" href="reliability-layer-behind-ai-hardware.html">
+            <div class="euv-readnext-kicker">Essay 051 &middot; Reliability</div>
+            <h3 class="euv-readnext-title">The Reliability Layer Behind AI Hardware</h3>
+          </a>
+          <a class="euv-readnext-card" href="package-escaped-the-wafer.html">
+            <div class="euv-readnext-kicker">Essay 046 &middot; Packaging</div>
+            <h3 class="euv-readnext-title">The Package Escaped the Wafer</h3>
+          </a>
+          <a class="euv-readnext-card" href="boring-back-end-of-ai.html">
+            <div class="euv-readnext-kicker">Essay 048 &middot; Back-End</div>
+            <h3 class="euv-readnext-title">The Boring Back-End of AI</h3>
+          </a>
+          <a class="euv-readnext-card" href="memory-oligopoly-ai-toll-booth.html">
+            <div class="euv-readnext-kicker">Essay 050 &middot; Memory</div>
+            <h3 class="euv-readnext-title">The Memory Oligopoly Became AI's Toll Booth</h3>
+          </a>
+          <a class="euv-readnext-card" href="apple-silicon-after-cpu-era.html">
+            <div class="euv-readnext-kicker">Essay 047 &middot; Apple Silicon</div>
+            <h3 class="euv-readnext-title">Apple Silicon After the CPU Era</h3>
+          </a>
+          <a class="euv-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="euv-readnext-kicker">Atlas</div>
+            <h3 class="euv-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="euv-readnext-card" href="../">
+            <div class="euv-readnext-kicker">Index</div>
+            <h3 class="euv-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
