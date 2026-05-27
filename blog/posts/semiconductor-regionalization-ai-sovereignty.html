@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I, Semiconductor: Regionalization Became the New Cost of AI Sovereignty | Pugalenthi Magendran</title>
+  <meta name="description" content="Semiconductors are not deglobalizing. They are becoming regionally duplicated around trusted blocs, and the cost of AI sovereignty is higher capex, duplicated fabs, and dependence on chokepoint suppliers.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/semiconductor-regionalization-ai-sovereignty.html">
+  <meta property="og:title" content="I, Semiconductor: Regionalization Became the New Cost of AI Sovereignty">
+  <meta property="og:description" content="A 2026 research memo updating the 2022 I, Semiconductor thesis. The semiconductor supply chain is not deglobalizing, it is becoming redundantly globalized around trusted blocs through the US CHIPS Act, the EU Chips Act, Rapidus, TSMC Arizona, and the SEMI capex cycle.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/semiconductor-regionalization-ai-sovereignty.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Geopolitics">
+  <meta property="article:tag" content="Supply Chain">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="CHIPS Act">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="Industrial Policy">
+  <meta property="article:tag" content="Rapidus">
+  <meta property="article:tag" content="EU Chips Act">
+  <meta property="article:tag" content="OSAT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I, Semiconductor: Regionalization Became the New Cost of AI Sovereignty">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Semiconductors are not deglobalizing. They are becoming regionally duplicated around trusted blocs, and the cost of AI sovereignty is higher capex, duplicated fabs, and dependence on chokepoint suppliers.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "I, Semiconductor: Regionalization Became the New Cost of AI Sovereignty",
+    "description": "Semiconductors are not deglobalizing. They are becoming regionally duplicated around trusted blocs, and the cost of AI sovereignty is higher capex, duplicated fabs, and dependence on chokepoint suppliers.",
+    "url": "https://pugalenthimagendran.com/blog/posts/semiconductor-regionalization-ai-sovereignty.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/semiconductor-regionalization-ai-sovereignty.html",
+    "keywords": "Semiconductors, Regionalization, AI Sovereignty, CHIPS Act, EU Chips Act, Rapidus, TSMC Arizona, ASML, Advanced Packaging, OSAT, Supply Chain, Geopolitics, Industrial Policy"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #6B4C7D); border: 1px solid rgba(107,76,125,0.30); background: rgba(107,76,125,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #6B4C7D); text-decoration: none; border-bottom: 0.5px solid rgba(107,76,125,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #6B4C7D); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #6B4C7D); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #6B4C7D); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #6B4C7D); }
+
+    /* Essay 068 Regionalization — scoped under .essay-isc, policy-amethyst #6B4C7D */
+    body.essay-isc {
+      --i-accent: #6B4C7D;
+      --i-accent-soft: rgba(107,76,125,0.10);
+      --i-accent-line: rgba(107,76,125,0.30);
+      --i-warm: #A6764D;
+      --i-warm-soft: rgba(166,118,77,0.08);
+      --i-warm-line: rgba(166,118,77,0.30);
+    }
+    body.essay-isc .essay-stamp { color: var(--i-accent); border-color: var(--i-accent-line); background: var(--i-accent-soft); }
+    body.essay-isc .essay-pull { border-left-color: var(--i-accent); }
+    body.essay-isc .essay-footnotes a { color: var(--i-accent); border-bottom-color: var(--i-accent-line); }
+    body.essay-isc .essay-fn a { color: var(--i-accent); }
+    body.essay-isc .essay-toc a:hover { color: var(--i-accent); }
+
+    /* Semiconductor life cycle map hero */
+    .isc-map { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(160deg, var(--i-accent-soft) 0%, transparent 70%); overflow: hidden; }
+    .isc-map::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(107,76,125,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(107,76,125,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .isc-map-title { position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .isc-map-stage { position: relative; z-index: 1; display: grid; grid-template-columns: 28px 1fr 0.8fr; gap: 0.6rem; padding: 0.7rem 0.85rem; margin-bottom: 0.4rem; border-radius: 8px; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); align-items: center; }
+    .isc-map-stage:last-child { margin-bottom: 0; }
+    .isc-map-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--i-accent); letter-spacing: 0.06em; }
+    .isc-map-step { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.3; }
+    .isc-map-region { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--color-text-tertiary); letter-spacing: 0.04em; line-height: 1.3; }
+
+    /* Thesis card */
+    .isc-thesis { border: 0.5px solid var(--i-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--i-accent-soft); margin: 2.5rem 0; }
+    .isc-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--i-accent); margin-bottom: 0.85rem; }
+    .isc-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary list */
+    .isc-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .isc-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .isc-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .isc-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .isc-execsum li:last-child { border-bottom: none; }
+    .isc-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--i-accent); letter-spacing: 0.08em; }
+
+    /* Old model vs new model callout */
+    .isc-models { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 2rem 0 2.5rem; }
+    .isc-model { padding: 1.25rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; }
+    .isc-model.old { background: rgba(0,0,0,0.30); }
+    .isc-model.new { border-color: var(--i-accent-line); background: var(--i-accent-soft); }
+    .isc-model-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.6rem; }
+    .isc-model.new .isc-model-label { color: var(--i-accent); }
+    .isc-model-tag { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 1.15rem; color: var(--color-text-primary); margin-bottom: 0.5rem; }
+    .isc-model-text { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); }
+
+    /* Stat cards grid (CHIPS Act, Rapidus, ASML, SEMI) */
+    .isc-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.75rem 0 2.25rem; }
+    .isc-stat { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .isc-stat-k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .isc-stat-v { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--i-accent); line-height: 1.1; margin-bottom: 0.3rem; }
+    .isc-stat-d { font-family: 'Source Serif 4', serif; font-size: 0.86rem; font-weight: 300; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* SEMI capex chart */
+    .isc-capex { margin: 1.75rem 0 2.25rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--i-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--i-accent-soft) 0%, transparent 100%); }
+    .isc-capex-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--i-accent); margin-bottom: 1rem; }
+    .isc-capex-bars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-bottom: 1rem; }
+    .isc-capex-bar { padding: 0.85rem 0.95rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-align: center; }
+    .isc-capex-year { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.4rem; }
+    .isc-capex-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--i-accent); line-height: 1; }
+    .isc-capex-sub { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--color-text-tertiary); margin-top: 0.4rem; letter-spacing: 0.08em; }
+    .isc-capex-total { padding-top: 0.85rem; border-top: 0.5px solid var(--color-border-tertiary); display: flex; justify-content: space-between; align-items: baseline; }
+    .isc-capex-total-k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--color-text-tertiary); text-transform: uppercase; }
+    .isc-capex-total-v { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--i-accent); }
+
+    /* Costs/benefits two-column */
+    .isc-tradeoff { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 1.75rem 0 2.25rem; }
+    .isc-tradeoff-col { padding: 1.25rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; }
+    .isc-tradeoff-col.benefits { border-color: var(--i-accent-line); background: var(--i-accent-soft); }
+    .isc-tradeoff-col.costs { border-color: var(--i-warm-line); background: var(--i-warm-soft); }
+    .isc-tradeoff-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.85rem; }
+    .isc-tradeoff-col.benefits .isc-tradeoff-label { color: var(--i-accent); }
+    .isc-tradeoff-col.costs .isc-tradeoff-label { color: var(--i-warm); }
+    .isc-tradeoff-list { list-style: none; padding: 0; margin: 0; }
+    .isc-tradeoff-list li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.4rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .isc-tradeoff-list li:last-child { border-bottom: none; }
+
+    /* New semiconductor map table */
+    .isc-newmap-wrap { margin: 1.75rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .isc-newmap { width: 100%; border-collapse: collapse; min-width: 760px; }
+    .isc-newmap th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--i-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--i-accent-line); background: var(--i-accent-soft); font-weight: 500; }
+    .isc-newmap td { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .isc-newmap tr:last-child td { border-bottom: none; }
+    .isc-newmap td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--i-accent); font-weight: 500; letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Evidence ledger */
+    .isc-ledger { margin: 1.75rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .isc-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--i-accent-soft); border-bottom: 0.5px solid var(--i-accent-line); }
+    .isc-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--i-accent); border-right: 0.5px solid var(--i-accent-line); }
+    .isc-ledger-head > div:last-child { border-right: none; }
+    .isc-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .isc-ledger-row:last-child { border-bottom: none; }
+    .isc-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .isc-ledger-row > div:last-child { border-right: none; }
+    .isc-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--i-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Risk grid */
+    .isc-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .isc-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .isc-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--i-warm); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .isc-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .isc-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .isc-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .isc-gloss-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .isc-gloss-row:last-child { border-bottom: none; }
+    .isc-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--i-accent); padding: 0.85rem 1rem; background: var(--i-accent-soft); border-right: 0.5px solid var(--i-accent-line); display: flex; align-items: center; }
+    .isc-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line box */
+    .isc-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--i-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--i-accent-soft) 0%, transparent 100%); }
+    .isc-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--i-accent); margin-bottom: 0.85rem; }
+    .isc-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .isc-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--i-accent); }
+
+    /* Sources box */
+    .isc-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .isc-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .isc-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .isc-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .isc-readnext { margin: 3rem 0 1rem; }
+    .isc-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .isc-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .isc-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .isc-readnext-card:hover { border-color: var(--i-accent-line); }
+    .isc-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--i-accent); margin-bottom: 0.4rem; }
+    .isc-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .isc-models { grid-template-columns: 1fr; }
+      .isc-stats { grid-template-columns: 1fr; }
+      .isc-capex-bars { grid-template-columns: 1fr; }
+      .isc-tradeoff { grid-template-columns: 1fr; }
+      .isc-readnext-grid { grid-template-columns: 1fr; }
+      .isc-risks { grid-template-columns: 1fr; }
+      .isc-map-stage { grid-template-columns: 28px 1fr; }
+      .isc-map-region { grid-column: 1 / -1; padding-top: 0.3rem; border-top: 0.5px dashed var(--color-border-tertiary); margin-top: 0.3rem; }
+      .isc-gloss-row { grid-template-columns: 1fr; }
+      .isc-gloss-term { border-right: none; border-bottom: 0.5px solid var(--i-accent-line); }
+      .isc-ledger-head, .isc-ledger-row { grid-template-columns: 1fr; }
+      .isc-ledger-head > div, .isc-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .isc-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-isc .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-isc">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 068 &nbsp;&middot;&nbsp; Semiconductors / Geopolitics / AI Infrastructure</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Geopolitics</span>
+        <span class="tag">Supply Chain</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">ASML</span>
+        <span class="tag">CHIPS Act</span>
+        <span class="tag">Advanced Packaging</span>
+        <span class="tag">Industrial Policy</span>
+      </div>
+
+      <h1 class="essay-hed">I, Semiconductor: Regionalization Became the New Cost of <em>AI Sovereignty</em>
+        <span class="essay-stamps">
+          <span class="essay-stamp">CHIPS Act</span>
+          <span class="essay-stamp">TSMC Arizona</span>
+          <span class="essay-stamp">ASML</span>
+          <span class="essay-stamp">EU Chips Act</span>
+          <span class="essay-stamp">Rapidus</span>
+          <span class="essay-stamp">Advanced Packaging</span>
+          <span class="essay-stamp essay-stamp--muted">OSAT</span>
+          <span class="essay-stamp essay-stamp--muted">AI Sovereignty</span>
+          <span class="essay-stamp essay-stamp--muted">Trusted Redundancy</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        The chip supply chain is not becoming independent. It is becoming redundantly globalized, and that resilience comes with a much higher price tag.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 supply-chain thesis</div>
+        </div>
+        <div class="essay-read-time">16 MIN</div>
+      </div>
+
+      <div class="isc-map" aria-hidden="true">
+        <div class="isc-map-title">Semiconductor life cycle &nbsp;&middot;&nbsp; regional chokepoints</div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">01</div>
+          <div class="isc-map-step">Silicon wafers</div>
+          <div class="isc-map-region">Japan &middot; Taiwan &middot; Korea &middot; Singapore</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">02</div>
+          <div class="isc-map-step">Materials and photoresist</div>
+          <div class="isc-map-region">Japan-heavy (Shin-Etsu, JSR, TOK)</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">03</div>
+          <div class="isc-map-step">Lithography</div>
+          <div class="isc-map-region">Netherlands (ASML) &middot; Japan tools</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">04</div>
+          <div class="isc-map-step">Deposition, etch, implant, metrology</div>
+          <div class="isc-map-region">US-heavy &middot; Japan &middot; EU specialty</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">05</div>
+          <div class="isc-map-step">Fabs (logic, memory)</div>
+          <div class="isc-map-region">Taiwan &middot; Korea &middot; US &middot; Japan &middot; EU &middot; China</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">06</div>
+          <div class="isc-map-step">Packaging and test</div>
+          <div class="isc-map-region">Taiwan &middot; China &middot; Malaysia &middot; Singapore &middot; Vietnam &middot; India</div>
+        </div>
+        <div class="isc-map-stage">
+          <div class="isc-map-num">07</div>
+          <div class="isc-map-step">AI data centers</div>
+          <div class="isc-map-region">US-led, expanding into EU, Middle East, India, ASEAN</div>
+        </div>
+      </div>
+
+      <div class="isc-thesis">
+        <div class="isc-thesis-label">Thesis</div>
+        <div class="isc-thesis-text">
+          The world is not fully deglobalizing semiconductors. That is impossible. What is happening is more specific: governments and companies are duplicating critical parts of the semiconductor supply chain across trusted regions because AI, national security, Taiwan risk, export controls, and chip shortages made the old efficiency-first model too fragile. The result is not self-sufficiency. It is <em>trusted redundancy</em>. That makes the system safer, but also more expensive, less efficient, and more capital-intensive.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 article got right</a></li>
+          <li><a href="#sec-update">The 2026 update: regionalization is now policy</a></li>
+          <li><a href="#sec-us">The US buildout is real, but not independence</a></li>
+          <li><a href="#sec-tsmc">TSMC is regionalizing, but Taiwan remains the engine room</a></li>
+          <li><a href="#sec-europe">Europe shows the gap between ambition and execution</a></li>
+          <li><a href="#sec-japan">Japan matters because the upstream stack matters</a></li>
+          <li><a href="#sec-asml">ASML proves why full self-sufficiency is fantasy</a></li>
+          <li><a href="#sec-semi">Equipment spending is the clearest proof</a></li>
+          <li><a href="#sec-cost">The cost of resilience</a></li>
+          <li><a href="#sec-ai">AI sovereignty makes regionalization permanent</a></li>
+          <li><a href="#sec-map">The new semiconductor map</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="isc-execsum">
+          <div class="isc-execsum-label">Executive summary</div>
+          <ul>
+            <li>The 2022 thesis warned that semiconductor supply chains were globally connected but dangerously concentrated.</li>
+            <li>By 2026, regionalization is no longer a prediction. It is official industrial policy across the US, Europe, Japan, Taiwan, Korea, India, and China.</li>
+            <li>The new model is not national self-sufficiency. It is trusted redundancy across allied or strategically important regions.</li>
+            <li>Regionalization makes the system more resilient, but also more expensive because smaller duplicated fabs are less efficient than giant concentrated fabs.</li>
+            <li>AI demand makes this permanent by increasing demand for leading-edge logic, HBM, advanced packaging, power, networking, storage, and fab equipment.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece, <em>I, Semiconductor: The Regionalization Of Semiconductors Due To Global Supply Chain Instability</em>, opened with the <em>I, Pencil</em> analogy.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Even a pencil, the simplest possible product, requires inputs from a dozen countries. Semiconductors are vastly more complex. The piece used that contrast to argue that the chip supply chain was fragile because it had been optimized for efficiency, not resilience, with every step placed where scale, cost, specialization, and supplier density were strongest.
+        </p>
+
+        <p>
+          The concentration map mattered. Silicon wafers were highly concentrated in Japan, Taiwan, Singapore, and South Korea. Lithography dependency was not only ASML in the Netherlands. Japan was critical through Tokyo Electron coaters and developers and photoresist suppliers like Shin-Etsu, JSR, and Tokyo Ohka Kogyo.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Advanced logic manufacturing was concentrated in Taiwan and South Korea. DRAM and NAND production were concentrated in East Asia. OSAT, packaging, and test were heavily concentrated in Asia, and even chips fabricated in the West often traveled to Asia for assembly. The page 2 pencil diagram, the page 3 silicon boule and wafer creation visual, the page 6 Japanese lithography dependency callout, and the page 7 and page 10 concentration charts all carried the same argument.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <p>
+          The 2022 piece also made a structural prediction. Regionalization would raise capital intensity because smaller duplicated fabs are less efficient than large concentrated giga-fabs. Page 14 connected regionalization directly to higher capex and argued that wafer fabrication equipment suppliers would benefit from this structural shift.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Four years later, that argument is not a forecast anymore. It is the published industry plan.
+        </p>
+
+        <h2 class="essay-h2" id="sec-update"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; Now policy, not theory</span>The 2026 update: regionalization is industrial policy</h2>
+
+        <p>
+          The 2022 argument has become reality. The US CHIPS and Science Act, the European Chips Act, Japan's Rapidus push, TSMC's Arizona and Kumamoto expansions, ESMC in Dresden, India's packaging incentives, Korea's memory and foundry support, and China's self-sufficiency drive all reflect the same shift. The OECD's 2025 semiconductor value-chain mapping report describes the chain as complex, distributed, deeply interconnected, and exposed to concentration and bottleneck risks across multiple critical inputs, which is the policy-level validation of the same picture.<sup class="essay-fn"><a href="#fn2">[2]</a></sup>
+        </p>
+
+        <p>
+          The distinction that matters is between two words that sound similar but mean different things. Deglobalization implies countries trying to rebuild the entire chip stack inside their borders. That is not realistic because the stack is too complex and too interdependent. Regionalization means duplicating selected critical capacity in trusted regions while still relying on the global ecosystem for the rest. The result is not independence. The result is reduced exposure to single-region failure.
+        </p>
+
+        <p class="essay-pull">
+          The semiconductor supply chain is not deglobalizing. It is becoming redundantly globalized.
+        </p>
+
+        <div class="isc-models">
+          <div class="isc-model old">
+            <div class="isc-model-label">Old model &nbsp;&middot;&nbsp; pre-2022</div>
+            <div class="isc-model-tag">Efficiency first</div>
+            <div class="isc-model-text">Place every step where scale, cost, specialization, and supplier density were strongest. Optimize for throughput and unit cost across one tightly connected global chain.</div>
+          </div>
+          <div class="isc-model new">
+            <div class="isc-model-label">New model &nbsp;&middot;&nbsp; 2026</div>
+            <div class="isc-model-tag">Resilience first</div>
+            <div class="isc-model-text">Duplicate critical capacity across trusted regions even when it is more expensive. Accept lower efficiency in exchange for reduced exposure to single-region failure.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-us"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; United States</span>The US buildout is real, but not independence</h2>
+
+        <p>
+          The US CHIPS and Science Act funding is structured to backstop the US semiconductor ecosystem at scale. NIST describes CHIPS for America as a roughly US$50 billion commitment, with about US$39 billion for manufacturing incentives and about US$11 billion for research and development.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> That is the public spend. The private response is larger. The Semiconductor Industry Association tracks more than 140 semiconductor ecosystem projects across more than 30 states, more than US$645 billion in private investment since 2020, and more than 525,000 US jobs supported across those projects.<sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <div class="isc-stats">
+          <div class="isc-stat"><div class="isc-stat-k">CHIPS Act total</div><div class="isc-stat-v">~ US$50B</div><div class="isc-stat-d">Federal commitment under the CHIPS and Science Act, per NIST CHIPS for America.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">Manufacturing incentives</div><div class="isc-stat-v">~ US$39B</div><div class="isc-stat-d">Funding directed at fab construction, expansion, and capacity in the US.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">R&amp;D commitment</div><div class="isc-stat-v">~ US$11B</div><div class="isc-stat-d">Funding for semiconductor R&amp;D programs and the National Semiconductor Technology Center.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">Private investment since 2020</div><div class="isc-stat-v">~ US$645B+</div><div class="isc-stat-d">Tracked private commitments across 140+ projects in 30+ states, per SIA.</div></div>
+        </div>
+
+        <p>
+          The honest interpretation is narrower than the headlines. The CHIPS Act does not make the US semiconductor-independent. It makes the US less exposed to single-region failure. America can build more fabs, but it still needs ASML lithography from the Netherlands, Japanese materials and photoresist, Taiwanese foundry knowledge, Korean memory, global packaging and test, and imported talent. The new model is allied redundancy, not self-sufficiency.
+        </p>
+
+        <p class="essay-pull">
+          America can build more fabs, but it still needs ASML lithography, Japanese materials, Taiwanese foundry knowledge, Korean memory, global packaging, and imported talent.
+        </p>
+
+        <h2 class="essay-h2" id="sec-tsmc"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; TSMC</span>Regionalizing, but Taiwan remains the engine room</h2>
+
+        <p>
+          TSMC's 2025 Annual Report frames Arizona as a multi-phase regional buildout. The first Arizona facility began volume production of 4nm-class technology in Q4 2024. A second Arizona facility is being prepared for 3nm and more advanced technologies. Construction of a third Arizona facility began in 2025. TSMC continues to invest in Taiwan for N2, advanced nodes, and advanced packaging, and is expanding through ESMC in Dresden and JASM in Kumamoto.<sup class="essay-fn"><a href="#fn5">[5]</a></sup>
+        </p>
+
+        <p>
+          The right reading is geographic flexibility, not relocation. TSMC is not moving out of Taiwan. The deepest technical center, the densest engineering talent pool, the most ambitious node ramps, and the most advanced packaging capacity all remain anchored on the island. Arizona, Kumamoto, and Dresden are extensions, designed to give TSMC and its customers a regional answer to a Taiwan-only failure mode rather than a Taiwan replacement.
+        </p>
+
+        <p class="essay-pull">
+          TSMC is regionalizing customer-facing capacity. It is not moving the heart of its technology engine out of Taiwan.
+        </p>
+
+        <h2 class="essay-h2" id="sec-europe"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; Europe</span>The gap between ambition and execution</h2>
+
+        <p>
+          The European Chips Act entered into force on 21 September 2023, with the explicit objectives of strengthening the semiconductor ecosystem, improving supply-chain resilience, reducing strategic dependencies, and doubling Europe's global semiconductor market share to 20% by 2030.<sup class="essay-fn"><a href="#fn6">[6]</a></sup> The European Commission's tracking page lists more than &euro;31.5 billion of approved public and private investment in first-of-a-kind facilities under the act.<sup class="essay-fn"><a href="#fn6">[6]</a></sup>
+        </p>
+
+        <p>
+          The European Court of Auditors looked at the same target with less optimism. Its 2025 report concluded that the EU's 20% market share target by 2030 is very unlikely to be achieved, and that the realistic forecast is closer to 11.7% by 2030 on current trajectories.<sup class="essay-fn"><a href="#fn7">[7]</a></sup> Europe has real projects. The ambition is larger than the execution capacity. That is not unique to Europe. It is the same gap, in slightly different forms, that every region is running into once the policy language collides with workforce, supplier ecosystem, and capital reality.
+        </p>
+
+        <p class="essay-pull">
+          Everyone wants semiconductor sovereignty. Very few regions can afford the full stack.
+        </p>
+
+        <h2 class="essay-h2" id="sec-japan"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; Japan</span>Why the upstream stack matters</h2>
+
+        <p>
+          The 2022 source highlighted Japan's structural role in photoresist, coaters and developers, wafers, and specialty materials.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Four years later, that role has been reinforced. Japan is doubling down upstream in materials and tools, and is also trying to re-enter advanced logic through Rapidus. In April 2026, Japan approved an additional 631.5 billion yen, roughly US$3.96 billion, in funding for Rapidus, with total R&amp;D assistance reaching approximately 2.354 trillion yen, and Rapidus targeting 2nm-class logic with mass production planned for fiscal 2027.<sup class="essay-fn"><a href="#fn8">[8]</a></sup>
+        </p>
+
+        <p>
+          Whether Rapidus reaches a mature 2nm ramp on its declared timeline is a separate question. The structural point stands regardless. Japan does not need to replace TSMC to matter. It already matters because the rest of the world needs Japanese materials, wafers, chemicals, equipment, and precision manufacturing to operate at all. Strengthening the upstream stack is the more important Japanese contribution to global resilience, even when the headline attention follows the logic projects.
+        </p>
+
+        <h2 class="essay-h2" id="sec-asml"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; ASML</span>Why full self-sufficiency is fantasy</h2>
+
+        <p>
+          ASML's 2025 numbers show the scale of a single chokepoint. The 2025 Annual Report and the Q4 2025 results release describe net sales of approximately &euro;32.7 billion, gross margin of 52.8%, R&amp;D of approximately &euro;4.7 billion, net income of approximately &euro;9.6 billion, and a backlog of approximately &euro;38.8 billion.<sup class="essay-fn"><a href="#fn9">[9]</a></sup><sup class="essay-fn"><a href="#fn10">[10]</a></sup> ASML remains the key chokepoint for EUV lithography, including the High-NA generation. No country can buy its way around that chokepoint in a few years.
+        </p>
+
+        <div class="isc-stats">
+          <div class="isc-stat"><div class="isc-stat-k">ASML 2025 net sales</div><div class="isc-stat-v">~ &euro;32.7B</div><div class="isc-stat-d">Per ASML 2025 Annual Report.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">Gross margin</div><div class="isc-stat-v">52.8%</div><div class="isc-stat-d">High structural margin reflects the chokepoint position.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">R&amp;D</div><div class="isc-stat-v">~ &euro;4.7B</div><div class="isc-stat-d">Continued lithography roadmap investment, including High-NA.</div></div>
+          <div class="isc-stat"><div class="isc-stat-k">Backlog</div><div class="isc-stat-v">~ &euro;38.8B</div><div class="isc-stat-d">Per Q4 2025 results, showing multi-year demand visibility.</div></div>
+        </div>
+
+        <p>
+          A country can subsidize fabs. It cannot quickly recreate ASML, Zeiss optics, Cymer light sources, the broader supplier network, and decades of lithography learning. Even if a parallel ecosystem were funded today, the realistic timeline runs into the same physics, the same precision-manufacturing constraints, and the same talent shortage that ASML itself faces.
+        </p>
+
+        <p class="essay-pull">
+          Regionalization can duplicate fabs faster than it can duplicate the toolchain.
+        </p>
+
+        <h2 class="essay-h2" id="sec-semi"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; Equipment cycle</span>The clearest proof is the capex</h2>
+
+        <p>
+          SEMI's 300mm fab equipment forecast turns the regionalization argument into a number. SEMI projects global 300mm fab equipment spending of approximately US$374 billion from 2026 to 2028, with US$116 billion in 2026, US$120 billion in 2027, and US$138 billion in 2028. Logic and micro investment is projected at approximately US$175 billion over the three-year window. Memory investment is projected at approximately US$136 billion, supported by AI training, inference, HBM, and storage demand. SEMI explicitly links the spending cycle to fab regionalization, AI chip demand, self-sufficiency efforts, localized industrial ecosystems, and supply-chain restructuring.<sup class="essay-fn"><a href="#fn11">[11]</a></sup>
+        </p>
+
+        <div class="isc-capex">
+          <div class="isc-capex-label">SEMI 300mm fab equipment forecast &nbsp;&middot;&nbsp; 2026 to 2028</div>
+          <div class="isc-capex-bars">
+            <div class="isc-capex-bar">
+              <div class="isc-capex-year">2026</div>
+              <div class="isc-capex-val">US$116B</div>
+              <div class="isc-capex-sub">300mm fab equipment</div>
+            </div>
+            <div class="isc-capex-bar">
+              <div class="isc-capex-year">2027</div>
+              <div class="isc-capex-val">US$120B</div>
+              <div class="isc-capex-sub">300mm fab equipment</div>
+            </div>
+            <div class="isc-capex-bar">
+              <div class="isc-capex-year">2028</div>
+              <div class="isc-capex-val">US$138B</div>
+              <div class="isc-capex-sub">300mm fab equipment</div>
+            </div>
+          </div>
+          <div class="isc-capex-total">
+            <div class="isc-capex-total-k">Three-year total</div>
+            <div class="isc-capex-total-v">~ US$374B</div>
+          </div>
+        </div>
+
+        <p>
+          That capex cycle is the 2022 capital-intensity argument made tangible. Regionalization raises structural capex because the same total wafer demand is now being served by more, smaller, and less utilized fabs spread across more regions. AI raises absolute demand on top of that. The two effects compound. Equipment suppliers, materials suppliers, and packaging tool vendors all sit on top of that compounded curve.
+        </p>
+
+        <p class="essay-pull">
+          Regionalization raises structural capex. AI raises demand. Together, they create a massive equipment cycle.
+        </p>
+
+        <h2 class="essay-h2" id="sec-cost"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; Trade-off</span>The cost of resilience</h2>
+
+        <p>
+          Regionalization is not free. It is expensive insurance. The honest version of the story has both sides on the page at the same time. The benefits are real. The costs are also real.
+        </p>
+
+        <div class="isc-tradeoff">
+          <div class="isc-tradeoff-col benefits">
+            <div class="isc-tradeoff-label">Benefits of regionalization</div>
+            <ul class="isc-tradeoff-list">
+              <li>Reduces single-region failure risk across Taiwan, Korea, Japan, and adjacent geographies.</li>
+              <li>Gives governments more control over critical infrastructure.</li>
+              <li>Improves supply assurance for defense, AI, automotive, energy, and cloud customers.</li>
+              <li>Creates local jobs, training pipelines, and industrial capability.</li>
+              <li>Gives companies geopolitical optionality across allied blocs.</li>
+              <li>Strengthens trusted-bloc cooperation on export controls, IP, and security.</li>
+            </ul>
+          </div>
+          <div class="isc-tradeoff-col costs">
+            <div class="isc-tradeoff-label">Costs of regionalization</div>
+            <ul class="isc-tradeoff-list">
+              <li>Smaller duplicated fabs are less efficient than large concentrated giga-fabs.</li>
+              <li>Tool utilization may be lower at duplicated capacity.</li>
+              <li>Labor and talent shortages get worse, not better, at the new locations.</li>
+              <li>Supplier ecosystems take years, sometimes decades, to build.</li>
+              <li>Subsidies can reward less efficient capacity by design.</li>
+              <li>Packaging, materials, and specialty steps may remain concentrated even after fabs are built.</li>
+              <li>Capital intensity rises across the industry.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Regionalization is not free resilience. It is expensive insurance.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ai"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; AI sovereignty</span>What makes regionalization permanent</h2>
+
+        <p>
+          AI changes the economics because governments now treat compute as strategic infrastructure on the same level as power, telecoms, and energy. AI demand pulls hard on leading-edge logic, on HBM and advanced memory, on advanced packaging like CoWoS-style integration, on power and networking inside the data center, and on storage at the system level. Every one of those layers has a geographic concentration story attached to it. Every one of those layers is now a target of regionalization policy somewhere in the world.
+        </p>
+
+        <p>
+          That is what flips regionalization from a chip-cycle response into a structural shift. A normal chip cycle ends. Industrial policy aimed at AI sovereignty does not. Once compute becomes a sovereign concern, the political logic for duplicated capacity outlives any single shortage. That is why the equipment forecast extends through 2028 and why the project tracker keeps adding lines. AI demand is the engine that makes regionalization permanent.
+        </p>
+
+        <p class="essay-pull">
+          The chip shortage made regionalization urgent. AI made it permanent.
+        </p>
+
+        <h2 class="essay-h2" id="sec-map"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; The new map</span>Layer by layer, where the chokepoints live</h2>
+
+        <div class="isc-newmap-wrap">
+          <table class="isc-newmap">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Old concentration</th>
+                <th>Regionalization response</th>
+                <th>Hard-to-duplicate chokepoint</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wafers</td>
+                <td>Japan, Taiwan, South Korea, Singapore</td>
+                <td>More allied materials and wafer capacity</td>
+                <td>Purity, crystal growth, specialty wafers</td>
+              </tr>
+              <tr>
+                <td>Photoresist and chemicals</td>
+                <td>Japan-heavy (Shin-Etsu, JSR, TOK, Sumitomo)</td>
+                <td>Supply diversification, dual sourcing, EU and US programs</td>
+                <td>Advanced EUV resist know-how and process integration</td>
+              </tr>
+              <tr>
+                <td>Lithography</td>
+                <td>Netherlands (ASML) plus Japanese support tools</td>
+                <td>Allied export controls and tool allocation policy</td>
+                <td>ASML EUV and High-NA platform</td>
+              </tr>
+              <tr>
+                <td>Fabs</td>
+                <td>Taiwan, Korea, East Asia</td>
+                <td>US, EU, Japan, India, Korea incentive programs</td>
+                <td>Yield learning, scale, engineering talent</td>
+              </tr>
+              <tr>
+                <td>Memory</td>
+                <td>Korea, Taiwan, Japan, Singapore, China</td>
+                <td>US and allied memory fabs and HBM capacity expansion</td>
+                <td>HBM stacking, DRAM scaling, NAND scale</td>
+              </tr>
+              <tr>
+                <td>Packaging and test</td>
+                <td>China, Taiwan, Malaysia, Singapore, Vietnam</td>
+                <td>US, India, EU packaging push</td>
+                <td>OSAT scale, substrates, skilled labor pools</td>
+              </tr>
+              <tr>
+                <td>EDA and IP</td>
+                <td>US-heavy</td>
+                <td>Export controls, domestic-alternative programs</td>
+                <td>Software ecosystems, IP libraries, design tools</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The pattern across the rows is consistent. Every layer is being touched by some regionalization policy. Every layer still has a chokepoint that cannot be duplicated on a policy timeline. The map gets safer at the layer that can be duplicated. The map stays fragile at the layer that cannot. That is the honest 2026 description of the chip supply chain.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="isc-ledger">
+          <div class="isc-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>2022 concentration thesis was right</div>
+            <div>Original article mapped wafer, lithography, fab, memory, OSAT, and packaging chokepoints across Japan, Taiwan, Korea, China, and Southeast Asia.</div>
+            <div>The supply chain was global but not balanced.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>US buildout is real</div>
+            <div>SIA tracks more than 140 projects, 30+ states, more than US$645B in private investment since 2020, and more than 525,000 jobs supported.</div>
+            <div>Regionalization has become capital deployment, not slogan.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>CHIPS Act is risk reduction</div>
+            <div>NIST CHIPS for America: approximately US$50B total, US$39B manufacturing incentives, US$11B R&amp;D.</div>
+            <div>The US is building resilience, not full independence.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>TSMC is regionalizing capacity</div>
+            <div>Arizona Fab 1 in 4nm volume production, Fab 2 for 3nm and beyond, Fab 3 construction in 2025, Japan and Europe expansions, continued Taiwan investment.</div>
+            <div>Geographic flexibility around Taiwan, not Taiwan replacement.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>Europe has ambition but execution risk</div>
+            <div>EU Chips Act 20% market share target by 2030; ECA forecast points to approximately 11.7% by 2030.</div>
+            <div>Sovereignty is harder than policy language.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>Japan is rebuilding advanced logic</div>
+            <div>Additional 631.5B yen approved for Rapidus in April 2026; cumulative R&amp;D assistance approximately 2.354T yen; 2nm-class target with mass production in fiscal 2027.</div>
+            <div>State capital is being used to re-enter leading-edge logic.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>ASML remains a chokepoint</div>
+            <div>2025 net sales of approximately &euro;32.7B, 52.8% gross margin, R&amp;D of approximately &euro;4.7B, backlog of approximately &euro;38.8B, dominant EUV and High-NA role.</div>
+            <div>The toolchain is harder to duplicate than fabs.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>Equipment suppliers benefit</div>
+            <div>SEMI forecasts approximately US$374B 300mm fab equipment spending from 2026 to 2028, with logic/micro at approximately US$175B and memory at approximately US$136B.</div>
+            <div>Regionalization plus AI demand drives a large equipment cycle.</div>
+          </div>
+          <div class="isc-ledger-row">
+            <div>AI makes regionalization permanent</div>
+            <div>AI demand on leading-edge logic, HBM, advanced packaging, power, networking, and storage; governments treating compute as strategic infrastructure.</div>
+            <div>Compute is now sovereign-grade infrastructure.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions, not only against regionalization optimists.
+        </p>
+
+        <div class="isc-risks">
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">Subsidy cycles can reverse. Political changes in any of the major regions could compress incentive flows before duplicated capacity reaches mature utilization.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">Talent shortages at new fab geographies can delay ramps and erode the cost case for duplicated capacity, even when capital is committed.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">A serious Taiwan disruption would expose how thin redundancy actually is at leading-edge nodes, regardless of how many projects are tracked elsewhere.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">Export control escalation could fragment tool, materials, and IP flows beyond what current regional plans assume, raising costs further.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">An AI demand normalization, or a hyperscaler pullback, could leave a large duplicated capacity footprint under-utilized and economically painful for years.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">ASML and Japanese chokepoint suppliers could face capacity or yield issues that ripple across every regional buildout simultaneously.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">European execution may continue to lag policy ambition, leaving Europe more dependent on US and Asian capacity than the EU Chips Act language implies.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">Rapidus may slip on its 2nm timeline. A slip would not break Japan's upstream role but would reset expectations for Japanese leading-edge logic.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">China's own self-sufficiency push could reshape demand and competitive dynamics inside trusted-bloc regionalization, especially at trailing and mature nodes.</div>
+          </div>
+          <div class="isc-risk">
+            <div class="isc-risk-num"></div>
+            <div class="isc-risk-text">Capital cost inflation in fabs, tools, materials, and packaging may exceed the planning assumptions baked into current incentive programs.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="isc-bottom">
+          <div class="isc-bottom-label">Bottom line</div>
+          <p>
+            The 2022 prediction was right, but the 2026 version needs to be more precise. Semiconductors are not deglobalizing. They are becoming regionally duplicated around trusted blocs. That makes the system safer, but also more expensive. The cost of AI sovereignty is higher capex, duplicated fabs, lower efficiency, workforce strain, and dependence on chokepoint suppliers like ASML, Japanese materials companies, US EDA, and Asian packaging ecosystems.
+          </p>
+          <p>
+            The world is not rebuilding one semiconductor supply chain. It is building several overlapping safety nets around the same fragile machine.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="isc-gloss">
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Semiconductor regionalization</div>
+            <div class="isc-gloss-def">The deliberate duplication of selected critical semiconductor capacity across multiple trusted regions to reduce single-region failure risk, even at the cost of efficiency.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Trusted redundancy</div>
+            <div class="isc-gloss-def">Building redundant capacity inside allied or strategically aligned regions, rather than attempting full domestic self-sufficiency.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Fab</div>
+            <div class="isc-gloss-def">A semiconductor fabrication facility. Where wafers are processed into chips through hundreds of steps including lithography, deposition, etch, implant, and metrology.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Giga-fab</div>
+            <div class="isc-gloss-def">An informal term for very large, highly concentrated fabs that process tens of thousands of wafers per month and capture significant efficiency through scale.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Wafer</div>
+            <div class="isc-gloss-def">A thin slice of highly pure silicon, usually 300 mm in diameter, on which semiconductor devices are built.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Photoresist</div>
+            <div class="isc-gloss-def">A light-sensitive material spun onto a wafer so that patterns can be transferred from a mask to the wafer during lithography. EUV resist is a specialty subset.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">EUV</div>
+            <div class="isc-gloss-def">Extreme ultraviolet lithography. The 13.5 nm-wavelength patterning technology used at leading-edge logic and DRAM nodes, supplied by ASML.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">EDA</div>
+            <div class="isc-gloss-def">Electronic design automation. The software ecosystem used to design, verify, and validate semiconductor chips. Dominated by US-headquartered vendors.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">OSAT</div>
+            <div class="isc-gloss-def">Outsourced Semiconductor Assembly and Test. Companies that handle packaging, assembly, and test services after wafer fabrication.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Advanced packaging</div>
+            <div class="isc-gloss-def">A family of techniques (2.5D, 3D, CoWoS, InFO, SoIC, hybrid bonding) that integrate multiple dies in a single package, central to AI accelerator scaling.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">HBM</div>
+            <div class="isc-gloss-def">High Bandwidth Memory. Stacked DRAM integrated with logic dies through advanced packaging. A key AI accelerator bandwidth bottleneck.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">CoWoS</div>
+            <div class="isc-gloss-def">Chip-on-Wafer-on-Substrate. TSMC's 2.5D advanced packaging platform that integrates logic dies and HBM stacks on a silicon interposer.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Capital intensity</div>
+            <div class="isc-gloss-def">The amount of capital required to produce a unit of output. Higher capital intensity means more spend per wafer or per chip, often driven by smaller, duplicated fabs.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Yield learning</div>
+            <div class="isc-gloss-def">The process of improving the fraction of good chips per wafer over time. Yield learning is one of the hardest things to duplicate in a new region.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Tool utilization</div>
+            <div class="isc-gloss-def">The proportion of installed semiconductor tool capacity that is actively producing wafers. Lower utilization spreads fixed costs across fewer wafers.</div>
+          </div>
+          <div class="isc-gloss-row">
+            <div class="isc-gloss-term">Supply-chain chokepoint</div>
+            <div class="isc-gloss-def">A point in the value chain where a small number of suppliers control most of the capacity, making the chain sensitive to any disruption at that point.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 16 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="isc-sources-box">
+          <div class="isc-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis piece is treated as historical context, particularly for the I, Pencil analogy, the geographic concentration map, the Japanese lithography dependency, and the capital intensity argument. The 2026 read is built from policy and corporate primary sources: the OECD value-chain mapping, NIST CHIPS for America, the SIA investment tracker, TSMC's annual reporting, the European Commission Chips Act page, the European Court of Auditors 2025 report, Reuters on Rapidus funding, ASML's annual report and Q4 2025 results, and the SEMI 300mm fab equipment forecast.
+          </p>
+          <p>
+            Company and government claims about future market share, funding totals, capacity ramps, and capex outlooks are treated as company and government claims, not as forecasts that this memo endorses. The structural argument that regionalization is now policy, that AI makes it permanent, and that chokepoint suppliers remain critical is independent analysis. The numbers behind it are not.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;I, Semiconductor: The Regionalization Of Semiconductors Due To Global Supply Chain Instability,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for the I, Pencil analogy on page 2, the silicon boule and wafer creation on page 3, the Japanese lithography dependency on page 6, the geographic concentration on pages 7 and 10, the capital intensity argument on page 14, and the framing of wafers, photoresist, lithography, fabs, memory, OSAT, and packaging concentration.</li>
+            <li id="fn2">OECD, &ldquo;Mapping the Semiconductor Value Chain,&rdquo; 2025 <a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/06/mapping-the-semiconductor-value-chain_5ba52971/4154cdbf-en.pdf" target="_blank" rel="noopener noreferrer">oecd.org/&hellip;/mapping-the-semiconductor-value-chain</a>. Source for the modern policy-level mapping of the value chain as complex, distributed, deeply interconnected, and exposed to concentration and bottleneck risks across multiple critical inputs.</li>
+            <li id="fn3">NIST, &ldquo;CHIPS for America,&rdquo; <a href="https://www.nist.gov/chips" target="_blank" rel="noopener noreferrer">nist.gov/chips</a>. Source for the structure of the CHIPS and Science Act, with approximately US$50B total, US$39B for manufacturing incentives, and US$11B for R&amp;D and related programs.</li>
+            <li id="fn4">Semiconductor Industry Association, &ldquo;Chip Supply Chain Investments,&rdquo; <a href="https://www.semiconductors.org/chip-supply-chain-investments/" target="_blank" rel="noopener noreferrer">semiconductors.org/chip-supply-chain-investments</a>. Source for the tracker of more than 140 semiconductor ecosystem projects across more than 30 states, more than US$645B in private investment since 2020, and more than 525,000 US jobs supported.</li>
+            <li id="fn5">TSMC, &ldquo;2025 Annual Report,&rdquo; <a href="https://investor.tsmc.com/static/annualReports/2025/english/index.html" target="_blank" rel="noopener noreferrer">investor.tsmc.com/&hellip;/2025</a>. Source for Arizona Fab 1 entering volume production of 4nm-class technology in Q4 2024, Arizona Fab 2 being prepared for 3nm and more advanced nodes, Arizona Fab 3 construction starting in 2025, continued Taiwan investment in N2 and advanced packaging, and Japan and Europe expansion.</li>
+            <li id="fn6">European Commission, &ldquo;European Chips Act,&rdquo; <a href="https://digital-strategy.ec.europa.eu/en/policies/european-chips-act" target="_blank" rel="noopener noreferrer">digital-strategy.ec.europa.eu/&hellip;/european-chips-act</a>. Source for the European Chips Act entering into force on 21 September 2023, the goal of doubling Europe's global semiconductor market share to 20%, the resilience and dependency reduction objectives, and the more than &euro;31.5B of approved public and private investment in first-of-a-kind facilities.</li>
+            <li id="fn7">European Court of Auditors, &ldquo;Special Report on the EU Chips Act,&rdquo; 2025 <a href="https://www.eca.europa.eu/en/publications?ref=sr-2025-12" target="_blank" rel="noopener noreferrer">eca.europa.eu/&hellip;/sr-2025-12</a>. Source for the assessment that the EU's 20% global market share target by 2030 is very unlikely to be achieved, with a realistic forecast closer to 11.7% by 2030.</li>
+            <li id="fn8">Reuters, &ldquo;Japan approves additional ~US$4B for chipmaker Rapidus,&rdquo; April 2026 <a href="https://www.reuters.com/world/asia-pacific/japan-approves-additional-4-bln-chipmaker-rapidus-2026-04-11/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/japan-approves-rapidus-2026-04-11</a>. Source for Japan approving an additional 631.5B yen for Rapidus, the cumulative R&amp;D assistance reaching approximately 2.354T yen, the 2nm-class logic target, and the fiscal 2027 mass production plan.</li>
+            <li id="fn9">ASML, &ldquo;2025 Annual Report,&rdquo; <a href="https://www.asml.com/investors/annual-report" target="_blank" rel="noopener noreferrer">asml.com/investors/annual-report</a>. Source for &euro;32.7B 2025 net sales, 52.8% gross margin, &euro;4.7B R&amp;D, and EUV and lithography chokepoint context.</li>
+            <li id="fn10">ASML, &ldquo;Q4 2025 Financial Results,&rdquo; <a href="https://www.asml.com/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener noreferrer">asml.com/&hellip;/q4-2025-financial-results</a>. Source for approximately &euro;9.6B net income, &euro;38.8B backlog, High-NA revenue recognition context, and 2026 outlook framing.</li>
+            <li id="fn11">SEMI, &ldquo;Global 300mm Fab Equipment Spending Expected to Total US$374B Over Next Three Years,&rdquo; <a href="https://www.semi.org/en/semi-press-release/semi-reports-global-300mm-fab-equipment-spending-expected-to-total-374-billion-dollars-over-next-three-years" target="_blank" rel="noopener noreferrer">semi.org/&hellip;/300mm-fab-equipment-374-billion</a>. Source for approximately US$374B global 300mm fab equipment spending from 2026 to 2028 (US$116B in 2026, US$120B in 2027, US$138B in 2028), logic and micro equipment investment of approximately US$175B, memory equipment investment of approximately US$136B, and the explicit linkage to fab regionalization, AI chip demand, self-sufficiency efforts, localized industrial ecosystems, and supply-chain restructuring.</li>
+          </ol>
+        </div>
+
+        <div class="isc-readnext">
+          <div class="isc-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="isc-readnext-grid">
+            <a href="advanced-packaging-became-the-computer.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 061</div>
+              <div class="isc-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="intel-bet-the-farm-foundry-proof.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 058</div>
+              <div class="isc-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</div>
+            </a>
+            <a href="globalfoundries-second-life.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 054</div>
+              <div class="isc-readnext-title">The Foundry That Quit Moore's Law Found a Second Life</div>
+            </a>
+            <a href="euv-throughput-bottleneck.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 055</div>
+              <div class="isc-readnext-title">The EUV Throughput Bottleneck</div>
+            </a>
+            <a href="euv-materials-war-ai-chips.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 059</div>
+              <div class="isc-readnext-title">The EUV Materials War Behind AI Chips</div>
+            </a>
+            <a href="memory-oligopoly-ai-toll-booth.html" class="isc-readnext-card">
+              <div class="isc-readnext-kicker">Essay 050</div>
+              <div class="isc-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>
