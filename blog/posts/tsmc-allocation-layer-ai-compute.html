@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSMC Became the Allocation Layer of AI Compute | Pugalenthi Magendran</title>
+  <meta name="description" content="TSMC is not just a wafer manufacturer. In the AI era, it allocates scarce advanced-node wafers, CoWoS capacity, SoIC, HBM integration, yield-learning windows and packaging slots across Apple, Nvidia, AMD, Qualcomm, Broadcom, MediaTek and Intel.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/tsmc-allocation-layer-ai-compute.html">
+  <meta property="og:title" content="TSMC Became the Allocation Layer of AI Compute">
+  <meta property="og:description" content="A technical essay on TSMC wafer supply agreements, customer leverage, temporary receipts, Nvidia capacity commitments, Intel 18A, CoWoS, SoIC and why TSMC's real power is access.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/tsmc-allocation-layer-ai-compute.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="Foundry">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="Intel">
+  <meta property="article:tag" content="Apple">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="Wafer Supply">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TSMC Became the Allocation Layer of AI Compute">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="TSMC is not just a wafer manufacturer. In the AI era, it allocates scarce advanced-node wafers, CoWoS capacity, SoIC, HBM integration, yield-learning windows and packaging slots across Apple, Nvidia, AMD, Qualcomm, Broadcom, MediaTek and Intel.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "TSMC Became the Allocation Layer of AI Compute",
+    "description": "TSMC is not just a wafer manufacturer. In the AI era, it allocates scarce advanced-node wafers, CoWoS capacity, SoIC, HBM integration, yield-learning windows and packaging slots across Apple, Nvidia, AMD, Qualcomm, Broadcom, MediaTek and Intel.",
+    "url": "https://pugalenthimagendran.com/blog/posts/tsmc-allocation-layer-ai-compute.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/tsmc-allocation-layer-ai-compute.html",
+    "keywords": "TSMC, Semiconductors, Foundry, AI Infrastructure, CoWoS, Nvidia, Intel, Apple, Advanced Packaging, Wafer Supply"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #B0413E); border: 1px solid rgba(176,65,62,0.30); background: rgba(176,65,62,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #B0413E); text-decoration: none; border-bottom: 0.5px solid rgba(176,65,62,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #B0413E); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #B0413E); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #B0413E); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #B0413E); }
+
+    /* Essay 062 TSMC — scoped under .essay-tsmc, brick red #B0413E */
+    body.essay-tsmc {
+      --t-accent: #B0413E;
+      --t-accent-soft: rgba(176,65,62,0.10);
+      --t-accent-faint: rgba(176,65,62,0.05);
+      --t-accent-line: rgba(176,65,62,0.30);
+    }
+    body.essay-tsmc .essay-stamp { color: var(--t-accent); border-color: var(--t-accent-line); background: var(--t-accent-soft); }
+    body.essay-tsmc .essay-footnotes a { color: var(--t-accent); border-bottom-color: var(--t-accent-line); }
+    body.essay-tsmc .essay-fn a { color: var(--t-accent); }
+    body.essay-tsmc .essay-pull { border-left-color: var(--t-accent); }
+    body.essay-tsmc .essay-toc a:hover { color: var(--t-accent); }
+
+    body.essay-tsmc .t-thesis { background: linear-gradient(180deg, var(--t-accent-soft), var(--t-accent-faint)); border: 0.5px solid var(--t-accent-line); border-left: 2px solid var(--t-accent); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-tsmc .t-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--t-accent); margin-bottom: 0.75rem; }
+    body.essay-tsmc .t-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.22rem; line-height: 1.5; color: var(--color-text-primary); margin: 0; }
+
+    body.essay-tsmc .t-sources-box { background: var(--color-background-secondary); border: 0.5px dashed var(--t-accent-line); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-tsmc .t-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); margin-bottom: 0.85rem; }
+    body.essay-tsmc .t-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-tsmc .t-sources-box li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.45rem; }
+
+    /* Allocation Stack — 9 layers */
+    body.essay-tsmc .t-stack { margin: 2.5rem 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+    body.essay-tsmc .t-stack-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); padding: 1rem 1.5rem; background: var(--t-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-tsmc .t-stack-layer { display: grid; grid-template-columns: 200px 1fr; gap: 1rem; padding: 0.7rem 1.5rem; border-bottom: 0.5px dashed var(--color-border-tertiary); align-items: baseline; }
+    body.essay-tsmc .t-stack-layer:last-child { border-bottom: none; }
+    body.essay-tsmc .t-stack-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.98rem; color: var(--color-text-primary); margin: 0; }
+    body.essay-tsmc .t-stack-desc { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* Customer terms table */
+    body.essay-tsmc .t-customers { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-tsmc .t-customers-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); padding: 1rem 1.5rem; background: var(--t-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-tsmc .t-customers table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.92rem; }
+    body.essay-tsmc .t-customers th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-tsmc .t-customers td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-primary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-tsmc .t-customers tr:last-child td { border-bottom: none; }
+    body.essay-tsmc .t-customers td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t-accent); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+
+    /* 2021 vs 2026 */
+    body.essay-tsmc .t-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.5rem 0; }
+    body.essay-tsmc .t-compare-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-tsmc .t-compare-col.right { border-color: var(--t-accent-line); background: var(--t-accent-faint); }
+    body.essay-tsmc .t-compare-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.65rem; }
+    body.essay-tsmc .t-compare-col.right .t-compare-label { color: var(--t-accent); }
+    body.essay-tsmc .t-compare-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.75rem; }
+    body.essay-tsmc .t-compare-col p { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Reservation Economics + Leverage Map — labeled key-value grids */
+    body.essay-tsmc .t-grid { margin: 2.5rem 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+    body.essay-tsmc .t-grid-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); padding: 1rem 1.5rem; background: var(--t-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-tsmc .t-grid-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+    body.essay-tsmc .t-grid-item { padding: 0.7rem 1.25rem; border-bottom: 0.5px dashed var(--color-border-tertiary); border-right: 0.5px dashed var(--color-border-tertiary); font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); }
+    body.essay-tsmc .t-grid-item:nth-child(even) { border-right: none; }
+    body.essay-tsmc .t-grid-item strong { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; color: var(--t-accent); display: block; margin-bottom: 0.2rem; text-transform: uppercase; }
+
+    /* Timeline */
+    body.essay-tsmc .t-timeline { margin: 2.5rem 0; display: flex; flex-direction: column; border-left: 1px solid var(--t-accent-line); padding-left: 1.5rem; margin-left: 0.5rem; }
+    body.essay-tsmc .t-timeline-item { padding: 0.65rem 0 1rem; position: relative; }
+    body.essay-tsmc .t-timeline-item::before { content: ''; position: absolute; left: -1.85rem; top: 1rem; width: 8px; height: 8px; background: var(--t-accent); border-radius: 50%; box-shadow: 0 0 0 3px var(--color-background-secondary); }
+    body.essay-tsmc .t-timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--t-accent); margin-bottom: 0.35rem; }
+    body.essay-tsmc .t-timeline-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.02rem; color: var(--color-text-primary); margin: 0 0 0.35rem; }
+    body.essay-tsmc .t-timeline-desc { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-secondary); margin: 0; }
+
+    /* Evidence Ledger */
+    body.essay-tsmc .t-ledger { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-tsmc .t-ledger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); padding: 1rem 1.5rem; background: var(--t-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-tsmc .t-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-tsmc .t-ledger th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-tsmc .t-ledger td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-secondary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-tsmc .t-ledger tr:last-child td { border-bottom: none; }
+    body.essay-tsmc .t-ledger td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--t-accent); letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Risk grid */
+    body.essay-tsmc .t-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin: 2.5rem 0; }
+    body.essay-tsmc .t-risk { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.15rem; background: var(--color-background-secondary); }
+    body.essay-tsmc .t-risk-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--t-accent); letter-spacing: 0.1em; margin-bottom: 0.45rem; }
+    body.essay-tsmc .t-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Read-next */
+    body.essay-tsmc .t-readnext { margin: 4rem 0 0; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    body.essay-tsmc .t-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
+    body.essay-tsmc .t-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    body.essay-tsmc .t-readnext-card { display: block; padding: 1.15rem 1.35rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+    body.essay-tsmc .t-readnext-card:hover { border-color: var(--t-accent); transform: translateY(-2px); }
+    body.essay-tsmc .t-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-accent); margin-bottom: 0.4rem; }
+    body.essay-tsmc .t-readnext-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--color-text-primary); margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-tsmc .t-stack-layer { grid-template-columns: 150px 1fr; gap: 0.6rem; padding: 0.7rem 1rem; }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+      body.essay-tsmc .t-stack-layer { grid-template-columns: 1fr; gap: 0.3rem; }
+    }
+    @media (max-width: 768px) {
+      body.essay-tsmc .t-compare { grid-template-columns: 1fr; }
+      body.essay-tsmc .t-risks { grid-template-columns: 1fr; }
+      body.essay-tsmc .t-readnext-grid { grid-template-columns: 1fr; }
+      body.essay-tsmc .t-grid-items { grid-template-columns: 1fr; }
+      body.essay-tsmc .t-grid-item { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-tsmc .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-tsmc">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 062 &nbsp;&middot;&nbsp; Foundry Power &amp; AI Allocation</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">TSMC</span>
+        <span class="tag">Semiconductors</span>
+        <span class="tag">Foundry</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">CoWoS</span>
+        <span class="tag">Nvidia</span>
+        <span class="tag">Intel</span>
+        <span class="tag">Apple</span>
+        <span class="tag">Advanced Packaging</span>
+        <span class="tag">Wafer Supply</span>
+        <span class="tag">SoIC</span>
+        <span class="tag">HBM</span>
+      </div>
+
+      <h1 class="essay-hed">
+        TSMC Became the Allocation Layer of <em>AI Compute</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Original analysis</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        In 2021, the question was whether TSMC could make Intel dependent on external manufacturing. In 2026, the bigger story is clearer: TSMC does not just manufacture chips. It allocates the world's scarcest advanced-node, advanced-packaging and AI compute capacity.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">15 min read</div>
+      </div>
+
+      <div class="t-thesis">
+        <div class="t-thesis-label">Thesis</div>
+        <p class="t-thesis-text">TSMC is no longer just the foundry behind chips. It is the allocation layer for scarce AI compute manufacturing &mdash; deciding how advanced-node wafers, CoWoS slots, SoIC and HBM integration flow to the world's most important chip designers.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2021">What the 2021 TSMC wafer-supply article got right</a></li>
+          <li><a href="#sec-shift">From smartphone cycle to AI/HPC allocation</a></li>
+          <li><a href="#sec-node">Advanced-node concentration increased leverage</a></li>
+          <li><a href="#sec-receipts">Temporary receipts, the financialization of access</a></li>
+          <li><a href="#sec-nvda">Nvidia shows the customer side of the allocation war</a></li>
+          <li><a href="#sec-cowos">CoWoS changed the meaning of foundry capacity</a></li>
+          <li><a href="#sec-apple">Apple, the old privileged model</a></li>
+          <li><a href="#sec-amd-mtk">AMD and MediaTek, preferred customers through alignment</a></li>
+          <li><a href="#sec-nvda-qcom">Nvidia and Qualcomm, optionality has a price</a></li>
+          <li><a href="#sec-intel">Intel, the strategic prize</a></li>
+          <li><a href="#sec-broadcom">Broadcom and custom silicon</a></li>
+          <li><a href="#sec-asml">ASML confirms the macro pull</a></li>
+          <li><a href="#sec-hierarchy">The new customer hierarchy</a></li>
+          <li><a href="#sec-misread">What people got wrong in 2021</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          The easiest way to misunderstand TSMC is to think it only sells wafers.
+        </p>
+
+        <p>
+          TSMC sells manufacturing certainty, timing, yield learning, process design kits, the IP ecosystem, design enablement, advanced packaging, CoWoS, SoIC, InFO, customer trust, and access to scarce capacity. When capacity is abundant, a foundry sells wafers. When capacity is scarce, a foundry allocates access. The company says it is everyone's foundry, and in one sense that is true. But not every customer gets the same terms, timing, integration depth, or leverage.
+        </p>
+
+        <p>
+          In the AI era, this matters more because the bottleneck is no longer only leading-edge wafers. It is also CoWoS, HBM integration, SoIC, advanced packaging, yield-learning windows, and multi-year capacity reservations.
+        </p>
+
+        <p class="essay-pull">
+          Everyone's foundry does not mean everyone's terms.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2021">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2021 TSMC wafer-supply article got right
+        </h2>
+
+        <p>
+          The 2021 SemiAnalysis piece on TSMC's wafer-supply agreements is the historical anchor for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It argued that TSMC says it is everyone's foundry, but customer terms differ widely. Apple was described as TSMC's most important customer, roughly three times larger than the second-largest at the time, and uniquely integrated with TSMC, including helping define base PDKs for new nodes and driving early utilization. AMD and MediaTek were described as preferred customers because they ran mostly exclusive on TSMC's leading-edge nodes, with MediaTek helping drive N6 and N4 evolutions and AMD acting as a packaging trailblazer and early ramp partner for 3D hybrid bonding.
+        </p>
+
+        <p>
+          The piece flagged Nvidia and Qualcomm as more opportunistic customers because they played Samsung and TSMC against each other, with Nvidia making roughly $1.64B of advance payments in one quarter and planning another $1.79B of future payments, and Qualcomm carrying around $13B of purchase obligations across suppliers. The TSMC Q3 2021 filing on page 5 showed temporary receipts from customers to retain fab capacity. And the article framed Intel as the strategic prize: TSMC's long game was to make Intel product teams comfortable choosing TSMC nodes when Intel internal manufacturing looked uncertain<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <div class="t-sources-box">
+          <div class="t-sources-box-label">Source notes &mdash; 2021 SemiAnalysis TSMC claims (historical)</div>
+          <ul>
+            <li>TSMC says it is everyone's foundry, but customer terms differ widely.</li>
+            <li>Apple was the most important customer, integrated into PDK definition and early-node ramps.</li>
+            <li>AMD and MediaTek were preferred customers via TSMC-leaning exclusivity and node-evolution work.</li>
+            <li>AMD was an early ramp partner for 3D hybrid bonding.</li>
+            <li>Nvidia and Qualcomm were opportunistic, multi-sourcing across Samsung and TSMC.</li>
+            <li>Nvidia ~$1.64B of advance payments in one quarter; ~$1.79B planned.</li>
+            <li>Qualcomm ~$13B of purchase obligations across suppliers including TSMC-related lines.</li>
+            <li>Page 5 TSMC Q3 2021 filing showed temporary receipts to retain capacity.</li>
+            <li>Intel was framed as the strategic prize: get Intel product teams comfortable with TSMC.</li>
+          </ul>
+        </div>
+
+        <p>
+          The 2021 article was right about the power dynamic. TSMC's leverage came from differentiated customer access, not just from owning fabs. The 2026 question is what that leverage has become as AI demand reshapes the picture.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-shift">
+          <span class="essay-h2-num">Section 02</span>
+          From smartphone cycle to AI/HPC allocation
+        </h2>
+
+        <p>
+          TSMC used to be understood heavily through the iPhone cycle. That is still important, but the center of gravity moved. TSMC's 2025 Form 20-F shows HPC revenue reaching NT$2.193T in 2025, equal to 58% of 2025 net revenue, with smartphone at 29%. HPC was 43% in 2023 and 51% in 2024 before reaching 58% in 2025, with HPC revenue growing 48% year over year from 2024 to 2025<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          The allocation problem became less about mobile seasonality and more about AI accelerators, server CPUs, custom ASICs, networking, and the advanced packaging that ties them together. TSMC is now structurally more exposed to AI/HPC than to the old smartphone-first cycle.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-node">
+          <span class="essay-h2-num">Section 03</span>
+          Advanced-node concentration increased leverage
+        </h2>
+
+        <p>
+          TSMC's 2025 Form 20-F also discloses the wafer-revenue mix by node. 3 nm was 24% of 2025 wafer revenue, 5 nm was 36%, and 7 nm was 14%, putting 7 nm and below at 74% of wafer revenue<sup class="essay-fn"><a href="#fn2">[2]</a></sup>. The more revenue concentrates at advanced nodes, the more TSMC's leverage concentrates around customers that need the best nodes.
+        </p>
+
+        <p>
+          Customers are not only buying capacity. They are buying entry into a small set of process platforms with high yield learning, mature PDKs, and proven ecosystems. The scarce resource is not generic wafer starts. It is qualified advanced-node capacity.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-receipts">
+          <span class="essay-h2-num">Section 04</span>
+          Temporary receipts, the financialization of access
+        </h2>
+
+        <p>
+          The clearest piece of TSMC disclosure on the allocation dynamic is the temporary receipts line. The 2025 Form 20-F notes that some customers pay temporary receipts to retain specified fab capacity, with year-end 2025 temporary receipts at NT$189.858B (current NT$146.559B, noncurrent NT$43.299B), and explains that the treatment can include refund or offsetting against accounts receivable when contract terms are satisfied<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          Capacity is no longer just ordered. It is reserved, financed, committed to and fought over years in advance.
+        </p>
+
+        <p>
+          This is not normal spot purchasing. Capacity has become something customers reserve financially. The system looks less like buying chips and more like securing access to an industrial bottleneck.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-nvda">
+          <span class="essay-h2-num">Section 05</span>
+          Nvidia shows the customer side of the allocation war
+        </h2>
+
+        <p>
+          Nvidia's FY2026 10-K describes the customer-side mechanics in detail. Nvidia uses foundries including TSMC and Samsung. Long manufacturing lead times and uncertain supply or capacity can create mismatches between supply and demand. Nvidia has paid premiums, provided deposits, and entered long-term supply agreements and capacity commitments to secure future supply. As of January 25, 2026, Nvidia disclosed $95.2B of outstanding inventory purchase and long-term supply and capacity obligations, with substantially all of those commitments expected to be paid through fiscal year 2027<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.
+        </p>
+
+        <p>
+          Nvidia is no longer simply placing purchase orders. Nvidia is financially locking down supply. That is what AI-scale demand does to the foundry relationship. AI chips turned supply agreements into strategic weapons.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-cowos">
+          <span class="essay-h2-num">Section 06</span>
+          CoWoS changed the meaning of foundry capacity
+        </h2>
+
+        <p>
+          TSMC's 2026 Technology Symposium reframes what foundry capacity means. TSMC is producing 5.5-reticle-size CoWoS, plans 14-reticle-size CoWoS in 2028 with around 10 large compute dies and 20 HBM stacks per package, and expects further expansion beyond 14 reticles in 2029. TSMC is also advancing SoIC, with A14-to-A14 SoIC planned for production availability in 2029 at 1.8x higher die-to-die IO density than N2-on-N2 SoIC. The COUPE co-packaged optics solution on substrate is targeted to begin production in 2026 with 2x power efficiency and 10x latency reduction versus pluggable board-level versions<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.
+        </p>
+
+        <p>
+          TSMC is no longer only allocating wafers. It is allocating package-scale AI systems. A customer needs the logic wafer, the HBM attach path, the interposer, the substrate, the packaging slot, the thermal path, and the integration ecosystem. The scarce resource is no longer only wafer starts. It is the right node, in the right quarter, with the right packaging capacity.
+        </p>
+
+        <p class="essay-pull">
+          TSMC's real product is not only wafers. It is manufacturing certainty.
+        </p>
+
+        <div class="t-stack">
+          <div class="t-stack-label">TSMC allocation stack &mdash; nine layers customers compete for</div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">Advanced-node wafers</h3><div class="t-stack-desc">N3, N2, A16 and beyond. The visible product, but only one layer.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">PDK &amp; IP ecosystem</h3><div class="t-stack-desc">Process design kits, foundation IP, design enablement, EDA support.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">Yield-learning windows</h3><div class="t-stack-desc">Early adopters benefit from the steepest yield-improvement curves.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">CoWoS capacity</h3><div class="t-stack-desc">2.5D advanced packaging that ties logic and HBM into one package.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">SoIC</h3><div class="t-stack-desc">3D die-stacking for logic-on-logic and cache-on-logic integration.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">HBM integration</h3><div class="t-stack-desc">Number of stacks, attach process, and shared roadmap with memory vendors.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">Packaging slots</h3><div class="t-stack-desc">Throughput per quarter; the queue that becomes the bottleneck.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">Customer commitments</h3><div class="t-stack-desc">Prepayments, temporary receipts, long-term supply agreements.</div></div>
+          <div class="t-stack-layer"><h3 class="t-stack-name">Roadmap timing</h3><div class="t-stack-desc">Which generation of process and package a customer hits, and when.</div></div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-apple">
+          <span class="essay-h2-num">Section 07</span>
+          Apple, the old privileged model
+        </h2>
+
+        <p>
+          Apple's power in the 2021 framing came from early-node mobile volume, predictability, tight PDK integration, and willingness to pay. Apple drove first-year utilization for N7 and N5, helped define early PDKs, and had seasonal flexibility, with TSMC prebuilding N5 wafers ahead of the iPhone cycle and Apple notably not prepaying in the same way as some other customers<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          That model still matters, but AI/HPC changed the center of gravity. In the smartphone era, Apple was the anchor customer. In the AI era, Nvidia-class capacity urgency changes the allocation game. Apple taught TSMC how to build around a privileged customer. AI taught everyone else how expensive access could become.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-amd-mtk">
+          <span class="essay-h2-num">Section 08</span>
+          AMD and MediaTek, preferred customers through alignment
+        </h2>
+
+        <p>
+          AMD and MediaTek were the 2021 article's preferred customers because they were mostly exclusive on TSMC's leading-edge nodes. MediaTek helped drive N6 and N4 node evolutions. AMD designed custom libraries and worked closely on N5, and acted as a ramp partner for 3D hybrid bonding<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          Preferred customer status is not only about size. It is about alignment. If a customer commits deeply to TSMC's roadmap, TSMC has more reason to optimize with them. TSMC rewards customers that make its roadmap more valuable.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-nvda-qcom">
+          <span class="essay-h2-num">Section 09</span>
+          Nvidia and Qualcomm, optionality has a price
+        </h2>
+
+        <p>
+          Nvidia and Qualcomm were the 2021 article's opportunistic customers, playing Samsung and TSMC against each other. That gave them price and supply flexibility in some periods. But when they needed large amounts of TSMC leading-edge capacity, they had to make stronger commitments. The 2021 advance-payment example for Nvidia and the large purchase-obligation profile for Qualcomm, including the eventual return of high-end Snapdragon to TSMC, illustrate the cost of optionality<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          The 2026 update sharpens this. Nvidia's $95.2B inventory and long-term supply commitments at end of FY2026 show that AI demand made optionality much more expensive<sup class="essay-fn"><a href="#fn3">[3]</a></sup>. Multi-sourcing can improve leverage during normal times. When the best capacity is scarce, the supplier with the best capacity gains leverage.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-intel">
+          <span class="essay-h2-num">Section 10</span>
+          Intel, the strategic prize
+        </h2>
+
+        <p>
+          Intel remains the most complicated customer because it is also trying to become a competing foundry. The 2021 framing was that TSMC wanted Intel design and product teams to become comfortable choosing external nodes, with Intel having moved toward more industry-standard SoC design flows and a roadmap that included chiplets on both in-house and external processes<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <p>
+          The 2026 update has Intel trying to reverse the dependency story. Intel says Panther Lake is the first client SoC built on Intel 18A and has entered production, with Fab 52 in Arizona ramping toward high-volume 18A manufacturing<sup class="essay-fn"><a href="#fn5">[5]</a></sup>. Lip-Bu Tan's reset memo says future Intel 14A investment will be tied to confirmed customer commitments and that "there are no more blank checks; every investment must make economic sense."<sup class="essay-fn"><a href="#fn6">[6]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          The Intel fight is not only about capacity. It is about which manufacturing roadmap Intel product teams trust.
+        </p>
+
+        <p>
+          TSMC wants Intel product teams comfortable with TSMC. Intel wants internal nodes to become good enough that product teams choose Intel again. This is not dependency in one direction. It is a design-team trust battle that will play out over multiple generations.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-broadcom">
+          <span class="essay-h2-num">Section 11</span>
+          Broadcom and custom silicon
+        </h2>
+
+        <p>
+          The 2021 article described Broadcom as a large TSMC customer with a diverse supply chain, slower growing and cautious with capacity commitments, with exposure in networking and RFFE<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. The right 2026 update treats Broadcom as part of the broader custom AI ASIC and networking story, without inventing specific TSMC deal terms.
+        </p>
+
+        <p>
+          The general point holds at a higher level. Custom silicon customers need TSMC not only for wafers but for advanced process and package integration. AI networking and custom ASICs make TSMC allocation matter beyond GPU companies.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-asml">
+          <span class="essay-h2-num">Section 12</span>
+          ASML confirms the macro pull
+        </h2>
+
+        <p>
+          TSMC's allocation power exists because the equipment stack is also scarce. ASML's Q4 2025 results reported Q4 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, and an end-2025 backlog of EUR 38.8B, with ASML noting that customers had a more positive medium-term view mainly because of sustainable AI-related demand<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.
+        </p>
+
+        <p>
+          EUV tools, advanced packaging equipment, HBM supply, and substrates all limit how fast capacity can expand. TSMC allocates capacity, but the whole upstream tool chain determines how much capacity can exist.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-hierarchy">
+          <span class="essay-h2-num">Section 13</span>
+          The new customer hierarchy
+        </h2>
+
+        <p>
+          Customer leverage at TSMC depends on a mix of scale, roadmap alignment, willingness to prepay or commit, early-node adoption, packaging needs, AI/HPC growth, seasonal demand shape, multi-sourcing behavior, strategic value, contribution to ecosystem learning, dependence on CoWoS and SoIC, and whether the customer makes TSMC more defensible. The 2026 ranking is not a revenue table. It is a map of leverage.
+        </p>
+
+        <div class="t-customers">
+          <div class="t-customers-label">Everyone's foundry, different terms &mdash; the leverage map</div>
+          <table>
+            <thead>
+              <tr><th>Customer</th><th>Source of leverage</th><th>2026 pressure point</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Apple</td><td>Early-node anchor, PDK influence, seasonal flexibility, no aggressive prepayment.</td><td>Smartphone-first share gradually outweighed by AI/HPC center of gravity.</td></tr>
+              <tr><td>AMD</td><td>TSMC alignment, custom libraries, packaging partnership including 3D hybrid bonding.</td><td>Competes with Nvidia for the same CoWoS and HBM packaging slots.</td></tr>
+              <tr><td>MediaTek</td><td>Node-evolution partner for N6 and N4; mobile volume across regions.</td><td>Mobile cycle exposure even as AI/HPC dominates TSMC's mix.</td></tr>
+              <tr><td>Nvidia</td><td>AI urgency, advanced packaging dependence, very large capacity commitments.</td><td>Disclosed $95.2B of outstanding inventory and long-term supply obligations.</td></tr>
+              <tr><td>Qualcomm</td><td>Large mobile customer; historic multi-sourcing with Samsung; high-end Snapdragon flows.</td><td>Optionality is more expensive when AI demand absorbs the leading-edge queue.</td></tr>
+              <tr><td>Broadcom</td><td>Networking, custom ASIC and RFFE exposure; diverse supply chain.</td><td>Custom AI silicon pulls Broadcom into the advanced-packaging queue too.</td></tr>
+              <tr><td>Intel</td><td>Both customer and foundry competitor; product-team trust battle on 18A and beyond.</td><td>Has to make internal manufacturing economically credible while still using TSMC where it must.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-misread">
+          <span class="essay-h2-num">Section 14</span>
+          What people got wrong in 2021
+        </h2>
+
+        <p>
+          The weak interpretation in 2021 was that TSMC wanted to make Intel dependent. That reading is too narrow. The better interpretation is that TSMC wanted every major chip designer to treat TSMC as the safest manufacturing default. Intel matters, but the bigger TSMC goal is broader: make every AI, CPU, GPU, mobile, networking, and custom ASIC team believe that the lowest execution risk is TSMC. Once that belief exists, TSMC's pricing, capacity, and roadmap power compound.
+        </p>
+
+        <p>
+          TSMC's moat is not only technology. It is customer risk reduction. The 2026 evidence, from temporary receipts to Nvidia's supply obligations to CoWoS roadmaps, all points in the same direction.
+        </p>
+
+        <div class="t-compare">
+          <div class="t-compare-col">
+            <div class="t-compare-label">2021 thesis</div>
+            <h3 class="t-compare-title">Unequal customer terms; Intel angle</h3>
+            <p>TSMC wanted to make Intel product teams comfortable with external manufacturing and treated customers differently, with Apple privileged, AMD and MediaTek preferred, Nvidia and Qualcomm opportunistic, and Broadcom diversified.</p>
+          </div>
+          <div class="t-compare-col right">
+            <div class="t-compare-label">2026 reality</div>
+            <h3 class="t-compare-title">Allocation layer for AI compute</h3>
+            <p>TSMC became the allocation layer for advanced AI compute across wafers, CoWoS, SoIC, HBM integration, packaging slots, yield-learning windows, and multi-year capacity commitments. The Intel angle remains real but sits inside a broader AI-driven framework.</p>
+          </div>
+        </div>
+
+        <div class="t-grid">
+          <div class="t-grid-label">Capacity reservation economics &mdash; how access is bought</div>
+          <div class="t-grid-items">
+            <div class="t-grid-item"><strong>Customer prepayments</strong>Cash up front to reserve future capacity.</div>
+            <div class="t-grid-item"><strong>Temporary receipts</strong>TSMC line item disclosing customer capacity-retention payments.</div>
+            <div class="t-grid-item"><strong>Long-term supply agreements</strong>Multi-year commitments with volume and pricing structure.</div>
+            <div class="t-grid-item"><strong>Capacity commitments</strong>Binding wafer-start and packaging-slot reservations.</div>
+            <div class="t-grid-item"><strong>Advanced packaging slots</strong>CoWoS, SoIC, and InFO throughput per quarter.</div>
+            <div class="t-grid-item"><strong>Equipment lead times</strong>EUV, advanced packaging tools, substrates; tool supply gates capacity supply.</div>
+            <div class="t-grid-item"><strong>AI demand uncertainty</strong>Customers pay to hedge against undersupply.</div>
+            <div class="t-grid-item"><strong>Geopolitical risk</strong>Onshore packaging, regional diversification, and trusted-manufacturing premiums.</div>
+          </div>
+        </div>
+
+        <div class="t-grid">
+          <div class="t-grid-label">Customer leverage map &mdash; what actually moves a foundry relationship</div>
+          <div class="t-grid-items">
+            <div class="t-grid-item"><strong>Scale</strong>Revenue and wafer demand concentration.</div>
+            <div class="t-grid-item"><strong>Exclusivity</strong>Whether a customer dual-sources at the leading edge.</div>
+            <div class="t-grid-item"><strong>Roadmap alignment</strong>How tightly the customer ties product cadence to TSMC nodes.</div>
+            <div class="t-grid-item"><strong>Prepayment willingness</strong>Cash or balance-sheet commitments to retain capacity.</div>
+            <div class="t-grid-item"><strong>Packaging dependence</strong>CoWoS, SoIC, InFO needs; specific HBM attach paths.</div>
+            <div class="t-grid-item"><strong>Strategic value</strong>How much the customer's success reinforces TSMC's moat.</div>
+            <div class="t-grid-item"><strong>Multi-sourcing behavior</strong>Whether the customer plays foundries against each other.</div>
+            <div class="t-grid-item"><strong>AI/HPC growth</strong>The exposure to the segment that now drives the queue.</div>
+          </div>
+        </div>
+
+        <div class="t-timeline" role="list">
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2021</div>
+            <h3 class="t-timeline-title">SemiAnalysis explains TSMC's unequal customer terms and Intel strategy</h3>
+            <p class="t-timeline-desc">The article maps Apple, AMD, MediaTek, Nvidia, Qualcomm, Broadcom and Intel as distinct customer archetypes<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2021</div>
+            <h3 class="t-timeline-title">TSMC temporary receipts show capacity-retention payments</h3>
+            <p class="t-timeline-desc">Q3 2021 filing makes the financialization of capacity access visible on the balance sheet<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2022-2023</div>
+            <h3 class="t-timeline-title">N3 ramps with more customer diversity than N5</h3>
+            <p class="t-timeline-desc">The leading-edge mix broadens beyond Apple-first ramps into HPC and custom silicon.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2024-2025</div>
+            <h3 class="t-timeline-title">AI/HPC becomes the center of TSMC growth</h3>
+            <p class="t-timeline-desc">HPC rises from 43% (2023) to 51% (2024) to 58% (2025) of TSMC net revenue<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2025</div>
+            <h3 class="t-timeline-title">TSMC HPC reaches 58% of revenue</h3>
+            <p class="t-timeline-desc">HPC revenue NT$2.193T, up 48% YoY. Advanced-node mix at 74% of wafer revenue<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2025</div>
+            <h3 class="t-timeline-title">Temporary receipts remain a major capacity-reservation line item</h3>
+            <p class="t-timeline-desc">NT$189.858B at year-end 2025: NT$146.559B current, NT$43.299B noncurrent<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2026</div>
+            <h3 class="t-timeline-title">TSMC capex planned at US$52B to US$56B</h3>
+            <p class="t-timeline-desc">Primarily 2 nm and 3 nm capacity expansion across Fab 20, Fab 21 and Fab 22 with advanced packaging build-out<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2026</div>
+            <h3 class="t-timeline-title">Nvidia discloses $95.2B outstanding inventory and long-term supply/capacity obligations</h3>
+            <p class="t-timeline-desc">Premiums, deposits, and long-term supply and capacity agreements; substantially all paid through FY2027<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2026</div>
+            <h3 class="t-timeline-title">TSMC produces 5.5-reticle CoWoS and outlines 14-reticle CoWoS for 2028</h3>
+            <p class="t-timeline-desc">Package-scale AI systems become the unit of allocation, not just wafer starts<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2028</div>
+            <h3 class="t-timeline-title">14-reticle CoWoS planned with ~10 compute dies and 20 HBM stacks</h3>
+            <p class="t-timeline-desc">Allocation expands from one die plus HBM to package-scale heterogeneous compute<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="t-timeline-item" role="listitem">
+            <div class="t-timeline-year">2029</div>
+            <h3 class="t-timeline-title">A14-to-A14 SoIC and beyond-14-reticle packaging roadmap</h3>
+            <p class="t-timeline-desc">SoIC at 1.8x higher die-to-die IO density vs N2-on-N2; CoWoS expected to extend further<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 15</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The argument above blends 2021 history, TSMC filings, Nvidia disclosures, Intel statements, and ASML demand context. It is worth being explicit about where the case can break.
+        </p>
+
+        <div class="t-risks">
+          <div class="t-risk"><div class="t-risk-num">Risk 01</div><p class="t-risk-text">TSMC does not publicly name all customers in its revenue concentration table; specific shares should not be inferred.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 02</div><p class="t-risk-text">Temporary receipts show capacity-retention payments but do not reveal every customer or full contract terms.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 03</div><p class="t-risk-text">Nvidia's $95.2B obligations include more than pure TSMC wafer commitments and should not be treated as a TSMC-only number.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 04</div><p class="t-risk-text">CoWoS capacity is only one part of the AI supply chain; HBM, substrates, assembly, test, power, cooling and networking are separate bottlenecks.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 05</div><p class="t-risk-text">Intel 18A could reduce Intel's reliance on TSMC if it executes well; the dependency story is not one-way.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 06</div><p class="t-risk-text">Samsung, Intel Foundry, and others can still compete in specific areas; TSMC dominance is not uniform across segments.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 07</div><p class="t-risk-text">Geopolitical risk around Taiwan remains material to any TSMC-centric thesis.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 08</div><p class="t-risk-text">Company roadmap targets (CoWoS reticle sizes, SoIC nodes, A14 timing) are not guaranteed outcomes.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 09</div><p class="t-risk-text">AI demand can soften or reshape; the allocation pressure depends on demand persistence.</p></div>
+          <div class="t-risk"><div class="t-risk-num">Risk 10</div><p class="t-risk-text">This essay is industry analysis, not investment advice; customer leverage shifts with each generation of product, process, and packaging.</p></div>
+        </div>
+
+        <p>
+          The point is not that TSMC controls everything. The point is that it sits at the narrowest point of the advanced compute supply chain.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 16</span>
+          Final verdict
+        </h2>
+
+        <p>
+          The 2021 article was right. TSMC's power was never only about selling wafers. It came from unequal terms, preferred customers, PDK integration, capacity commitments, and customer trust. In 2026, that power is larger because AI made advanced compute capacity scarce. TSMC now allocates the key ingredients of AI hardware: advanced wafers, CoWoS, SoIC, HBM integration, yield learning, PDK maturity, packaging slots, and roadmap timing.
+        </p>
+
+        <p>
+          Intel remains the most interesting strategic case. Nvidia shows the new urgency. Apple shows the old privileged model. AMD and MediaTek show alignment. Qualcomm shows optionality's price. Broadcom shows custom silicon's pull.
+        </p>
+
+        <p class="essay-pull">
+          Everyone can call TSMC their foundry. Not everyone gets the same seat at the table.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 17</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="t-ledger">
+          <div class="t-ledger-label">Evidence ledger &mdash; load-bearing claims with sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2021)</td><td>Apple anchor PDK partner; AMD and MediaTek preferred; Nvidia and Qualcomm opportunistic; Broadcom diversified; Intel as strategic prize.</td><td>Anchors the historical customer-terms framework.</td></tr>
+              <tr><td>TSMC 2025 Form 20-F</td><td>HPC 58% of FY2025 revenue (NT$2.193T, +48% YoY); 3 nm 24%, 5 nm 36%, 7 nm 14% (74% at 7 nm and below); temporary receipts NT$189.858B; 2026 capex US$52-56B.</td><td>Quantifies the AI/HPC center of gravity and capacity reservation lines.</td></tr>
+              <tr><td>Nvidia FY2026 10-K</td><td>$95.2B outstanding inventory and long-term supply/capacity obligations; substantially paid through FY2027; premiums, deposits and capacity commitments to secure supply.</td><td>Quantifies how AI demand turned supply agreements into strategic weapons.</td></tr>
+              <tr><td>TSMC 2026 Symposium</td><td>5.5-reticle CoWoS today; 14-reticle CoWoS by 2028 with ~10 compute dies and 20 HBM stacks; A14-to-A14 SoIC 2029; COUPE in 2026.</td><td>Defines the package-scale allocation layer.</td></tr>
+              <tr><td>Intel Panther Lake / 18A</td><td>Panther Lake first 18A client SoC in production; Fab 52 ramping to HVM on 18A.</td><td>Shows Intel attempting to reduce dependency on TSMC.</td></tr>
+              <tr><td>Lip-Bu Tan reset memo</td><td>14A investment tied to confirmed customer commitments; "no more blank checks".</td><td>Frames Intel's foundry economics test.</td></tr>
+              <tr><td>ASML Q4 2025</td><td>Q4 net bookings EUR 13.2B; EUV bookings EUR 7.4B; backlog EUR 38.8B; positive medium-term view mainly because of AI-related demand.</td><td>Macro evidence that the equipment stack is being pulled by AI.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;TSMC Wants To Make Intel Dependent On External Manufacturing &mdash; Wafer Supply Agreement Insights For AMD, Apple, Broadcom, Intel, MediaTek, Nvidia, and Qualcomm,&rdquo; 2021 (PDF supplied by author). Source for the customer-terms taxonomy: Apple anchor and PDK partner; AMD and MediaTek preferred; Nvidia and Qualcomm opportunistic; Broadcom diversified; Intel as strategic prize; Nvidia $1.64B advance payments and $1.79B planned; Qualcomm ~$13B purchase obligations; and the Q3 2021 TSMC filing showing temporary receipts to retain capacity.</li>
+          <li id="fn2">TSMC, &ldquo;2025 Form 20-F,&rdquo; <a href="https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf" target="_blank" rel="noopener noreferrer">investor.tsmc.com/&hellip;/2025_20F Report</a>. Source for HPC at 58% of FY2025 revenue with NT$2.193T and +48% YoY growth, smartphone at 29%, the 24%/36%/14% mix at 3 nm / 5 nm / 7 nm with 74% at 7 nm and below, temporary receipts of NT$189.858B at year-end 2025 (NT$146.559B current, NT$43.299B noncurrent), and 2026 capex of US$52-56B focused on 2 nm and 3 nm capacity expansion and advanced packaging.</li>
+          <li id="fn3">Nvidia, &ldquo;Form 10-K (Fiscal Year 2026),&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm" target="_blank" rel="noopener noreferrer">sec.gov/&hellip;/nvda-20260125</a>. Source for Nvidia's use of TSMC and Samsung as foundries, the description of premiums, deposits, long-term supply agreements and capacity commitments, the $95.2B outstanding inventory purchase and long-term supply and capacity obligations as of January 25, 2026, and the statement that substantially all such commitments are expected to be paid through fiscal year 2027.</li>
+          <li id="fn4">TSMC, &ldquo;TSMC 2026 Technology Symposium,&rdquo; <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener noreferrer">pr.tsmc.com/english/news/3302</a>. Source for 5.5-reticle CoWoS in production, 14-reticle CoWoS planned by 2028 with around 10 compute dies and 20 HBM stacks, expansion beyond 14 reticles in 2029, A14-to-A14 SoIC production availability in 2029 at 1.8x higher die-to-die IO density vs N2-on-N2 SoIC, and COUPE co-packaged optics on substrate beginning production in 2026 with 2x power efficiency and 10x latency reduction vs pluggable versions.</li>
+          <li id="fn5">Intel Newsroom, &ldquo;Intel Unveils Panther Lake Architecture &mdash; First AI PC Platform Built on 18A,&rdquo; <a href="https://newsroom.intel.com/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a" target="_blank" rel="noopener noreferrer">newsroom.intel.com</a>. Source for Panther Lake as the first client SoC built on Intel 18A and the production status, and the framing of Fab 52 in Arizona ramping to high-volume 18A manufacturing.</li>
+          <li id="fn6">Intel Newsroom, Lip-Bu Tan, &ldquo;Steps in the Right Direction,&rdquo; <a href="https://newsroom.intel.com/corporate/lip-bu-tan-steps-in-the-right-direction" target="_blank" rel="noopener noreferrer">newsroom.intel.com/corporate/lip-bu-tan-steps-in-the-right-direction</a>. Source for the 14A-tied-to-customer-commitments policy and the no-more-blank-checks language used in the Intel section.</li>
+          <li id="fn7">ASML, &ldquo;Q4 2025 Financial Results,&rdquo; <a href="https://www.asml.com/en/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener noreferrer">asml.com/&hellip;/q4-2025-financial-results</a>. Source for Q4 2025 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, the end-2025 backlog of EUR 38.8B, and the customer commentary on a more positive medium-term assessment driven mainly by AI-related demand.</li>
+        </ol>
+      </div>
+
+      <div class="t-readnext">
+        <div class="t-readnext-label">Read next</div>
+        <div class="t-readnext-grid">
+          <a class="t-readnext-card" href="advanced-packaging-became-the-computer.html">
+            <div class="t-readnext-kicker">Essay 061 &middot; Packaging</div>
+            <h3 class="t-readnext-title">The Package Became the Computer</h3>
+          </a>
+          <a class="t-readnext-card" href="aws-cpu-cloud-infrastructure.html">
+            <div class="t-readnext-kicker">Essay 060 &middot; Hyperscalers</div>
+            <h3 class="t-readnext-title">AWS Turned the CPU Into Cloud Infrastructure</h3>
+          </a>
+          <a class="t-readnext-card" href="euv-materials-war-ai-chips.html">
+            <div class="t-readnext-kicker">Essay 059 &middot; EUV Materials</div>
+            <h3 class="t-readnext-title">The EUV Materials War Behind AI Chips</h3>
+          </a>
+          <a class="t-readnext-card" href="intel-bet-the-farm-foundry-proof.html">
+            <div class="t-readnext-kicker">Essay 058 &middot; Intel</div>
+            <h3 class="t-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</h3>
+          </a>
+          <a class="t-readnext-card" href="node-race-became-system-race.html">
+            <div class="t-readnext-kicker">Essay 056 &middot; Foundries</div>
+            <h3 class="t-readnext-title">The Node Race Became a System Race</h3>
+          </a>
+          <a class="t-readnext-card" href="euv-throughput-bottleneck.html">
+            <div class="t-readnext-kicker">Essay 055 &middot; Lithography</div>
+            <h3 class="t-readnext-title">The EUV Throughput Bottleneck</h3>
+          </a>
+          <a class="t-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="t-readnext-kicker">Atlas</div>
+            <h3 class="t-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="t-readnext-card" href="../">
+            <div class="t-readnext-kicker">Index</div>
+            <h3 class="t-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>

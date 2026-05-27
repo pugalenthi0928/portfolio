@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marvell's Tanzanite Bet Was Early. CXL Is Now Becoming the Memory Pooling Layer for AI Infrastructure. | Pugalenthi Magendran</title>
+  <meta name="description" content="Marvell's Tanzanite acquisition was an early CXL memory-pooling bet. In 2026, AI inference, KV cache, and memory utilization make CXL a serious composable infrastructure layer, but not an HBM replacement.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/marvell-tanzanite-cxl-memory-pooling-ai-infrastructure.html">
+  <meta property="og:title" content="Marvell's Tanzanite Bet Was Early. CXL Is Now Becoming the Memory Pooling Layer for AI Infrastructure.">
+  <meta property="og:description" content="A research memo on Marvell, CXL, memory pooling, composable AI servers, Structera A/X/S, Alaska P, XConn switching, CXL 4.0, and the realistic role of CXL beside HBM in 2026 AI infrastructure.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/marvell-tanzanite-cxl-memory-pooling-ai-infrastructure.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="AI Infrastructure">
+  <meta property="article:tag" content="Marvell">
+  <meta property="article:tag" content="CXL">
+  <meta property="article:tag" content="Memory Pooling">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Composable Servers">
+  <meta property="article:tag" content="Structera">
+  <meta property="article:tag" content="Tanzanite">
+  <meta property="article:tag" content="Data Centers">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="KV Cache">
+  <meta property="article:tag" content="XConn">
+  <meta property="article:tag" content="UALink">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Marvell's Tanzanite Bet Was Early. CXL Is Now Becoming the Memory Pooling Layer for AI Infrastructure.">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Marvell's Tanzanite acquisition was an early CXL memory-pooling bet. In 2026, AI inference, KV cache, and memory utilization make CXL a serious composable infrastructure layer, but not an HBM replacement.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Marvell's Tanzanite Bet Was Early. CXL Is Now Becoming the Memory Pooling Layer for AI Infrastructure.",
+    "description": "Marvell's Tanzanite acquisition was an early CXL memory-pooling bet. In 2026, AI inference, KV cache, and memory utilization make CXL a serious composable infrastructure layer, but not an HBM replacement.",
+    "url": "https://pugalenthimagendran.com/blog/posts/marvell-tanzanite-cxl-memory-pooling-ai-infrastructure.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/marvell-tanzanite-cxl-memory-pooling-ai-infrastructure.html",
+    "keywords": "Marvell, Tanzanite, CXL, Memory Pooling, Composable Servers, Structera, Alaska P, XConn, CXL 4.0, KV Cache, HBM, AI Infrastructure"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #4E5E8C); border: 1px solid rgba(78,94,140,0.30); background: rgba(78,94,140,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #4E5E8C); text-decoration: none; border-bottom: 0.5px solid rgba(78,94,140,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #4E5E8C); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #4E5E8C); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #4E5E8C); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #4E5E8C); }
+
+    /* Essay 076 Marvell CXL — scoped under .essay-mvl, data-fabric cobalt #4E5E8C */
+    body.essay-mvl {
+      --m-accent: #4E5E8C;
+      --m-accent-soft: rgba(78,94,140,0.10);
+      --m-accent-line: rgba(78,94,140,0.30);
+      --m-hbm: #8C3E5A;
+      --m-hbm-soft: rgba(140,62,90,0.10);
+      --m-hbm-line: rgba(140,62,90,0.30);
+      --m-cold: #4A6E5A;
+      --m-cold-soft: rgba(74,110,90,0.10);
+      --m-cold-line: rgba(74,110,90,0.30);
+      --m-warn: #B5703A;
+      --m-warn-soft: rgba(181,112,58,0.08);
+      --m-warn-line: rgba(181,112,58,0.30);
+    }
+    body.essay-mvl .essay-stamp { color: var(--m-accent); border-color: var(--m-accent-line); background: var(--m-accent-soft); }
+    body.essay-mvl .essay-pull { border-left-color: var(--m-accent); }
+    body.essay-mvl .essay-footnotes a { color: var(--m-accent); border-bottom-color: var(--m-accent-line); }
+    body.essay-mvl .essay-fn a { color: var(--m-accent); }
+    body.essay-mvl .essay-toc a:hover { color: var(--m-accent); }
+
+    /* Memory hierarchy hero */
+    .mvl-hier { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(180deg, var(--m-hbm-soft) 0%, transparent 50%, var(--m-cold-soft) 100%); overflow: hidden; }
+    .mvl-hier::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(78,94,140,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(78,94,140,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .mvl-hier-title { position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .mvl-tier { position: relative; z-index: 1; padding: 0.85rem 1rem; margin-bottom: 0.5rem; border-radius: 8px; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); }
+    .mvl-tier:last-child { margin-bottom: 0; }
+    .mvl-tier.hbm { border-color: var(--m-hbm-line); background: rgba(140,62,90,0.16); }
+    .mvl-tier.local { border-color: var(--color-border-tertiary); background: rgba(0,0,0,0.40); }
+    .mvl-tier.cxl { border-color: var(--m-accent-line); background: rgba(78,94,140,0.16); border-left-width: 3px; }
+    .mvl-tier.cold { border-color: var(--m-cold-line); background: rgba(74,110,90,0.12); }
+    .mvl-tier-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .mvl-tier.hbm .mvl-tier-label { color: var(--m-hbm); }
+    .mvl-tier.cxl .mvl-tier-label { color: var(--m-accent); }
+    .mvl-tier.cold .mvl-tier-label { color: var(--m-cold); }
+    .mvl-tier-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 0.35rem; line-height: 1.25; }
+    .mvl-tier-text { font-family: 'Source Serif 4', serif; font-size: 0.86rem; font-weight: 300; color: var(--color-text-secondary); line-height: 1.45; }
+    .mvl-hier-center { position: relative; z-index: 1; margin-top: 1rem; padding-top: 0.85rem; border-top: 0.5px solid var(--color-border-tertiary); font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.98rem; line-height: 1.4; color: var(--color-text-primary); text-align: center; }
+
+    /* Thesis */
+    .mvl-thesis { border: 0.5px solid var(--m-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--m-accent-soft); margin: 2.5rem 0; }
+    .mvl-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 0.85rem; }
+    .mvl-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary */
+    .mvl-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .mvl-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .mvl-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .mvl-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .mvl-execsum li:last-child { border-bottom: none; }
+    .mvl-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--m-accent); letter-spacing: 0.08em; }
+
+    /* PDF ref */
+    .mvl-pdfref { margin: 1.5rem 0 2.25rem; padding: 1.1rem 1.4rem; border: 0.5px solid var(--color-border-tertiary); border-left-width: 3px; border-left-color: var(--m-accent-line); border-radius: 8px; background: var(--color-background-secondary); }
+    .mvl-pdfref-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 0.55rem; }
+    .mvl-pdfref-list { list-style: none; padding: 0; margin: 0; }
+    .mvl-pdfref-list li { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.28rem 0 0.28rem 4.5rem; position: relative; }
+    .mvl-pdfref-list li::before { content: attr(data-page); position: absolute; left: 0; top: 0.32rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--m-accent); letter-spacing: 0.06em; }
+
+    /* Three model cards */
+    .mvl-models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin: 1.75rem 0 2.25rem; }
+    .mvl-model { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .mvl-model.composable { border-color: var(--m-accent-line); background: var(--m-accent-soft); }
+    .mvl-model-h { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+    .mvl-model.composable .mvl-model-h { color: var(--m-accent); }
+    .mvl-model-t { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 1rem; color: var(--color-text-primary); margin-bottom: 0.4rem; line-height: 1.3; }
+    .mvl-model-d { font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* CXL type cards */
+    .mvl-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin: 1.5rem 0 2.25rem; }
+    .mvl-type { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .mvl-type.t3 { border-color: var(--m-accent-line); background: var(--m-accent-soft); }
+    .mvl-type-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; color: var(--m-accent); margin-bottom: 0.3rem; text-transform: uppercase; }
+    .mvl-type-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Portfolio map */
+    .mvl-port { margin: 1.5rem 0 2.25rem; padding: 1.4rem 1.6rem; border: 0.5px solid var(--m-accent-line); border-radius: 12px; background: var(--m-accent-soft); }
+    .mvl-port-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 1rem; }
+    .mvl-port-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .mvl-port-item { padding: 0.75rem 0.95rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; }
+    .mvl-port-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--m-accent); margin-bottom: 0.25rem; text-transform: uppercase; }
+    .mvl-port-text { font-family: 'Source Serif 4', serif; font-size: 0.87rem; font-weight: 300; line-height: 1.45; color: var(--color-text-primary); }
+
+    /* AI memory pressure pills */
+    .mvl-press { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.55rem; margin: 1.5rem 0 2.25rem; }
+    .mvl-press-pill { padding: 0.7rem 0.9rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; background: var(--color-background-secondary); font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.4; }
+
+    /* Stat cards */
+    .mvl-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.25rem; }
+    .mvl-stat { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .mvl-stat-k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .mvl-stat-v { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--m-accent); line-height: 1.1; margin-bottom: 0.3rem; }
+    .mvl-stat-d { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* Memory tier comparison table */
+    .mvl-tbl-wrap { margin: 1.5rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .mvl-tbl { width: 100%; border-collapse: collapse; min-width: 720px; }
+    .mvl-tbl th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--m-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--m-accent-line); background: var(--m-accent-soft); font-weight: 500; }
+    .mvl-tbl td { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .mvl-tbl tr:last-child td { border-bottom: none; }
+    .mvl-tbl td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--m-accent); letter-spacing: 0.04em; font-weight: 500; white-space: nowrap; }
+
+    /* Use case pills */
+    .mvl-uses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.55rem; margin: 1.5rem 0 2.25rem; }
+    .mvl-use-pill { padding: 0.7rem 0.9rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; background: var(--color-background-secondary); font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.4; }
+
+    /* Check list */
+    .mvl-check { margin: 1.5rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--m-accent-line); border-radius: 12px; background: var(--m-accent-soft); }
+    .mvl-check-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 0.9rem; }
+    .mvl-check-list { list-style: none; padding: 0; margin: 0; }
+    .mvl-check-list li { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 400; line-height: 1.55; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 2.4rem; position: relative; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .mvl-check-list li:last-child { border-bottom: none; }
+    .mvl-check-list li::before { content: "[ ? ]"; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--m-accent); letter-spacing: 0.04em; }
+
+    /* Evidence ledger */
+    .mvl-ledger { margin: 1.5rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .mvl-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--m-accent-soft); border-bottom: 0.5px solid var(--m-accent-line); }
+    .mvl-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--m-accent); border-right: 0.5px solid var(--m-accent-line); }
+    .mvl-ledger-head > div:last-child { border-right: none; }
+    .mvl-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .mvl-ledger-row:last-child { border-bottom: none; }
+    .mvl-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .mvl-ledger-row > div:last-child { border-right: none; }
+    .mvl-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--m-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Risk grid */
+    .mvl-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .mvl-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .mvl-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--m-warn); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .mvl-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .mvl-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .mvl-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .mvl-gloss-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .mvl-gloss-row:last-child { border-bottom: none; }
+    .mvl-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--m-accent); padding: 0.85rem 1rem; background: var(--m-accent-soft); border-right: 0.5px solid var(--m-accent-line); display: flex; align-items: center; }
+    .mvl-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line */
+    .mvl-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--m-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--m-accent-soft) 0%, transparent 100%); }
+    .mvl-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 0.85rem; }
+    .mvl-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .mvl-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--m-accent); }
+
+    /* Sources box */
+    .mvl-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .mvl-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .mvl-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .mvl-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .mvl-readnext { margin: 3rem 0 1rem; }
+    .mvl-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .mvl-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .mvl-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .mvl-readnext-card:hover { border-color: var(--m-accent-line); }
+    .mvl-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--m-accent); margin-bottom: 0.4rem; }
+    .mvl-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .mvl-models { grid-template-columns: 1fr; }
+      .mvl-types { grid-template-columns: 1fr; }
+      .mvl-port-grid { grid-template-columns: 1fr; }
+      .mvl-press { grid-template-columns: 1fr; }
+      .mvl-stats { grid-template-columns: 1fr; }
+      .mvl-uses { grid-template-columns: 1fr; }
+      .mvl-readnext-grid { grid-template-columns: 1fr; }
+      .mvl-risks { grid-template-columns: 1fr; }
+      .mvl-gloss-row { grid-template-columns: 1fr; }
+      .mvl-gloss-term { border-right: none; border-bottom: 0.5px solid var(--m-accent-line); }
+      .mvl-ledger-head, .mvl-ledger-row { grid-template-columns: 1fr; }
+      .mvl-ledger-head > div, .mvl-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .mvl-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-mvl .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-mvl">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 076 &nbsp;&middot;&nbsp; AI Infrastructure / CXL / Memory Fabric</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Marvell</span>
+        <span class="tag">CXL</span>
+        <span class="tag">Memory Pooling</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Composable Servers</span>
+        <span class="tag">Structera</span>
+        <span class="tag">Tanzanite</span>
+        <span class="tag">Data Centers</span>
+        <span class="tag">HBM</span>
+        <span class="tag">KV Cache</span>
+      </div>
+
+      <h1 class="essay-hed">Marvell's Tanzanite Bet Was Early. CXL Is Now Becoming the <em>Memory Pooling Layer</em> for AI Infrastructure.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Marvell</span>
+          <span class="essay-stamp">Tanzanite</span>
+          <span class="essay-stamp">CXL</span>
+          <span class="essay-stamp">Structera A</span>
+          <span class="essay-stamp">Structera X</span>
+          <span class="essay-stamp">Structera S</span>
+          <span class="essay-stamp">XConn</span>
+          <span class="essay-stamp essay-stamp--muted">Memory pooling</span>
+          <span class="essay-stamp essay-stamp--muted">KV cache</span>
+          <span class="essay-stamp essay-stamp--muted">Composable AI servers</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        AI infrastructure is not only constrained by GPUs and HBM. It is also constrained by memory capacity, utilization, and flexibility. CXL is the attempt to turn stranded DRAM into a composable memory tier.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 Tanzanite / CXL thesis</div>
+        </div>
+        <div class="essay-read-time">16 MIN</div>
+      </div>
+
+      <div class="mvl-hier" aria-hidden="true">
+        <div class="mvl-hier-title">AI memory hierarchy &nbsp;&middot;&nbsp; where each tier lives</div>
+        <div class="mvl-tier hbm">
+          <div class="mvl-tier-label">Top &nbsp;&middot;&nbsp; fastest</div>
+          <div class="mvl-tier-name">HBM beside GPU or accelerator</div>
+          <div class="mvl-tier-text">Highest bandwidth &middot; limited capacity per stack &middot; expensive &middot; best for accelerator compute.</div>
+        </div>
+        <div class="mvl-tier local">
+          <div class="mvl-tier-label">Middle</div>
+          <div class="mvl-tier-name">Local DDR / MRDIMM / SOCAMM</div>
+          <div class="mvl-tier-text">Primary CPU memory &middot; lower latency than remote memory &middot; fixed to the server or socket.</div>
+        </div>
+        <div class="mvl-tier cxl">
+          <div class="mvl-tier-label">Flexible tier</div>
+          <div class="mvl-tier-name">CXL attached / pooled memory</div>
+          <div class="mvl-tier-text">Memory expansion &middot; rack-level pooling &middot; dynamic allocation &middot; better utilization &middot; latency trade-off.</div>
+        </div>
+        <div class="mvl-tier cold">
+          <div class="mvl-tier-label">Bottom</div>
+          <div class="mvl-tier-name">NVMe / SSD</div>
+          <div class="mvl-tier-text">Cold data &middot; high capacity &middot; much higher latency than DRAM tiers.</div>
+        </div>
+        <div class="mvl-hier-center">CXL does not replace HBM. It creates a flexible memory tier around the system.</div>
+      </div>
+
+      <div class="mvl-thesis">
+        <div class="mvl-thesis-label">Thesis</div>
+        <div class="mvl-thesis-text">
+          The 2022 Tanzanite article was right that CXL memory pooling would matter for composable servers. In 2026, the thesis is stronger because AI has made memory capacity, bandwidth, utilization, and KV-cache economics central infrastructure problems. Marvell has turned the idea into a serious portfolio with Structera A, Structera X, Structera S, Alaska P, XConn switching, and custom CXL silicon. But the realistic role of CXL is not to replace HBM. HBM remains the high-bandwidth memory tier for accelerators. CXL becomes the flexible memory tier around the system.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 Tanzanite article got right</a></li>
+          <li><a href="#sec-util">Why memory utilization matters</a></li>
+          <li><a href="#sec-cxl">CXL basics without the jargon</a></li>
+          <li><a href="#sec-portfolio">The 2026 update: Marvell turned the thesis into a portfolio</a></li>
+          <li><a href="#sec-ai">Why AI makes CXL more important</a></li>
+          <li><a href="#sec-structera-s">Structera S is the rack-scale proof point</a></li>
+          <li><a href="#sec-xconn">XConn completes the switching angle</a></li>
+          <li><a href="#sec-cxl4">CXL 4.0 shows the standard is still moving</a></li>
+          <li><a href="#sec-latency">The latency trade-off still matters</a></li>
+          <li><a href="#sec-not-hbm">CXL is not replacing HBM</a></li>
+          <li><a href="#sec-inference">What this means for AI inference</a></li>
+          <li><a href="#sec-marvell-strategy">Marvell's broader AI infrastructure strategy</a></li>
+          <li><a href="#sec-prove">What Marvell must prove</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="mvl-execsum">
+          <div class="mvl-execsum-label">Executive summary</div>
+          <ul>
+            <li>In 2022, Marvell acquired Tanzanite to fill a CXL memory-pooling gap in its data-center silicon portfolio.</li>
+            <li>The old article argued that CXL would enable composable server architectures where compute, memory, storage, and accelerators are allocated around workload needs.</li>
+            <li>That thesis aged well because AI has made memory capacity, bandwidth, utilization, and KV-cache economics central infrastructure problems.</li>
+            <li>Marvell has now built a broader CXL portfolio: Structera A near-memory accelerators, Structera X memory-expansion controllers, Structera S CXL switches, Alaska P retimers, XConn switching, and custom CXL silicon.</li>
+            <li>The realistic role of CXL is not replacing HBM. It is becoming the flexible capacity and utilization tier around AI systems.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 Tanzanite article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece on Marvell's Tanzanite acquisition framed CXL as a standardized protocol for cache coherency and memory pooling, and treated Tanzanite as the missing memory-pooling piece in Marvell's data-center silicon portfolio after the earlier Cavium, Avera Semi, Inphi, and Innovium acquisitions.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> The strategic argument was simple. Data centers are not homogeneous. Workloads need different ratios of CPU, memory, storage, accelerators, and networking. Fixed server configurations create waste because customers often pay for resources they do not fully use. DRAM is one of the most expensive components per server, so improving memory utilization matters. CXL was the protocol that would let memory be expanded and pooled rather than permanently fixed to one CPU or server.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="mvl-pdfref">
+          <div class="mvl-pdfref-label">2022 PDF page references used in this essay</div>
+          <ul class="mvl-pdfref-list">
+            <li data-page="P.02">CXL Type 1, Type 2, and Type 3 devices: caching devices / accelerators, accelerators with memory, and memory buffers.</li>
+            <li data-page="P.05">Micron-cited CXL TAM chart sketching a path from a small 2025 market toward a much larger 2030 opportunity.</li>
+            <li data-page="P.06">Rack-scale CXL Type 3 memory-pooling concept.</li>
+            <li data-page="P.08">Tanzanite memory-pooling demo with multiple host CPUs and Tanzanite memory devices over PCIe / CXL.</li>
+            <li data-page="P.10">Latency penalty discussion, comparing pooled memory to CPU-to-CPU NUMA-like latency rather than local DRAM.</li>
+            <li data-page="P.11">Single-host memory expansion contrasted with true memory pooling beyond one CPU host.</li>
+          </ul>
+        </div>
+
+        <p class="essay-pull">
+          The future server is not a fixed box. It is a pool of compute, memory, storage, and accelerators composed around the workload.
+        </p>
+
+        <h2 class="essay-h2" id="sec-util"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; Utilization</span>Why memory utilization matters</h2>
+
+        <p>
+          Cloud infrastructure is not a uniform blob. Some workloads need lots of memory and few cores. Some need many cores and moderate memory. Some need accelerators but limited CPU memory. Some need temporary memory bursts. Fixed servers strand resources because the workload mix never matches the SKU mix exactly. Stranded DRAM is especially expensive because memory is a large fraction of server cost.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="mvl-models">
+          <div class="mvl-model">
+            <div class="mvl-model-h">Old model</div>
+            <div class="mvl-model-t">Fixed box</div>
+            <div class="mvl-model-d">CPU owns local DRAM. Memory is fixed when the server is built.</div>
+          </div>
+          <div class="mvl-model">
+            <div class="mvl-model-h">CXL model</div>
+            <div class="mvl-model-t">Attached and pooled</div>
+            <div class="mvl-model-d">Memory can be attached, expanded, and pooled as a resource rather than locked to one socket.</div>
+          </div>
+          <div class="mvl-model composable">
+            <div class="mvl-model-h">Composable model</div>
+            <div class="mvl-model-t">Resource on demand</div>
+            <div class="mvl-model-d">Workloads request the mix of compute, memory, storage, and accelerators they actually need.</div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          CXL is not just a bandwidth story. It is a utilization story.
+        </p>
+
+        <h2 class="essay-h2" id="sec-cxl"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; CXL basics</span>The standard without the jargon</h2>
+
+        <p>
+          CXL stands for Compute Express Link. It runs over PCIe physical infrastructure and adds coherent memory and device protocols on top. The CXL specification distinguishes three device types. Tanzanite and Marvell's CXL memory-pooling thesis is mostly about Type 3-style memory expansion and pooling.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <div class="mvl-types">
+          <div class="mvl-type">
+            <div class="mvl-type-name">Type 1</div>
+            <div class="mvl-type-text">Caching devices or accelerators without local memory. Use CXL.cache to participate in CPU coherency.</div>
+          </div>
+          <div class="mvl-type">
+            <div class="mvl-type-name">Type 2</div>
+            <div class="mvl-type-text">Accelerators with local memory, such as GPUs, FPGAs, or smart accelerators that expose memory and cache to the host.</div>
+          </div>
+          <div class="mvl-type t3">
+            <div class="mvl-type-name">Type 3</div>
+            <div class="mvl-type-text">Memory devices and memory expanders. The category Marvell's Structera-class products mostly target.</div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          CXL's promise is not just faster peripheral I/O. It is making memory part of the data-center fabric.
+        </p>
+
+        <h2 class="essay-h2" id="sec-portfolio"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; Portfolio</span>Marvell turned the thesis into a portfolio</h2>
+
+        <p>
+          Marvell's Structera CXL product line targets memory bandwidth and capacity challenges in data centers, with Structera A as a near-memory accelerator family, Structera X as a memory-expansion controller family, and a broader portfolio of accompanying CXL silicon.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> The product launch material describes Structera A as targeting deep learning recommendation models, ML, and AI workloads with near-memory acceleration, and Structera X as a memory-expansion controller designed for capacity-heavy workloads, with inline compression and a 5nm process node.<sup class="essay-fn"><a href="#fn3">[3]</a></sup>
+        </p>
+
+        <div class="mvl-port">
+          <div class="mvl-port-label">Marvell CXL portfolio &nbsp;&middot;&nbsp; how the pieces fit</div>
+          <div class="mvl-port-grid">
+            <div class="mvl-port-item"><div class="mvl-port-name">Structera A</div><div class="mvl-port-text">Near-memory accelerator family for DLRM, ML, and AI workloads on CXL-attached memory.</div></div>
+            <div class="mvl-port-item"><div class="mvl-port-name">Structera X</div><div class="mvl-port-text">CXL memory-expansion controller family, framed around capacity, compression, and DDR support.</div></div>
+            <div class="mvl-port-item"><div class="mvl-port-name">Structera S</div><div class="mvl-port-text">CXL switch family enabling rack-level memory pooling across CPUs, GPUs, and XPUs.</div></div>
+            <div class="mvl-port-item"><div class="mvl-port-name">Alaska P</div><div class="mvl-port-text">PCIe / CXL retimers extending signal reach across packages, boards, and racks.</div></div>
+            <div class="mvl-port-item"><div class="mvl-port-name">XConn</div><div class="mvl-port-text">PCIe / CXL switching IP and platform, acquired in early 2026.</div></div>
+            <div class="mvl-port-item"><div class="mvl-port-name">Custom CXL silicon</div><div class="mvl-port-text">Cloud-operator-specific CXL silicon built on Marvell's data-center connectivity stack.</div></div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Memory pooling moved from demo slide to product portfolio.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ai"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; AI pressure</span>Why AI makes CXL more important</h2>
+
+        <p>
+          AI workloads create brutal memory pressure across the system, not only on the accelerator. Marvell's framing around the Structera S launch is explicit: LLM size, expanding context windows, and KV-cache growth are driving memory demand, and CXL-based memory pooling is positioned as a way to improve utilization and application performance without relying only on HBM stacking.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> The pressure shows up in many places at once.
+        </p>
+
+        <div class="mvl-press">
+          <div class="mvl-press-pill">Larger LLMs with more parameters</div>
+          <div class="mvl-press-pill">Longer context windows per request</div>
+          <div class="mvl-press-pill">Larger KV caches per session</div>
+          <div class="mvl-press-pill">Recommendation models with huge embedding tables</div>
+          <div class="mvl-press-pill">Vector databases and retrieval systems</div>
+          <div class="mvl-press-pill">In-memory analytical databases</div>
+          <div class="mvl-press-pill">Memory-heavy CPU inference</div>
+          <div class="mvl-press-pill">Multi-tenant inference platforms</div>
+          <div class="mvl-press-pill">Analytics and data preprocessing near AI pipelines</div>
+          <div class="mvl-press-pill">Accelerators waiting on data from elsewhere in the system</div>
+        </div>
+
+        <p class="essay-pull">
+          HBM feeds the GPU. CXL helps feed the system.
+        </p>
+
+        <h2 class="essay-h2" id="sec-structera-s"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; Structera S</span>The rack-scale proof point</h2>
+
+        <p>
+          The Structera S launch is where Marvell turns memory pooling from a single-host expansion story into a rack-level fabric story. Marvell describes the Structera S 30260 as a 260-lane CXL switch supporting CXL 3.0, enabling rack-level memory pooling, with aggregate bandwidth of up to 4 TB/s and the ability to dynamically allocate memory across CPUs, GPUs, XPUs, and other accelerators, with Q3 2026 sampling guidance.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> Marvell's technical blog adds deployment framing including memory expansion, near-memory acceleration, and pooling examples across CPUs and accelerators.<sup class="essay-fn"><a href="#fn5">[5]</a></sup>
+        </p>
+
+        <div class="mvl-stats">
+          <div class="mvl-stat"><div class="mvl-stat-k">Structera S lanes</div><div class="mvl-stat-v">260</div><div class="mvl-stat-d">260-lane CXL switch per Marvell's Structera S 30260 launch.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Protocol</div><div class="mvl-stat-v">CXL 3.0</div><div class="mvl-stat-d">Targets rack-level memory pooling with CXL 3.0 semantics.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Aggregate bandwidth</div><div class="mvl-stat-v">~ 4 TB/s</div><div class="mvl-stat-d">Up to 4 TB/s aggregate bandwidth across the switch fabric per Marvell.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Sampling</div><div class="mvl-stat-v">Q3 2026</div><div class="mvl-stat-d">Structera S 30260 sampling guidance per Marvell's launch material.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          Tanzanite was the memory-pooling idea. Structera S is Marvell's attempt to turn that idea into rack-scale AI infrastructure.
+        </p>
+
+        <h2 class="essay-h2" id="sec-xconn"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; XConn</span>The switching angle</h2>
+
+        <p>
+          Marvell completed its acquisition of XConn Technologies in February 2026 to expand its PCIe and CXL switching portfolio, framed by the company as strengthening scale-up connectivity for next-generation AI and cloud data-center architectures, with XConn technology expected to support Marvell's UALink scale-up switching roadmap.<sup class="essay-fn"><a href="#fn6">[6]</a></sup> Reuters reported the deal at approximately US$540 million, with revenue contribution expected as integration progresses.<sup class="essay-fn"><a href="#fn7">[7]</a></sup> The strategic logic is straightforward. CXL memory pooling depends on a switching and fabric layer. Without switching, CXL is mostly expansion. With switching, it becomes a memory fabric.
+        </p>
+
+        <div class="mvl-stats">
+          <div class="mvl-stat"><div class="mvl-stat-k">XConn deal value</div><div class="mvl-stat-v">~ US$540M</div><div class="mvl-stat-d">Reported deal value per Reuters on the Marvell-XConn transaction.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Closing</div><div class="mvl-stat-v">Feb 2026</div><div class="mvl-stat-d">Acquisition completion timing per Marvell's investor release.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Scope</div><div class="mvl-stat-v">PCIe + CXL</div><div class="mvl-stat-d">PCIe and CXL switching IP and platform technology.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Roadmap fit</div><div class="mvl-stat-v">UALink</div><div class="mvl-stat-d">Expected to support Marvell's UALink scale-up switching roadmap.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          Marvell is trying to own the open memory-fabric layer around AI infrastructure.
+        </p>
+
+        <h2 class="essay-h2" id="sec-cxl4"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; CXL 4.0</span>The standard is still moving</h2>
+
+        <p>
+          The CXL specification has not stopped evolving. CXL 4.0 was announced in late 2025, doubling bandwidth from 64 GT/s to 128 GT/s, adding bundled ports, and enhancing memory RAS (reliability, availability, and serviceability) features, on top of CXL 3.0's dynamic capacity device capability.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> The same CXL Consortium materials emphasize that pooled memory can have different performance characteristics from local memory and that software must be NUMA-aware or NUMA-optimized to use it well.<sup class="essay-fn"><a href="#fn8">[8]</a></sup>
+        </p>
+
+        <div class="mvl-stats">
+          <div class="mvl-stat"><div class="mvl-stat-k">CXL 4.0 bandwidth</div><div class="mvl-stat-v">128 GT/s</div><div class="mvl-stat-d">Doubled from 64 GT/s, per CXL Consortium materials.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">Port model</div><div class="mvl-stat-v">Bundled</div><div class="mvl-stat-d">Bundled ports added in CXL 4.0 for higher aggregate throughput.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">RAS</div><div class="mvl-stat-v">Enhanced</div><div class="mvl-stat-d">Memory reliability, availability, and serviceability features expanded.</div></div>
+          <div class="mvl-stat"><div class="mvl-stat-k">From 3.0</div><div class="mvl-stat-v">DCD</div><div class="mvl-stat-d">Dynamic capacity device capability from CXL 3.0 carries into 4.0.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          CXL is not one product. It is an ecosystem standard trying to become the memory fabric of the data center.
+        </p>
+
+        <h2 class="essay-h2" id="sec-latency"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; Latency</span>The trade-off still matters</h2>
+
+        <p>
+          CXL memory is useful, but it is not identical to local DRAM. Page 10 of the 2022 article framed latency as the largest concern and compared pooled memory latency to CPU-to-CPU NUMA-like latency rather than to local memory.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> The CXL Consortium itself emphasizes that pooled memory has different performance characteristics and that software needs to be NUMA-optimized to use it effectively.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> The practical implication is that CXL is best treated as a memory tier with its own characteristics, not as a drop-in replacement for local memory.
+        </p>
+
+        <div class="mvl-tbl-wrap">
+          <table class="mvl-tbl">
+            <thead>
+              <tr>
+                <th>Memory tier</th>
+                <th>Strength</th>
+                <th>Weakness</th>
+                <th>Best workload fit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>HBM</td>
+                <td>Extreme bandwidth right next to the accelerator</td>
+                <td>Expensive and capacity-limited per stack</td>
+                <td>Accelerator training and high-throughput inference</td>
+              </tr>
+              <tr>
+                <td>Local DDR / MRDIMM / SOCAMM</td>
+                <td>Lower-latency CPU memory close to the socket</td>
+                <td>Fixed to server or socket; cannot move with the workload</td>
+                <td>General-purpose CPU workloads and primary host memory</td>
+              </tr>
+              <tr>
+                <td>CXL attached memory</td>
+                <td>Capacity expansion beyond DIMM-per-socket limits</td>
+                <td>Higher latency than local DRAM</td>
+                <td>Memory-heavy workloads that tolerate tiering</td>
+              </tr>
+              <tr>
+                <td>CXL pooled memory</td>
+                <td>Utilization and sharing across hosts and accelerators</td>
+                <td>Software complexity and latency variability</td>
+                <td>Long-context inference, KV cache, composable cloud, memory bursts</td>
+              </tr>
+              <tr>
+                <td>NVMe / SSD</td>
+                <td>Cheap capacity at large scale</td>
+                <td>Much higher latency than any DRAM tier</td>
+                <td>Cold data and storage-heavy pipelines</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="essay-pull">
+          CXL wins where memory flexibility is worth more than local-memory latency.
+        </p>
+
+        <h2 class="essay-h2" id="sec-not-hbm"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; Not HBM</span>CXL is not replacing HBM</h2>
+
+        <p>
+          HBM remains the premium memory beside GPUs and AI accelerators. It delivers the bandwidth profile that frontier AI training and high-throughput inference depend on. CXL is not a substitute for HBM bandwidth. CXL's role is more likely capacity expansion, pooling, and utilization around the broader system. The two coexist: HBM for hot accelerator compute, CXL for flexible memory capacity and system-level memory pressure. Framing CXL as an HBM alternative misreads the architecture.
+        </p>
+
+        <p class="essay-pull">
+          The mistake is asking whether CXL beats HBM. The better question is which memory tier each workload should live in.
+        </p>
+
+        <h2 class="essay-h2" id="sec-inference"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; AI inference</span>Where CXL matters most</h2>
+
+        <p>
+          CXL may matter more for inference than the discourse often acknowledges. Long-context inference, KV-cache growth, multi-tenant inference platforms, and embedding-heavy systems all create memory allocation problems that map well to tiered and pooled memory rather than to ever-larger per-server DRAM. Marvell's Structera S framing reinforces this: LLM size, context windows, and KV cache are the workload drivers the company highlights for memory pooling.<sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <div class="mvl-uses">
+          <div class="mvl-use-pill">KV cache expansion for long-context LLMs</div>
+          <div class="mvl-use-pill">Many concurrent users with varying context lengths</div>
+          <div class="mvl-use-pill">Recommendation models with large embedding tables</div>
+          <div class="mvl-use-pill">Vector search and retrieval systems</div>
+          <div class="mvl-use-pill">CPU inference and hybrid CPU/GPU inference</div>
+          <div class="mvl-use-pill">Memory-heavy analytics near AI pipelines</div>
+          <div class="mvl-use-pill">Avoiding overprovisioning memory in every server</div>
+          <div class="mvl-use-pill">Multi-tenant memory bursts across shared pools</div>
+        </div>
+
+        <p class="essay-pull">
+          Long-context AI does not only create a compute problem. It creates a memory allocation problem.
+        </p>
+
+        <h2 class="essay-h2" id="sec-marvell-strategy"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; Marvell strategy</span>Connective tissue, not just chips</h2>
+
+        <p>
+          Marvell's CXL strategy fits inside a broader bet on AI data-center connectivity and custom silicon. CXL sits beside Ethernet, SerDes, retimers, switching, optical interconnect, custom ASICs, and AI infrastructure silicon. The Tanzanite acquisition slotted memory pooling into that strategy, while subsequent moves added switching (XConn) and adjacent scale-up connectivity directions including UALink.<sup class="essay-fn"><a href="#fn6">[6]</a></sup><sup class="essay-fn"><a href="#fn7">[7]</a></sup> Marvell's announced Celestial AI acquisition extends the same pattern toward optical I/O at package, system, and rack levels.<sup class="essay-fn"><a href="#fn9">[9]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Marvell's bet is not just on chips. It is on the connective tissue of AI infrastructure.
+        </p>
+
+        <h2 class="essay-h2" id="sec-prove"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; Proof points</span>What Marvell must prove</h2>
+
+        <div class="mvl-check">
+          <div class="mvl-check-label">Marvell's open proof points &nbsp;&middot;&nbsp; what AI infrastructure customers will watch</div>
+          <ol class="mvl-check-list">
+            <li>Can CXL pooling deliver useful performance under real AI workloads, not only benchmarks?</li>
+            <li>Can software stacks become NUMA-aware enough to exploit pooled memory consistently?</li>
+            <li>Can operators manage latency variability across multi-tenant CXL deployments?</li>
+            <li>Can CXL switching scale without too much cost, power, and complexity?</li>
+            <li>Can Structera S integrate smoothly with CPUs, GPUs, XPUs, and memory devices from multiple vendors?</li>
+            <li>Can CXL pooling improve total cost of ownership enough to justify deployment in production?</li>
+            <li>Can memory pooling work in multi-tenant cloud environments with strong isolation and security?</li>
+            <li>Can the ecosystem avoid fragmentation across vendors, generations, and CXL revisions?</li>
+          </ol>
+        </div>
+
+        <p class="essay-pull">
+          The hardware is becoming real. The software and deployment model still have to catch up.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="mvl-ledger">
+          <div class="mvl-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>Marvell acquired Tanzanite to fill a CXL gap</div>
+            <div>The 2022 PDF frames Tanzanite as filling Marvell's memory-pooling IP hole after Cavium, Avera Semi, Inphi, and Innovium.</div>
+            <div>The acquisition was strategic, not random.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>CXL targets composable servers</div>
+            <div>Page 2 shows CXL Type 1, 2, and 3 devices, and page 5 discusses composable server architecture and TAM framing.</div>
+            <div>CXL was designed to move memory beyond fixed server boundaries.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>Memory pooling has a latency trade-off</div>
+            <div>Page 10 of the 2022 PDF discusses NUMA-like latency versus local memory.</div>
+            <div>CXL is a new memory tier, not magic DRAM.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>Marvell productized the thesis</div>
+            <div>Structera A and X target near-memory acceleration and memory expansion, with Structera launch material citing inline compression and 5nm process.</div>
+            <div>The Tanzanite idea became a real product portfolio.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>Structera S is the rack-scale proof point</div>
+            <div>Marvell launched a 260-lane CXL 3.0 switch with up to 4 TB/s aggregate bandwidth and Q3 2026 sampling guidance.</div>
+            <div>Marvell is now targeting rack-level memory pooling.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>AI makes CXL more relevant</div>
+            <div>Marvell says LLM size, context windows, and KV cache are driving memory demand.</div>
+            <div>AI turned memory pooling into an infrastructure issue.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>The CXL standard matured</div>
+            <div>CXL 4.0 doubles bandwidth to 128 GT/s and adds bundled ports and memory RAS features on top of CXL 3.0 Dynamic Capacity Device.</div>
+            <div>The ecosystem is moving toward larger memory fabrics.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>XConn strengthens Marvell's switching strategy</div>
+            <div>Marvell completed XConn acquisition for PCIe / CXL switching and AI scale-up connectivity, with Reuters reporting approximately US$540M deal value.</div>
+            <div>Marvell is building the fabric layer, not just endpoints.</div>
+          </div>
+          <div class="mvl-ledger-row">
+            <div>CXL will not replace HBM</div>
+            <div>HBM remains the high-bandwidth accelerator memory tier; the 2022 PDF frames CXL as composable infrastructure rather than HBM substitute.</div>
+            <div>CXL is more likely to become the flexible capacity / utilization tier.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions, and they are listed here so the argument can be stress-tested.
+        </p>
+
+        <div class="mvl-risks">
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">CXL pooled memory is not equivalent to local DRAM. Latency variability and software-stack maturity remain the biggest practical risks.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">Marvell performance claims (260 lanes, 4 TB/s aggregate, near-memory acceleration) are Marvell claims and should be tracked against independent benchmarks once shipping.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">Not all AI workloads benefit equally from CXL memory pooling. Workloads with extreme bandwidth needs still belong on HBM, and CXL is best treated as a tier, not a replacement.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">CXL ecosystem adoption depends on consistent vendor support across CPUs, GPUs, switches, and memory devices. Fragmentation can slow deployment.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">Hyperscaler in-house CXL silicon could compress the addressable market for merchant CXL providers over time.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">Competing scale-up connectivity efforts (UALink, NVLink, OCP MGX) could change the architectural balance for memory pooling and pooling-adjacent fabrics.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">CXL switching adds cost, power, and complexity. Some operators may prefer simpler memory-expansion deployments over true pooling for several years.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">Multi-tenant security and isolation requirements may slow real-world deployments of pooled memory in shared environments.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">CXL specification revisions move quickly. Customers will need to manage compatibility across CXL 3.0, 4.0, and beyond.</div>
+          </div>
+          <div class="mvl-risk">
+            <div class="mvl-risk-num"></div>
+            <div class="mvl-risk-text">An AI demand normalization could slow CXL adoption timelines that depend on continued capex acceleration.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 16 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="mvl-bottom">
+          <div class="mvl-bottom-label">Bottom line</div>
+          <p>
+            The 2022 Tanzanite article was right that CXL memory pooling would matter for composable servers. In 2026, the thesis is stronger because AI has made memory capacity, bandwidth, utilization, and KV-cache economics central infrastructure problems. Marvell has turned the idea into a serious portfolio with Structera A, Structera X, Structera S, Alaska P, XConn switching, and custom CXL silicon.
+          </p>
+          <p>
+            But the realistic role of CXL is not to replace HBM. HBM remains the high-bandwidth memory tier for accelerators. CXL becomes the flexible memory tier around the system: useful for expansion, pooling, utilization, long-context inference, KV cache, memory-heavy analytics, and composable AI infrastructure.
+          </p>
+          <p>
+            The AI memory wall is not only about faster memory. It is about putting the right memory in the right place at the right time.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 17 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="mvl-gloss">
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">CXL</div><div class="mvl-gloss-def">Compute Express Link. An open standard for cache-coherent and memory-coherent interconnect over PCIe physical infrastructure.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">PCIe</div><div class="mvl-gloss-def">Peripheral Component Interconnect Express. The dominant high-speed interconnect for CPU-to-device communication in modern servers.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">CXL Type 1</div><div class="mvl-gloss-def">Caching devices and accelerators that use CXL.cache to participate in CPU coherency without local memory exposure.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">CXL Type 2</div><div class="mvl-gloss-def">Accelerators with local memory (GPUs, FPGAs, smart accelerators) that expose memory and cache to the host.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">CXL Type 3</div><div class="mvl-gloss-def">Memory devices and memory expanders. The category Structera-class products mostly target.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Memory expansion</div><div class="mvl-gloss-def">Adding more memory to a single host using CXL beyond what DIMM slots alone allow.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Memory pooling</div><div class="mvl-gloss-def">Sharing CXL memory across multiple hosts or accelerators, often via switching, with dynamic allocation.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Memory fabric</div><div class="mvl-gloss-def">An interconnect layer that treats memory as a shared, addressable resource across a rack or larger system, rather than as private DRAM behind each socket.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Composable server</div><div class="mvl-gloss-def">A server architecture in which compute, memory, storage, and accelerators are allocated dynamically to match workload needs rather than fixed at build time.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">DRAM utilization</div><div class="mvl-gloss-def">The fraction of installed DRAM that is actually used by running workloads. Low utilization is expensive because DRAM is a large server cost line.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">NUMA</div><div class="mvl-gloss-def">Non-Uniform Memory Access. An architecture in which memory has different latencies depending on which CPU socket or domain accesses it. CXL pooled memory looks NUMA-like to software.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Local DRAM</div><div class="mvl-gloss-def">DIMM-attached memory directly tied to a CPU socket, with the lowest latency available outside the CPU cache.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Remote memory</div><div class="mvl-gloss-def">Memory accessed across an interconnect rather than directly attached to the local socket. CXL pooled memory is a form of remote memory.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">HBM</div><div class="mvl-gloss-def">High Bandwidth Memory. Stacked DRAM packaged with accelerators for very high bandwidth and limited capacity per stack.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">KV cache</div><div class="mvl-gloss-def">Key-value cache used by transformer LLMs to remember past tokens during inference. Grows with context length and concurrency.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Structera A</div><div class="mvl-gloss-def">Marvell's near-memory accelerator family in the Structera CXL product line, framed at DLRM, ML, and AI workloads.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Structera X</div><div class="mvl-gloss-def">Marvell's CXL memory-expansion controller family, framed around capacity, compression, and DDR support.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Structera S</div><div class="mvl-gloss-def">Marvell's CXL switch family, including the Structera S 30260 with up to 4 TB/s aggregate bandwidth for rack-level memory pooling.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Retimer</div><div class="mvl-gloss-def">A signal-conditioning device that extends PCIe / CXL reach across packages, boards, and racks. Marvell's Alaska P is an example.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">XConn</div><div class="mvl-gloss-def">PCIe and CXL switching technology acquired by Marvell in early 2026 to expand its scale-up connectivity portfolio.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">UALink</div><div class="mvl-gloss-def">An open scale-up interconnect specification for tightly coupled AI accelerators across servers and racks. Targeted by multiple vendors as an alternative scale-up fabric.</div></div>
+          <div class="mvl-gloss-row"><div class="mvl-gloss-term">Near-memory acceleration</div><div class="mvl-gloss-def">Compute placed close to memory (in the CXL memory device itself, for example) to reduce data movement for memory-heavy workloads such as DLRM.</div></div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 18 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="mvl-sources-box">
+          <div class="mvl-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis Tanzanite piece is treated as historical context for the CXL Type 1 / 2 / 3 framing, the composable server thesis, the DRAM utilization problem, the rack-scale CXL memory-pooling concept, and the latency trade-off discussion. Marvell product claims (Structera lane counts, aggregate bandwidth, process node, near-memory acceleration framing) are treated as Marvell's claims rather than as independently verified numbers. The CXL Consortium materials are used at the specification level, and the company is explicit that pooled memory may have different performance characteristics and that software needs to be NUMA-optimized.
+          </p>
+          <p>
+            The 2026 read is built primarily from Marvell's Structera CXL product page, the Structera launch release, the Structera S launch release, the Structera S technical blog, the CXL Consortium 4.0 Q&amp;A, Marvell's XConn acquisition release, Reuters on the XConn deal, and (as broader connectivity context) the Marvell-Celestial AI acquisition release. The structural arguments that CXL becomes the flexible memory tier around AI infrastructure, that latency keeps CXL from being a transparent HBM replacement, and that software maturity is the binding constraint are independent analysis.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;Marvell Acquires Tanzanite Silicon To Enable Composable Server Architectures Using CXL Based Memory Expansion And Pooling,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for the CXL Type 1 / 2 / 3 framing on page 2, the Micron-cited CXL TAM chart on page 5, the rack-scale CXL Type 3 memory-pooling concept on page 6, the Tanzanite memory-pooling demo across multiple host CPUs over PCIe / CXL on page 8, the latency penalty and NUMA-like comparison on page 10, and the single-host expansion versus true memory pooling contrast on page 11.</li>
+            <li id="fn2">Marvell, &ldquo;Structera CXL Product Line,&rdquo; <a href="https://www.marvell.com/products/cxl.html" target="_blank" rel="noopener noreferrer">marvell.com/&hellip;/cxl</a>. Source for Marvell's official Structera CXL product framing, the Structera A near-memory accelerator family, the Structera X memory-expansion controller family, the DDR4 and DDR5 support context, inline compression, encryption, and secure-boot capabilities, and the broader CXL portfolio framing used in this essay.</li>
+            <li id="fn3">Marvell, &ldquo;Marvell Introduces Breakthrough Structera CXL Product Line to Address Server Memory Bandwidth and Capacity Challenges in Cloud Data Centers,&rdquo; <a href="https://www.marvell.com/company/newsroom/marvell-introduces-breakthrough-structera-cxl-product-line-to-address-server-memory-bandwidth-and-capacity-challenges-in-cloud-data-centers.html" target="_blank" rel="noopener noreferrer">marvell.com/&hellip;/structera-launch</a>. Source for the official 2024 Structera launch, Structera A for DLRM, ML, and AI workloads, Structera X memory-expansion framing, four memory channels, inline compression, the 5nm process context, and the custom CXL silicon for cloud-operator framing.</li>
+            <li id="fn4">Marvell, &ldquo;Marvell Next-Gen CXL Switch Memory Pooling Breaks the AI Memory Wall,&rdquo; <a href="https://www.marvell.com/company/newsroom/marvell-next-gen-cxl-switch-memory-pooling-breaks-ai-memory-wall.html" target="_blank" rel="noopener noreferrer">marvell.com/&hellip;/structera-s-launch</a>. Source for the Structera S 30260 framing as a 260-lane CXL switch with CXL 3.0 support, rack-level memory pooling, up to 4 TB/s aggregate bandwidth, dynamic memory allocation across CPUs, GPUs, XPUs, and other accelerators, the LLM size / context window / KV-cache memory-wall framing, and the Q3 2026 sampling guidance.</li>
+            <li id="fn5">Marvell, &ldquo;Structera S: Scaling the AI Memory Wall with CXL Switching,&rdquo; <a href="https://www.marvell.com/blogs/structera-s-scaling-the-ai-memory-wall-with-cxl-switching.html" target="_blank" rel="noopener noreferrer">marvell.com/&hellip;/structera-s-blog</a>. Source for the Structera S deployment examples, the memory-expansion vs near-memory acceleration vs pooling framing, the 4 TB/s cumulative bandwidth context, and the CXL switching explanation used in this essay.</li>
+            <li id="fn6">Marvell, &ldquo;Marvell Completes Acquisition of XConn Technologies,&rdquo; <a href="https://investor.marvell.com/news-events/press-releases/detail/1007/marvell-completes-acquisition-of-xconn-technologies" target="_blank" rel="noopener noreferrer">investor.marvell.com/&hellip;/marvell-completes-xconn</a>. Source for Marvell completing the XConn acquisition in February 2026, the PCIe / CXL switching portfolio expansion, the AI and cloud data-center scale-up connectivity framing, the support for Marvell's UALink scale-up switching roadmap, and the multi-rack deployment context.</li>
+            <li id="fn7">Reuters, &ldquo;Marvell to buy networking equipment firm XConn in $540 million deal amid AI demand,&rdquo; <a href="https://www.reuters.com/legal/transactional/marvell-buy-networking-equipment-firm-xconn-540-million-deal-amid-ai-2026-01-06/" target="_blank" rel="noopener noreferrer">reuters.com/&hellip;/marvell-xconn-540m</a>. Source for the approximately US$540M deal value, the revenue contribution expectations, and the AI data-center infrastructure context cited in this essay.</li>
+            <li id="fn8">CXL Consortium, &ldquo;Introducing the CXL 4.0 Specification &mdash; Webinar Q&amp;A Recap,&rdquo; <a href="https://computeexpresslink.org/blog/introducing-the-cxl-4-0-specification-webinar-qa-recap-4386/" target="_blank" rel="noopener noreferrer">computeexpresslink.org/&hellip;/cxl-4-0-qa</a>. Source for CXL 4.0's 128 GT/s bandwidth doubling, the bundled ports addition, the memory RAS enhancements, the carryover of CXL 3.0's Dynamic Capacity Device capability, the NUMA-optimized software caveat, and the framing that pooled memory has different performance characteristics from local memory.</li>
+            <li id="fn9">Marvell, &ldquo;Marvell to Acquire Celestial AI, Accelerating Scale-Up Connectivity for Next-Generation Data Centers,&rdquo; <a href="https://investor.marvell.com/news-events/press-releases/detail/1000/marvell-to-acquire-celestial-ai-accelerating-scale-up-connectivity-for-next-generation-data-centers" target="_blank" rel="noopener noreferrer">investor.marvell.com/&hellip;/marvell-celestial-ai</a>. Used here only as broader Marvell connectivity context, including the package, system, and rack-level optical I/O framing and the AI scale-up connectivity strategy. Not used as a CXL-specific source.</li>
+          </ol>
+        </div>
+
+        <div class="mvl-readnext">
+          <div class="mvl-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="mvl-readnext-grid">
+            <a href="memory-oligopoly-ai-toll-booth.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 050</div>
+              <div class="mvl-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+            <a href="ayar-labs-optical-io-cpo-ai-scale.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 075</div>
+              <div class="mvl-readnext-title">Ayar Labs Was Early on Optical I/O. Now It Has to Prove CPO Can Ship at AI Scale.</div>
+            </a>
+            <a href="advanced-packaging-became-the-computer.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 061</div>
+              <div class="mvl-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="samsung-semiconductor-crisis-ai-memory-comeback.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 074</div>
+              <div class="mvl-readnext-title">Samsung's Semiconductor Crisis Was Real. The AI Memory Boom Gave It a Second Chance.</div>
+            </a>
+            <a href="nvidia-hopper-supplier-risk-ai-hardware-platforms.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 072</div>
+              <div class="mvl-readnext-title">Nvidia's Hopper Supplier Cut Was a Warning</div>
+            </a>
+            <a href="aws-cpu-cloud-infrastructure.html" class="mvl-readnext-card">
+              <div class="mvl-readnext-kicker">Essay 060</div>
+              <div class="mvl-readnext-title">AWS Turned the CPU Into Cloud Infrastructure</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

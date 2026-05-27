@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veeco's Transformation: The Small Toolmaker Under AI's Biggest Hardware Bottlenecks | Pugalenthi Magendran</title>
+  <meta name="description" content="Veeco does not make GPUs or HBM, but its tools sit underneath AI hardware bottlenecks: EUV mask blanks, laser annealing, advanced packaging, GaN power, photonics, and data storage.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/veeco-ai-hardware-bottlenecks.html">
+  <meta property="og:title" content="Veeco's Transformation: The Small Toolmaker Under AI's Biggest Hardware Bottlenecks">
+  <meta property="og:description" content="A research memo on Veeco's transformation from HDD and LED MOCVD into a narrow semiconductor process tool platform under EUV mask blanks, laser annealing, HBM, advanced packaging, compound semis, and the Axcelis merger.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/veeco-ai-hardware-bottlenecks.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Semiconductor Equipment">
+  <meta property="article:tag" content="Veeco">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta property="article:tag" content="EUV">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Laser Annealing">
+  <meta property="article:tag" content="Axcelis">
+  <meta property="article:tag" content="WFE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Veeco's Transformation: The Small Toolmaker Under AI's Biggest Hardware Bottlenecks">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Veeco does not make GPUs or HBM, but its tools sit underneath AI hardware bottlenecks: EUV mask blanks, laser annealing, advanced packaging, GaN power, photonics, and data storage.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Veeco's Transformation: The Small Toolmaker Under AI's Biggest Hardware Bottlenecks",
+    "description": "Veeco does not make GPUs or HBM, but its tools sit underneath AI hardware bottlenecks: EUV mask blanks, laser annealing, advanced packaging, GaN power, photonics, and data storage.",
+    "url": "https://pugalenthimagendran.com/blog/posts/veeco-ai-hardware-bottlenecks.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/veeco-ai-hardware-bottlenecks.html",
+    "keywords": "Veeco, Semiconductor Equipment, WFE, AI Infrastructure, EUV Mask Blank, Laser Annealing, HBM, Advanced Packaging, ASML, TSMC, Axcelis, GaN, Photonics"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #2D6E7E); border: 1px solid rgba(45,110,126,0.30); background: rgba(45,110,126,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #2D6E7E); text-decoration: none; border-bottom: 0.5px solid rgba(45,110,126,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #2D6E7E); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #2D6E7E); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #2D6E7E); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #2D6E7E); }
+
+    /* Essay 067 Veeco — scoped under .essay-vco, instrument-teal #2D6E7E */
+    body.essay-vco {
+      --v-accent: #2D6E7E;
+      --v-accent-soft: rgba(45,110,126,0.10);
+      --v-accent-line: rgba(45,110,126,0.30);
+      --v-amber: #B8732A;
+      --v-amber-soft: rgba(184,115,42,0.08);
+    }
+    body.essay-vco .essay-stamp { color: var(--v-accent); border-color: var(--v-accent-line); background: var(--v-accent-soft); }
+    body.essay-vco .essay-pull { border-left-color: var(--v-accent); }
+    body.essay-vco .essay-footnotes a { color: var(--v-accent); border-bottom-color: var(--v-accent-line); }
+    body.essay-vco .essay-fn a { color: var(--v-accent); }
+    body.essay-vco .essay-toc a:hover { color: var(--v-accent); }
+
+    /* AI hardware bottleneck stack hero */
+    .vco-stack { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(180deg, var(--v-accent-soft) 0%, transparent 100%); overflow: hidden; }
+    .vco-stack::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(45,110,126,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(45,110,126,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .vco-stack-layer { position: relative; z-index: 1; padding: 0.85rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; border: 0.5px solid var(--color-border-tertiary); background: rgba(0,0,0,0.30); }
+    .vco-stack-layer:last-child { margin-bottom: 0; }
+    .vco-stack-layer.top { border-color: var(--v-accent-line); background: rgba(45,110,126,0.18); }
+    .vco-stack-layer.bottom { border-color: var(--v-accent-line); background: rgba(45,110,126,0.12); }
+    .vco-stack-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .vco-stack-content { font-family: 'Source Serif 4', serif; font-size: 0.96rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.5; }
+    .vco-stack-arrow { position: relative; z-index: 1; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--v-accent); line-height: 0.8; margin: -0.15rem 0; }
+
+    /* Thesis card */
+    .vco-thesis { border: 0.5px solid var(--v-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--v-accent-soft); margin: 2.5rem 0; }
+    .vco-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 0.85rem; }
+    .vco-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary list */
+    .vco-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .vco-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .vco-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .vco-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .vco-execsum li:last-child { border-bottom: none; }
+    .vco-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--v-accent); letter-spacing: 0.08em; }
+
+    /* Plain-English explainer card */
+    .vco-explainer { margin: 1.5rem 0 2rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--v-accent-line); border-radius: 12px; background: var(--v-accent-soft); }
+    .vco-explainer-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 0.85rem; }
+    .vco-explainer-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+    .vco-explainer-line { display: grid; grid-template-columns: 110px 1fr; gap: 0.85rem; padding: 0.4rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); align-items: baseline; }
+    .vco-explainer-line:last-child { border-bottom: none; }
+    .vco-explainer-line .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--v-accent); }
+    .vco-explainer-line .v { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); }
+
+    /* Dependency chain visual */
+    .vco-chain { margin: 1.75rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); }
+    .vco-chain-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .vco-chain-node { display: block; padding: 0.65rem 0.9rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; background: rgba(0,0,0,0.25); font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 400; color: var(--color-text-primary); }
+    .vco-chain-node.anchor { border-color: var(--v-accent-line); background: var(--v-accent-soft); font-weight: 500; color: var(--v-accent); }
+    .vco-chain-arrow { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--v-accent); text-align: center; line-height: 0.8; padding: 4px 0; }
+
+    /* Compound semi cards */
+    .vco-comp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.75rem 0 2rem; }
+    .vco-comp-card { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .vco-comp-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 0.4rem; }
+    .vco-comp-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); }
+
+    /* Evidence ledger */
+    .vco-ledger { margin: 1.75rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .vco-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--v-accent-soft); border-bottom: 0.5px solid var(--v-accent-line); }
+    .vco-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v-accent); border-right: 0.5px solid var(--v-accent-line); }
+    .vco-ledger-head > div:last-child { border-right: none; }
+    .vco-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .vco-ledger-row:last-child { border-bottom: none; }
+    .vco-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .vco-ledger-row > div:last-child { border-right: none; }
+    .vco-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--v-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Segment scorecard */
+    .vco-score-wrap { margin: 1.75rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .vco-score { width: 100%; border-collapse: collapse; min-width: 720px; }
+    .vco-score th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--v-accent-line); background: var(--v-accent-soft); font-weight: 500; }
+    .vco-score td { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .vco-score tr:last-child td { border-bottom: none; }
+    .vco-score td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--v-accent); font-weight: 500; letter-spacing: 0.04em; white-space: nowrap; }
+    .vco-score .rel-h { color: #4FAE83; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+    .vco-score .rel-m { color: #C77B30; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+    .vco-score .rel-l { color: var(--color-text-tertiary); font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+
+    /* Axcelis merger card */
+    .vco-merger { margin: 1.5rem 0 2.25rem; padding: 1.5rem 1.75rem; border: 1px solid var(--v-accent-line); border-left-width: 3px; border-radius: 10px; background: var(--v-accent-soft); }
+    .vco-merger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 1rem; }
+    .vco-merger-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .vco-merger-card { padding: 0.85rem 1rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; }
+    .vco-merger-card .k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .vco-merger-card .v { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 400; line-height: 1.45; color: var(--color-text-primary); }
+
+    /* Risk grid */
+    .vco-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .vco-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .vco-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--v-amber); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .vco-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .vco-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .vco-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .vco-gloss-row { display: grid; grid-template-columns: 180px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .vco-gloss-row:last-child { border-bottom: none; }
+    .vco-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--v-accent); padding: 0.85rem 1rem; background: var(--v-accent-soft); border-right: 0.5px solid var(--v-accent-line); display: flex; align-items: center; }
+    .vco-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line box */
+    .vco-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--v-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--v-accent-soft) 0%, transparent 100%); }
+    .vco-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 0.85rem; }
+    .vco-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .vco-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--v-accent); }
+
+    /* Sources box */
+    .vco-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .vco-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .vco-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .vco-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .vco-readnext { margin: 3rem 0 1rem; }
+    .vco-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .vco-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .vco-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .vco-readnext-card:hover { border-color: var(--v-accent-line); }
+    .vco-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v-accent); margin-bottom: 0.4rem; }
+    .vco-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .vco-comp-grid { grid-template-columns: 1fr; }
+      .vco-merger-grid { grid-template-columns: 1fr; }
+      .vco-readnext-grid { grid-template-columns: 1fr; }
+      .vco-risks { grid-template-columns: 1fr; }
+      .vco-explainer-line { grid-template-columns: 1fr; gap: 0.2rem; }
+      .vco-gloss-row { grid-template-columns: 1fr; }
+      .vco-gloss-term { border-right: none; border-bottom: 0.5px solid var(--v-accent-line); }
+      .vco-ledger-head, .vco-ledger-row { grid-template-columns: 1fr; }
+      .vco-ledger-head > div, .vco-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .vco-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-vco .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-vco">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 067 &nbsp;&middot;&nbsp; Semiconductor Equipment / AI Infrastructure</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Semiconductor Equipment</span>
+        <span class="tag">Veeco</span>
+        <span class="tag">Advanced Packaging</span>
+        <span class="tag">EUV</span>
+        <span class="tag">HBM</span>
+        <span class="tag">ASML</span>
+        <span class="tag">TSMC</span>
+      </div>
+
+      <h1 class="essay-hed">Veeco's Transformation: The Small Toolmaker Under AI's <em>Biggest Hardware Bottlenecks</em>
+        <span class="essay-stamps">
+          <span class="essay-stamp">EUV mask blanks</span>
+          <span class="essay-stamp">Laser annealing</span>
+          <span class="essay-stamp">HBM</span>
+          <span class="essay-stamp">Advanced packaging</span>
+          <span class="essay-stamp">GaN power</span>
+          <span class="essay-stamp">Silicon photonics</span>
+          <span class="essay-stamp essay-stamp--muted">AI data storage</span>
+          <span class="essay-stamp essay-stamp--muted">Axcelis merger</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        Veeco is not the headline name in AI infrastructure. But its process tools sit underneath EUV masks, gate-all-around annealing, HBM, advanced packaging, GaN power, photonics, and AI data storage.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 small-cap WFE thesis</div>
+        </div>
+        <div class="essay-read-time">15 MIN</div>
+      </div>
+
+      <div class="vco-stack" aria-hidden="true">
+        <div class="vco-stack-layer top">
+          <div class="vco-stack-label">Top layer &nbsp;&middot;&nbsp; what users see</div>
+          <div class="vco-stack-content">AI systems</div>
+        </div>
+        <div class="vco-stack-arrow">|</div>
+        <div class="vco-stack-layer">
+          <div class="vco-stack-label">Middle layer &nbsp;&middot;&nbsp; bottlenecks</div>
+          <div class="vco-stack-content">GPUs &nbsp;&middot;&nbsp; HBM &nbsp;&middot;&nbsp; advanced packaging &nbsp;&middot;&nbsp; EUV logic &nbsp;&middot;&nbsp; data center storage &nbsp;&middot;&nbsp; photonics</div>
+        </div>
+        <div class="vco-stack-arrow">|</div>
+        <div class="vco-stack-layer bottom">
+          <div class="vco-stack-label">Bottom layer &nbsp;&middot;&nbsp; tools</div>
+          <div class="vco-stack-content">Veeco process tools: ion beam deposition &nbsp;&middot;&nbsp; laser annealing &nbsp;&middot;&nbsp; wet processing &nbsp;&middot;&nbsp; advanced packaging lithography &nbsp;&middot;&nbsp; MOCVD</div>
+        </div>
+      </div>
+
+      <div class="vco-thesis">
+        <div class="vco-thesis-label">Thesis</div>
+        <div class="vco-thesis-text">
+          Veeco does not make GPUs, HBM, EUV scanners, or advanced logic chips. But its tools sit underneath several AI hardware bottlenecks that now matter deeply: EUV mask blanks, laser annealing for advanced logic and memory, HBM and 3D advanced packaging, compound semiconductors, silicon photonics, GaN power, and AI data storage. The story is not <em>Veeco is booming because AI</em>. The stronger story is that Veeco has repositioned from lower-quality legacy exposure into narrow but strategically important semiconductor process steps.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 article got right</a></li>
+          <li><a href="#sec-mix">Veeco has become more semiconductor-heavy</a></li>
+          <li><a href="#sec-lsa">Laser annealing is the clearest advanced-node story</a></li>
+          <li><a href="#sec-euv">EUV mask blanks are the hidden lithography layer</a></li>
+          <li><a href="#sec-pkg">Advanced packaging is now central</a></li>
+          <li><a href="#sec-hbm">HBM gives Veeco a stronger AI connection</a></li>
+          <li><a href="#sec-comp">Compound semiconductor is the optionality layer</a></li>
+          <li><a href="#sec-storage">Data storage is AI-adjacent, but cyclical</a></li>
+          <li><a href="#sec-axcelis">The Axcelis merger changes scale</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-scorecard">Segment scorecard</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="vco-execsum">
+          <div class="vco-execsum-label">Executive summary</div>
+          <ul>
+            <li>Veeco's 2022 story was a turnaround from hard-drive cyclicality and commodity LED MOCVD exposure.</li>
+            <li>By 2026, the more important story is semiconductor process-tool relevance inside the AI hardware buildout.</li>
+            <li>Veeco's semiconductor business is now the core, with semiconductor revenue representing roughly 72% of 2025 revenue.</li>
+            <li>The strongest technical vectors are laser annealing, EUV mask blank deposition, advanced packaging, wet processing, and compound semiconductor tools.</li>
+            <li>The Axcelis merger changes the endgame by turning Veeco's niche process-tool portfolio into part of a larger US wafer fabrication equipment platform.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece, <em>The Transformation of Veeco</em>, described a small semiconductor capital equipment company carrying two difficult inheritances.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Veeco had historically sold ion beam deposition and etch tools into hard-drive heads, a cyclical and increasingly mature market. It also had a major LED MOCVD business that had become structurally unattractive due to Chinese commodity competition. The 2022 read was that Veeco was repositioning around a better mix of semiconductor niches, and that the repositioning deserved attention even though the headline financials were not yet showing it.
+        </p>
+
+        <p>
+          The repositioning was not abstract. Veeco acquired Ultratech in 2017, which deepened its laser annealing and advanced packaging lithography capabilities. It exited the commodity LED equipment business in 2018. The narrative growth vectors were data storage, GaN power and RF, microLED, advanced packaging lithography, EUV mask blanks, and laser annealing for advanced nodes.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> The 2022 visuals carried the argument. The page 2 evolution slide showed Veeco moving from HDD ion beam tools and LED MOCVD toward laser annealing, advanced packaging lithography, and a broader strategy. The page 11 EUV mask diagram showed why EUV masks are different: anti-reflective coating on top, an absorber layer, ruthenium capping, a Mo/Si multilayer mirror, a low thermal expansion substrate underneath, and a conductive backside coating. The page 13 laser annealing slide explained that local laser exposure replaces full-wafer heating, allowing a lower thermal budget and less damage to fragile devices. The page 14 gate transistor evolution slide connected laser annealing demand to FinFET and gate-all-around transitions.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <p>
+          Four years later, that 2022 framing reads less like a forecast and more like a map of the niches Veeco actually moved into. The right way to update it is not to claim Veeco is now an AI company. It is to look at how the niches have aged in an AI manufacturing environment and where the company sits inside the bottlenecks that now constrain AI hardware production.
+        </p>
+
+        <h2 class="essay-h2" id="sec-mix"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; Mix</span>Veeco has become more semiconductor-heavy</h2>
+
+        <p>
+          Veeco's transformation should be judged by mix, not by total revenue. The 2025 full-year results show why. Total revenue was about US$664.3 million, down from 2024, with semiconductor revenue of about US$476.6 million, or roughly 72% of total revenue.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> Compound semiconductor and data storage segments were weaker than in 2024, which is the reason the headline revenue line did not look like a clean growth story. The center of gravity moved further toward semiconductor process equipment exactly as AI hardware manufacturing became more complex.
+        </p>
+
+        <p class="essay-pull">
+          The weak version of the story is Veeco is booming because AI. The stronger version is that Veeco's center of gravity has shifted toward semiconductor process equipment exactly as AI hardware manufacturing becomes more complex.
+        </p>
+
+        <p>
+          That distinction matters because it tells you what to watch. Watching total revenue tells you about cyclical conditions inside compound semiconductor and data storage. Watching semiconductor segment revenue, and the specific applications underneath it, tells you about Veeco's exposure to the steps where AI hardware production is hardest to scale. Those two stories are different, and they will keep being different through the Axcelis combination.
+        </p>
+
+        <h2 class="essay-h2" id="sec-lsa"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; Laser annealing</span>The clearest advanced-node story</h2>
+
+        <p>
+          Advanced chips need thermal processing. They need heat to activate dopants, to drive diffusion, and to repair the damage that earlier process steps leave behind. The catch is that as devices become smaller, more vertical, and more fragile, the thermal budget gets tighter. Traditional full-wafer heating risks damaging sensitive structures or causing diffusion in places that need to stay sharp. Laser annealing solves that problem by heating local regions for very short periods, often nanoseconds, leaving the rest of the wafer cold.
+        </p>
+
+        <div class="vco-explainer">
+          <div class="vco-explainer-label">Laser annealing in plain English</div>
+          <div class="vco-explainer-grid">
+            <div class="vco-explainer-line"><div class="k">Problem</div><div class="v">Advanced chips need heat for dopant activation and repair, but too much heat damages the device.</div></div>
+            <div class="vco-explainer-line"><div class="k">Old approach</div><div class="v">Heat the whole wafer in a furnace or rapid thermal anneal step.</div></div>
+            <div class="vco-explainer-line"><div class="k">Veeco approach</div><div class="v">Heat only targeted areas, for extremely short periods, with a controlled laser pulse.</div></div>
+            <div class="vco-explainer-line"><div class="k">Why it matters</div><div class="v">Gate-all-around devices, DRAM, HBM, and advanced packaging stacks all have tighter thermal margins than the nodes that came before them.</div></div>
+          </div>
+        </div>
+
+        <p>
+          The 2022 article connected laser annealing demand to gate-all-around transitions and dopant activation in advanced devices.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Veeco's current investor materials extend that argument. The company describes its Laser Spike Annealing as a production tool of record at multiple Tier 1 logic customers and at an HBM DRAM customer, and is positioning a Nanosecond Annealing platform aimed at future logic and memory applications.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> Veeco's 2025 Annual Report supports the same framing with a more conservative tone, describing laser annealing as one of the company's strategic process technologies inside the semiconductor segment.<sup class="essay-fn"><a href="#fn3">[3]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          As chips become denser, more vertical, and more fragile, the ability to heat only what needs heating becomes more valuable.
+        </p>
+
+        <h2 class="essay-h2" id="sec-euv"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; EUV mask blanks</span>The hidden lithography layer</h2>
+
+        <p>
+          Everyone talks about ASML when discussing EUV lithography. That is correct, but incomplete. EUV scanners cannot pattern anything without an EUV mask, and EUV masks are not normal transmissive masks. They are reflective multilayer mirrors built on low thermal expansion substrates. The stack matters. So does the company that lays down the multilayer film.
+        </p>
+
+        <p>
+          The 2022 article explained that Veeco's ion beam deposition tools are used for Mo/Si multilayer deposition and ruthenium capping in EUV mask blank manufacturing.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Veeco's 2025 Annual Report and investor presentation continue that role, describing NEXUS ion beam deposition systems as used in EUV mask blank manufacturing, with the company framing itself as the production tool of record in that step.<sup class="essay-fn"><a href="#fn3">[3]</a></sup><sup class="essay-fn"><a href="#fn4">[4]</a></sup> ASML's own scale shows how important the EUV ecosystem has become. The 2025 ASML annual report disclosed substantial High-NA progress, large backlog, and meaningful EUV investment.<sup class="essay-fn"><a href="#fn5">[5]</a></sup> Veeco sits in the less visible mask blank layer of that ecosystem.
+        </p>
+
+        <div class="vco-chain">
+          <div class="vco-chain-label">EUV stack dependency</div>
+          <div class="vco-chain-node">ASML EUV scanner</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">EUV photomask (reflective)</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">Mask blank substrate (LTEM)</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">Mo/Si multilayer mirror + Ru capping</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node anchor">Veeco ion beam deposition</div>
+        </div>
+
+        <p class="essay-pull">
+          ASML gets the spotlight, but EUV cannot scale without the mask blank ecosystem. Veeco sits in that hidden layer.
+        </p>
+
+        <h2 class="essay-h2" id="sec-pkg"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; Packaging</span>Advanced packaging is central because AI is packaging-limited</h2>
+
+        <p>
+          AI accelerators are no longer limited only by transistor scaling. They are limited by memory bandwidth, interconnect density, package size, thermal constraints, and HBM integration. That is why advanced packaging has moved from a back-end detail to a core scaling layer. TSMC's 2025 annual reporting discusses CoWoS, InFO, SoIC and COUPE as part of its 3D Fabric platform, with CoWoS integrating SoCs and HBM stacks for HPC and AI applications.<sup class="essay-fn"><a href="#fn6">[6]</a></sup>
+        </p>
+
+        <p>
+          The 2022 article connected Veeco's advanced packaging lithography to copper pillars, TSVs, Foveros, InFO, CoWoS, FoCoS, HBM, and related packaging flows.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Four years later, that connection is stronger, not weaker. Veeco's 2025 Annual Report and 2026 investor presentation describe wet processing and lithography tools positioned at 2.5D and 3D packaging, including process steps tied to AI accelerator and HBM packaging.<sup class="essay-fn"><a href="#fn3">[3]</a></sup><sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <div class="vco-chain">
+          <div class="vco-chain-label">AI packaging chain &nbsp;&middot;&nbsp; where Veeco appears</div>
+          <div class="vco-chain-node">Nvidia or custom AI accelerator</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">TSMC advanced logic die</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">HBM stacks</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">CoWoS or similar 2.5D / 3D package</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">Copper pillars, microbumps, TSVs, cleaning, wet processing</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node anchor">Veeco lithography and wet processing tool exposure</div>
+        </div>
+
+        <p class="essay-pull">
+          AI chips are no longer limited only by transistor scaling. They are limited by memory bandwidth, interconnect density, packaging capacity, and thermal constraints.
+        </p>
+
+        <h2 class="essay-h2" id="sec-hbm"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; HBM</span>Where Veeco gets a stronger AI connection</h2>
+
+        <p>
+          HBM is one of the clearest AI hardware bottlenecks. Each generation of AI accelerator pulls harder on HBM capacity, DRAM process complexity, advanced packaging integration, and the wet processing steps in between. Nvidia's Q1 FY2027 print, with US$81.6 billion in revenue and data center as the dominant driver of growth, is the most visible signal of how concentrated that pull has become.<sup class="essay-fn"><a href="#fn7">[7]</a></sup>
+        </p>
+
+        <p>
+          Veeco should not be described as the main HBM beneficiary. SK hynix, Micron, and Samsung are the memory beneficiaries, with TSMC capturing the advanced packaging integration value through CoWoS and adjacent platforms.<sup class="essay-fn"><a href="#fn6">[6]</a></sup> The accurate claim is narrower. Veeco sells into the process steps that become more important as HBM and 3D packaging scale: ion beam deposition for select interconnect layers, laser annealing for DRAM and HBM-related thermal steps, and wet processing for the packaging side. The 2026 investor presentation explicitly references HBM DRAM customer evaluation for advanced annealing.<sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <div class="vco-chain">
+          <div class="vco-chain-label">HBM-to-tool chain</div>
+          <div class="vco-chain-node">Nvidia and custom AI systems</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">HBM demand growth</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">DRAM process and advanced packaging complexity</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node">Wet processing, lithography, annealing, packaging tool demand</div>
+          <div class="vco-chain-arrow">|</div>
+          <div class="vco-chain-node anchor">Veeco exposure (selective, not dominant)</div>
+        </div>
+
+        <p class="essay-pull">
+          Veeco is not the primary HBM winner. But it sells into process steps that become more important as HBM and 3D packaging scale.
+        </p>
+
+        <h2 class="essay-h2" id="sec-comp"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; Compound semi</span>The optionality layer</h2>
+
+        <p>
+          Compound semiconductor is strategically interesting and financially uneven. Veeco's 2025 results show compound semiconductor revenue down year over year, so the segment is not a smooth growth engine right now.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> The strategic case rests on a different set of variables. AI data centers are becoming power-constrained and connectivity-constrained, which gives GaN power and silicon photonics long-term relevance. Veeco's Propel 300mm GaN-on-silicon and Lumina+ arsenide and phosphide platforms are positioned at GaN power, RF, microLED, and photonics applications across automotive, communications, and AI infrastructure.<sup class="essay-fn"><a href="#fn3">[3]</a></sup><sup class="essay-fn"><a href="#fn4">[4]</a></sup>
+        </p>
+
+        <p>
+          The honest framing is that compound semiconductor is not yet the smooth growth engine. It is the optionality layer. If GaN power adoption accelerates, if photonics and co-packaged optics move beyond pilot lines, if microLED gets a credible volume use case, the segment's revenue profile changes. None of those outcomes is guaranteed on a 12-month view.
+        </p>
+
+        <div class="vco-comp-grid">
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">GaN power</div>
+            <div class="vco-comp-text">Power density and efficiency for AI data center power conversion, automotive, and industrial applications. The clearest near-term volume story inside compound semiconductor.</div>
+          </div>
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">RF</div>
+            <div class="vco-comp-text">GaN and adjacent RF devices for communications infrastructure, satellite, defense, and 5G/6G base stations. Steady, less cyclical than memory or AI compute.</div>
+          </div>
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">InP lasers</div>
+            <div class="vco-comp-text">Indium phosphide lasers for optical links, datacom transceivers, and the photonics layer underneath co-packaged optics. The connection to AI infrastructure runs through bandwidth.</div>
+          </div>
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">microLED</div>
+            <div class="vco-comp-text">Long-horizon display optionality. Volume is gated on yield and cost. Not a 2026 story, but a real option if mass transfer and yield economics keep improving.</div>
+          </div>
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">SiC / GaN ecosystem</div>
+            <div class="vco-comp-text">Electrification, power conversion, and grid-tied applications. Veeco does not own the wafer side, but tool exposure across the broader compound semiconductor flow remains relevant.</div>
+          </div>
+          <div class="vco-comp-card">
+            <div class="vco-comp-name">Future infrastructure</div>
+            <div class="vco-comp-text">Photonics platforms, silicon-photonics integration, and emerging compound semiconductor applications that AI hyperscalers increasingly fund as part of system design rather than chip design.</div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          Compound semiconductor is not yet the smooth growth engine. It is the optionality layer.
+        </p>
+
+        <h2 class="essay-h2" id="sec-storage"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; Storage</span>AI-adjacent, but cyclical</h2>
+
+        <p>
+          The 2022 article argued that hard-drive tooling could benefit from data center demand, more magnetic heads per drive, more platters per drive, and more complex drive architectures.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> That narrative is still partially true. AI and cloud workloads pull on storage at scale, and HAMR adoption increases manufacturing complexity, which usually helps tool vendors.
+        </p>
+
+        <p>
+          The numbers are less generous. Veeco's data storage revenue fell sharply year over year in 2025, which means data storage is not the main Veeco transformation story today.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> The fair read is that data storage is an AI-adjacent cyclical kicker, not the core thesis. If HDD makers add more heads per drive, transition further into HAMR, and add platters, Veeco's tool demand can rebound. None of that is guaranteed on the same timeline as the AI accelerator buildout.
+        </p>
+
+        <p class="essay-pull">
+          Data storage is an AI-adjacent cyclical kicker, not the core thesis.
+        </p>
+
+        <h2 class="essay-h2" id="sec-axcelis"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; Scale</span>The Axcelis merger changes the endgame</h2>
+
+        <p>
+          Veeco is not just transforming on its own. Axcelis and Veeco announced an all-stock merger in 2025, with the combined company framed as a larger US wafer fabrication equipment platform.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> The merger SEC exhibit and investor release describe a combined enterprise value of approximately US$4.4 billion, pro forma fiscal 2024 revenue of about US$1.7 billion, and Veeco shareholders expected to own about 42% of the combined company, with the combined portfolio spanning ion implantation, laser annealing, ion beam deposition, advanced packaging solutions, MOCVD, and wet processing.<sup class="essay-fn"><a href="#fn9">[9]</a></sup>
+        </p>
+
+        <p>
+          Scale matters in semiconductor equipment in ways that revenue alone does not capture. Customers reward global support depth, multi-tool process recipes, R&D breadth, customer-facing PDK and integration support, and credibility through multiple node ramps. A merged Axcelis-Veeco does not become Applied Materials, Lam Research, or Tokyo Electron in size, but it does become a more credible mid-tier US wafer fabrication equipment supplier with a portfolio that touches several AI hardware bottlenecks simultaneously.
+        </p>
+
+        <div class="vco-merger">
+          <div class="vco-merger-label">Axcelis &times; Veeco &nbsp;&middot;&nbsp; deal mechanics</div>
+          <div class="vco-merger-grid">
+            <div class="vco-merger-card"><div class="k">Combined EV</div><div class="v">~ US$4.4 billion enterprise value at announcement</div></div>
+            <div class="vco-merger-card"><div class="k">Pro forma FY24 revenue</div><div class="v">~ US$1.7 billion</div></div>
+            <div class="vco-merger-card"><div class="k">Veeco shareholder ownership</div><div class="v">~ 42% of the combined company</div></div>
+            <div class="vco-merger-card"><div class="k">Combined portfolio</div><div class="v">Ion implantation, laser annealing, ion beam deposition, advanced packaging, MOCVD, wet processing</div></div>
+            <div class="vco-merger-card"><div class="k">Strategic framing</div><div class="v">Larger US wafer fabrication equipment platform with broader process coverage</div></div>
+            <div class="vco-merger-card"><div class="k">What it does not change</div><div class="v">Cyclical exposure inside compound semiconductor and data storage segments</div></div>
+          </div>
+        </div>
+
+        <p class="essay-pull">
+          The Axcelis deal turns Veeco's transformation from a niche turnaround into a scale story.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="vco-ledger">
+          <div class="vco-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Veeco is more semiconductor-heavy now</div>
+            <div>Semiconductor revenue was about 72% of 2025 revenue per FY2025 results.</div>
+            <div>The old LED and HDD image is outdated.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Total revenue was not booming</div>
+            <div>2025 total revenue of about US$664.3M, down year over year.</div>
+            <div>Transformation is real but uneven across segments.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Laser annealing is advanced-node relevant</div>
+            <div>LSA framed as production tool of record at multiple Tier 1 logic customers and an HBM DRAM customer; Nanosecond Annealing positioned for future logic and memory.</div>
+            <div>Strongest front-end opportunity in the current Veeco portfolio.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>EUV mask blank tools are strategic</div>
+            <div>NEXUS ion beam deposition used for Mo/Si multilayer and ruthenium capping in EUV mask blank manufacturing.</div>
+            <div>Hidden lithography infrastructure layer underneath the ASML ecosystem.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Advanced packaging is AI-linked</div>
+            <div>CoWoS, InFO, SoIC, COUPE growth per TSMC reporting; wet processing and packaging lithography demand follows.</div>
+            <div>Veeco benefits from rising packaging complexity, not from a single product.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Compound semi is mixed</div>
+            <div>Compound semiconductor revenue fell in 2025, while GaN and photonics orders remain on the roadmap.</div>
+            <div>Optionality rather than current core growth.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Data storage is cyclical</div>
+            <div>Data storage revenue fell sharply in 2025, while AI, cloud, and HAMR adoption support a possible recovery.</div>
+            <div>Kicker, not core thesis.</div>
+          </div>
+          <div class="vco-ledger-row">
+            <div>Axcelis merger changes scale</div>
+            <div>Approximately US$4.4B combined EV and US$1.7B pro forma 2024 revenue per merger materials.</div>
+            <div>Veeco becomes part of a larger US WFE platform with broader process coverage.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-scorecard"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; Scorecard</span>Segment scorecard</h2>
+
+        <div class="vco-score-wrap">
+          <table class="vco-score">
+            <thead>
+              <tr>
+                <th>Segment</th>
+                <th>AI relevance</th>
+                <th>2025 evidence</th>
+                <th>Risk</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Laser annealing</td>
+                <td><span class="rel-h">High</span></td>
+                <td>Logic, HBM, advanced nodes; nanosecond annealing roadmap</td>
+                <td>Customer concentration, qualification cycles</td>
+                <td>Strongest technical vector</td>
+              </tr>
+              <tr>
+                <td>EUV mask blanks</td>
+                <td><span class="rel-h">High</span></td>
+                <td>NEXUS IBD positioned at EUV mask blank manufacturing</td>
+                <td>Narrow market; demand tied to broader EUV ecosystem</td>
+                <td>Hidden but strategic</td>
+              </tr>
+              <tr>
+                <td>Advanced packaging</td>
+                <td><span class="rel-h">High</span></td>
+                <td>AI/HBM packaging demand pull; wet processing and lithography</td>
+                <td>Capex cyclicality at OSATs and foundries</td>
+                <td>Strong AI link, broader portfolio</td>
+              </tr>
+              <tr>
+                <td>Compound semiconductor</td>
+                <td><span class="rel-m">Medium to high</span></td>
+                <td>GaN-on-silicon, photonics, InP lasers, microLED options</td>
+                <td>Lumpy revenue; segment fell in 2025</td>
+                <td>Optionality, not core engine</td>
+              </tr>
+              <tr>
+                <td>Data storage</td>
+                <td><span class="rel-m">Medium</span></td>
+                <td>Cloud and AI data center demand context, HAMR transition</td>
+                <td>Cyclical; segment fell sharply in 2025</td>
+                <td>AI-adjacent kicker</td>
+              </tr>
+              <tr>
+                <td>microLED</td>
+                <td><span class="rel-l">Low to medium today</span></td>
+                <td>Long-term display optionality</td>
+                <td>Adoption timing and yield economics</td>
+                <td>Future option, not 2026 thesis</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions. They are listed here so the conclusions can be stress-tested.
+        </p>
+
+        <div class="vco-risks">
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Semiconductor mix improvement is real, but total revenue is cyclical. A weaker WFE year could compress margins even if the mix story remains intact.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Laser annealing demand depends on a small number of leading-edge logic, DRAM, and HBM customers. Customer concentration and qualification cycles can swing tool revenue meaningfully.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">EUV mask blank manufacturing is a narrow market with a small set of customers. Any consolidation, in-housing, or competitive deposition step could shrink the addressable opportunity.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Advanced packaging tool demand follows OSAT and foundry capex. If AI accelerator orders normalize, the packaging tool order book can compress quickly.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Compound semiconductor is the most volatile segment in the recent print. GaN power adoption, microLED, and photonics timing remain uncertain.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Data storage is sensitive to HDD shipment cycles, HAMR adoption pace, and hyperscaler buying patterns. Recoveries here are not guaranteed.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">The Axcelis merger has integration, regulatory, and execution risk. Combined revenue and synergy targets are projections, not guaranteed outcomes.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Competitive pressure from larger WFE incumbents could compress Veeco's pricing in laser annealing, wet processing, and advanced packaging steps over time.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">Export controls and US-China trade dynamics can change demand patterns for compound semiconductor and packaging tools without warning.</div>
+          </div>
+          <div class="vco-risk">
+            <div class="vco-risk-num"></div>
+            <div class="vco-risk-text">AI accelerator demand could normalize faster than current consensus, which would reduce the urgency behind several of Veeco's strongest tool categories.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="vco-bottom">
+          <div class="vco-bottom-label">Bottom line</div>
+          <p>
+            Veeco's transformation is real, but not because every business line is booming. The stronger story is that Veeco has shifted from lower-quality legacy exposure toward a set of narrow but strategically important semiconductor process steps: EUV mask blank deposition, laser annealing for advanced logic and memory, HBM and advanced packaging process tools, photonics and GaN platforms, and AI-adjacent data storage.
+          </p>
+          <p>
+            The Axcelis merger changes the endgame. Veeco's niches now sit inside a broader US semiconductor equipment scale story. That does not make Veeco the next ASML, Applied Materials, or Lam Research. But it does make Veeco much more interesting than a small legacy toolmaker.
+          </p>
+          <p>
+            Veeco is not the AI story everyone talks about. It is part of the manufacturing layer that makes the AI story possible.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="vco-gloss">
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">WFE</div>
+            <div class="vco-gloss-def">Wafer fabrication equipment. The broad category of semiconductor manufacturing tools sold to fabs, including deposition, etch, lithography, ion implantation, annealing, cleaning, and metrology.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">MOCVD</div>
+            <div class="vco-gloss-def">Metal-organic chemical vapor deposition. A film deposition technique used for compound semiconductor materials, including GaN, GaAs, and InP.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Ion beam deposition</div>
+            <div class="vco-gloss-def">A precision deposition technique that uses an ion beam to deposit very thin, uniform films. Used in EUV mask blank multilayer deposition and in hard-drive head manufacturing.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">EUV mask blank</div>
+            <div class="vco-gloss-def">The base for an EUV photomask. A reflective multilayer mirror built on a low thermal expansion substrate, capped with ruthenium and topped with an absorber layer.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Mo/Si multilayer</div>
+            <div class="vco-gloss-def">Alternating molybdenum and silicon layers that form the reflective mirror inside an EUV mask blank. Deposition uniformity matters because EUV light reflects, not transmits.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Ruthenium capping</div>
+            <div class="vco-gloss-def">A thin protective ruthenium layer on top of the Mo/Si multilayer in an EUV mask blank. It protects the multilayer from oxidation and damage during use.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Laser annealing</div>
+            <div class="vco-gloss-def">A thermal processing technique that uses a laser to deliver localized heat over very short timescales, replacing or augmenting full-wafer thermal processing for advanced devices.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Thermal budget</div>
+            <div class="vco-gloss-def">The cumulative amount of heat a device can tolerate during manufacturing without damaging features or causing unwanted diffusion. Tighter at advanced nodes.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Gate-all-around</div>
+            <div class="vco-gloss-def">A transistor architecture in which the gate wraps the channel on all sides. The next mainstream transistor architecture after FinFET, used at TSMC N2, Intel 18A and adjacent nodes.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">HBM</div>
+            <div class="vco-gloss-def">High Bandwidth Memory. Stacked DRAM connected to logic dies through advanced packaging. Central to AI accelerator memory bandwidth.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">TSV</div>
+            <div class="vco-gloss-def">Through-silicon via. A vertical electrical connection that passes through a silicon die, used in 3D and 2.5D packaging to connect stacked dies.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">Copper pillar</div>
+            <div class="vco-gloss-def">A vertical copper structure used as a fine-pitch interconnect in advanced packaging, replacing or augmenting solder bumps.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">CoWoS</div>
+            <div class="vco-gloss-def">Chip-on-Wafer-on-Substrate. TSMC's advanced 2.5D packaging platform that integrates logic dies and HBM stacks on a silicon interposer.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">OSAT</div>
+            <div class="vco-gloss-def">Outsourced Semiconductor Assembly and Test. Companies like ASE and Amkor that perform packaging, assembly, and test services for fabless and IDM customers.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">GaN</div>
+            <div class="vco-gloss-def">Gallium nitride. A wide bandgap compound semiconductor used for power conversion and high-frequency RF applications.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">InP laser</div>
+            <div class="vco-gloss-def">A semiconductor laser built on indium phosphide, used in optical communications, datacom transceivers, and the photonics layer underneath co-packaged optics.</div>
+          </div>
+          <div class="vco-gloss-row">
+            <div class="vco-gloss-term">HAMR</div>
+            <div class="vco-gloss-def">Heat-Assisted Magnetic Recording. A hard-drive technology that uses local heating to increase areal density, enabling higher-capacity drives for cloud and AI workloads.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="vco-sources-box">
+          <div class="vco-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis transformation piece is treated as historical context, particularly for the framing of Veeco's HDD and LED MOCVD inheritance, the Ultratech acquisition, the commodity LED exit, and the early thesis on EUV mask blanks, laser annealing, advanced packaging, and compound semiconductor. The 2026 read is built primarily on Veeco's own disclosures: FY2025 results, the 2025 Annual Report and 10-K, and the May 2026 investor presentation.
+          </p>
+          <p>
+            ASML, TSMC, Nvidia and the Axcelis-Veeco merger materials are used to anchor the broader environment Veeco sells into: EUV ecosystem scale, advanced packaging programs, AI accelerator demand, and the deal mechanics of the planned combination. Company claims about product positioning, customer status, and roadmap are treated as company claims, not as independent forecasts that this memo endorses.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;The Transformation of Veeco,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for Veeco's HDD and LED MOCVD inheritance, the 2017 Ultratech acquisition, the 2018 commodity LED exit, the early thesis on EUV mask blanks, GaN power and RF, microLED, advanced packaging lithography, and laser annealing for advanced nodes; the page 2 Veeco evolution slide, the page 11 EUV mask diagram (anti-reflective coating, absorber, ruthenium capping, Mo/Si multilayer mirror, low thermal expansion substrate, conductive backside coating), the page 13 laser annealing slide, and the page 14 gate transistor evolution slide.</li>
+            <li id="fn2">Veeco Instruments, &ldquo;Veeco Reports Fourth Quarter and Fiscal Year 2025 Financial Results,&rdquo; <a href="https://ir.veeco.com/news-and-events/news-details/2026/Veeco-Reports-Fourth-Quarter-and-Fiscal-Year-2025-Financial-Results/default.aspx" target="_blank" rel="noopener noreferrer">ir.veeco.com/&hellip;/fourth-quarter-fy2025</a>. Source for 2025 total revenue of approximately US$664.3M, semiconductor segment revenue of approximately US$476.6M (about 72% of total), and the compound semiconductor and data storage segment revenue declines referenced in this essay.</li>
+            <li id="fn3">Veeco Instruments, 2025 Annual Report / Form 10-K <a href="https://www.sec.gov/Archives/edgar/data/103145/000110465926032103/tm267511d2_ars.pdf" target="_blank" rel="noopener noreferrer">sec.gov/&hellip;/veeco-ars-2025</a>. Source for the business description across ion beam deposition, laser annealing, advanced packaging lithography, MOCVD, and wet processing; the EUV mask blank ion beam deposition role; the laser annealing positioning; the advanced packaging applications; and the compound semiconductor and data storage segment commentary used in this essay.</li>
+            <li id="fn4">Veeco Instruments, &ldquo;Investor Presentation, May 2026&rdquo; <a href="https://s1.q4cdn.com/522285864/files/doc_presentations/2026/May/Investor-Presentation-May-2026-FINAl.pdf" target="_blank" rel="noopener noreferrer">s1.q4cdn.com/&hellip;/Investor-Presentation-May-2026</a>. Source for Laser Spike Annealing framed as production tool of record at multiple Tier 1 logic customers and an HBM DRAM customer, the Nanosecond Annealing positioning for future logic and memory, the EUV mask blank production tool of record claim, the advanced packaging and wet processing positioning, the compound semiconductor opportunity framing, and the AI infrastructure photonics references.</li>
+            <li id="fn5">ASML, &ldquo;2025 Annual Report&rdquo; <a href="https://www.asml.com/investors/annual-report" target="_blank" rel="noopener noreferrer">asml.com/investors/annual-report</a>. Source for EUV and High-NA ecosystem context, 2025 net sales, gross margin, R&amp;D, and backlog scale used in this essay to frame why the EUV mask blank layer underneath ASML matters.</li>
+            <li id="fn6">TSMC, &ldquo;2025 Annual Report&rdquo; <a href="https://investor.tsmc.com/static/annualReports/2025/english/index.html" target="_blank" rel="noopener noreferrer">investor.tsmc.com/&hellip;/2025</a>. Source for advanced packaging and 3D Fabric platform context including CoWoS, InFO, SoIC and COUPE, AI and HPC packaging demand framing, and N2 and adjacent node context referenced in this essay.</li>
+            <li id="fn7">Nvidia, &ldquo;Nvidia Announces Financial Results for First Quarter, Fiscal 2027&rdquo; <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2027" target="_blank" rel="noopener noreferrer">nvidianews.nvidia.com/&hellip;/q1-fy2027</a>. Source for Nvidia Q1 FY2027 revenue of US$81.6B and data center as the dominant driver of growth, used to anchor the HBM and packaging demand pull referenced in this essay.</li>
+            <li id="fn8">Axcelis and Veeco, &ldquo;Axcelis-Veeco Combination,&rdquo; <a href="https://www.axcelisveeco.com/" target="_blank" rel="noopener noreferrer">axcelisveeco.com</a>. Source for the all-stock merger announcement, the combined company framing as a larger US wafer fabrication equipment platform, and the strategic rationale referenced in this essay.</li>
+            <li id="fn9">Axcelis and Veeco, merger SEC exhibit / investor release <a href="https://www.sec.gov/Archives/edgar/data/1113232/000110465925095307/tm2527661d1_ex99-1.htm" target="_blank" rel="noopener noreferrer">sec.gov/&hellip;/axcelis-veeco-merger-ex99</a>. Source for the approximately US$4.4B combined enterprise value, approximately US$1.7B pro forma fiscal 2024 revenue, the combined portfolio across ion implantation, laser annealing, ion beam deposition, advanced packaging, MOCVD, and wet processing, and the Veeco shareholder ownership of approximately 42% of the combined company.</li>
+          </ol>
+        </div>
+
+        <div class="vco-readnext">
+          <div class="vco-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="vco-readnext-grid">
+            <a href="advanced-packaging-became-the-computer.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 061</div>
+              <div class="vco-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="euv-materials-war-ai-chips.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 059</div>
+              <div class="vco-readnext-title">The EUV Materials War Behind AI Chips</div>
+            </a>
+            <a href="euv-throughput-bottleneck.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 055</div>
+              <div class="vco-readnext-title">The EUV Throughput Bottleneck</div>
+            </a>
+            <a href="reliability-layer-behind-ai-hardware.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 051</div>
+              <div class="vco-readnext-title">The Reliability Layer Behind AI Hardware</div>
+            </a>
+            <a href="memory-oligopoly-ai-toll-booth.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 050</div>
+              <div class="vco-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+            <a href="intel-bet-the-farm-foundry-proof.html" class="vco-readnext-card">
+              <div class="vco-readnext-kicker">Essay 058</div>
+              <div class="vco-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple's iPhone Chip Split Became the New Normal. Then AI Changed the Rules Again. | Pugalenthi Magendran</title>
+  <meta name="description" content="Apple's iPhone chip split was not a one-off. Moore's Law economics forced Pro-first silicon, then Apple Intelligence raised the baseline chip floor across the lineup.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/apple-iphone-chip-split-ai-moores-law.html">
+  <meta property="og:title" content="Apple's iPhone Chip Split Became the New Normal. Then AI Changed the Rules Again.">
+  <meta property="og:description" content="A 2026 research memo on Apple's iPhone silicon ladder, the iPhone 14/15 chip split, A18 and Apple Intelligence, A19 and A19 Pro, N1 wireless, C1/C1X modems, TSMC N3 and N2 economics, and Apple's segmentation strategy.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/apple-iphone-chip-split-ai-moores-law.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Apple Silicon">
+  <meta property="article:tag" content="Apple">
+  <meta property="article:tag" content="iPhone">
+  <meta property="article:tag" content="Apple Silicon">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Moore's Law">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Apple Intelligence">
+  <meta property="article:tag" content="Mobile SoCs">
+  <meta property="article:tag" content="A19">
+  <meta property="article:tag" content="A18">
+  <meta property="article:tag" content="N1 Wireless">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apple's iPhone Chip Split Became the New Normal. Then AI Changed the Rules Again.">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Apple's iPhone chip split was not a one-off. Moore's Law economics forced Pro-first silicon, then Apple Intelligence raised the baseline chip floor across the lineup.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Apple's iPhone Chip Split Became the New Normal. Then AI Changed the Rules Again.",
+    "description": "Apple's iPhone chip split was not a one-off. Moore's Law economics forced Pro-first silicon, then Apple Intelligence raised the baseline chip floor across the lineup.",
+    "url": "https://pugalenthimagendran.com/blog/posts/apple-iphone-chip-split-ai-moores-law.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/apple-iphone-chip-split-ai-moores-law.html",
+    "keywords": "Apple, iPhone, Apple Silicon, A15, A16, A17 Pro, A18, A19, Apple Intelligence, TSMC N3, TSMC N2, Moore's Law, Pro mix, Silicon Ladder"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #3E5742); border: 1px solid rgba(62,87,66,0.30); background: rgba(62,87,66,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #3E5742); text-decoration: none; border-bottom: 0.5px solid rgba(62,87,66,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #3E5742); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #3E5742); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #3E5742); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #3E5742); }
+
+    /* Essay 071 Apple iPhone chip split — scoped under .essay-aix, Pro-forest #3E5742 */
+    body.essay-aix {
+      --a-accent: #3E5742;
+      --a-accent-soft: rgba(62,87,66,0.10);
+      --a-accent-line: rgba(62,87,66,0.30);
+      --a-bronze: #9A7B43;
+      --a-bronze-soft: rgba(154,123,67,0.08);
+      --a-bronze-line: rgba(154,123,67,0.30);
+    }
+    body.essay-aix .essay-stamp { color: var(--a-accent); border-color: var(--a-accent-line); background: var(--a-accent-soft); }
+    body.essay-aix .essay-pull { border-left-color: var(--a-accent); }
+    body.essay-aix .essay-footnotes a { color: var(--a-accent); border-bottom-color: var(--a-accent-line); }
+    body.essay-aix .essay-fn a { color: var(--a-accent); }
+    body.essay-aix .essay-toc a:hover { color: var(--a-accent); }
+
+    /* Apple silicon ladder hero */
+    .aix-ladder { position: relative; margin: 0.5rem 0 2.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: linear-gradient(180deg, var(--a-bronze-soft) 0%, transparent 50%, var(--a-accent-soft) 100%); overflow: hidden; }
+    .aix-ladder::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(62,87,66,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(62,87,66,0.07) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.55; pointer-events: none; }
+    .aix-ladder-title { position: relative; z-index: 1; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .aix-rung { position: relative; z-index: 1; padding: 0.85rem 1rem; margin-bottom: 0.5rem; border-radius: 8px; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); }
+    .aix-rung:last-child { margin-bottom: 0; }
+    .aix-rung.top { border-color: var(--a-accent-line); background: rgba(62,87,66,0.16); }
+    .aix-rung.middle { border-color: var(--a-accent-line); background: rgba(62,87,66,0.10); }
+    .aix-rung.bottom { border-color: var(--a-bronze-line); background: rgba(154,123,67,0.10); }
+    .aix-rung-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.3rem; }
+    .aix-rung.bottom .aix-rung-label { color: var(--a-bronze); }
+    .aix-rung-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--color-text-primary); margin-bottom: 0.35rem; line-height: 1.25; }
+    .aix-rung-text { font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-weight: 300; color: var(--color-text-secondary); line-height: 1.45; }
+
+    /* Thesis card */
+    .aix-thesis { border: 0.5px solid var(--a-accent-line); border-radius: 12px; padding: 1.5rem 1.75rem; background: var(--a-accent-soft); margin: 2.5rem 0; }
+    .aix-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.85rem; }
+    .aix-thesis-text { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); }
+
+    /* Executive summary */
+    .aix-execsum { margin: 2rem 0 3rem; padding: 1.5rem 1.75rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); counter-reset: execnum; }
+    .aix-execsum-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .aix-execsum ul { list-style: none; padding: 0; margin: 0; }
+    .aix-execsum li { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--color-text-primary); padding: 0.5rem 0 0.5rem 1.5rem; position: relative; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .aix-execsum li:last-child { border-bottom: none; }
+    .aix-execsum li::before { content: counter(execnum, decimal-leading-zero); counter-increment: execnum; position: absolute; left: 0; top: 0.55rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-accent); letter-spacing: 0.08em; }
+
+    /* iPhone timeline */
+    .aix-timeline { margin: 1.5rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; background: var(--color-background-secondary); }
+    .aix-timeline-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .aix-timeline-row { display: grid; grid-template-columns: 80px 1fr; gap: 1rem; padding: 0.6rem 0; border-bottom: 0.5px dashed var(--color-border-tertiary); align-items: baseline; }
+    .aix-timeline-row:last-child { border-bottom: none; }
+    .aix-tl-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--a-accent); letter-spacing: 0.08em; }
+    .aix-tl-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+    .aix-tl-text strong { color: var(--a-accent); font-weight: 500; }
+
+    /* Old/transition/AI three-column model evolution */
+    .aix-models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1.75rem 0 2.25rem; }
+    .aix-model { padding: 1.1rem 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; }
+    .aix-model.old { background: rgba(0,0,0,0.30); }
+    .aix-model.mid { border-color: var(--a-bronze-line); background: var(--a-bronze-soft); }
+    .aix-model.ai { border-color: var(--a-accent-line); background: var(--a-accent-soft); }
+    .aix-model-era { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+    .aix-model.mid .aix-model-era { color: var(--a-bronze); }
+    .aix-model.ai .aix-model-era { color: var(--a-accent); }
+    .aix-model-tag { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: 1rem; color: var(--color-text-primary); margin-bottom: 0.4rem; line-height: 1.3; }
+    .aix-model-text { font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Silicon ladder table */
+    .aix-ladder-wrap { margin: 1.5rem 0 2.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; }
+    .aix-tier-table { width: 100%; border-collapse: collapse; min-width: 680px; }
+    .aix-tier-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-accent); padding: 0.85rem 0.95rem; border-bottom: 0.5px solid var(--a-accent-line); background: var(--a-accent-soft); font-weight: 500; }
+    .aix-tier-table td { font-family: 'Source Serif 4', serif; font-size: 0.91rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); padding: 0.8rem 0.95rem; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+    .aix-tier-table tr:last-child td { border-bottom: none; }
+    .aix-tier-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--a-accent); letter-spacing: 0.04em; font-weight: 500; white-space: nowrap; }
+
+    /* TSMC node economics card */
+    .aix-node { margin: 1.5rem 0 2.25rem; padding: 1.4rem 1.6rem; border: 0.5px solid var(--a-bronze-line); border-radius: 12px; background: var(--a-bronze-soft); }
+    .aix-node-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-bronze); margin-bottom: 1rem; }
+    .aix-node-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+    .aix-node-card { padding: 0.8rem 0.95rem; background: rgba(0,0,0,0.30); border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; }
+    .aix-node-card .k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .aix-node-card .v { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 400; line-height: 1.45; color: var(--color-text-primary); }
+
+    /* Apple silicon allocation decision list */
+    .aix-alloc { margin: 1.5rem 0 2.25rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--a-accent-line); border-radius: 12px; background: var(--a-accent-soft); counter-reset: allocnum; }
+    .aix-alloc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.9rem; }
+    .aix-alloc-list { list-style: none; padding: 0; margin: 0; }
+    .aix-alloc-list li { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 400; line-height: 1.55; color: var(--color-text-primary); padding: 0.42rem 0 0.42rem 2rem; position: relative; border-bottom: 0.5px dashed var(--color-border-tertiary); }
+    .aix-alloc-list li:last-child { border-bottom: none; }
+    .aix-alloc-list li::before { counter-increment: allocnum; content: counter(allocnum, decimal-leading-zero); position: absolute; left: 0; top: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-accent); letter-spacing: 0.08em; }
+
+    /* Segmentation levers grid */
+    .aix-levers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.55rem; margin: 1.5rem 0 2.25rem; }
+    .aix-lever { padding: 0.7rem 0.9rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 6px; background: var(--color-background-secondary); font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 400; color: var(--color-text-primary); line-height: 1.4; }
+
+    /* Apple financial stat band */
+    .aix-fin { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2.25rem; }
+    .aix-fin-card { padding: 1rem 1.15rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .aix-fin-k { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.3rem; }
+    .aix-fin-v { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--a-accent); line-height: 1.1; margin-bottom: 0.3rem; }
+    .aix-fin-d { font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 300; line-height: 1.45; color: var(--color-text-secondary); }
+
+    /* Evidence ledger */
+    .aix-ledger { margin: 1.5rem 0 2.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .aix-ledger-head { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; background: var(--a-accent-soft); border-bottom: 0.5px solid var(--a-accent-line); }
+    .aix-ledger-head > div { padding: 0.85rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-accent); border-right: 0.5px solid var(--a-accent-line); }
+    .aix-ledger-head > div:last-child { border-right: none; }
+    .aix-ledger-row { display: grid; grid-template-columns: 1.2fr 1.7fr 1.2fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .aix-ledger-row:last-child { border-bottom: none; }
+    .aix-ledger-row > div { padding: 0.85rem 1rem; font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); border-right: 0.5px solid var(--color-border-tertiary); }
+    .aix-ledger-row > div:last-child { border-right: none; }
+    .aix-ledger-row > div:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--a-accent); letter-spacing: 0.04em; font-weight: 500; }
+
+    /* Risk grid */
+    .aix-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; counter-reset: risknum; }
+    .aix-risk { padding: 0.95rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; background: var(--color-background-secondary); }
+    .aix-risk-num { counter-increment: risknum; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--a-bronze); letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+    .aix-risk-num::before { content: "R" counter(risknum, decimal-leading-zero); }
+    .aix-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); }
+
+    /* Glossary */
+    .aix-gloss { margin: 1.5rem 0 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; overflow: hidden; }
+    .aix-gloss-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+    .aix-gloss-row:last-child { border-bottom: none; }
+    .aix-gloss-term { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--a-accent); padding: 0.85rem 1rem; background: var(--a-accent-soft); border-right: 0.5px solid var(--a-accent-line); display: flex; align-items: center; }
+    .aix-gloss-def { font-family: 'Source Serif 4', serif; font-size: 0.94rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); padding: 0.85rem 1rem; }
+
+    /* Bottom-line box */
+    .aix-bottom { margin: 1.75rem 0 1.5rem; padding: 1.5rem 1.75rem; border: 0.5px solid var(--a-accent-line); border-radius: 12px; background: linear-gradient(180deg, var(--a-accent-soft) 0%, transparent 100%); }
+    .aix-bottom-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.85rem; }
+    .aix-bottom p { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 400; line-height: 1.7; color: var(--color-text-primary); margin-bottom: 0.85rem; }
+    .aix-bottom p:last-child { margin-bottom: 0; font-style: italic; color: var(--a-accent); }
+
+    /* Sources box */
+    .aix-sources-box { margin: 2rem 0 1.75rem; padding: 1.25rem 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; background: var(--color-background-secondary); }
+    .aix-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.75rem; }
+    .aix-sources-box p { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.65rem; }
+    .aix-sources-box p:last-child { margin-bottom: 0; }
+
+    /* Read-next */
+    .aix-readnext { margin: 3rem 0 1rem; }
+    .aix-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1rem; }
+    .aix-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .aix-readnext-card { display: block; padding: 1rem 1.1rem; border: 0.5px solid var(--color-border-tertiary); border-radius: 8px; text-decoration: none; background: var(--color-background-secondary); transition: border-color 0.15s ease; }
+    .aix-readnext-card:hover { border-color: var(--a-accent-line); }
+    .aix-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--a-accent); margin-bottom: 0.4rem; }
+    .aix-readnext-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--color-text-primary); }
+
+    @media (max-width: 760px) {
+      .aix-models { grid-template-columns: 1fr; }
+      .aix-levers { grid-template-columns: 1fr; }
+      .aix-fin { grid-template-columns: 1fr; }
+      .aix-node-grid { grid-template-columns: 1fr; }
+      .aix-readnext-grid { grid-template-columns: 1fr; }
+      .aix-risks { grid-template-columns: 1fr; }
+      .aix-timeline-row { grid-template-columns: 1fr; }
+      .aix-gloss-row { grid-template-columns: 1fr; }
+      .aix-gloss-term { border-right: none; border-bottom: 0.5px solid var(--a-accent-line); }
+      .aix-ledger-head, .aix-ledger-row { grid-template-columns: 1fr; }
+      .aix-ledger-head > div, .aix-ledger-row > div { border-right: none; border-bottom: 0.5px solid var(--color-border-tertiary); }
+      .aix-ledger-row > div:last-child { border-bottom: none; }
+      .essay-toc ol { column-count: 1; }
+      body.essay-aix .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-aix">
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../#work">Work</a>
+        <a href="../../#ai">AI</a>
+        <a href="../../#thinking">Thinking</a>
+        <a href="../../#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="essay-format">
+    <div class="essay-page">
+      <div class="essay-issue">Essay No. 071 &nbsp;&middot;&nbsp; Apple Silicon / Semiconductors / AI</div>
+
+      <div class="essay-tag-row">
+        <span class="tag">Apple</span>
+        <span class="tag">iPhone</span>
+        <span class="tag">Apple Silicon</span>
+        <span class="tag">Semiconductors</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">Moore's Law</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Apple Intelligence</span>
+        <span class="tag">Mobile SoCs</span>
+      </div>
+
+      <h1 class="essay-hed">Apple's iPhone Chip Split Became the New Normal. Then AI <em>Changed the Rules Again</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">A15</span>
+          <span class="essay-stamp">A16</span>
+          <span class="essay-stamp">A17 Pro</span>
+          <span class="essay-stamp">A18</span>
+          <span class="essay-stamp">A19</span>
+          <span class="essay-stamp">Apple Intelligence</span>
+          <span class="essay-stamp essay-stamp--muted">TSMC N3</span>
+          <span class="essay-stamp essay-stamp--muted">TSMC N2</span>
+          <span class="essay-stamp essay-stamp--muted">Moore's Law economics</span>
+          <span class="essay-stamp essay-stamp--muted">Pro mix</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        Apple no longer treats the newest A-series chip as a free annual upgrade for every iPhone. The iPhone lineup is now segmented by AI capability, Pro silicon, memory, thermals, camera pipeline, wireless chips, and modem strategy.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">PUGALENTHI MAGENDRAN</div>
+          <div class="essay-date">May 27, 2026 &nbsp;&middot;&nbsp; Research memo &nbsp;&middot;&nbsp; Updating a 2022 Apple silicon thesis</div>
+        </div>
+        <div class="essay-read-time">15 MIN</div>
+      </div>
+
+      <div class="aix-ladder" aria-hidden="true">
+        <div class="aix-ladder-title">Apple iPhone silicon ladder &nbsp;&middot;&nbsp; how the lineup tiers map to silicon</div>
+        <div class="aix-rung top">
+          <div class="aix-rung-label">Top &nbsp;&middot;&nbsp; Pro</div>
+          <div class="aix-rung-title">Pro iPhones</div>
+          <div class="aix-rung-text">Pro-class A-series &middot; stronger GPU &middot; better thermals &middot; higher memory bandwidth &middot; Pro camera pipeline &middot; Pro video workflows &middot; custom subsystems</div>
+        </div>
+        <div class="aix-rung middle">
+          <div class="aix-rung-label">Middle &nbsp;&middot;&nbsp; standard flagship</div>
+          <div class="aix-rung-title">Standard flagship iPhones</div>
+          <div class="aix-rung-text">Current-generation A-series &middot; strong Neural Engine &middot; Apple wireless chips &middot; computational photography</div>
+        </div>
+        <div class="aix-rung bottom">
+          <div class="aix-rung-label">Bottom &nbsp;&middot;&nbsp; AI-capable baseline</div>
+          <div class="aix-rung-title">AI-capable baseline iPhones</div>
+          <div class="aix-rung-text">A18 / A19 class &middot; Apple Intelligence eligibility &middot; mainstream camera and battery experience</div>
+        </div>
+      </div>
+
+      <div class="aix-thesis">
+        <div class="aix-thesis-label">Thesis</div>
+        <div class="aix-thesis-text">
+          Apple's 2022 iPhone chip split was not a one-off marketing decision. It was a sign that Moore's Law had slowed economically: newer nodes still improved performance and efficiency, but the cost-per-transistor benefit was no longer strong enough to give every iPhone the newest chip for free. That split became real with iPhone 14 and continued with iPhone 15. But Apple Intelligence changed the rules again by raising the minimum silicon floor. Apple's modern iPhone strategy is now a <em>silicon ladder</em>: AI-capable baseline chips, Pro-class chips, custom wireless and modem subsystems, and feature segmentation through GPU, memory, thermals, camera pipeline, and sustained performance.
+        </div>
+      </div>
+
+      <div class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">Historical context: what the 2022 article got right</a></li>
+          <li><a href="#sec-14">The iPhone 14 split was the first visible break</a></li>
+          <li><a href="#sec-15">Apple repeated the pattern with iPhone 15</a></li>
+          <li><a href="#sec-ai">Apple Intelligence changed the rules</a></li>
+          <li><a href="#sec-ladder">The new Apple silicon ladder</a></li>
+          <li><a href="#sec-tsmc">TSMC node economics are still the force underneath</a></li>
+          <li><a href="#sec-fin">Apple's financials explain why silicon allocation matters</a></li>
+          <li><a href="#sec-pro">Pro mix is not just marketing</a></li>
+          <li><a href="#sec-seg">The segmentation moved</a></li>
+          <li><a href="#sec-industry">What this means for the semiconductor industry</a></li>
+          <li><a href="#sec-ledger">Evidence ledger</a></li>
+          <li><a href="#sec-risks">Risks and limitations</a></li>
+          <li><a href="#sec-bottom">Bottom line</a></li>
+          <li><a href="#sec-glossary">Glossary</a></li>
+          <li><a href="#sec-sources">Sources and method notes</a></li>
+        </ol>
+      </div>
+
+      <div class="essay-body">
+
+        <div class="aix-execsum">
+          <div class="aix-execsum-label">Executive summary</div>
+          <ul>
+            <li>In 2022, Apple broke tradition by putting A15 in iPhone 14 and A16 only in iPhone 14 Pro.</li>
+            <li>The 2022 SemiAnalysis article argued this was caused by Moore's Law economics: newer nodes were still better, but no longer cheap enough to give every model the newest chip.</li>
+            <li>Apple repeated the pattern in 2023 when iPhone 15 used A16 while iPhone 15 Pro used A17 Pro.</li>
+            <li>In 2024, Apple Intelligence changed the pattern by forcing a higher baseline: iPhone 16 moved to A18 because AI capability became a product requirement.</li>
+            <li>The modern iPhone strategy is not simply "old chip for non-Pro, new chip for Pro." It is a silicon ladder shaped by AI, GPU, memory, thermals, camera pipeline, wireless chips, modem chips, and product margin.</li>
+          </ul>
+        </div>
+
+        <h2 class="essay-h2" id="sec-2022"><span class="essay-h2-num">Section 1 &nbsp;&middot;&nbsp; Historical frame</span>What the 2022 article got right</h2>
+
+        <p>
+          The 2022 SemiAnalysis piece, <em>As Moore's Law Slows, Apple Is Forced To Use Cheaper Chipsets In Non-Pro iPhones</em>, made an argument that did not sound obvious at the time.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> Apple was about to use A15 in non-Pro iPhone 14 models because the economics of transistor scaling had worsened. Moore's Law had slowed, especially in the economic sense. Apple's last major cost-per-transistor improvement, the piece argued, came around the TSMC N10-to-N7 transition. N7-to-N5 and N5-to-N4 economic scaling were weaker, N3 was delayed, A15 die size was already large, and LPDDR5 added memory cost pressure. The prediction was a structural one: iPhone SoCs would bifurcate by product tier.<sup class="essay-fn"><a href="#fn1">[1]</a></sup>
+        </p>
+
+        <p>
+          The visuals carried the argument. Page 3 of the 2022 PDF showed Apple SoC transistor count and die-size pressure rising across A-series generations. Page 5 showed the memory transition table, highlighting the move from LPDDR4X toward LPDDR5.<sup class="essay-fn"><a href="#fn1">[1]</a></sup> The point underneath the visuals was simple. Newer silicon was becoming a bill-of-materials problem, not only a performance feature. Once that shift was real, Apple no longer had a free path to put the newest A-series chip in every iPhone.
+        </p>
+
+        <p>
+          Four years later, that argument reads less like a forecast and more like a description of how Apple's iPhone product line now works. The lineup has bifurcated by tier, then become more complex as AI raised the baseline, then become more complex again as Apple expanded its own wireless and modem silicon. The 2022 piece called the first move. The 2026 update has to deal with the next three.
+        </p>
+
+        <h2 class="essay-h2" id="sec-14"><span class="essay-h2-num">Section 2 &nbsp;&middot;&nbsp; First break</span>The iPhone 14 split was the first visible break</h2>
+
+        <p>
+          iPhone 14 and iPhone 14 Plus used A15 Bionic with a 5-core GPU, per Apple's launch announcement.<sup class="essay-fn"><a href="#fn2">[2]</a></sup> iPhone 14 Pro and iPhone 14 Pro Max used A16 Bionic, per Apple's separate Pro announcement.<sup class="essay-fn"><a href="#fn3">[3]</a></sup> That was the break. For years, the assumption had been that the main flagship iPhone family received the newest A-series chip together, with the Pro line differentiating on camera, display, and design but sharing the same SoC.
+        </p>
+
+        <p class="essay-pull">
+          The problem was not that Apple forgot how to make great chips. The problem was that great chips were becoming more expensive to give to everyone.
+        </p>
+
+        <p>
+          The right way to read the 2022 split is not as a marketing trick. It is as a constraint Apple absorbed into its product line and then turned into a product architecture. The constraint was the cost curve under the chip. The architecture was the decision to let Pro lead and non-Pro follow.
+        </p>
+
+        <h2 class="essay-h2" id="sec-15"><span class="essay-h2-num">Section 3 &nbsp;&middot;&nbsp; Pattern</span>iPhone 15 repeated the pattern</h2>
+
+        <p>
+          iPhone 15 and iPhone 15 Plus used A16 Bionic, per Apple's launch announcement.<sup class="essay-fn"><a href="#fn4">[4]</a></sup> iPhone 15 Pro and iPhone 15 Pro Max used A17 Pro, which Apple positioned as the first 3nm chip in the industry.<sup class="essay-fn"><a href="#fn5">[5]</a></sup> By the time iPhone 15 Pro launched, the chip split was no longer a surprise. It had become an architecture choice that Apple was repeating intentionally.
+        </p>
+
+        <p class="essay-pull">
+          By iPhone 15, the split was no longer a surprise. It was the new product architecture.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ai"><span class="essay-h2-num">Section 4 &nbsp;&middot;&nbsp; Apple Intelligence</span>AI changed the rules</h2>
+
+        <p>
+          Before Apple Intelligence, Apple could put an older but still powerful chip in a non-Pro iPhone and most users would not notice. The chip difference showed up in benchmark charts and Pro-only camera features, not in core product experience. After Apple Intelligence, the chip became a feature eligibility gate. If a model could not run Apple Intelligence, it could not access a growing part of the product surface that Apple now advertises as central.
+        </p>
+
+        <p>
+          iPhone 16 and iPhone 16 Plus used A18 and were built for Apple Intelligence, per Apple's iPhone 16 announcement.<sup class="essay-fn"><a href="#fn6">[6]</a></sup> iPhone 16 Pro used A18 Pro with a stronger GPU configuration and broader Pro differentiation, per Apple's separate Pro release.<sup class="essay-fn"><a href="#fn7">[7]</a></sup> Apple Intelligence support created a visible hardware floor across the lineup, framed officially on Apple's Apple Intelligence page.<sup class="essay-fn"><a href="#fn8">[8]</a></sup> The pattern continued downmarket: iPhone 16e used A18 and supported Apple Intelligence, while including Apple's first own modem (C1) and other product-form choices.<sup class="essay-fn"><a href="#fn9">[9]</a></sup> The 2025 cycle pushed both AI and custom subsystems further: iPhone 17 shipped with A19 and the Apple-designed N1 wireless chip supporting Wi-Fi 7, Bluetooth 6, and Thread.<sup class="essay-fn"><a href="#fn10">[10]</a></sup> iPhone 17e uses A19, showing that Apple is moving AI-capable silicon further down its lineup over time.<sup class="essay-fn"><a href="#fn13">[13]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Apple wants to segment silicon by price, but AI forces a minimum silicon floor across the lineup.
+        </p>
+
+        <div class="aix-timeline">
+          <div class="aix-timeline-label">iPhone silicon timeline &nbsp;&middot;&nbsp; how the split evolved</div>
+          <div class="aix-timeline-row">
+            <div class="aix-tl-year">2022</div>
+            <div class="aix-tl-text">iPhone 14 and 14 Plus use <strong>A15</strong>. iPhone 14 Pro and Pro Max use <strong>A16</strong>. First open chip split between non-Pro and Pro.</div>
+          </div>
+          <div class="aix-timeline-row">
+            <div class="aix-tl-year">2023</div>
+            <div class="aix-tl-text">iPhone 15 and 15 Plus use <strong>A16</strong>. iPhone 15 Pro and Pro Max use <strong>A17 Pro</strong>, positioned as the industry's first 3nm chip.</div>
+          </div>
+          <div class="aix-timeline-row">
+            <div class="aix-tl-year">2024</div>
+            <div class="aix-tl-text">iPhone 16 and 16 Plus use <strong>A18</strong>, built for Apple Intelligence. iPhone 16 Pro uses <strong>A18 Pro</strong>. AI raises the baseline silicon floor.</div>
+          </div>
+          <div class="aix-timeline-row">
+            <div class="aix-tl-year">2025</div>
+            <div class="aix-tl-text">iPhone 16e ships with <strong>A18</strong> and Apple's C1 modem. iPhone 17 uses <strong>A19</strong> and the <strong>N1</strong> Apple wireless chip. iPhone 17 Pro uses <strong>A19 Pro</strong> with a 6-core GPU. iPhone Air uses <strong>A19 Pro</strong>, <strong>N1</strong>, and <strong>C1X</strong>.</div>
+          </div>
+          <div class="aix-timeline-row">
+            <div class="aix-tl-year">2026</div>
+            <div class="aix-tl-text">iPhone 17e uses <strong>A19</strong>, showing Apple is moving AI-capable silicon further into entry tiers while differentiating Pro through GPU, memory, thermals, camera pipeline, and custom subsystems.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-ladder"><span class="essay-h2-num">Section 5 &nbsp;&middot;&nbsp; The ladder</span>The new Apple silicon ladder</h2>
+
+        <p>
+          The clean way to think about Apple's iPhone strategy in 2026 is as three models, not one. Each model describes how Apple paired silicon to product over a different period.
+        </p>
+
+        <div class="aix-models">
+          <div class="aix-model old">
+            <div class="aix-model-era">Pre-2022</div>
+            <div class="aix-model-tag">Old model</div>
+            <div class="aix-model-text">New iPhone year = newest A-series chip for everyone in the main lineup, with Pro differentiating on camera, display, and design.</div>
+          </div>
+          <div class="aix-model mid">
+            <div class="aix-model-era">2022 to 2023</div>
+            <div class="aix-model-tag">Transition model</div>
+            <div class="aix-model-text">Pro gets the newest chip. Non-Pro inherits last year's Pro chip. The split is driven by Moore's Law economics, not by product strategy.</div>
+          </div>
+          <div class="aix-model ai">
+            <div class="aix-model-era">2024 to 2026</div>
+            <div class="aix-model-tag">AI model</div>
+            <div class="aix-model-text">Every relevant iPhone needs an AI-capable floor. Pro differentiation moves to GPU, thermals, memory, camera pipeline, wireless silicon, modem silicon, and sustained performance.</div>
+          </div>
+        </div>
+
+        <div class="aix-ladder-wrap">
+          <table class="aix-tier-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Silicon role</th>
+                <th>Product purpose</th>
+                <th>Differentiation lever</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Entry iPhone</td>
+                <td>AI-capable baseline chip (A18 or A19 class)</td>
+                <td>Bring Apple Intelligence to lower price points</td>
+                <td>Older display, simpler camera, fewer Pro features</td>
+              </tr>
+              <tr>
+                <td>Standard flagship</td>
+                <td>Current-generation A-series baseline</td>
+                <td>Mainstream flagship experience</td>
+                <td>Strong AI, camera, battery, wireless, display</td>
+              </tr>
+              <tr>
+                <td>Air</td>
+                <td>Efficiency and custom-subsystem showcase</td>
+                <td>Thin design and power efficiency</td>
+                <td>A-series Pro-class chip, N-series wireless, C-series modem</td>
+              </tr>
+              <tr>
+                <td>Pro</td>
+                <td>Best A-series implementation</td>
+                <td>Performance, camera, gaming, creator workflows</td>
+                <td>GPU, thermals, memory bandwidth, camera pipeline, Pro video</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Reading the table left to right, the differentiation moves from <em>which chip</em> at the bottom of the lineup to <em>what total silicon system</em> at the top. That is the structural shift. The lineup is no longer ordered by SoC generation alone.
+        </p>
+
+        <h2 class="essay-h2" id="sec-tsmc"><span class="essay-h2-num">Section 6 &nbsp;&middot;&nbsp; Node economics</span>TSMC is still the force underneath</h2>
+
+        <p>
+          Moore's Law did not stop. The cheap version of Moore's Law did. TSMC's 3nm family illustrates how product-specific node selection has become. The 3nm family includes multiple variants, with public TSMC material naming N3, N3E, N3P, N3X, N3C, and N3A. Advanced-node selection is now a product choice across performance, power, density, and cost rather than one universal new node for every product.<sup class="essay-fn"><a href="#fn14">[14]</a></sup> N2 entered volume production in Q4 2025 and uses first-generation nanosheet transistor technology, marking the next generation of leading-edge logic.<sup class="essay-fn"><a href="#fn15">[15]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Moore's Law did not stop. The cheap version of Moore's Law did.
+        </p>
+
+        <div class="aix-node">
+          <div class="aix-node-label">TSMC node economics &nbsp;&middot;&nbsp; what Apple chooses across</div>
+          <div class="aix-node-grid">
+            <div class="aix-node-card"><div class="k">N3 family variants</div><div class="v">N3, N3E, N3P, N3X, N3C, N3A. Performance, power, density, and product-specific options.</div></div>
+            <div class="aix-node-card"><div class="k">3nm Apple use</div><div class="v">A17 Pro positioned by Apple as the industry's first 3nm chip; A18 and A19 families continue at 3nm-class processes.</div></div>
+            <div class="aix-node-card"><div class="k">N2 status</div><div class="v">TSMC N2 entered volume production in Q4 2025 with first-generation nanosheet transistor technology.</div></div>
+            <div class="aix-node-card"><div class="k">Implication for Apple</div><div class="v">Each new node is technically better but more expensive to design, validate, yield, and allocate across product tiers.</div></div>
+          </div>
+        </div>
+
+        <p>
+          The takeaway is that advanced silicon is still expensive to design, validate, yield, and allocate. Apple is one of the few companies that buys leading-edge node capacity at the volume required to ride each transition. That volume gives Apple privileged access. It does not eliminate the cost-per-die problem that the 2022 piece identified.
+        </p>
+
+        <h2 class="essay-h2" id="sec-fin"><span class="essay-h2-num">Section 7 &nbsp;&middot;&nbsp; Allocation</span>Apple's financials explain why silicon allocation matters</h2>
+
+        <p>
+          Apple reported iPhone net sales of approximately US$209.6 billion in fiscal 2025, with the company saying higher net sales of Pro models drove the increase, and noting that product gross margin percentage was pressured by product mix and tariff costs.<sup class="essay-fn"><a href="#fn16">[16]</a></sup> At that volume, every extra dollar of silicon, memory, modem, camera hardware, packaging, or thermal design scales across enormous shipment counts.
+        </p>
+
+        <div class="aix-fin">
+          <div class="aix-fin-card"><div class="aix-fin-k">iPhone net sales FY2025</div><div class="aix-fin-v">~ US$209.6B</div><div class="aix-fin-d">Per Apple FY2025 Form 10-K, with higher Pro model sales cited as the driver.</div></div>
+          <div class="aix-fin-card"><div class="aix-fin-k">Margin pressure</div><div class="aix-fin-v">Product mix + tariffs</div><div class="aix-fin-d">Apple's FY2025 filing flagged product gross margin pressure from product mix and tariff costs.</div></div>
+        </div>
+
+        <p>
+          The way to read Apple's chip strategy is as portfolio management. Apple makes decisions on which models deserve the newest node, which need the newest Neural Engine, which can reuse proven silicon, which get Pro GPU configurations, which get better memory bandwidth, which receive the newest Apple-designed modem and wireless chips, and which protect margin rather than drive upgrade cycles. None of those decisions are made in isolation. They get traded off against each other across the lineup every cycle.
+        </p>
+
+        <div class="aix-alloc">
+          <div class="aix-alloc-label">Apple's silicon allocation decisions &nbsp;&middot;&nbsp; what gets traded off every cycle</div>
+          <ol class="aix-alloc-list">
+            <li>Which models deserve the newest TSMC node.</li>
+            <li>Which models need the newest Neural Engine for Apple Intelligence eligibility.</li>
+            <li>Which models can reuse proven silicon to protect cost.</li>
+            <li>Which models get Pro GPU configurations.</li>
+            <li>Which models get better memory bandwidth and capacity.</li>
+            <li>Which models receive the newest Apple-designed wireless chip (N-series).</li>
+            <li>Which models receive Apple's own modem (C-series) and which still ship third-party silicon.</li>
+            <li>Which models protect gross margin versus drive upgrade cycles.</li>
+            <li>How camera pipeline, thermals, and sustained performance map to silicon choices.</li>
+          </ol>
+        </div>
+
+        <p class="essay-pull">
+          The 2022 article framed the A15 / A16 split as a cost problem. The 2026 version should frame it as a silicon allocation strategy.
+        </p>
+
+        <h2 class="essay-h2" id="sec-pro"><span class="essay-h2-num">Section 8 &nbsp;&middot;&nbsp; Pro mix</span>Pro mix is not just marketing</h2>
+
+        <p>
+          Better silicon supports premiumisation. Apple's FY2025 filing said higher net sales of Pro models drove iPhone growth.<sup class="essay-fn"><a href="#fn16">[16]</a></sup> Pro models justify higher prices through a bundle of features: chip, GPU, camera, display, storage, materials, battery, thermals, and creator workflows. Silicon is one of the levers that makes Pro feel meaningfully different from standard flagship, not the only one. iPhone 17 Pro extends that pattern with A19 Pro and a 6-core GPU configuration framed for Pro performance and creator workloads.<sup class="essay-fn"><a href="#fn11">[11]</a></sup>
+        </p>
+
+        <p class="essay-pull">
+          Apple does not only sell a faster chip. It sells a higher-margin system built around that chip.
+        </p>
+
+        <h2 class="essay-h2" id="sec-seg"><span class="essay-h2-num">Section 9 &nbsp;&middot;&nbsp; Segmentation moved</span>The segmentation did not disappear, it became total</h2>
+
+        <p>
+          When Apple brought newer chips to more models for Apple Intelligence, the headline read like the chip split was reversing. The reality is more interesting. The segmentation did not vanish. It moved from simple SoC generation to total silicon system. The standard flagship is still meaningfully different from Pro, just not on the basis of which A-series number is printed on the box.
+        </p>
+
+        <div class="aix-levers">
+          <div class="aix-lever">GPU core count and configuration</div>
+          <div class="aix-lever">RAM capacity and memory bandwidth</div>
+          <div class="aix-lever">Sustained performance and cooling envelope</div>
+          <div class="aix-lever">Camera pipeline and ISP capabilities</div>
+          <div class="aix-lever">Pro video workflows (ProRes, ProRAW, ACES)</div>
+          <div class="aix-lever">Display features (ProMotion, peak brightness, always-on)</div>
+          <div class="aix-lever">Storage tiers and read/write performance</div>
+          <div class="aix-lever">Modem generation (Apple C1, C1X, third-party)</div>
+          <div class="aix-lever">Wireless chip generation (Apple N1, third-party)</div>
+          <div class="aix-lever">Physical design constraints (Air thinness, Pro thermals)</div>
+          <div class="aix-lever">AI features limited by memory, thermals, or model size</div>
+          <div class="aix-lever">Sensor stack and computational photography depth</div>
+        </div>
+
+        <p class="essay-pull">
+          The chip split did not vanish. It became more sophisticated.
+        </p>
+
+        <p>
+          iPhone Air is the clearest case. Apple shipped Air with A19 Pro, N1, and C1X, framing the device as a power-efficient, custom-subsystem showcase rather than as a Pro device by another name.<sup class="essay-fn"><a href="#fn12">[12]</a></sup> That bundle does not fit the older categories cleanly. It only makes sense once you stop reading the lineup as <em>which A-series chip</em> and start reading it as <em>which total silicon system</em>.
+        </p>
+
+        <h2 class="essay-h2" id="sec-industry"><span class="essay-h2-num">Section 10 &nbsp;&middot;&nbsp; Industry signal</span>What this means for the semiconductor industry</h2>
+
+        <p>
+          Apple is the cleanest consumer example of a broader semiconductor reality. New nodes still matter. Node migration is no longer automatically cheap enough for every product tier. Product companies increasingly use chip generations, bins, accelerators, memory systems, and subsystems to segment their lineups. AI raises the minimum hardware floor, while Pro devices still absorb the newest and most expensive silicon first. The same logic shows up in PCs, tablets, wearables, edge AI devices, and AI-capable consumer electronics. Apple just runs it most visibly because its volumes magnify every choice.
+        </p>
+
+        <p class="essay-pull">
+          AI raises the floor. Moore's Law economics raises the price of the ceiling.
+        </p>
+
+        <h2 class="essay-h2" id="sec-ledger"><span class="essay-h2-num">Section 11 &nbsp;&middot;&nbsp; Evidence</span>Evidence ledger</h2>
+
+        <div class="aix-ledger">
+          <div class="aix-ledger-head">
+            <div>Claim</div>
+            <div>Evidence</div>
+            <div>Interpretation</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>2022 predicted iPhone SoC bifurcation</div>
+            <div>The 2022 SemiAnalysis article argued non-Pro iPhone 14 would use A15 while Pro models used A16 because transistor economics were worsening.</div>
+            <div>The chip split was not random marketing.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>Apple confirmed the iPhone 14 split</div>
+            <div>Apple's announcements show iPhone 14 with A15 (5-core GPU) and iPhone 14 Pro with A16.</div>
+            <div>The prediction became product reality.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>Apple repeated the split in 2023</div>
+            <div>Apple's announcements show iPhone 15 with A16 and iPhone 15 Pro with A17 Pro, positioned as the industry's first 3nm chip.</div>
+            <div>Pro-first silicon became a strategy.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>AI changed the baseline in 2024</div>
+            <div>iPhone 16 used A18 and was built for Apple Intelligence; iPhone 16 Pro used A18 Pro.</div>
+            <div>Apple Intelligence raised the minimum chip floor.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>Entry models now need AI-capable chips</div>
+            <div>iPhone 16e used A18 with Apple's C1 modem; iPhone 17e uses A19.</div>
+            <div>Apple is moving AI-capable silicon downmarket over time.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>TSMC node choice is more tiered</div>
+            <div>The N3 family includes N3, N3E, N3P, N3X, N3C, and N3A variants, and N2 entered volume production in Q4 2025.</div>
+            <div>Advanced nodes are better, but not automatically cheap enough for every SKU.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>Pro mix matters financially</div>
+            <div>Apple's FY2025 Form 10-K says iPhone net sales of approximately US$209.6B rose with higher Pro model sales, with product mix pressuring margin.</div>
+            <div>Silicon helps drive premiumisation.</div>
+          </div>
+          <div class="aix-ledger-row">
+            <div>Modern iPhone strategy is a silicon ladder</div>
+            <div>A-series, Pro-class A-series, Apple-designed N1 wireless, Apple-designed C1 / C1X modem, Apple Intelligence eligibility, GPU, memory, thermals, and camera pipeline shape tier identity.</div>
+            <div>Apple segments by total silicon system, not only SoC generation.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-risks"><span class="essay-h2-num">Section 12 &nbsp;&middot;&nbsp; Risk register</span>Risks and limitations</h2>
+
+        <p>
+          This essay is an analysis of public disclosures and historical context. It is not investment advice. The honest risks against the read above run in several directions, and they are listed here so the argument can be stress-tested.
+        </p>
+
+        <div class="aix-risks">
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Moore's Law has not stopped. It has slowed economically, especially in cost per transistor. Be careful with absolutist framing in either direction.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Apple's silicon allocation strategy is inferred from product behavior and public filings. The internal cost trade-offs are private and may differ from the framing here.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Apple Intelligence support requirements may evolve. Memory, thermals, and model-size constraints could pull or push the AI floor over time.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Pro mix gains can reverse. A consumer shift toward standard flagship or entry models would compress the margin uplift this memo highlights.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Tariffs and trade policy materially affect Apple's product mix economics, as Apple's FY2025 filing flagged. These are policy variables, not modeled trends.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Apple's own modem and wireless silicon roadmap (C-series and N-series) may move faster or slower than the lineup currently implies, changing the segmentation logic.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Competitive Android silicon (Qualcomm, MediaTek, Google Tensor, Samsung) could narrow Apple's chip lead and change the strategic value of Pro silicon differentiation.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">TSMC node delays, yield issues, or geopolitical disruption could force Apple to make different node choices than the strategy above assumes.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Memory pricing (LPDDR and HBM-adjacent dynamics) affects iPhone bill of materials in ways that interact with chip choice and AI feature scope.</div>
+          </div>
+          <div class="aix-risk">
+            <div class="aix-risk-num"></div>
+            <div class="aix-risk-text">Regulatory and platform pressures (App Store, sideloading, AI policy) may change how Apple monetizes the Pro silicon advantage even if the silicon strategy itself remains intact.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-bottom"><span class="essay-h2-num">Section 13 &nbsp;&middot;&nbsp; Bottom line</span>Bottom line</h2>
+
+        <div class="aix-bottom">
+          <div class="aix-bottom-label">Bottom line</div>
+          <p>
+            The 2022 article was right that Moore's Law economics would force Apple to split iPhone silicon by product tier. That split became real with iPhone 14 and continued with iPhone 15. But the 2026 update is more nuanced: Apple Intelligence raised the minimum silicon floor, forcing newer AI-capable chips into more of the lineup.
+          </p>
+          <p>
+            Apple's new strategy is not simply "old chip for non-Pro, new chip for Pro." It is a silicon ladder: AI-capable baseline chips, Pro-class chips, custom wireless and modem subsystems, and feature segmentation through GPU, memory, thermals, camera pipeline, and sustained performance.
+          </p>
+          <p>
+            Apple is no longer just choosing which iPhone gets the newest chip. It is deciding how much silicon each customer tier is allowed to have.
+          </p>
+        </div>
+
+        <h2 class="essay-h2" id="sec-glossary"><span class="essay-h2-num">Section 14 &nbsp;&middot;&nbsp; Definitions</span>Glossary</h2>
+
+        <div class="aix-gloss">
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">SoC</div>
+            <div class="aix-gloss-def">System-on-chip. A single chip that integrates CPU cores, GPU, Neural Engine, ISP, media engines, memory controllers, and other functional blocks.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">A-series chip</div>
+            <div class="aix-gloss-def">Apple's family of custom mobile SoCs (A15, A16, A17 Pro, A18, A19, and the Pro variants), designed in-house and manufactured at TSMC.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Neural Engine</div>
+            <div class="aix-gloss-def">Apple's on-chip accelerator for neural network inference, used for on-device AI features including parts of Apple Intelligence.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Apple Intelligence</div>
+            <div class="aix-gloss-def">Apple's on-device and Private Cloud Compute AI feature set introduced in iOS 18, with hardware eligibility tied to chip and memory requirements.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Moore's Law</div>
+            <div class="aix-gloss-def">The historical observation that the number of transistors on a chip roughly doubled every two years, traditionally accompanied by improving cost per transistor.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Cost per transistor</div>
+            <div class="aix-gloss-def">A key economic metric in semiconductor scaling. Newer nodes can deliver more transistors per area but no longer guarantee lower cost per transistor.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Die size</div>
+            <div class="aix-gloss-def">The physical area of a chip. Larger die sizes mean fewer chips per wafer and higher cost per unit, with stronger sensitivity to yield.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Wafer cost</div>
+            <div class="aix-gloss-def">The price a fabless designer pays the foundry for each processed wafer. Wafer cost has risen sharply at advanced nodes such as N5, N3, and N2.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">TSMC N3</div>
+            <div class="aix-gloss-def">TSMC's 3nm-class process family with variants such as N3, N3E, N3P, N3X, N3C, and N3A, targeting performance, power, density, and product-specific needs.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">TSMC N2</div>
+            <div class="aix-gloss-def">TSMC's 2nm-class process, in volume production from Q4 2025, using first-generation nanosheet transistors.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">LPDDR5</div>
+            <div class="aix-gloss-def">Low-Power Double Data Rate 5 memory used in modern smartphones. Higher bandwidth and capacity than LPDDR4X, but more expensive.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Memory bandwidth</div>
+            <div class="aix-gloss-def">The rate at which data can move between memory and the SoC. A key constraint on AI inference performance and Pro creative workflows.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Product binning</div>
+            <div class="aix-gloss-def">The practice of using the same silicon design at different performance or feature levels by selecting which dies meet which specs, often used to fit chips into multiple product tiers.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Gross margin</div>
+            <div class="aix-gloss-def">Revenue minus cost of goods sold, expressed as a percentage. Apple's product gross margin is sensitive to silicon, memory, modem, and packaging cost.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Pro mix</div>
+            <div class="aix-gloss-def">The share of iPhone units (or revenue) coming from Pro models. A higher Pro mix typically supports higher average selling price and gross margin.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Silicon ladder</div>
+            <div class="aix-gloss-def">A framing used in this essay: Apple's iPhone lineup is structured as a ladder where each tier is defined by an entire silicon system, not only by which A-series chip it carries.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Sustained performance</div>
+            <div class="aix-gloss-def">How quickly performance is delivered over time without throttling. Pro devices typically deliver higher sustained performance through better thermals and power delivery.</div>
+          </div>
+          <div class="aix-gloss-row">
+            <div class="aix-gloss-term">Thermal envelope</div>
+            <div class="aix-gloss-def">The amount of heat a device can dissipate without throttling. A major design constraint for thin iPhones (Air) and a key Pro differentiator.</div>
+          </div>
+        </div>
+
+        <h2 class="essay-h2" id="sec-sources"><span class="essay-h2-num">Section 15 &nbsp;&middot;&nbsp; Method</span>Sources and method notes</h2>
+
+        <div class="aix-sources-box">
+          <div class="aix-sources-box-label">How this essay reads sources</div>
+          <p>
+            The 2022 SemiAnalysis piece is treated as historical context for the Moore's Law economic slowdown, the A15 in non-Pro iPhone 14 prediction, the A16 in Pro models, the N3 delay, the N4 and N5 family issue, A15 die-size pressure, LPDDR5 cost pressure, and the iPhone SoC bifurcation thesis. The 2026 read is built from Apple's official iPhone 14 and 14 Pro, iPhone 15 and 15 Pro, iPhone 16 and 16 Pro, Apple Intelligence, iPhone 16e, iPhone 17, iPhone 17 Pro, iPhone Air, and iPhone 17e announcements, plus TSMC's 3nm and 2nm pages and Apple's FY2025 Form 10-K.
+          </p>
+          <p>
+            Apple's product, financial, and feature-eligibility claims are treated as Apple's claims, not as endorsed forecasts. TSMC's process descriptions are treated as TSMC's claims. The structural arguments that Moore's Law slowed economically, that Apple Intelligence raised the silicon floor, and that the iPhone lineup is now a silicon ladder are independent analysis.
+          </p>
+        </div>
+
+        <div class="essay-footnotes">
+          <h3>Footnotes &nbsp;&middot;&nbsp; primary sources</h3>
+          <ol>
+            <li id="fn1">SemiAnalysis, &ldquo;As Moore's Law Slows, Apple Is Forced To Use Cheaper Chipsets In Non-Pro iPhones,&rdquo; 2022 (PDF supplied by author). Historical anchor used in this essay for the Moore's Law economic slowdown framing, the A15 in non-Pro iPhone 14 prediction, the A16 in Pro models framing, the N3 delay context, the N4 and N5 family issues, the page 3 transistor count and die-size pressure visual, the page 5 LPDDR4X to LPDDR5 memory transition visual, and the iPhone SoC bifurcation thesis.</li>
+            <li id="fn2">Apple, &ldquo;Apple introduces iPhone 14 and iPhone 14 Plus,&rdquo; <a href="https://www.apple.com/au/newsroom/2022/09/apple-introduces-iphone-14-and-iphone-14-plus/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-14</a>. Source for iPhone 14 and iPhone 14 Plus using A15 Bionic with a 5-core GPU.</li>
+            <li id="fn3">Apple, &ldquo;Apple debuts iPhone 14 Pro and iPhone 14 Pro Max,&rdquo; <a href="https://www.apple.com/au/newsroom/2022/09/apple-debuts-iphone-14-pro-and-iphone-14-pro-max/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-14-pro</a>. Source for iPhone 14 Pro and iPhone 14 Pro Max using A16 Bionic.</li>
+            <li id="fn4">Apple, &ldquo;Apple debuts iPhone 15 and iPhone 15 Plus,&rdquo; <a href="https://www.apple.com/au/newsroom/2023/09/apple-debuts-iphone-15-and-iphone-15-plus/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-15</a>. Source for iPhone 15 and iPhone 15 Plus using A16 Bionic.</li>
+            <li id="fn5">Apple, &ldquo;Apple unveils iPhone 15 Pro and iPhone 15 Pro Max,&rdquo; <a href="https://www.apple.com/au/newsroom/2023/09/apple-unveils-iphone-15-pro-and-iphone-15-pro-max/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-15-pro</a>. Source for iPhone 15 Pro and iPhone 15 Pro Max using A17 Pro and A17 Pro being positioned by Apple as the industry's first 3nm chip.</li>
+            <li id="fn6">Apple, &ldquo;Apple introduces iPhone 16 and iPhone 16 Plus,&rdquo; <a href="https://www.apple.com/newsroom/2024/09/apple-introduces-iphone-16-and-iphone-16-plus/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-16</a>. Source for iPhone 16 and iPhone 16 Plus using A18 and being built for Apple Intelligence.</li>
+            <li id="fn7">Apple, &ldquo;Apple debuts iPhone 16 Pro and iPhone 16 Pro Max,&rdquo; <a href="https://www.apple.com/newsroom/2024/09/apple-debuts-iphone-16-pro-and-iphone-16-pro-max/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-16-pro</a>. Source for iPhone 16 Pro and iPhone 16 Pro Max using A18 Pro with Pro differentiation and Apple Intelligence positioning.</li>
+            <li id="fn8">Apple, &ldquo;Apple Intelligence,&rdquo; <a href="https://www.apple.com/au/apple-intelligence/" target="_blank" rel="noopener noreferrer">apple.com/au/apple-intelligence</a>. Source for Apple Intelligence hardware eligibility framing and the supported iPhone floor referenced in this essay.</li>
+            <li id="fn9">Apple, &ldquo;Apple debuts iPhone 16e, a powerful new member of the iPhone 16 family,&rdquo; <a href="https://www.apple.com/au/newsroom/2025/02/apple-debuts-iphone-16e-a-powerful-new-member-of-the-iphone-16-family/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-16e</a>. Source for iPhone 16e using A18, Apple Intelligence support, and the introduction of the Apple C1 modem in a more affordable iPhone.</li>
+            <li id="fn10">Apple, &ldquo;Apple debuts iPhone 17,&rdquo; <a href="https://www.apple.com/newsroom/2025/09/apple-debuts-iphone-17/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-17</a>. Source for iPhone 17 using A19, the introduction of the Apple N1 wireless chip with Wi-Fi 7, Bluetooth 6, and Thread, and the Apple Intelligence-related silicon positioning.</li>
+            <li id="fn11">Apple, &ldquo;Apple unveils iPhone 17 Pro and iPhone 17 Pro Max,&rdquo; <a href="https://www.apple.com/newsroom/2025/09/apple-unveils-iphone-17-pro-and-iphone-17-pro-max/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-17-pro</a>. Source for iPhone 17 Pro and Pro Max using A19 Pro with a 6-core GPU configuration, the Apple N1 wireless chip, and Pro silicon differentiation framing.</li>
+            <li id="fn12">Apple, &ldquo;Introducing iPhone Air, a powerful new iPhone with a breakthrough design,&rdquo; <a href="https://www.apple.com/newsroom/2025/09/introducing-iphone-air-a-powerful-new-iphone-with-a-breakthrough-design/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-air</a>. Source for iPhone Air using A19 Pro, Apple's N1 wireless chip, and Apple's C1X modem in a thin design positioned around efficiency and custom-subsystem differentiation.</li>
+            <li id="fn13">Apple, &ldquo;Apple introduces iPhone 17e,&rdquo; <a href="https://www.apple.com/newsroom/2026/03/apple-introduces-iphone-17e/" target="_blank" rel="noopener noreferrer">apple.com/&hellip;/iphone-17e</a>. Source for iPhone 17e using A19 and the broader pattern of AI-capable silicon moving further down the iPhone lineup.</li>
+            <li id="fn14">TSMC, &ldquo;3nm Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_3nm" target="_blank" rel="noopener noreferrer">tsmc.com/&hellip;/3nm</a>. Source for the TSMC 3nm family context, the N3, N3E, N3P, N3X, N3C, and N3A variants, and the framing that 3nm-class process selection is product-specific rather than universal.</li>
+            <li id="fn15">TSMC, &ldquo;2nm Technology,&rdquo; <a href="https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_2nm" target="_blank" rel="noopener noreferrer">tsmc.com/&hellip;/2nm</a>. Source for TSMC N2 entering volume production in Q4 2025 and using first-generation nanosheet transistor technology.</li>
+            <li id="fn16">Apple Inc., FY2025 Form 10-K <a href="https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm" target="_blank" rel="noopener noreferrer">sec.gov/&hellip;/aapl-20250927</a>. Source for iPhone net sales of approximately US$209.6B in fiscal 2025, the statement that higher Pro model sales drove iPhone growth, the product gross margin pressure from product mix and tariff costs, and the underlying margin sensitivity framing used in this essay.</li>
+          </ol>
+        </div>
+
+        <div class="aix-readnext">
+          <div class="aix-readnext-label">Read next &nbsp;&middot;&nbsp; related essays</div>
+          <div class="aix-readnext-grid">
+            <a href="a15-die-shot-apple-silicon-future.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 052</div>
+              <div class="aix-readnext-title">The A15 Die Shot That Predicted Apple Silicon's Future</div>
+            </a>
+            <a href="node-race-became-system-race.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 056</div>
+              <div class="aix-readnext-title">The Node Race Became a System Race</div>
+            </a>
+            <a href="qualcomm-modem-to-antenna-moat.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 057</div>
+              <div class="aix-readnext-title">Qualcomm's Modem-to-Antenna Moat</div>
+            </a>
+            <a href="advanced-packaging-became-the-computer.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 061</div>
+              <div class="aix-readnext-title">The Package Became the Computer</div>
+            </a>
+            <a href="memory-oligopoly-ai-toll-booth.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 050</div>
+              <div class="aix-readnext-title">The Memory Oligopoly Became AI's Toll Booth</div>
+            </a>
+            <a href="euv-throughput-bottleneck.html" class="aix-readnext-card">
+              <div class="aix-readnext-kicker">Essay 055</div>
+              <div class="aix-readnext-title">The EUV Throughput Bottleneck</div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); text-align: center;">
+        <a href="../" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-decoration: none;">&larr; All essays</a>
+      </div>
+    </div>
+  </article>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

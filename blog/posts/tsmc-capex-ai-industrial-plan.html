@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSMC's Capex Became the AI Industrial Plan | Pugalenthi Magendran</title>
+  <meta name="description" content="TSMC's 2026 capex is not just foundry spending. It is the industrial buildout behind AI compute across 2nm, 3nm, CoWoS, SoIC, advanced packaging and HPC capacity.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/tsmc-capex-ai-industrial-plan.html">
+  <meta property="og:title" content="TSMC's Capex Became the AI Industrial Plan">
+  <meta property="og:description" content="A technical essay on TSMC's capex, AI infrastructure, HPC growth, advanced nodes, CoWoS, SoIC, ASML EUV demand, Intel 18A, Samsung foundry and why capital spending became the map of AI compute scarcity.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/tsmc-capex-ai-industrial-plan.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="Capex">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="Foundry">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="SoIC">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Intel">
+  <meta property="article:tag" content="Samsung">
+  <meta property="article:tag" content="Advanced Packaging">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TSMC's Capex Became the AI Industrial Plan">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="TSMC's 2026 capex is not just foundry spending. It is the industrial buildout behind AI compute across 2nm, 3nm, CoWoS, SoIC, advanced packaging and HPC capacity.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "TSMC's Capex Became the AI Industrial Plan",
+    "description": "TSMC's 2026 capex is not just foundry spending. It is the industrial buildout behind AI compute across 2nm, 3nm, CoWoS, SoIC, advanced packaging and HPC capacity.",
+    "url": "https://pugalenthimagendran.com/blog/posts/tsmc-capex-ai-industrial-plan.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/tsmc-capex-ai-industrial-plan.html",
+    "keywords": "TSMC, Capex, Semiconductors, AI Infrastructure, Foundry, CoWoS, SoIC, ASML, Intel, Samsung, Advanced Packaging"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #8B6F2C); border: 1px solid rgba(139,111,44,0.30); background: rgba(139,111,44,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #8B6F2C); text-decoration: none; border-bottom: 0.5px solid rgba(139,111,44,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #8B6F2C); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #8B6F2C); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #8B6F2C); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #8B6F2C); }
+
+    /* Essay 064 TSMC Capex — scoped under .essay-cap, bronze-mustard #8B6F2C */
+    body.essay-cap {
+      --x-accent: #8B6F2C;
+      --x-accent-soft: rgba(139,111,44,0.10);
+      --x-accent-faint: rgba(139,111,44,0.05);
+      --x-accent-line: rgba(139,111,44,0.30);
+    }
+    body.essay-cap .essay-stamp { color: var(--x-accent); border-color: var(--x-accent-line); background: var(--x-accent-soft); }
+    body.essay-cap .essay-footnotes a { color: var(--x-accent); border-bottom-color: var(--x-accent-line); }
+    body.essay-cap .essay-fn a { color: var(--x-accent); }
+    body.essay-cap .essay-pull { border-left-color: var(--x-accent); }
+    body.essay-cap .essay-toc a:hover { color: var(--x-accent); }
+
+    body.essay-cap .x-thesis { background: linear-gradient(180deg, var(--x-accent-soft), var(--x-accent-faint)); border: 0.5px solid var(--x-accent-line); border-left: 2px solid var(--x-accent); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-cap .x-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--x-accent); margin-bottom: 0.75rem; }
+    body.essay-cap .x-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.22rem; line-height: 1.5; color: var(--color-text-primary); margin: 0; }
+
+    body.essay-cap .x-sources-box { background: var(--color-background-secondary); border: 0.5px dashed var(--x-accent-line); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-cap .x-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); margin-bottom: 0.85rem; }
+    body.essay-cap .x-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-cap .x-sources-box li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.45rem; }
+
+    /* Flywheel — 9 nodes in a ladder */
+    body.essay-cap .x-flywheel { margin: 2.5rem 0; padding: 1.5rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); }
+    body.essay-cap .x-flywheel-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); margin-bottom: 1rem; }
+    body.essay-cap .x-flywheel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
+    body.essay-cap .x-flywheel-step { border: 0.5px solid var(--x-accent-line); border-radius: 6px; padding: 0.75rem 0.85rem; background: var(--x-accent-faint); }
+    body.essay-cap .x-flywheel-num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: var(--x-accent); margin-bottom: 0.3rem; }
+    body.essay-cap .x-flywheel-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.92rem; color: var(--color-text-primary); margin: 0; line-height: 1.25; }
+
+    /* 2022 vs 2026 comparison */
+    body.essay-cap .x-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.5rem 0; }
+    body.essay-cap .x-compare-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-cap .x-compare-col.right { border-color: var(--x-accent-line); background: var(--x-accent-faint); }
+    body.essay-cap .x-compare-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.65rem; }
+    body.essay-cap .x-compare-col.right .x-compare-label { color: var(--x-accent); }
+    body.essay-cap .x-compare-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.75rem; }
+    body.essay-cap .x-compare-col ul { margin: 0; padding-left: 1.1rem; }
+    body.essay-cap .x-compare-col li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin-bottom: 0.4rem; }
+
+    /* Generic 2-col grid for "Where the Money Goes" and "Trust Stack" */
+    body.essay-cap .x-grid { margin: 2.5rem 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+    body.essay-cap .x-grid-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); padding: 1rem 1.5rem; background: var(--x-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cap .x-grid-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+    body.essay-cap .x-grid-item { padding: 0.7rem 1.25rem; border-bottom: 0.5px dashed var(--color-border-tertiary); border-right: 0.5px dashed var(--color-border-tertiary); font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); }
+    body.essay-cap .x-grid-item:nth-child(even) { border-right: none; }
+    body.essay-cap .x-grid-item strong { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; color: var(--x-accent); display: block; margin-bottom: 0.2rem; text-transform: uppercase; }
+
+    /* Counterpoints 2-col */
+    body.essay-cap .x-counter { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.5rem 0; }
+    body.essay-cap .x-counter-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-cap .x-counter-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); margin-bottom: 0.55rem; }
+    body.essay-cap .x-counter-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--color-text-primary); margin: 0 0 0.65rem; }
+    body.essay-cap .x-counter-col ul { margin: 0; padding-left: 1.05rem; }
+    body.essay-cap .x-counter-col li { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin-bottom: 0.35rem; }
+
+    /* Timeline */
+    body.essay-cap .x-timeline { margin: 2.5rem 0; display: flex; flex-direction: column; border-left: 1px solid var(--x-accent-line); padding-left: 1.5rem; margin-left: 0.5rem; }
+    body.essay-cap .x-timeline-item { padding: 0.65rem 0 1rem; position: relative; }
+    body.essay-cap .x-timeline-item::before { content: ''; position: absolute; left: -1.85rem; top: 1rem; width: 8px; height: 8px; background: var(--x-accent); border-radius: 50%; box-shadow: 0 0 0 3px var(--color-background-secondary); }
+    body.essay-cap .x-timeline-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--x-accent); margin-bottom: 0.35rem; }
+    body.essay-cap .x-timeline-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.02rem; color: var(--color-text-primary); margin: 0 0 0.35rem; }
+    body.essay-cap .x-timeline-desc { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-secondary); margin: 0; }
+
+    /* Evidence Ledger */
+    body.essay-cap .x-ledger { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-cap .x-ledger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); padding: 1rem 1.5rem; background: var(--x-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cap .x-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-cap .x-ledger th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-cap .x-ledger td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-secondary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-cap .x-ledger tr:last-child td { border-bottom: none; }
+    body.essay-cap .x-ledger td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--x-accent); letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Risk grid */
+    body.essay-cap .x-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin: 2.5rem 0; }
+    body.essay-cap .x-risk { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.15rem; background: var(--color-background-secondary); }
+    body.essay-cap .x-risk-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--x-accent); letter-spacing: 0.1em; margin-bottom: 0.45rem; }
+    body.essay-cap .x-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Read-next */
+    body.essay-cap .x-readnext { margin: 4rem 0 0; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cap .x-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
+    body.essay-cap .x-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    body.essay-cap .x-readnext-card { display: block; padding: 1.15rem 1.35rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+    body.essay-cap .x-readnext-card:hover { border-color: var(--x-accent); transform: translateY(-2px); }
+    body.essay-cap .x-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--x-accent); margin-bottom: 0.4rem; }
+    body.essay-cap .x-readnext-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--color-text-primary); margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-cap .x-flywheel-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+    }
+    @media (max-width: 768px) {
+      body.essay-cap .x-compare { grid-template-columns: 1fr; }
+      body.essay-cap .x-counter { grid-template-columns: 1fr; }
+      body.essay-cap .x-risks { grid-template-columns: 1fr; }
+      body.essay-cap .x-readnext-grid { grid-template-columns: 1fr; }
+      body.essay-cap .x-grid-items { grid-template-columns: 1fr; }
+      body.essay-cap .x-grid-item { border-right: none; }
+    }
+    @media (max-width: 480px) {
+      body.essay-cap .x-flywheel-grid { grid-template-columns: 1fr; }
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-cap .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-cap">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 064 &nbsp;&middot;&nbsp; TSMC Capex &amp; AI Industrial Plan</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">TSMC</span>
+        <span class="tag">Capex</span>
+        <span class="tag">Semiconductors</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">Foundry</span>
+        <span class="tag">CoWoS</span>
+        <span class="tag">SoIC</span>
+        <span class="tag">ASML</span>
+        <span class="tag">Intel</span>
+        <span class="tag">Samsung</span>
+        <span class="tag">Advanced Packaging</span>
+        <span class="tag">HPC</span>
+      </div>
+
+      <h1 class="essay-hed">
+        TSMC's Capex Became the AI <em>Industrial Plan</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">Original analysis</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        In 2022, TSMC's $40B to $44B capex plan looked like a foundry gauntlet against Intel and Samsung. In 2026, the story is bigger: TSMC's spending is becoming the physical buildout of the AI compute economy.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">15 min read</div>
+      </div>
+
+      <div class="x-thesis">
+        <div class="x-thesis-label">Thesis</div>
+        <p class="x-thesis-text">TSMC's capex is no longer just foundry spending. It is the industrial plan behind AI compute &mdash; concentrated on 2 nm, 3 nm, CoWoS, SoIC, advanced packaging and HPC capacity, the exact bottlenecks AI demand has created.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">What the 2022 TSMC capex article got right</a></li>
+          <li><a href="#sec-plan">From foundry gauntlet to AI industrial plan</a></li>
+          <li><a href="#sec-2026">The 2026 capex number</a></li>
+          <li><a href="#sec-hpc">HPC became the center of gravity</a></li>
+          <li><a href="#sec-nodes">Advanced nodes are where the value concentrates</a></li>
+          <li><a href="#sec-pkg">CoWoS and SoIC turned packaging into capex strategy</a></li>
+          <li><a href="#sec-asml">ASML shows the upstream pull</a></li>
+          <li><a href="#sec-fly">The capex flywheel</a></li>
+          <li><a href="#sec-intel">Intel is the serious counterpoint</a></li>
+          <li><a href="#sec-samsung">Samsung is also fighting the same battle</a></li>
+          <li><a href="#sec-trust">The real race is trusted capacity</a></li>
+          <li><a href="#sec-misread">What people get wrong about TSMC capex</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          In 2022, TSMC shocked the semiconductor world with a $40B to $44B capital expenditure plan.
+        </p>
+
+        <p>
+          Intel and Samsung were promising aggressive roadmaps. TSMC responded with capital. But the deeper point was not that TSMC simply spent more. It was that TSMC spent into the right bottlenecks: advanced nodes, packaging, yield learning, and customer-backed capacity. By 2026, that spending has become the physical buildout of AI compute.
+        </p>
+
+        <p class="essay-pull">
+          TSMC's capex is not just spending. It is a map of where the AI economy expects scarcity.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2022">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2022 TSMC capex article got right
+        </h2>
+
+        <p>
+          The 2022 SemiAnalysis piece on TSMC's capex gauntlet is the historical anchor for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It framed TSMC's $40B to $44B 2022 capex plan as a gauntlet against Intel and Samsung, noting that 2021 planned capex of $25B to $28B had landed around $30B and that 2022 expectations had been raised from $30B to $35B up to $40B to $44B. The piece argued that Intel and Samsung would struggle to keep up at that scale and cited customer commitments anchoring the spend: TSMC had collected $6.7B of customer prepayments over six months, alongside Nvidia advance payments inside broader long-term supply agreements.
+        </p>
+
+        <p>
+          The mix mattered as much as the headline. The piece said 70% to 80% of 2022 capex was allocated to 7&nbsp;nm, 5&nbsp;nm, 3&nbsp;nm, and 2&nbsp;nm, with around 10% directed at masks and advanced packaging including CoWoS, SoIC, and InFO. A 12-inch-equivalent wafer ASP chart on page 5 showed average pricing rising as mix shifted toward leading edge and specialty technologies. The 2021 platform-revenue chart on page 7 had smartphones at 44% and HPC at 37%, with HPC already called the largest absolute-dollar growth sector<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.
+        </p>
+
+        <div class="x-sources-box">
+          <div class="x-sources-box-label">Source notes &mdash; 2022 SemiAnalysis TSMC capex gauntlet (historical)</div>
+          <ul>
+            <li>2022 capex plan raised to $40B-$44B, up from $30B-$35B prior expectation.</li>
+            <li>2021 planned $25B-$28B; actual ~$30B.</li>
+            <li>70%-80% of 2022 capex directed to 7 nm, 5 nm, 3 nm, 2 nm.</li>
+            <li>~10% directed to masks and advanced packaging (CoWoS, SoIC, InFO).</li>
+            <li>$6.7B of customer prepayments collected in six months.</li>
+            <li>Nvidia advance payments cited inside long-term supply agreements.</li>
+            <li>Rising 12-inch-equivalent wafer ASP as leading-edge mix grew.</li>
+            <li>2021 platform mix: smartphone 44%, HPC 37%; HPC already the largest absolute-dollar growth sector.</li>
+          </ul>
+        </div>
+
+        <p>
+          The 2022 article was right because it understood capex as strategy, not just accounting. The 2026 update has to ask the harder question: what does that strategy now buy.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-plan">
+          <span class="essay-h2-num">Section 02</span>
+          From foundry gauntlet to AI industrial plan
+        </h2>
+
+        <p>
+          In 2022, the capex story was mostly framed as TSMC versus Intel versus Samsung. In 2026, the story is bigger. TSMC's capex is the physical layer behind AI infrastructure: leading-edge logic for AI accelerators and server CPUs, networking chips, HBM integration, CoWoS and SoIC packaging, and a global fab footprint that exists to make those workloads producible at scale.
+        </p>
+
+        <p>
+          The contest moved from foundry bragging rights to AI industrial capacity. TSMC's capex is no longer just a foundry fight. It is the construction crew for the AI economy.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2026">
+          <span class="essay-h2-num">Section 03</span>
+          The 2026 capex number
+        </h2>
+
+        <p>
+          TSMC's 2025 Form 20-F reports capital expenditures of US$40.895B in 2025 and 2026 capex expected between US$52B and US$56B, with the filing noting that the budget can be adjusted by market conditions and is mainly focused on manufacturing capacity and technology upgrades that support customer fabrication and technology needs<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          The number is huge. The mix is the story.
+        </p>
+
+        <p>
+          The 2026 number is bigger than the 2022 "gauntlet." But the more important question is not size alone. It is what the spending is buying.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-hpc">
+          <span class="essay-h2-num">Section 04</span>
+          HPC became the center of gravity
+        </h2>
+
+        <p>
+          The platform mix tells the AI story directly. TSMC's 2025 Form 20-F shows HPC revenue of NT$2.193T, 58% of 2025 net revenue, up from 43% in 2023 and 51% in 2024, with HPC growth of 48% year over year. Smartphone revenue is 29% of 2025 net revenue. TSMC describes HPC as driven by data explosion and AI application innovation and defines the platform to include AI GPUs, AI ASICs, CPUs, server processors, and high-speed networking chips<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          TSMC used to be understood through the iPhone cycle. Now it is increasingly understood through the AI/HPC buildout.
+        </p>
+
+        <p>
+          Apple still matters. But the center of gravity has moved. TSMC's capex is now tied to the demands of AI infrastructure customers as much as to the mobile cycle that defined the 2010s.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-nodes">
+          <span class="essay-h2-num">Section 05</span>
+          Advanced nodes are where the value concentrates
+        </h2>
+
+        <p>
+          The wafer revenue mix concentrates the spend. TSMC's 2025 Form 20-F reports 3&nbsp;nm at 24% of 2025 wafer revenue, 5&nbsp;nm at 36%, and 7&nbsp;nm at 14%, with 7&nbsp;nm and below totaling 74% of wafer revenue, up from 69% in 2024<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          TSMC's capex is not generic semiconductor capacity. It is concentrated around high-value advanced nodes because AI accelerators and HPC chips need the best power, performance, and density. That pushes capex toward 2&nbsp;nm, 3&nbsp;nm, and the supporting ecosystem that turns those nodes into shipping products. The capex is concentrated where AI value is accumulating.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-pkg">
+          <span class="essay-h2-num">Section 06</span>
+          CoWoS and SoIC turned packaging into capex strategy
+        </h2>
+
+        <p>
+          TSMC's 2026 Technology Symposium frames packaging as a first-class capex item. TSMC is producing 5.5-reticle-size CoWoS, plans 14-reticle-size CoWoS in 2028 (around 10 large compute dies and 20 HBM stacks), and expects expansion beyond 14 reticles in 2029. A14-to-A14 SoIC is planned for production availability in 2029 at 1.8x higher die-to-die IO density than N2-on-N2 SoIC. COUPE co-packaged optics on substrate begins production in 2026 with 2x power efficiency and 10x latency reduction versus pluggable board versions<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.
+        </p>
+
+        <p>
+          Capex is no longer just fab shells and EUV tools. AI compute needs package-scale integration. CoWoS, SoIC, and co-packaged optics are now part of the foundry capex roadmap. AI scaling moved from wafer starts into package-scale systems.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-asml">
+          <span class="essay-h2-num">Section 07</span>
+          ASML shows the upstream pull
+        </h2>
+
+        <p>
+          ASML's Q4 2025 results reported Q4 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, 2025 total net sales of EUR 32.7B, and a year-end backlog of EUR 38.8B, with 2026 net sales guidance of EUR 34B to EUR 39B and customer commentary that capacity plans had become more positive due to sustainable AI-related demand<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.
+        </p>
+
+        <p>
+          TSMC capex does not happen in isolation. EUV scanners, deposition tools, etch tools, metrology, inspection, advanced packaging tools, and test systems all sit upstream. AI demand pulls the whole tool ecosystem forward. The AI capex wave begins in hyperscaler budgets, flows through Nvidia and custom ASICs, then lands in TSMC fabs and ASML order books.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-fly">
+          <span class="essay-h2-num">Section 08</span>
+          The capex flywheel
+        </h2>
+
+        <p>
+          The reason TSMC's capex compounds is that the spending becomes more than buildings and tools. It becomes process maturity, which becomes customer trust, which becomes the next round of demand. The flywheel is what turns capital into a moat.
+        </p>
+
+        <div class="x-flywheel">
+          <div class="x-flywheel-label">Capex flywheel &mdash; nine steps from demand to demand</div>
+          <div class="x-flywheel-grid">
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 01</div><h3 class="x-flywheel-name">AI/HPC demand</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 02</div><h3 class="x-flywheel-name">Customer commitments</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 03</div><h3 class="x-flywheel-name">Capex</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 04</div><h3 class="x-flywheel-name">Advanced-node capacity</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 05</div><h3 class="x-flywheel-name">Yield learning</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 06</div><h3 class="x-flywheel-name">PDK maturity</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 07</div><h3 class="x-flywheel-name">CoWoS &amp; SoIC</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 08</div><h3 class="x-flywheel-name">Customer trust</h3></div>
+            <div class="x-flywheel-step"><div class="x-flywheel-num">Step 09</div><h3 class="x-flywheel-name">More demand</h3></div>
+          </div>
+        </div>
+
+        <p>
+          TSMC's advantage compounds because spending becomes process maturity, which becomes customer trust, which becomes more leading-edge demand. Intel and Samsung can spend money, but they have to prove yield, customer trust, and ecosystem maturity at the same time. Capex compounds only when it becomes customer confidence.
+        </p>
+
+        <div class="x-grid">
+          <div class="x-grid-label">Where the money goes &mdash; the layers TSMC capex is buying</div>
+          <div class="x-grid-items">
+            <div class="x-grid-item"><strong>2 nm</strong>Next-generation leading-edge capacity for HPC and mobile customers.</div>
+            <div class="x-grid-item"><strong>3 nm</strong>Current AI accelerator and flagship-mobile capacity.</div>
+            <div class="x-grid-item"><strong>Advanced packaging</strong>Capex for 2.5D, 3D, and substrate-level integration.</div>
+            <div class="x-grid-item"><strong>CoWoS</strong>Reticle-scale packaging slots from 5.5R today to 14R by 2028.</div>
+            <div class="x-grid-item"><strong>SoIC</strong>3D die stacking with rising die-to-die IO density.</div>
+            <div class="x-grid-item"><strong>Global fabs</strong>U.S., Japan, and European footprint for trusted manufacturing.</div>
+            <div class="x-grid-item"><strong>Specialty technologies</strong>RF, automotive, and embedded process variants.</div>
+            <div class="x-grid-item"><strong>R&amp;D and process</strong>The flywheel input that yield learning and PDKs come out of.</div>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-intel">
+          <span class="essay-h2-num">Section 09</span>
+          Intel is the serious counterpoint
+        </h2>
+
+        <p>
+          Intel is not irrelevant. Intel's newsroom confirms that Panther Lake is the first client SoC built on Intel 18A and has entered production, that Fab 52 in Arizona is fully operational and set to reach high-volume production on 18A, and that Clearwater Forest is Intel's first 18A server processor expected in the first half of 2026, with 18A using RibbonFET and PowerVia<sup class="essay-fn"><a href="#fn5">[5]</a></sup>.
+        </p>
+
+        <p>
+          Intel is trying to prove that it can turn capex into competitive internal manufacturing again. The 18A story is the real counterpoint to TSMC's dominance. But the burden is high because product teams and external customers need to trust the node, yield, PDKs, packaging, and supply chain at the same time. Intel's challenge is not announcing a node. It is earning manufacturing trust again.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-samsung">
+          <span class="essay-h2-num">Section 10</span>
+          Samsung is also fighting the same battle
+        </h2>
+
+        <p>
+          Samsung's FY2025 results describe a foundry business that began mass production of first-generation 2&nbsp;nm products, began shipments of 4&nbsp;nm HBM base-die products in Q4 2025, and plans 2026 foundry growth focused on ramping second-generation 2&nbsp;nm products. Samsung said it would strengthen competitiveness through integrated solutions combining logic, memory, and advanced packaging<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.
+        </p>
+
+        <p>
+          Samsung is important because it combines memory, logic, and packaging under one roof. That vertical integration is strategically valuable. But foundry trust still depends on yield, roadmap execution, and customer wins. Samsung has the right assets. The test is whether it can convert them into trusted leading-edge foundry share.
+        </p>
+
+        <div class="x-counter">
+          <div class="x-counter-col">
+            <div class="x-counter-label">Counterpoint 01</div>
+            <h3 class="x-counter-title">Intel 18A and Panther Lake</h3>
+            <ul>
+              <li>Panther Lake as the first client SoC on 18A; already in production.</li>
+              <li>RibbonFET and PowerVia (GAA + backside power delivery).</li>
+              <li>Fab 52 in Arizona fully operational on 18A.</li>
+              <li>Clearwater Forest as the first 18A server CPU, expected H1 2026.</li>
+              <li>Burden: external-customer trust, not just internal product success.</li>
+            </ul>
+          </div>
+          <div class="x-counter-col">
+            <div class="x-counter-label">Counterpoint 02</div>
+            <h3 class="x-counter-title">Samsung 2 nm &amp; logic+memory+packaging</h3>
+            <ul>
+              <li>Mass production of first-generation 2 nm products.</li>
+              <li>4 nm HBM base-die shipments starting Q4 2025.</li>
+              <li>2026 focus on second-generation 2 nm ramp.</li>
+              <li>Integrated logic, memory, and advanced-packaging solutions.</li>
+              <li>Burden: convert vertical integration into trusted leading-edge foundry share.</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-trust">
+          <span class="essay-h2-num">Section 11</span>
+          The real race is trusted capacity
+        </h2>
+
+        <p>
+          Capex alone does not win. Customers need yield, cycle time, PDK maturity, IP ecosystem, EDA readiness, advanced packaging, stable roadmap, predictable capacity, strong customer support, and a track record of proven high-volume ramps. TSMC's advantage is that customers believe its capex will become usable capacity. That belief is the moat.
+        </p>
+
+        <p class="essay-pull">
+          The foundry race is no longer about who spends the most. It is about whose spending customers trust.
+        </p>
+
+        <div class="x-grid">
+          <div class="x-grid-label">Foundry trust stack &mdash; what customers actually buy when they buy a node</div>
+          <div class="x-grid-items">
+            <div class="x-grid-item"><strong>Roadmap</strong>Credible cadence across multiple generations.</div>
+            <div class="x-grid-item"><strong>Node performance</strong>Power, performance, and density at the stated node.</div>
+            <div class="x-grid-item"><strong>Yield</strong>Good dies per wafer at production volume, not at risk-production.</div>
+            <div class="x-grid-item"><strong>PDKs</strong>Mature process design kits the customer can tape out against.</div>
+            <div class="x-grid-item"><strong>IP ecosystem</strong>Foundation IP, analog, memory compilers, and partner IP.</div>
+            <div class="x-grid-item"><strong>EDA readiness</strong>Tools that handle the new node and its DTCO rules.</div>
+            <div class="x-grid-item"><strong>Packaging</strong>CoWoS, SoIC, InFO, and substrates aligned to the node.</div>
+            <div class="x-grid-item"><strong>Capacity</strong>Reserved volume that scales with the customer's ramp curve.</div>
+            <div class="x-grid-item"><strong>Customer support</strong>Engineering teams behind every leading-edge tape-out.</div>
+            <div class="x-grid-item"><strong>High-volume ramps</strong>Track record of converting trial wafers into shipping product.</div>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-misread">
+          <span class="essay-h2-num">Section 12</span>
+          What people get wrong about TSMC capex
+        </h2>
+
+        <p>
+          The weak interpretation in 2026 is that TSMC is spending more than Intel and Samsung. The better interpretation is that TSMC is turning AI demand into the manufacturing base for the next compute platform. The spending is not just defensive. It is customer-backed. It is concentrated on advanced nodes and advanced packaging. It is tied to AI/HPC demand. And it reinforces the PDK, yield, and customer-trust flywheel. TSMC's capex is strategy written in concrete, EUV tools, and CoWoS lines.
+        </p>
+
+        <div class="x-compare">
+          <div class="x-compare-col">
+            <div class="x-compare-label">2022 framing</div>
+            <h3 class="x-compare-title">$40B-$44B gauntlet</h3>
+            <ul>
+              <li>Capex jumped from $30B-$35B expectation to $40B-$44B plan.</li>
+              <li>70%-80% of capex directed to 7 nm / 5 nm / 3 nm / 2 nm.</li>
+              <li>$6.7B of customer prepayments collected in six months.</li>
+              <li>Framed as Intel and Samsung struggling to keep up at scale.</li>
+              <li>2021 platform mix: smartphone 44%, HPC 37%.</li>
+            </ul>
+          </div>
+          <div class="x-compare-col right">
+            <div class="x-compare-label">2026 reality</div>
+            <h3 class="x-compare-title">$52B-$56B industrial plan</h3>
+            <ul>
+              <li>2025 capex US$40.895B; 2026 plan US$52B-$56B.</li>
+              <li>HPC 58% of 2025 net revenue; smartphones 29%.</li>
+              <li>7 nm and below at 74% of wafer revenue (3 nm 24%, 5 nm 36%, 7 nm 14%).</li>
+              <li>5.5-reticle CoWoS today, 14-reticle CoWoS by 2028.</li>
+              <li>ASML EUV backlog and 2026 sales guide pulled by AI demand.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="x-timeline" role="list">
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2021</div>
+            <h3 class="x-timeline-title">Smartphone 44%, HPC 37% in TSMC platform mix</h3>
+            <p class="x-timeline-desc">HPC already called the largest absolute-dollar growth sector even before the AI capex cycle accelerated<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2022</div>
+            <h3 class="x-timeline-title">TSMC announces $40B-$44B capex plan</h3>
+            <p class="x-timeline-desc">Raised from a $30B-$35B prior expectation; framed as a foundry gauntlet against Intel and Samsung<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2022</div>
+            <h3 class="x-timeline-title">70%-80% of capex directed to 7 nm / 5 nm / 3 nm / 2 nm</h3>
+            <p class="x-timeline-desc">Roughly 10% to masks and advanced packaging including CoWoS, SoIC and InFO<sup class="essay-fn"><a href="#fn1">[1]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2025</div>
+            <h3 class="x-timeline-title">TSMC capex reaches US$40.895B</h3>
+            <p class="x-timeline-desc">Form 20-F reports 2025 capital expenditures of US$40.895B, mainly focused on advanced-node capacity and technology upgrades<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2025</div>
+            <h3 class="x-timeline-title">HPC reaches 58% of revenue</h3>
+            <p class="x-timeline-desc">HPC revenue NT$2.193T, +48% YoY; smartphone 29%; HPC defined to include AI GPUs, AI ASICs, CPUs, server processors, and networking chips<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2025</div>
+            <h3 class="x-timeline-title">7 nm and below at 74% of wafer revenue</h3>
+            <p class="x-timeline-desc">3 nm 24%, 5 nm 36%, 7 nm 14%; up from 69% at 7 nm and below in 2024<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2026</div>
+            <h3 class="x-timeline-title">TSMC plans US$52B-$56B capex</h3>
+            <p class="x-timeline-desc">2026 plan focused on manufacturing capacity and technology upgrades supporting customer fabrication needs<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2026</div>
+            <h3 class="x-timeline-title">ASML reports major EUV bookings and backlog</h3>
+            <p class="x-timeline-desc">Q4 net bookings EUR 13.2B, EUV EUR 7.4B, 2025 sales EUR 32.7B, backlog EUR 38.8B, 2026 sales guide EUR 34-39B, AI-driven demand<sup class="essay-fn"><a href="#fn4">[4]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2026</div>
+            <h3 class="x-timeline-title">TSMC produces 5.5-reticle CoWoS</h3>
+            <p class="x-timeline-desc">Packaging-as-allocation layer firmly established; COUPE co-packaged optics also begins production in 2026<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2028</div>
+            <h3 class="x-timeline-title">14-reticle CoWoS target</h3>
+            <p class="x-timeline-desc">Around 10 large compute dies and 20 HBM stacks per package by the end of the decade<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+          <div class="x-timeline-item" role="listitem">
+            <div class="x-timeline-year">2029</div>
+            <h3 class="x-timeline-title">A14-to-A14 SoIC and beyond-14-reticle packaging</h3>
+            <p class="x-timeline-desc">SoIC at 1.8x higher die-to-die IO density vs N2-on-N2; CoWoS expected to extend further<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.</p>
+          </div>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 13</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The capex-as-industrial-plan reading rests on TSMC filings, ASML results, and Intel and Samsung company materials. It is worth being explicit about where the case can break.
+        </p>
+
+        <div class="x-risks">
+          <div class="x-risk"><div class="x-risk-num">Risk 01</div><p class="x-risk-text">Capex forecasts can change depending on market conditions; the 2026 plan is a range, not a guarantee.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 02</div><p class="x-risk-text">AI demand may not grow smoothly; capex commitments are durable but demand cycles are not.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 03</div><p class="x-risk-text">Customer concentration increases revenue and roadmap risk for the foundry.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 04</div><p class="x-risk-text">TSMC's Form 20-F does not name every major customer in platform or customer concentration tables; specific shares should not be inferred.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 05</div><p class="x-risk-text">Advanced packaging capacity is not the same as final AI accelerator output; CoWoS, HBM, substrates, power, thermal, assembly and test are separate bottlenecks.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 06</div><p class="x-risk-text">Intel 18A could improve Intel's manufacturing credibility if execution is strong; dependency is not one-way.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 07</div><p class="x-risk-text">Samsung can still compete where memory, logic and packaging integration matter together.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 08</div><p class="x-risk-text">Geopolitical risk around Taiwan remains material to any TSMC-centric thesis.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 09</div><p class="x-risk-text">TSMC technology symposium roadmap targets are not guaranteed capacity outcomes.</p></div>
+          <div class="x-risk"><div class="x-risk-num">Risk 10</div><p class="x-risk-text">This essay is industry analysis, not investment advice; cycle and customer dynamics can move quickly.</p></div>
+        </div>
+
+        <p>
+          The point is not that TSMC can spend its way around every risk. The point is that AI has made TSMC's capex one of the clearest maps of where compute scarcity is moving.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 14</span>
+          Final verdict
+        </h2>
+
+        <p>
+          The 2022 article was right. TSMC's $40B to $44B capex plan was a gauntlet. The 2026 version is larger: TSMC's capex is now the industrial plan behind AI compute, concentrated on 2&nbsp;nm, 3&nbsp;nm, CoWoS, SoIC, advanced packaging, yield learning, PDK maturity, global manufacturing capacity, and HPC customer trust.
+        </p>
+
+        <p>
+          Intel and Samsung still matter. But the foundry race is no longer won by roadmap slides. It is won by converting capital into trusted capacity.
+        </p>
+
+        <p class="essay-pull">
+          The AI boom is not only being trained in data centers. It is being poured into TSMC's capex budget.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 15</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="x-ledger">
+          <div class="x-ledger-label">Evidence ledger &mdash; load-bearing claims with sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2022)</td><td>$40B-$44B 2022 capex plan; 70%-80% to 7/5/3/2 nm; 10% to masks and advanced packaging; $6.7B prepayments; smartphone 44% / HPC 37% in 2021 mix.</td><td>Anchors the historical capex framework.</td></tr>
+              <tr><td>TSMC 2025 Form 20-F</td><td>2025 capex US$40.895B; 2026 plan US$52-56B; HPC 58% of revenue (+48% YoY); 7 nm and below 74% of wafer revenue; 3 nm 24%, 5 nm 36%, 7 nm 14%.</td><td>Quantifies the shift to AI/HPC and advanced-node concentration.</td></tr>
+              <tr><td>TSMC 2026 Symposium</td><td>5.5-reticle CoWoS today; 14-reticle CoWoS by 2028 with ~10 dies + 20 HBM; A14-A14 SoIC 2029; COUPE in 2026.</td><td>Packaging-as-capex strategy.</td></tr>
+              <tr><td>ASML Q4 2025</td><td>Q4 bookings EUR 13.2B; EUV EUR 7.4B; 2025 sales EUR 32.7B; backlog EUR 38.8B; 2026 guide EUR 34-39B; AI-driven medium-term plans.</td><td>Upstream equipment confirmation of the same pull.</td></tr>
+              <tr><td>Intel Newsroom</td><td>Panther Lake first 18A client SoC in production; Fab 52 fully operational on 18A; Clearwater Forest H1 2026 first 18A server CPU.</td><td>Counterpoint to TSMC's capex dominance.</td></tr>
+              <tr><td>Samsung FY2025</td><td>Mass production of first-gen 2 nm; 4 nm HBM base-die shipments Q4 2025; 2026 focus on second-gen 2 nm; integrated logic+memory+packaging solutions.</td><td>Samsung's parallel push; vertical integration as its lever.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;TSMC Throws Down a $40B-$44B Gauntlet, Far Surpassing Intel And Samsung,&rdquo; 2022 (PDF supplied by author). Source for the $40B-$44B 2022 capex plan, the 2021 $25B-$28B prior plan and ~$30B actual, the 2022 capex mix (70%-80% to 7 nm, 5 nm, 3 nm and 2 nm; ~10% to masks and advanced packaging including CoWoS, SoIC, InFO), the $6.7B six-month customer prepayments figure, the Nvidia advance-payment references inside long-term supply agreements, the rising 12-inch-equivalent wafer ASP framing, the 2021 platform mix of smartphone 44% and HPC 37%, and the framing of HPC as the largest absolute-dollar growth sector.</li>
+          <li id="fn2">TSMC, &ldquo;2025 Form 20-F,&rdquo; <a href="https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf" target="_blank" rel="noopener noreferrer">investor.tsmc.com/&hellip;/2025_20F Report</a>. Source for 2025 capital expenditures of US$40.895B, the 2026 capex plan of US$52B-$56B, HPC at 58% of 2025 net revenue with NT$2.193T (+48% YoY), smartphones at 29%, HPC at 43% in 2023 and 51% in 2024, the HPC definition that includes AI GPUs, AI ASICs, CPUs, server processors and high-speed networking chips, and the wafer-revenue mix of 3 nm at 24%, 5 nm at 36%, 7 nm at 14%, with 7 nm and below at 74% of total wafer revenue.</li>
+          <li id="fn3">TSMC, &ldquo;TSMC 2026 Technology Symposium,&rdquo; <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener noreferrer">pr.tsmc.com/english/news/3302</a>. Source for 5.5-reticle CoWoS in production, 14-reticle CoWoS planned by 2028 with around 10 large compute dies and 20 HBM stacks, expansion beyond 14 reticles in 2029, A14-to-A14 SoIC production availability in 2029 at 1.8x higher die-to-die IO density vs N2-on-N2 SoIC, and COUPE co-packaged optics on substrate beginning production in 2026 with 2x power efficiency and 10x latency reduction vs pluggable versions.</li>
+          <li id="fn4">ASML, &ldquo;Q4 2025 Financial Results,&rdquo; <a href="https://www.asml.com/en/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener noreferrer">asml.com/&hellip;/q4-2025-financial-results</a>. Source for Q4 2025 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, 2025 total net sales of EUR 32.7B, the end-2025 backlog of EUR 38.8B, the 2026 net sales guidance range of EUR 34B to EUR 39B, and the customer commentary on a more positive medium-term view driven mainly by sustainable AI-related demand.</li>
+          <li id="fn5">Intel Newsroom, &ldquo;Intel Unveils Panther Lake Architecture &mdash; First AI PC Platform Built on 18A,&rdquo; <a href="https://newsroom.intel.com/client-computing/intel-unveils-panther-lake-architecture-first-ai-pc-platform-built-on-18a" target="_blank" rel="noopener noreferrer">newsroom.intel.com</a>. Source for Panther Lake as the first client SoC built on Intel 18A and the production status, the fully operational Fab 52 in Arizona ramping to high-volume production on 18A, the framing of Clearwater Forest as the first 18A server processor expected in H1 2026, and the description of Intel 18A using RibbonFET and PowerVia.</li>
+          <li id="fn6">Samsung Newsroom, &ldquo;Samsung Electronics Announces Fourth Quarter and FY 2025 Results,&rdquo; <a href="https://news.samsung.com/global/samsung-electronics-announces-fourth-quarter-and-fy-2025-results" target="_blank" rel="noopener noreferrer">news.samsung.com</a>. Source for Samsung Foundry's mass production of first-generation 2 nm products, the Q4 2025 4 nm HBM base-die shipments, the 2026 focus on ramping second-generation 2 nm products, and the framing of strengthened competitiveness through integrated solutions combining logic, memory, and advanced packaging.</li>
+        </ol>
+      </div>
+
+      <div class="x-readnext">
+        <div class="x-readnext-label">Read next</div>
+        <div class="x-readnext-grid">
+          <a class="x-readnext-card" href="advanced-packaging-became-the-computer.html">
+            <div class="x-readnext-kicker">Essay 061 &middot; Packaging</div>
+            <h3 class="x-readnext-title">The Package Became the Computer</h3>
+          </a>
+          <a class="x-readnext-card" href="aws-cpu-cloud-infrastructure.html">
+            <div class="x-readnext-kicker">Essay 060 &middot; Hyperscalers</div>
+            <h3 class="x-readnext-title">AWS Turned the CPU Into Cloud Infrastructure</h3>
+          </a>
+          <a class="x-readnext-card" href="intel-bet-the-farm-foundry-proof.html">
+            <div class="x-readnext-kicker">Essay 058 &middot; Intel</div>
+            <h3 class="x-readnext-title">Intel Bet the Farm. Now It Has to Prove the Foundry</h3>
+          </a>
+          <a class="x-readnext-card" href="node-race-became-system-race.html">
+            <div class="x-readnext-kicker">Essay 056 &middot; Foundries</div>
+            <h3 class="x-readnext-title">The Node Race Became a System Race</h3>
+          </a>
+          <a class="x-readnext-card" href="euv-throughput-bottleneck.html">
+            <div class="x-readnext-kicker">Essay 055 &middot; Lithography</div>
+            <h3 class="x-readnext-title">The EUV Throughput Bottleneck</h3>
+          </a>
+          <a class="x-readnext-card" href="euv-materials-war-ai-chips.html">
+            <div class="x-readnext-kicker">Essay 059 &middot; EUV Materials</div>
+            <h3 class="x-readnext-title">The EUV Materials War Behind AI Chips</h3>
+          </a>
+          <a class="x-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="x-readnext-kicker">Atlas</div>
+            <h3 class="x-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="x-readnext-card" href="../">
+            <div class="x-readnext-kicker">Index</div>
+            <h3 class="x-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>

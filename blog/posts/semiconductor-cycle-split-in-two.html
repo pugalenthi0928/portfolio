@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Semiconductor Cycle Split in Two | Pugalenthi Magendran</title>
+  <meta name="description" content="The 2026 semiconductor market is approaching $1 trillion, but AI has split the cycle. Logic, HBM, EUV, CoWoS and hyperscaler silicon are booming while traditional electronics recover unevenly.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/blog/posts/semiconductor-cycle-split-in-two.html">
+  <meta property="og:title" content="The Semiconductor Cycle Split in Two">
+  <meta property="og:description" content="A 2026 semiconductor outlook on AI infrastructure, memory, logic, HBM, CoWoS, EUV, Nvidia, TSMC, ASML, Micron and why the old semiconductor cycle split in two.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/blog/posts/semiconductor-cycle-split-in-two.html">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta property="article:published_time" content="2026-05-27">
+  <meta property="article:author" content="Pugalenthi Magendran">
+  <meta property="article:section" content="Semiconductors">
+  <meta property="article:tag" content="Semiconductors">
+  <meta property="article:tag" content="2026 Outlook">
+  <meta property="article:tag" content="AI Infrastructure">
+  <meta property="article:tag" content="HBM">
+  <meta property="article:tag" content="CoWoS">
+  <meta property="article:tag" content="EUV">
+  <meta property="article:tag" content="Nvidia">
+  <meta property="article:tag" content="TSMC">
+  <meta property="article:tag" content="ASML">
+  <meta property="article:tag" content="Memory">
+  <meta property="article:tag" content="Logic">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Semiconductor Cycle Split in Two">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="The 2026 semiconductor market is approaching $1 trillion, but AI has split the cycle. Logic, HBM, EUV, CoWoS and hyperscaler silicon are booming while traditional electronics recover unevenly.">
+  <meta name="view-transition" content="same-origin">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "The Semiconductor Cycle Split in Two",
+    "description": "The 2026 semiconductor market is approaching $1 trillion, but AI has split the cycle. Logic, HBM, EUV, CoWoS and hyperscaler silicon are booming while traditional electronics recover unevenly.",
+    "url": "https://pugalenthimagendran.com/blog/posts/semiconductor-cycle-split-in-two.html",
+    "datePublished": "2026-05-27",
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" },
+    "publisher": { "@type": "Person", "name": "Pugalenthi Magendran" },
+    "mainEntityOfPage": "https://pugalenthimagendran.com/blog/posts/semiconductor-cycle-split-in-two.html",
+    "keywords": "Semiconductors, 2026 Outlook, AI Infrastructure, HBM, CoWoS, EUV, Nvidia, TSMC, ASML, Memory, Logic"
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../blog.css?v=15">
+  <style>
+    .essay-format { --color-text-primary: var(--text); --color-text-secondary: var(--text-secondary); --color-text-tertiary: var(--text-tertiary); --color-background-secondary: var(--bg-alt); --color-border-primary: var(--border); --color-border-secondary: var(--border); --color-border-tertiary: var(--border-light); --border-radius-md: 8px; --border-radius-lg: 12px; }
+    .essay-page { max-width: 720px; margin: 0 auto; padding: 0 0 2rem; }
+    .essay-issue { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 3rem; }
+    .essay-tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .essay-tag-row .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 4px 10px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); color: var(--color-text-tertiary); background: none; }
+    .essay-hed { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.12; color: var(--color-text-primary); margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    .essay-hed em { font-style: italic; font-weight: 400; }
+    .essay-deck { font-family: 'Source Serif 4', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); border-left: 2px solid var(--color-border-tertiary); padding-left: 1.25rem; margin-bottom: 2.5rem; font-style: italic; }
+    .essay-meta { display: flex; align-items: center; gap: 1.5rem; padding: 1.25rem 0; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 3rem; }
+    .essay-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; }
+    .essay-meta-text { flex: 1; }
+    .essay-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-primary); letter-spacing: 0.04em; }
+    .essay-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+    .essay-read-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; }
+    .essay-stamps { display: inline-flex; flex-wrap: wrap; gap: 8px; vertical-align: middle; margin-left: 12px; }
+    .essay-stamp { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; color: var(--accent, #3C6794); border: 1px solid rgba(60,103,148,0.30); background: rgba(60,103,148,0.06); }
+    .essay-stamp--muted { color: var(--color-text-tertiary); border-color: var(--color-border-tertiary); background: rgba(255,255,255,0.02); }
+    .essay-lede { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p { font-family: 'Source Serif 4', serif; font-size: 1.05rem; font-weight: 300; line-height: 1.85; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+    .essay-body p em { font-style: italic; }
+    .essay-body p strong { font-weight: 500; }
+    .essay-h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; line-height: 1.25; color: var(--color-text-primary); margin: 3.5rem 0 1.25rem; letter-spacing: -0.005em; scroll-margin-top: 6rem; }
+    .essay-h2 .essay-h2-num { display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400; letter-spacing: 0.14em; color: var(--color-text-tertiary); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .essay-section-rule { width: 40px; height: 1px; background: var(--color-border-tertiary); margin: 3rem 0 1.5rem; border: none; }
+    .essay-footnotes { margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    .essay-footnotes h3 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.5rem; }
+    .essay-footnotes ol { padding-left: 1.5rem; }
+    .essay-footnotes li { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.7; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+    .essay-footnotes a { color: var(--accent, #3C6794); text-decoration: none; border-bottom: 0.5px solid rgba(60,103,148,0.3); }
+    .essay-footnotes a:hover { border-bottom-color: var(--accent, #3C6794); }
+    .essay-fn { font-family: 'JetBrains Mono', monospace; font-size: 0.7em; vertical-align: super; line-height: 0; margin-left: 2px; }
+    .essay-fn a { color: var(--accent, #3C6794); text-decoration: none; }
+    .essay-fn a:hover { text-decoration: underline; }
+    .essay-pull { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.45rem; line-height: 1.45; color: var(--color-text-primary); border-left: 2px solid var(--accent, #3C6794); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2.5rem 0; }
+    .essay-toc { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0 3rem; }
+    .essay-toc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; color: var(--color-text-tertiary); text-transform: uppercase; margin-bottom: 0.85rem; }
+    .essay-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: tocnum; column-count: 2; column-gap: 2rem; }
+    .essay-toc li { counter-increment: tocnum; margin-bottom: 0.5rem; break-inside: avoid; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+    .essay-toc li::before { content: counter(tocnum, decimal-leading-zero) "  "; color: var(--color-text-tertiary); }
+    .essay-toc a { color: var(--color-text-secondary); text-decoration: none; }
+    .essay-toc a:hover { color: var(--accent, #3C6794); }
+
+    /* Essay 063 Cycle Split — scoped under .essay-cyc, deep steel-blue #3C6794 */
+    body.essay-cyc {
+      --c-accent: #3C6794;
+      --c-accent-soft: rgba(60,103,148,0.10);
+      --c-accent-faint: rgba(60,103,148,0.05);
+      --c-accent-line: rgba(60,103,148,0.30);
+    }
+    body.essay-cyc .essay-stamp { color: var(--c-accent); border-color: var(--c-accent-line); background: var(--c-accent-soft); }
+    body.essay-cyc .essay-footnotes a { color: var(--c-accent); border-bottom-color: var(--c-accent-line); }
+    body.essay-cyc .essay-fn a { color: var(--c-accent); }
+    body.essay-cyc .essay-pull { border-left-color: var(--c-accent); }
+    body.essay-cyc .essay-toc a:hover { color: var(--c-accent); }
+
+    body.essay-cyc .c-thesis { background: linear-gradient(180deg, var(--c-accent-soft), var(--c-accent-faint)); border: 0.5px solid var(--c-accent-line); border-left: 2px solid var(--c-accent); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-cyc .c-thesis-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 0.75rem; }
+    body.essay-cyc .c-thesis-text { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1.22rem; line-height: 1.5; color: var(--color-text-primary); margin: 0; }
+
+    body.essay-cyc .c-sources-box { background: var(--color-background-secondary); border: 0.5px dashed var(--c-accent-line); border-radius: var(--border-radius-md); padding: 1.5rem 1.75rem; margin: 2.5rem 0; }
+    body.essay-cyc .c-sources-box-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 0.85rem; }
+    body.essay-cyc .c-sources-box ul { margin: 0; padding-left: 1.25rem; }
+    body.essay-cyc .c-sources-box li { font-family: 'Source Serif 4', serif; font-size: 0.95rem; font-weight: 300; line-height: 1.65; color: var(--color-text-secondary); margin-bottom: 0.45rem; }
+
+    /* Two cycles split */
+    body.essay-cyc .c-cycles { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.5rem 0; }
+    body.essay-cyc .c-cycle-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-cyc .c-cycle-col.ai { border-color: var(--c-accent-line); background: var(--c-accent-faint); }
+    body.essay-cyc .c-cycle-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.55rem; }
+    body.essay-cyc .c-cycle-col.ai .c-cycle-label { color: var(--c-accent); }
+    body.essay-cyc .c-cycle-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.6rem; }
+    body.essay-cyc .c-cycle-col ul { margin: 0; padding-left: 1.1rem; }
+    body.essay-cyc .c-cycle-col li { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-primary); margin-bottom: 0.35rem; }
+    body.essay-cyc .c-cycle-foot { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--c-accent); margin-top: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* Bottleneck stack — 10 layers */
+    body.essay-cyc .c-stack { margin: 2.5rem 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+    body.essay-cyc .c-stack-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); padding: 1rem 1.5rem; background: var(--c-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cyc .c-stack-layer { display: grid; grid-template-columns: 200px 1fr; gap: 1rem; padding: 0.7rem 1.5rem; border-bottom: 0.5px dashed var(--color-border-tertiary); align-items: baseline; }
+    body.essay-cyc .c-stack-layer:last-child { border-bottom: none; }
+    body.essay-cyc .c-stack-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.98rem; color: var(--color-text-primary); margin: 0; }
+    body.essay-cyc .c-stack-desc { font-family: 'Source Serif 4', serif; font-size: 0.9rem; font-weight: 300; line-height: 1.5; color: var(--color-text-secondary); }
+
+    /* 2022 vs 2026 */
+    body.essay-cyc .c-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2.5rem 0; }
+    body.essay-cyc .c-compare-col { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1.25rem 1.5rem; background: var(--color-background-secondary); }
+    body.essay-cyc .c-compare-col.right { border-color: var(--c-accent-line); background: var(--c-accent-faint); }
+    body.essay-cyc .c-compare-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.65rem; }
+    body.essay-cyc .c-compare-col.right .c-compare-label { color: var(--c-accent); }
+    body.essay-cyc .c-compare-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); margin: 0 0 0.75rem; }
+    body.essay-cyc .c-compare-col p { font-family: 'Source Serif 4', serif; font-size: 0.93rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Market signal table */
+    body.essay-cyc .c-signals { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-cyc .c-signals-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); padding: 1rem 1.5rem; background: var(--c-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cyc .c-signals table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.92rem; }
+    body.essay-cyc .c-signals th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-cyc .c-signals td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-primary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-cyc .c-signals tr:last-child td { border-bottom: none; }
+    body.essay-cyc .c-signals td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--c-accent); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+
+    /* Evidence Ledger */
+    body.essay-cyc .c-ledger { margin: 2.5rem 0; overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+    body.essay-cyc .c-ledger-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); padding: 1rem 1.5rem; background: var(--c-accent-faint); border-bottom: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cyc .c-ledger table { width: 100%; border-collapse: collapse; font-family: 'Source Serif 4', serif; font-size: 0.9rem; }
+    body.essay-cyc .c-ledger th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-tertiary); padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-weight: 500; }
+    body.essay-cyc .c-ledger td { padding: 0.85rem 1rem; border-bottom: 0.5px dashed var(--color-border-tertiary); color: var(--color-text-secondary); font-weight: 300; line-height: 1.55; vertical-align: top; }
+    body.essay-cyc .c-ledger tr:last-child td { border-bottom: none; }
+    body.essay-cyc .c-ledger td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--c-accent); letter-spacing: 0.04em; white-space: nowrap; }
+
+    /* Risk grid */
+    body.essay-cyc .c-risks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin: 2.5rem 0; }
+    body.essay-cyc .c-risk { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.15rem; background: var(--color-background-secondary); }
+    body.essay-cyc .c-risk-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--c-accent); letter-spacing: 0.1em; margin-bottom: 0.45rem; }
+    body.essay-cyc .c-risk-text { font-family: 'Source Serif 4', serif; font-size: 0.92rem; font-weight: 300; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
+
+    /* Read-next */
+    body.essay-cyc .c-readnext { margin: 4rem 0 0; padding-top: 2rem; border-top: 0.5px solid var(--color-border-tertiary); }
+    body.essay-cyc .c-readnext-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 1.25rem; }
+    body.essay-cyc .c-readnext-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    body.essay-cyc .c-readnext-card { display: block; padding: 1.15rem 1.35rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); text-decoration: none; transition: border-color 180ms ease, transform 180ms ease; }
+    body.essay-cyc .c-readnext-card:hover { border-color: var(--c-accent); transform: translateY(-2px); }
+    body.essay-cyc .c-readnext-kicker { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 0.4rem; }
+    body.essay-cyc .c-readnext-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; line-height: 1.35; color: var(--color-text-primary); margin: 0; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body.essay-cyc .c-stack-layer { grid-template-columns: 150px 1fr; gap: 0.6rem; padding: 0.7rem 1rem; }
+    }
+    @media (max-width: 880px) {
+      .essay-toc ol { column-count: 1; }
+      body.essay-cyc .c-stack-layer { grid-template-columns: 1fr; gap: 0.3rem; }
+    }
+    @media (max-width: 768px) {
+      body.essay-cyc .c-cycles { grid-template-columns: 1fr; }
+      body.essay-cyc .c-compare { grid-template-columns: 1fr; }
+      body.essay-cyc .c-risks { grid-template-columns: 1fr; }
+      body.essay-cyc .c-readnext-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .essay-h2 { font-size: 1.5rem; }
+      body.essay-cyc .essay-pull { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body class="essay-cyc">
+  <header class="site-nav">
+    <nav class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran — home">P.</a>
+      <ul class="nav-links">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../projects/">Projects</a></li>
+        <li><a href="../../atlases/">Atlases</a></li>
+        <li><a href="../../reading-room/">Reading Room</a></li>
+        <li><a href="../" aria-current="page">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="essay-format">
+    <article class="essay-page">
+      <p class="essay-issue">Essay No. 063 &nbsp;&middot;&nbsp; 2026 Semiconductor Outlook</p>
+
+      <div class="essay-tag-row">
+        <span class="tag">Semiconductors</span>
+        <span class="tag">2026 Outlook</span>
+        <span class="tag">AI Infrastructure</span>
+        <span class="tag">HBM</span>
+        <span class="tag">CoWoS</span>
+        <span class="tag">EUV</span>
+        <span class="tag">Nvidia</span>
+        <span class="tag">TSMC</span>
+        <span class="tag">ASML</span>
+        <span class="tag">Memory</span>
+        <span class="tag">Logic</span>
+        <span class="tag">Hyperscalers</span>
+      </div>
+
+      <h1 class="essay-hed">
+        The Semiconductor Cycle Split in <em>Two</em>.
+        <span class="essay-stamps">
+          <span class="essay-stamp">2026 outlook</span>
+          <span class="essay-stamp essay-stamp--muted">Not investment advice</span>
+        </span>
+      </h1>
+
+      <p class="essay-deck">
+        In 2022, the industry was still digesting pandemic shortages. In 2026, the semiconductor market is approaching $1 trillion, but the growth is not evenly distributed. AI is pulling logic, HBM, CoWoS, EUV and cloud capex into a supercycle while traditional electronics recover unevenly.
+      </p>
+
+      <div class="essay-meta">
+        <div class="essay-avatar">PM</div>
+        <div class="essay-meta-text">
+          <div class="essay-author">Pugalenthi Magendran</div>
+          <div class="essay-date">Published May 27, 2026</div>
+        </div>
+        <div class="essay-read-time">15 min read</div>
+      </div>
+
+      <div class="c-thesis">
+        <div class="c-thesis-label">Thesis</div>
+        <p class="c-thesis-text">The semiconductor market is not one clean cycle anymore. AI split it into a supercycle in logic, HBM, EUV, CoWoS and hyperscaler silicon, and a traditional electronics cycle in smartphones, PCs, autos, industrial and analog that is recovering unevenly.</p>
+      </div>
+
+      <nav class="essay-toc" aria-label="Table of contents">
+        <div class="essay-toc-label">In this essay</div>
+        <ol>
+          <li><a href="#sec-2022">What the 2022 SemiAnalysis note was really about</a></li>
+          <li><a href="#sec-headline">The headline number, approaching $1 trillion</a></li>
+          <li><a href="#sec-stack">AI is not buying GPUs, it is buying the whole stack</a></li>
+          <li><a href="#sec-nvda">Nvidia is the demand signal</a></li>
+          <li><a href="#sec-tsmc">TSMC became the foundry proof</a></li>
+          <li><a href="#sec-asml">ASML shows the equipment bottleneck</a></li>
+          <li><a href="#sec-pkg">Packaging became part of the market outlook</a></li>
+          <li><a href="#sec-hbm">HBM became the memory bottleneck</a></li>
+          <li><a href="#sec-trad">The traditional electronics cycle is different</a></li>
+          <li><a href="#sec-two">The two-cycle framework</a></li>
+          <li><a href="#sec-split">Why the split matters for every company</a></li>
+          <li><a href="#sec-bottle">The bottleneck stack</a></li>
+          <li><a href="#sec-misread">What people get wrong about the 2026 outlook</a></li>
+          <li><a href="#sec-risks">Risks and limits</a></li>
+          <li><a href="#sec-verdict">Final verdict</a></li>
+          <li><a href="#sec-sources">Evidence ledger and source notes</a></li>
+        </ol>
+      </nav>
+
+      <div class="essay-body">
+
+        <p class="essay-lede">
+          For decades, people talked about "the semiconductor cycle" as if it were one thing.
+        </p>
+
+        <p>
+          Demand rose, fabs filled up, prices rose, capacity expanded, inventory built, demand slowed, prices fell, and the cycle reset. That model still exists, but in 2026 it is no longer enough. AI has pulled the semiconductor market apart. Some segments are supply constrained and capacity hungry. Others are recovering unevenly or being squeezed by component inflation from the same shortages. The industry is approaching $1 trillion, but the growth is concentrated.
+        </p>
+
+        <p class="essay-pull">
+          The semiconductor cycle did not disappear. AI split it in two.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-2022">
+          <span class="essay-h2-num">Section 01</span>
+          What the 2022 SemiAnalysis note was really about
+        </h2>
+
+        <p>
+          The 2022 SemiAnalysis launch note for Transistor Radio is the historical hook for this essay<sup class="essay-fn"><a href="#fn1">[1]</a></sup>. It announced the joint podcast with Fabricated Knowledge and described its scope: semiconductor news, market outlooks, subsegments, and opinions that did not always become full written articles. It framed semiconductors as the world's most important industry. The piece was not a forecast model. It was a signal that semiconductor outlooks had become too important and too fragmented to ignore.
+        </p>
+
+        <p>
+          In 2022, the industry needed more outlook commentary after pandemic-era shortages. In 2026, the outlook matters more because the market is no longer one cycle. The 2022 launch note implicitly bet that semiconductor markets would split into stories that needed more space than a single article. That bet was right.
+        </p>
+
+        <div class="c-sources-box">
+          <div class="c-sources-box-label">Source notes &mdash; 2022 SemiAnalysis launch note (historical context)</div>
+          <ul>
+            <li>Launch note for SemiAnalysis + Fabricated Knowledge's Transistor Radio podcast.</li>
+            <li>Scope: semiconductor news, market outlooks, subsegments, and opinions beyond written-article format.</li>
+            <li>Framing: semiconductors as the world's most important industry.</li>
+            <li>Treat as a signal that semiconductor outlooks had become too complex for single-headline coverage, not as a 2022 forecast.</li>
+          </ul>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-headline">
+          <span class="essay-h2-num">Section 02</span>
+          The headline number, approaching $1 trillion
+        </h2>
+
+        <p>
+          WSTS forecasts the global semiconductor market to grow by more than 25% in 2026 and reach about $975B, with memory and logic both expected to grow more than 30% year over year<sup class="essay-fn"><a href="#fn2">[2]</a></sup>. SIA reported 2025 global semiconductor sales of $791.7B, up 25.6% year over year, with logic the largest category at $301.9B and memory second at $223.1B<sup class="essay-fn"><a href="#fn3">[3]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          The headline number hides the real story.
+        </p>
+
+        <p>
+          The market is clearly growing. But the headline hides concentration. Logic and memory are exactly where AI demand hits hardest: compute and data movement. The headline is almost $1 trillion. The real story is where the growth is concentrated.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-stack">
+          <span class="essay-h2-num">Section 03</span>
+          AI is not buying GPUs, it is buying the whole stack
+        </h2>
+
+        <p>
+          AI demand pulls on many layers at once: AI accelerators, leading-edge logic, HBM, CoWoS, EUV exposure time, advanced substrates, networking silicon, custom ASICs, datacenter CPUs, power management, memory capacity, packaging capacity, and cloud capex. AI is not one product category. It is an infrastructure buildout.
+        </p>
+
+        <p class="essay-pull">
+          AI is not just buying GPUs. It is buying the whole stack.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-nvda">
+          <span class="essay-h2-num">Section 04</span>
+          Nvidia is the demand signal
+        </h2>
+
+        <p>
+          Nvidia is not the whole semiconductor market, but it is the clearest demand signal for the AI infrastructure side of the split. Nvidia reported FY2026 revenue of $215.9B, up 65% year over year, with data center revenue up 68% year over year, framing the growth as driven by accelerated computing and the AI platform shift<sup class="essay-fn"><a href="#fn4">[4]</a></sup>. Nvidia's 10-K context adds long manufacturing lead times, premium pricing, deposits, long-term supply agreements, and capacity commitments as ways the company secures future supply<sup class="essay-fn"><a href="#fn5">[5]</a></sup>.
+        </p>
+
+        <p>
+          Nvidia is the visible part of the AI infrastructure supercycle. The scale shows that AI infrastructure is no longer an early-cycle experiment; it is reshaping foundry capacity, memory demand, networking, and packaging across the industry.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-tsmc">
+          <span class="essay-h2-num">Section 05</span>
+          TSMC became the foundry proof
+        </h2>
+
+        <p>
+          TSMC used to be understood largely through the iPhone cycle. In 2026, it is better understood through AI/HPC. TSMC's 2025 Form 20-F reports HPC at 58% of net revenue, with smartphones at 29%, and shows 7&nbsp;nm and below at 74% of wafer revenue. TSMC plans large 2026 capex, primarily focused on 2&nbsp;nm and 3&nbsp;nm capacity expansion alongside advanced packaging build-out<sup class="essay-fn"><a href="#fn6">[6]</a></sup>.
+        </p>
+
+        <p>
+          The center of gravity moved from smartphone seasonality to AI/HPC capacity. The foundry is no longer led by the same cycle that defined the 2010s.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-asml">
+          <span class="essay-h2-num">Section 06</span>
+          ASML shows the equipment bottleneck
+        </h2>
+
+        <p>
+          ASML's Q4 2025 results reported Q4 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, and a year-end backlog above EUR 38B, with 2026 net sales guidance of EUR 34B to EUR 39B. ASML attributed stronger medium-term customer capacity plans mainly to sustainable AI-related demand<sup class="essay-fn"><a href="#fn7">[7]</a></sup>.
+        </p>
+
+        <p>
+          EUV is not a side variable. Advanced AI chips need leading-edge lithography. If EUV tool supply, source power, uptime, or customer capacity plans are constrained, the AI compute buildout is constrained. AI demand reaches all the way upstream into lithography.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-pkg">
+          <span class="essay-h2-num">Section 07</span>
+          Packaging became part of the market outlook
+        </h2>
+
+        <p>
+          TSMC's 2026 Technology Symposium framed the packaging-as-allocation story explicitly. TSMC is producing 5.5-reticle-size CoWoS, plans 14-reticle-size CoWoS in 2028, and that 14-reticle version is expected to integrate around 10 large compute dies and 20 HBM stacks. TSMC is also advancing SoIC and co-packaged optics<sup class="essay-fn"><a href="#fn8">[8]</a></sup>.
+        </p>
+
+        <p>
+          The semiconductor outlook cannot be written only as wafer supply. Packaging capacity is now part of AI compute capacity. CoWoS, HBM attach, and package-scale systems are central to the AI roadmap. AI scaling moved from the die into the package.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-hbm">
+          <span class="essay-h2-num">Section 08</span>
+          HBM became the memory bottleneck
+        </h2>
+
+        <p>
+          Micron announced that it had completed price and volume agreements for its entire calendar 2026 HBM supply, including HBM4<sup class="essay-fn"><a href="#fn9">[9]</a></sup>. Memory and logic are the two categories driving the WSTS 2026 forecast, both expected to grow more than 30%<sup class="essay-fn"><a href="#fn2">[2]</a></sup>.
+        </p>
+
+        <p>
+          HBM is not ordinary DRAM in the AI cycle. It is a gating input for accelerators. If HBM supply is tight, accelerator shipments and system builds are constrained. Memory stopped being background capacity. HBM became strategic capacity.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-trad">
+          <span class="essay-h2-num">Section 09</span>
+          The traditional electronics cycle is different
+        </h2>
+
+        <p>
+          Smartphones, PCs, autos, industrial, and analog are not experiencing the same cycle as AI infrastructure. Some are recovering, some are still digesting inventory, and some are being squeezed by memory price increases. IDC analysis of the global memory shortage says it is affecting both the smartphone and PC markets, with DRAM and NAND supply growth running below historical norms and 2026 PC shipments potentially declining sharply because of memory shortages and component-price pressure<sup class="essay-fn"><a href="#fn10">[10]</a></sup>.
+        </p>
+
+        <p class="essay-pull">
+          The AI cycle is capacity hungry. The traditional electronics cycle is price sensitive.
+        </p>
+
+        <p>
+          AI datacenters can pay for scarce memory. PC and smartphone OEMs are much more price sensitive. That means AI can cause semiconductor revenue growth while hurting device unit growth elsewhere. AI datacenters are creating a memory supercycle. Traditional devices are paying for it.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-two">
+          <span class="essay-h2-num">Section 10</span>
+          The two-cycle framework
+        </h2>
+
+        <p>
+          The cleanest way to read 2026 is to separate the two cycles and look at each on its own terms.
+        </p>
+
+        <div class="c-cycles">
+          <div class="c-cycle-col ai">
+            <div class="c-cycle-label">Cycle 01</div>
+            <h3 class="c-cycle-title">AI infrastructure supercycle</h3>
+            <ul>
+              <li>AI accelerators (GPUs and custom ASICs).</li>
+              <li>HBM3e and HBM4.</li>
+              <li>CoWoS and advanced packaging.</li>
+              <li>EUV and leading-edge wafers (N3, N2, A16).</li>
+              <li>Networking silicon and optical interconnect.</li>
+              <li>Datacenter CPUs (Graviton, Cobalt, Axion, Xeon, EPYC).</li>
+              <li>Hyperscaler custom silicon (Trainium, MTIA, TPU).</li>
+              <li>Power, thermal and substrate infrastructure.</li>
+              <li>Cloud capex pulling all of the above.</li>
+            </ul>
+            <div class="c-cycle-foot">Capacity hungry &middot; performance hungry &middot; supply constrained</div>
+          </div>
+          <div class="c-cycle-col">
+            <div class="c-cycle-label">Cycle 02</div>
+            <h3 class="c-cycle-title">Traditional electronics cycle</h3>
+            <ul>
+              <li>Smartphones, including mid-range mobile.</li>
+              <li>PCs and notebooks.</li>
+              <li>Consumer electronics and IoT devices.</li>
+              <li>Automotive semiconductors (MCUs, ADAS, power).</li>
+              <li>Industrial and embedded.</li>
+              <li>Analog and mixed-signal.</li>
+              <li>Older-node and trailing-edge capacity.</li>
+              <li>Recovery still uneven by segment.</li>
+            </ul>
+            <div class="c-cycle-foot">Price sensitive &middot; inventory sensitive &middot; consumer-demand exposed</div>
+          </div>
+        </div>
+
+        <p>
+          The AI cycle is not replacing the old semiconductor cycle. It is sitting on top of it and distorting it. Both cycles can be true at once.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-split">
+          <span class="essay-h2-num">Section 11</span>
+          Why the split matters for every company
+        </h2>
+
+        <p>
+          The same market can look amazing or weak depending on where a company sits. Beneficiaries cluster in the AI infrastructure stack: leading-edge foundries, AI accelerator vendors, HBM suppliers, lithography and process equipment, advanced packaging, networking silicon, hyperscaler custom silicon providers, and power and thermal infrastructure. Pressured segments cluster in the traditional electronics cycle: price-sensitive PC and smartphone OEMs, low-margin consumer electronics, analog and industrial names still digesting inventory, and companies without AI/HPC exposure or dependent on older cycles.
+        </p>
+
+        <p>
+          There is no single semiconductor outlook anymore. There are positions inside the bottleneck stack.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-bottle">
+          <span class="essay-h2-num">Section 12</span>
+          The bottleneck stack
+        </h2>
+
+        <p>
+          The new semiconductor cycle is best read as a stack of bottlenecks. A shortage in any single layer can slow the entire AI buildout. That is why the market can grow rapidly and still feel constrained.
+        </p>
+
+        <div class="c-stack">
+          <div class="c-stack-label">Bottleneck stack &mdash; ten layers that gate the AI cycle</div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">AI demand</h3><div class="c-stack-desc">Training and inference workloads, agentic and reasoning models, video generation.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Cloud capex</h3><div class="c-stack-desc">Hyperscaler and neo-cloud spending shapes the order book for everyone below.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Accelerator design</h3><div class="c-stack-desc">GPUs, TPUs, Trainium, MTIA, custom ASICs; designs decide what gets built.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Leading-edge logic</h3><div class="c-stack-desc">N3, N2, A16 and beyond; the visible wafer scarcity layer.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">HBM</h3><div class="c-stack-desc">HBM3e and HBM4 supply gates accelerator throughput.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">CoWoS &amp; advanced packaging</h3><div class="c-stack-desc">2.5D and 3D packaging slots; reticle-scale CoWoS now central to AI compute.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">EUV</h3><div class="c-stack-desc">Scanner availability, source power, uptime; the upstream gate for advanced nodes.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Substrates &amp; materials</h3><div class="c-stack-desc">Advanced substrates, ABF, glass substrates, photoresist, EUV materials.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Networking &amp; power</h3><div class="c-stack-desc">NVLink, scale-up fabrics, optical IO, power delivery, thermal solutions.</div></div>
+          <div class="c-stack-layer"><h3 class="c-stack-name">Datacenters</h3><div class="c-stack-desc">Power, cooling, real estate, permitting, grid interconnect, water.</div></div>
+        </div>
+
+        <p class="essay-pull">
+          The new semiconductor cycle is a stack of bottlenecks.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-misread">
+          <span class="essay-h2-num">Section 13</span>
+          What people get wrong about the 2026 outlook
+        </h2>
+
+        <p>
+          The weak interpretation of 2026 is that semiconductors are booming. The better interpretation is that AI infrastructure is booming, and that boom is repricing the rest of the semiconductor stack. Revenue growth can coexist with device shipment weakness. HBM shortages can help memory suppliers and hurt PC OEMs. CoWoS shortages can constrain AI accelerators even when wafers exist. EUV bookings can rise because AI customers are reserving future capacity, not because every chip segment is suddenly healthy. The headline number is less important than the constraint map.
+        </p>
+
+        <div class="c-compare">
+          <div class="c-compare-col">
+            <div class="c-compare-label">2022 framing</div>
+            <h3 class="c-compare-title">Pandemic shortages &amp; subsegment commentary</h3>
+            <p>The industry was still digesting pandemic shortages. Semiconductor outlooks required more subsegment commentary than fit in single articles, which the 2022 Transistor Radio launch note explicitly tried to enable.</p>
+          </div>
+          <div class="c-compare-col right">
+            <div class="c-compare-label">2026 reality</div>
+            <h3 class="c-compare-title">Near-$1T market split by AI</h3>
+            <p>2025 sales reached $791.7B and 2026 is forecast near $975B. The growth is concentrated in logic, memory and AI infrastructure. CoWoS, HBM and EUV act as gates while traditional electronics face memory-price pressure.</p>
+          </div>
+        </div>
+
+        <div class="c-signals">
+          <div class="c-signals-label">Market signal table &mdash; the load-bearing 2025-2026 numbers</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Signal</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>WSTS</td><td>2026 market forecast ~$975B, up &gt;25% YoY; memory and logic both &gt;30% growth.</td></tr>
+              <tr><td>SIA</td><td>2025 global semiconductor sales $791.7B, +25.6% YoY; logic $301.9B; memory $223.1B.</td></tr>
+              <tr><td>Nvidia</td><td>FY2026 revenue $215.9B, +65% YoY; data center +68% YoY.</td></tr>
+              <tr><td>TSMC</td><td>HPC platform 58% of 2025 net revenue; 7 nm and below at 74% of wafer revenue.</td></tr>
+              <tr><td>ASML</td><td>Q4 2025 net bookings EUR 13.2B; EUV bookings EUR 7.4B; 2026 sales guide EUR 34-39B.</td></tr>
+              <tr><td>Micron</td><td>Entire calendar 2026 HBM supply under price and volume agreement, including HBM4.</td></tr>
+              <tr><td>IDC</td><td>Global memory shortage pressures smartphone and PC markets; sub-norm DRAM/NAND supply growth.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-risks">
+          <span class="essay-h2-num">Section 14</span>
+          Risks and limits
+        </h2>
+
+        <p>
+          The two-cycle framing relies on a mix of WSTS and SIA market data, company filings, and IDC reporting. It is worth being explicit about where the case can break.
+        </p>
+
+        <div class="c-risks">
+          <div class="c-risk"><div class="c-risk-num">Risk 01</div><p class="c-risk-text">WSTS and company forecasts are forecasts, not guarantees. Headline numbers can move with one quarter of soft demand.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 02</div><p class="c-risk-text">Nvidia's growth is extraordinary but should not be treated as the entire semiconductor market.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 03</div><p class="c-risk-text">TSMC's HPC mix does not mean smartphones are unimportant; mobile remains a major foundry segment.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 04</div><p class="c-risk-text">ASML bookings show demand for equipment, not instant chip supply.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 05</div><p class="c-risk-text">TSMC CoWoS roadmap targets are not guaranteed capacity outcomes.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 06</div><p class="c-risk-text">Micron HBM agreements show tight supply, but HBM is only one part of the AI bottleneck.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 07</div><p class="c-risk-text">Memory shortages can shift if suppliers add capacity faster than expected or demand changes.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 08</div><p class="c-risk-text">Traditional semiconductor categories may recover faster or slower than expected; the two-cycle framing is a snapshot, not a forecast.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 09</div><p class="c-risk-text">AI capex could slow if model economics, power availability, regulation, or customer demand disappoint.</p></div>
+          <div class="c-risk"><div class="c-risk-num">Risk 10</div><p class="c-risk-text">This essay is industry analysis, not investment advice; the cycle structure can shift quickly with one large announcement.</p></div>
+        </div>
+
+        <p>
+          The point is not that the whole market goes up forever. The point is that AI split the cycle and changed which bottlenecks matter.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-verdict">
+          <span class="essay-h2-num">Section 15</span>
+          Final verdict
+        </h2>
+
+        <p>
+          In 2022, the industry needed more semiconductor outlook commentary because the market was becoming too important and too complex for simple headlines. In 2026, that complexity is the story. The market is approaching $1 trillion. But it is not one smooth boom. AI infrastructure is pulling logic, HBM, EUV, CoWoS, memory, and cloud capex into a supercycle. Traditional electronics are recovering unevenly and sometimes being squeezed by the same shortages AI created. The industry is no longer one cycle. It is a stack of bottlenecks.
+        </p>
+
+        <p class="essay-pull">
+          The semiconductor cycle did not disappear. AI split it in two.
+        </p>
+
+        <hr class="essay-section-rule">
+
+        <h2 class="essay-h2" id="sec-sources">
+          <span class="essay-h2-num">Section 16</span>
+          Evidence ledger and source notes
+        </h2>
+
+        <div class="c-ledger">
+          <div class="c-ledger-label">Evidence ledger &mdash; load-bearing claims with sources</div>
+          <table>
+            <thead>
+              <tr><th>Source</th><th>Claim</th><th>Why it matters</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SemiAnalysis (2022)</td><td>Transistor Radio launch note; semiconductor outlooks too important and fragmented for single articles.</td><td>Anchors the historical hook that 2026 had to extend.</td></tr>
+              <tr><td>WSTS</td><td>2026 market forecast ~$975B, +25% YoY; memory and logic both &gt;30% growth.</td><td>Frames the near-$1T headline.</td></tr>
+              <tr><td>SIA</td><td>2025 sales $791.7B (+25.6% YoY); logic $301.9B; memory $223.1B.</td><td>Quantifies concentration in logic and memory.</td></tr>
+              <tr><td>Nvidia FY2026 results</td><td>Revenue $215.9B (+65% YoY); data center +68% YoY.</td><td>The visible AI infrastructure demand signal.</td></tr>
+              <tr><td>Nvidia FY2026 10-K</td><td>Long lead times, deposits, long-term supply agreements, capacity commitments.</td><td>Shows how the AI buyer secures the bottleneck stack.</td></tr>
+              <tr><td>TSMC 2025 Form 20-F</td><td>HPC 58% of FY2025 net revenue; smartphone 29%; 7 nm and below 74% of wafer revenue.</td><td>Defines the foundry shift from mobile-led to AI/HPC-led demand.</td></tr>
+              <tr><td>ASML Q4 2025</td><td>Q4 net bookings EUR 13.2B; EUV EUR 7.4B; 2026 sales guide EUR 34-39B; AI-driven medium-term plans.</td><td>Equipment-stack scarcity gates how much capacity can exist.</td></tr>
+              <tr><td>TSMC 2026 Symposium</td><td>5.5-reticle CoWoS in production; 14-reticle by 2028 with ~10 compute dies and 20 HBM stacks.</td><td>Defines the package-scale allocation layer.</td></tr>
+              <tr><td>Micron HBM</td><td>Entire calendar 2026 HBM supply under price and volume agreement, including HBM4.</td><td>HBM became strategic capacity, not background memory.</td></tr>
+              <tr><td>IDC memory shortage</td><td>Memory shortage pressures smartphones and PCs; sub-norm DRAM/NAND supply growth.</td><td>Names the traditional-electronics cost of the AI cycle.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="essay-footnotes">
+        <h3>Footnotes &amp; sources</h3>
+        <ol>
+          <li id="fn1">SemiAnalysis, &ldquo;2022 Semiconductor Outlook (and Webinar) &mdash; Transistor Radio Podcast Launch,&rdquo; 2022 (PDF supplied by author). Source for the launch-note context: a joint SemiAnalysis + Fabricated Knowledge podcast announcement covering semiconductor outlooks, subsegments, and opinions beyond traditional article format, used here as the historical hook for why 2026 outlook commentary matters.</li>
+          <li id="fn2">WSTS, &ldquo;Semiconductor Market Forecast,&rdquo; <a href="https://www.wsts.org/76/Recent-News-Release" target="_blank" rel="noopener noreferrer">wsts.org/76/Recent-News-Release</a>. Source for the &gt;25% 2026 growth forecast, the ~$975B market size projection, and the &gt;30% YoY growth expectation for memory and logic.</li>
+          <li id="fn3">SIA, &ldquo;Global Annual Semiconductor Sales Increase 25.6% to $791.7 Billion in 2025,&rdquo; <a href="https://www.semiconductors.org/global-annual-semiconductor-sales-increase-25-6-to-791-7-billion-in-2025/" target="_blank" rel="noopener noreferrer">semiconductors.org</a>. Source for 2025 total sales of $791.7B (+25.6% YoY), the $301.9B logic category, and the $223.1B memory category.</li>
+          <li id="fn4">NVIDIA, &ldquo;NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2026,&rdquo; <a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026" target="_blank" rel="noopener noreferrer">nvidianews.nvidia.com</a>. Source for FY2026 revenue of $215.9B, the +65% YoY growth, and the +68% YoY data center growth.</li>
+          <li id="fn5">NVIDIA, &ldquo;Form 10-K (Fiscal Year 2026),&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm" target="_blank" rel="noopener noreferrer">sec.gov/&hellip;/nvda-20260125</a>. Source for Nvidia's description of long manufacturing lead times, premiums, deposits, long-term supply agreements, capacity commitments, and AI-driven data center growth used as the supply-chain side of the demand signal.</li>
+          <li id="fn6">TSMC, &ldquo;2025 Form 20-F,&rdquo; <a href="https://investor.tsmc.com/sites/ir/sec-filings/2025_20F%20Report.pdf" target="_blank" rel="noopener noreferrer">investor.tsmc.com/&hellip;/2025_20F Report</a>. Source for HPC at 58% of FY2025 net revenue, smartphones at 29%, advanced technologies at 7 nm and below at 74% of wafer revenue, and 2026 capex focused on 2 nm and 3 nm capacity expansion alongside advanced packaging build-out.</li>
+          <li id="fn7">ASML, &ldquo;Q4 2025 Financial Results,&rdquo; <a href="https://www.asml.com/news/press-releases/2026/q4-2025-financial-results" target="_blank" rel="noopener noreferrer">asml.com/&hellip;/q4-2025-financial-results</a>. Source for Q4 2025 net bookings of EUR 13.2B, EUV bookings of EUR 7.4B, the end-2025 backlog, the 2026 net sales guidance range of EUR 34B to EUR 39B, and the customer commentary on AI-driven medium-term capacity plans.</li>
+          <li id="fn8">TSMC, &ldquo;TSMC 2026 Technology Symposium,&rdquo; <a href="https://pr.tsmc.com/english/news/3302" target="_blank" rel="noopener noreferrer">pr.tsmc.com/english/news/3302</a>. Source for 5.5-reticle CoWoS in production today, 14-reticle CoWoS planned by 2028 with around 10 large compute dies and 20 HBM stacks, the advancement of SoIC, and the co-packaged optics roadmap used as packaging-as-bottleneck context.</li>
+          <li id="fn9">Micron Technology, &ldquo;Micron Completes Calendar 2026 HBM Supply Agreements,&rdquo; <a href="https://investors.micron.com/static-files/530bd7ed-a8c8-4687-af4a-8c129f740e09" target="_blank" rel="noopener noreferrer">investors.micron.com/&hellip;</a>. Source for the disclosure that Micron has completed price and volume agreements covering its entire calendar 2026 HBM supply, including HBM4.</li>
+          <li id="fn10">IDC, &ldquo;Global Memory Shortage Crisis &mdash; Market Analysis and the Potential Impact on the Smartphone and PC Markets in 2026,&rdquo; <a href="https://www.idc.com/resource-center/blog/global-memory-shortage-crisis-market-analysis-and-the-potential-impact-on-the-smartphone-and-pc-markets-in-2026/" target="_blank" rel="noopener noreferrer">idc.com/&hellip;/global-memory-shortage-crisis</a>. Source for the memory-shortage pressure on smartphone and PC markets, the sub-norm DRAM and NAND supply-growth framing, and the 2026 PC shipment-pressure expectation used in the traditional-electronics section.</li>
+        </ol>
+      </div>
+
+      <div class="c-readnext">
+        <div class="c-readnext-label">Read next</div>
+        <div class="c-readnext-grid">
+          <a class="c-readnext-card" href="advanced-packaging-became-the-computer.html">
+            <div class="c-readnext-kicker">Essay 061 &middot; Packaging</div>
+            <h3 class="c-readnext-title">The Package Became the Computer</h3>
+          </a>
+          <a class="c-readnext-card" href="aws-cpu-cloud-infrastructure.html">
+            <div class="c-readnext-kicker">Essay 060 &middot; Hyperscalers</div>
+            <h3 class="c-readnext-title">AWS Turned the CPU Into Cloud Infrastructure</h3>
+          </a>
+          <a class="c-readnext-card" href="euv-throughput-bottleneck.html">
+            <div class="c-readnext-kicker">Essay 055 &middot; Lithography</div>
+            <h3 class="c-readnext-title">The EUV Throughput Bottleneck</h3>
+          </a>
+          <a class="c-readnext-card" href="memory-oligopoly-ai-toll-booth.html">
+            <div class="c-readnext-kicker">Essay 050 &middot; Memory</div>
+            <h3 class="c-readnext-title">The Memory Oligopoly Became AI's Toll Booth</h3>
+          </a>
+          <a class="c-readnext-card" href="node-race-became-system-race.html">
+            <div class="c-readnext-kicker">Essay 056 &middot; Foundries</div>
+            <h3 class="c-readnext-title">The Node Race Became a System Race</h3>
+          </a>
+          <a class="c-readnext-card" href="reliability-layer-behind-ai-hardware.html">
+            <div class="c-readnext-kicker">Essay 051 &middot; Reliability</div>
+            <h3 class="c-readnext-title">The Reliability Layer Behind AI Hardware</h3>
+          </a>
+          <a class="c-readnext-card" href="../../accelerated-computing-atlas/">
+            <div class="c-readnext-kicker">Atlas</div>
+            <h3 class="c-readnext-title">Accelerated Computing Atlas</h3>
+          </a>
+          <a class="c-readnext-card" href="../">
+            <div class="c-readnext-kicker">Index</div>
+            <h3 class="c-readnext-title">All essays</h3>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Pugalenthi Magendran. Built by hand.</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=16"></script>
+  <script src="../blog.js?v=49"></script>
+</body>
+</html>
