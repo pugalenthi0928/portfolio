@@ -101,7 +101,7 @@ function renderHeroStats(posts) {
   // Use the actual topic-group count (themes the archive is organised into),
   // not the unique-tag count which is confusing.
   if (elThemes) {
-    const themeKeys = new Set(posts.map(p => (BLOG_POST_TOPIC[p.slug] || 'other')));
+    const themeKeys = new Set(posts.map(p => resolveTopic(p)));
     elThemes.textContent = themeKeys.size;
   }
 
@@ -153,72 +153,223 @@ function createFeaturedCard(post, totalCount) {
 
 
 // ============================================
-// TOPIC GROUPS — group archive by primary theme
+// TOPIC TAXONOMY — used for BOTH "Read by theme" grouping
+// AND "Full archive" filter chips. One mental model, two views.
 // ============================================
-// Explicit slug -> topic mapping so each essay lands in the
-// right bucket regardless of how its tags happen to be ordered.
-// Order of BLOG_TOPIC_ORDER controls the on-page rendering order.
-const BLOG_TOPIC_ORDER = ['infrastructure', 'agents', 'platforms', 'cognition', 'research'];
+// BLOG_TOPIC_ORDER controls render order in both views.
+const BLOG_TOPIC_ORDER = [
+  'apple', 'foundry', 'memory', 'packaging', 'compute',
+  'equipment', 'optical', 'policy', 'strategy'
+];
 
 const BLOG_TOPIC_LABELS = {
-  infrastructure: 'AI infrastructure & hardware',
-  agents:         'AI agents, software & accountability',
-  platforms:      'Platforms, attention & memory',
-  cognition:      'Labour, cognition & culture',
-  research:       'Research & first principles',
-  other:          'Other essays'
+  apple:     'Apple Silicon & Mobile',
+  foundry:   'Foundries & Process',
+  memory:    'Memory & Storage',
+  packaging: 'Packaging & Interconnect',
+  compute:   'GPU & AI Compute',
+  equipment: 'Equipment & Materials',
+  optical:   'Optical & Networking',
+  policy:    'Policy, Geopolitics & Security',
+  strategy:  'AI Strategy & Culture',
+  other:     'Other essays'
 };
 
-const BLOG_POST_TOPIC = {
-  'dead-zone-layer':                'infrastructure',
-  'vehicle-compute-backbone':       'infrastructure',
-  'open-isa-talent-bet':            'infrastructure',
-  'architecture-gatekeeper':        'infrastructure',
-  'custom-ai-hardware-trap':        'infrastructure',
-  'package-became-the-computer':    'infrastructure',
-  'back-end-bottleneck':            'infrastructure',
-  'wafer-scale-training-bet':       'infrastructure',
-  'semiconductor-substitution-ladder': 'infrastructure',
-  'power-efficiency-layer':         'infrastructure',
-  'foundry-trust-test':             'infrastructure',
-  'android-flagship-breakout':      'infrastructure',
-  'bubble-that-became-infrastructure': 'infrastructure',
-  'ai-chip-software-wall':          'infrastructure',
-  'fab-that-outlived-3d-xpoint':    'infrastructure',
-  'wafer-scale-latency-bet':        'infrastructure',
-  'gaa-credibility-test':           'infrastructure',
-  'ai-native-network':              'infrastructure',
-  'networked-ai-bet':               'infrastructure',
-  'foundry-toll-road':              'infrastructure',
-  'clinic-on-wrist-reality-check':  'infrastructure',
-  'other-leading-edge':             'infrastructure',
-  'inference-efficiency-war':       'infrastructure',
-  'when-ai-runs-out-of-copper':     'infrastructure',
-  'custom-silicon-flywheel':        'infrastructure',
-  'nvidia-earnings-quality-test':   'infrastructure',
-  'ai-memory-tax':                  'infrastructure',
-  'boring-back-end-boom':           'infrastructure',
-  'density-illusion':               'infrastructure',
-  'modem-to-antenna-war':           'infrastructure',
-  'nvidia-ai-factory-arm':          'infrastructure',
-  'mediatek-fragmented-compute-war':'infrastructure',
-  'dry-resist-war':                 'infrastructure',
-  'ai-memory-wall':                 'infrastructure',
-  'liability-laundering':           'agents',
-  'prompt-is-not-infrastructure':   'agents',
-  'the-cheap-code-era':             'agents',
-  'interface-coup':                 'platforms',
-  'free-intelligence-trap':         'platforms',
-  'memory-moat':                    'platforms',
-  'model-monoculture':              'cognition',
-  'the-boiling-frog-economy':       'cognition',
-  'yann-lecun-billion-dollar-bet':  'research',
-  'the-title-was-wrong':            'research',
-  'no-alexander-without-aristotle': 'research'
+// Short labels for compact filter chips
+const BLOG_TOPIC_CHIP_LABELS = {
+  apple:     'Apple Silicon',
+  foundry:   'Foundries',
+  memory:    'Memory',
+  packaging: 'Packaging',
+  compute:   'GPU & AI',
+  equipment: 'Equipment',
+  optical:   'Optical & RF',
+  policy:    'Policy',
+  strategy:  'Strategy'
 };
+
+// Tag membership per cluster — used to decide which posts a cluster chip filters.
+// A post matches a cluster if any of its tags is in that cluster's list.
+const BLOG_TOPIC_TAGS = {
+  apple: [
+    'Apple Silicon','Apple M2','Apple M5','Apple Intelligence','M-Series','Apple M-Series',
+    'A19','A18','A17','A16','A15','A14','A13','N1 Wireless','iPhone','iPad','Mobile SoCs',
+    'Fusion Architecture','Apple','Apple Avalanche','Apple Blizzard','LPDDR5','Neural Accelerator',
+    'AI PC','Local AI','Unified Memory','Apple Arc','Apple Silicon Mac','Neural Engine',
+    'Avalanche','Blizzard','Firestorm','Icestorm','Dynamic Caching'
+  ],
+  foundry: [
+    'TSMC','Intel','Intel 4','Intel 18A','18A','14A','7A','Samsung Foundry','GlobalFoundries',
+    'Foundry','Rapidus','Process Technology','RibbonFET','PowerVia','GAA',"Moore's Law",
+    '2026 Outlook','Logic','Capex','TSMC Capex','Wafer Supply','Exynos','N3','N3E','N3P','N2','A14 Node',
+    'Meteor Lake','Panther Lake','Clearwater Forest','Lunar Lake','Arrow Lake',
+    'Intel Foundry','Foundry Services','IFS','Fab','Fab 18','Fab 21','TSMC Arizona',
+    'Process Leadership','Node Race','EUV Throughput','Allocation','Process Cadence',
+    'CapEx','3nm','5nm','2nm','Density','Density Illusion','Fab Capacity','N2P','A16','MBCFET','SF2'
+  ],
+  memory: [
+    'HBM','HBM3','HBM3E','HBM4','HBM4E','DRAM','NAND','3D NAND','SRAM',
+    'Memory','Memory Wall','Memory Bandwidth','Memory Pooling','Memory Controller',
+    'CXL','KV Cache','Composable Servers','Tanzanite','Structera','Marvell',
+    'SOCAMM2','SOCAMM','Micron','SK Hynix','SK hynix','Memory Oligopoly',
+    'YMTC','CXMT','3D XPoint','Optane','Memory Tax','SSD','LPDDR6',
+    'Memory Hierarchy','AI Memory','Memory Comeback','Samsung Memory'
+  ],
+  packaging: [
+    'Advanced Packaging','CoWoS','SoIC','Hybrid Bonding','Foveros','Chiplets',
+    'Die-to-Die IO','TCB','ASMPT','Besi','Bonding','Back-End','Back-End Bottleneck',
+    'Wafer-Scale','InFO','Multi-Die','Co-Packaging','OSAT','Packaging','3DFabric',
+    'Packaging Bottleneck','Bonding Step','Advanced Packaging Bottleneck',
+    'Panel-Level Packaging','SoW-X','Fan-Out Packaging','Glass Substrates',
+    'InFO_SoW','Fan-Out Wafer','Interposers','RDL','EMIB','COUPE'
+  ],
+  compute: [
+    'GPU','GPU Architecture','Nvidia','Hopper','Blackwell','Vera Rubin','Rubin',
+    'AI Infrastructure','Custom Silicon','Trainium','Inferentia','AWS','Graviton',
+    'CUDA','NVLink','Hyperscalers','Cobalt','Axion','Tesla AI6','Tesla',
+    'AmpereOne','Ampere Computing','Ampere','SoftBank','Oracle Cloud','Cloud Native CPUs',
+    'Arm Servers','Arm','Liquid Cooling','Power Delivery','Inference','Data Centers',
+    'Software Moats','Edge AI','Wafer-Scale Training','Cerebras','Groq',
+    'Custom Accelerator','TPU','XPU','AI Factory','OpenVINO','MLPerf',
+    'Training','Networked AI','Nitro','Microsoft Cobalt','Google Axion',
+    'Datacenter Chips','MTIA','RISC-V','Hyperscaler Silicon','Software-Defined Hardware'
+  ],
+  equipment: [
+    'ASML','EUV','High-NA EUV','Veeco','Laser Annealing','Axcelis','WFE',
+    'Semiconductor Equipment','Advanced Manufacturing','Photoresist','Dry Resist',
+    'Lam Research','Tokyo Electron','TEL','Applied Materials','KLA','JSR','Inpria',
+    'MOR','CAR','Lithography','Etch','CMP','Implant','Materials','Wet Process',
+    'Atomic Layer Etch','ALE','ALD','Ion Implant','Reliability','Burn-In','Aehr',
+    'EUV Materials','Resist','EUV Photons','SiC Equipment','Topaz PVD','Semicap'
+  ],
+  optical: [
+    'Silicon Photonics','Co-Packaged Optics','Optical I/O','Ayar Labs','TeraPHY','SuperNova',
+    'UALink','UCIe','Lightmatter','Fotonix','Open Edge Platform','XConn','BlueField',
+    '5G','6G','Wi-Fi 7','Modem','Modems','Antenna','RFFE','RF SOI','FD-SOI','ultraBAW',
+    'Qualcomm','MediaTek','Networking','vRAN','Open RAN','Optical','Photonics',
+    'CPO','Network and Edge','MN&E','Intel NEX','Snapdragon','Dimensity 9500',
+    'mmWave','Apple C1','Wireless','Connectivity','5G Advanced','Direct-to-Device',
+    'Satellite Messaging','Starlink','SpaceX','Mobile Networks','Globalstar','Amazon Leo'
+  ],
+  policy: [
+    'Geopolitics','CHIPS Act','EU Chips Act','Industrial Policy','Export Controls',
+    'Supply Chain','Supply Chain Security','National Security','Cybersecurity',
+    'Firmware','Identity Security','Confidential Computing','Sovereignty','Regionalization',
+    'China','Silicon Carbide','SiC','Trade','Tariffs','Sanctions','Made in America',
+    'Tariff','Decoupling','Reshoring','Onshoring','Platform Risk','Vulnerability',
+    'China Semiconductors','Arm China','Semiconductor IP','IP Licensing','Semiconductor Sovereignty'
+  ],
+  strategy: [
+    'AI Ethics','AI Safety','AI Policy','LLM','Agents','Prompts','Memory Moat',
+    'Platforms','Interfaces','Free Intelligence','Liability','Cheap Code',
+    'Model Monoculture','Yann LeCun','Research','Philosophy','First Principles',
+    'Cognition','Labour','Culture','Aristotle','Boiling Frog','Title','Software Strategy'
+  ]
+};
+
+// Explicit slug -> topic mapping (highest-scoring-cluster classification, with
+// hand overrides where tag-scoring would misroute). One topic per essay.
+const BLOG_POST_TOPIC = {
+  'apple-m2-costly-transition-m5-ai-silicon-direction': 'apple',
+  'ampere-cloud-native-softbank-ai-infrastructure':     'compute',
+  'meteor-lake-intel-chiplet-future-process-leadership':'foundry',
+  'marvell-tanzanite-cxl-memory-pooling-ai-infrastructure': 'memory',
+  'ayar-labs-optical-io-cpo-ai-scale':                  'optical',
+  'samsung-semiconductor-crisis-ai-memory-comeback':    'memory',
+  'nvidia-empire-intel-network-edge-playbook':          'compute',
+  'nvidia-hopper-supplier-risk-ai-hardware-platforms':  'compute',
+  'apple-iphone-chip-split-ai-moores-law':              'apple',
+  'globalfoundries-fotonix-silicon-photonics-ai-infrastructure': 'optical',
+  'nvidia-hack-ai-infrastructure-security':             'policy',
+  'semiconductor-regionalization-ai-sovereignty':       'policy',
+  'veeco-ai-hardware-bottlenecks':                      'equipment',
+  'intel-turnaround-18a-14a-execution-test':            'foundry',
+  'bonding-step-ai-packaging-bottleneck':               'packaging',
+  'tsmc-capex-ai-industrial-plan':                      'foundry',
+  'semiconductor-cycle-split-in-two':                   'foundry',
+  'tsmc-allocation-layer-ai-compute':                   'foundry',
+  'advanced-packaging-became-the-computer':             'packaging',
+  'aws-cpu-cloud-infrastructure':                       'compute',
+  'euv-materials-war-ai-chips':                         'equipment',
+  'intel-bet-the-farm-foundry-proof':                   'foundry',
+  'qualcomm-modem-to-antenna-moat':                     'optical',
+  'node-race-became-system-race':                       'foundry',
+  'euv-throughput-bottleneck':                          'equipment',
+  'globalfoundries-second-life':                        'optical',
+  'china-silicon-carbide-overcapacity-war':             'policy',
+  'a15-die-shot-apple-silicon-future':                  'apple',
+  'reliability-layer-behind-ai-hardware':               'equipment',
+  'memory-oligopoly-ai-toll-booth':                     'memory',
+  'chinas-nand-breakout':                               'memory',
+  'boring-back-end-of-ai':                              'packaging',
+  'apple-silicon-after-cpu-era':                        'apple',
+  'package-escaped-the-wafer':                          'packaging',
+  'dead-zone-layer':                                    'optical',
+  'vehicle-compute-backbone':                           'compute',
+  'open-isa-talent-bet':                                'compute',
+  'architecture-gatekeeper':                            'policy',
+  'custom-ai-hardware-trap':                            'compute',
+  'package-became-the-computer':                        'packaging',
+  'back-end-bottleneck':                                'packaging',
+  'wafer-scale-training-bet':                           'packaging',
+  'semiconductor-substitution-ladder':                  'equipment',
+  'power-efficiency-layer':                             'compute',
+  'foundry-trust-test':                                 'foundry',
+  'android-flagship-breakout':                          'optical',
+  'bubble-that-became-infrastructure':                  'compute',
+  'ai-chip-software-wall':                              'compute',
+  'fab-that-outlived-3d-xpoint':                        'memory',
+  'wafer-scale-latency-bet':                            'compute',
+  'gaa-credibility-test':                               'foundry',
+  'ai-native-network':                                  'optical',
+  'networked-ai-bet':                                   'compute',
+  'foundry-toll-road':                                  'foundry',
+  'clinic-on-wrist-reality-check':                      'compute',
+  'other-leading-edge':                                 'optical',
+  'inference-efficiency-war':                           'compute',
+  'when-ai-runs-out-of-copper':                         'optical',
+  'custom-silicon-flywheel':                            'compute',
+  'nvidia-earnings-quality-test':                       'compute',
+  'ai-memory-tax':                                      'memory',
+  'boring-back-end-boom':                               'packaging',
+  'density-illusion':                                   'foundry',
+  'modem-to-antenna-war':                               'optical',
+  'nvidia-ai-factory-arm':                              'compute',
+  'mediatek-fragmented-compute-war':                    'compute',
+  'dry-resist-war':                                     'equipment',
+  'ai-memory-wall':                                     'memory',
+  'liability-laundering':                               'strategy',
+  'prompt-is-not-infrastructure':                       'strategy',
+  'the-cheap-code-era':                                 'strategy',
+  'interface-coup':                                     'strategy',
+  'free-intelligence-trap':                             'strategy',
+  'memory-moat':                                        'strategy',
+  'model-monoculture':                                  'strategy',
+  'the-boiling-frog-economy':                           'strategy',
+  'yann-lecun-billion-dollar-bet':                      'strategy',
+  'the-title-was-wrong':                                'strategy',
+  'no-alexander-without-aristotle':                     'strategy'
+};
+
+// Resolve a post's topic. First check the explicit slug map; if absent
+// (a new post that hasn't been added to BLOG_POST_TOPIC yet), fall back
+// to tag-membership: pick the cluster with the most matching tags.
+function resolveTopic(post) {
+  const explicit = BLOG_POST_TOPIC[post.slug];
+  if (explicit) return explicit;
+  const tagSet = new Set(post.tags || []);
+  let best = { key: 'other', score: 0 };
+  BLOG_TOPIC_ORDER.forEach(key => {
+    const tags = BLOG_TOPIC_TAGS[key] || [];
+    let s = 0;
+    for (const t of tags) if (tagSet.has(t)) s += 1;
+    if (s > best.score) best = { key, score: s };
+  });
+  return best.score > 0 ? best.key : 'other';
+}
 
 function classifyPost(post) {
-  const key = BLOG_POST_TOPIC[post.slug] || 'other';
+  const key = resolveTopic(post);
   return { key, label: BLOG_TOPIC_LABELS[key] };
 }
 
@@ -304,6 +455,11 @@ function createPostCard(post) {
   article.className = 'blog-card';
   article.setAttribute('data-animate', 'fade-up');
   article.setAttribute('data-tags', post.tags.join(','));
+  article.setAttribute('data-topic', resolveTopic(post));
+  article.setAttribute('data-slug', post.slug);
+  // Searchable text: title + excerpt + tags, lowercased
+  const searchText = (post.title + ' ' + post.excerpt + ' ' + post.tags.join(' ')).toLowerCase();
+  article.setAttribute('data-search', searchText);
 
   const title = escapeHTML(post.title);
   const excerpt = escapeHTML(post.excerpt);
@@ -342,42 +498,139 @@ function formatDate(dateStr) {
 
 
 // ============================================
-// TAG FILTERING
+// FILTER UI — curated topic chips + search + collapsed all-tags disclosure
 // ============================================
-function renderFilters(container, tags) {
-  // "All" button
-  const allBtn = document.createElement('button');
-  allBtn.className = 'blog-filter-tag active';
-  allBtn.textContent = 'All';
-  allBtn.addEventListener('click', () => filterByTag('all', container));
-  container.appendChild(allBtn);
+// Filter state combines topic (cluster), specific tag, and a search query.
+// All three apply with AND semantics. 'all' topic means no topic filter.
+const blogFilterState = { topic: 'all', tag: null, query: '' };
 
-  tags.forEach(tag => {
-    const btn = document.createElement('button');
-    btn.className = 'blog-filter-tag';
-    btn.textContent = tag;
-    btn.addEventListener('click', () => filterByTag(tag, container));
-    container.appendChild(btn);
+function renderFilters(container, tags) {
+  container.innerHTML = '';
+
+  // --- Row 1: curated topic chips (All + 9 clusters) ---
+  const topicRow = document.createElement('div');
+  topicRow.className = 'blog-filter-row blog-filter-row--topics';
+
+  const allBtn = makeChip('All', 'all', 'topic');
+  allBtn.classList.add('active');
+  topicRow.appendChild(allBtn);
+
+  BLOG_TOPIC_ORDER.forEach(key => {
+    const label = BLOG_TOPIC_CHIP_LABELS[key] || BLOG_TOPIC_LABELS[key];
+    topicRow.appendChild(makeChip(label, key, 'topic'));
   });
+
+  container.appendChild(topicRow);
+
+  // --- Row 2: search input ---
+  const searchRow = document.createElement('div');
+  searchRow.className = 'blog-filter-row blog-filter-row--search';
+
+  const searchWrap = document.createElement('div');
+  searchWrap.className = 'blog-search';
+  searchWrap.innerHTML =
+    '<svg class="blog-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>' +
+    '</svg>' +
+    '<input type="search" class="blog-search-input" placeholder="Search essays by title, topic, or tag" aria-label="Search essays">';
+  searchRow.appendChild(searchWrap);
+  container.appendChild(searchRow);
+
+  const input = searchWrap.querySelector('input');
+  input.addEventListener('input', (e) => {
+    blogFilterState.query = e.target.value.trim().toLowerCase();
+    applyBlogFilters();
+  });
+
+  // --- Row 3: collapsed "Browse all tags" disclosure ---
+  if (tags && tags.length) {
+    const disclosure = document.createElement('details');
+    disclosure.className = 'blog-filter-disclosure';
+
+    const summary = document.createElement('summary');
+    summary.className = 'blog-filter-summary';
+    summary.innerHTML =
+      '<span class="blog-filter-summary-label">Browse all ' + tags.length + ' tags</span>' +
+      '<svg class="blog-filter-summary-chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    disclosure.appendChild(summary);
+
+    const tagRow = document.createElement('div');
+    tagRow.className = 'blog-filter-row blog-filter-row--tags';
+    tags.slice().sort((a, b) => a.localeCompare(b)).forEach(tag => {
+      tagRow.appendChild(makeChip(tag, tag, 'tag'));
+    });
+    disclosure.appendChild(tagRow);
+
+    container.appendChild(disclosure);
+  }
 }
 
-
-function filterByTag(tag, filtersContainer) {
-  // Update active state
-  filtersContainer.querySelectorAll('.blog-filter-tag').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.toLowerCase() === tag.toLowerCase() || (tag === 'all' && btn.textContent === 'All'));
-  });
-
-  // Filter cards
-  const cards = document.querySelectorAll('.blog-card');
-  cards.forEach(card => {
-    const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : [];
-    if (tag === 'all' || cardTags.includes(tag)) {
-      card.style.display = '';
+function makeChip(label, value, kind) {
+  const btn = document.createElement('button');
+  btn.className = 'blog-filter-tag';
+  btn.dataset.kind = kind;        // 'topic' or 'tag'
+  btn.dataset.value = value;
+  btn.textContent = label;
+  btn.addEventListener('click', () => {
+    if (kind === 'topic') {
+      blogFilterState.topic = value;
+      blogFilterState.tag = null;  // selecting a topic clears any specific-tag filter
     } else {
-      card.style.display = 'none';
+      // selecting a specific tag clears the topic filter for clarity
+      blogFilterState.tag = (blogFilterState.tag === value) ? null : value;
+      blogFilterState.topic = 'all';
     }
+    applyBlogFilters();
   });
+  return btn;
+}
+
+function applyBlogFilters() {
+  // Update active chip states
+  document.querySelectorAll('.blog-filter-tag').forEach(btn => {
+    const k = btn.dataset.kind;
+    const v = btn.dataset.value;
+    let active = false;
+    if (k === 'topic') {
+      active = (v === blogFilterState.topic && !blogFilterState.tag);
+    } else if (k === 'tag') {
+      active = (v === blogFilterState.tag);
+    }
+    btn.classList.toggle('active', active);
+  });
+
+  // Apply filters to cards
+  const cards = document.querySelectorAll('.blog-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cardTopic = card.dataset.topic || 'other';
+    const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+    const search = card.dataset.search || '';
+
+    const topicOk = (blogFilterState.topic === 'all') || (cardTopic === blogFilterState.topic);
+    const tagOk = !blogFilterState.tag || cardTags.includes(blogFilterState.tag);
+    const queryOk = !blogFilterState.query || search.indexOf(blogFilterState.query) !== -1;
+
+    const show = topicOk && tagOk && queryOk;
+    card.style.display = show ? '' : 'none';
+    if (show) visible += 1;
+  });
+
+  // Update empty-state hint (if a placeholder exists or we create one inline)
+  let empty = document.getElementById('blog-filter-empty');
+  if (visible === 0) {
+    if (!empty) {
+      empty = document.createElement('p');
+      empty.id = 'blog-filter-empty';
+      empty.className = 'blog-empty';
+      empty.textContent = 'No essays match. Try clearing the search or picking a different topic.';
+      const grid = document.getElementById('blog-grid');
+      if (grid) grid.appendChild(empty);
+    }
+    empty.style.display = '';
+  } else if (empty) {
+    empty.style.display = 'none';
+  }
 }
 
 
