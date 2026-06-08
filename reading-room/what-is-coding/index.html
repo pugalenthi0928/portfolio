@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is Coding? A Mental Model for Becoming a Better Engineer | Pugalenthi Magendran</title>
+  <meta name="description" content="Files, repos, and databases are the surface. The real work of coding is designing behavior, state, rules, interfaces, and complexity boundaries. A personal field guide for engineering maturity, grounded partly in Parnas and Ousterhout.">
+  <link rel="canonical" href="https://pugalenthimagendran.com/reading-room/what-is-coding/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="What Is Coding? A Mental Model for Becoming a Better Engineer">
+  <meta property="og:description" content="Files are where software is written down. Code is the behavior those files describe. A practical engineering field guide.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://pugalenthimagendran.com/reading-room/what-is-coding/">
+  <meta property="og:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is Coding? A Mental Model for Becoming a Better Engineer">
+  <meta name="twitter:image" content="https://pugalenthimagendran.com/ogimage.png">
+  <meta name="twitter:description" content="Files are where software is written down. Code is the behavior those files describe.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Is Coding? A Mental Model for Becoming a Better Engineer",
+    "description": "A practical engineering field guide on coding as behavior, state, rules, interfaces, and complexity management. Grounded partly in Parnas and Ousterhout.",
+    "url": "https://pugalenthimagendran.com/reading-room/what-is-coding/",
+    "isPartOf": { "@type": "CollectionPage", "name": "Reading Room", "url": "https://pugalenthimagendran.com/reading-room/" },
+    "author": { "@type": "Person", "name": "Pugalenthi Magendran", "url": "https://pugalenthimagendran.com" }
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css?v=26">
+  <link rel="stylesheet" href="../../builder-os.css?v=1">
+  <style>
+    /* ============================================
+       WHAT IS CODING  ·  scoped under body.wic-page
+       Soft lavender accent for the reflective, field-manual feel.
+       ============================================ */
+    body.wic-page {
+      --wic-accent: #A89CD4;
+      --wic-accent-soft: rgba(168,156,212,0.10);
+      --wic-accent-faint: rgba(168,156,212,0.04);
+      --wic-bd: rgba(255,255,255,0.08);
+      --wic-bd-soft: rgba(255,255,255,0.05);
+      --wic-cool: #6CBFE0;
+      --wic-cool-soft: rgba(108,191,224,0.10);
+      --wic-amber: #E8B468;
+      --wic-amber-soft: rgba(232,180,104,0.10);
+      --wic-green: #5DCAA5;
+      --wic-green-soft: rgba(93,202,165,0.10);
+      --wic-red: #E07A8B;
+      --wic-red-soft: rgba(224,122,139,0.12);
+      --wic-red-faint: rgba(224,122,139,0.04);
+    }
+    body.wic-page main { padding-top: 0; }
+
+    /* Hero accent overrides */
+    body.wic-page .bos-hero-issue strong { color: var(--wic-accent); }
+    body.wic-page .bos-hero-title em { color: var(--wic-accent); font-style: italic; }
+
+    /* ============================================
+       TABLE OF CONTENTS — inline, light-touch
+       ============================================ */
+    .wic-toc {
+      margin: 36px 0 0;
+      padding: 22px 24px 20px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 12px;
+      background: var(--bg-alt);
+    }
+    .wic-toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 14px;
+    }
+    .wic-toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 22px;
+    }
+    .wic-toc-list a {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 4px 0;
+      border-bottom: 0.5px solid transparent;
+      transition: color 160ms ease, border-color 160ms ease;
+    }
+    .wic-toc-list a:hover {
+      color: var(--text);
+      border-bottom-color: var(--wic-accent);
+    }
+    .wic-toc-list a span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--wic-accent);
+      text-transform: uppercase;
+    }
+
+    /* ============================================
+       SECTION HEAD (slightly customised over bos-section-head)
+       ============================================ */
+    .wic-section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+    .wic-mental-model-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--wic-amber);
+      padding: 5px 12px 5px 10px;
+      border: 0.5px solid var(--wic-amber);
+      border-radius: 999px;
+      background: var(--wic-amber-soft);
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .wic-mental-model-banner {
+      margin: 0 0 28px;
+      padding: 14px 18px;
+      border-left: 2px solid var(--wic-amber);
+      background: var(--wic-amber-soft);
+      border-radius: 0 6px 6px 0;
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .wic-mental-model-banner strong {
+      color: var(--text);
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    /* Reused prose block for in-section paragraphs */
+    .wic-prose {
+      max-width: 760px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+    .wic-prose p { margin: 0 0 16px; }
+    .wic-prose p:last-child { margin-bottom: 0; }
+    .wic-prose strong { color: var(--text); font-weight: 500; }
+    .wic-prose em { color: var(--text); font-style: italic; }
+
+    .wic-prose-callout {
+      max-width: 760px;
+      margin: 22px 0 0;
+      padding: 18px 22px;
+      border-left: 2px solid var(--wic-accent);
+      background: var(--wic-accent-soft);
+      border-radius: 0 8px 8px 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    /* ============================================
+       SURFACE-VS-DEPTH DIAGRAM
+       ============================================ */
+    .wic-stack {
+      margin: 28px 0 0;
+      max-width: 720px;
+      display: grid;
+      gap: 0;
+    }
+    .wic-stack-layer {
+      padding: 18px 22px;
+      border: 0.5px solid var(--wic-bd);
+      background: var(--bg-alt);
+      font-family: 'Source Serif 4', serif;
+      color: var(--text);
+      position: relative;
+    }
+    .wic-stack-layer:first-child { border-radius: 10px 10px 0 0; }
+    .wic-stack-layer:last-child { border-radius: 0 0 10px 10px; border-top: none; }
+    .wic-stack-layer:not(:first-child):not(:last-child) { border-top: none; }
+    .wic-stack-arrow {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--wic-accent);
+      padding: 6px 0;
+      line-height: 1;
+    }
+    .wic-stack-layer-label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 6px;
+    }
+    .wic-stack-layer-text {
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .wic-stack-layer-text-quiet {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    /* ============================================
+       FLOW — Input → Rules → State → Output
+       ============================================ */
+    .wic-flow {
+      margin: 28px 0 0;
+      padding: 22px 24px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 12px;
+      background: var(--bg-alt);
+    }
+    .wic-flow-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 14px;
+    }
+    .wic-flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+    .wic-flow-step {
+      padding: 7px 14px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+    .wic-flow-arrow {
+      color: var(--wic-accent);
+      padding: 0 3px;
+    }
+    .wic-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .wic-flow-item {
+      padding: 14px 18px;
+      border: 0.5px solid var(--wic-bd-soft);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+    }
+    .wic-flow-item-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 6px;
+    }
+    .wic-flow-item-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.94rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    /* ============================================
+       8-LAYER CARD GRID
+       ============================================ */
+    .wic-layers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .wic-layer {
+      padding: 22px 24px 20px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+      position: relative;
+      transition: border-color 200ms ease;
+    }
+    .wic-layer:hover { border-color: var(--wic-accent); }
+    .wic-layer-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-layer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: var(--wic-accent);
+      flex-shrink: 0;
+    }
+    .wic-layer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .wic-layer-body {
+      display: grid;
+      gap: 10px;
+    }
+    .wic-layer-row {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: baseline;
+    }
+    .wic-layer-row-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding-top: 2px;
+    }
+    .wic-layer-row-val {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .wic-layer-row-val--code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.86rem;
+      color: var(--text);
+    }
+    .wic-layer-row--mistake .wic-layer-row-label { color: var(--wic-red); }
+    .wic-layer-row--mistake .wic-layer-row-val {
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .wic-layer-row--question .wic-layer-row-label { color: var(--wic-accent); }
+    .wic-layer-row--question .wic-layer-row-val {
+      color: var(--text);
+      font-style: italic;
+      font-size: 0.92rem;
+    }
+
+    /* ============================================
+       FILES/REPOS GRID
+       ============================================ */
+    .wic-things {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wic-thing {
+      padding: 18px 22px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 8px;
+      background: var(--bg-alt);
+    }
+    .wic-thing-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--wic-accent);
+      margin-bottom: 8px;
+    }
+    .wic-thing-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .wic-analogy {
+      margin: 22px 0 0;
+      padding: 18px 22px;
+      border: 0.5px dashed var(--wic-bd);
+      border-radius: 8px;
+      background: var(--wic-accent-faint);
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 760px;
+    }
+    .wic-analogy strong { font-style: normal; color: var(--text); font-weight: 500; }
+    .wic-analogy-caveat {
+      display: block;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--wic-bd-soft);
+      font-size: 0.86rem;
+      color: var(--text-tertiary);
+    }
+
+    /* ============================================
+       BAD vs GOOD comparison
+       ============================================ */
+    .wic-cmp {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 0;
+    }
+    .wic-cmp-card {
+      padding: 20px 22px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+      position: relative;
+    }
+    .wic-cmp-card--bad { border-left: 2px solid var(--wic-red); }
+    .wic-cmp-card--good { border-left: 2px solid var(--wic-green); }
+    .wic-cmp-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .wic-cmp-card--bad .wic-cmp-label { color: var(--wic-red); }
+    .wic-cmp-card--good .wic-cmp-label { color: var(--wic-green); }
+    .wic-cmp-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .wic-cmp-code {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: rgba(0,0,0,0.25);
+      border: 0.5px solid var(--wic-bd-soft);
+      border-radius: 6px;
+      padding: 10px 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ============================================
+       SHALLOW VS DEEP module visuals
+       ============================================ */
+    .wic-modcmp {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 0;
+    }
+    .wic-modcmp-card {
+      padding: 22px 24px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .wic-modcmp-card--shallow { border-left: 2px solid var(--wic-red); }
+    .wic-modcmp-card--deep    { border-left: 2px solid var(--wic-green); }
+    .wic-modcmp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+    .wic-modcmp-bar {
+      display: flex;
+      align-items: stretch;
+      height: 96px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0 16px;
+      border: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-modcmp-interface,
+    .wic-modcmp-hidden {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 8px 6px;
+      line-height: 1.4;
+    }
+    .wic-modcmp-card--shallow .wic-modcmp-interface { flex: 0 0 60%; background: var(--wic-red-soft); color: var(--wic-red); }
+    .wic-modcmp-card--shallow .wic-modcmp-hidden    { flex: 0 0 40%; background: var(--wic-red-faint); color: var(--text-tertiary); }
+    .wic-modcmp-card--deep    .wic-modcmp-interface { flex: 0 0 22%; background: var(--wic-green-soft); color: var(--wic-green); }
+    .wic-modcmp-card--deep    .wic-modcmp-hidden    { flex: 0 0 78%; background: rgba(93,202,165,0.04); color: var(--text-secondary); }
+    .wic-modcmp-text {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .wic-modcmp-text strong { color: var(--text); font-weight: 500; }
+
+    /* ============================================
+       TACTICAL VS STRATEGIC two-column list
+       ============================================ */
+    .wic-trd {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 0;
+    }
+    .wic-trd-card {
+      padding: 22px 24px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .wic-trd-card--bad  { border-left: 2px solid var(--wic-red); }
+    .wic-trd-card--good { border-left: 2px solid var(--wic-green); }
+    .wic-trd-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .wic-trd-card--bad  .wic-trd-title { color: var(--wic-red); }
+    .wic-trd-card--good .wic-trd-title { color: var(--wic-green); }
+    .wic-trd-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .wic-trd-list li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.94rem;
+      line-height: 1.55;
+      color: var(--text);
+      padding-left: 18px;
+      position: relative;
+    }
+    .wic-trd-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 8px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+    .wic-trd-card--bad  .wic-trd-list li::before { background: var(--wic-red); opacity: 0.7; }
+    .wic-trd-card--good .wic-trd-list li::before { background: var(--wic-green); opacity: 0.7; }
+
+    /* ============================================
+       NUMBERED CHECKLIST — How to Read Any Repo
+       ============================================ */
+    .wic-checklist {
+      padding: 24px 26px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 12px;
+      background: var(--bg-alt);
+      max-width: 820px;
+    }
+    .wic-checklist-list {
+      list-style: none;
+      counter-reset: clk;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .wic-checklist-list li {
+      counter-increment: clk;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: baseline;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 0.5px solid var(--wic-bd-soft);
+      background: rgba(255,255,255,0.025);
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.96rem;
+      color: var(--text);
+      line-height: 1.5;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+    .wic-checklist-list li:hover {
+      background: var(--wic-accent-soft);
+      border-color: var(--wic-accent);
+    }
+    .wic-checklist-list li::before {
+      content: counter(clk, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      color: var(--wic-accent);
+    }
+
+    /* ============================================
+       DESIGN-NOTE TEMPLATE
+       ============================================ */
+    .wic-template {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 22px 0 0;
+    }
+    .wic-template-card {
+      padding: 22px 24px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .wic-template-card--filled { border-left: 2px solid var(--wic-accent); }
+    .wic-template-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 14px;
+    }
+    .wic-template-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .wic-template-list li {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--text);
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-template-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .wic-template-list li b {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 400;
+    }
+
+    /* ============================================
+       PROJECT CARDS — LeadMiner / Locarde / GateCrown
+       ============================================ */
+    .wic-projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .wic-project {
+      padding: 24px 26px 22px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 12px;
+      background: var(--bg-alt);
+      position: relative;
+    }
+    .wic-project::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background: var(--wic-accent);
+      opacity: 0.5;
+      border-radius: 12px 0 0 12px;
+    }
+    .wic-project--p1::before { background: var(--wic-cool); }
+    .wic-project--p2::before { background: var(--wic-green); }
+    .wic-project--p3::before { background: var(--wic-amber); }
+    .wic-project-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+    .wic-project--p1 .wic-project-eyebrow { color: var(--wic-cool); }
+    .wic-project--p2 .wic-project-eyebrow { color: var(--wic-green); }
+    .wic-project--p3 .wic-project-eyebrow { color: var(--wic-amber); }
+    .wic-project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 14px;
+      letter-spacing: -0.01em;
+    }
+    .wic-project-section {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-project-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+    .wic-project-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+    .wic-project-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 4px;
+    }
+    .wic-project-list li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: var(--text-secondary);
+    }
+    .wic-project-mods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 6px;
+    }
+    .wic-project-mods span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.025);
+      color: var(--text);
+    }
+
+    /* ============================================
+       RED FLAGS — full-width grid of cards
+       ============================================ */
+    .wic-redflags {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wic-redflag {
+      padding: 20px 22px;
+      border: 0.5px solid var(--wic-bd);
+      border-left: 2px solid var(--wic-red);
+      border-radius: 8px;
+      background: var(--bg-alt);
+    }
+    .wic-redflag-flag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--wic-red);
+      margin-bottom: 12px;
+    }
+    .wic-redflag-flag::before { content: '\26A0  '; opacity: 0.85; margin-right: 2px; }
+    .wic-redflag-sig {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.0rem;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-redflag-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .wic-redflag-row:last-child { margin-bottom: 0; }
+    .wic-redflag-row-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding-top: 2px;
+    }
+    .wic-redflag-row-val {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .wic-redflag-row--fix .wic-redflag-row-label { color: var(--wic-green); }
+
+    /* ============================================
+       FINAL "OPERATING SYSTEM" SUMMARY BOX
+       ============================================ */
+    .wic-os {
+      padding: 32px 34px 30px;
+      border: 0.5px solid var(--wic-accent);
+      border-radius: 14px;
+      background: var(--wic-accent-soft);
+      max-width: 820px;
+    }
+    .wic-os-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--wic-accent);
+      margin-bottom: 18px;
+    }
+    .wic-os-list {
+      list-style: none;
+      counter-reset: os;
+      padding: 0;
+      margin: 0 0 24px;
+      display: grid;
+      gap: 8px;
+    }
+    .wic-os-list li {
+      counter-increment: os;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: baseline;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.0rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+    .wic-os-list li::before {
+      content: counter(os, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--wic-accent);
+    }
+    .wic-os-key {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 0.5px solid var(--wic-bd);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.18rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* ============================================
+       SOURCES & NOTES
+       ============================================ */
+    .wic-sources {
+      max-width: 820px;
+      padding: 24px 26px;
+      border: 0.5px solid var(--wic-bd);
+      border-radius: 10px;
+      background: var(--bg-alt);
+    }
+    .wic-sources-intro {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-size: 0.94rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin: 0 0 18px;
+      padding-bottom: 18px;
+      border-bottom: 0.5px solid var(--wic-bd-soft);
+    }
+    .wic-sources-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+    .wic-sources-list li {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text);
+      padding-left: 18px;
+      position: relative;
+    }
+    .wic-sources-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 1px;
+      background: var(--wic-accent);
+    }
+    .wic-sources-list li em {
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .wic-sources-list li b {
+      font-weight: 500;
+      color: var(--text);
+    }
+    .wic-sources-caveat {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 0.5px solid var(--wic-bd-soft);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       RESPONSIVE — collapse all 2-col grids on mobile
+       ============================================ */
+    @media (max-width: 880px) {
+      .wic-toc-list,
+      .wic-flow-grid,
+      .wic-layers,
+      .wic-things,
+      .wic-cmp,
+      .wic-modcmp,
+      .wic-trd,
+      .wic-template,
+      .wic-redflags {
+        grid-template-columns: 1fr;
+      }
+      .wic-projects { grid-template-columns: 1fr; }
+      .wic-layer-row,
+      .wic-redflag-row,
+      .wic-template-list li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .wic-checklist-list li { grid-template-columns: 32px 1fr; }
+      .wic-stack { max-width: 100%; }
+      .wic-os { padding: 24px 22px 22px; }
+      .wic-os-list li { grid-template-columns: 32px 1fr; }
+    }
+  </style>
+</head>
+<body class="wic-page">
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Grain Overlay -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Mouse Glow -->
+  <div class="mouse-glow" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a href="../../" class="nav-logo" aria-label="Pugalenthi Magendran home">P.</a>
+      <div class="nav-links">
+        <a href="../../projects/">Work</a>
+        <a href="../../blog/">Writing</a>
+        <a href="../../atlases/">Atlases</a>
+        <a href="../">Reading Room</a>
+        <a href="../../#about">About</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile navigation">
+    <a href="../../projects/">Work</a>
+    <a href="../../blog/">Writing</a>
+    <a href="../../atlases/">Atlases</a>
+    <a href="../">Reading Room</a>
+    <a href="../../#about">About</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+
+  <main id="main">
+
+    <!-- ========== HERO ========== -->
+    <section class="bos-hero">
+      <div class="container">
+        <div class="bos-hero-issue"><strong>Reading Room</strong> &nbsp;&middot;&nbsp; Field guide &nbsp;&middot;&nbsp; Engineering</div>
+        <h1 class="bos-hero-title">What Is Coding? <em>A mental model for becoming a better engineer.</em></h1>
+        <p class="bos-hero-subtitle">Files, repos, and databases are the surface. The real work is designing behavior, state, rules, and boundaries.</p>
+        <p class="bos-hero-intro">A personal field guide I wrote to make myself a much better engineer. It is grounded partly in Parnas&rsquo;s information hiding paper and Ousterhout&rsquo;s software design philosophy, partly in my own synthesised mental model, and partly in the projects I am actually building.</p>
+
+        <!-- Table of contents -->
+        <nav class="wic-toc" aria-label="On this page">
+          <div class="wic-toc-label">On this page</div>
+          <ul class="wic-toc-list">
+            <li><a href="#s1"><span>01</span> The Surface Illusion</a></li>
+            <li><a href="#s2"><span>02</span> The simplest definition of coding</a></li>
+            <li><a href="#s3"><span>03</span> The real layers of coding</a></li>
+            <li><a href="#s4"><span>04</span> Files, repos, programs, databases</a></li>
+            <li><a href="#s5"><span>05</span> From files to knowledge boundaries</a></li>
+            <li><a href="#s6"><span>06</span> Deep modules</a></li>
+            <li><a href="#s7"><span>07</span> Tactical vs strategic programming</a></li>
+            <li><a href="#s8"><span>08</span> How to read any repo</a></li>
+            <li><a href="#s9"><span>09</span> How to think before writing code</a></li>
+            <li><a href="#s10"><span>10</span> Apply this to my projects</a></li>
+            <li><a href="#s11"><span>11</span> Engineering red flags</a></li>
+            <li><a href="#s12"><span>12</span> The final operating system</a></li>
+            <li><a href="#s13"><span>13</span> Sources &amp; notes</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ========== 01 · THE SURFACE ILLUSION ========== -->
+    <section class="bos-section" id="s1">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 01</span>
+          <h2 class="bos-section-title">The Surface Illusion</h2>
+          <p class="bos-section-sub">When I look at software, I usually see files. That view is not wrong, but it is shallow.</p>
+        </div>
+
+        <div class="wic-prose">
+          <p>When I open a project, the first things I see are repos, files, folders, databases, APIs, and configs. That is software as a filing cabinet. It is a real view, but it is the surface.</p>
+          <p>At the surface, software looks like file management. At the deeper level, software is <strong>behavior</strong>, <strong>state</strong>, <strong>rules</strong>, <strong>interfaces</strong>, and <strong>abstractions</strong>. The files are where it is written down. The behavior is what actually exists.</p>
+          <p>This essay is about training myself to see the second layer first.</p>
+        </div>
+
+        <div class="wic-prose-callout">
+          Files are where software is written down. Code is the behavior those files describe.
+        </div>
+
+        <div class="wic-stack" aria-label="Surface vs depth diagram">
+          <div class="wic-stack-layer">
+            <span class="wic-stack-layer-label">Surface</span>
+            <div class="wic-stack-layer-text">Repos &middot; files &middot; folders &middot; configs &middot; databases &middot; APIs</div>
+            <div class="wic-stack-layer-text-quiet">What I see when I open the project.</div>
+          </div>
+          <div class="wic-stack-arrow" aria-hidden="true">&darr;</div>
+          <div class="wic-stack-layer">
+            <span class="wic-stack-layer-label">Depth</span>
+            <div class="wic-stack-layer-text">Behavior &middot; state &middot; rules &middot; interfaces &middot; abstractions</div>
+            <div class="wic-stack-layer-text-quiet">What the software actually does.</div>
+          </div>
+          <div class="wic-stack-arrow" aria-hidden="true">&darr;</div>
+          <div class="wic-stack-layer">
+            <span class="wic-stack-layer-label">Outcome</span>
+            <div class="wic-stack-layer-text">Product experience &middot; business logic &middot; user trust</div>
+            <div class="wic-stack-layer-text-quiet">What anyone outside the code actually cares about.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 02 · SIMPLEST DEFINITION ========== -->
+    <section class="bos-section" id="s2">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 02</span>
+          <h2 class="bos-section-title">The simplest definition of coding</h2>
+          <p class="bos-section-sub">One sentence: coding is designing and controlling behavior.</p>
+        </div>
+
+        <div class="wic-prose">
+          <p>A useful definition I keep returning to:</p>
+        </div>
+
+        <div class="wic-prose-callout">
+          Coding is designing and controlling behavior. When this input arrives, with this state, under these rules, produce this output.
+        </div>
+
+        <div class="wic-flow">
+          <div class="wic-flow-label">The core loop</div>
+          <div class="wic-flow-row" aria-label="Input arrow Rules arrow State change arrow Output">
+            <span class="wic-flow-step">Input</span>
+            <span class="wic-flow-arrow">&rarr;</span>
+            <span class="wic-flow-step">Rules</span>
+            <span class="wic-flow-arrow">&rarr;</span>
+            <span class="wic-flow-step">State change</span>
+            <span class="wic-flow-arrow">&rarr;</span>
+            <span class="wic-flow-step">Output</span>
+          </div>
+
+          <div class="wic-flow-grid">
+            <div class="wic-flow-item">
+              <div class="wic-flow-item-name">Input</div>
+              <div class="wic-flow-item-text">A request, a file, a user action, an event, an API response. Anything that arrives.</div>
+            </div>
+            <div class="wic-flow-item">
+              <div class="wic-flow-item-name">Rules</div>
+              <div class="wic-flow-item-text">Business logic, validation, scoring, permissions. The conditions that decide what should happen.</div>
+            </div>
+            <div class="wic-flow-item">
+              <div class="wic-flow-item-name">State</div>
+              <div class="wic-flow-item-text">Database, cache, filesystem, session, logs. What the software remembers.</div>
+            </div>
+            <div class="wic-flow-item">
+              <div class="wic-flow-item-name">Output</div>
+              <div class="wic-flow-item-text">A UI response, an email, a saved record, a report, an API result. What leaves the system.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 03 · REAL LAYERS ========== -->
+    <section class="bos-section" id="s3">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 03</span>
+          <h2 class="bos-section-title">The real layers of coding</h2>
+          <p class="bos-section-sub">Eight layers, from raw bytes up to product behavior. A way to know which floor I am actually working on.</p>
+        </div>
+
+        <div class="wic-mental-model-banner">
+          <strong>A practical mental model I use to understand software &mdash; not an official taxonomy.</strong> These eight layers are my own framing, not a structure proposed by Parnas, Ousterhout, or any specific paper. Use it as a thinking tool, not as a definition.
+        </div>
+
+        <div class="wic-layers">
+
+          <!-- Layer 1 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 01</span>
+              <h3 class="wic-layer-name">Bytes</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">The machine ultimately stores and moves numbers.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">0x48 0x69 0x21 &nbsp; (the bytes for &ldquo;Hi!&rdquo;)</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Forgetting that strings, files, and network packets are just labelled bytes underneath.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">What encoding, byte order, or unit assumption am I quietly making?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 2 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 02</span>
+              <h3 class="wic-layer-name">Data</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">Humans assign meaning to bytes: strings, users, leads, documents, evidence, payments.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">Lead { name, email, company, source, score }</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Confusing the data with its shape. A &ldquo;lead&rdquo; is not its database row; the row is one representation.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">What is this thing in the real world, and what shape best serves the work it has to do?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 3 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 03</span>
+              <h3 class="wic-layer-name">Operations</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">Code transforms data: clean, sort, score, validate, summarise, send, export.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">scoreLead(lead, policy) &rarr; score</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Mixing transformation with side effects, so a &ldquo;clean&rdquo; function also writes to the database.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">Is this operation pure transformation, or is it also changing state and talking to the outside world?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 4 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 04</span>
+              <h3 class="wic-layer-name">State</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">Software remembers things: databases, files, logs, sessions, queues, caches.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">leads, campaigns, sent_messages, audit_log</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Sprinkling stateful writes across the codebase so nothing has a single source of truth.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">For each piece of state: who owns it, who reads it, who is allowed to change it?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 5 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 05</span>
+              <h3 class="wic-layer-name">Interfaces</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">The contract between two parts of the system: functions, classes, APIs, events, schemas.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">leadSource.fetch(criteria) &rarr; Lead[]</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Exposing provider-specific Apollo or scraping shapes everywhere instead of a clean lead contract.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">What does the caller really need to know &mdash; and what can I hide from them?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 6 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 06</span>
+              <h3 class="wic-layer-name">Modules &amp; abstractions</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">Design decides what each part is allowed to know and what it must hide.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">LLMClient hides model, prompt, retries, fallback</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Treating modules as folders rather than as boundaries of knowledge.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">If this design decision changes tomorrow, how many files have to move with it?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 7 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 07</span>
+              <h3 class="wic-layer-name">Systems</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">Frontend, backend, database, workers, queues, external APIs, auth, and logging working together.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">Web &rarr; API &rarr; Worker &rarr; LLM &rarr; CRM</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Reasoning only about one process while the failure modes live in the seams between processes.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">What happens at the boundary &mdash; on retries, timeouts, partial failure, or version skew?</div></div>
+            </div>
+          </article>
+
+          <!-- Layer 8 -->
+          <article class="wic-layer">
+            <div class="wic-layer-head">
+              <span class="wic-layer-num">Layer 08</span>
+              <h3 class="wic-layer-name">Product &amp; business logic</h3>
+            </div>
+            <div class="wic-layer-body">
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Definition</div><div class="wic-layer-row-val">The software encodes real-world rules: compliance, scoring, permissions, pricing, workflows.</div></div>
+              <div class="wic-layer-row"><div class="wic-layer-row-label">Example</div><div class="wic-layer-row-val wic-layer-row-val--code">do not message unsubscribed leads</div></div>
+              <div class="wic-layer-row wic-layer-row--mistake"><div class="wic-layer-row-label">Beginner miss</div><div class="wic-layer-row-val">Burying real-world rules inside utility functions where the business cannot see or audit them.</div></div>
+              <div class="wic-layer-row wic-layer-row--question"><div class="wic-layer-row-label">Ask yourself</div><div class="wic-layer-row-val">Which lines of code are policy decisions in disguise, and where should they actually live?</div></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 04 · FILES REPOS PROGRAMS DATABASES ========== -->
+    <section class="bos-section" id="s4">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 04</span>
+          <h2 class="bos-section-title">Files, repos, programs, databases: what they really are</h2>
+          <p class="bos-section-sub">Naming each artefact precisely so I stop treating them as interchangeable.</p>
+        </div>
+
+        <div class="wic-things">
+          <div class="wic-thing">
+            <div class="wic-thing-name">file</div>
+            <div class="wic-thing-text">A container for code, data, config, or documentation. By itself, just text on disk.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">repo</div>
+            <div class="wic-thing-text">The versioned history of project files and the collaboration record around them. Memory of changes.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">program</div>
+            <div class="wic-thing-text">A running behavior. The files describe it; the program is what actually executes.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">database</div>
+            <div class="wic-thing-text">Structured persistent state with querying, consistency guarantees, and recovery rules.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">api</div>
+            <div class="wic-thing-text">A contract between systems. Inputs, outputs, errors, and the assumptions both sides agree to.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">log</div>
+            <div class="wic-thing-text">Memory of what happened. Time-ordered events for debugging, auditing, and post-incident learning.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">queue</div>
+            <div class="wic-thing-text">Memory of work waiting to happen. Decouples producers from consumers and absorbs bursts.</div>
+          </div>
+          <div class="wic-thing">
+            <div class="wic-thing-name">config</div>
+            <div class="wic-thing-text">Behavior I want to change without rewriting code. Feature flags, environments, secrets.</div>
+          </div>
+        </div>
+
+        <div class="wic-analogy">
+          A kitchen analogy I use sparingly. <strong>Files</strong> are the recipe cards. The <strong>repo</strong> is the recipe book with handwritten edits and history. The <strong>database</strong> is the pantry plus the order records. The <strong>running program</strong> is the kitchen operating during service. The <strong>API</strong> is the printed menu that promises what the kitchen will accept.
+          <span class="wic-analogy-caveat">Caveat: do not overdo this. A kitchen analogy explains the artefacts. It does not explain concurrency, partial failure, schema migrations, or backpressure &mdash; the parts of software that actually hurt.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 05 · FROM FILES TO KNOWLEDGE BOUNDARIES ========== -->
+    <section class="bos-section" id="s5">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 05</span>
+          <h2 class="bos-section-title">From files to knowledge boundaries</h2>
+          <p class="bos-section-sub">The shift from junior to senior engineering is the shift from &ldquo;where do I put this file?&rdquo; to &ldquo;who is allowed to know this?&rdquo;</p>
+        </div>
+
+        <div class="wic-prose">
+          <p>A junior question: <em>where should this file live?</em> A senior question: <em>who is allowed to know this thing?</em></p>
+          <p>The senior question is the one Parnas pushed in 1972. His paper on decomposing systems into modules argued that modularity is not just splitting a system into pieces. The effectiveness depends on the criteria used to divide the system. His central conclusion is sharp: it is usually wrong to begin decomposition from a flowchart of the program. Instead, begin with <strong>difficult design decisions or decisions likely to change</strong>, and design each module to <strong>hide one such decision</strong> from the rest of the system.<sup>[1]</sup></p>
+          <p>That is information hiding. Modules should hide design decisions and expose as little as necessary through their interfaces. The rest of the system gets a small, stable contract; the messy decision lives in one place and can change without breaking everyone.</p>
+        </div>
+
+        <div class="wic-prose-callout">
+          A module is not a folder. A module is a wall around a design decision that is likely to change.
+        </div>
+
+        <div class="wic-cmp">
+          <div class="wic-cmp-card wic-cmp-card--bad">
+            <div class="wic-cmp-label">Bad &mdash; provider leaks everywhere</div>
+            <div class="wic-cmp-text">OpenAI-specific call patterns, headers, retry shapes, and prompt formats live in twenty different files. Switching to a different model provider would touch every one of them.</div>
+            <code class="wic-cmp-code">// scoring.ts
+openai.chat.completions.create({ model: 'gpt-4o', ... })
+
+// email.ts
+openai.chat.completions.create({ model: 'gpt-4o-mini', ... })
+
+// outreach.ts, summary.ts, evidence.ts, ...
+//   each importing the SDK directly
+</code>
+          </div>
+          <div class="wic-cmp-card wic-cmp-card--good">
+            <div class="wic-cmp-label">Good &mdash; one wall around the decision</div>
+            <div class="wic-cmp-text">An <code>LLMClient</code> hides model choice, prompt format, retries, fallback, and logging. Everyone else asks for a completion and stops caring how it is produced.</div>
+            <code class="wic-cmp-code">// llmClient.ts  -- the wall
+export const llm = {
+  complete(prompt: Prompt): Promise&lt;Completion&gt; { ... }
+}
+
+// scoring.ts, email.ts, outreach.ts, ...
+const result = await llm.complete(prompt)
+</code>
+          </div>
+        </div>
+
+        <div class="wic-cmp">
+          <div class="wic-cmp-card wic-cmp-card--bad">
+            <div class="wic-cmp-label">Bad &mdash; raw provider fields in business logic</div>
+            <div class="wic-cmp-text">Apollo&rsquo;s raw response shape is used directly in scoring, email generation, export, and UI. The day Apollo changes a field name, the whole pipeline breaks.</div>
+            <code class="wic-cmp-code">// scoring.ts
+if (apolloLead.organization?.estimated_num_employees &gt; 50) ...
+
+// email.ts
+const company = apolloLead.organization?.name ?? '???'
+</code>
+          </div>
+          <div class="wic-cmp-card wic-cmp-card--good">
+            <div class="wic-cmp-label">Good &mdash; normalise at the edge</div>
+            <div class="wic-cmp-text">An <code>ApolloAdapter</code> converts the raw response into a <code>NormalizedLead</code>. The rest of the app only knows the normalised shape.</div>
+            <code class="wic-cmp-code">// apolloAdapter.ts
+export function fromApollo(raw): NormalizedLead { ... }
+
+// scoring.ts
+if (lead.employees &gt; 50) ...
+
+// email.ts
+const company = lead.company.name
+</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 06 · DEEP MODULES ========== -->
+    <section class="bos-section" id="s6">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 06</span>
+          <h2 class="bos-section-title">Deep modules</h2>
+          <p class="bos-section-sub">Ousterhout&rsquo;s test: how much functionality does this module give me, behind how small an interface?</p>
+        </div>
+
+        <div class="wic-prose">
+          <p>Ousterhout&rsquo;s clearest idea is the <strong>deep module</strong>. A good module provides a lot of functionality through a small, simple interface. A shallow module gives little benefit but still adds cognitive cost: another name to learn, another file to open, another concept to keep in your head.<sup>[2]</sup></p>
+          <p>He also pushes a wider definition of &ldquo;interface.&rdquo; The interface is not just method signatures. It is everything the caller has to understand to use the module correctly &mdash; side effects, dependencies, ordering assumptions, behavior under failure. If the docstring needs four paragraphs to be safe, the interface is not really small.<sup>[2]</sup></p>
+        </div>
+
+        <div class="wic-modcmp">
+          <div class="wic-modcmp-card wic-modcmp-card--shallow">
+            <h3 class="wic-modcmp-title">Shallow module</h3>
+            <div class="wic-modcmp-bar" aria-label="Large interface, small hidden functionality">
+              <div class="wic-modcmp-interface">Large interface</div>
+              <div class="wic-modcmp-hidden">Small<br>hidden value</div>
+            </div>
+            <div class="wic-modcmp-text">A function that wraps one line and adds a name. The caller now has to learn the wrapper <em>and</em> still know what is underneath.</div>
+          </div>
+          <div class="wic-modcmp-card wic-modcmp-card--deep">
+            <h3 class="wic-modcmp-title">Deep module</h3>
+            <div class="wic-modcmp-bar" aria-label="Small interface, large hidden functionality">
+              <div class="wic-modcmp-interface">Small<br>interface</div>
+              <div class="wic-modcmp-hidden">Large hidden complexity that the caller never has to think about</div>
+            </div>
+            <div class="wic-modcmp-text">One method. Behind it: deduplication, enrichment, fallback, retries, scoring. The caller is freed from all of that.</div>
+          </div>
+        </div>
+
+        <div class="wic-cmp">
+          <div class="wic-cmp-card wic-cmp-card--bad">
+            <div class="wic-cmp-label">Bad &mdash; shallow pass-through</div>
+            <div class="wic-cmp-text">A tiny function that just renames a field. It buys nothing for the caller and creates a layer to maintain forever.</div>
+            <code class="wic-cmp-code">function getCompanyName(company) {
+  return company.name
+}
+</code>
+          </div>
+          <div class="wic-cmp-card wic-cmp-card--good">
+            <div class="wic-cmp-label">Good &mdash; deep resolver</div>
+            <div class="wic-cmp-text">A small interface that hides real work: deduplication, domain matching, enrichment fallback, confidence scoring.</div>
+            <code class="wic-cmp-code">CompanyResolver.resolve(rawLead)
+//   - dedupes against existing companies
+//   - matches by domain + name fuzzy
+//   - enriches from secondary source on miss
+//   - returns a NormalizedCompany with confidence
+</code>
+          </div>
+        </div>
+
+        <div class="wic-prose-callout">
+          Small is not automatically good. Deep is good.
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 07 · TACTICAL VS STRATEGIC ========== -->
+    <section class="bos-section" id="s7">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 07</span>
+          <h2 class="bos-section-title">Tactical vs strategic programming</h2>
+          <p class="bos-section-sub">Two different questions an engineer can ask. The second one compounds.</p>
+        </div>
+
+        <div class="wic-prose">
+          <p>Ousterhout draws a sharp line between two mindsets. <strong>Tactical programming</strong> optimises for making the current thing work. <strong>Strategic programming</strong> invests in design so that future development stays easier. Tactical is fine in short bursts. The trap is doing it forever &mdash; every shortcut becomes the next person&rsquo;s constraint.<sup>[2]</sup></p>
+          <p>The honest version of strategic programming is not perfectionism. It is: every time I touch a file, I leave its structure slightly better than I found it.</p>
+        </div>
+
+        <div class="wic-trd">
+          <div class="wic-trd-card wic-trd-card--bad">
+            <div class="wic-trd-title">Tactical red flags</div>
+            <ul class="wic-trd-list">
+              <li>&ldquo;I&rsquo;ll clean it up later.&rdquo;</li>
+              <li>Copy-pasting provider-specific logic into a third file.</li>
+              <li>Passing raw dictionaries around because typing the shape feels slow.</li>
+              <li>Adding another flag instead of clarifying the abstraction.</li>
+              <li>Creating tiny pass-through functions because the structure feels off.</li>
+              <li>Adding special cases into general-purpose code.</li>
+              <li>Changing the fewest lines possible because the surrounding code is scary.</li>
+              <li>Skipping a name change because too many files reference the old one.</li>
+            </ul>
+          </div>
+          <div class="wic-trd-card wic-trd-card--good">
+            <div class="wic-trd-title">Strategic habits</div>
+            <ul class="wic-trd-list">
+              <li>Design the interface before writing the implementation.</li>
+              <li>Ask what is likely to change &mdash; then hide that thing.</li>
+              <li>Hide external providers behind one wall.</li>
+              <li>Keep raw external data at the edges; normalise before it travels.</li>
+              <li>Improve one thing every time you touch a file.</li>
+              <li>Write comments where the decision is not obvious from the code.</li>
+              <li>Prefer one deep module over three shallow ones.</li>
+              <li>Rename freely when the old name lies.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 08 · HOW TO READ ANY REPO ========== -->
+    <section class="bos-section" id="s8">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 08</span>
+          <h2 class="bos-section-title">How to read any repo</h2>
+          <p class="bos-section-sub">A reading order that finds the architecture instead of getting lost in folders.</p>
+        </div>
+
+        <div class="wic-checklist">
+          <ol class="wic-checklist-list">
+            <li>What product behavior does this repo create? One sentence, in user-visible terms.</li>
+            <li>What are the main domain nouns &mdash; the three to seven words that show up everywhere?</li>
+            <li>Where does data enter the system? HTTP routes, webhooks, cron jobs, file uploads.</li>
+            <li>Where is state stored? Which databases, caches, blob stores, external services?</li>
+            <li>Where does data leave? Responses, emails, exports, third-party APIs, queues.</li>
+            <li>What are the core rules? Permissions, validation, scoring, billing, compliance.</li>
+            <li>What external services does it depend on, and how is that dependency wrapped?</li>
+            <li>Which design decisions are hidden well &mdash; meaning one file owns the change?</li>
+            <li>Which decisions are leaking everywhere &mdash; copies, near-duplicates, scattered conditionals?</li>
+            <li>If I changed the database, the provider, the LLM, or the scoring logic, how many files would change?</li>
+          </ol>
+        </div>
+
+        <div class="wic-prose" style="margin-top: 22px;">
+          <p>The folder structure is the map you get for free. The <strong>real architecture is the dependency and knowledge structure</strong> &mdash; which modules know what, and which decisions ripple when something changes. Question ten is the X-ray for that.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 09 · HOW TO THINK BEFORE WRITING CODE ========== -->
+    <section class="bos-section" id="s9">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 09</span>
+          <h2 class="bos-section-title">How to think before writing code</h2>
+          <p class="bos-section-sub">A reusable design note I fill in before opening an editor.</p>
+        </div>
+
+        <div class="wic-template">
+          <article class="wic-template-card">
+            <div class="wic-template-card-title">Template</div>
+            <ul class="wic-template-list">
+              <li><b>Feature</b><span>What behavior needs to exist?</span></li>
+              <li><b>Inputs</b><span>What data or events enter?</span></li>
+              <li><b>Outputs</b><span>What should be produced?</span></li>
+              <li><b>State</b><span>What needs to be remembered?</span></li>
+              <li><b>Rules</b><span>What must always be true?</span></li>
+              <li><b>Likely changes</b><span>What could change later?</span></li>
+              <li><b>Hidden decisions</b><span>What should other modules not know?</span></li>
+              <li><b>Interface</b><span>What is the simplest way for another part to use this?</span></li>
+              <li><b>Red flags</b><span>Where might complexity leak?</span></li>
+            </ul>
+          </article>
+
+          <article class="wic-template-card wic-template-card--filled">
+            <div class="wic-template-card-title">Filled example &mdash; LeadMiner outreach</div>
+            <ul class="wic-template-list">
+              <li><b>Feature</b><span>Generate personalised outreach emails for LeadMiner.</span></li>
+              <li><b>Inputs</b><span>Lead profile, campaign settings, user tone preference.</span></li>
+              <li><b>Outputs</b><span>A draft email ready for human review or send.</span></li>
+              <li><b>State</b><span>Sent messages, campaign history, lead status, send window.</span></li>
+              <li><b>Rules</b><span>No duplicates, respect unsubscribes, keep tone professional, no claims I cannot verify.</span></li>
+              <li><b>Likely changes</b><span>LLM provider, prompt format, scoring logic, CRM export shape.</span></li>
+              <li><b>Hidden decisions</b><span>Model provider, prompt construction, retry policy, compliance checks.</span></li>
+              <li><b>Interface</b><span><code>messageGenerator.generate(lead, campaign)</code></span></li>
+              <li><b>Red flags</b><span>Prompt strings copy-pasted across modules; raw provider fields used in send logic.</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 10 · APPLY TO MY PROJECTS ========== -->
+    <section class="bos-section" id="s10">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 10</span>
+          <h2 class="bos-section-title">Apply this to my projects</h2>
+          <p class="bos-section-sub">The exercise is to name, for each product, the design decisions that should live behind one wall.</p>
+        </div>
+
+        <div class="wic-projects">
+
+          <article class="wic-project wic-project--p1">
+            <div class="wic-project-eyebrow">Product 01</div>
+            <h3 class="wic-project-name">LeadMiner</h3>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Decisions to hide</div>
+              <ul class="wic-project-list">
+                <li>Lead source provider</li>
+                <li>Raw data format</li>
+                <li>Deduplication logic</li>
+                <li>Scoring policy</li>
+                <li>LLM provider</li>
+                <li>Outreach policy</li>
+                <li>CRM / export format</li>
+              </ul>
+            </div>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Recommended modules</div>
+              <div class="wic-project-mods">
+                <span>LeadSourceAdapter</span>
+                <span>LeadNormalizer</span>
+                <span>CompanyResolver</span>
+                <span>LeadScoringPolicy</span>
+                <span>LLMClient</span>
+                <span>MessageGenerator</span>
+                <span>CRMExporter</span>
+                <span>AuditLog</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="wic-project wic-project--p2">
+            <div class="wic-project-eyebrow">Product 02</div>
+            <h3 class="wic-project-name">Locarde</h3>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Decisions to hide</div>
+              <ul class="wic-project-list">
+                <li>Evidence source</li>
+                <li>Evidence storage</li>
+                <li>Framework mapping</li>
+                <li>Control evaluation logic</li>
+                <li>Audit bundle generation</li>
+                <li>Report rendering</li>
+              </ul>
+            </div>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Recommended modules</div>
+              <div class="wic-project-mods">
+                <span>EvidenceCollector</span>
+                <span>EvidenceStore</span>
+                <span>FrameworkRegistry</span>
+                <span>ControlMapper</span>
+                <span>PolicyEvaluator</span>
+                <span>AuditBundleGenerator</span>
+                <span>TrustReportRenderer</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="wic-project wic-project--p3">
+            <div class="wic-project-eyebrow">Product 03</div>
+            <h3 class="wic-project-name">GateCrown</h3>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Decisions to hide</div>
+              <ul class="wic-project-list">
+                <li>Client intake structure</li>
+                <li>Risk assessment rules</li>
+                <li>Document generation templates</li>
+                <li>Regulatory mapping</li>
+                <li>Training evidence logging</li>
+                <li>Versioning of compliance documents</li>
+              </ul>
+            </div>
+
+            <div class="wic-project-section">
+              <div class="wic-project-section-label">Recommended modules</div>
+              <div class="wic-project-mods">
+                <span>ClientProfile</span>
+                <span>RiskAssessmentPolicy</span>
+                <span>CDDWorkflow</span>
+                <span>DocumentGenerator</span>
+                <span>ComplianceMapping</span>
+                <span>TrainingEvidenceLog</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 11 · ENGINEERING RED FLAGS ========== -->
+    <section class="bos-section" id="s11">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 11</span>
+          <h2 class="bos-section-title">Engineering red flags</h2>
+          <p class="bos-section-sub">Specific code patterns that warn me I am leaking knowledge, not designing it.</p>
+        </div>
+
+        <div class="wic-redflags">
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Duplication of detail</div>
+            <div class="wic-redflag-sig">The same low-level detail appears in many files.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">Every change has to be made in every copy. Drift is inevitable.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Put the detail behind one named module and let everyone call it.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Schema leak into UI</div>
+            <div class="wic-redflag-sig">Database column names appear in the UI layer.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">A schema change ripples into screens that should not have known about the database.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Map at the boundary: rows become domain objects before they leave the data layer.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Provider fields in business logic</div>
+            <div class="wic-redflag-sig">Apollo, Stripe, or OpenAI field names appear deep in scoring or rules.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">Replacing the provider becomes an archaeology project instead of a swap.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Normalise once at the edge; rules see your domain shape only.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Hard-to-name module</div>
+            <div class="wic-redflag-sig">A module exists but its name is vague or contested.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">If I cannot name it, it is probably doing more than one job &mdash; or the wrong job.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Split until each part has a clear, declarative name.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Vague names</div>
+            <div class="wic-redflag-sig">Functions called <code>processData</code>, <code>handleThing</code>, <code>manager</code>, <code>utils</code>.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">The names do not constrain behavior, so every change becomes plausible.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Force the name to commit to one job. Rename freely when behavior shifts.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Interface needs an essay</div>
+            <div class="wic-redflag-sig">Using the module safely requires four paragraphs of explanation.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">The interface is not really small. The complexity has just been moved into the comments.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Redesign the interface to absorb the rules. Use defaults, types, and shapes to remove choices.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Small change, many files</div>
+            <div class="wic-redflag-sig">Editing one rule requires touching many unrelated files.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">The decision was never hidden; it was scattered.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Pull the rule into one policy module others depend on.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Tests fight the design</div>
+            <div class="wic-redflag-sig">Tests are painful because responsibilities are mixed in one function.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">Tests are pain-detectors. If they hurt, the design probably does too.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Split into pure transformation + a thin side-effect shell. Test them separately.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Transform plus side effect</div>
+            <div class="wic-redflag-sig">A function both computes data and sends an email, writes to a queue, or hits an API.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">You can never call it &ldquo;just to compute&rdquo; in another context.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Return the data; let a caller decide whether to commit the effect.</div></div>
+          </article>
+
+          <article class="wic-redflag">
+            <div class="wic-redflag-flag">Permanent &ldquo;temporary&rdquo; hack</div>
+            <div class="wic-redflag-sig">A workaround written under pressure has become load-bearing.</div>
+            <div class="wic-redflag-row"><div class="wic-redflag-row-label">Why bad</div><div class="wic-redflag-row-val">It is now part of the design without ever being designed.</div></div>
+            <div class="wic-redflag-row wic-redflag-row--fix"><div class="wic-redflag-row-label">Do instead</div><div class="wic-redflag-row-val">Promote it to a real abstraction with a clear contract &mdash; or remove it.</div></div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 12 · FINAL OPERATING SYSTEM ========== -->
+    <section class="bos-section" id="s12">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 12</span>
+          <h2 class="bos-section-title">The final operating system</h2>
+          <p class="bos-section-sub">The short version I want to carry around in my head.</p>
+        </div>
+
+        <div class="wic-os">
+          <div class="wic-os-label">Coding is</div>
+          <ol class="wic-os-list">
+            <li>Modeling reality as data.</li>
+            <li>Defining rules that transform data.</li>
+            <li>Managing state safely over time.</li>
+            <li>Creating interfaces between parts.</li>
+            <li>Hiding complexity behind abstractions.</li>
+            <li>Making behavior understandable, changeable, and reliable.</li>
+          </ol>
+          <div class="wic-os-key">
+            Whenever I code, I should ask: what behavior am I creating, what state am I changing, and what complexity am I hiding?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 13 · SOURCES & NOTES ========== -->
+    <section class="bos-section" id="s13">
+      <div class="container">
+        <div class="bos-section-head">
+          <span class="wic-section-num">Section 13</span>
+          <h2 class="bos-section-title">Sources &amp; notes</h2>
+          <p class="bos-section-sub">What I built on, where I synthesised, and what I did not claim.</p>
+        </div>
+
+        <div class="wic-sources">
+          <p class="wic-sources-intro">This essay is a synthesis of my own learning, grounded partly in Parnas&rsquo;s information hiding paper and Ousterhout&rsquo;s software design philosophy. The eight-layer model in Section 03 is my own framing, not a structure proposed by either author. Where I draw a specific claim from a source, the inline reference points to it.</p>
+
+          <ul class="wic-sources-list">
+            <li><sup>[1]</sup> <b>D. L. Parnas</b>, <em>&ldquo;On the Criteria To Be Used in Decomposing Systems into Modules,&rdquo;</em> Communications of the ACM, vol. 15, no. 12, December 1972. The paper that argues modularity depends on the criteria of decomposition, that it is usually wrong to begin from a flowchart, and that each module should hide a difficult design decision or one likely to change.</li>
+            <li><sup>[2]</sup> <b>John Ousterhout</b>, <em>A Philosophy of Software Design</em>, 2nd edition. The source for the deep-class / deep-module idea, the wider definition of &ldquo;interface,&rdquo; and the tactical-vs-strategic programming distinction. Also discusses defining errors out of existence and the cost of complexity over time.</li>
+            <li><b>John Ousterhout</b>, talks and transcripts on software design (including the Stanford / Google talk that summarises the book). Useful as a faster path into the deep-class and strategic-programming ideas.</li>
+          </ul>
+
+          <div class="wic-sources-caveat">
+            Verification &middot; The eight-layer model is mine, labelled as a mental model in Section 03. The kitchen analogy in Section 04 is intentionally limited. Project recommendations in Section 10 are design suggestions for my own work, not formal architecture decisions. Nothing here should be cited as a claim by Parnas or Ousterhout that they did not make.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="bos-section">
+      <div class="container">
+        <div class="bos-cta-band">
+          <h2 class="bos-cta-title">More of the library this guide came from.</h2>
+          <p class="bos-cta-sub">Books, papers, and field maps on AI, software systems, intelligence, startups, and trust.</p>
+          <a class="bos-cta-btn" href="../">
+            Open Reading Room
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="../../" class="footer-logo">P.</a>
+          <p class="footer-tagline">AI engineer at Perplexity AI &middot; Melbourne</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="../../projects/">Work</a>
+          <a href="../../blog/">Writing</a>
+          <a href="../../atlases/">Atlases</a>
+          <a href="../../#about">About</a>
+          <a href="../../#experience">Experience</a>
+          <a href="../">Reading Room</a>
+          <a href="../../#contact">Contact</a>
+          <a href="../../blog/feed.xml">RSS</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copyright">&copy; 2026 Pugalenthi Magendran</span>
+        <span class="footer-credit">Built with <span>vanilla HTML, CSS &amp; JS</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../script.js?v=15"></script>
+</body>
+</html>
